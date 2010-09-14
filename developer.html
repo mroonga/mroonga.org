@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. 開発者向け情報 &mdash; groonga storage engine v0.1 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="groonga storage engine v0.1 documentation" href="index.html" />
+    <link rel="prev" title="3. リファレンス" href="reference.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reference.html" title="3. リファレンス"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>4. 開発者向け情報<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>4.1. 開発手法について<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>groongaストレージエンジン開発プロジェクトではBTSの1つであるRedmineを用いたチケット駆動開発を実施しています。</p>
+<p>Redmineは以下のサイトで運用されています。</p>
+<p><a class="reference external" href="http://redmine.groonga.org/projects/show/mroonga">http://redmine.groonga.org/projects/show/mroonga</a></p>
+<p>開発の作業はチケット単位で行っています。</p>
+<p>開発者の方は上記サイトへのアカウント登録をお願いします。</p>
+</div>
+<div class="section" id="id3">
+<h2>4.2. ロードマップについて<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>ロードマップは以下のページで確認できます。基本的に開発はロードマップに沿って行います。</p>
+<p><a class="reference external" href="http://redmine.groonga.org/projects/mroonga/roadmap">http://redmine.groonga.org/projects/mroonga/roadmap</a></p>
+<p>ロードマップはオフラインあるいはオンラインでの開発会議で検討を行った上で決定されます。</p>
+<p>ロードマップは各バージョンごとに追加する機能の一覧として構成されています。</p>
+</div>
+<div class="section" id="id4">
+<h2>4.3. ソースコード管理について<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>githubを使用したgitによるソースコード管理を行っています。</p>
+<p><a class="reference external" href="http://github.com/mroonga/mroonga">http://github.com/mroonga/mroonga</a></p>
+<p>上記レポジトリに対してread/writeでcloneを作成し、commitおよびpushして下さい。</p>
+<p>アカウントを作成していない開発者の方はgithub.comへの登録をお願いします。</p>
+</div>
+<div class="section" id="id5">
+<h2>4.4. 開発の流れについて<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>開発は以下の流れで行いたいと考えています。</p>
+<ol class="arabic simple">
+<li>チケットの新規作成と内容の記述</li>
+<li>チケットの割り当て(担当者作業開始)</li>
+<li>機能実装あるいはバグの修正作業</li>
+<li>テストコードの追加と実行</li>
+<li>実装/テスト内容に対するレビュー</li>
+<li>ドキュメントの追加/変更</li>
+<li>チケットの完了</li>
+</ol>
+<p>機能追加や仕様変更に関わるチケットの作成については、まずは開発会議等でご相談下さい。</p>
+<p>レポジトリへのcommitおよびpushのタイミングは開発者の方にお任せしますが、チケットとの対応が後で分かるようにしておいて下さい。</p>
+<p>テストコードの追加と実行については後述しますのでそちらを参照して下さい。</p>
+<p>基本的にチケットを担当されている方が設計、実装、テスト、ドキュメントまで一通りお願いしたいと考えています。</p>
+<p>他の開発者にレビューを依頼し(特に機能追加の場合)、無事パスしたら最後にドキュメントを追加/変更してチケット完了となります。</p>
+<p>ドキュメントの追加/変更方法についても詳しくは後述します。</p>
+</div>
+<div class="section" id="id6">
+<h2>4.5. リリースについて<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>リリースはロードマップ上のチケットが全て完了となった段階で行います。</p>
+<p>リリースにあたっては以下の作業を行っています。</p>
+<ul class="simple">
+<li>ソースパッケージ作成</li>
+<li>バイナリパッケージ作成</li>
+<li>ドキュメント(<a class="reference external" href="http://mroonga.github.com">http://mroonga.github.com</a>)のアップデート</li>
+<li>リリースの告知</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2>4.6. 開発環境<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>現在、以下のような開発環境を想定しています。</p>
+<ul class="simple">
+<li>Linux x86_64</li>
+<li>glibc 2.5</li>
+<li>MySQL 5.1</li>
+<li>groonga 1.0</li>
+<li>cutter 1.0 (C/C++単体テスト用)</li>
+<li>sphinx 1.0 (ドキュメント用)</li>
+</ul>
+<p>glibc 2.5はRed Hat Enterprise Linux 5に相当します。</p>
+</div>
+<div class="section" id="id8">
+<h2>4.7. ソースディレクトリ解説<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>今のところソースファイルの数はごくわずかです。なるべくシンプルな状態を維持したいと考えています。</p>
+<dl class="docutils">
+<dt>ha_mroonga.h</dt>
+<dd>groongaストレージエンジンのヘッダファイル</dd>
+<dt>ha_mroonga.cc</dt>
+<dd>groongaストレージエンジンの実装コード</dd>
+<dt>mrnsys.h</dt>
+<dd>ユーティリティ関数のヘッダファイル</dd>
+<dt>mrnsys.c</dt>
+<dd>ユーティリティ関数の実装コード</dd>
+<dt>test/sql/</dt>
+<dd>SQLによるテストコード用ディレクトリ</dd>
+<dt>test/sql/t/</dt>
+<dd>SQLテストスクリプト（現在実行可能なSQL文の定義も兼ねる）</dd>
+<dt>test/sql/r/</dt>
+<dd>SQLテスト想定実行結果（SQL動作仕様定義も兼ねる）</dd>
+<dt>test/unit/</dt>
+<dd>C/C++関数単体でのテストコード用ディレクトリ</dd>
+<dt>doc/ja/</dt>
+<dd>sphinx形式のドキュメント一式</dd>
+</dl>
+<p>groongaストレージエンジンはまだ開発の立ち上げ段階であるため、SQL実行に関する仕様のドキュメント化は当面行いません。</p>
+<p>その代わりとしてSQLテストスクリプトとその想定実行結果を機能一覧/仕様定義として見なしています。</p>
+</div>
+<div class="section" id="id9">
+<h2>4.8. テストコードの追加と実行について<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>groongaストレージエンジンではプログラムの品質管理のため、2種類の回帰テストを用いています。</p>
+<dl class="docutils">
+<dt>SQLテスト</dt>
+<dd>SQL実行により動作確認を行えるような機能追加/バグ修正に関しては必ずSQLテストを追加して下さい。高速化機能などは一見するとSQLによる動作確認ができないように見える場合もありますが、ステータス変数やinformation_schemaプラグインなどを使用することで上手くテストできるものもあります。</dd>
+<dt>C/C++単体テスト</dt>
+<dd>cutterを使用した関数レベルでの回帰テストです。ユーティリティ関数などSQL実行結果による動作の差異を確認できないような実装を追加した場合にはこちらにテストを追加して下さい。</dd>
+</dl>
+<p>ソースコードレポジトリへのpushを行う前に必ず回帰テストを実行し、デグレードが発生していないことを確認して下さい。</p>
+</div>
+<div class="section" id="id10">
+<h2>4.9. ドキュメントの追加と変更について<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>groongaストレージエンジンではドキュメント作成にsphinxを使用しています。</p>
+<p>ドキュメントはReStructuredText形式でソースファイルを書き、HTML形式などにビルドしています。</p>
+<p>ドキュメントのソースファイルは&#8221;doc/ja/source&#8221;ディレクトリにある拡張子が.rstのファイルです。</p>
+<p>加筆修正を行ったら&#8221;make html&#8221;等でビルドして下さい。</p>
+<p>ドキュメントの公開場所は <a class="reference external" href="http://mroonga.github.com">http://mroonga.github.com</a> です。</p>
+<p>githubのサイト機能を使用しているため、http://github.com/mroonga/mroonga.github.com レポジトリに最新のHTML出力ファイルをpushすることで更新が行われます。</p>
+<p>sphinxの出力するディレクトリ名がgithubで使用できない問題を回避するため、&#8221;doc/ja/source&#8221;ディレクトリにてsphinx2github.shスクリプトを用意しています。このスクリプトを実行した上でcommitおよびpushして下さい。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. 開発者向け情報</a><ul>
+<li><a class="reference internal" href="#id2">4.1. 開発手法について</a></li>
+<li><a class="reference internal" href="#id3">4.2. ロードマップについて</a></li>
+<li><a class="reference internal" href="#id4">4.3. ソースコード管理について</a></li>
+<li><a class="reference internal" href="#id5">4.4. 開発の流れについて</a></li>
+<li><a class="reference internal" href="#id6">4.5. リリースについて</a></li>
+<li><a class="reference internal" href="#id7">4.6. 開発環境</a></li>
+<li><a class="reference internal" href="#id8">4.7. ソースディレクトリ解説</a></li>
+<li><a class="reference internal" href="#id9">4.8. テストコードの追加と実行について</a></li>
+<li><a class="reference internal" href="#id10">4.9. ドキュメントの追加と変更について</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reference.html"
+                        title="previous chapter">3. リファレンス</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/developer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="reference.html" title="3. リファレンス"
+             >previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, groonga project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>
