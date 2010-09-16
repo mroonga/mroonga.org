@@ -75,14 +75,13 @@
 <li>チケットの新規作成と内容の記述</li>
 <li>開発会議での検討(ロードマップへの反映)</li>
 <li>チケットの割り当て(担当者作業開始)</li>
-<li>機能実装あるいはバグの修正作業</li>
-<li>テストコードの追加と実行</li>
-<li>実装/テスト内容に対するレビュー</li>
-<li>ドキュメントの追加/変更</li>
+<li>機能実装あるいはバグの修正作業、必要に応じてレポジトリへのpush</li>
+<li>テストコードの追加と実行、レポジトリへのpush</li>
+<li>実装/テスト内容に対するレビュー(必要に応じて4へ戻る)</li>
+<li>ドキュメントの追加/変更、 レポジトリへのpush</li>
 <li>チケットの完了</li>
 </ol>
 <p>機能追加や仕様変更などについても積極的にアイデアを募集します。まずはチケットを新規作成して内容を記述して下さい。</p>
-<p>レポジトリへのcommitおよびpushのタイミングは開発者の方にお任せしますが、チケットとの対応が後で分かるようにしておいて下さい。</p>
 <p>テストコードの追加と実行については後述しますのでそちらを参照して下さい。</p>
 <p>基本的にチケットを担当されている方が設計、実装、テスト、ドキュメントまで一通りお願いしたいと考えています。</p>
 <p>他の開発者にレビューを依頼し(特に機能追加の場合)、無事パスしたら最後にドキュメントを追加/変更してチケット完了となります。</p>
@@ -159,10 +158,10 @@
 <p>groongaストレージエンジンではドキュメント作成にsphinxを使用しています。</p>
 <p>ドキュメントはReStructuredText形式でソースファイルを書き、HTML形式などにビルドしています。</p>
 <p>ドキュメントのソースファイルは&#8221;doc/ja/source&#8221;ディレクトリにある拡張子が.rstのファイルです。</p>
-<p>加筆修正を行ったら&#8221;make html&#8221;等でビルドして下さい。</p>
-<p>ドキュメントの公開場所は <a class="reference external" href="http://mroonga.github.com">http://mroonga.github.com</a> です。</p>
-<p>githubのサイト機能を使用しているため <a class="reference external" href="http://github.com/mroonga/mroonga.github.com">http://github.com/mroonga/mroonga.github.com</a> レポジトリに最新のHTML出力ファイルをpushすることで更新が行われます。</p>
-<p>sphinxの出力するディレクトリ名がgithubで使用できない問題を回避するため、&#8221;doc/ja/source&#8221;ディレクトリにてsphinx2github.shスクリプトを用意しています。このスクリプトを実行した上でcommitおよびpushして下さい。</p>
+<p>加筆修正を行ったら&#8221;make html&#8221;等でビルドして構文エラーが起きないことを確認して下さい。</p>
+<p>ドキュメントの実際の公開場所は <a class="reference external" href="http://mroonga.github.com">http://mroonga.github.com</a> で、これはgithubのサイト機能を使用しているため <a class="reference external" href="http://github.com/mroonga/mroonga.github.com">http://github.com/mroonga/mroonga.github.com</a> レポジトリに最新のHTML出力ファイルをpushすることで更新が行われる仕組みとなっていますが、mroonga.github.comレポジトリへのpushは現リリースバージョンとの整合性などを確認した上で別のタイミングでpushします。</p>
+<p>従って、各チケットに対するドキュメントのpushはmroongaレポジトリに対するpushのみで構いません。</p>
+<p>またsphinxの出力するディレクトリ名がgithubで使用できない問題を回避するため、&#8221;doc/ja/source&#8221;ディレクトリにてsphinx2github.shスクリプトを用意しています。mroonga.github.comにcommitする場合にはこのスクリプトを実行してsphinxの生成したファイルを修正して置きましょう。</p>
 </div>
 </div>
 
