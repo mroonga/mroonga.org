@@ -61,8 +61,27 @@
 </pre></div>
 </div>
 <p>それぞれの環境毎にインストール方法を説明します。</p>
+<div class="section" id="debian-gnu-linux-lenny">
+<h2>2.1. Debian GNU/Linux lenny<a class="headerlink" href="#debian-gnu-linux-lenny" title="Permalink to this headline">¶</a></h2>
+<p>/etc/apt/sources.list.d/backports.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://backports.debian.org/debian-backports lenny-backports main
+deb-src http://backports.debian.org/debian-backports lenny-backports main
+</pre></div>
+</div>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ lenny main
+deb-src http://packages.groonga.org/debian/ lenny main
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
+% sudo aptitude update
+% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
 <div class="section" id="debian-gnu-linux-squeeze">
-<h2>2.1. Debian GNU/Linux squeeze<a class="headerlink" href="#debian-gnu-linux-squeeze" title="Permalink to this headline">¶</a></h2>
+<h2>2.2. Debian GNU/Linux squeeze<a class="headerlink" href="#debian-gnu-linux-squeeze" title="Permalink to this headline">¶</a></h2>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ squeeze main
 deb-src http://packages.groonga.org/debian/ squeeze main
@@ -76,7 +95,7 @@ deb-src http://packages.groonga.org/debian/ squeeze main
 </div>
 </div>
 <div class="section" id="debian-gnu-linux-sid">
-<h2>2.2. Debian GNU/Linux sid<a class="headerlink" href="#debian-gnu-linux-sid" title="Permalink to this headline">¶</a></h2>
+<h2>2.3. Debian GNU/Linux sid<a class="headerlink" href="#debian-gnu-linux-sid" title="Permalink to this headline">¶</a></h2>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ unstable main
 deb-src http://packages.groonga.org/debian/ unstable main
@@ -89,23 +108,8 @@ deb-src http://packages.groonga.org/debian/ unstable main
 </pre></div>
 </div>
 </div>
-<div class="section" id="ubuntu-8-04-lts-hardy-heron">
-<h2>2.3. Ubuntu 8.04 LTS Hardy Heron<a class="headerlink" href="#ubuntu-8-04-lts-hardy-heron" title="Permalink to this headline">¶</a></h2>
-<p>注: Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
-<p>/etc/apt/sources.list.d/groonga.list:</p>
-<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ hardy universe
-deb-src http://packages.groonga.org/ubuntu/ hardy universe
-</pre></div>
-</div>
-<p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
-</pre></div>
-</div>
-</div>
-<div class="section" id="ubuntu-10-04-lucid-lynx">
-<h2>2.4. Ubuntu 10.04 Lucid Lynx<a class="headerlink" href="#ubuntu-10-04-lucid-lynx" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ubuntu-10-04-lts-lucid-lynx">
+<h2>2.4. Ubuntu 10.04 LTS Lucid Lynx<a class="headerlink" href="#ubuntu-10-04-lts-lucid-lynx" title="Permalink to this headline">¶</a></h2>
 <p>注: Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ lucid universe
@@ -119,8 +123,23 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 </pre></div>
 </div>
 </div>
+<div class="section" id="ubuntu-10-04-lts-maverick-meerkat">
+<h2>2.5. Ubuntu 10.04 LTS Maverick Meerkat<a class="headerlink" href="#ubuntu-10-04-lts-maverick-meerkat" title="Permalink to this headline">¶</a></h2>
+<p>注: Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ maverick universe
+deb-src http://packages.groonga.org/ubuntu/ maverick universe
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
+% sudo aptitude update
+% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
 <div class="section" id="centos-5">
-<h2>2.5. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
+<h2>2.6. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
@@ -129,7 +148,7 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 </div>
 </div>
 <div class="section" id="fedora-13">
-<h2>2.6. Fedora 13<a class="headerlink" href="#fedora-13" title="Permalink to this headline">¶</a></h2>
+<h2>2.7. Fedora 13<a class="headerlink" href="#fedora-13" title="Permalink to this headline">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
@@ -138,31 +157,31 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 </div>
 </div>
 <div class="section" id="id2">
-<h2>2.7. ソースコードからのインストール<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>2.8. ソースコードからのインストール<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>ソースコードからインストールする方法を説明します。パッケージ
 がない環境ではソースコードからインストールすることになります。</p>
 <div class="section" id="mecab">
-<h3>2.7.1. 形態素解析(mecab)について<a class="headerlink" href="#mecab" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.1. 形態素解析(mecab)について<a class="headerlink" href="#mecab" title="Permalink to this headline">¶</a></h3>
 <p>形態素単位でトークナイズした全文検索索引を使用したい場合は、
 groongaのインストール前にMeCab
 (<a class="reference external" href="http://mecab.sourceforge.net/">http://mecab.sourceforge.net/</a>)をインストールしてください。</p>
 </div>
 <div class="section" id="id3">
-<h3>2.7.2. ダウンロード<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.2. ダウンロード<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>以下のページからソースのtarballをダウンロード可能です。</p>
 <p><a class="reference external" href="http://github.com/mroonga/mroonga/downloads">http://github.com/mroonga/mroonga/downloads</a></p>
 </div>
 <div class="section" id="id4">
-<h3>2.7.3. 前提条件<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.3. 前提条件<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>MySQLおよびgroongaが既にインストールされている必要があります。</p>
 <p>またgroongaストレージエンジンをビルドするためにはMySQLのソースコードも必要です。</p>
 </div>
 <div class="section" id="mysql">
-<h3>2.7.4. MySQLのインストール<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.4. MySQLのインストール<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
 <p>MySQL 5.1最新版のソースコードをダウンロードし、ビルド＆インストールして下さい。</p>
 <p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/index.html">http://dev.mysql.com/doc/refman/5.1/ja/index.html</a></p>
-<p>mysql-5.1.50を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.1.50
+<p>mysql-5.1.51を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
+<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.1.51
 </pre></div>
 </div>
 <p>MySQLのバイナリが以下にインストールされているものと仮定します。</p>
@@ -171,16 +190,16 @@ groongaのインストール前にMeCab
 </div>
 </div>
 <div class="section" id="groonga">
-<h3>2.7.5. groongaのインストール<a class="headerlink" href="#groonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.5. groongaのインストール<a class="headerlink" href="#groonga" title="Permalink to this headline">¶</a></h3>
 <p>groongaの最新版をビルド＆インストールして下さい。</p>
 <p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
 <p>ここでは/usr/libなどの標準パスにlibgroongaがインストールされているものと仮定します。</p>
 </div>
 <div class="section" id="id5">
-<h3>2.7.6. groongaストレージエンジンのビルド<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.6. groongaストレージエンジンのビルド<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>以下のように <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> でMySQLソースコードディレクトリ、 <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt> でmysql_configコマンドのパスを指定してconfigureを実行します。</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
-  --with-mysql-source=/usr/local/src/mysql-5.1.50 \
+  --with-mysql-source=/usr/local/src/mysql-5.1.51 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
 </pre></div>
 </div>
@@ -190,7 +209,7 @@ groongaのインストール前にMeCab
 </div>
 </div>
 <div class="section" id="id6">
-<h3>2.7.7. groongaストレージエンジンのインストール<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.7. groongaストレージエンジンのインストール<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>&#8220;make install&#8221;を実行するとMySQLのプラグイン用ディレクトリにha_groonga.soが配置されます。</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -217,7 +236,7 @@ groongaのインストール前にMeCab
 </div>
 </div>
 <div class="section" id="github">
-<h2>2.8. githubからのインストール<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>
+<h2>2.9. githubからのインストール<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>
 <p>レポジトリから一式ダウンロードします。</p>
 <div class="highlight-none"><div class="highlight"><pre>git clone git://github.com/mroonga/mroonga.git
 </pre></div>
@@ -239,23 +258,24 @@ groongaのインストール前にMeCab
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2. インストールガイド</a><ul>
-<li><a class="reference internal" href="#debian-gnu-linux-squeeze">2.1. Debian GNU/Linux squeeze</a></li>
-<li><a class="reference internal" href="#debian-gnu-linux-sid">2.2. Debian GNU/Linux sid</a></li>
-<li><a class="reference internal" href="#ubuntu-8-04-lts-hardy-heron">2.3. Ubuntu 8.04 LTS Hardy Heron</a></li>
-<li><a class="reference internal" href="#ubuntu-10-04-lucid-lynx">2.4. Ubuntu 10.04 Lucid Lynx</a></li>
-<li><a class="reference internal" href="#centos-5">2.5. CentOS 5</a></li>
-<li><a class="reference internal" href="#fedora-13">2.6. Fedora 13</a></li>
-<li><a class="reference internal" href="#id2">2.7. ソースコードからのインストール</a><ul>
-<li><a class="reference internal" href="#mecab">2.7.1. 形態素解析(mecab)について</a></li>
-<li><a class="reference internal" href="#id3">2.7.2. ダウンロード</a></li>
-<li><a class="reference internal" href="#id4">2.7.3. 前提条件</a></li>
-<li><a class="reference internal" href="#mysql">2.7.4. MySQLのインストール</a></li>
-<li><a class="reference internal" href="#groonga">2.7.5. groongaのインストール</a></li>
-<li><a class="reference internal" href="#id5">2.7.6. groongaストレージエンジンのビルド</a></li>
-<li><a class="reference internal" href="#id6">2.7.7. groongaストレージエンジンのインストール</a></li>
+<li><a class="reference internal" href="#debian-gnu-linux-lenny">2.1. Debian GNU/Linux lenny</a></li>
+<li><a class="reference internal" href="#debian-gnu-linux-squeeze">2.2. Debian GNU/Linux squeeze</a></li>
+<li><a class="reference internal" href="#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
+<li><a class="reference internal" href="#ubuntu-10-04-lts-lucid-lynx">2.4. Ubuntu 10.04 LTS Lucid Lynx</a></li>
+<li><a class="reference internal" href="#ubuntu-10-04-lts-maverick-meerkat">2.5. Ubuntu 10.04 LTS Maverick Meerkat</a></li>
+<li><a class="reference internal" href="#centos-5">2.6. CentOS 5</a></li>
+<li><a class="reference internal" href="#fedora-13">2.7. Fedora 13</a></li>
+<li><a class="reference internal" href="#id2">2.8. ソースコードからのインストール</a><ul>
+<li><a class="reference internal" href="#mecab">2.8.1. 形態素解析(mecab)について</a></li>
+<li><a class="reference internal" href="#id3">2.8.2. ダウンロード</a></li>
+<li><a class="reference internal" href="#id4">2.8.3. 前提条件</a></li>
+<li><a class="reference internal" href="#mysql">2.8.4. MySQLのインストール</a></li>
+<li><a class="reference internal" href="#groonga">2.8.5. groongaのインストール</a></li>
+<li><a class="reference internal" href="#id5">2.8.6. groongaストレージエンジンのビルド</a></li>
+<li><a class="reference internal" href="#id6">2.8.7. groongaストレージエンジンのインストール</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#github">2.8. githubからのインストール</a></li>
+<li><a class="reference internal" href="#github">2.9. githubからのインストール</a></li>
 </ul>
 </li>
 </ul>
