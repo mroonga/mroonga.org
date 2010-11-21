@@ -82,7 +82,11 @@
 <div class="section" id="id3">
 <h2>3.2. 全文検索の利用方法<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>インストールが確認できたら、テーブルを1つ作成してみましょう。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (c1 INT PRIMARY KEY, c2 VARCHAR(255), FULLTEXT INDEX (c2)) ENGINE = groonga DEFAULT CHARSET utf8;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (
+     &gt;   c1 INT PRIMARY KEY,
+     &gt;   c2 VARCHAR(255),
+     &gt;   FULLTEXT INDEX (c2)
+     &gt; ) ENGINE = groonga DEFAULT CHARSET utf8;
 Query OK, 0 rows affected (0.22 sec)
 </pre></div>
 </div>
@@ -107,11 +111,113 @@ Query OK, 1 row affected (0.04 sec)
 <p>おぉぉー。検索できましたね。</p>
 </div>
 <div class="section" id="id4">
-<h2>3.3. ログ出力<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2>3.3. 検索スコアの取得方法<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
+<p>検索スコアを取得するためには、テーブル定義時に <tt class="docutils literal"><span class="pre">_score</span></tt> という名前のカラムを作成して下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (
+     &gt;   c1 INT PRIMARY KEY,
+     &gt;   c2 TEXT,
+     &gt;   _score FLOAT,
+     &gt;   FULLTEXT INDEX (c2)
+     &gt; ) ENGINE = groonga DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.22 sec)
+</pre></div>
+</div>
+<p>_scoreカラムのデータ型はFLOATまたはDOUBLEである必要があります。</p>
+<p>INSERTでテーブルにレコードを追加してみましょう。_scoreカラムは仮想カラムとして実装されており、更新は行えません。更新対象から外すか、値に <tt class="docutils literal"><span class="pre">null</span></tt> を使用する必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; insert into t1 values(1, &quot;aa ii uu ee oo&quot;, null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into t1 values(2, &quot;aa ii ii ii oo&quot;, null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into t1 values(3, &quot;dummy&quot;, null);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>全文検索(MATCH...AGAINSTによる検索)を実行した場合、_scoreカラムを通じて検索スコアを取得できます。_scoreカラムをORDER BYに指定することで結果のソートも行うことができます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from t1 where match(c2) against(&quot;ii&quot;) order by _score desc;
++----+----------------+--------+
+| c1 | c2             | _score |
++----+----------------+--------+
+|  2 | aa ii ii ii oo |      3 |
+|  1 | aa ii uu ee oo |      1 |
++----+----------------+--------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id">
+<h2>3.4. レコードIDの取得方法<a class="headerlink" href="#id" title="Permalink to this headline">¶</a></h2>
+<p>groongaではテーブルにレコードを追加した際にレコードを一意に識別するための番号が割当てられます。</p>
+<p>groongaストレージエンジンではアプリケーションの開発を容易にするため、このレコードIDをSQLで取得できるようになっています。</p>
+<p>レコードIDを取得するためには、テーブル定義時に <tt class="docutils literal"><span class="pre">_id</span></tt> という名前のカラムを作成して下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (
+    -&gt;   _id INT,
+    -&gt;   foo INT,
+    -&gt;   UNIQUE KEY (_id) USING HASH
+    -&gt; ) ENGINE = groonga;
+Query OK, 0 rows affected (0.01 sec)
+</pre></div>
+</div>
+<p>_idカラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
+<p>また_idカラムにはインデックスを作成することが可能ですが、HASH形式である必要があります。</p>
+<p>INSERTでテーブルにレコードを追加してみましょう。_idカラムは仮想カラムとして実装されており、また_idの値であるレコードIDはgroongaにより割当てられるため、SQLによる更新時に値を指定することはできません。
+更新対象から外すか、値に <tt class="docutils literal"><span class="pre">null</span></tt> を使用する必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>レコードIDを取得するには、_idカラムを含むようにしてSELECTを行います。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from t1;
++------+------+
+| _id  | foo  |
++------+------+
+|    1 |  100 |
+|    2 |  100 |
+|    3 |  100 |
+|    4 |  100 |
++------+------+
+4 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>また直前のINSERTにより割当てられたレコードIDについては、LAST_INSERT_GRN_ID関数により取得することもできます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT LAST_INSERT_GRN_ID();
++----------------------+
+| LAST_INSERT_GRN_ID() |
++----------------------+
+|                    5 |
++----------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>LAST_INSERT_GRN_ID関数はユーザ定義関数(UDF)としてgroongaストレージエンジンに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION LAST_INSERT_GRN_ID RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
+</pre></div>
+</div>
+<p>ご覧のように_idカラムやLAST_INSERT_GRN_ID関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE t1 SET foo = 200 WHERE _id = 5;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>3.5. ログ出力<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>groongaストレージエンジンではデフォルトでログの出力を行うようになっています。</p>
-<p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">mroonga.log</span></tt> というファイル名で出力されます。</p>
+<p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
-<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 0.1 init
+<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|groonga-storage-engine started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
@@ -119,8 +225,8 @@ Query OK, 1 row affected (0.04 sec)
 <p>現在のgroongaストレージエンジンは開発バージョンということもあり、ログの出力レベルは最大(=DUMP)となっております。</p>
 <p>ログの出力レベルの変更や&#8221;flush logs&#8221;への対応はまだ行われておりませんが、将来のバージョンで対応される予定となっています。</p>
 </div>
-<div class="section" id="id5">
-<h2>3.4. カラムの刈り込み<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>3.6. カラムの刈り込み<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>groongaでは各カラムごとにファイルを分けてデータを格納する「カラムストア方式」が採用されており、groongaストレージエンジンではこの特性を活かすためにテーブルアクセス時に必要なカラムに対してのみアクセスを行う実装を行っています。</p>
 <p>この高速化の仕組みはgroongaストレージエンジン内部で自動的に行われるため、特に設定などを行う必要はありません。</p>
 <p>例えば以下のようにカラムが20個定義されているテーブルが存在するものと仮定します。</p>
@@ -142,8 +248,8 @@ Query OK, 1 row affected (0.04 sec)
 </div>
 <p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
 </div>
-<div class="section" id="id6">
-<h2>3.5. 行カウント高速化<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>3.7. 行カウント高速化<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>COUNT(*)などの行カウントを行う場合と通常のSELECTによるデータ参照を行う場合に対して、従来よりMySQLではストレージエンジンの呼び出しを行う部分(=ストレージエンジンインタフェース)における区別が存在していないため、行数をカウントするだけで良いような場合にもレコードアクセス（SELECTの結果には含まれないデータへのアクセス）が行われる問題があります。</p>
 <p>groongaストレージエンジンの前身であるTritonn(MySQL+Senna)ではこの問題に対して&#8221;2indパッチ&#8221;という不要なレコードアクセスを省略する仕組みを独自に実装してこの性能問題を回避していました。</p>
 <p>これに引き続き、groongaストレージエンジンでも行カウントを高速化するための仕組みを実装しています。</p>
@@ -177,9 +283,11 @@ Query OK, 1 row affected (0.04 sec)
 <li><a class="reference internal" href="#">3. ユーザガイド</a><ul>
 <li><a class="reference internal" href="#id2">3.1. インストール確認</a></li>
 <li><a class="reference internal" href="#id3">3.2. 全文検索の利用方法</a></li>
-<li><a class="reference internal" href="#id4">3.3. ログ出力</a></li>
-<li><a class="reference internal" href="#id5">3.4. カラムの刈り込み</a></li>
-<li><a class="reference internal" href="#id6">3.5. 行カウント高速化</a></li>
+<li><a class="reference internal" href="#id4">3.3. 検索スコアの取得方法</a></li>
+<li><a class="reference internal" href="#id">3.4. レコードIDの取得方法</a></li>
+<li><a class="reference internal" href="#id5">3.5. ログ出力</a></li>
+<li><a class="reference internal" href="#id6">3.6. カラムの刈り込み</a></li>
+<li><a class="reference internal" href="#id7">3.7. 行カウント高速化</a></li>
 </ul>
 </li>
 </ul>

@@ -123,8 +123,8 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 </pre></div>
 </div>
 </div>
-<div class="section" id="ubuntu-10-04-lts-maverick-meerkat">
-<h2>2.5. Ubuntu 10.04 LTS Maverick Meerkat<a class="headerlink" href="#ubuntu-10-04-lts-maverick-meerkat" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ubuntu-10-10-maverick-meerkat">
+<h2>2.5. Ubuntu 10.10 Maverick Meerkat<a class="headerlink" href="#ubuntu-10-10-maverick-meerkat" title="Permalink to this headline">¶</a></h2>
 <p>注: Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ maverick universe
@@ -161,7 +161,7 @@ deb-src http://packages.groonga.org/ubuntu/ maverick universe
 <p>ソースコードからインストールする方法を説明します。パッケージ
 がない環境ではソースコードからインストールすることになります。</p>
 <div class="section" id="mecab">
-<h3>2.8.1. 形態素解析(mecab)について<a class="headerlink" href="#mecab" title="Permalink to this headline">¶</a></h3>
+<h3>2.8.1. 形態素解析(MeCab)について<a class="headerlink" href="#mecab" title="Permalink to this headline">¶</a></h3>
 <p>形態素単位でトークナイズした全文検索索引を使用したい場合は、
 groongaのインストール前にMeCab
 (<a class="reference external" href="http://mecab.sourceforge.net/">http://mecab.sourceforge.net/</a>)をインストールしてください。</p>
@@ -218,7 +218,7 @@ groongaのインストール前にMeCab
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_groonga.so&#39;;
 </pre></div>
 </div>
-<p>以下のように&#8221;SHOW ENGINES&#8221;コマンドで&#8221;groonga&#8221;が表示されればインストール完了です。</p>
+<p>以下のように&#8221;SHOW ENGINES&#8221;コマンドで&#8221;groonga&#8221;が表示されればgroongaストレージエンジンのインストールは完了です。</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
 | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
@@ -231,6 +231,12 @@ groongaのインストール前にMeCab
 | MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
 6 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>続いてUDF(ユーザ定義関数)をインストールします。</p>
+<p>INSERTを行った際にgroongaにより割当てられるレコードIDを取得するためのLAST_INSERT_GRN_ID関数をインストールします。</p>
+<p>以下のようにCREATE FUNCTIONを実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION LAST_INSERT_GRN_ID RETURNS INTEGER soname &#39;ha_groonga.so&#39;;
 </pre></div>
 </div>
 </div>
@@ -262,11 +268,11 @@ groongaのインストール前にMeCab
 <li><a class="reference internal" href="#debian-gnu-linux-squeeze">2.2. Debian GNU/Linux squeeze</a></li>
 <li><a class="reference internal" href="#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
 <li><a class="reference internal" href="#ubuntu-10-04-lts-lucid-lynx">2.4. Ubuntu 10.04 LTS Lucid Lynx</a></li>
-<li><a class="reference internal" href="#ubuntu-10-04-lts-maverick-meerkat">2.5. Ubuntu 10.04 LTS Maverick Meerkat</a></li>
+<li><a class="reference internal" href="#ubuntu-10-10-maverick-meerkat">2.5. Ubuntu 10.10 Maverick Meerkat</a></li>
 <li><a class="reference internal" href="#centos-5">2.6. CentOS 5</a></li>
 <li><a class="reference internal" href="#fedora-13">2.7. Fedora 13</a></li>
 <li><a class="reference internal" href="#id2">2.8. ソースコードからのインストール</a><ul>
-<li><a class="reference internal" href="#mecab">2.8.1. 形態素解析(mecab)について</a></li>
+<li><a class="reference internal" href="#mecab">2.8.1. 形態素解析(MeCab)について</a></li>
 <li><a class="reference internal" href="#id3">2.8.2. ダウンロード</a></li>
 <li><a class="reference internal" href="#id4">2.8.3. 前提条件</a></li>
 <li><a class="reference internal" href="#mysql">2.8.4. MySQLのインストール</a></li>
