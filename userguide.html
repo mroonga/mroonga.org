@@ -190,24 +190,24 @@ Query OK, 1 row affected (0.00 sec)
 4 rows in set (0.00 sec)
 </pre></div>
 </div>
-<p>また直前のINSERTにより割当てられたレコードIDについては、LAST_INSERT_GRN_ID関数により取得することもできます。</p>
+<p>また直前のINSERTにより割当てられたレコードIDについては、last_insert_grn_id関数により取得することもできます。</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO t1 VALUES (null, 100);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; SELECT LAST_INSERT_GRN_ID();
+mysql&gt; SELECT last_insert_grn_id();
 +----------------------+
-| LAST_INSERT_GRN_ID() |
+| last_insert_grn_id() |
 +----------------------+
 |                    5 |
 +----------------------+
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>LAST_INSERT_GRN_ID関数はユーザ定義関数(UDF)としてgroongaストレージエンジンに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION LAST_INSERT_GRN_ID RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
+<p>last_insert_grn_id関数はユーザ定義関数(UDF)としてgroongaストレージエンジンに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
 </pre></div>
 </div>
-<p>ご覧のように_idカラムやLAST_INSERT_GRN_ID関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
+<p>ご覧のように_idカラムやlast_insert_grn_id関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE t1 SET foo = 200 WHERE _id = 5;
 </pre></div>
 </div>
