@@ -222,8 +222,46 @@ mysql&gt; SELECT last_insert_grn_id();
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
 </div>
-<p>現在のgroongaストレージエンジンは開発バージョンということもあり、ログの出力レベルは最大(=DUMP)となっております。</p>
-<p>ログの出力レベルの変更や&#8221;flush logs&#8221;への対応はまだ行われておりませんが、将来のバージョンで対応される予定となっています。</p>
+<p>現在のgroongaストレージエンジンは開発バージョンということもあり、ログのデフォルトの出力レベルは最大(=DUMP)となっております。</p>
+<p>ログの出力レベルは <tt class="docutils literal"><span class="pre">groonga_log_level</span></tt> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+-------+
+| Variable_name     | Value |
++-------------------+-------+
+| groonga_log_level | DUMP  |
++-------------------+-------+
+1 row in set (0.00 sec)
+
+mysql&gt; SET GLOBAL groonga_log_level=NOTICE;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+--------+
+| Variable_name     | Value  |
++-------------------+--------+
+| groonga_log_level | NOTICE |
++-------------------+--------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>設定可能なログレベルは以下の通りです。</p>
+<ul class="simple">
+<li>NONE</li>
+<li>EMERG</li>
+<li>ALERT</li>
+<li>CRIT</li>
+<li>ERROR</li>
+<li>WARNING</li>
+<li>NOTICE</li>
+<li>INFO</li>
+<li>DEBUG</li>
+<li>DUMP</li>
+</ul>
+<p>またFLUSH LOGSでログの再オープンを行うことができます。MySQLサーバを停止せずにログのローテートを行いたいような場合には、以下の手順で実行すると良いでしょう。</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">groonga.log</span></tt> ファイルの名前を変更（OSコマンドのmvなどで）</li>
+<li>MySQLサーバに対して&#8221;FLUSH LOGS&#8221;を実行（mysqlコマンドあるいはmysqladminコマンドにて）</li>
+</ol>
 </div>
 <div class="section" id="id6">
 <h2>3.6. カラムの刈り込み<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
