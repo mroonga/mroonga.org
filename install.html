@@ -52,36 +52,13 @@
 <span id="id1"></span><h1>2. インストールガイド<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
 <p>バイナリパッケージを使用したインストールではgroonga関連パッケージと共にMySQL関連のパッケージもインストールされます。</p>
 <p>インストール環境に既にディストリビューション由来のMySQLパッケージ(ver5.0以下)がインストール済みの場合には事前に削除しておいて下さい。</p>
-<p>aptitudeの場合</p>
-<div class="highlight-none"><div class="highlight"><pre>sudo aptitude remove mysql*
-</pre></div>
-</div>
 <p>yumの場合</p>
 <div class="highlight-none"><div class="highlight"><pre>sudo yum remove mysql*
 </pre></div>
 </div>
 <p>それぞれの環境毎にインストール方法を説明します。</p>
-<div class="section" id="debian-gnu-linux-lenny">
-<h2>2.1. Debian GNU/Linux lenny<a class="headerlink" href="#debian-gnu-linux-lenny" title="Permalink to this headline">¶</a></h2>
-<p>/etc/apt/sources.list.d/backports.list:</p>
-<div class="highlight-none"><div class="highlight"><pre>deb http://backports.debian.org/debian-backports lenny-backports main
-deb-src http://backports.debian.org/debian-backports lenny-backports main
-</pre></div>
-</div>
-<p>/etc/apt/sources.list.d/groonga.list:</p>
-<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ lenny main
-deb-src http://packages.groonga.org/debian/ lenny main
-</pre></div>
-</div>
-<p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
-</pre></div>
-</div>
-</div>
 <div class="section" id="debian-gnu-linux-squeeze">
-<h2>2.2. Debian GNU/Linux squeeze<a class="headerlink" href="#debian-gnu-linux-squeeze" title="Permalink to this headline">¶</a></h2>
+<h2>2.1. Debian GNU/Linux squeeze<a class="headerlink" href="#debian-gnu-linux-squeeze" title="Permalink to this headline">¶</a></h2>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ squeeze main
 deb-src http://packages.groonga.org/debian/ squeeze main
@@ -90,7 +67,21 @@ deb-src http://packages.groonga.org/debian/ squeeze main
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
+% sudo aptitude -V -D -y install mysql-server-groonga
+</pre></div>
+</div>
+</div>
+<div class="section" id="debian-gnu-linux-wheezy">
+<h2>2.2. Debian GNU/Linux wheezy<a class="headerlink" href="#debian-gnu-linux-wheezy" title="Permalink to this headline">¶</a></h2>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ wheezy main
+deb-src http://packages.groonga.org/debian/ wheezy main
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
+% sudo aptitude update
+% sudo aptitude -V -D -y install mysql-server-groonga
 </pre></div>
 </div>
 </div>
@@ -104,7 +95,7 @@ deb-src http://packages.groonga.org/debian/ unstable main
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
+% sudo aptitude -V -D -y install mysql-server-groonga
 </pre></div>
 </div>
 </div>
@@ -119,7 +110,7 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
+% sudo aptitude -V -D -y install mysql-server-groonga
 </pre></div>
 </div>
 </div>
@@ -134,7 +125,7 @@ deb-src http://packages.groonga.org/ubuntu/ maverick universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga libgroonga-tokenizer-mecab
+% sudo aptitude -V -D -y install mysql-server-groonga
 </pre></div>
 </div>
 </div>
@@ -143,16 +134,16 @@ deb-src http://packages.groonga.org/ubuntu/ maverick universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
-% sudo yum install -y mysql-groonga groonga-tokenizer-mecab
+% sudo yum install -y mysql-groonga
 </pre></div>
 </div>
 </div>
-<div class="section" id="fedora-13">
-<h2>2.7. Fedora 13<a class="headerlink" href="#fedora-13" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fedora-14">
+<h2>2.7. Fedora 14<a class="headerlink" href="#fedora-14" title="Permalink to this headline">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
-% sudo yum install -y mysql-groonga groonga-tokenizer-mecab
+% sudo yum install -y mysql-groonga
 </pre></div>
 </div>
 </div>
@@ -251,7 +242,7 @@ groongaのインストール前にMeCab
 <div class="highlight-none"><div class="highlight"><pre>./autogen.sh
 </pre></div>
 </div>
-<p>この後のステップは <a class="reference external" href="#id2">ソースコードからのインストール</a> と同じです。</p>
+<p>この後のステップは <a class="reference internal" href="#id2">ソースコードからのインストール</a> と同じです。</p>
 </div>
 </div>
 
@@ -264,13 +255,13 @@ groongaのインストール前にMeCab
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2. インストールガイド</a><ul>
-<li><a class="reference internal" href="#debian-gnu-linux-lenny">2.1. Debian GNU/Linux lenny</a></li>
-<li><a class="reference internal" href="#debian-gnu-linux-squeeze">2.2. Debian GNU/Linux squeeze</a></li>
+<li><a class="reference internal" href="#debian-gnu-linux-squeeze">2.1. Debian GNU/Linux squeeze</a></li>
+<li><a class="reference internal" href="#debian-gnu-linux-wheezy">2.2. Debian GNU/Linux wheezy</a></li>
 <li><a class="reference internal" href="#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
 <li><a class="reference internal" href="#ubuntu-10-04-lts-lucid-lynx">2.4. Ubuntu 10.04 LTS Lucid Lynx</a></li>
 <li><a class="reference internal" href="#ubuntu-10-10-maverick-meerkat">2.5. Ubuntu 10.10 Maverick Meerkat</a></li>
 <li><a class="reference internal" href="#centos-5">2.6. CentOS 5</a></li>
-<li><a class="reference internal" href="#fedora-13">2.7. Fedora 13</a></li>
+<li><a class="reference internal" href="#fedora-14">2.7. Fedora 14</a></li>
 <li><a class="reference internal" href="#id2">2.8. ソースコードからのインストール</a><ul>
 <li><a class="reference internal" href="#mecab">2.8.1. 形態素解析(MeCab)について</a></li>
 <li><a class="reference internal" href="#id3">2.8.2. ダウンロード</a></li>
@@ -331,7 +322,7 @@ groongaのインストール前にMeCab
     </div>
     <div class="footer">
         &copy; Copyright 2010, groonga project.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
 </html>
