@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ユーザガイド &mdash; groonga storage engine v0.7 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="groonga storage engine v0.7 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li><a href="../index.html">groonga storage engine v0.7 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>ユーザガイド<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>インストール方法についてはこちらを参照して下さい: <tt class="xref doc docutils literal"><span class="pre">install</span></tt></p>
+<div class="section" id="id2">
+<h2>インストール確認<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MySQLサーバの起動停止方法は通常のMySQLと同じです。</p>
+<p>MySQLサーバを起動した上でmysqlコマンドで接続します。パスワードを設定済みの場合は <tt class="docutils literal"><span class="pre">-p</span></tt> オプションでパスワードを指定して下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>shell&gt; mysql -uroot test
+</pre></div>
+</div>
+<p>SHOW ENGINESコマンドでgroongaストレージエンジンがインストールされているかどうかを確認します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
++------------+---------+------------------------------------------------------------+--------------+------+------------+
+| Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
++------------+---------+------------------------------------------------------------+--------------+------+------------+
+| groonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
+| MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
+| CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
+| MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
+| InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
+| MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
++------------+---------+------------------------------------------------------------+--------------+------+------------+
+6 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>上記のように&quot;groonga&quot;ストレージエンジンが見えていればインストールは無事完了しています。</p>
+<p>インストールされていなければ以下のようにINSTALL PLUGINコマンドを実行して下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_groonga.so&#39;;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>動作モード<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>0.7からgroongaストレージエンジンは以下の2つの動作モードのど
+ちらかで動作するようになりました。</p>
+<ul class="simple">
+<li>ストレージモード（0.6以前と同じ動作）</li>
+<li>ラッパーモード</li>
+</ul>
+<p>ストレージモードでは、全文検索機能だけではなくデータストアも
+含めてgroongaの機能を利用します。ストレージエンジンのすべての
+機能をgroongaストレージエンジンで実現するため、groongaが得意
+としている集計操作が高速である、 <tt class="docutils literal"><span class="pre">groonga</span></tt> コマンドで直接デー
+タベースを操作できるという特長があります。</p>
+<p>ストレージモードの構成を図で表すと以下のようになります。
+MyISAMやInnoDBなど既存のストレージエンジンの代わりに利用しま
+す。</p>
+<div class="figure">
+<img alt="ストレージモード" src="userguide/_static/images/storage-mode.png" />
+</div>
+<p>ラッパーモードでは全文検索機能のみgroongaの機能を利用し、デー
+タストアはInnoDBなど既存のストレージエンジンを利用します。ラッ
+パーモードを利用することにより、ストレージエンジンとして多く
+の利用実績のあるInnoDBに全文検索エンジンとして実績のある
+groongaを組み合わせて、高速な全文検索機能付きの信頼性のあるデー
+タベースとして利用できるという特長があります。</p>
+<p>ラッパーモードの構成を図で表すと以下のようになります。全文検
+索関連の処理はgroongaストレージエンジンで処理し、それ以外の処
+理はMyISAMやInnoDBなど既存のストレージエンジンを利用します。
+SQLを処理するSQL Handlerと既存のストレージエンジンの間に位置
+するため、すべてのデータが一度groongaストレージエンジンを通
+ることになります。これを利用して、全文検索用のインデックス作
+成などを透過的に行います。</p>
+<div class="figure">
+<img alt="ラッパーモード" src="userguide/_static/images/wrapper-mode.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ユーザガイド</a><ul>
+<li><a class="reference internal" href="#id2">インストール確認</a></li>
+<li><a class="reference internal" href="#id3">動作モード</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/userguide/index.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li><a href="../index.html">groonga storage engine v0.7 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, groonga project.
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1 で生成しました。
+    </div>
+  </body>
+</html>

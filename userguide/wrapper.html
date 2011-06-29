@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.3.2. ラッパーモード &mdash; groonga storage engine v0.7 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="groonga storage engine v0.7 documentation" href="../index.html" />
+    <link rel="up" title="3. ユーザガイド" href="../userguide.html" />
+    <link rel="next" title="4. リファレンス" href="../reference.html" />
+    <link rel="prev" title="3.3.1. ストレージモード" href="storage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../reference.html" title="4. リファレンス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="storage.html" title="3.3.1. ストレージモード"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">groonga storage engine v0.7 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" accesskey="U">3. ユーザガイド</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>3.3.2. ラッパーモード<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>ここでは groonga ストレージエンジンにおけるラッパーモードの利用方法を説明します。</p>
+<div class="section" id="id2">
+<h2>3.3.2.1. ラッパーモードの利用方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで groonga ストレージエンジンが動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> のように指定するようになっています。</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">現在のところ、ラッパーモードではテーブルに必ずプライマリーキーを設定する必要があります。ストレージモードはこの限りではありません。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>3.3.2.2. 全文検索の利用方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>それでは早速 groonga ストレージエンジンのラッパーモードを利用して、テーブルを1つ作成してみましょう。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE weather_forecasts (
+    -&gt;   id INT PRIMARY KEY,
+    -&gt;   content VARCHAR(255),
+    -&gt;   FULLTEXT INDEX (content)
+    -&gt; ) ENGINE = groonga COMMENT = &#39;engine &quot;innodb&quot;&#39; DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.30 sec)
+</pre></div>
+</div>
+<p>次に INSERT でデータを投入してみましょう。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO weather_forecasts VALUES(1, &quot;明日の天気は晴れでしょう。&quot;);
+Query OK, 1 row affected (0.04 sec)
+
+mysql&gt; INSERT INTO weather_forecasts VALUES(2, &quot;明日の天気は雨でしょう。&quot;);
+Query OK, 1 row affected (0.04 sec)
+</pre></div>
+</div>
+<p>データの投入が終了したら、全文検索を実行してみます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM weather_forecasts WHERE MATCH(content) AGAINST(&quot;晴れ&quot;);
++----+-----------------------------------------+
+| id | content                                 |
++----+-----------------------------------------+
+|  1 | 明日の天気は晴れでしょう。 |
++----+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>お、検索できましたね。</p>
+</div>
+<div class="section" id="id4">
+<h2>3.3.2.3. 検索スコアの取得方法<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
+<p>ストレージモードでは、検索スコアの取得を行うために <tt class="docutils literal"><span class="pre">_score</span></tt> という名前の仮想カラムを作成していました。一方、ラッパーモードではこの必要がありません。その代わりに WHERE 句へ指定したものと同じ match against を ORDER BY や SELECT 部分に指定することで、そのマッチの検索スコアを利用することができるようになっています。これは MySQL の全文検索機能における標準的な検索スコアの取得方法にならったものです（ <a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 リファレンスマニュアル :: 11 関数と演算子 :: 11.7 全文検索関数</a> ）。</p>
+<p>それでは、実際に検索スコアを利用してみることにしましょう。まずはテーブルを作成します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE messages (
+    -&gt;   id INT PRIMARY KEY,
+    -&gt;   message TEXT,
+    -&gt;   FULLTEXT INDEX (message)
+    -&gt; ) ENGINE = groonga COMMENT = &#39;engine &quot;innodb&quot;&#39; DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.28 sec)
+</pre></div>
+</div>
+<p>次に、検索対象となるデータを挿入します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt;  INSERT INTO messages VALUES(1, &quot;aa ii uu ee oo&quot;);
+Query OK, 1 row affected (0.04 sec)
+
+mysql&gt;  INSERT INTO messages VALUES(2, &quot;aa ii ii ii oo&quot;);
+Query OK, 1 row affected (0.04 sec)
+
+mysql&gt;  INSERT INTO messages VALUES(3, &quot;hoge huga hehe&quot;);
+Query OK, 1 row affected (0.05 sec)
+
+mysql&gt;  INSERT INTO messages VALUES(4, &quot;foo bar baz&quot;);
+Query OK, 1 row affected (0.04 sec)
+</pre></div>
+</div>
+<p>データが挿入し終わったので、実際に検索スコアを利用した検索を行なってみます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM messages WHERE MATCH(message) AGAINST(&quot;ii&quot;) ORDER BY MATCH(message) AGAINST(&quot;ii&quot;) DESC;
++----+----------------+
+| id | message        |
++----+----------------+
+|  2 | aa ii ii ii oo |
+|  1 | aa ii uu ee oo |
++----+----------------+
+2 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>検索対象の文字列 <tt class="docutils literal"><span class="pre">ii</span></tt> をより多く含む、すなわち検索スコアの高い <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">2</span></tt> のメッセージが上に来ていることが確認できます。</p>
+<p>ここで、SELECT 句に match against を記述することで、検索スコアの値自体を検索結果に含めることも可能です。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH(message) AGAINST(&quot;ii&quot;) FROM messages WHERE MATCH(message) AGAINST(&quot;ii&quot;) ORDER BY MATCH(message) AGAINST(&quot;ii&quot;) DESC;
++----+----------------+------------------------------+
+| id | message        | MATCH(message) AGAINST(&quot;ii&quot;) |
++----+----------------+------------------------------+
+|  2 | aa ii ii ii oo |                            3 |
+|  1 | aa ii uu ee oo |                            1 |
++----+----------------+------------------------------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>属性名を変更したい場合は <tt class="docutils literal"><span class="pre">AS</span></tt> を使って下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH(message) AGAINST(&quot;ii&quot;) AS score FROM messages WHERE MATCH(message) AGAINST(&quot;ii&quot;) ORDER BY MATCH(message) AGAINST(&quot;ii&quot;) DESC;
++----+----------------+-------+
+| id | message        | score |
++----+----------------+-------+
+|  2 | aa ii ii ii oo |     3 |
+|  1 | aa ii uu ee oo |     1 |
++----+----------------+-------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id">
+<h2>3.3.2.4. レコードIDの取得方法<a class="headerlink" href="#id" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ストレージモードでは <tt class="docutils literal"><span class="pre">_id</span></tt> という名前のカラムを作成することにより groonga 内部でのレコード ID 値を取得することが可能となっていました。</p>
+<p>他方、ラッパーモードでは groonga 内部でのレコード ID 値を取得することができません。これは「レコードを一意に識別するためにはより MySQL の作法に従ったプライマリキーを利用すべきである」という設計方針によるものです。</p>
+</div>
+<div class="section" id="id5">
+<h2>3.3.2.5. ログ出力<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groongaストレージエンジンではデフォルトでログの出力を行うようになっています。</p>
+<p>ログファイルはMySQLのデータディレクトリ（/var/lib/mysql/ など）直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
+<p>以下はログの出力例です。</p>
+<div class="highlight-none"><div class="highlight"><pre>2011-06-24 11:11:31.282121|n|6bdea740|groonga-storage-engine started.
+2011-06-24 11:11:31.282154|n|6bdea740|log level is &#39;NOTICE&#39;
+2011-06-24 11:30:58.485508|n|3cda6700|DDL:table_create x
+2011-06-24 11:31:05.131690|n|cee84700|DDL:obj_remove x
+2011-06-24 13:37:31.692572|n|86ceb700|DDL:column_create t1_0001 c2
+2011-06-24 13:37:31.781556|n|86ceb700|DDL:set_source t1_0001.c2 t1.c2
+2011-06-24 13:49:27.767387|n|5cd1f700|DDL:obj_remove t1_0001
+2011-06-24 14:33:55.867480| |8cd59700|96a20c50|:18446744072478952540 filter(2)
+</pre></div>
+</div>
+<p>ログのデフォルトの出力レベルは NOTICE （必要な情報のみ出力。デバッグ情報などは出力しない）となっています。</p>
+<p>ログの出力レベルは <tt class="docutils literal"><span class="pre">groonga_log_level</span></tt> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+--------+
+| Variable_name     | Value  |
++-------------------+--------+
+| groonga_log_level | NOTICE |
++-------------------+--------+
+1 row in set (0.00 sec)
+
+mysql&gt; SET GLOBAL groonga_log_level=DUMP;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+-------+
+| Variable_name     | Value |
++-------------------+-------+
+| groonga_log_level | DUMP  |
++-------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>設定可能なログレベルは以下の通りです。</p>
+<ul class="simple">
+<li>NONE</li>
+<li>EMERG</li>
+<li>ALERT</li>
+<li>CRIT</li>
+<li>ERROR</li>
+<li>WARNING</li>
+<li>NOTICE</li>
+<li>INFO</li>
+<li>DEBUG</li>
+<li>DUMP</li>
+</ul>
+<p>またFLUSH LOGSでログの再オープンを行うことができます。MySQLサーバを停止せずにログのローテートを行いたいような場合には、以下の手順で実行すると良いでしょう。</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">groonga.log</span></tt> ファイルの名前を変更（OSコマンドのmvなどで）</li>
+<li>MySQLサーバに対して&quot;FLUSH LOGS&quot;を実行（mysqlコマンドあるいはmysqladminコマンドにて）</li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h2>3.3.2.6. 注意点<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>0.7でのラッパーモードの実装はMySQLのストレージエンジンAPIを実直に利用したものになっています。そのため、「全文検索結果で結果レコードを絞り込むことにより不要なレコードアクセスを減らし、全文検索結果を用いた高速な検索を実現する」ということができません。これはMySQLのストレージエンジンAPIの制限なのですが、0.8では解消し、高速に検索できるようにする予定です。</p>
+<p>0.7での動作と0.8で予定している動作の概要は以下の通りです。</p>
+<div class="section" id="id7">
+<h3>3.3.2.6.1. 0.7での動作<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>0.7ではMySQLのストレージエンジンAPIに素直に従った実装になってるため、全文検索結果を有効に活用しきれていません。MySQLのストレージエンジンAPIに従った場合の動作を以下に示します。</p>
+<p>サンプルクエリは <tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">users</span> <span class="pre">WHERE</span> <span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span> <span class="pre">AND</span> <span class="pre">MATCH(description)</span> <span class="pre">AGAINST(&quot;趣味&quot;);</span></tt> とします。</p>
+<ol class="arabic simple">
+<li>MySQLはクエリのうち全文検索条件の部分「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS(&quot;趣味&quot;)</span></tt> 」だけで検索するようにgroongaストレージエンジンに依頼します。</li>
+<li>groongaストレージエンジンはMySQLから渡された条件で全文検索を行います。</li>
+<li>MySQLはクエリから全文検索条件の部分「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS(&quot;趣味&quot;)</span></tt> 」を取り除いたクエリ「 <tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">users</span> <span class="pre">WHERE</span> <span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span></tt> 」で検索するようgroongaストレージエンジンに依頼します。</li>
+<li>groongaストレージエンジンはMySQLから渡された条件で検索するようにラップしているストレージエンジンに依頼します。</li>
+<li>MySQLはgroongaストレージエンジンにマッチしたレコードを順に返すように要求します。</li>
+<li>groongaストレージエンジンはラップしているストレージエンジンからレコードを順に取り出してMySQLに返します。このとき返すレコードは「 <tt class="docutils literal"><span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span></tt> 」にマッチしたレコードです。「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS</span> <span class="pre">(&quot;趣味&quot;)</span></tt> 」での絞り込みは行われていません。</li>
+<li>MySQLはgroongaストレージエンジンから返ってきたそれぞれのレコードについて、全文検索結果のスコアを問い合せます。</li>
+<li>groongaストレージエンジンは各レコードについて「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS</span> <span class="pre">(&quot;趣味&quot;)</span></tt> 」がヒットしていればスコアを返し、そうでなければ「ヒットしなかったという特別なスコア」を返します。</li>
+<li>MySQLはgroongaストレージエンジンが返したスコアを確認し、「ヒットしなかったという特別なスコア」が返されたレコードを検索結果から除去します。この時点ではじめて全文検索結果がレコードの絞り込みに使われます。</li>
+<li>MySQLはgroongaストレージエンジンが返したレコード（= ラップしているストレージエンジンが返したレコード）から、「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS</span> <span class="pre">(&quot;趣味&quot;)</span></tt> 」にヒットしなかったレコードを削除したものをクライアントに返します。</li>
+</ol>
+<p>このうち、6.のところで全文検索結果を反映したレコードのみを返すことができれば余計なレコードアクセスが減り、より高いパフォーマンスをだせます。しかし、MySQLのストレージエンジンAPIでは「全文検索以外の条件でレコードを取得した後に全文検索結果を参照してレコードをフィルターする」という動作のためせっかくのgroongaの高速な全文検索機能を活かしきれていません。</p>
+</div>
+<div class="section" id="id8">
+<h3>3.3.2.6.2. 0.8での動作<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>0.8ではMySQLのストレージエンジンAPIの制限を回避し、全文検索結果を有効に活用した高速な検索を実現する方法を実装する予定です。予定している実装方法を以下に示します。</p>
+<p>サンプルクエリは <tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">users</span> <span class="pre">WHERE</span> <span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span> <span class="pre">AND</span> <span class="pre">MATCH(description)</span> <span class="pre">AGAINST(&quot;趣味&quot;);</span></tt> とします。</p>
+<ol class="arabic simple">
+<li>MySQLはクエリのうち全文検索条件の部分「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS(&quot;趣味&quot;)</span></tt> 」だけで検索するようにgroongaストレージエンジンに依頼します。</li>
+<li>groongaストレージエンジンはMySQLから渡された条件で全文検索を行います。</li>
+<li>MySQLはクエリから全文検索条件の部分「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS(&quot;趣味&quot;)</span></tt> 」を取り除いたクエリ「 <tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">users</span> <span class="pre">WHERE</span> <span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span></tt> 」で検索するようgroongaストレージエンジンに依頼します。</li>
+<li>groongaストレージエンジンはMySQLから渡されたクエリに全文検索でヒットしたレコードで絞り込む条件「 <tt class="docutils literal"><span class="pre">id</span> <span class="pre">IN</span> <span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">...)</span></tt> 」を追加したクエリ「 <tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">users</span> <span class="pre">WHERE</span> <span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span> <span class="pre">AND</span> <span class="pre">id</span> <span class="pre">IN</span> <span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">...)</span></tt> 」で検索するよう、ラップしているストレージエンジンに依頼します。</li>
+<li>MySQLはgroongaストレージエンジンにレコードを順に返すように要求します。</li>
+<li>groongaストレージエンジンはラップしているストレージエンジンからレコードを順に取り出してMySQLに返します。このとき返すレコードは「 <tt class="docutils literal"><span class="pre">users.age</span> <span class="pre">&gt;=</span> <span class="pre">20</span> <span class="pre">AND</span> <span class="pre">id</span> <span class="pre">IN</span> <span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">...)</span></tt> 」にマッチしたレコードなので、「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS</span> <span class="pre">(&quot;趣味&quot;)</span></tt> 」での絞り込み結果も反映されています。</li>
+<li>MySQLはgroongaストレージエンジンから返ってきたそれぞれのレコードについて、全文検索結果のスコアを問い合せます。</li>
+<li>groongaストレージエンジンは各レコードについて「 <tt class="docutils literal"><span class="pre">MATCH(description)</span> <span class="pre">AGAINS</span> <span class="pre">(&quot;趣味&quot;)</span></tt> 」で検索した結果のスコアを返します。</li>
+<li>MySQLはgroongaストレージエンジンが返したレコードをクライアントに返します。</li>
+</ol>
+<p>ポイントは4.の「全文検索でヒットしたレコードで絞り込む条件」を追加している部分です。これで「全文検索条件での絞り込みで無駄なレコードアクセスを減らすことができない」というMySQLのストレージエンジンAPIの制限を回避することができます。これにより、全文検索結果を用いて無駄なレコードアクセスを減らすことができるため、高速な全文検索を実現できます。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.3.2. ラッパーモード</a><ul>
+<li><a class="reference internal" href="#id2">3.3.2.1. ラッパーモードの利用方法</a></li>
+<li><a class="reference internal" href="#id3">3.3.2.2. 全文検索の利用方法</a></li>
+<li><a class="reference internal" href="#id4">3.3.2.3. 検索スコアの取得方法</a></li>
+<li><a class="reference internal" href="#id">3.3.2.4. レコードIDの取得方法</a></li>
+<li><a class="reference internal" href="#id5">3.3.2.5. ログ出力</a></li>
+<li><a class="reference internal" href="#id6">3.3.2.6. 注意点</a><ul>
+<li><a class="reference internal" href="#id7">3.3.2.6.1. 0.7での動作</a></li>
+<li><a class="reference internal" href="#id8">3.3.2.6.2. 0.8での動作</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="storage.html"
+                        title="前の章へ">3.3.1. ストレージモード</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../reference.html"
+                        title="次の章へ">4. リファレンス</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/userguide/wrapper.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../reference.html" title="4. リファレンス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="storage.html" title="3.3.1. ストレージモード"
+             >前へ</a> |</li>
+        <li><a href="../index.html">groonga storage engine v0.7 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" >3. ユーザガイド</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1 で生成しました。
+    </div>
+  </body>
+</html>

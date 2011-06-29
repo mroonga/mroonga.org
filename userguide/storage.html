@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.3.1. ストレージモード &mdash; groonga storage engine v0.7 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="groonga storage engine v0.7 documentation" href="../index.html" />
+    <link rel="up" title="3. ユーザガイド" href="../userguide.html" />
+    <link rel="next" title="3.3.2. ラッパーモード" href="wrapper.html" />
+    <link rel="prev" title="3. ユーザガイド" href="../userguide.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="wrapper.html" title="3.3.2. ラッパーモード"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../userguide.html" title="3. ユーザガイド"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">groonga storage engine v0.7 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" accesskey="U">3. ユーザガイド</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>3.3.1. ストレージモード<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>ここでは groonga ストレージエンジンにおけるストレージモードの利用方法を説明します。</p>
+<div class="section" id="id2">
+<h2>3.3.1.1. 全文検索の利用方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>インストールが確認できたら、テーブルを1つ作成してみましょう。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (
+     &gt;   c1 INT PRIMARY KEY,
+     &gt;   c2 VARCHAR(255),
+     &gt;   FULLTEXT INDEX (c2)
+     &gt; ) ENGINE = groonga DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.22 sec)
+</pre></div>
+</div>
+<p>INSERTでデータを投入してみましょう。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO t1 VALUES(1, &quot;明日の天気は晴れでしょう。&quot;);
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; INSERT INTO t1 VALUES(2, &quot;明日の天気は雨でしょう。&quot;);
+Query OK, 1 row affected (0.04 sec)
+</pre></div>
+</div>
+<p>全文検索を実行してみます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;晴れ&quot;);
++----+-----------------------------------------+
+| c1 | c2                                      |
++----+-----------------------------------------+
+|  1 | 明日の天気は晴れでしょう。 |
++----+-----------------------------------------+
+1 row in set (0.02 sec)
+</pre></div>
+</div>
+<p>おぉぉー。検索できましたね。</p>
+</div>
+<div class="section" id="id3">
+<h2>3.3.1.2. 検索スコアの取得方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
+<p>検索スコアを取得するためには、テーブル定義時に <tt class="docutils literal"><span class="pre">_score</span></tt> という名前のカラムを作成して下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (
+     &gt;   c1 INT PRIMARY KEY,
+     &gt;   c2 TEXT,
+     &gt;   _score FLOAT,
+     &gt;   FULLTEXT INDEX (c2)
+     &gt; ) ENGINE = groonga DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.22 sec)
+</pre></div>
+</div>
+<p>_scoreカラムのデータ型はFLOATまたはDOUBLEである必要があります。</p>
+<p>INSERTでテーブルにレコードを追加してみましょう。_scoreカラムは仮想カラムとして実装されており、更新は行えません。更新対象から外すか、値に <tt class="docutils literal"><span class="pre">null</span></tt> を使用する必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; insert into t1 values(1, &quot;aa ii uu ee oo&quot;, null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into t1 values(2, &quot;aa ii ii ii oo&quot;, null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into t1 values(3, &quot;dummy&quot;, null);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>全文検索(MATCH...AGAINSTによる検索)を実行した場合、_scoreカラムを通じて検索スコアを取得できます。_scoreカラムをORDER BYに指定することで結果のソートも行うことができます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from t1 where match(c2) against(&quot;ii&quot;) order by _score desc;
++----+----------------+--------+
+| c1 | c2             | _score |
++----+----------------+--------+
+|  2 | aa ii ii ii oo |      3 |
+|  1 | aa ii uu ee oo |      1 |
++----+----------------+--------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id">
+<h2>3.3.1.3. レコードIDの取得方法<a class="headerlink" href="#id" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groongaではテーブルにレコードを追加した際にレコードを一意に識別するための番号が割当てられます。</p>
+<p>groongaストレージエンジンではアプリケーションの開発を容易にするため、このレコードIDをSQLで取得できるようになっています。</p>
+<p>レコードIDを取得するためには、テーブル定義時に <tt class="docutils literal"><span class="pre">_id</span></tt> という名前のカラムを作成して下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE t1 (
+    -&gt;   _id INT,
+    -&gt;   foo INT,
+    -&gt;   UNIQUE KEY (_id) USING HASH
+    -&gt; ) ENGINE = groonga;
+Query OK, 0 rows affected (0.01 sec)
+</pre></div>
+</div>
+<p>_idカラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
+<p>また_idカラムにはインデックスを作成することが可能ですが、HASH形式である必要があります。</p>
+<p>INSERTでテーブルにレコードを追加してみましょう。_idカラムは仮想カラムとして実装されており、また_idの値であるレコードIDはgroongaにより割当てられるため、SQLによる更新時に値を指定することはできません。
+更新対象から外すか、値に <tt class="docutils literal"><span class="pre">null</span></tt> を使用する必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>レコードIDを取得するには、_idカラムを含むようにしてSELECTを行います。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from t1;
++------+------+
+| _id  | foo  |
++------+------+
+|    1 |  100 |
+|    2 |  100 |
+|    3 |  100 |
+|    4 |  100 |
++------+------+
+4 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>また直前のINSERTにより割当てられたレコードIDについては、last_insert_grn_id関数により取得することもできます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO t1 VALUES (null, 100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT last_insert_grn_id();
++----------------------+
+| last_insert_grn_id() |
++----------------------+
+|                    5 |
++----------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>last_insert_grn_id関数はユーザ定義関数(UDF)としてgroongaストレージエンジンに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
+</pre></div>
+</div>
+<p>ご覧のように_idカラムやlast_insert_grn_id関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE t1 SET foo = 200 WHERE _id = 5;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3.3.1.4. ログ出力<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groongaストレージエンジンではデフォルトでログの出力を行うようになっています。</p>
+<p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
+<p>以下はログの出力例です。</p>
+<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|groonga-storage-engine started.
+2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
+2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
+</pre></div>
+</div>
+<p>ログのデフォルトの出力レベルはNOTICE（必要な情報のみ出力。デバッグ情報などは出力しない）となっております。</p>
+<p>ログの出力レベルは <tt class="docutils literal"><span class="pre">groonga_log_level</span></tt> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+--------+
+| Variable_name     | Value  |
++-------------------+--------+
+| groonga_log_level | NOTICE |
++-------------------+--------+
+1 row in set (0.00 sec)
+
+mysql&gt; SET GLOBAL groonga_log_level=DUMP;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+-------+
+| Variable_name     | Value |
++-------------------+-------+
+| groonga_log_level | DUMP  |
++-------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>設定可能なログレベルは以下の通りです。</p>
+<ul class="simple">
+<li>NONE</li>
+<li>EMERG</li>
+<li>ALERT</li>
+<li>CRIT</li>
+<li>ERROR</li>
+<li>WARNING</li>
+<li>NOTICE</li>
+<li>INFO</li>
+<li>DEBUG</li>
+<li>DUMP</li>
+</ul>
+<p>またFLUSH LOGSでログの再オープンを行うことができます。MySQLサーバを停止せずにログのローテートを行いたいような場合には、以下の手順で実行すると良いでしょう。</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">groonga.log</span></tt> ファイルの名前を変更（OSコマンドのmvなどで）</li>
+<li>MySQLサーバに対して&quot;FLUSH LOGS&quot;を実行（mysqlコマンドあるいはmysqladminコマンドにて）</li>
+</ol>
+</div>
+<div class="section" id="id5">
+<h2>3.3.1.5. カラムの刈り込み<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groongaでは各カラムごとにファイルを分けてデータを格納する「カラムストア方式」が採用されており、groongaストレージエンジンではこの特性を活かすためにテーブルアクセス時に必要なカラムに対してのみアクセスを行う実装を行っています。</p>
+<p>この高速化の仕組みはgroongaストレージエンジン内部で自動的に行われるため、特に設定などを行う必要はありません。</p>
+<p>例えば以下のようにカラムが20個定義されているテーブルが存在するものと仮定します。</p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
+  c1 INT PRIMARY KEY AUTO_INCREMENT,
+  c2 INT,
+  c3 INT,
+  ...
+  c11 VARCHAR(20),
+  c12 VARCHAR(20),
+  ...
+  c20 DATETIME
+) ENGINE = InnoDB DEFAULT CHARSET utf8;
+</pre></div>
+</div>
+<p>この時、以下のようなSELECT文が発行される場合、groongaストレージエンジンではSELECT句およびWHERE句で参照しているカラムに対してのみデータの読み取りを行ってSQL文を処理します（内部的に不要なカラムに対してはアクセスしません）。</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
+</pre></div>
+</div>
+<p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
+</div>
+<div class="section" id="id6">
+<h2>3.3.1.6. 行カウント高速化<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>COUNT(*)などの行カウントを行う場合と通常のSELECTによるデータ参照を行う場合に対して、従来よりMySQLではストレージエンジンの呼び出しを行う部分(=ストレージエンジンインタフェース)における区別が存在していないため、行数をカウントするだけで良いような場合にもレコードアクセス（SELECTの結果には含まれないデータへのアクセス）が行われる問題があります。</p>
+<p>groongaストレージエンジンの前身であるTritonn(MySQL+Senna)ではこの問題に対して&quot;2indパッチ&quot;という不要なレコードアクセスを省略する仕組みを独自に実装してこの性能問題を回避していました。</p>
+<p>これに引き続き、groongaストレージエンジンでも行カウントを高速化するための仕組みを実装しています。</p>
+<p>例えば以下のSELECT文では不要なカラムデータの読み取りは省略され、必要最小限のコストで行カウントの結果を返すことができます。</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;);
+</pre></div>
+</div>
+<p>行カウント高速化の処理が行われたかどうかはステータス変数で確認することもできます。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; show status like &#39;groonga_count_skip&#39;;
++--------------------+-------+
+| Variable_name      | Value |
++--------------------+-------+
+| groonga_count_skip | 1     |
++--------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>行カウント高速化の処理が行われる度に <tt class="docutils literal"><span class="pre">groonga_count_skip</span></tt> ステータス変数がインクリメントされます。</p>
+<p>備考：この高速化機能はインデックスを用いて実装されています。現在のところインデックスアクセスのみでレコードが特定できるパタンでのみ有効に機能します。</p>
+</div>
+<div class="section" id="order-by-limit">
+<h2>3.3.1.7. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#order-by-limit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
+<p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
+<p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
+<p>groongaストレージエンジンでも ORDER BY LIMIT を高速化するための仕組みを実装しています。</p>
+<p>例えば以下のSELECT文では ORDER BY LIMIT は、groonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
+</pre></div>
+</div>
+<p>ORDER BY LIMIT 高速化の処理が行われたかどうかはステータス変数で確認することもできます。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; show status like &#39;groonga_fast_order_limit&#39;;
++--------------------------+-------+
+| Variable_name            | Value |
++--------------------------+-------+
+| groonga_fast_order_limit | 1     |
++--------------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>ORDER BY LIMIT 高速化の処理が行われる度に <tt class="docutils literal"><span class="pre">groonga_fast_order_limit</span></tt> ステータス変数がインクリメントされます。</p>
+<p>備考：この高速化機能は、「select ... match against order by _score desc limit X, Y」を狙い撃ちした高速化で、現在のところ以下の条件が成立した場合に機能します。</p>
+<ul class="simple">
+<li>where句がmatch...againstのみ</li>
+<li>joinしていない</li>
+<li>limitの指定がある</li>
+<li>order byの指定がカラムである(_score、_id含む)</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.3.1. ストレージモード</a><ul>
+<li><a class="reference internal" href="#id2">3.3.1.1. 全文検索の利用方法</a></li>
+<li><a class="reference internal" href="#id3">3.3.1.2. 検索スコアの取得方法</a></li>
+<li><a class="reference internal" href="#id">3.3.1.3. レコードIDの取得方法</a></li>
+<li><a class="reference internal" href="#id4">3.3.1.4. ログ出力</a></li>
+<li><a class="reference internal" href="#id5">3.3.1.5. カラムの刈り込み</a></li>
+<li><a class="reference internal" href="#id6">3.3.1.6. 行カウント高速化</a></li>
+<li><a class="reference internal" href="#order-by-limit">3.3.1.7. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../userguide.html"
+                        title="前の章へ">3. ユーザガイド</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="wrapper.html"
+                        title="次の章へ">3.3.2. ラッパーモード</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/userguide/storage.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="wrapper.html" title="3.3.2. ラッパーモード"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../userguide.html" title="3. ユーザガイド"
+             >前へ</a> |</li>
+        <li><a href="../index.html">groonga storage engine v0.7 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" >3. ユーザガイド</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1 で生成しました。
+    </div>
+  </body>
+</html>
