@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. リファレンス &mdash; groonga storage engine v0.6 documentation</title>
+    <title>4. リファレンス &mdash; groonga storage engine v0.7 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.6',
+        VERSION:     '0.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,24 +22,25 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="groonga storage engine v0.6 documentation" href="index.html" />
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="top" title="groonga storage engine v0.7 documentation" href="index.html" />
     <link rel="next" title="5. 開発者向け情報" href="developer.html" />
-    <link rel="prev" title="3. ユーザガイド" href="userguide.html" /> 
+    <link rel="prev" title="3.3.2. ラッパーモード" href="userguide/wrapper.html" /> 
   </head>
   <body>
     <div class="related">
-      <h3>Navigation</h3>
+      <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
         <li class="right" >
           <a href="developer.html" title="5. 開発者向け情報"
-             accesskey="N">next</a> |</li>
+             accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="userguide.html" title="3. ユーザガイド"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">groonga storage engine v0.6 documentation</a> &raquo;</li> 
+          <a href="userguide/wrapper.html" title="3.3.2. ラッパーモード"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="index.html">groonga storage engine v0.7 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,38 +50,47 @@
           <div class="body">
             
   <div class="section" id="id1">
-<h1>4. リファレンス<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>4. リファレンス<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="sql">
-<h2>4.1. 利用可能なSQLコマンドの一覧<a class="headerlink" href="#sql" title="Permalink to this headline">¶</a></h2>
+<h2>4.1. 利用可能なSQLコマンドの一覧<a class="headerlink" href="#sql" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>groongaストレージエンジンのソースコードの以下のディレクトリにSQL実行サンプルファイルがたくさんあります。</p>
 <div class="highlight-none"><div class="highlight"><pre>test/sql/t
 </pre></div>
 </div>
 <p>ファイル一覧</p>
-<div class="highlight-none"><div class="highlight"><pre>binlog.test             drop_table.test               select_all.test
-btree.test              fulltext.test                 select_pkey.test
-count_performance.test  hash.test                     select_secondary_key.test
-create_table.test       information_schema.test       show_create_table.test
-delete.test             insert.test                   show_table_status.test
-drop_database.test      order_limit_performance.test  update.test
+<div class="highlight-none"><div class="highlight"><pre>auto_increment.test        insert.test
+binlog.test                insert_wrapper.test
+btree.test                 last_insert_grn_id.test
+count_performance.test     log_level.test
+create_table.test          order_limit_performance.test
+create_table_wrapper.test  replace.test
+delete.test                select_all.test
+delete_wrapper.test        select_pkey.test
+drop_database.test         select_secondary_key.test
+drop_table.test            show_create_table.test
+flush_logs.test            show_table_status.test
+fulltext.test              tinyint.test
+fulltext_wrapper.test      update.test
+hash.test                  update_wrapper.test
+information_schema.test
 </pre></div>
 </div>
 <p>ここに記述されているSQL文が現在利用可能なSQL文となります。</p>
 <p>※逆に言うとここに記述されていないSQL文の動作はサポートしておりません。</p>
 </div>
 <div class="section" id="id2">
-<h2>4.2. サーバ変数の一覧<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>4.2. サーバ変数の一覧<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今のところ独自に追加されたサーバ変数はありません。</p>
 </div>
 <div class="section" id="id3">
-<h2>4.3. ステータス変数の一覧<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>4.3. ステータス変数の一覧<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>独自に追加されたステータス変数を説明します。</p>
 <div class="section" id="groonga-count-skip">
-<h3>4.3.1. groonga_count_skip<a class="headerlink" href="#groonga-count-skip" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.1. groonga_count_skip<a class="headerlink" href="#groonga-count-skip" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>行カウント高速化機能が動作する度にカウントアップされます。スキーマ/SQLチューニングを行って行カウント高速化機能を利用できるようにした際の動作確認に利用できます。</p>
 </div>
 <div class="section" id="groonga-fast-order-limit">
-<h3>4.3.2. groonga_fast_order_limit<a class="headerlink" href="#groonga-fast-order-limit" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.2. groonga_fast_order_limit<a class="headerlink" href="#groonga-fast-order-limit" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ORDER BY LIMIT 高速化機能が動作する度にカウントアップされます。スキーマ/SQLチューニングを行って ORDER BY LIMIT 高速化機能を利用できるようにした際の動作確認に利用できます。</p>
 </div>
 </div>
@@ -92,7 +102,7 @@ drop_database.test      order_limit_performance.test  update.test
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">4. リファレンス</a><ul>
 <li><a class="reference internal" href="#sql">4.1. 利用可能なSQLコマンドの一覧</a></li>
@@ -106,27 +116,27 @@ drop_database.test      order_limit_performance.test  update.test
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="userguide.html"
-                        title="previous chapter">3. ユーザガイド</a></p>
-  <h4>Next topic</h4>
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="userguide/wrapper.html"
+                        title="前の章へ">3.3.2. ラッパーモード</a></p>
+  <h4>次のトピックへ</h4>
   <p class="topless"><a href="developer.html"
-                        title="next chapter">5. 開発者向け情報</a></p>
-  <h3>This Page</h3>
+                        title="次の章へ">5. 開発者向け情報</a></p>
+  <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="sources/reference.txt"
-           rel="nofollow">Show Source</a></li>
+           rel="nofollow">ソースコードを表示</a></li>
   </ul>
 <div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+  <h3>クイック検索</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" size="18" />
-      <input type="submit" value="Go" />
+      <input type="submit" value="検索" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
     <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
+    モジュール、クラス、または関数名を入力してください
     </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
@@ -135,23 +145,23 @@ drop_database.test      order_limit_performance.test  update.test
       <div class="clearer"></div>
     </div>
     <div class="related">
-      <h3>Navigation</h3>
+      <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
         <li class="right" >
           <a href="developer.html" title="5. 開発者向け情報"
-             >next</a> |</li>
+             >次へ</a> |</li>
         <li class="right" >
-          <a href="userguide.html" title="3. ユーザガイド"
-             >previous</a> |</li>
-        <li><a href="index.html">groonga storage engine v0.6 documentation</a> &raquo;</li> 
+          <a href="userguide/wrapper.html" title="3.3.2. ラッパーモード"
+             >前へ</a> |</li>
+        <li><a href="index.html">groonga storage engine v0.7 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2010, groonga project.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2009-2011, groonga project.
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1 で生成しました。
     </div>
   </body>
 </html>
