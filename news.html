@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>最新ニュース &mdash; groonga storage engine v1.0.0 documentation</title>
+    <title>最新ニュース &mdash; groonga storage engine v1.0.1 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0.0',
+        VERSION:     '1.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
-    <link rel="top" title="groonga storage engine v1.0.0 documentation" href="index.html" /> 
+    <link rel="top" title="groonga storage engine v1.0.1 documentation" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -32,7 +32,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="index.html">groonga storage engine v1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">groonga storage engine v1.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -43,11 +43,51 @@
             
   <div class="section" id="id1">
 <h1>最新ニュース<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="release-1-0-0">
-<span id="id2"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>初回リリースから約1年経って、初のメジャーリリース！</p>
+<div class="section" id="release-1-0-1">
+<span id="id2"></span><h2>1.0.1 リリース - 2011/10/29<a class="headerlink" href="#release-1-0-1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>位置情報検索の対応を強化とストレージモードでの動的なインデックス変更の対応強化が目玉のリリース。</p>
 <div class="section" id="id3">
 <h3>改良<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>[ストレージモード][ラッパーモード] <cite>flush tables</cite> によるデータベースの再オープンに対応。</li>
+<li>[ラッパーモード] 位置情報インデックスに対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。）</li>
+<li>[ベンチマーク] groongaのデータベースには実際に書き込むかどうかを指定する <cite>groonga_dry_write</cite> 変数の追加。ベンチマーク時などボトルネック処理の確認用。</li>
+<li>CentOS 6用のインストールドキュメントにMySQLのバージョン番号を追加。 [&#64;yoshi_kenさんが提案]</li>
+<li>[位置情報検索] 不必要な処理をなるべくしないようにして高速化。</li>
+<li>mysql_configがfast mutexesを有効にしていると報告しても、それを無視する <cite>--disable-fast-mutexes</cite> configureオプションを追加。</li>
+<li>[ストレージモード] <cite>create index</cite> に対応。</li>
+<li>[ストレージモード] <cite>drop index</cite> に対応。</li>
+<li>[ストレージモード] 全文検索用のマルチカラムインデックスに対応。</li>
+<li><cite>D</cite> プラグマに対応。</li>
+<li>MySQL 5.5.17に対応。</li>
+<li>MySQL 5.6.3-m6に対応。</li>
+<li>groonga 1.2.7に対応。（1.2.6以下のサポートを削除。）</li>
+<li>Ubuntu 11.10 Oneiric Ocelotに対応。</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>修正<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>booleanモードでクエリの先頭に <cite>+</cite> を指定すると何もヒットしなくなる問題を修正。 [西山はじめさんが報告]</li>
+<li>[Fedora] パッケージの依存関係を修正。 [Takahiro Nagaiさんが報告]</li>
+<li>[Fedora] プラグインをロードするとシンボルが見つからずエラーになる問題を修正。 [Takahiro Nagaiさんが報告]</li>
+<li>[ストレージモード] マルチカラムインデックスに <cite>varchar</cite> を使うとインデックスが正常に作成されない問題を修正。 #1143 [Takahiro Nagaiさんが報告]</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3>感謝<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>&#64;yoshi_kenさん</li>
+<li>西山はじめさん</li>
+<li>Takahiro Nagaiさん</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-0-0">
+<span id="id6"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>初回リリースから約1年経って、初のメジャーリリース！</p>
+<div class="section" id="id7">
+<h3>改良<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>[ラッパーモード] drop index対応。 #1040</li>
 <li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
@@ -64,8 +104,8 @@
 <li>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h3>修正<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id8">
+<h3>修正<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</li>
 <li>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</li>
@@ -73,8 +113,8 @@
 <li>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h3>感謝<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id9">
+<h3>感謝<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>Isao Sugimotoさん</li>
 <li>&#64;zaubermaerchenさん</li>
@@ -83,9 +123,9 @@
 </div>
 </div>
 <div class="section" id="release-0-9">
-<span id="id6"></span><h2>0.9 リリース - 2011/08/29<a class="headerlink" href="#release-0-9" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id7">
-<h3>改良<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id10"></span><h2>0.9 リリース - 2011/08/29<a class="headerlink" href="#release-0-9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id11">
+<h3>改良<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>MySQL 5.1.58に対応。</li>
 <li>MySQL 5.6.3に対応。</li>
@@ -93,9 +133,9 @@
 </div>
 </div>
 <div class="section" id="release-0-8">
-<span id="id8"></span><h2>0.8 リリース - 2011/07/29<a class="headerlink" href="#release-0-8" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id9">
-<h3>改良<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id12"></span><h2>0.8 リリース - 2011/07/29<a class="headerlink" href="#release-0-8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id13">
+<h3>改良<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>[deb] プラグインインストール時のエラーを無視するようにした。</li>
 <li>[ラッパーモード] マルチカラムインデックスのサポート。 #1031</li>
@@ -105,9 +145,9 @@
 </div>
 </div>
 <div class="section" id="release-0-7">
-<span id="id10"></span><h2>0.7 リリース - 2011/06/29<a class="headerlink" href="#release-0-7" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id11">
-<h3>改良<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id14"></span><h2>0.7 リリース - 2011/06/29<a class="headerlink" href="#release-0-7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id15">
+<h3>改良<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>既存のストレージエンジンに全文検索機能を追加する <a class="reference internal" href="userguide/wrapper.html"><em>ラッパーモード</em></a> の追加。</li>
 <li>MySQL 5.5.13サポートの追加。 #984</li>
@@ -115,14 +155,14 @@
 <li>Mac OS Xでのビルドをサポート。（&#64;issmさんが報告）</li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h3>修正<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id16">
+<h3>修正<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>常にデバッグモードでビルドされる問題を修正。（&#64;supistarさんが報告）</li>
 </ul>
 </div>
-<div class="section" id="id13">
-<h3>感謝<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id17">
+<h3>感謝<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>&#64;issmさん</li>
 <li>&#64;supistarさん</li>
@@ -130,9 +170,9 @@
 </div>
 </div>
 <div class="section" id="release-0-6">
-<span id="id14"></span><h2>0.6 リリース - 2011/05/29<a class="headerlink" href="#release-0-6" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id15">
-<h3>改良<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id18"></span><h2>0.6 リリース - 2011/05/29<a class="headerlink" href="#release-0-6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id19">
+<h3>改良<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>auto_increment機能の追加。#670</li>
 <li>不必要な&quot;duplicated _id on insert&quot;というエラーメッセージを
@@ -145,8 +185,8 @@
 <li>Fedora 14サポートの削除。</li>
 </ul>
 </div>
-<div class="section" id="id16">
-<h3>修正<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id20">
+<h3>修正<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>ORDER BY LIMITの高速化が機能しないケースがある問題の修正。#845</li>
 <li>デバッグビルド時のメモリリークを修正。</li>
@@ -154,8 +194,8 @@
 と一緒に使うとクラッシュする問題を修正。</li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h3>感謝<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id21">
+<h3>感謝<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>Mitsuhiro Shibuyaさん</li>
 <li>Hiroki Minetaさん</li>
@@ -163,10 +203,10 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id18">
-<h2>0.5 リリース - 2011/03/29<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id19">
-<h3>改良<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id22">
+<h2>0.5 リリース - 2011/03/29<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id23">
+<h3>改良<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>&quot;uninstall plugin&quot;対応 #741</li>
 <li>MariaDB対応 （かずひこさんが提案）</li>
@@ -175,17 +215,17 @@
 <li>エラーメッセージの改良</li>
 </ul>
 </div>
-<div class="section" id="id20">
-<h3>感謝<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id24">
+<h3>感謝<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>かずひこさん</li>
 </ul>
 </div>
 </div>
-<div class="section" id="id21">
-<h2>0.4 リリース - 2010/11/29<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id22">
-<h3>改良<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id25">
+<h2>0.4 リリース - 2010/11/29<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id26">
+<h3>改良<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>全文検索のスコア取得機能の追加。</li>
 <li>レコードIDへのアクセス機能の追加。</li>
@@ -199,17 +239,17 @@
 <li>MySQL 5.5への対応。</li>
 </ul>
 </div>
-<div class="section" id="id23">
-<h3>感謝<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id27">
+<h3>感謝<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>とみたまさひろさん</li>
 </ul>
 </div>
 </div>
-<div class="section" id="id24">
-<h2>0.3 リリース - 2010/10/29<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id25">
-<h3>改良<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id28">
+<h2>0.3 リリース - 2010/10/29<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id29">
+<h3>改良<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>エラーメッセージの出力を実装。</li>
 <li>カラムの刈り込みの実装を強化。</li>
@@ -218,52 +258,52 @@
 <li>ユーザガイドドキュメントの追加。</li>
 </ul>
 </div>
-<div class="section" id="id26">
-<h3>変更<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id30">
+<h3>変更<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>インデックス作成時にNORMALIZEフラグを付与。</li>
 </ul>
 </div>
-<div class="section" id="id27">
-<h3>修正<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id31">
+<h3>修正<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>LIMITなどを用いた場合にカーソルが正しくクローズされない問題の修正。</li>
 </ul>
 </div>
 </div>
-<div class="section" id="id28">
-<h2>0.2 リリース - 2010/09/29<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id29">
-<h3>改良<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id32">
+<h2>0.2 リリース - 2010/09/29<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id33">
+<h3>改良<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>packages.groonga.orgでのバイナリパッケージ配布開始。aptitude/yumによるインストールが可能に。</li>
 <li>バイナリログの出力に対応。</li>
 </ul>
 </div>
-<div class="section" id="id30">
-<h3>変更<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id34">
+<h3>変更<a class="headerlink" href="#id34" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>共有ライブラリの名前を&quot;libgroonga_storage_engine.so&quot;から&quot;ha_groonga.so&quot;に変更。</li>
 <li>configureオプションの <tt class="docutils literal"><span class="pre">--with-mysql</span></tt> および <tt class="docutils literal"><span class="pre">--libdir</span></tt> を削除。</li>
 <li>configureオプションの <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> および <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt> を追加。</li>
 </ul>
 </div>
-<div class="section" id="id31">
-<h3>修正<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id35">
+<h3>修正<a class="headerlink" href="#id35" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>ヘッダファイルのincludeパスを修正。</li>
 <li>&quot;SHOW CREATE TABLE&quot;に出力されるENGINE名を修正。</li>
 </ul>
 </div>
-<div class="section" id="id32">
-<h3>感謝<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id36">
+<h3>感謝<a class="headerlink" href="#id36" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>とみたまさひろさん</li>
 </ul>
 </div>
 </div>
-<div class="section" id="id33">
-<h2>0.1 リリース - 2010/08/19<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id37">
+<h2>0.1 リリース - 2010/08/19<a class="headerlink" href="#id37" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>初回テストリリース</p>
 </div>
 </div>
@@ -277,56 +317,62 @@
   <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">最新ニュース</a><ul>
-<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
+<li><a class="reference internal" href="#release-1-0-1">1.0.1 リリース - 2011/10/29</a><ul>
 <li><a class="reference internal" href="#id3">改良</a></li>
 <li><a class="reference internal" href="#id4">修正</a></li>
 <li><a class="reference internal" href="#id5">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-0-9">0.9 リリース - 2011/08/29</a><ul>
+<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
 <li><a class="reference internal" href="#id7">改良</a></li>
+<li><a class="reference internal" href="#id8">修正</a></li>
+<li><a class="reference internal" href="#id9">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-0-9">0.9 リリース - 2011/08/29</a><ul>
+<li><a class="reference internal" href="#id11">改良</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-8">0.8 リリース - 2011/07/29</a><ul>
-<li><a class="reference internal" href="#id9">改良</a></li>
+<li><a class="reference internal" href="#id13">改良</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-7">0.7 リリース - 2011/06/29</a><ul>
-<li><a class="reference internal" href="#id11">改良</a></li>
-<li><a class="reference internal" href="#id12">修正</a></li>
-<li><a class="reference internal" href="#id13">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-0-6">0.6 リリース - 2011/05/29</a><ul>
 <li><a class="reference internal" href="#id15">改良</a></li>
 <li><a class="reference internal" href="#id16">修正</a></li>
 <li><a class="reference internal" href="#id17">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id18">0.5 リリース - 2011/03/29</a><ul>
+<li><a class="reference internal" href="#release-0-6">0.6 リリース - 2011/05/29</a><ul>
 <li><a class="reference internal" href="#id19">改良</a></li>
-<li><a class="reference internal" href="#id20">感謝</a></li>
+<li><a class="reference internal" href="#id20">修正</a></li>
+<li><a class="reference internal" href="#id21">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id21">0.4 リリース - 2010/11/29</a><ul>
-<li><a class="reference internal" href="#id22">改良</a></li>
-<li><a class="reference internal" href="#id23">感謝</a></li>
+<li><a class="reference internal" href="#id22">0.5 リリース - 2011/03/29</a><ul>
+<li><a class="reference internal" href="#id23">改良</a></li>
+<li><a class="reference internal" href="#id24">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id24">0.3 リリース - 2010/10/29</a><ul>
-<li><a class="reference internal" href="#id25">改良</a></li>
-<li><a class="reference internal" href="#id26">変更</a></li>
-<li><a class="reference internal" href="#id27">修正</a></li>
+<li><a class="reference internal" href="#id25">0.4 リリース - 2010/11/29</a><ul>
+<li><a class="reference internal" href="#id26">改良</a></li>
+<li><a class="reference internal" href="#id27">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id28">0.2 リリース - 2010/09/29</a><ul>
+<li><a class="reference internal" href="#id28">0.3 リリース - 2010/10/29</a><ul>
 <li><a class="reference internal" href="#id29">改良</a></li>
 <li><a class="reference internal" href="#id30">変更</a></li>
 <li><a class="reference internal" href="#id31">修正</a></li>
-<li><a class="reference internal" href="#id32">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id33">0.1 リリース - 2010/08/19</a></li>
+<li><a class="reference internal" href="#id32">0.2 リリース - 2010/09/29</a><ul>
+<li><a class="reference internal" href="#id33">改良</a></li>
+<li><a class="reference internal" href="#id34">変更</a></li>
+<li><a class="reference internal" href="#id35">修正</a></li>
+<li><a class="reference internal" href="#id36">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id37">0.1 リリース - 2010/08/19</a></li>
 </ul>
 </li>
 </ul>
@@ -339,7 +385,7 @@
 <div id="searchbox" style="display: none">
   <h3>クイック検索</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="検索" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -359,12 +405,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="index.html">groonga storage engine v1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">groonga storage engine v1.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2011, groonga project.
-      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7 で生成しました。
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8 で生成しました。
     </div>
   </body>
 </html>
