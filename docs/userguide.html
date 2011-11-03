@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. User&#39;s guide &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="index.html" />
+    <link rel="next" title="3.3.1. Storage mode" href="userguide/storage.html" />
+    <link rel="prev" title="2. Installation Guide" href="install.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="./../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../ja/docs/userguide.html"><img src="static/jp.png" alt="日本語"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="userguide/storage.html" title="3.3.1. Storage mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="2. Installation Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="user-s-guide">
+<h1>3. User's guide<a class="headerlink" href="#user-s-guide" title="Permalink to this headline">¶</a></h1>
+<p>Please read the following to see how to install : <a class="reference internal" href="install.html"><em>Installation Guide</em></a></p>
+<div class="section" id="how-to-check-the-installation">
+<h2>3.1. How to check the installation<a class="headerlink" href="#how-to-check-the-installation" title="Permalink to this headline">¶</a></h2>
+<p>The way to start or stop MySQL server is just same as the normal MySQL.</p>
+<p>After invoking the MySQL server, connect to it by mysql command. If you set password, you need to add '-p' option.</p>
+<div class="highlight-none"><div class="highlight"><pre>shell&gt; mysql -uroot test
+</pre></div>
+</div>
+<p>By using SHOW ENGINES command, you can check if groonga storage engine is installed.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
++------------+---------+------------------------------------------------------------+--------------+------+------------+
+| Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
++------------+---------+------------------------------------------------------------+--------------+------+------------+
+| groonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
+| MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
+| CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
+| MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
+| InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
+| MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
++------------+---------+------------------------------------------------------------+--------------+------+------------+
+6 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>If you see &quot;groonga&quot; storage engine like above, the installation is well done.</p>
+<p>If not installed, invoke INSTALL PLUGIN command like below.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_groonga.so&#39;;
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-modes">
+<h2>3.2. Running modes<a class="headerlink" href="#running-modes" title="Permalink to this headline">¶</a></h2>
+<p>groonga storage engine can run in the following two modes.</p>
+<ul class="simple">
+<li>storage mode</li>
+<li>wrapper mode</li>
+</ul>
+<p>With the storage mode, we use groonga for both of the full text search function and the data storage.
+Since all functions of storage engine are realised with groonga, aggregations are fast, that is one of groonga's advantages, and you can manage the database directly by <tt class="docutils literal"><span class="pre">groonga</span></tt> command.</p>
+<p>The structure of the storage mode is the following. You use it instead of existing storage engines like MyISAM or InnoDB</p>
+<div class="figure align-center">
+<img alt="storage mode" src="_images/storage-mode.png" />
+</div>
+<p>With the wrapper mode, groonga is used for full text search function only, and another existing storage engine like InnoDB is used for storing data.
+By using wrapper mode, you combine InnoDB that is well-use as the storage engine and groonga that is a proven full text search engine, and you can use it as the stable database having the fast full text search function.</p>
+<p>The structure of the wrapper mode is the following. Full text search related operations are done by groonga storage engine, and other operations are done by existing storage engines like MyISAM, InnoDB etc.
+Groonga storage engine is located between SQL Handler that processes SQL and an existing storage engine, thus all data goes through groonga storage engine.
+With this way, full text search indexing etc. are done transparently.</p>
+<div class="figure align-center">
+<img alt="wrapper mode" src="_images/wrapper-mode.png" />
+</div>
+</div>
+<div class="section" id="usage-of-each-mode">
+<h2>3.3. Usage of each mode<a class="headerlink" href="#usage-of-each-mode" title="Permalink to this headline">¶</a></h2>
+<p>Please see the following pages for the usage of each mode.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide/storage.html">3.3.1. Storage mode</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#how-to-use-full-text-search">3.3.1.1. How to use full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#how-to-get-search-score">3.3.1.2. How to get search score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#how-to-specify-the-parser-for-full-text-search">3.3.1.3. How to specify the parser for full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#how-to-use-geolocation-search">3.3.1.4. How to use geolocation search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#how-to-get-the-record-id">3.3.1.5. How to get the record ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#logging">3.3.1.6. Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#choosing-appropriate-columns">3.3.1.7. Choosing appropriate columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#optimisation-for-counting-rows">3.3.1.8. Optimisation for counting rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/storage.html#optimisation-for-order-by-limit-in-full-text-search">3.3.1.9. Optimisation for ORDER BY LIMIT in full text search</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/wrapper.html">3.3.2. Wrapper mode</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/wrapper.html#how-to-use-wrapper-mode">3.3.2.1. How to use wrapper mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/wrapper.html#how-to-use-full-text-search">3.3.2.2. How to use full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/wrapper.html#how-to-get-search-score">3.3.2.3. How to get search score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/wrapper.html#how-to-specify-the-parser-for-full-text-search">3.3.2.4. How to specify the parser for full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/wrapper.html#logging">3.3.2.5. Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/wrapper.html#optimisation-for-order-by-limit-in-full-text-search">3.3.2.6. Optimisation for ORDER BY LIMIT in full text search</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. User's guide</a><ul>
+<li><a class="reference internal" href="#how-to-check-the-installation">3.1. How to check the installation</a></li>
+<li><a class="reference internal" href="#running-modes">3.2. Running modes</a></li>
+<li><a class="reference internal" href="#usage-of-each-mode">3.3. Usage of each mode</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">2. Installation Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="userguide/storage.html"
+                        title="next chapter">3.3.1. Storage mode</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/userguide.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="userguide/storage.html" title="3.3.1. Storage mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="2. Installation Guide"
+             >previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>お知らせ &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="index.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="./../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../docs/news.html"><img src="static/us.png" alt="English"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="news">
+<h1>お知らせ<a class="headerlink" href="#news" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="release-1-0-1-2011-10-29">
+<span id="release-1-0-1"></span><h2>1.0.1リリース - 2011/10/29<a class="headerlink" href="#release-1-0-1-2011-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>位置情報検索の対応を強化とストレージモードでの動的なインデックス変更の対応強化が目玉のリリース。</p>
+<div class="section" id="improvements">
+<h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>[ストレージモード][ラッパーモード] <cite>flush tables</cite> によるデータベースの再オープンに対応。</li>
+<li>[ラッパーモード] 位置情報インデックスに対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。）</li>
+<li>[ベンチマーク] groongaのデータベースには実際に書き込むかどうかを指定する <cite>groonga_dry_write</cite> 変数の追加。ベンチマーク時などボトルネック処理の確認用。</li>
+<li>CentOS 6用のインストールドキュメントにMySQLのバージョン番号を追加。 [&#64;yoshi_kenさんが提案]</li>
+<li>[位置情報検索] 不必要な処理をなるべくしないようにして高速化。</li>
+<li>mysql_configがfast mutexesを有効にしていると報告しても、それを無視する <cite>--disable-fast-mutexes</cite> configureオプションを追加。</li>
+<li>[ストレージモード] <cite>create index</cite> に対応。</li>
+<li>[ストレージモード] <cite>drop index</cite> に対応。</li>
+<li>[ストレージモード] 全文検索用のマルチカラムインデックスに対応。</li>
+<li><cite>D</cite> プラグマに対応。</li>
+<li>MySQL 5.5.17に対応。</li>
+<li>MySQL 5.6.3-m6に対応。</li>
+<li>groonga 1.2.7に対応。（1.2.6以下のサポートを削除。）</li>
+<li>Ubuntu 11.10 Oneiric Ocelotに対応。</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>booleanモードでクエリの先頭に <cite>+</cite> を指定すると何もヒットしなくなる問題を修正。 [西山はじめさんが報告]</li>
+<li>[Fedora] パッケージの依存関係を修正。 [Takahiro Nagaiさんが報告]</li>
+<li>[Fedora] プラグインをロードするとシンボルが見つからずエラーになる問題を修正。 [Takahiro Nagaiさんが報告]</li>
+<li>[ストレージモード] マルチカラムインデックスに <cite>varchar</cite> を使うとインデックスが正常に作成されない問題を修正。 #1143 [Takahiro Nagaiさんが報告]</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>&#64;yoshi_kenさん</li>
+<li>西山はじめさん</li>
+<li>Takahiro Nagaiさん</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-0-0">
+<span id="id1"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>初回リリースから約1年経って、初のメジャーリリース！</p>
+<div class="section" id="id2">
+<h3>改良<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>[ラッパーモード] drop index対応。 #1040</li>
+<li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
+<li>[ストレージモード] マルチカラムインデックスに対応。 #455</li>
+<li>[ストレージモード][ラッパーモード] 全文検索用パーサー（トークナイザー）のカスタマイズに対応。 #592</li>
+<li>configureにデフォルトの全文検索用パーサーを指定する <cite>--with-default-parser</cite> オプションを追加。</li>
+<li>実行時にデフォルトの全文検索用パーサーを指定する <cite>groonga_default_parser</cite> 変数を追加。</li>
+<li>[ラッパーモード] ストレージモードで実装している <cite>order</cite> と <cite>limit</cite> が指定された場合に必要のないレコードを返さないようにする高速化に対応。</li>
+<li>[ストレージモード] 1つの <cite>select</cite> 中での複数の <cite>match against</cite> 指定に対応。</li>
+<li>[非互換][ストレージモード] <cite>_score</cite> カラムの削除。代わりにMySQL標準の書き方である <cite>match against</cite> を使ってください。</li>
+<li>[ラッパーモード] プライマリキーの更新に対応。</li>
+<li>MySQL 5.5.16に対応。</li>
+<li>CentOS 6に対応。</li>
+<li>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>修正<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</li>
+<li>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</li>
+<li>[Ubuntu] Lucid上でテーブルを削除するとクラッシュする問題を修正。 #1063 （Isao Sugimotoさんが報告）</li>
+<li>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>感謝<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>Isao Sugimotoさん</li>
+<li>&#64;zaubermaerchenさん</li>
+<li>Tomohiro MITSUMUNEさん</li>
+</ul>
+</div>
+</div>
+<div class="section" id="past-releases">
+<h2>Past releases<a class="headerlink" href="#past-releases" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="news/0.x.html">バージョン0.xのお知らせ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#release-0-9">0.9 リリース - 2011/08/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#release-0-8">0.8 リリース - 2011/07/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#release-0-7">0.7 リリース - 2011/06/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#release-0-6">0.6 リリース - 2011/05/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#id13">0.5 リリース - 2011/03/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#id16">0.4 リリース - 2010/11/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#id19">0.3 リリース - 2010/10/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#id23">0.2 リリース - 2010/09/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/0.x.html#id28">0.1 リリース - 2010/08/19</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">お知らせ</a><ul>
+<li><a class="reference internal" href="#release-1-0-1-2011-10-29">1.0.1リリース - 2011/10/29</a><ul>
+<li><a class="reference internal" href="#improvements">改良</a></li>
+<li><a class="reference internal" href="#fixes">修正</a></li>
+<li><a class="reference internal" href="#thanks">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
+<li><a class="reference internal" href="#id2">改良</a></li>
+<li><a class="reference internal" href="#id3">修正</a></li>
+<li><a class="reference internal" href="#id4">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#past-releases">Past releases</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/news.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

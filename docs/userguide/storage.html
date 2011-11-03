@@ -1,0 +1,563 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.3.1. Storage mode &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="../index.html" />
+    <link rel="up" title="3. User&#39;s guide" href="../userguide.html" />
+    <link rel="next" title="3.3.2. Wrapper mode" href="wrapper.html" />
+    <link rel="prev" title="3. User&#39;s guide" href="../userguide.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/userguide/storage.html"><img src="../static/jp.png" alt="日本語"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="wrapper.html" title="3.3.2. Wrapper mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../userguide.html" title="3. User&#39;s guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" accesskey="U">3. User's guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="storage-mode">
+<h1>3.3.1. Storage mode<a class="headerlink" href="#storage-mode" title="Permalink to this headline">¶</a></h1>
+<p>Here we explain how to use storage mode of groonga storage engine.</p>
+<div class="section" id="how-to-use-full-text-search">
+<h2>3.3.1.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
+<p>After confirming the installation, let's create a table. The important point is to specify groonga storage engine by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">groonga</span></tt>.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
+    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
+    -&gt;   content VARCHAR(255),
+    -&gt;   FULLTEXT INDEX (content)
+    -&gt; ) ENGINE = groonga DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.10 sec)
+</pre></div>
+</div>
+<p>We put data by INSERT.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;明日の天気は晴れでしょう。&quot;);
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; INSERT INTO diaries (content) VALUES (&quot;明日の天気は雨でしょう。&quot;);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>Try full text search.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;晴れ&quot;);
++----+-----------------------------------------+
+| id | content                                 |
++----+-----------------------------------------+
+|  1 | 明日の天気は晴れでしょう。 |
++----+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Yes, full text search works.</p>
+</div>
+<div class="section" id="how-to-get-search-score">
+<h2>3.3.1.2. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In version 1.0.0 or before, groonga storage engine used a special column named <tt class="docutils literal"><span class="pre">_score</span></tt> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
+</div>
+<p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
+<p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
+<p>Let's try.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;今日は晴れました。明日も晴れるでしょう。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO diaries (content) VALUES (&quot;今日は晴れましたが、明日は雨でしょう。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
++----+--------------------------------------------------------------+------------------------------------+
+| id | content                                                      | MATCH (content) AGAINST (&quot;晴れ&quot;) |
++----+--------------------------------------------------------------+------------------------------------+
+|  3 | 今日は晴れました。明日も晴れるでしょう。 |                                  2 |
+|  1 | 明日の天気は晴れでしょう。                      |                                  1 |
+|  4 | 今日は晴れましたが、明日は雨でしょう。    |                                  1 |
++----+--------------------------------------------------------------+------------------------------------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>The result having the search word <tt class="docutils literal"><span class="pre">晴れ</span></tt> more, i.e. <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></tt> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
+<p>You can use <tt class="docutils literal"><span class="pre">AS</span></tt> to change the attribute name.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
++----+--------------------------------------------------------------+------------------------------------+
+| id | content                                                      | MATCH (content) AGAINST (&quot;晴れ&quot;) |
++----+--------------------------------------------------------------+------------------------------------+
+|  3 | 今日は晴れました。明日も晴れるでしょう。 |                                  2 |
+|  1 | 明日の天気は晴れでしょう。                      |                                  1 |
+|  4 | 今日は晴れましたが、明日は雨でしょう。    |                                  1 |
++----+--------------------------------------------------------------+------------------------------------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-specify-the-parser-for-full-text-search">
+<h2>3.3.1.3. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
+<p>MySQL has the following syntax to specify the parser <a class="footnote-reference" href="#parser" id="id2">[2]</a> for full text search.</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
+</pre></div>
+</div>
+<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in groonga storage engine, tokenisers that are added in groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">COMMENT</span></tt> in <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <tt class="docutils literal"><span class="pre">groonga_default_parser</span></tt> variable described below.</p>
+</div>
+<p>You can specify one of following values as the parser.</p>
+<dl class="docutils">
+<dt>TokenBigram</dt>
+<dd><p class="first">It tokenises in bigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 3 letters or more. It is to reduce noises.</p>
+<p class="last">This is the default value.</p>
+</dd>
+<dt>TokenMecab</dt>
+<dd>It tokenises using MeCab. Groonga should be built with MeCab support.</dd>
+<dt>TokenBigramSplitSymbol</dt>
+<dd><p class="first">It tokenises in bigram. Unlike TokenBigram, continuous symbols are not treated as a token, but tokenised in bigram.</p>
+<p class="last">When you use TokenBigramSplitSymbol instead of TokenBigram, &quot;!?&quot; can match &quot;!?!?!?&quot; in &quot;Is it really!?!?!?&quot;. But when you use TokenBigram, only &quot;!?!?!?&quot; can match as well.</p>
+</dd>
+<dt>TokenBigramSplitSymbolAlpha</dt>
+<dd><p class="first">It tokenise in bigram. In addition to TokenBigramSplitSymbol, continuous alphabets are not treated as a token either, but tokenised in bigram.</p>
+<p class="last">When you use TokenBigramSplitSymbolAlpha instead of TokenBigram, &quot;real&quot; can match &quot;Is it really?&quot;. But when you use TokenBigram, only &quot;really&quot; can match as well.</p>
+</dd>
+<dt>TokenBigramSplitSymbolAlphaDigit</dt>
+<dd><p class="first">It tokenise in bigram. In addition to TokenBigramSplitSymbolAlpha, continuous numbers are not treated as a token either, but tokenised in bigram. So any kind of characters are treated equally in bigram.</p>
+<p class="last">When you use TokenBigramSplitSymbolAlphaDigit instead of TokenBigram, &quot;567&quot; can match &quot;090-0123-4567&quot;. But when you use TokenBigram, only &quot;4567&quot; can match as well.</p>
+</dd>
+<dt>TokenBigramIgnoreBlank</dt>
+<dd><p class="first">It tokenise in bigram. Unlike TokenBigram, it ignores white spaces.</p>
+<p class="last">When you use TokenBigramIgnoreBlank instead of TokenBigram, &quot;みなさん&quot; can match &quot;み な さ ん 注 目&quot;. But when you use TokenBigram, only &quot;み な さ ん&quot; can match as well.</p>
+</dd>
+<dt>TokenBigramIgnoreBlankSplitSymbol</dt>
+<dd><p class="first">It tokenise in bigram. Unlike TokenBigramSplitSymbol, it ignores white spaces.</p>
+<p class="last">When you use TokenBigramIgnoreBlankSplitSymbol instead of TokenBigramSplitSymbol, &quot;???&quot; can match &quot;! ? ???&quot;. But when you use TokenBigramSplitSymbol, only &quot;? ??&quot; can match as well.</p>
+</dd>
+<dt>TokenBigramIgnoreBlankSplitSymbolAlpha</dt>
+<dd><p class="first">It tokenise in bigram. Unlike TokenBigramSplitSymbolAlpha, it ignores white spaces.</p>
+<p class="last">When you use TokenBigramIgnoreBlankSplitSymbolAlpha instead of TokenBigramSplitSymbolAlpha, &quot;ama&quot; can match &quot;I am a pen.&quot;. But when you use TokenBigramSplitSymbolAlpha, only &quot;am a&quot; can match as well.</p>
+</dd>
+<dt>TokenBigramIgnoreBlankSplitSymbolAlphaDigit</dt>
+<dd><p class="first">It tokenise in bigram. Unlike TokenBigramSplitSymbolAlphaDigit, it ignores white spaces.</p>
+<p class="last">When you use TokenBigramIgnoreBlankSplitSymbolAlphaDigit instead of TokenBigramSplitSymbolAlphaDigit, &quot;9001&quot; can match &quot;090 0123 4567&quot;. But when you use TokenBigramSplitSymbolAlphaDigit, only &quot;90 01&quot; can match as well.</p>
+</dd>
+<dt>TokenDelimit</dt>
+<dd><p class="first">It tokenise by splitting with a white space.</p>
+<p class="last">&quot;映画 ホラー 話題&quot; will be tokenised as &quot;映画&quot;, &quot;ホラー&quot;, &quot;話題&quot;.</p>
+</dd>
+<dt>TokenDelimitNull</dt>
+<dd><p class="first">It tokenise by splitting with a null character (\0).</p>
+<p class="last">&quot;映画\0ホラー\0話題&quot; will be tokenised as &quot;映画&quot;, &quot;ホラー&quot;, &quot;話題&quot;.</p>
+</dd>
+<dt>TokenUnigram</dt>
+<dd>It tokenises in unigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 2 letters or more. It is to reduce noises.</dd>
+<dt>TokenTrigram</dt>
+<dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
+</dl>
+<p>You can specify the default parser by passing <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> option in <tt class="docutils literal"><span class="pre">configure</span></tt> when you build groonga storage engine.</p>
+<div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
+</pre></div>
+</div>
+<p>Or you can set <tt class="docutils literal"><span class="pre">groonga_default_parser</span></tt> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>my.cnf:</p>
+<div class="highlight-none"><div class="highlight"><pre>[mysqld]
+groonga_default_parser=TokenMecab
+</pre></div>
+</div>
+<p>SQL:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET GLOBAL groonga_default_parser = TokenMecab;
+Query OK, 0 rows affected (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-use-geolocation-search">
+<h2>3.3.1.4. How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Permalink to this headline">¶</a></h2>
+<p>In storage mode, you can use fast geolocation search in addition to full text search. But unlike MyISAM, you can only store POINT type data. You cannot store other types data like LINE. And fast search using index only supports MBRContains. It does not support MBRDisjoint.</p>
+<p>For the table definition for geolocation search, you need to define a POINT type column like in MyISAM and define SPATIAL INDEX for it.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE shops (
+    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
+    -&gt;   name VARCHAR(255),
+    -&gt;   location POINT NOT NULL,
+    -&gt;   SPATIAL INDEX (location)
+    -&gt; ) ENGINE = groonga;
+Query OK, 0 rows affected (0.06 sec)
+</pre></div>
+</div>
+<p>To store data, you create POINT type data by using geomFromText() function like in MyISAM.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO shops VALUES (null, &#39;根津のたいやき&#39;, GeomFromText(&#39;POINT(139.762573 35.720253)&#39;));
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO shops VALUES (null, &#39;浪花家&#39;, GeomFromText(&#39;POINT(139.796234 35.730061)&#39;));
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO shops VALUES (null, &#39;柳屋 たい焼き&#39;, GeomFromText(&#39;POINT(139.783981 35.685341)&#39;));
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>If you want to find shops within the rectangle where Ikebukuro station (139.7101 35.7292) is the top-left point and Tokyo Station (139.7662 35.6815) is the bottom-right point, SELECT phrase is like the following.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT id, name, AsText(location) FROM shops WHERE MBRContains(GeomFromText(&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;), location);
++----+-----------------------+------------------------------------------+
+| id | name                  | AsText(location)                         |
++----+-----------------------+------------------------------------------+
+|  1 | 根津のたいやき | POINT(139.762572777778 35.7202527777778) |
++----+-----------------------+------------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Here you can search by geolocation!</p>
+</div>
+<div class="section" id="how-to-get-the-record-id">
+<h2>3.3.1.5. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
+<p>groonga assigns a unique number to identify the record when a record is added in the table.</p>
+<p>To make the development of applications easier, you can get this record ID by SQL in groonga storage engine.</p>
+<p>To get the record ID, you need to create a column named <tt class="docutils literal"><span class="pre">_id</span></tt> when you create a table.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE memos (
+    -&gt;   _id INT,
+     &gt;   content VARCHAR(255),
+    -&gt;   UNIQUE KEY (_id) USING HASH
+    -&gt; ) ENGINE = groonga;
+Query OK, 0 rows affected (0.04 sec)
+</pre></div>
+</div>
+<p>Tye typo of _id column should be integer one (TINYINT, SMALLINT, MEDIUMINT, INT or BIGINT).</p>
+<p>You can create an index for _id column, but it should be HASH type.</p>
+<p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by groonga, you cannot specify the value when updating.
+So you need to exclude it from setting columns, or you need to use <tt class="docutils literal"><span class="pre">null</span></tt> as its value.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;今夜はさんま。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (null, &quot;明日はgroongaをアップデート。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (null, &quot;帰りにおだんご。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (null, &quot;金曜日は肉の日。&quot;);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>To get the record ID, you invoke SELECT with _id column.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM memos;
++------+------------------------------------------+
+| _id  | content                                  |
++------+------------------------------------------+
+|    1 | 今夜はさんま。                    |
+|    2 | 明日はgroongaをアップデート。 |
+|    3 | 帰りにおだんご。                 |
+|    4 | 金曜日は肉の日。                 |
++------+------------------------------------------+
+4 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>By using last_insert_grn_id function, you can also get the record ID that is assigned by the last INSERT.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;冷蔵庫に牛乳が残り1本。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT last_insert_grn_id();
++----------------------+
+| last_insert_grn_id() |
++----------------------+
+|                    5 |
++----------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>last_insert_grn_id function is included in groonga storage engine as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
+</pre></div>
+</div>
+<p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE memos SET content = &quot;冷蔵庫に牛乳はまだたくさんある。&quot; WHERE _id = last_insert_grn_id();
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>3.3.1.6. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>groonga storage engine outputs the logs by default.</p>
+<p>Log files are located in MySQL's data directory with the filename  <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
+<p>Here is the example of the log.</p>
+<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|groonga-storage-engine started.
+2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
+2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
+</pre></div>
+</div>
+<p>The default log level is NOTICE, i.e. we have important information only and we don't have debug information etc.).</p>
+<p>You can get the log level by <tt class="docutils literal"><span class="pre">groonga_log_level</span></tt> system variable, that is a global variable. You can also modify it dynamically by using SET phrase.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+--------+
+| Variable_name     | Value  |
++-------------------+--------+
+| groonga_log_level | NOTICE |
++-------------------+--------+
+1 row in set (0.00 sec)
+
+mysql&gt; SET GLOBAL groonga_log_level=DUMP;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+-------+
+| Variable_name     | Value |
++-------------------+-------+
+| groonga_log_level | DUMP  |
++-------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Available log levels are the followings.</p>
+<ul class="simple">
+<li>NONE</li>
+<li>EMERG</li>
+<li>ALERT</li>
+<li>CRIT</li>
+<li>ERROR</li>
+<li>WARNING</li>
+<li>NOTICE</li>
+<li>INFO</li>
+<li>DEBUG</li>
+<li>DUMP</li>
+</ul>
+<p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
+<ol class="arabic simple">
+<li>change the file name of <tt class="docutils literal"><span class="pre">groonga.log</span></tt> (by using OS's mv command etc.).</li>
+<li>invoke &quot;FLUSH LOGS&quot; in MySQL server (by mysql command or mysqladmin command).</li>
+</ol>
+</div>
+<div class="section" id="choosing-appropriate-columns">
+<h2>3.3.1.7. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
+<p>groonga uses one file per column to store data, and groonga storage engine accesses needed columns only when accessing a table to utilise this characteristic.</p>
+<p>This optimisation is done automatically in groonga storage engine internal, you don't need any specific configuration.</p>
+<p>Imagine that we have a table with 20 columns like below.</p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
+  c1 INT PRIMARY KEY AUTO_INCREMENT,
+  c2 INT,
+  c3 INT,
+  ...
+  c11 VARCHAR(20),
+  c12 VARCHAR(20),
+  ...
+  c20 DATETIME
+) ENGINE = groonga DEFAULT CHARSET utf8;
+</pre></div>
+</div>
+<p>When we run SELECT phrase like the following, groonga storage engine reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
+<blockquote>
+<div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
+<p>In this case above, only columns c1, c2, c11 and c12 are accessed, and we can process the SQL rapidly.</p>
+</div>
+<div class="section" id="optimisation-for-counting-rows">
+<h2>3.3.1.8. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
+<p>In MySQL's storage engine interface, there is no difference between counting rows like COUNT(*) and normal data retrieving by SELECT. So access to data that is not included in SELECT result can happen even if you just want to count rows.</p>
+<p>Tritonn (MySQL + Senna), that is groonga storage engine's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
+<p>Groonga storage engine also has the optimisation for counting rows.</p>
+<p>In the following SELECT, for example, needless read of columns are skipped and you can get the result of counting rows with the minimal cost.</p>
+<blockquote>
+<div>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;);</div></blockquote>
+<p>You can check if this optimisation works or not by the status variable.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;groonga_count_skip&#39;;
++--------------------+-------+
+| Variable_name      | Value |
++--------------------+-------+
+| groonga_count_skip | 1     |
++--------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">groonga_count_skip</span></tt> status variable value is increased.</p>
+<p>Note : This optimisation is implemented by using the index. It only works in the case where we records can be specified only by the index.</p>
+</div>
+<div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
+<h2>3.3.1.9. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
+<p>Generally speaking, MySQL can process &quot;ORDER BY&quot; query with almost no cost if we can get records by index, and can process &quot;LIMIT&quot; with low cost by limiting the range of processing data even if the number of query result is very big.</p>
+<p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
+<p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
+<p>Groonga storage engine also has the optimisation for ORDER BY LIMIT.</p>
+<p>In the SELECT example below, ORDER BY LIMIT is processed in groonga only and the minimal records are passed to MySQL.</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
+</pre></div>
+</div>
+<p>You can check if this optimisation works or not by the status variable.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;groonga_fast_order_limit&#39;;
++--------------------------+-------+
+| Variable_name            | Value |
++--------------------------+-------+
+| groonga_fast_order_limit | 1     |
++--------------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">groonga_fast_order_limit</span></tt> status variable value is increased.</p>
+<p>Note : This optimisation is targeting queries like &quot;select ... match against order by _score desc limit X, Y&quot; only, and it works if all of the following conditions are right.</p>
+<ul class="simple">
+<li>WHERE phrase has &quot;match...against&quot; only</li>
+<li>no JOIN</li>
+<li>with LIMIT</li>
+<li>ORDER BY phrase has columns (including _id) or &quot;match...against&quot; that is used in WHERE phrase only</li>
+</ul>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="score" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 Reference Manual :: 11 Functions and Operations :: 11.7 Full-Text Search Functions</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="parser" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In groonga, we call it a 'tokeniser'.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.3.1. Storage mode</a><ul>
+<li><a class="reference internal" href="#how-to-use-full-text-search">3.3.1.1. How to use full text search</a></li>
+<li><a class="reference internal" href="#how-to-get-search-score">3.3.1.2. How to get search score</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.3.1.3. How to specify the parser for full text search</a></li>
+<li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.1.4. How to use geolocation search</a></li>
+<li><a class="reference internal" href="#how-to-get-the-record-id">3.3.1.5. How to get the record ID</a></li>
+<li><a class="reference internal" href="#logging">3.3.1.6. Logging</a></li>
+<li><a class="reference internal" href="#choosing-appropriate-columns">3.3.1.7. Choosing appropriate columns</a></li>
+<li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.1.8. Optimisation for counting rows</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.1.9. Optimisation for ORDER BY LIMIT in full text search</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../userguide.html"
+                        title="previous chapter">3. User's guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="wrapper.html"
+                        title="next chapter">3.3.2. Wrapper mode</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/userguide/storage.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="wrapper.html" title="3.3.2. Wrapper mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../userguide.html" title="3. User&#39;s guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" >3. User's guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

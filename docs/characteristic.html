@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. The characteristics of groonga storage engine &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="index.html" />
+    <link rel="next" title="2. Installation Guide" href="install.html" />
+    <link rel="prev" title="groonga storage engine" href="index.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="./../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../ja/docs/characteristic.html"><img src="static/jp.png" alt="日本語"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="install.html" title="2. Installation Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="groonga storage engine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-characteristics-of-groonga-storage-engine">
+<h1>1. The characteristics of groonga storage engine<a class="headerlink" href="#the-characteristics-of-groonga-storage-engine" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-groonga-storage-engine">
+<h2>1.1. What is groonga storage engine?<a class="headerlink" href="#what-is-groonga-storage-engine" title="Permalink to this headline">¶</a></h2>
+<p>Groonga storage engine is a MySQL storage engine based on groonga, the full text search engine.</p>
+<p>In MySQL 5.1 or later, Pluggable Storage Engine interface is introduced, and we can use custom storage engines easily. So we implement groonga storage engine, so that we can use groonga through MySQL.</p>
+<p>By using groonga storage engine, you can use groonga with SQL.</p>
+</div>
+<div class="section" id="the-successor-of-tritonn">
+<h2>1.2. The successor of Tritonn<a class="headerlink" href="#the-successor-of-tritonn" title="Permalink to this headline">¶</a></h2>
+<p>To support Japanese full text search, Tritonn was developed by embedding Senna, the predecessor of groonga, in MySQL.
+Groonga storage engine is its successor.</p>
+</div>
+<div class="section" id="running-as-a-mysql-plugin">
+<h2>1.3. Running as a MySQL plugin<a class="headerlink" href="#running-as-a-mysql-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Since Tritonn was the modified version of MySQL, we need to build it by ourselves or use binary files provided by Tritonn project, thus we cannot use the official binary files provided by MySQL.</p>
+<p>On the other hand, groonga storage engine is an independent program (shared library) using Pluggable Storage Engine interface, and we can dynamically load it on MySQL's official binary.
+So we can use it more easily than Tritonn.</p>
+</div>
+<div class="section" id="faster-index-update">
+<h2>1.4. Faster index update<a class="headerlink" href="#faster-index-update" title="Permalink to this headline">¶</a></h2>
+<p>Comparing to Senna, groonga has much better throughput in adding or updating index.</p>
+<p>Groonga storage engine also has the benefit of this performance improvement.</p>
+</div>
+<div class="section" id="faster-search">
+<h2>1.5. Faster search<a class="headerlink" href="#faster-search" title="Permalink to this headline">¶</a></h2>
+<p>In Tritonn, we use MyISAM storage engine, thus we have a exclusive table lock by updating data (and index), and it prevents the performance of search.</p>
+<p>But in groonga storage engine, we no longer have this issue, and the performance of search is better especially in frequent data update cases.</p>
+</div>
+<div class="section" id="geolocation-search">
+<h2>1.6. Geolocation search<a class="headerlink" href="#geolocation-search" title="Permalink to this headline">¶</a></h2>
+<p>Groonga supports not only the full text search, but also the fast geolocation search using index.
+And MySQL also has the syntax for geolocation search.
+With groonga storage engine, you can use groonga's fast geolocation search by using MySQL's geolocation SQL syntax.</p>
+</div>
+<div class="section" id="sharing-the-same-groonga-storage">
+<h2>1.7. Sharing the same groonga storage<a class="headerlink" href="#sharing-the-same-groonga-storage" title="Permalink to this headline">¶</a></h2>
+<p>Groonga storage engine stores the data by using groonga's DB API.
+And its storage file's format is same as that of the file that is managed by groonga itself only.
+Therefore you can share the same groonga storage like below.</p>
+<ul class="simple">
+<li>Store data through groonga storage engine (MySQL) and search from groonga server.</li>
+<li>Store data through groonga server and search from groonga storage engine (MySQL).</li>
+</ul>
+<p>And groonga's storage file can be shared with multi-processes and multi-threads, so that we can invoke several search queries to the same storage file simultaneously.</p>
+</div>
+<div class="section" id="associate-with-other-storage-engines">
+<h2>1.8. Associate with other storage engines<a class="headerlink" href="#associate-with-other-storage-engines" title="Permalink to this headline">¶</a></h2>
+<p>Groonga storage engine has two running modes.</p>
+<p>One is &quot;storage mode&quot;, that is the default mode, and we use groonga for both storing data and searching.
+With this mode, you can have full benefits of groonga described above, like fast data update, lock-free full text search and geolocation search.
+But it does not support transactions.</p>
+<p>Another one is &quot;wrapper mode&quot;, that adds full text search function on other storage engines like MyISAM or InnoDB.
+With this mode, you can use groonga's fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB.
+But you cannot have benefits from groonga's read-lock free characteristic.
+And you might have the performance bottle neck in the storage engine in updating data.</p>
+</div>
+<div class="section" id="supported-platforms">
+<h2>1.9. Supported platforms<a class="headerlink" href="#supported-platforms" title="Permalink to this headline">¶</a></h2>
+<p>We currently support the following platforms.</p>
+<ul class="simple">
+<li>Linux x86_64 (Intel64/AMD64)</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. The characteristics of groonga storage engine</a><ul>
+<li><a class="reference internal" href="#what-is-groonga-storage-engine">1.1. What is groonga storage engine?</a></li>
+<li><a class="reference internal" href="#the-successor-of-tritonn">1.2. The successor of Tritonn</a></li>
+<li><a class="reference internal" href="#running-as-a-mysql-plugin">1.3. Running as a MySQL plugin</a></li>
+<li><a class="reference internal" href="#faster-index-update">1.4. Faster index update</a></li>
+<li><a class="reference internal" href="#faster-search">1.5. Faster search</a></li>
+<li><a class="reference internal" href="#geolocation-search">1.6. Geolocation search</a></li>
+<li><a class="reference internal" href="#sharing-the-same-groonga-storage">1.7. Sharing the same groonga storage</a></li>
+<li><a class="reference internal" href="#associate-with-other-storage-engines">1.8. Associate with other storage engines</a></li>
+<li><a class="reference internal" href="#supported-platforms">1.9. Supported platforms</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">groonga storage engine</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="next chapter">2. Installation Guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/characteristic.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="install.html" title="2. Installation Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="groonga storage engine"
+             >previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

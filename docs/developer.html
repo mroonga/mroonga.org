@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Developer&#39;s guide &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="index.html" />
+    <link rel="next" title="5.1. How to debug" href="developer/debug.html" />
+    <link rel="prev" title="4. Reference" href="reference.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="./../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../ja/docs/developer.html"><img src="static/jp.png" alt="日本語"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="developer/debug.html" title="5.1. How to debug"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="4. Reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="developer-s-guide">
+<h1>5. Developer's guide<a class="headerlink" href="#developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer/debug.html">5.1. How to debug</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/debug.html#building-for-debugging">5.1.1. Building for debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/debug.html#more-about-run-sql-test-sh">5.1.2. More about run-sql-test.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer/release.html">5.2. Release procedure (XXX not yet translated)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html#id1">5.2.1. 変更点の記述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html#id2">5.2.2. 配布用ファイルのアップロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html#id3">5.2.3. パッケージの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html#id4">5.2.4. タグを打つ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html#id5">5.2.5. ドキュメントのアップロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html#id6">5.2.6. リリースメールの送信</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="how-we-are-developing">
+<h2>5.3. How we are developing<a class="headerlink" href="#how-we-are-developing" title="Permalink to this headline">¶</a></h2>
+<p>We, the groonga storage engine development project, are doing Ticket Driven Development by using a BTS named Redmine.</p>
+<p>The location of our Redmine site is the following.</p>
+<p><a class="reference external" href="http://redmine.groonga.org/projects/show/mroonga">http://redmine.groonga.org/projects/show/mroonga</a></p>
+<p>Developments are done per ticket.</p>
+<p>We would like to ask developers to register on the site above.</p>
+</div>
+<div class="section" id="roadmaps">
+<h2>5.4. Roadmaps<a class="headerlink" href="#roadmaps" title="Permalink to this headline">¶</a></h2>
+<p>You can see our roadmaps in the following page. Generally speaking, we develop based on the roadmap.</p>
+<p><a class="reference external" href="http://redmine.groonga.org/projects/mroonga/roadmap">http://redmine.groonga.org/projects/mroonga/roadmap</a></p>
+<p>We decide our roadmaps by discussing in off-line or on-line meetings.</p>
+<p>Roadmaps specify the list of adding features in each version.</p>
+</div>
+<div class="section" id="source-code-management">
+<h2>5.5. Source code management<a class="headerlink" href="#source-code-management" title="Permalink to this headline">¶</a></h2>
+<p>We manage the source code using git on github.</p>
+<p><a class="reference external" href="http://github.com/mroonga/mroonga">http://github.com/mroonga/mroonga</a></p>
+<p>If you want to contribute, please make clone in read/write mode, and then commit and push please.</p>
+<p>If you still do not have your account on github.com, please register.</p>
+</div>
+<div class="section" id="process-of-development">
+<h2>5.6. Process of development<a class="headerlink" href="#process-of-development" title="Permalink to this headline">¶</a></h2>
+<p>We would like to develop in the following procedure.</p>
+<ol class="arabic simple">
+<li>Create a new ticket and add a description</li>
+<li>Discuss in the development meeting and update roadmaps</li>
+<li>Assign the ticket, and the assignee starts development</li>
+<li>Implement features or fix bugs, then push to the repository if needed</li>
+<li>Add and run test codes, then push to the repository</li>
+<li>Review the implementation and tests, and go back to 4. if needed</li>
+<li>Add or update documents, then push to the repository</li>
+<li>Close the ticket</li>
+</ol>
+<p>We welcome your ideas about new features or changes of specifications.
+Please create a ticket first and describe your idea there.</p>
+<p>For adding and running test codes, please refer the description below.</p>
+<p>Generally speaking, we want to ask the assignee to handle whole the process, like design, implementation, test and documentations.</p>
+<p>Then you ask other developers to review (especially in case of adding new features), and when it passes you add or update documents and the ticket can be closed.</p>
+<p>For adding and updating documents, please refer the description below.</p>
+</div>
+<div class="section" id="release">
+<h2>5.7. Release<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h2>
+<p>We release the software when all tickets of the roadmap are closed.</p>
+<p>We do the following to release.</p>
+<ul class="simple">
+<li>Create source packages</li>
+<li>Create binary packages</li>
+<li>Update documents on <a class="reference external" href="http://mroonga.github.com">http://mroonga.github.com</a></li>
+<li>Announce the release</li>
+</ul>
+<p>(This section will be moved to <a class="reference internal" href="developer/release.html"><em>Release procedure (XXX not yet translated)</em></a>).</p>
+</div>
+<div class="section" id="development-environment">
+<h2>5.8. Development environment<a class="headerlink" href="#development-environment" title="Permalink to this headline">¶</a></h2>
+<p>Currently we are assuming the following development environments.</p>
+<ul class="simple">
+<li>Linux x86_64</li>
+<li>glibc 2.5</li>
+<li>MySQL 5.5</li>
+<li>groonga 1.2</li>
+<li>Cutter 1.1 (for C/C++ unit tests)</li>
+<li>Sphinx 1.1 (for documents)</li>
+</ul>
+<p>glibc 2.5 is used in Red Hat Enterprise Linux 5.</p>
+</div>
+<div class="section" id="contents-of-the-source-tree">
+<h2>5.9. Contents of the source tree<a class="headerlink" href="#contents-of-the-source-tree" title="Permalink to this headline">¶</a></h2>
+<p>There are just a few source files for now, and we would like to keep it simple as possible.</p>
+<dl class="docutils">
+<dt>ha_mroonga.h</dt>
+<dd>The header file of groonga storage engine</dd>
+<dt>ha_mroonga.cc</dt>
+<dd>The implementation of groonga storage engine</dd>
+<dt>mrnsys.h</dt>
+<dd>The header file of utility functions</dd>
+<dt>mrnsys.c</dt>
+<dd>The implementation of utility functions</dd>
+<dt>test/sql/</dt>
+<dd>The directory for tests by SQL</dd>
+<dt>test/sql/t/</dt>
+<dd>SQL test scripts, that are also the definition of currently available SQL statements</dd>
+<dt>test/sql/r/</dt>
+<dd>The expected results of SQL tests, that are also the definition of the current specification of supported SQL</dd>
+<dt>test/unit/</dt>
+<dd>The directory for per-function unit tests by C/C++</dd>
+<dt>doc/en/</dt>
+<dd>English documents in Sphinx format</dd>
+<dt>doc/ja/</dt>
+<dd>Japanese documents in Sphinx format</dd>
+</dl>
+<p>Since we are still in the early stage of the development of groonga storage engine, we will not make the documents of the specification of SQL queries for now.</p>
+<p>Alternatively we consider our SQL tests and its expected results as the list of features and the definition of their specifications.</p>
+</div>
+<div class="section" id="adding-and-running-tests">
+<h2>5.10. Adding and running tests<a class="headerlink" href="#adding-and-running-tests" title="Permalink to this headline">¶</a></h2>
+<p>We use two kinds of regression tests to manage the quality of groonga storage engine.</p>
+<dl class="docutils">
+<dt>SQL tests</dt>
+<dd>When you add features or fix bugs that can be confirmed by SQL queries, please always add SQL tests. You might think that performance improvements cannot be confirmed with SQL, but some can be still well tested by using status variables or information_schema plugin etc.</dd>
+<dt>C/C++ unit tests</dt>
+<dd>They are function level regression tests using Cutter. When you add features that cannot differ SQL queries' results, like utility functions, please add tests here.</dd>
+</dl>
+<p>Before pushing to the repository, please always run the regression tests and confirm that you don't introduce any degradation.</p>
+<p>You can invoke these two kinds of tests by &quot;make check&quot;.</p>
+<p>SQL tests are implemented as &quot;sub test suite&quot; for &quot;mysql-test&quot; in MySQL's regression tests. For the detail about how to add test cases or how to modify expected result files, please refer the following MySQL document.</p>
+<p><a class="reference external" href="http://dev.mysql.com/doc/mysqltest/2.0/en/index.html">http://dev.mysql.com/doc/mysqltest/2.0/en/index.html</a></p>
+<p>For the detail about C/C++ unit tests, please refer the following cutter document.</p>
+<p><a class="reference external" href="http://cutter.sourceforge.net/">http://cutter.sourceforge.net/</a></p>
+</div>
+<div class="section" id="adding-and-updating-documents">
+<h2>5.11. Adding and updating documents<a class="headerlink" href="#adding-and-updating-documents" title="Permalink to this headline">¶</a></h2>
+<p>We use Sphinx for the documentation of groonga storage engine.</p>
+<p>We write documents in ReStructuredText format and we convert them to HTML etc.</p>
+<p>The source files of documents are files having .rst extension in &quot;doc/ja/source&quot; directory.</p>
+<p>When you add or modify them, please try to build by &quot;make html&quot; etc. and confirm that no syntax error happens.</p>
+<p>Documents are published in <a class="reference external" href="http://mroonga.github.com">http://mroonga.github.com</a> . Since we are using github's web site feature, they will be updated each time when HTML files are pushed to <a class="reference external" href="http://github.com/mroonga/mroonga.github.com">http://github.com/mroonga/mroonga.github.com</a> repository. We push to mroonga.github.com repository after confirming the consistency between documents and current released version.</p>
+<p>So you can just push to mroonga repository to push documents for each ticket.</p>
+<p>To avoid the issue that directory names of sphinx's output cannot be used in github, we prepare sphinx2github.sh script in &quot;doc/en/source&quot; directory. When you commit to mroonga.github.com repository, please modify sphinx's output files by using this script beforehand.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. Developer's guide</a><ul>
+<li><a class="reference internal" href="#how-we-are-developing">5.3. How we are developing</a></li>
+<li><a class="reference internal" href="#roadmaps">5.4. Roadmaps</a></li>
+<li><a class="reference internal" href="#source-code-management">5.5. Source code management</a></li>
+<li><a class="reference internal" href="#process-of-development">5.6. Process of development</a></li>
+<li><a class="reference internal" href="#release">5.7. Release</a></li>
+<li><a class="reference internal" href="#development-environment">5.8. Development environment</a></li>
+<li><a class="reference internal" href="#contents-of-the-source-tree">5.9. Contents of the source tree</a></li>
+<li><a class="reference internal" href="#adding-and-running-tests">5.10. Adding and running tests</a></li>
+<li><a class="reference internal" href="#adding-and-updating-documents">5.11. Adding and updating documents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reference.html"
+                        title="previous chapter">4. Reference</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="developer/debug.html"
+                        title="next chapter">5.1. How to debug</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/developer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="developer/debug.html" title="5.1. How to debug"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="4. Reference"
+             >previous</a> |</li>
+        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

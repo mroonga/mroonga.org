@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.2. Release procedure (XXX not yet translated) &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="../index.html" />
+    <link rel="up" title="5. Developer&#39;s guide" href="../developer.html" />
+    <link rel="prev" title="5.1. How to debug" href="debug.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/developer/release.html"><img src="../static/jp.png" alt="日本語"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="debug.html" title="5.1. How to debug"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+          <li><a href="../developer.html" accesskey="U">5. Developer's guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="release-procedure-xxx-not-yet-translated">
+<h1>5.2. Release procedure (XXX not yet translated)<a class="headerlink" href="#release-procedure-xxx-not-yet-translated" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>5.2.1. 変更点の記述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>まず <tt class="docutils literal"><span class="pre">doc/ja/source/news.rst</span></tt> に変更点をまとめます。</p>
+<p>次に、バージョンを確かめます。</p>
+<p>例えば <tt class="docutils literal"><span class="pre">git</span> <span class="pre">tag</span></tt> の結果が次のようになっていたとき</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git tag
+v0.1
+v0.2
+v0.3
+v0.3a
+v0.4
+v0.5
+v0.6
+</pre></div>
+</div>
+<p>次のようにすると、タグ <tt class="docutils literal"><span class="pre">v0.6</span></tt> 以降のコミットを閲覧できます。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git log -p --reverse v0.6..
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>5.2.2. 配布用ファイルのアップロード<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>次に、配布用の <tt class="docutils literal"><span class="pre">tar.gz</span></tt> ファイルを作成します。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make dist
+</pre></div>
+</div>
+<p>そして、作成された <tt class="docutils literal"><span class="pre">tar.gz</span></tt> ファイルを <a class="reference external" href="https://github.com/mroonga/mroonga/downloads">https://github.com/mroonga/mroonga/downloads</a> よりアップロードします。</p>
+</div>
+<div class="section" id="id3">
+<h2>5.2.3. パッケージの作成<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Linux 用にパッケージを作成する必要があります。パッケージは以下の 2 種類に分けることが可能です。</p>
+<ol class="arabic simple">
+<li>Debian 系</li>
+<li>Red Hat 系</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">現在のところ、パッケージの作成は Debian GNU/Linux (Ubuntu も可) でしか行えません。</p>
+</div>
+<div class="section" id="debian">
+<h3>5.2.3.1. Debian 系<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>以下の作業は初回パッケージ作成時のみ必要です。初回パッケージ作成時にはパッケージ作成に必要なソフトウェアをインストールします。:</p>
+<div class="last highlight-none"><div class="highlight"><pre>$ sudo apt-get install -y debootstrap
+</pre></div>
+</div>
+</div>
+<p>まず apt ディレクトリに移動します。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ cd apt
+</pre></div>
+</div>
+<p>その後、次のようにすれば一連のリリース作業（build update sign upload）が行われますが、途中で失敗することもあります。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make release
+</pre></div>
+</div>
+<p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make build
+$ make update
+$ make sign
+$ make upload
+</pre></div>
+</div>
+<p>make build に PARALLEL=yes とするとビルドが並列に走り、作業がより高速に行えます。</p>
+<p>また make build CODES=lucid などとすると、ビルド対象を指定することができます。</p>
+<p>このように Makefile.am を書き換えずにコマンドライン引数でビルドの挙動を変更する方法は、知っておいて損はないでしょう。</p>
+</div>
+<div class="section" id="red-hat">
+<h3>5.2.3.2. Red Hat 系<a class="headerlink" href="#red-hat" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>以下の作業は初回パッケージ作成時のみ必要です。初回パッケージ作成時にはパッケージ作成に必要なソフトウェアをインストールします。:</p>
+<div class="last highlight-none"><div class="highlight"><pre>$ sudo apt-get install -y rinse createrepo rpm
+</pre></div>
+</div>
+</div>
+<p>まず yum ディレクトリに移動する。</p>
+<p>その後、次のようにすれば一連のリリース作業（build sign update upload）が行われますが、途中で失敗することもあります。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make release
+</pre></div>
+</div>
+<p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make build
+$ make sign
+$ make update
+$ make upload
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>5.2.4. タグを打つ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">tag</span></tt> とするとタグが打たれます。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make tag
+$ git push --tags origin
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>5.2.5. ドキュメントのアップロード<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>GitHub からドキュメントアップロード用のリポジトリ (mroonga.github.com) を clone</li>
+<li>mroonga/doc/ja/sphinx2github.sh を実行し mroonga/doc/ja/html 内のディレクトリ名を GitHub (Jekyll) 用に変更</li>
+<li>mroonga/doc/ja/html 内のファイルを 1. で clone した mroonga.github.com にコピー</li>
+<li>mroonga.github.com へコミットを行い GitHub へ push</li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h2>5.2.6. リリースメールの送信<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>メーリングリスト (<a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a>) にリリースメールを流します。メッセージ内容のテンプレートを以下に示します。</p>
+<div class="highlight-none"><div class="highlight"><pre>ドキュメント(インストールガイド含む)
+  http://mroonga.github.com/
+
+ダウンロード
+  http://github.com/mroonga/mroonga/downloads
+
+groongaストレージエンジンとは、全文検索エンジンであるgroonga
+をベースとしたMySQLのストレージエンジンです。Tritonnの後継プ
+ロジェクトとなります。
+
+
+最近のトピックス
+================
+
+# &lt;&lt;&lt;ユーモアを交えて最近のトピックスを&gt;&gt;&gt;
+
+先月開催されたMySQL Conference 2011でgroongaストレージエンジ
+ンについて発表してきました。（私じゃなくて開発チームのみなさ
+んが。）英語ですが、以下の発表資料があるので興味がある方はご
+覧ください。
+
+  http://groonga.org/ja/publication/
+
+
+いろいろ試してくれている方もいらっしゃるようでありがとうござ
+います。いちいさんなど使った感想を公開してくれていてとても参
+考になります。ありがとうございます。
+  http://d.hatena.ne.jp/ichii386/20110427/1303852054
+
+（↓の変更点にあるとおり、今回のリリースからauto_increment機
+能が追加されています。）
+
+
+ただ、「REPLACE INTO処理が完了せずにコネクションを消費する」
+のようなバグレポートがあるように、うまく動かないケースもある
+ようなので、試していただける方は注意してください。
+  http://redmine.groonga.org/issues/910
+
+今日リリースしたgroonga 1.2.2でマルチスレッド・マルチプロセ
+ス時にデータ破損してしまう問題を修正しているので、最新の
+groongaと組み合わせると問題が解決しているかもしれません。
+
+使ってみて、なにか問題があったら報告してもらえると助かります。
+
+# &lt;&lt;&lt;&lt;以下 news.rst に書かれている内容を貼り付ける&gt;&gt;&gt;
+
+変更点
+======
+
+0.5からの変更点は以下の通りです。
+  http://mroonga.github.com/news.html#release-0-6
+
+改良
+----
+
+    auto_increment機能の追加。#670
+    不必要な”duplicated _id on insert”というエラーメッセージを抑制。 #910（←は未修正）
+    CentOSで利用しているMySQLのバージョンを5.5.10から5.5.12へアップデート。
+    Ubuntu 11.04 Natty Narwhalサポートの追加。
+    Ubuntu 10.10 Maverick Meerkatサポートの削除。
+    Fedora 15サポートの追加。
+    Fedora 14サポートの削除。
+
+修正
+----
+
+    ORDER BY LIMITの高速化が機能しないケースがある問題の修正。#845
+    デバッグビルド時のメモリリークを修正。
+    提供しているCentOS用パッケージをOracle提供MySQLパッケージと一緒に使うとクラッシュする問題を修正。
+
+感謝
+----
+
+    Mitsuhiro Shibuyaさん
+    Hiroki Minetaさん
+    @kodakaさん
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.2. Release procedure (XXX not yet translated)</a><ul>
+<li><a class="reference internal" href="#id1">5.2.1. 変更点の記述</a></li>
+<li><a class="reference internal" href="#id2">5.2.2. 配布用ファイルのアップロード</a></li>
+<li><a class="reference internal" href="#id3">5.2.3. パッケージの作成</a><ul>
+<li><a class="reference internal" href="#debian">5.2.3.1. Debian 系</a></li>
+<li><a class="reference internal" href="#red-hat">5.2.3.2. Red Hat 系</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">5.2.4. タグを打つ</a></li>
+<li><a class="reference internal" href="#id5">5.2.5. ドキュメントのアップロード</a></li>
+<li><a class="reference internal" href="#id6">5.2.6. リリースメールの送信</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="debug.html"
+                        title="previous chapter">5.1. How to debug</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/developer/release.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="debug.html" title="5.1. How to debug"
+             >previous</a> |</li>
+        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+          <li><a href="../developer.html" >5. Developer's guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

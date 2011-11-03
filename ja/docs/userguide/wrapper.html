@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.3.2. ラッパーモード &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="../index.html" />
+    <link rel="up" title="3. ユーザガイド" href="../userguide.html" />
+    <link rel="next" title="4. リファレンス" href="../reference.html" />
+    <link rel="prev" title="3.3.1. ストレージモード" href="storage.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/userguide/wrapper.html"><img src="../static/us.png" alt="English"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../reference.html" title="4. リファレンス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="storage.html" title="3.3.1. ストレージモード"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" accesskey="U">3. ユーザガイド</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="wrapper-mode">
+<h1>3.3.2. ラッパーモード<a class="headerlink" href="#wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>ここでは groonga ストレージエンジンにおけるラッパーモードの利用方法を説明します。</p>
+<div class="section" id="how-to-use-wrapper-mode">
+<h2>3.3.2.1. ラッパーモードの利用方法<a class="headerlink" href="#how-to-use-wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで groonga ストレージエンジンが動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> のように指定するようになっています。</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">現在のところ、ラッパーモードではテーブルに必ずプライマリーキーを設定する必要があります。ストレージモードはこの限りではありません。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">ラッパーモードでは現在ストレージモードでサポートされていない、以下をサポートしています。</p>
+</div>
+</div>
+<div class="section" id="how-to-use-full-text-search">
+<h2>3.3.2.2. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">groonga</span></tt> とgroongaストレージエンジンを指定するところがポイントです。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
+    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
+    -&gt;   content VARCHAR(255),
+    -&gt;   FULLTEXT INDEX (content)
+    -&gt; ) ENGINE = groonga COMMENT = &#39;engine &quot;innodb&quot;&#39; DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.52 sec)
+</pre></div>
+</div>
+<p>INSERTでデータを投入してみましょう。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;明日の天気は晴れでしょう。&quot;);
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; INSERT INTO diaries (content) VALUES (&quot;明日の天気は雨でしょう。&quot;);
+Query OK, 1 row affected (0.00 sec)
+</pre></div>
+</div>
+<p>全文検索を実行してみます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;晴れ&quot;);
++----+-----------------------------------------+
+| id | content                                 |
++----+-----------------------------------------+
+|  1 | 明日の天気は晴れでしょう。 |
++----+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>おぉぉー。検索できましたね。</p>
+</div>
+<div class="section" id="how-to-get-search-score">
+<h2>3.3.2.3. 検索スコアの取得方法<a class="headerlink" href="#how-to-get-search-score" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
+<p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference" href="#score" id="id1">[]</a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
+<p>それでは実際にやってみましょう。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;今日は晴れました。明日も晴れるでしょう。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO diaries (content) VALUES (&quot;今日は晴れましたが、明日は雨でしょう。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
++----+--------------------------------------------------------------+------------------------------------+
+| id | content                                                      | MATCH (content) AGAINST (&quot;晴れ&quot;) |
++----+--------------------------------------------------------------+------------------------------------+
+|  3 | 今日は晴れました。明日も晴れるでしょう。 |                                  2 |
+|  1 | 明日の天気は晴れでしょう。                      |                                  1 |
+|  4 | 今日は晴れましたが、明日は雨でしょう。    |                                  1 |
++----+--------------------------------------------------------------+------------------------------------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>検索対象の文字列 <tt class="docutils literal"><span class="pre">晴れ</span></tt> をより多く含む、すなわち検索スコアの高い <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></tt> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
+<p>属性名を変更したい場合は <tt class="docutils literal"><span class="pre">AS</span></tt> を使って下さい。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
++----+--------------------------------------------------------------+------------------------------------+
+| id | content                                                      | MATCH (content) AGAINST (&quot;晴れ&quot;) |
++----+--------------------------------------------------------------+------------------------------------+
+|  3 | 今日は晴れました。明日も晴れるでしょう。 |                                  2 |
+|  1 | 明日の天気は晴れでしょう。                      |                                  1 |
+|  4 | 今日は晴れましたが、明日は雨でしょう。    |                                  1 |
++----+--------------------------------------------------------------+------------------------------------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-specify-the-parser-for-full-text-search">
+<h2>3.3.2.4. 全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MySQLは全文検索用のパーサ <a class="footnote-reference" href="#parser" id="id1">[]</a> を指定する以下のような構文を持っています。:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
+</pre></div>
+</div>
+<p>しかし、この構文を利用する場合は、あらかじめすべてのパーサをMySQLに登録しておく必要があります。一方、groongaはトークナイザー（MySQLでいうパーサ）を動的に追加することができます。そのため、groognaストレージエンジンでもこの構文を採用するとgroonga側に動的に追加されたトークナイザーに対応できなくなります。groongaに動的に追加されるトークナイザーにはMeCabを用いたトークナイザーもあり、この制限に縛られることは利便性を損なうと判断し、以下のようなコメントを用いた独自の構文を採用することにしました。:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last"><tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> に <tt class="docutils literal"><span class="pre">COMMENT</span></tt> を指定できるのはMySQL 5.5からになります。MySQL 5.1を利用している場合は後述の <tt class="docutils literal"><span class="pre">groonga_default_parser</span></tt> 変数を利用してください。</p>
+</div>
+<p>パーサに指定できるのは以下の値です。</p>
+<dl class="docutils">
+<dt>TokenBigram</dt>
+<dd><p class="first">バイグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、3文字以上のトークンも存在する。これはノイズを減らすためである。</p>
+<p class="last">デフォルト値。</p>
+</dd>
+<dt>TokenMecab</dt>
+<dd>MeCabを用いてトークナイズする。groongaがMeCabサポート付きでビルドされている必要がある。</dd>
+<dt>TokenBigramSplitSymbol</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramと異なり、記号が連続していても特別扱いして1つのトークンとして扱わず通常のバイグラムの処理を行う。</p>
+<p class="last">TokenBigramではなくTokenBigramSplitSymbolを利用すると「Is it really!?!?!?」の「!?!?!?」の部分に「!?」でマッチする。TokenBigramの場合は「!?!?!?」でないとマッチしない。</p>
+</dd>
+<dt>TokenBigramSplitSymbolAlpha</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolに加えて、連続したアルファベットも特別扱いせずに通常のバイグラムの処理を行う。</p>
+<p class="last">TokenBigramではなくTokenBigramSplitSymbolAlphaを利用すると「Is it really?」に「real」でマッチする。TokenBigramの場合は「really」でないとマッチしない。</p>
+</dd>
+<dt>TokenBigramSplitSymbolAlphaDigit</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolAlphaに加えて、連続した数字も特別扱いせずに通常のバイグラムの処理を行う。つまり、すべての字種を特別扱いせずにバイグラムの処理を行う。</p>
+<p class="last">TokenBigramではなくTokenBigramSplitSymbolAlphaDigitを利用すると「090-0123-4567」に「567」でマッチする。TokenBigramの場合は「4567」でないとマッチしない。</p>
+</dd>
+<dt>TokenBigramIgnoreBlank</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramと異なり、空白を無視して処理する。</p>
+<p class="last">TokenBigramではなくTokenBigramIgnoreBlankを利用すると「み な さ ん 注 目」に「みなさん」でマッチする。TokenBigramの場合は「み な さ ん」でないとマッチしない。</p>
+</dd>
+<dt>TokenBigramIgnoreBlankSplitSymbol</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolと異なり、空白を無視して処理する。</p>
+<p class="last">TokenBigramSplitSymbolではなくTokenBigramIgnoreBlankSplitSymbolを利用すると「! !? ??」に「???」でマッチする。TokenBigramSplitSymbolの場合は「? ??」でないとマッチしない。</p>
+</dd>
+<dt>TokenBigramIgnoreBlankSplitSymbolAlpha</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolAlphaと異なり、空白を無視して処理する。</p>
+<p class="last">TokenBigramSplitSymbolAlphaではなくTokenBigramIgnoreBlankSplitSymbolAlphaを利用すると「I am a pen.」に「ama」でマッチする。TokenBigramSplitSymbolAlphaの場合は「am a」でないとマッチしない。</p>
+</dd>
+<dt>TokenBigramIgnoreBlankSplitSymbolAlphaDigit</dt>
+<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolAlphaDigitと異なり、空白を無視して処理する。</p>
+<p class="last">okenBigramSplitSymbolAlphaDigitではなくTokenBigramIgnoreBlankSplitSymbolAlphaDigitを利用すると「090 0123 4567」に「9001」でマッチする。TokenBigramSplitSymbolAlphaDigitの場合は「90 01」でないとマッチしない。</p>
+</dd>
+<dt>TokenDelimit</dt>
+<dd><p class="first">空白区切りでトークナイズする。</p>
+<p class="last">「映画 ホラー 話題」は「映画」・「ホラー」・「話題」にトークナイズされる。</p>
+</dd>
+<dt>TokenDelimitNull</dt>
+<dd><p class="first">null文字（\0）区切りでトークナイズする。</p>
+<p class="last">「映画\0ホラー\0話題」は「映画」・「ホラー」・「話題」にトークナイズされる。</p>
+</dd>
+<dt>TokenUnigram</dt>
+<dd>ユニグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、2文字以上のトークンも存在する。これはノイズを減らすためである。</dd>
+<dt>TokenTrigram</dt>
+<dd>トリグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、4文字以上のトークンも存在する。これはノイズを減らすためである。</dd>
+</dl>
+<p>デフォルトのパーサは <tt class="docutils literal"><span class="pre">configure</span></tt> の <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> オプションでビルド時に指定することができます。:</p>
+<div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
+</pre></div>
+</div>
+<p>デフォルトのパーサは <tt class="docutils literal"><span class="pre">configure</span></tt> の <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> オプションでビルド時に指定することができます。::また、my.cnfまたはSQL内で <tt class="docutils literal"><span class="pre">groonga_default_parser</span></tt> 変数を指定することでも指定できます。my.cnfで指定するとMySQLを再起動しても値は変更されたままですが、反映させるために再起動しなければいけません。一方、SQLで指定した場合はすぐに設定が反映されますが、MySQLが再起動すると設定は失われます。</p>
+<p>my.cnf:</p>
+<div class="highlight-none"><div class="highlight"><pre>[mysqld]
+groonga_default_parser=TokenMecab
+</pre></div>
+</div>
+<p>SQL:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET GLOBAL groonga_default_parser = TokenMecab;
+Query OK, 0 rows affected (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>3.3.2.5. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groongaストレージエンジンではデフォルトでログの出力を行うようになっています。</p>
+<p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
+<p>以下はログの出力例です。</p>
+<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|groonga-storage-engine started.
+2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
+2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
+</pre></div>
+</div>
+<p>ログのデフォルトの出力レベルはNOTICE（必要な情報のみ出力。デバッグ情報などは出力しない）となっております。</p>
+<p>ログの出力レベルは <tt class="docutils literal"><span class="pre">groonga_log_level</span></tt> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+--------+
+| Variable_name     | Value  |
++-------------------+--------+
+| groonga_log_level | NOTICE |
++-------------------+--------+
+1 row in set (0.00 sec)
+
+mysql&gt; SET GLOBAL groonga_log_level=DUMP;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
++-------------------+-------+
+| Variable_name     | Value |
++-------------------+-------+
+| groonga_log_level | DUMP  |
++-------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>設定可能なログレベルは以下の通りです。</p>
+<ul class="simple">
+<li>NONE</li>
+<li>EMERG</li>
+<li>ALERT</li>
+<li>CRIT</li>
+<li>ERROR</li>
+<li>WARNING</li>
+<li>NOTICE</li>
+<li>INFO</li>
+<li>DEBUG</li>
+<li>DUMP</li>
+</ul>
+<p>またFLUSH LOGSでログの再オープンを行うことができます。MySQLサーバを停止せずにログのローテートを行いたいような場合には、以下の手順で実行すると良いでしょう。</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">groonga.log</span></tt> ファイルの名前を変更（OSコマンドのmvなどで）</li>
+<li>MySQLサーバに対して&quot;FLUSH LOGS&quot;を実行（mysqlコマンドあるいはmysqladminコマンドにて）</li>
+</ol>
+</div>
+<div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
+<h2>3.3.2.6. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
+<p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
+<p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
+<p>groongaストレージエンジンでも ORDER BY LIMIT を高速化するための仕組みを実装しています。</p>
+<p>例えば以下のSELECT文では ORDER BY LIMIT は、groonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
+</pre></div>
+</div>
+<p>行カウント高速化の処理が行われたかどうかはステータス変数で確認することもできます。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;groonga_fast_order_limit&#39;;
++--------------------------+-------+
+| Variable_name            | Value |
++--------------------------+-------+
+| groonga_fast_order_limit | 1     |
++--------------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>ORDER BY LIMIT 高速化の処理が行われる度に <tt class="docutils literal"><span class="pre">groonga_fast_order_limit</span></tt> ステータス変数がインクリメントされます。</p>
+<p>備考：この高速化機能は、「select ... match against order by _score desc limit X, Y」を狙い撃ちした高速化で、現在のところ以下の条件が成立した場合に機能します。</p>
+<ul class="simple">
+<li>where句がmatch...againstのみ</li>
+<li>joinしていない</li>
+<li>limitの指定がある</li>
+<li>order byの指定がカラム(_id含む)またはwhere句に指定したmatch...againstである</li>
+</ul>
+<p class="rubric">脚注</p>
+<table class="docutils footnote" frame="void" id="score" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 リファレンスマニュアル :: 11 関数と演算子 :: 11.7 全文検索関数</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="parser" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>groongaではトークナイザーと呼んでいる。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.3.2. ラッパーモード</a><ul>
+<li><a class="reference internal" href="#how-to-use-wrapper-mode">3.3.2.1. ラッパーモードの利用方法</a></li>
+<li><a class="reference internal" href="#how-to-use-full-text-search">3.3.2.2. 全文検索の利用方法</a></li>
+<li><a class="reference internal" href="#how-to-get-search-score">3.3.2.3. 検索スコアの取得方法</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.3.2.4. 全文検索用パーサの変更</a></li>
+<li><a class="reference internal" href="#logging">3.3.2.5. ログ出力</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.2.6. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="storage.html"
+                        title="前の章へ">3.3.1. ストレージモード</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../reference.html"
+                        title="次の章へ">4. リファレンス</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/userguide/wrapper.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../reference.html" title="4. リファレンス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="storage.html" title="3.3.1. ストレージモード"
+             >前へ</a> |</li>
+        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+          <li><a href="../userguide.html" >3. ユーザガイド</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>groonga storage engine &mdash; groonga storage engine v1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="#" />
+    <link rel="next" title="1. The characteristics of groonga storage engine" href="characteristic.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
+    <meta property="og:site_name" content="groonga storage engine" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="./../">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../ja/docs/index.html"><img src="static/jp.png" alt="日本語"></a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="characteristic.html" title="1. The characteristics of groonga storage engine"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="groonga-storage-engine">
+<h1>groonga storage engine<a class="headerlink" href="#groonga-storage-engine" title="Permalink to this headline">¶</a></h1>
+<p>For the release history: <a class="reference internal" href="news.html"><em>News</em></a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="characteristic.html">1. The characteristics of groonga storage engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#what-is-groonga-storage-engine">1.1. What is groonga storage engine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#the-successor-of-tritonn">1.2. The successor of Tritonn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#running-as-a-mysql-plugin">1.3. Running as a MySQL plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#faster-index-update">1.4. Faster index update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#faster-search">1.5. Faster search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#geolocation-search">1.6. Geolocation search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#sharing-the-same-groonga-storage">1.7. Sharing the same groonga storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#associate-with-other-storage-engines">1.8. Associate with other storage engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#supported-platforms">1.9. Supported platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">2. Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#debian-gnu-linux-squeeze">2.1. Debian GNU/Linux squeeze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#debian-gnu-linux-wheezy">2.2. Debian GNU/Linux wheezy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ubuntu-10-04-lts-lucid-lynx">2.4. Ubuntu 10.04 LTS Lucid Lynx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ubuntu-11-04-natty-narwhal">2.5. Ubuntu 11.04 Natty Narwhal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#ubuntu-11-10-oneiric-ocelot">2.6. Ubuntu 11.10 Oneiric Ocelot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#centos-5">2.7. CentOS 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#centos-6">2.8. CentOS 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#fedora-15">2.9. Fedora 15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#install-from-the-source-code">2.10. Install from the source code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#japanese-morphological-analysis-system-mecab">2.10.1. Japanese morphological analysis system (MeCab)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#download">2.10.2. Download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#requirements">2.10.3. Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#install-mysql">2.10.4. Install MySQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#install-groonga">2.10.5. Install groonga</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#build-groonga-storage-engine">2.10.6. Build groonga storage engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#install-groonga-storage-engine">2.10.7. Install groonga storage engine</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">3. User's guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide.html#how-to-check-the-installation">3.1. How to check the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide.html#running-modes">3.2. Running modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide.html#usage-of-each-mode">3.3. Usage of each mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userguide/storage.html">3.3.1. Storage mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userguide/wrapper.html">3.3.2. Wrapper mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">4. Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-available-sql-commands">4.1. List of available SQL commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-server-variables">4.2. List of server variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-status-variables">4.3. List of status variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-count-skip">4.3.1. groonga_count_skip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-fast-order-limit">4.3.2. groonga_fast_order_limit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">5. Developer's guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/debug.html">5.1. How to debug</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/debug.html#building-for-debugging">5.1.1. Building for debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/debug.html#more-about-run-sql-test-sh">5.1.2. More about run-sql-test.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html">5.2. Release procedure (XXX not yet translated)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#id1">5.2.1. 変更点の記述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#id2">5.2.2. 配布用ファイルのアップロード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#id3">5.2.3. パッケージの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#id4">5.2.4. タグを打つ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#id5">5.2.5. ドキュメントのアップロード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#id6">5.2.6. リリースメールの送信</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#how-we-are-developing">5.3. How we are developing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#roadmaps">5.4. Roadmaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#source-code-management">5.5. Source code management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#process-of-development">5.6. Process of development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#release">5.7. Release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#development-environment">5.8. Development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#contents-of-the-source-tree">5.9. Contents of the source tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#adding-and-running-tests">5.10. Adding and running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#adding-and-updating-documents">5.11. Adding and updating documents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices">
+<h1>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">groonga storage engine</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices">Indices</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="characteristic.html"
+                        title="next chapter">1. The characteristics of groonga storage engine</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="characteristic.html" title="1. The characteristics of groonga storage engine"
+             >next</a> |</li>
+        <li><a href="#">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, groonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
