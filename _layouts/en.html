@@ -1,0 +1,92 @@
+---
+site_title: Groonga storage engine
+author: The groonga project
+layout: skeleton
+language: en
+country: US
+---
+<header id="header">
+  <div class="title">
+    <a href="/">
+      <span class="project">Groonga storage engine</span>
+      <span class="separator">-</span>
+      <span class="description">{{ page.title }}</span>
+    </a>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="/docs/">Documentation</a></li>
+      <li><a href="/publication/">Publication</a></li>
+      <li><a href="/related-projects.html">Related Projects</a></li>
+      <li><a href="/docs/community.html">Community</a></li>
+      <li><a href="/docs/contribution.html">Contribution</a></li>
+      <li><a href="/en/blog/">Blog</a></li>
+    </ul>
+  </nav>
+
+  <div class="facebook-buttons">
+    <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+             layout="standard"
+             width="290"></fb:like>
+  </div>
+
+  <div class="other-language-links">
+    <ul>
+      {% capture relative_path %}
+        {% if page.relative_path %}
+          /{{ page.relative_path }}
+        {% else %}
+          {{ page.url | remove:'index.html' }}
+        {% endif %}
+      {% endcapture %}
+      <li><a href="/ja{{ relative_path | remove:' ' | strip_newlines }}" alt="日本語" title="日本語"><img src="/images/jp.png"></a></li>
+    </ul>
+  </div>
+</header>
+
+{% if page.no_sidebar %}
+  {{ content }}
+{% else %}
+<div id="body">
+  {% capture title_heading %}
+    {% if page.heading %}
+      {{ page.heading }}
+    {% else %}
+      {{ page.title }}
+    {% endif %}
+  {% endcapture %}
+  <h1 id="title">{{ title_heading | remove:' ' | strip_newlines }}</h1>
+  <div id="content">
+    {{ content }}
+  </div>
+  <div id="sidebar">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/docs/">Documentation</a></li>
+      <li><a href="/related-projects.html">Related Projects</a></li>
+      <li><a href="/publication/">Publication</a></li>
+      <li><a href="/docs/community.html">Community</a></li>
+      <li><a href="/docs/contribution.html">Contribution</a></li>
+      <li><a href="/en/blog/">Blog</a></li>
+    </ul>
+    <h2>The Latest Posts</h2>
+    <ul>
+      {% for post in site.posts %}
+        {% if post.categories contains "en" %}
+        <li>
+          <a href="{{ post.url }}">{{ post.title }}</a>
+          <span class="date">({{ post.date | date: "%Y-%m-%d" }})</span>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+<footer id="footer">
+  <address>&copy; The groonga project.</address>
+  <p class="license">Groonga storage engine is released under <a href="http://www.opensource.org/licenses/lgpl-2.1.php">the GNU Lesser General Public License version 2.1</a>.</p>
+</footer>

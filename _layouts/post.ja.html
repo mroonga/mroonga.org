@@ -1,0 +1,48 @@
+---
+layout: ja
+heading: mroongaブログ
+heading_link: /ja/blog/
+relative_path: blog/
+---
+<div class="post">
+  <span class="date"><a href="{{ page.url }}" title="{{ page.title | escape }} ({{ page.date | date: '%Y-%m-%d' }})">{{ page.date | date: "%Y-%m-%d" }}</a></span>
+  {{ content }}
+  <div class="social-widgets">
+    <div class="inline-widgets">
+      <g:plusone href="{{ site.url }}{{ page.url }}" size="medium"></g:plusone>
+      <a href="http://b.hatena.ne.jp/entry/{{ site.url }}{{ page.url }}"
+         class="hatena-bookmark-button"
+         data-hatena-bookmark-layout="standard"
+         title="このエントリーをはてなブックマークに追加"
+         ><img src="http://b.st-hatena.com/images/entry-button/button-only.gif"
+             width="20"
+             height="20"
+             style="border: none;"
+             alt="このエントリーをはてなブックマークに追加" /></a>
+      <a href="http://twitter.com/share"
+         class="twitter-share-button"
+         data-lang="ja"
+         data-url="{{ site.url }}{{ page.url }}"
+         data-text="{{ page.title | escape }} ({{ page.date | date: '%Y-%m-%d' }}">ツイートする</a>
+    </div>
+    <fb:like layout="standard"
+             width="450"
+             href="{{ site.url }}{{ page.url }}"></fb:like>
+  </div>
+</div>
+
+{% if site.related_posts != empty %}
+<--
+<section id="related">
+  <h2>関連記事</h2>
+  <ul class="posts">
+    {% for post in site.related_posts limit:3 %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+      <span class="date">({{ post.date | date: "%Y-%m-%d" }})</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+-->
+{% endif %}

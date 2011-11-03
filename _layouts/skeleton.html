@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="{{ page.language }}">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>{{ page.site_title }} - {{ page.title }}</title>
+  <meta name="author" content="{{ page.author }}" />
+
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.png" />
+
+  <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+  <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+  <meta property="og:type" content="product" />
+  <meta property="og:image" content="{{ site.url }}/images/groonga-storage-engine.png" />
+  <meta property="og:site_name" content="{{ page.site_title }}" />
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+  <!-- Homepage CSS -->
+  <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+{% case page.language %}
+{% when "en" %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/en/blog/index.rdf" />
+{% when "ja" %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/ja/blog/index.rdf" />
+{% endcase %}
+
+{% if page.language == "ja" %}
+  <script type="text/javascript" src="http://s.hatena.ne.jp/js/HatenaStar.js"></script>
+  <script type="text/javascript">
+    Hatena.Star.SiteConfig = {
+      entryNodes: {
+        'div.post': {
+          uri: 'span.date a',
+          title: 'h2',
+          container: 'h2'
+        }
+      }
+    };
+    (function() {
+      if (!window.addEventListener) {
+        return;
+      }
+
+      var NodeInsert = function(evt) {
+        Hatena.Star.EntryLoader.loadNewEntries(evt.target);
+      };
+      window.addEventListener('AutoPagerize_DOMNodeInserted', NodeInsert, false);
+      window.addEventListener('AutoPatchWork.DOMNodeInserted', NodeInsert, false);
+    })();
+  </script>
+{% endif %}
+</head>
+<body>
+  <div id="fb-root"></div>
+  {{ content }}
+
+  <script type="text/javascript"
+          src="http://b.st-hatena.com/js/bookmark_button.js"
+          charset="utf-8"
+          async="async"></script>
+  <script src="http://platform.twitter.com/widgets.js"
+          type="text/javascript"></script>
+  <script type="text/javascript" src="http://apis.google.com/js/plusone.js">
+    {lang: '{{ page.language }}'}
+  </script>
+  <script src="http://connect.facebook.net/{{ page.language }}_{{ page.country }}/all.js"></script>
+
+  <script>
+    FB.init({
+       appId  : null,
+       status : true, // check login status
+       cookie : true, // enable cookies to allow the server to access the session
+       xfbml  : true  // parse XFBML
+    });
+  </script>
+</body>
+</html>
