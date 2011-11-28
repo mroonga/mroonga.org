@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.1. Storage mode &mdash; groonga storage engine v1.0.2 documentation</title>
+    <title>3.3.1. Storage mode &mdash; mroonga v1.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0.2',
+        VERSION:     '1.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v1.10 documentation" href="../index.html" />
     <link rel="up" title="3. User&#39;s guide" href="../userguide.html" />
     <link rel="next" title="3.3.2. Wrapper mode" href="wrapper.html" />
     <link rel="prev" title="3. User&#39;s guide" href="../userguide.html" /> 
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="../userguide.html" title="3. User&#39;s guide"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v1.10 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" accesskey="U">3. User's guide</a> &raquo;</li> 
       </ul>
     </div>  
@@ -87,10 +87,10 @@
             
   <div class="section" id="storage-mode">
 <h1>3.3.1. Storage mode<a class="headerlink" href="#storage-mode" title="Permalink to this headline">¶</a></h1>
-<p>Here we explain how to use storage mode of groonga storage engine.</p>
+<p>Here we explain how to use storage mode of mroonga</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.3.1.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify groonga storage engine by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">groonga</span></tt>.</p>
+<p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">groonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
@@ -123,7 +123,7 @@ Query OK, 1 row affected (0.00 sec)
 <h2>3.3.1.2. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In version 1.0.0 or before, groonga storage engine used a special column named <tt class="docutils literal"><span class="pre">_score</span></tt> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
+<p class="last">In version 1.0.0 or before, mroonga used a special column named <tt class="docutils literal"><span class="pre">_score</span></tt> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
 </div>
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
@@ -165,7 +165,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WH
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
-<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in groonga storage engine, tokenisers that are added in groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
+<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in mroonga, tokenisers that are added in groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
@@ -222,7 +222,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WH
 <dt>TokenTrigram</dt>
 <dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
 </dl>
-<p>You can specify the default parser by passing <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> option in <tt class="docutils literal"><span class="pre">configure</span></tt> when you build groonga storage engine.</p>
+<p>You can specify the default parser by passing <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> option in <tt class="docutils literal"><span class="pre">configure</span></tt> when you build mroonga</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
 </pre></div>
 </div>
@@ -276,8 +276,8 @@ Query OK, 1 row affected (0.00 sec)
 </div>
 <div class="section" id="how-to-get-the-record-id">
 <h2>3.3.1.5. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
-<p>groonga assigns a unique number to identify the record when a record is added in the table.</p>
-<p>To make the development of applications easier, you can get this record ID by SQL in groonga storage engine.</p>
+<p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
+<p>To make the development of applications easier, you can get this record ID by SQL in mroonga</p>
 <p>To get the record ID, you need to create a column named <tt class="docutils literal"><span class="pre">_id</span></tt> when you create a table.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE memos (
     -&gt;   _id INT,
@@ -330,7 +330,7 @@ mysql&gt; SELECT last_insert_grn_id();
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>last_insert_grn_id function is included in groonga storage engine as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
+<p>last_insert_grn_id function is included in mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
 </pre></div>
 </div>
@@ -343,10 +343,10 @@ Rows matched: 1  Changed: 1  Warnings: 0
 </div>
 <div class="section" id="logging">
 <h2>3.3.1.6. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
-<p>groonga storage engine outputs the logs by default.</p>
+<p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
 <p>Here is the example of the log.</p>
-<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|groonga-storage-engine started.
+<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
@@ -394,8 +394,8 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
 </div>
 <div class="section" id="choosing-appropriate-columns">
 <h2>3.3.1.7. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
-<p>groonga uses one file per column to store data, and groonga storage engine accesses needed columns only when accessing a table to utilise this characteristic.</p>
-<p>This optimisation is done automatically in groonga storage engine internal, you don't need any specific configuration.</p>
+<p>Groonga uses one file per column to store data, and mroonga accesses needed columns only when accessing a table to utilise this characteristic.</p>
+<p>This optimisation is done automatically in mroonga internal, you don't need any specific configuration.</p>
 <p>Imagine that we have a table with 20 columns like below.</p>
 <div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
   c1 INT PRIMARY KEY AUTO_INCREMENT,
@@ -409,7 +409,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
 ) ENGINE = groonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
-<p>When we run SELECT phrase like the following, groonga storage engine reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
+<p>When we run SELECT phrase like the following, mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
 <blockquote>
 <div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
 <p>In this case above, only columns c1, c2, c11 and c12 are accessed, and we can process the SQL rapidly.</p>
@@ -417,8 +417,8 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
 <div class="section" id="optimisation-for-counting-rows">
 <h2>3.3.1.8. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
 <p>In MySQL's storage engine interface, there is no difference between counting rows like COUNT(*) and normal data retrieving by SELECT. So access to data that is not included in SELECT result can happen even if you just want to count rows.</p>
-<p>Tritonn (MySQL + Senna), that is groonga storage engine's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
-<p>Groonga storage engine also has the optimisation for counting rows.</p>
+<p>Tritonn (MySQL + Senna), that is mroonga's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
+<p>Mroonga also has the optimisation for counting rows.</p>
 <p>In the following SELECT, for example, needless read of columns are skipped and you can get the result of counting rows with the minimal cost.</p>
 <blockquote>
 <div>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;);</div></blockquote>
@@ -440,7 +440,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
 <p>Generally speaking, MySQL can process &quot;ORDER BY&quot; query with almost no cost if we can get records by index, and can process &quot;LIMIT&quot; with low cost by limiting the range of processing data even if the number of query result is very big.</p>
 <p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
 <p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
-<p>Groonga storage engine also has the optimisation for ORDER BY LIMIT.</p>
+<p>Mroonga also has the optimisation for ORDER BY LIMIT.</p>
 <p>In the SELECT example below, ORDER BY LIMIT is processed in groonga only and the minimal records are passed to MySQL.</p>
 <div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
 </pre></div>
@@ -541,7 +541,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
         <li class="right" >
           <a href="../userguide.html" title="3. User&#39;s guide"
              >previous</a> |</li>
-        <li><a href="../index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v1.10 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" >3. User's guide</a> &raquo;</li> 
       </ul>
     </div>

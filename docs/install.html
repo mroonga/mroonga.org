@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Installation Guide &mdash; groonga storage engine v1.0.2 documentation</title>
+    <title>2. Installation Guide &mdash; mroonga v1.10 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0.2',
+        VERSION:     '1.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,9 +24,9 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="index.html" />
+    <link rel="top" title="mroonga v1.10 documentation" href="index.html" />
     <link rel="next" title="3. User&#39;s guide" href="userguide.html" />
-    <link rel="prev" title="1. The characteristics of groonga storage engine" href="characteristic.html" /> 
+    <link rel="prev" title="1. The characteristics of mroonga" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -72,9 +72,9 @@
           <a href="userguide.html" title="3. User&#39;s guide"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="characteristic.html" title="1. The characteristics of groonga storage engine"
+          <a href="characteristic.html" title="1. The characteristics of mroonga"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -85,14 +85,11 @@
             
   <div class="section" id="installation-guide">
 <h1>2. Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
-<p>If you use binary packages, MySQL related packages will be also installed when you install groonga storage engine package.</p>
+<p>If you use binary packages, MySQL related packages will be also installed when you install mroonga package.</p>
+<p>We distribute packages for both 32-bit and 64-bit but we recommend that you should use 64-bit package for server. You should use 32-bit package just only for test or development. You will get no memory error with 32-bit package even if you just process medium size data.</p>
 <p>Here we explain how to install for each environment.</p>
 <div class="section" id="debian-gnu-linux-squeeze">
 <h2>2.1. Debian GNU/Linux squeeze<a class="headerlink" href="#debian-gnu-linux-squeeze" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ squeeze main
 deb-src http://packages.groonga.org/debian/ squeeze main
@@ -101,16 +98,12 @@ deb-src http://packages.groonga.org/debian/ squeeze main
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga
+% sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="debian-gnu-linux-wheezy">
 <h2>2.2. Debian GNU/Linux wheezy<a class="headerlink" href="#debian-gnu-linux-wheezy" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ wheezy main
 deb-src http://packages.groonga.org/debian/ wheezy main
@@ -119,16 +112,12 @@ deb-src http://packages.groonga.org/debian/ wheezy main
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga
+% sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="debian-gnu-linux-sid">
 <h2>2.3. Debian GNU/Linux sid<a class="headerlink" href="#debian-gnu-linux-sid" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ unstable main
 deb-src http://packages.groonga.org/debian/ unstable main
@@ -137,16 +126,12 @@ deb-src http://packages.groonga.org/debian/ unstable main
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga
+% sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="ubuntu-10-04-lts-lucid-lynx">
 <h2>2.4. Ubuntu 10.04 LTS Lucid Lynx<a class="headerlink" href="#ubuntu-10-04-lts-lucid-lynx" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
@@ -159,16 +144,12 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga
+% sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="ubuntu-11-04-natty-narwhal">
 <h2>2.5. Ubuntu 11.04 Natty Narwhal<a class="headerlink" href="#ubuntu-11-04-natty-narwhal" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
@@ -181,16 +162,12 @@ deb-src http://packages.groonga.org/ubuntu/ natty universe
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga
+% sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="ubuntu-11-10-oneiric-ocelot">
 <h2>2.6. Ubuntu 11.10 Oneiric Ocelot<a class="headerlink" href="#ubuntu-11-10-oneiric-ocelot" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
@@ -203,16 +180,12 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-groonga
+% sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="centos-5">
 <h2>2.7. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <p>CentOS 5's MySQL packages should be removed beforehand if installed.</p>
 <p>Remove existing MySQL packages</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum remove mysql*
@@ -221,34 +194,26 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
-% sudo yum install -y mysql-groonga
+% sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="centos-6">
 <h2>2.8. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <p>In CentOS 6, unlike in CentOS 5, we use CentOS's MySQL packages (version 5.1.x). So you don't need to remove CentOS's MySQL packages.</p>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
-% sudo yum install -y mysql-groonga
+% sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 </div>
 <div class="section" id="fedora-15">
 <h2>2.9. Fedora 15<a class="headerlink" href="#fedora-15" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">amd64 packages only. i386 packages are not provided.</p>
-</div>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
-% sudo yum install -y mysql-groonga
+% sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 </div>
@@ -272,7 +237,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <div class="section" id="requirements">
 <h3>2.10.3. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>MySQL and groonga should be already installed.</p>
-<p>And MySQL's source code is also required to build groonga storage engine.</p>
+<p>And MySQL's source code is also required to build mroonga.</p>
 </div>
 <div class="section" id="install-mysql">
 <h3>2.10.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
@@ -293,8 +258,8 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
 <p>Here we assume that libgroonga is installed in the standard location like /usr/lib etc.</p>
 </div>
-<div class="section" id="build-groonga-storage-engine">
-<h3>2.10.6. Build groonga storage engine<a class="headerlink" href="#build-groonga-storage-engine" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="build-mroonga">
+<h3>2.10.6. Build mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>Run configure script by specifying the location of MySQL source code with <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> and the path of mysql_config command with <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
   --with-mysql-source=/usr/local/src/mysql-5.5.17 \
@@ -313,8 +278,8 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 </pre></div>
 </div>
 </div>
-<div class="section" id="install-groonga-storage-engine">
-<h3>2.10.7. Install groonga storage engine<a class="headerlink" href="#install-groonga-storage-engine" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="install-mroonga">
+<h3>2.10.7. Install mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>By invoking &quot;make install&quot;, ha_groonga.so will be installed in MySQL's plugin directory.</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -323,7 +288,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_groonga.so&#39;;
 </pre></div>
 </div>
-<p>If &quot;groonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, groonga storage engine is well installed.</p>
+<p>If &quot;groonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, mroonga is well installed.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
 | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
@@ -372,8 +337,8 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <li><a class="reference internal" href="#requirements">2.10.3. Requirements</a></li>
 <li><a class="reference internal" href="#install-mysql">2.10.4. Install MySQL</a></li>
 <li><a class="reference internal" href="#install-groonga">2.10.5. Install groonga</a></li>
-<li><a class="reference internal" href="#build-groonga-storage-engine">2.10.6. Build groonga storage engine</a></li>
-<li><a class="reference internal" href="#install-groonga-storage-engine">2.10.7. Install groonga storage engine</a></li>
+<li><a class="reference internal" href="#build-mroonga">2.10.6. Build mroonga</a></li>
+<li><a class="reference internal" href="#install-mroonga">2.10.7. Install mroonga</a></li>
 </ul>
 </li>
 </ul>
@@ -382,7 +347,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="characteristic.html"
-                        title="previous chapter">1. The characteristics of groonga storage engine</a></p>
+                        title="previous chapter">1. The characteristics of mroonga</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="userguide.html"
                         title="next chapter">3. User's guide</a></p>
@@ -418,9 +383,9 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
           <a href="userguide.html" title="3. User&#39;s guide"
              >next</a> |</li>
         <li class="right" >
-          <a href="characteristic.html" title="1. The characteristics of groonga storage engine"
+          <a href="characteristic.html" title="1. The characteristics of mroonga"
              >previous</a> |</li>
-        <li><a href="index.html">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

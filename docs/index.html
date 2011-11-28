@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>groonga storage engine &mdash; groonga storage engine v1.0.2 documentation</title>
+    <title>Mroonga &mdash; mroonga v1.10 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0.2',
+        VERSION:     '1.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="groonga storage engine v1.0.2 documentation" href="#" />
-    <link rel="next" title="1. The characteristics of groonga storage engine" href="characteristic.html" /> 
+    <link rel="top" title="mroonga v1.10 documentation" href="#" />
+    <link rel="next" title="1. The characteristics of mroonga" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -68,9 +68,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="characteristic.html" title="1. The characteristics of groonga storage engine"
+          <a href="characteristic.html" title="1. The characteristics of mroonga"
              accesskey="N">next</a> |</li>
-        <li><a href="#">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+        <li><a href="#">mroonga v1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -79,13 +79,13 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="groonga-storage-engine">
-<h1>groonga storage engine<a class="headerlink" href="#groonga-storage-engine" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="mroonga">
+<h1>Mroonga<a class="headerlink" href="#mroonga" title="Permalink to this headline">¶</a></h1>
 <p>For the release history: <a class="reference internal" href="news.html"><em>News</em></a></p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="characteristic.html">1. The characteristics of groonga storage engine</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="characteristic.html#what-is-groonga-storage-engine">1.1. What is groonga storage engine?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="characteristic.html">1. The characteristics of mroonga</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#what-is-mroonga">1.1. What is mroonga?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="characteristic.html#the-successor-of-tritonn">1.2. The successor of Tritonn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="characteristic.html#running-as-a-mysql-plugin">1.3. Running as a MySQL plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="characteristic.html#faster-index-update">1.4. Faster index update</a></li>
@@ -112,8 +112,8 @@
 <li class="toctree-l3"><a class="reference internal" href="install.html#requirements">2.10.3. Requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#install-mysql">2.10.4. Install MySQL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="install.html#install-groonga">2.10.5. Install groonga</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#build-groonga-storage-engine">2.10.6. Build groonga storage engine</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#install-groonga-storage-engine">2.10.7. Install groonga storage engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#build-mroonga">2.10.6. Build mroonga</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#install-mroonga">2.10.7. Install mroonga</a></li>
 </ul>
 </li>
 </ul>
@@ -130,10 +130,19 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">4. Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-available-sql-commands">4.1. List of available SQL commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-server-variables">4.2. List of server variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-status-variables">4.3. List of status variables</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-count-skip">4.3.1. groonga_count_skip</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-fast-order-limit">4.3.2. groonga_fast_order_limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-unavailable-sql-commands">4.2. List of unavailable SQL commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#i-found-an-unlisted-sql-command">4.3. I found an unlisted SQL command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-server-variables">4.4. List of server variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-default-parser">4.4.1. groonga_default_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-libgroonga-version">4.4.2. groonga_libgroonga_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-log-file">4.4.3. groonga_log_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-log-level">4.4.4. groonga_log_level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-version">4.4.5. groonga_version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#list-of-status-variables">4.5. List of status variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-count-skip">4.5.1. groonga_count_skip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#groonga-fast-order-limit">4.5.2. groonga_fast_order_limit</a></li>
 </ul>
 </li>
 </ul>
@@ -184,7 +193,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">groonga storage engine</a><ul>
+<li><a class="reference internal" href="#">Mroonga</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices">Indices</a></li>
@@ -192,7 +201,7 @@
 
   <h4>Next topic</h4>
   <p class="topless"><a href="characteristic.html"
-                        title="next chapter">1. The characteristics of groonga storage engine</a></p>
+                        title="next chapter">1. The characteristics of mroonga</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="sources/index.txt"
@@ -222,9 +231,9 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="characteristic.html" title="1. The characteristics of groonga storage engine"
+          <a href="characteristic.html" title="1. The characteristics of mroonga"
              >next</a> |</li>
-        <li><a href="#">groonga storage engine v1.0.2 documentation</a> &raquo;</li> 
+        <li><a href="#">mroonga v1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
