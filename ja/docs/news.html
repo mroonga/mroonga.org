@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>お知らせ &mdash; mroonga v1.10 documentation</title>
+    <title>お知らせ &mdash; mroonga v1.11 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.10',
+        VERSION:     '1.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v1.10 documentation" href="index.html" /> 
+    <link rel="top" title="mroonga v1.11 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -67,7 +67,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="index.html">mroonga v1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.11 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -78,40 +78,91 @@
             
   <div class="section" id="news">
 <h1>お知らせ<a class="headerlink" href="#news" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="release-1-10-2011-11-29">
-<span id="release-1-10"></span><h2>1.10リリース - 2011/11/29<a class="headerlink" href="#release-1-10-2011-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>このリリースからプロジェクト名と製品名を「groognaストレージエンジン」から「mroonga」に変更しました。</p>
-<p>MariaDB対応とバグ修正が主な変更点のリリース。</p>
+<div class="section" id="release-1-11-2011-12-29">
+<span id="release-1-11"></span><h2>1.11リリース - 2011/12/29<a class="headerlink" href="#release-1-11-2011-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li>groonga_libgroonga_version変数およびgroonga_version変数の追加。 #1158</li>
-<li>information_schema.plugins.plugin_versionがmroongaのバージョンを返すようにした。 #1157</li>
-<li>groonga_log_file変数の追加。 #1178</li>
-<li>FLUSH STATUSがgroonga_*ステータス変数をリセットするようにした。 #1166</li>
-<li>TRUNCATE TABLEに対応。 #1151</li>
-<li>ALTER TABLEに対応。 #1168</li>
-<li>MariaDB 5.2.9に対応。</li>
-<li>MariaDB 5.3.2-betaに対応。</li>
-<li>[rpm] ドキュメントのパッケージを分離しました。</li>
+<li>MySQL 5.5.19に対応。</li>
+<li>MySQL 5.6.4に対応。</li>
+<li>MySQL 5.6.3対応をやめた。</li>
+<li>Supported Fedora 16.</li>
+<li>Dropped Fedora 15 support.</li>
+<li>警告strict-aliasingをでないようにした。 [groonga-dev,00659] [かずひこさんが報告]</li>
+<li>utf8, binary, ascii, latin1, cp932, sjis, eucjpms, ujis, koi8r charsetに対応。 [#1160] [nobodyさんが報告]</li>
+<li>[wrapper mode] 削除をロールバックした後に削除できなくなる問題を修正。 [#1224] [宍倉功一さんが報告]</li>
 </ul>
 </div>
 <div class="section" id="fixes">
 <h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li>[ストレージモード] TEXT型に対するREPLACE INTOが動作しないバグの修正。 #1153</li>
-<li>[ラッパーモード] LOCK TABLE内のINSERTがInnoDBで動かないバグの修正。 #1154</li>
-<li>ORDERとLIMITの両方を使うと結果が正しくないバグの修正。 #1161</li>
-<li>SQL_CALC_FOUND_ROWSを使うとFOUND_ROWS()が正しくない値を返すバグの修正。 #1163</li>
-<li>ハイフンが含まれるテーブル名で動かないバグの修正。 #1165</li>
+<li>[storage mode] 主キーがないテーブルで全文検索すると結果が空になる問題を修正。 [#1193] [かずひこさんが報告]</li>
+<li>コンパイラの-Wno-というフラグの検出に失敗していた問題を修正。 [Arnaud Fontaineさんがパッチを作成]</li>
+<li>[wrapper mode] 全件カウント時にインデックスが使われない問題を修正。 [#1196][groonga-dev,0653] [金岡勲さんが報告]</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>かずひこさん</li>
+<li>Arnaud Fontaineさん</li>
+<li>金岡勲さん</li>
+<li>nobodyさん</li>
+<li>宍倉功一さん</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-10-2011-11-29">
+<span id="release-1-10"></span><h2>1.10リリース - 2011/11/29<a class="headerlink" href="#release-1-10-2011-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このリリースからプロジェクト名と製品名を「groognaストレージエンジン」から「mroonga」に変更しました。</p>
+<p>MariaDB対応とバグ修正が主な変更点のリリース。</p>
+<div class="section" id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>「groonga storage engine」から「mroonga」に改名。 #1170</li>
+<li>groonga_libgroonga_version変数およびgroonga_version変数の追加。 #1158</li>
+<li>information_schema.plugins.plugin_versionがmroongaのバージョンを返すようにした。 #1157</li>
+<li>groonga_log_file変数の追加。 #1178 [nobodyさんが提案]</li>
+<li>FLUSH STATUSがgroonga_*ステータス変数をリセットするようにした。 #1166 [かずひこさんが報告]</li>
+<li>TRUNCATE TABLEに対応。 #1151 [Takahiro Nagaiさんが提案]</li>
+<li>ALTER TABLEに対応。 #1168</li>
+<li>MariaDB 5.2.9に対応。 #1152 [Kazuhikoさんが報告]</li>
+<li>MariaDB 5.3.2-betaに対応。 #1152 [かずひこさんが報告]</li>
+<li>[rpm] ドキュメントのパッケージを分離。</li>
+<li>文字列のシステム変数のメモリ確保方法を改良。</li>
+<li>PLUGIN_LICENSE_GPLを使うようにした。 [Kazuhikoさんが提案]</li>
+<li>MeCab関連の設定を削除。</li>
+<li>FOUND_ROWS()とSQL_CALC_FOUND_ROWSに対応。 #1163 [Horikoshi Yukiさんが報告]</li>
+<li>'-'を含むテーブル名に対応。 #1165 [nobodyさんが報告]</li>
+<li>MySQL 5.1上でテーブルを作りなおさないインデックス変更に対応。</li>
+<li>[deb] i386対応。</li>
+<li>[rpm] i386対応。</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>[ストレージモード] TEXT型に対するREPLACE INTOが動作しないバグの修正。 #1153 [Kazuhikoさんが報告]</li>
+<li>[ラッパーモード] LOCK TABLE内のINSERTがInnoDBで動かないバグの修正。 #1154 [Kazuhikoさんが報告]</li>
+<li>ORDERとLIMITの両方を使うと結果が正しくないバグの修正。 #1161 [Horikoshi Yukiさんが報告]</li>
+<li>FORCE INDEXで存在しないキーを指定するクラッシュするバグを修正。 #1181 [Takahiro Nagaiさんが報告]</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>感謝<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>Kazuhikoさん</li>
+<li>Horikoshi Yukiさん</li>
+<li>nobodyさん</li>
+<li>Takahiro Nagaiさん</li>
 </ul>
 </div>
 </div>
 <div class="section" id="release-1-0-1-2011-10-29">
 <span id="release-1-0-1"></span><h2>1.0.1リリース - 2011/10/29<a class="headerlink" href="#release-1-0-1-2011-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>位置情報検索の対応を強化とストレージモードでの動的なインデックス変更の対応強化が目玉のリリース。</p>
-<div class="section" id="id1">
-<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id4">
+<h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>[ストレージモード][ラッパーモード] <cite>flush tables</cite> によるデータベースの再オープンに対応。</li>
 <li>[ラッパーモード] 位置情報インデックスに対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。）</li>
@@ -129,8 +180,8 @@
 <li>Ubuntu 11.10 Oneiric Ocelotに対応。</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id5">
+<h3>修正<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>booleanモードでクエリの先頭に <cite>+</cite> を指定すると何もヒットしなくなる問題を修正。 [西山はじめさんが報告]</li>
 <li>[Fedora] パッケージの依存関係を修正。 [Takahiro Nagaiさんが報告]</li>
@@ -138,8 +189,8 @@
 <li>[ストレージモード] マルチカラムインデックスに <cite>varchar</cite> を使うとインデックスが正常に作成されない問題を修正。 #1143 [Takahiro Nagaiさんが報告]</li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id6">
+<h3>感謝<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>&#64;yoshi_kenさん</li>
 <li>西山はじめさん</li>
@@ -148,10 +199,10 @@
 </div>
 </div>
 <div class="section" id="release-1-0-0">
-<span id="id3"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id7"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>初回リリースから約1年経って、初のメジャーリリース！</p>
-<div class="section" id="id4">
-<h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id8">
+<h3>改良<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>[ラッパーモード] drop index対応。 #1040</li>
 <li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
@@ -168,8 +219,8 @@
 <li>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h3>修正<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id9">
+<h3>修正<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</li>
 <li>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</li>
@@ -177,8 +228,8 @@
 <li>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h3>感謝<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id10">
+<h3>感謝<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>Isao Sugimotoさん</li>
 <li>&#64;zaubermaerchenさん</li>
@@ -216,21 +267,28 @@
   <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">お知らせ</a><ul>
-<li><a class="reference internal" href="#release-1-10-2011-11-29">1.0.1リリース - 2011/11/29</a><ul>
+<li><a class="reference internal" href="#release-1-11-2011-12-29">1.11リリース - 2011/12/29</a><ul>
 <li><a class="reference internal" href="#improvements">改良</a></li>
 <li><a class="reference internal" href="#fixes">修正</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-1-0-1-2011-10-29">1.0.1リリース - 2011/10/29</a><ul>
-<li><a class="reference internal" href="#id1">改良</a></li>
-<li><a class="reference internal" href="#id2">修正</a></li>
 <li><a class="reference internal" href="#thanks">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
+<li><a class="reference internal" href="#release-1-10-2011-11-29">1.0.1リリース - 2011/11/29</a><ul>
+<li><a class="reference internal" href="#id1">改良</a></li>
+<li><a class="reference internal" href="#id2">修正</a></li>
+<li><a class="reference internal" href="#id3">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-0-1-2011-10-29">1.0.1リリース - 2011/10/29</a><ul>
 <li><a class="reference internal" href="#id4">改良</a></li>
 <li><a class="reference internal" href="#id5">修正</a></li>
 <li><a class="reference internal" href="#id6">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
+<li><a class="reference internal" href="#id8">改良</a></li>
+<li><a class="reference internal" href="#id9">修正</a></li>
+<li><a class="reference internal" href="#id10">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">Past releases</a><ul>
@@ -268,7 +326,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="index.html">mroonga v1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.11 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
