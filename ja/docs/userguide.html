@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3. ユーザガイド &mdash; mroonga v1.11 documentation</title>
+    <title>3. ユーザガイド &mdash; mroonga v1.20 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.11',
+        VERSION:     '1.20',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v1.11 documentation" href="index.html" />
+    <link rel="top" title="mroonga v1.20 documentation" href="index.html" />
     <link rel="next" title="3.3.1. ストレージモード" href="userguide/storage.html" />
     <link rel="prev" title="2. インストールガイド" href="install.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="install.html" title="2. インストールガイド"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v1.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.20 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -99,7 +99,7 @@
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
 | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
-| groonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
+| mroonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
 | MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
 | CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
 | MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
@@ -109,9 +109,9 @@
 6 rows in set (0.00 sec)
 </pre></div>
 </div>
-<p>上記のように&quot;groonga&quot;ストレージエンジンが見えていればインストールは無事完了しています。</p>
+<p>上記のように&quot;mroonga&quot;ストレージエンジンが見えていればインストールは無事完了しています。</p>
 <p>インストールされていなければ以下のようにINSTALL PLUGINコマンドを実行して下さい。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_groonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 </div>
@@ -127,7 +127,7 @@
 <div class="figure align-center">
 <img alt="storage mode" src="_images/storage-mode.png" />
 </div>
-<p>ラッパーモードでは全文検索機能のみgroongaの機能を利用し、データストアはInnoDBなど既存のストレージエンジンを利用します。ラッパーモードを利用することにより、ストレージエンジンとして多くの利用実績のあるInnoDBに全文検索エンジンとして実績のあるgroongaを組み合わせて、高速な全文検索機能付きの信頼性のあるデータベースとして利用できるという特長があります。</p>
+<p>ラッパーモードでは全文検索機能のみgroongaの機能を利用し、データストアはInnoDBなど既存のストレージエンジンを利用します。ラッパーモードを利用することにより、ストレージエンジンとして多くの利用実績のあるInnoDBに全文検索エンジンとして実績のあるmroongaを組み合わせて、高速な全文検索機能付きの信頼性のあるデータベースとして利用できるという特長があります。</p>
 <p>ラッパーモードの構成を図で表すと以下のようになります。全文検索関連の処理はgroongaストレージエンジンで処理し、それ以外の処理はMyISAMやInnoDBなど既存のストレージエンジンを利用します。SQLを処理するSQL Handlerと既存のストレージエンジンの間に位置するため、すべてのデータが一度mroongaを通ることになります。これを利用して、全文検索用のインデックス作成などを透過的に行います。</p>
 <div class="figure align-center">
 <img alt="wrapper mode" src="_images/wrapper-mode.png" />
@@ -222,11 +222,11 @@
         <li class="right" >
           <a href="install.html" title="2. インストールガイド"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v1.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.20 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2011, groonga project.
+        &copy; Copyright 2009-2012, mroonga project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 

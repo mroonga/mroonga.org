@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.1. Storage mode &mdash; mroonga v1.11 documentation</title>
+    <title>3.3.1. Storage mode &mdash; mroonga v1.20 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.11',
+        VERSION:     '1.20',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v1.11 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v1.20 documentation" href="../index.html" />
     <link rel="up" title="3. User&#39;s guide" href="../userguide.html" />
     <link rel="next" title="3.3.2. Wrapper mode" href="wrapper.html" />
     <link rel="prev" title="3. User&#39;s guide" href="../userguide.html" /> 
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="../userguide.html" title="3. User&#39;s guide"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">mroonga v1.11 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v1.20 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" accesskey="U">3. User's guide</a> &raquo;</li> 
       </ul>
     </div>  
@@ -90,12 +90,12 @@
 <p>Here we explain how to use storage mode of mroonga</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.3.1.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">groonga</span></tt>.</p>
+<p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
     -&gt;   FULLTEXT INDEX (content)
-    -&gt; ) ENGINE = groonga DEFAULT CHARSET utf8;
+    -&gt; ) ENGINE = mroonga DEFAULT CHARSET utf8;
 Query OK, 0 rows affected (0.10 sec)
 </pre></div>
 </div>
@@ -148,13 +148,13 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WH
 <p>The result having the search word <tt class="docutils literal"><span class="pre">晴れ</span></tt> more, i.e. <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></tt> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
 <p>You can use <tt class="docutils literal"><span class="pre">AS</span></tt> to change the attribute name.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
-+----+--------------------------------------------------------------+------------------------------------+
-| id | content                                                      | MATCH (content) AGAINST (&quot;晴れ&quot;) |
-+----+--------------------------------------------------------------+------------------------------------+
-|  3 | 今日は晴れました。明日も晴れるでしょう。 |                                  2 |
-|  1 | 明日の天気は晴れでしょう。                      |                                  1 |
-|  4 | 今日は晴れましたが、明日は雨でしょう。    |                                  1 |
-+----+--------------------------------------------------------------+------------------------------------+
++----+--------------------------------------------------------------+-------+
+| id | content                                                      | score |
++----+--------------------------------------------------------------+-------+
+|  3 | 今日は晴れました。明日も晴れるでしょう。 |     2 |
+|  1 | 明日の天気は晴れでしょう。                      |     1 |
+|  4 | 今日は晴れましたが、明日は雨でしょう。    |     1 |
++----+--------------------------------------------------------------+-------+
 3 rows in set (0.00 sec)
 </pre></div>
 </div>
@@ -171,7 +171,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WH
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><tt class="docutils literal"><span class="pre">COMMENT</span></tt> in <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <tt class="docutils literal"><span class="pre">groonga_default_parser</span></tt> variable described below.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">COMMENT</span></tt> in <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> variable described below.</p>
 </div>
 <p>You can specify one of following values as the parser.</p>
 <dl class="docutils">
@@ -226,14 +226,14 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WH
 <div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
 </pre></div>
 </div>
-<p>Or you can set <tt class="docutils literal"><span class="pre">groonga_default_parser</span></tt> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>Or you can set <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
 <div class="highlight-none"><div class="highlight"><pre>[mysqld]
-groonga_default_parser=TokenMecab
+mroonga_default_parser=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET GLOBAL groonga_default_parser = TokenMecab;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET GLOBAL mroonga_default_parser = TokenMecab;
 Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
@@ -247,7 +247,7 @@ Query OK, 0 rows affected (0.00 sec)
     -&gt;   name VARCHAR(255),
     -&gt;   location POINT NOT NULL,
     -&gt;   SPATIAL INDEX (location)
-    -&gt; ) ENGINE = groonga;
+    -&gt; ) ENGINE = mroonga;
 Query OK, 0 rows affected (0.06 sec)
 </pre></div>
 </div>
@@ -283,7 +283,7 @@ Query OK, 1 row affected (0.00 sec)
     -&gt;   _id INT,
      &gt;   content VARCHAR(255),
     -&gt;   UNIQUE KEY (_id) USING HASH
-    -&gt; ) ENGINE = groonga;
+    -&gt; ) ENGINE = mroonga;
 Query OK, 0 rows affected (0.04 sec)
 </pre></div>
 </div>
@@ -294,7 +294,7 @@ So you need to exclude it from setting columns, or you need to use <tt class="do
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;今夜はさんま。&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;明日はgroongaをアップデート。&quot;);
+mysql&gt; INSERT INTO memos VALUES (null, &quot;明日はmroongaをアップデート。&quot;);
 Query OK, 1 row affected (0.00 sec)
 
 mysql&gt; INSERT INTO memos VALUES (null, &quot;帰りにおだんご。&quot;);
@@ -310,7 +310,7 @@ Query OK, 1 row affected (0.00 sec)
 | _id  | content                                  |
 +------+------------------------------------------+
 |    1 | 今夜はさんま。                    |
-|    2 | 明日はgroongaをアップデート。 |
+|    2 | 明日はmroongaをアップデート。 |
 |    3 | 帰りにおだんご。                 |
 |    4 | 金曜日は肉の日。                 |
 +------+------------------------------------------+
@@ -331,7 +331,7 @@ mysql&gt; SELECT last_insert_grn_id();
 </pre></div>
 </div>
 <p>last_insert_grn_id function is included in mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_groonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 <p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE.</p>
@@ -352,23 +352,23 @@ Rows matched: 1  Changed: 1  Warnings: 0
 </pre></div>
 </div>
 <p>The default log level is NOTICE, i.e. we have important information only and we don't have debug information etc.).</p>
-<p>You can get the log level by <tt class="docutils literal"><span class="pre">groonga_log_level</span></tt> system variable, that is a global variable. You can also modify it dynamically by using SET phrase.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
+<p>You can get the log level by <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> system variable, that is a global variable. You can also modify it dynamically by using SET phrase.</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 +-------------------+--------+
 | Variable_name     | Value  |
 +-------------------+--------+
-| groonga_log_level | NOTICE |
+| mroonga_log_level | NOTICE |
 +-------------------+--------+
 1 row in set (0.00 sec)
 
-mysql&gt; SET GLOBAL groonga_log_level=DUMP;
+mysql&gt; SET GLOBAL mroonga_log_level=DUMP;
 Query OK, 0 rows affected (0.00 sec)
 
-mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
+mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 +-------------------+-------+
 | Variable_name     | Value |
 +-------------------+-------+
-| groonga_log_level | DUMP  |
+| mroonga_log_level | DUMP  |
 +-------------------+-------+
 1 row in set (0.00 sec)
 </pre></div>
@@ -406,7 +406,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
   c12 VARCHAR(20),
   ...
   c20 DATETIME
-) ENGINE = groonga DEFAULT CHARSET utf8;
+) ENGINE = mroonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
 <p>When we run SELECT phrase like the following, mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
@@ -423,16 +423,16 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
 <blockquote>
 <div>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;);</div></blockquote>
 <p>You can check if this optimisation works or not by the status variable.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;groonga_count_skip&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;mroonga_count_skip&#39;;
 +--------------------+-------+
 | Variable_name      | Value |
 +--------------------+-------+
-| groonga_count_skip | 1     |
+| mroonga_count_skip | 1     |
 +--------------------+-------+
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">groonga_count_skip</span></tt> status variable value is increased.</p>
+<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">mroonga_count_skip</span></tt> status variable value is increased.</p>
 <p>Note : This optimisation is implemented by using the index. It only works in the case where we records can be specified only by the index.</p>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
@@ -446,16 +446,16 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
 </pre></div>
 </div>
 <p>You can check if this optimisation works or not by the status variable.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;groonga_fast_order_limit&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;mroonga_fast_order_limit&#39;;
 +--------------------------+-------+
 | Variable_name            | Value |
 +--------------------------+-------+
-| groonga_fast_order_limit | 1     |
+| mroonga_fast_order_limit | 1     |
 +--------------------------+-------+
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">groonga_fast_order_limit</span></tt> status variable value is increased.</p>
+<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">mroonga_fast_order_limit</span></tt> status variable value is increased.</p>
 <p>Note : This optimisation is targeting queries like &quot;select ... match against order by _score desc limit X, Y&quot; only, and it works if all of the following conditions are right.</p>
 <ul class="simple">
 <li>WHERE phrase has &quot;match...against&quot; only</li>
@@ -541,12 +541,12 @@ mysql&gt; SHOW VARIABLES LIKE &#39;groonga_log_level&#39;;
         <li class="right" >
           <a href="../userguide.html" title="3. User&#39;s guide"
              >previous</a> |</li>
-        <li><a href="../index.html">mroonga v1.11 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v1.20 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" >3. User's guide</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2011, groonga project.
+        &copy; Copyright 2009-2012, mroonga project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

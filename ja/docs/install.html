@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. インストールガイド &mdash; mroonga v1.11 documentation</title>
+    <title>2. インストールガイド &mdash; mroonga v1.20 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.11',
+        VERSION:     '1.20',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v1.11 documentation" href="index.html" />
+    <link rel="top" title="mroonga v1.20 documentation" href="index.html" />
     <link rel="next" title="3. ユーザガイド" href="userguide.html" />
     <link rel="prev" title="1. mroongaの特徴" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v1.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.20 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -209,8 +209,8 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 </pre></div>
 </div>
 </div>
-<div class="section" id="fedora-15">
-<h2>2.9. Fedora 15<a class="headerlink" href="#fedora-15" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="fedora-16">
+<h2>2.9. Fedora 16<a class="headerlink" href="#fedora-16" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
@@ -281,12 +281,12 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 </div>
 <div class="section" id="install-mroonga">
 <h3>2.10.7. mroongaのインストール<a class="headerlink" href="#install-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>&quot;make install&quot;を実行するとMySQLのプラグイン用ディレクトリにha_groonga.soが配置されます。</p>
+<p>&quot;make install&quot;を実行するとMySQLのプラグイン用ディレクトリにha_mroonga.soが配置されます。</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
 </div>
 <p>その後、mysqldを起動し、mysqlクライアントで接続して&quot;INSTALL PLUGIN&quot;コマンドでインストールします。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_groonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN groonga SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 <p>以下のように&quot;SHOW ENGINES&quot;コマンドで&quot;groonga&quot;が表示されればmroongaのインストールは完了です。</p>
@@ -307,7 +307,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>続いてUDF(ユーザ定義関数)をインストールします。</p>
 <p>INSERTを行った際にgroongaにより割当てられるレコードIDを取得するためのlast_insert_grn_id関数をインストールします。</p>
 <p>以下のようにCREATE FUNCTIONを実行します。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER soname &#39;ha_groonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER soname &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 </div>
@@ -331,7 +331,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <li><a class="reference internal" href="#ubuntu-11-10-oneiric-ocelot">2.6. Ubuntu 11.10 Oneiric Ocelot</a></li>
 <li><a class="reference internal" href="#centos-5">2.7. CentOS 5</a></li>
 <li><a class="reference internal" href="#centos-6">2.8. CentOS 6</a></li>
-<li><a class="reference internal" href="#fedora-15">2.9. Fedora 15</a></li>
+<li><a class="reference internal" href="#fedora-16">2.9. Fedora 16</a></li>
 <li><a class="reference internal" href="#install-from-the-source-code">2.10. ソースコードからのインストール</a><ul>
 <li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.10.1. 形態素解析(MeCab)について</a></li>
 <li><a class="reference internal" href="#download">2.10.2. ダウンロード</a></li>
@@ -386,11 +386,11 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v1.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v1.20 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2011, groonga project.
+        &copy; Copyright 2009-2012, mroonga project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 
