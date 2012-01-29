@@ -126,10 +126,21 @@ includes <tt class="docutils literal"><span class="pre">CREATE</span> <span clas
 </div>
 <p>We upgrade to &quot;mroonga&quot; storage engine. We will use
 <tt class="docutils literal"><span class="pre">apt-get</span></tt> on Debian GNU/Linux or Ubuntu and <tt class="docutils literal"><span class="pre">yum</span></tt> on
-CentOS or Fedora:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga # for Debian GNU/Linux or Ubuntu
-% sudo yum install -y mysql-mroonga # for CentOS or Fedora
+CentOS or Fedora.</p>
+<p>apt-get:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
+</div>
+<p>yum:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
+% sudo yum install -y mysql-mroonga
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">We don't forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> before <tt class="docutils literal"><span class="pre">yum</span>
+<span class="pre">install</span></tt>. If we forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt>, we will break
+a MySQL's system table.</p>
 </div>
 <p>We recreate a database:</p>
 <div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;

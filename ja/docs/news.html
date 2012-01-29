@@ -117,10 +117,19 @@
 <div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
-<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <tt class="docutils literal"><span class="pre">apt-get</span></tt> を使います。CentOSやFedoraでは <tt class="docutils literal"><span class="pre">yum</span></tt> を使います:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga # for Debian GNU/Linux or Ubuntu
-% sudo yum install -y mysql-mroonga # for CentOS or Fedora
+<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <tt class="docutils literal"><span class="pre">apt-get</span></tt> を使います。CentOSやFedoraでは <tt class="docutils literal"><span class="pre">yum</span></tt> を使います。</p>
+<p>apt-get:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
+</div>
+<p>yum:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
+% sudo yum install -y mysql-mroonga
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last"><tt class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></tt> の前に <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れてはいけません。もし、 <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
 <div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
