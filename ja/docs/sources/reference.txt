@@ -39,7 +39,6 @@ List of available SQL commands
 * ``CREATE TABLE table_name (column_name ENUM(...))``
 * ``CREATE TABLE table_name (column_name FLOAT)``
 * ``CREATE TABLE table_name (column_name GEOMETRY NOT NULL)``
-* ``CREATE TABLE table_name (column_name INT PRIMARY KEY AUTO_INCREMENT)``
 * ``CREATE TABLE table_name (column_name INT UNSIGNED)``
 * ``CREATE TABLE table_name (column_name INT)``
 * ``CREATE TABLE table_name (column_name LONGBLOB)``
@@ -58,18 +57,40 @@ List of available SQL commands
 * ``CREATE TABLE table_name (column_name VARBINARY(...))``
 * ``CREATE TABLE table_name (column_name VARCHAR(...))``
 * ``CREATE TABLE table_name (column_name YEAR)``
+* ``CREATE TABLE table_name (column_name INT AUTO_INCREMENT)``
+* ``CREATE TABLE table_name (column_name INT PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name DATE PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name DATETIME PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name DATETIME(fractional_seconds_precision) PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name DECIMAL PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name DECIMAL(maximum_number_digits, fractional_seconds_precision) PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name TIME PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name TIME(fractional_seconds_precision) PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name TIMESTAMP PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name TIMESTAMP(fractional_seconds_precision) PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name YEAR PRIMARY KEY)``
+* ``CREATE TABLE table_name (column_name1 INT, column_name2 ..., KEY (column_name1, column_name2))``
+* ``CREATE TABLE table_name (column_name1 DOUBLE, column_name2 ..., KEY (column_name1, column_name2))``
+* ``CREATE TABLE table_name (column_name1 FLOAT, column_name2 ..., KEY (column_name1, column_name2))``
+* ``CREATE TABLE table_name (column_name1 CHAR(...), column_name2 ..., KEY (column_name1, column_name2))``
+* ``CREATE TABLE table_name (column_name1 VARCHAR(...), column_name2 ..., KEY (column_name1, column_name2))``
+* ``CREATE TEMPORARY TABLE table_name (...)``
 * ``DELETE FROM table_name WHERE ...``
 * ``DROP INDEX column_name ON table_name``
 * ``DROP TABLE IF EXISTS table_name, ...``
 * ``DROP TABLE \`table-name-with-hyphen\`, ...``
 * ``DROP TABLE table_name, ...``
+* ``DROP TEMPORARY TABLE table_name``
 * ``FLUSH LOGS``
 * ``FLUSH TABLES``
 * ``INSERT INTO (geometry_column_name) VALUES (GeomFromText('POINT(...)'))``
 * ``INSERT INTO ... VALUES ...``
+* ``INSERT INTO ... VALUES ... ON DUPLICATE KEY UPDATE ...`` (for ``PRIMARY KEY``)
+* ``INSERT INTO ... VALUES ... ON DUPLICATE KEY UPDATE ...`` (for ``UNIQUE KEY``)
 * ``INSERT INTO table_name (column_name, ...) SELECT ... FROM other_table_name``
 * ``REPLACE INTO table_name SELECT ... FROM other_table_name ...``
 * ``SELECT * FROM information_schema.plugins WHERE plugin_name = "mroonga"``
+* ``SELECT * FROM table_name``
 * ``SELECT * FROM table_name FORCE INDEX(index_name) WHERE ...``
 * ``SELECT * FROM table_name ORDER BY column_name ASC LIMIT ...``
 * ``SELECT * FROM table_name ORDER BY column_name ASC``
@@ -90,7 +111,7 @@ List of available SQL commands
 * ``SELECT * FROM table_name WHERE column_name > ...``
 * ``SELECT * FROM table_name WHERE column_name >= ...``
 * ``SELECT * FROM table_name WHERE column_name BETWEEN ... AND ...``
-* ``SELECT * FROM table_name``
+* ``SELECT * FROM table_name WHERE column_name IN (SELECT sub_column_name FROM sub_table_name WHERE MATCH(sub_text_column_name) AGAINST("..."))``
 * ``SELECT *, MATCH(column_name) AGAINST("..." IN BOOLEAN MODE) FROM table_name WHERE MATCH(column_name) AGAINST("..." IN BOOLEAN MODE)``
 * ``SELECT FOUND_ROWS()``
 * ``SELECT SQL_CALC_FOUND_ROWS * FROM table_name WHERE MATCH(...) AGAINST("..." IN BOOLEAN MODE) ORDER BY column_name LIMIT start,n_records``
@@ -179,7 +200,6 @@ Here is an example transcript to change log file to ``/tmp/mroonga.log``::
   +------------------+------------------+
   1 row in set (0.00 sec)
 
-
 mroonga_log_level
 ^^^^^^^^^^^^^^^^^
 
@@ -219,6 +239,67 @@ Here is an example SQL to confirm the running mroonga version::
   +-----------------+-------+
   | mroonga_version | 1.10  |
   +-----------------+-------+
+  1 row in set (0.00 sec)
+
+mroonga_dry_write
+^^^^^^^^^^^^^^^^^
+
+Whether really write data to groonga database or not. The
+default value is ``OFF`` that means data are really written
+to groonga database. Usually we don't need to change the
+value of this variable. This variable is useful for
+benchmark because we can measure processing time MySQL and
+mroonga. It doesn't include groonga's processing time.
+
+Here is an example SQL to disable writing data to groonga
+database::
+
+  mysql> SHOW VARIABLES LIKE 'mroonga_dry_write';
+  +-------------------+-------+
+  | Variable_name     | Value |
+  +-------------------+-------+
+  | mroonga_dry_write | OFF   |
+  +-------------------+-------+
+  1 row in set (0.00 sec)
+
+  mysql> SET mroonga_dry_write = true;
+  Query OK, 0 rows affected (0.00 sec)
+
+  mysql> SHOW VARIABLES LIKE 'mroonga_dry_write';
+  +-------------------+-------+
+  | Variable_name     | Value |
+  +-------------------+-------+
+  | mroonga_dry_write | ON    |
+  +-------------------+-------+
+  1 row in set (0.00 sec)
+
+mroonga_enable_optimization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Whether enable optimization or not. The default value is
+``ON`` that means optimization is enabled. Usually we don't
+need to change the value of this variable. This variable is
+useful for benchmark.
+
+Here is an example SQL to disable optimization::
+
+  mysql> SHOW VARIABLES LIKE 'mroonga_enable_optimization';
+  +-----------------------------+-------+
+  | Variable_name               | Value |
+  +-----------------------------+-------+
+  | mroonga_enable_optimization | ON    |
+  +-----------------------------+-------+
+  1 row in set (0.00 sec)
+
+  mysql> SET mroonga_enable_optimization = false;
+  Query OK, 0 rows affected (0.00 sec)
+
+  mysql> SHOW VARIABLES LIKE 'mroonga_enable_optimization';
+  +-----------------------------+-------+
+  | Variable_name               | Value |
+  +-----------------------------+-------+
+  | mroonga_enable_optimization | OFF   |
+  +-----------------------------+-------+
   1 row in set (0.00 sec)
 
 List of status variables
