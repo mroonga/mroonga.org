@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. インストールガイド &mdash; mroonga v2.00 documentation</title>
+    <title>2. インストールガイド &mdash; mroonga v2.01 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.00',
+        VERSION:     '2.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,14 +25,14 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.00 documentation" href="index.html" />
+    <link rel="top" title="mroonga v2.01 documentation" href="index.html" />
     <link rel="next" title="3. ユーザガイド" href="userguide.html" />
     <link rel="prev" title="1. mroongaの特徴" href="characteristic.html" /> 
-      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
-    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
-    <meta property="og:site_name" content="groonga storage engine" />
+    <meta property="og:image" content="http://mroonga.github.com/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
@@ -43,21 +43,21 @@
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
-      <span class="project">groonga</span>
+      <span class="project">mroonga</span>
       <span class="separator">-</span>
       <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
     </a>
   </h1>
 
       <div class="facebook-buttons">
-      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
                layout="standard"
                width="290"></fb:like>
     </div>
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../docs/install.html"><img src="static/us.png" alt="English"></a></li>
+      <li><a href="../../docs/install.html"><img src="static/us.png" alt="English">English version</a></li>
     </ul>
   </div>
 </div>
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v2.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -102,6 +102,11 @@ deb-src http://packages.groonga.org/debian/ squeeze main
 % sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude -V -D -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
 </div>
 <div class="section" id="debian-gnu-linux-wheezy">
 <h2>2.2. Debian GNU/Linux wheezy<a class="headerlink" href="#debian-gnu-linux-wheezy" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -114,6 +119,11 @@ deb-src http://packages.groonga.org/debian/ wheezy main
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
 % sudo aptitude -V -D -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude -V -D -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -130,12 +140,21 @@ deb-src http://packages.groonga.org/debian/ unstable main
 % sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude -V -D -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
 </div>
 <div class="section" id="ubuntu-10-04-lts-lucid-lynx">
 <h2>2.4. Ubuntu 10.04 LTS Lucid Lynx<a class="headerlink" href="#ubuntu-10-04-lts-lucid-lynx" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">ノート</p>
 <p class="last">Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">セキュリティアップデートリポジトリもインストール対象としておくこと</p>
 </div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ lucid universe
@@ -144,8 +163,13 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 </div>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-mroonga
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -155,6 +179,10 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 <p class="first admonition-title">ノート</p>
 <p class="last">Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">セキュリティアップデートリポジトリもインストール対象としておくこと</p>
+</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ natty universe
 deb-src http://packages.groonga.org/ubuntu/ natty universe
@@ -162,8 +190,13 @@ deb-src http://packages.groonga.org/ubuntu/ natty universe
 </div>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-mroonga
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -173,6 +206,10 @@ deb-src http://packages.groonga.org/ubuntu/ natty universe
 <p class="first admonition-title">ノート</p>
 <p class="last">Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">セキュリティアップデートリポジトリもインストール対象としておくこと</p>
+</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ oneiric universe
 deb-src http://packages.groonga.org/ubuntu/ oneiric universe
@@ -180,8 +217,13 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 </div>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-mroonga
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -189,13 +231,21 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <h2>2.7. CentOS 5<a class="headerlink" href="#centos-5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>既にディストリビューション由来のMySQLパッケージがインストール済みの場合には事前に削除する必要があります。</p>
 <p>既存のMySQLパッケージを削除:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove mysql*
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove &#39;mysql*&#39;
 </pre></div>
 </div>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
+% sudo yum install -y MySQL-server
+% sudo service mysql start
 % sudo yum install -y mysql-mroonga
+(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -205,7 +255,15 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
+% sudo yum install -y mysql-server
+% sudo service mysqld start
 % sudo yum install -y mysql-mroonga
+(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -215,6 +273,11 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
 % sudo yum install -y mysql-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -244,8 +307,8 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <h3>2.10.4. MySQLのインストール<a class="headerlink" href="#install-mysql" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MySQL 5.5最新版のソースコードをダウンロードし、ビルド＆インストールして下さい。</p>
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
-<p>mysql-5.5.17を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.5.17
+<p>mysql-5.5.22を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
+<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.5.22
 </pre></div>
 </div>
 <p>MySQLのバイナリが以下にインストールされているものと仮定します。</p>
@@ -260,17 +323,17 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>ここでは/usr/libなどの標準パスにlibgroongaがインストールされているものと仮定します。</p>
 </div>
 <div class="section" id="build-mroonga">
-<h3>2.10.6. Build mroonga<a class="headerlink" href="#build-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.10.6. mroongaのビルド<a class="headerlink" href="#build-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下のように <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> でMySQLソースコードディレクトリ、 <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt> でmysql_configコマンドのパスを指定してconfigureを実行します。</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
-  --with-mysql-source=/usr/local/src/mysql-5.5.17 \
+  --with-mysql-source=/usr/local/src/mysql-5.5.22 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
 </pre></div>
 </div>
 <p>groongaを/usr/libなど標準のパス以外にインストールした場合はPKG_CONFIG_PATHを指定する必要があります。例えば、ｰｰprefix=$HOME/localでgroongaをインストールした場合は以下のようにします。:</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
   PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig \
-  --with-mysql-source=/usr/local/src/mysql-5.5.17 \
+  --with-mysql-source=/usr/local/src/mysql-5.5.22 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
 </pre></div>
 </div>
@@ -289,7 +352,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
-<p>If &quot;mroonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, mroonga is well installed.</p>
+<p>以下のように&quot;SHOW ENGINES&quot;コマンドで&quot;mroonga&quot;が表示されればmroongaのインストールは完了です。</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
 | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
@@ -338,7 +401,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <li><a class="reference internal" href="#requirements">2.10.3. 前提条件</a></li>
 <li><a class="reference internal" href="#install-mysql">2.10.4. MySQLのインストール</a></li>
 <li><a class="reference internal" href="#install-groonga">2.10.5. groongaのインストール</a></li>
-<li><a class="reference internal" href="#build-mroonga">2.10.6. Build mroonga</a></li>
+<li><a class="reference internal" href="#build-mroonga">2.10.6. mroongaのビルド</a></li>
 <li><a class="reference internal" href="#install-mroonga">2.10.7. mroongaのインストール</a></li>
 </ul>
 </li>
@@ -386,7 +449,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v2.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.01 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

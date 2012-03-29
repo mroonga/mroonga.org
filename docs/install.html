@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Installation Guide &mdash; mroonga v2.00 documentation</title>
+    <title>2. Installation Guide &mdash; mroonga v2.01 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.00',
+        VERSION:     '2.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,14 +24,14 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.00 documentation" href="index.html" />
+    <link rel="top" title="mroonga v2.01 documentation" href="index.html" />
     <link rel="next" title="3. User&#39;s guide" href="userguide.html" />
     <link rel="prev" title="1. The characteristics of mroonga" href="characteristic.html" /> 
-      <meta property="fb:page_id" content="238184682903165" /><!-- groonga storage engine -->
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
-    <meta property="og:image" content="http://groonga.org/images/mroonga.png" />
-    <meta property="og:site_name" content="groonga storage engine" />
+    <meta property="og:image" content="http://mroonga.github.com/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
@@ -42,21 +42,21 @@
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
-      <span class="project">groonga</span>
+      <span class="project">mroonga</span>
       <span class="separator">-</span>
       <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
     </a>
   </h1>
 
       <div class="facebook-buttons">
-      <fb:like href="http://www.facebook.com/pages/groonga-storage-engine/238184682903165"
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
                layout="standard"
                width="290"></fb:like>
     </div>
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../ja/docs/install.html"><img src="static/jp.png" alt="日本語"></a></li>
+      <li><a href="../ja/docs/install.html"><img src="static/jp.png" alt="日本語">日本語版はこちら</a></li>
     </ul>
   </div>
 </div>
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mroonga v2.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -101,6 +101,11 @@ deb-src http://packages.groonga.org/debian/ squeeze main
 % sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude -V -D -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
 </div>
 <div class="section" id="debian-gnu-linux-wheezy">
 <h2>2.2. Debian GNU/Linux wheezy<a class="headerlink" href="#debian-gnu-linux-wheezy" title="Permalink to this headline">¶</a></h2>
@@ -113,6 +118,11 @@ deb-src http://packages.groonga.org/debian/ wheezy main
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
 % sudo aptitude update
 % sudo aptitude -V -D -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude -V -D -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -129,12 +139,21 @@ deb-src http://packages.groonga.org/debian/ unstable main
 % sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude -V -D -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
 </div>
 <div class="section" id="ubuntu-10-04-lts-lucid-lynx">
 <h2>2.4. Ubuntu 10.04 LTS Lucid Lynx<a class="headerlink" href="#ubuntu-10-04-lts-lucid-lynx" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the security update repository.</p>
 </div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ lucid universe
@@ -143,8 +162,13 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 </div>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-mroonga
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -154,6 +178,10 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 <p class="first admonition-title">Note</p>
 <p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the security update repository.</p>
+</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ natty universe
 deb-src http://packages.groonga.org/ubuntu/ natty universe
@@ -161,8 +189,13 @@ deb-src http://packages.groonga.org/ubuntu/ natty universe
 </div>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-mroonga
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -172,6 +205,10 @@ deb-src http://packages.groonga.org/ubuntu/ natty universe
 <p class="first admonition-title">Note</p>
 <p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the security update repository.</p>
+</div>
 <p>/etc/apt/sources.list.d/groonga.list:</p>
 <div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ oneiric universe
 deb-src http://packages.groonga.org/ubuntu/ oneiric universe
@@ -179,8 +216,13 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 </div>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1C837F31
-% sudo aptitude update
-% sudo aptitude -V -D -y install mysql-server-mroonga
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -188,13 +230,21 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <h2>2.7. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
 <p>CentOS 5's MySQL packages should be removed beforehand if installed.</p>
 <p>Remove existing MySQL packages</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove mysql*
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove &#39;mysql*&#39;
 </pre></div>
 </div>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
+% sudo yum install -y MySQL-server
+% sudo service mysql start
 % sudo yum install -y mysql-mroonga
+(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -204,7 +254,15 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
+% sudo yum install -y mysql-server
+% sudo service mysqld start
 % sudo yum install -y mysql-mroonga
+(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -214,6 +272,11 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-repository-1.0.0-0.noarch.rpm
 % sudo yum update
 % sudo yum install -y mysql-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
@@ -243,8 +306,8 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <h3>2.10.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
 <p>Download the latest MySQL 5.5 source code, then build and install it.</p>
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
-<p>Here we assume that we use mysql-5.5.17 and its source code is extracted in the following directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.5.17
+<p>Here we assume that we use mysql-5.5.22 and its source code is extracted in the following directory.</p>
+<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.5.22
 </pre></div>
 </div>
 <p>And we assume that MySQL is installed in the following directory.</p>
@@ -262,14 +325,14 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <h3>2.10.6. Build mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>Run configure script by specifying the location of MySQL source code with <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> and the path of mysql_config command with <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
-  --with-mysql-source=/usr/local/src/mysql-5.5.17 \
+  --with-mysql-source=/usr/local/src/mysql-5.5.22 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
 </pre></div>
 </div>
 <p>If groonga is not installed in the standard location like /usr/lib, you need to specify its location by PKG_CONFIG_PATH. For example, if groonga is installed with <tt class="docutils literal"><span class="pre">--prefix=$HOME/local</span></tt>, do like the following</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
   PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig \
-  --with-mysql-source=/usr/local/src/mysql-5.5.17 \
+  --with-mysql-source=/usr/local/src/mysql-5.5.22 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
 </pre></div>
 </div>
@@ -385,7 +448,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              >previous</a> |</li>
-        <li><a href="index.html">mroonga v2.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.01 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
