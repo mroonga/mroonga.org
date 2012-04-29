@@ -422,7 +422,7 @@ voidを省略
       {
          Record *record = records[i];
          Column *column = columns[column_name];
-	 column.set_value(value);
+         column.set_value(value);
       }
     }
 
@@ -434,7 +434,7 @@ voidを省略
       {
          Record *record = records[i];
          Column *column = columns[column_name];
-	 column.set_value(value);
+         column.set_value(value);
       }
     }
 
@@ -598,8 +598,78 @@ C++では真偽値に ``bool`` を使うためこのような状況は発生し�
     for (int i = 0; i < 10; ++i) {
     }
 
+キャスト
+--------
+
+C++のスタイルを用いる
+^^^^^^^^^^^^^^^^^^^^^
+
+Cスタイルのキャストはなんでもキャストできてしまうため、意図しないキャストにも気付かない可能性がある。例えば、単に ``const`` を外したいだけなのに、間違って違う型に変換していても気付けない。C++のキャストでは ``const`` を外したいときは ``const_cast`` を使用し、型を変換するときは ``static_cast`` を指定する。こうすれば、 ``static_cast`` で間違って ``const`` を外してしまっている場合も気付ける。 ``reinterpret_cast`` はどうしても必要なときのみ注意して使う。
+
+よい例（ ``const_cast`` を使っている）:
+
+    uchar *to_key;
+    const ucahr *from_key;
+    KEY *key_info;
+    uint key_length;
+    key_copy(to_key, const_cast<uchar *>from_key, key_info, key_length);
+
+よい例（ ``static_cast`` を使っている）:
+
+    int n_hits = 1;
+    int n_documents = 10;
+    float hit_ratio = (float)(n_hits) / n_documents;
+
+よい例（ ``static_cast`` では無理なので ``reinterpret_cast`` を使っている）:
+
+    THD *thread = current_thd;
+    my_hash_delete(&mrn_allocated_thds, reinterpret_cast<uchar *>(thread));
+
+悪い例（Cスタイルのキャストを使っている）:
+
+    int n_hits = 1;
+    int n_documents = 10;
+    float hit_ratio = (float)(n_hits) / n_documents;
+
+悪い例（ ``static_cast`` で十分なのに ``reinterpret_cast`` を使っている）:
+
+    void *value = get_value(key);
+    char *name;
+    name = reinterpret_cast<char *>(value);
+
+変数宣言
+--------
+
+ポインタ型を示す ``*`` とリファレンス型を示す ``&`` は変数名に寄せる
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cと同様にポインタ型を示す ``*`` は型名ではなく変数名に寄せる。これは、以下のように複数の変数を一度に宣言したときに一貫性がなくなるためである。2つめ以降の変数は近くに型名がないため ``*`` を寄せる場所がない。
+
+    char* key, *value;
+
+同様に、リファレンス型を示す ``&`` も変数名に寄せる。
+
+なお、 ``*`` や ``&`` と型名の間にはスペースを入れない。
+
+よい例:
+
+    char *key;
+
+よい例:
+
+    bool is_exist(const std::string &file_name);
+
+悪い例（型名に寄せている）:
+
+    char* key;
+
 その他
 ------
+
+  * ここに書いていないものについては特にスタイルを定めないが、
+    プロジェクト内で常に一貫性のあるスタイルを使用すること。
+    同じような事をするときは同じような書き方にすること。
+    複数の書き方で同じようなことを実現している場合は1つの方法に合わせること。
 
 以下、具体例が必要。
 
@@ -621,4 +691,3 @@ C++では真偽値に ``bool`` を使うためこのような状況は発生し�
   * typeidを使わない。
   * 例外はMySQLで問題がないようであればOK。mroongaから外の世
     界（MySQLの世界）にはださないようにする。
-  * castはCのキャストではなくC++のキャストを使う。
