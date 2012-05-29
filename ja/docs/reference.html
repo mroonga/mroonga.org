@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. リファレンス &mdash; mroonga v2.02 documentation</title>
+    <title>4. リファレンス &mdash; mroonga v2.03 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.02',
+        VERSION:     '2.03',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.02 documentation" href="index.html" />
+    <link rel="top" title="mroonga v2.03 documentation" href="index.html" />
     <link rel="next" title="5. コミュニティ" href="community.html" />
     <link rel="prev" title="3.3.2. ラッパーモード" href="userguide/wrapper.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="userguide/wrapper.html" title="3.3.2. ラッパーモード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v2.02 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.03 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -368,6 +368,93 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </pre></div>
 </div>
 </div>
+<div class="section" id="mroonga-match-escalation-threshold">
+<span id="id1"></span><h3>4.4.8. mroonga_match_escalation_threshold<a class="headerlink" href="#mroonga-match-escalation-threshold" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="http://groonga.org/docs/spec/search.html">groongaの検索の仕様</a> を確認してください。</p>
+<p>デフォルト値はgroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <tt class="docutils literal"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></tt> でデフォルト値を設定できます。</p>
+<p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
+<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<p>この変数の値による挙動の変化を示す別の例です。</p>
+<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">TEXT</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="nb">TEXT</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">tags_index</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;parser &quot;TokenDelimit&quot;&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+
+<span class="c1">-- Test data</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello groonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;groonga install&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello mroonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;mroonga install&quot;</span><span class="p">);</span>
+
+<span class="c1">-- Matches all records that have &quot;install&quot; tag.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;install&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- id        title   tags</span>
+<span class="c1">-- 1 Hello groonga!  groonga install</span>
+<span class="c1">-- 2 Hello mroonga!  mroonga install</span>
+
+<span class="c1">-- Matches no records by &quot;gr&quot; tag search because no &quot;gr&quot; tag is used.</span>
+<span class="c1">-- But matches a record that has &quot;groonga&quot; tag because search</span>
+<span class="c1">-- method is escalated and prefix search with &quot;gr&quot; is used.</span>
+<span class="c1">-- The default threshold is 0. It means that no records are matched then</span>
+<span class="c1">-- search method is escalated.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- id        title   tags</span>
+<span class="c1">-- 1 Hello groonga!  groonga install</span>
+
+<span class="c1">-- Disables escalation.</span>
+<span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="c1">-- No records are matched.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- id        title   tags</span>
+
+<span class="c1">-- Enables escalation again.</span>
+<span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="c1">-- Matches a record by prefix search with &quot;gr&quot;.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- id        title   tags</span>
+<span class="c1">-- 1 Hello groonga!  groonga install</span>
+</pre></div>
+</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="list-of-status-variables">
 <h2>4.5. ステータス変数の一覧<a class="headerlink" href="#list-of-status-variables" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -423,6 +510,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <li><a class="reference internal" href="#mroonga-version">4.4.5. mroonga_version</a></li>
 <li><a class="reference internal" href="#mroonga-dry-write">4.4.6. mroonga_dry_write</a></li>
 <li><a class="reference internal" href="#mroonga-enable-optimization">4.4.7. mroonga_enable_optimization</a></li>
+<li><a class="reference internal" href="#mroonga-match-escalation-threshold">4.4.8. mroonga_match_escalation_threshold</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#list-of-status-variables">4.5. ステータス変数の一覧</a><ul>
@@ -474,7 +562,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
         <li class="right" >
           <a href="userguide/wrapper.html" title="3.3.2. ラッパーモード"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v2.02 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.03 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
