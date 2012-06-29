@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. インストールガイド &mdash; mroonga v2.03 documentation</title>
+    <title>2. インストールガイド &mdash; mroonga v2.04 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.03',
+        VERSION:     '2.04',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.03 documentation" href="index.html" />
+    <link rel="top" title="mroonga v2.04 documentation" href="index.html" />
     <link rel="next" title="3. ユーザガイド" href="userguide.html" />
     <link rel="prev" title="1. mroongaの特徴" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v2.03 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.04 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -99,6 +99,7 @@ deb-src http://packages.groonga.org/debian/ squeeze main
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo aptitude update
 % sudo aptitude -V -D -y --allow-untrusted install groonga-keyring
+% sudo aptitude update
 % sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
@@ -116,9 +117,10 @@ deb-src http://packages.groonga.org/debian/ wheezy main
 </pre></div>
 </div>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo aptitude update
-% sudo aptitude -V -D -y --allow-untrusted install groonga-keyring
-% sudo aptitude -V -D -y install mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
@@ -137,6 +139,7 @@ deb-src http://packages.groonga.org/debian/ unstable main
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo aptitude update
 % sudo aptitude -V -D -y --allow-untrusted install groonga-keyring
+% sudo aptitude update
 % sudo aptitude -V -D -y install mysql-server-mroonga
 </pre></div>
 </div>
@@ -164,6 +167,7 @@ deb-src http://packages.groonga.org/ubuntu/ lucid universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
 % sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
 % sudo apt-get -y install mysql-server-mroonga
 </pre></div>
 </div>
@@ -191,6 +195,7 @@ deb-src http://packages.groonga.org/ubuntu/ natty universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
 % sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
 % sudo apt-get -y install mysql-server-mroonga
 </pre></div>
 </div>
@@ -218,6 +223,7 @@ deb-src http://packages.groonga.org/ubuntu/ oneiric universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
 % sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
 % sudo apt-get -y install mysql-server-mroonga
 </pre></div>
 </div>
@@ -245,6 +251,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
 % sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
 % sudo apt-get -y install mysql-server-mroonga
 </pre></div>
 </div>
@@ -263,7 +270,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-0.noarch.rpm
-% sudo yum update
+% sudo yum makecache
 % sudo yum install -y MySQL-server
 % sudo service mysql start
 % sudo yum install -y mysql-mroonga
@@ -281,7 +288,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 <p>CentOS 6用のパッケージはCentOS 5用のパッケージと違い、ディストリビューション由来のMySQLパッケージ（MySQL 5.1系）を利用します。そのため、ディストリビューション由来のMySQLを削除する必要はありません。</p>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-0.noarch.rpm
-% sudo yum update
+% sudo yum makecache
 % sudo yum install -y mysql-server
 % sudo service mysqld start
 % sudo yum install -y mysql-mroonga
@@ -298,7 +305,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 <h2>2.10. Fedora 16<a class="headerlink" href="#fedora-16" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-0.noarch.rpm
-% sudo yum update
+% sudo yum makecache
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
@@ -489,7 +496,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v2.03 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.04 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
