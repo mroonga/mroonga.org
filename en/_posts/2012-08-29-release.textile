@@ -1,0 +1,37 @@
+---
+layout: post.en
+title: Mroonga 2.06 has been released!
+description: Mroonga 2.0.5 has been released!
+---
+h2. Mroonga 2.06 has been released!
+
+"Mroonga 2.06":/docs/news.html#release-2-05 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+This release has a backward compatibility about database. But this release depends on new functionality introduced at groonga 2.0.6.
+Note that you must use mroonga 2.06 with groonga 2.0.6.
+
+There is one topic for this release:
+
+* Supported "-WORD" syntax in BOOLEAN MODE
+
+h3. Supported "-WORD" syntax in BOOLEAN MODE
+
+mroonga had not support '-' as boolean full-text search operator.
+
+This release supports "-WORD" syntax in BOOLEAN MODE.
+
+For example, you can select the records which contain 'weather', and the records which does not contain 'tomorrow' in the content column:
+
+<pre>
+SELECT * FROM diaries WHERE MATCH(content) AGAINST("-tomorrow +weather" IN BOOLEAN MODE);
+</pre>
+
+h3. Conclusion
+
+See "Release 2.06 - 2012/08/29":/docs/news.html#release-2-06 about detailed changes since 2.05.
+
+Let's search by mroonga!
