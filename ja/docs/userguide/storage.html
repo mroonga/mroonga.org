@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.1. ストレージモード &mdash; mroonga v2.06 documentation</title>
+    <title>3.3.1. ストレージモード &mdash; mroonga v2.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.06',
+        VERSION:     '2.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.06 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v2.07 documentation" href="../index.html" />
     <link rel="up" title="3. ユーザガイド" href="../userguide.html" />
     <link rel="next" title="3.3.2. ラッパーモード" href="wrapper.html" />
     <link rel="prev" title="3. ユーザガイド" href="../userguide.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="../userguide.html" title="3. ユーザガイド"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">mroonga v2.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v2.07 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" accesskey="U">3. ユーザガイド</a> &raquo;</li> 
       </ul>
     </div>  
@@ -341,8 +341,95 @@ Rows matched: 1  Changed: 1  Warnings: 0
 </pre></div>
 </div>
 </div>
+<div class="section" id="how-to-get-snippet-keyword-in-context">
+<h2>3.3.1.6. スニペットの取得方法 (文脈付き索引)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">この機能は実験的です。引数や引数の値が予告なく変更される可能性があります。</p>
+</div>
+<p>キーワードと周辺のテキストを検索結果として取得したいことがあります。</p>
+<p>スニペットは'キーワードと関連するテキスト'を意味します。文脈付き索引ともいいます。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は検索結果からスニペットを取得する方法を提供します。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数の構文:</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_snippet(document, max_length, max_count, encoding,
+  skip_leading_spaces, html_escape, prefix, suffix,
+  word1, word1_prefix, word1_suffix,
+  word2, word2_prefix, word2_suffix, ...);
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> の引数の詳細です。</p>
+<dl class="docutils">
+<dt>document</dt>
+<dd>カラム名もしくは文字列を指定。</dd>
+<dt>max_length</dt>
+<dd>スニペットの長さの最大バイト数を指定。</dd>
+<dt>max_count</dt>
+<dd>スニペットの最大個数を指定。</dd>
+<dt>encoding</dt>
+<dd>文書のエンコーディングを指定します。値として 'ascii_general_ci'、'cp932_japanese_ci'、'eucjpms_japanese_ci'、'utf8_japanese_ci'などが指定できます。</dd>
+<dt>skip_leading_spaces</dt>
+<dd>先頭の空白を無視するかを指定します。1なら無視し、0なら無視しません。</dd>
+<dt>html_escape</dt>
+<dd>HTMLのエスケープを行うか指定します。1ならエスケープし、0ならそのまま出力します。</dd>
+<dt>prefix</dt>
+<dd>スニペットの開始テキストを指定。</dd>
+<dt>suffix</dt>
+<dd>The end text of snippet.</dd>
+<dt>wordN</dt>
+<dd>単語を指定。</dd>
+<dt>wordN_prefix</dt>
+<dd>It is the start text of wordN.</dd>
+<dt>wordN_suffix</dt>
+<dd>It is the end text of wordN.</dd>
+</dl>
+<p>mroonga_snippet 関数はユーザ定義関数(UDF)としてmroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
+<p>'fulltext'というキーワードと'MySQL'と'search'という関連語を含む文書の検索をしてみましょう。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は上記のことができます。</p>
+<p>実行例で使用するスキーマ定義はこちら:</p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
+  `id` int(11) NOT NULL,
+  `text` text,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `text` (`text`)
+) ENGINE=mroonga DEFAULT CHARSET=utf8
+</pre></div>
+</div>
+<p>実行例で使用するサンプルデータはこちら:</p>
+<div class="highlight-none"><div class="highlight"><pre>insert into snippet_test (id, text) values (1, &#39;An open-source fulltext search engine and column store.&#39;);
+insert into snippet_test (id, text) values (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
+insert into snippet_test (id, text) values (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
+</pre></div>
+</div>
+<p>実行結果はこちら:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from snippet_test;
++----+-------------------------------------------------------------------------------------------------+
+| id | text                                                                                            |
++----+-------------------------------------------------------------------------------------------------+
+|  1 | An open-source fulltext search engine and column store.                                         |
+|  2 | An open-source storage engine for fast fulltext search with MySQL.                              |
+|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. |
++----+-------------------------------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) from snippet_test where match(text) against (&#39;fulltext&#39;);
++----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| id | text                                                                                            | mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) |
++----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|  1 | An open-source fulltext search engine and column store.                                         | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
+|  2 | An open-source storage engine for fast fulltext search with MySQL.                              | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
+|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. | ...f &lt;span class=&quot;w2&quot;&gt;MySQL&lt;/span&gt; ...&lt;br&gt;...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;                                                                                                                   |
++----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>'fulltext'というキーワードと関連する'MySQL'と'search'が抽出できました。</p>
+</div>
 <div class="section" id="logging">
-<h2>3.3.1.6. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.3.1.7. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
@@ -393,7 +480,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="choosing-appropriate-columns">
-<h2>3.3.1.7. カラムの刈り込み<a class="headerlink" href="#choosing-appropriate-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.3.1.8. カラムの刈り込み<a class="headerlink" href="#choosing-appropriate-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>groongaでは各カラムごとにファイルを分けてデータを格納する「カラムストア方式」が採用されており、mroongaではこの特性を活かすためにテーブルアクセス時に必要なカラムに対してのみアクセスを行う実装を行っています。</p>
 <p>この高速化の仕組みはmroonga内部で自動的に行われるため、特に設定などを行う必要はありません。</p>
 <p>例えば以下のようにカラムが20個定義されているテーブルが存在するものと仮定します。</p>
@@ -415,7 +502,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
 </div>
 <div class="section" id="optimisation-for-counting-rows">
-<h2>3.3.1.8. 行カウント高速化<a class="headerlink" href="#optimisation-for-counting-rows" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.3.1.9. 行カウント高速化<a class="headerlink" href="#optimisation-for-counting-rows" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>COUNT(*)などの行カウントを行う場合と通常のSELECTによるデータ参照を行う場合に対して、従来よりMySQLではストレージエンジンの呼び出しを行う部分(=ストレージエンジンインタフェース)における区別が存在していないため、行数をカウントするだけで良いような場合にもレコードアクセス（SELECTの結果には含まれないデータへのアクセス）が行われる問題があります。</p>
 <p>mroongaの前身であるTritonn(MySQL+Senna)ではこの問題に対して&quot;2indパッチ&quot;という不要なレコードアクセスを省略する仕組みを独自に実装してこの性能問題を回避していました。</p>
 <p>これに引き続き、mroongaでも行カウントを高速化するための仕組みを実装しています。</p>
@@ -436,7 +523,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>備考：この高速化機能はインデックスを用いて実装されています。現在のところインデックスアクセスのみでレコードが特定できるパタンでのみ有効に機能します。</p>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>3.3.1.9. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.3.1.10. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
 <p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
 <p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
@@ -493,10 +580,11 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.3.1.3. 全文検索用パーサの変更</a></li>
 <li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.1.4. 位置情報検索の利用方法</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">3.3.1.5. レコードIDの取得方法</a></li>
-<li><a class="reference internal" href="#logging">3.3.1.6. ログ出力</a></li>
-<li><a class="reference internal" href="#choosing-appropriate-columns">3.3.1.7. カラムの刈り込み</a></li>
-<li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.1.8. 行カウント高速化</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.1.9. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.1.6. スニペットの取得方法 (文脈付き索引)</a></li>
+<li><a class="reference internal" href="#logging">3.3.1.7. ログ出力</a></li>
+<li><a class="reference internal" href="#choosing-appropriate-columns">3.3.1.8. カラムの刈り込み</a></li>
+<li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.1.9. 行カウント高速化</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.1.10. 全文検索時の ORDER BY LIMIT 高速化</a></li>
 </ul>
 </li>
 </ul>
@@ -541,7 +629,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="../userguide.html" title="3. ユーザガイド"
              >前へ</a> |</li>
-        <li><a href="../index.html">mroonga v2.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v2.07 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" >3. ユーザガイド</a> &raquo;</li> 
       </ul>
     </div>
