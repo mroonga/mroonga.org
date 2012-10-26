@@ -1,0 +1,80 @@
+---
+layout: post.en
+title: Mroonga 2.08 has been released!
+description: Mroonga 2.08 has been released!
+published: false
+---
+
+h2. Groonga fulltext search engine meetup
+
+We hold a event groonga fulltext search engine session next month!
+
+* Location:  VOYAGE GROUP, Inc. Shibuya First Place Bldg. 8F Seminar room Shinsen-cho 8-16, Shibuya, Tokyo "Google Maps":https://www.google.co.jp/maps?q=35.6553195,139.6937795
+* Date: 2012/11/29 19:00 - 21:00 JST (Open: 18:30, Party starts 21:00)
+* Reservation: via "ATND event page":http://atnd.org/events/33070
+
+See "ATND event page":http://atnd.org/events/33070 about event details.
+
+Now, we are looking for the speakers!! Deadline for submission is Nov 04 23:59, 2012 (JST). There is a benefit for the speaker that fee of party is free.
+
+NOTE: ATND is the web site which support to announce event and keep track of who's attending.
+
+h2. Mroonga 2.08 has been released!
+
+"Mroonga 2.08":/docs/news.html#release-2-08 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+This release has a backward incompatible change against multiple column index. If you have any tables that uses any multiple comlumn indexes against @VARCHAR@ or @CHAR@, please recreate those indexes by @ALTER TABLE DISABLE KEYS@ and @ALTER TABLE ENBALE KEYS@ as follows:
+
+<pre>
+mysql> ALTER TABLE table_name DISABLE KEYS;
+mysql> ALTER TABLE table_name ENABLE KEYS;
+</pre>
+
+
+There are two topics for this release:
+
+* Supported utf8mb4 character set
+* Supported Ubuntu 12.10 Quantal Quetzal
+
+h3. Supported utf8mb4 character set
+
+This release began to support utf8mb4 character set which enables you to handle 4 bytes UTF-8 with mroonga.
+
+So, you can specify DEFAULT CHARSET utf8mb4 now.
+
+Note that you can use utf8mb4 with MySQL 5.5 or later.
+
+Here is the Distribution which supports utf8mb4 (MySQL 5.5.x):
+
+* Debian/wheezy
+* Debian/unstable
+* Ubuntu/precise
+* Ubuntu/quantal
+* CentOS 5 (groonga repository provides MySQL 5.5.x package)
+* Fedora 17
+
+If you use the version 5.1 or older one of MySQL which provided by Distribution, you can not use utf8mb4 with mroonga. Setup MySQL 5.5 or later version and mroonga by yourself.
+
+Here is the Distribution which does not supports utf8mb4 (MySQL 5.1.x):
+
+* Debian/squeeze
+* Ubuntu/lucid
+* Ubuntu/natty
+* Ubuntu/oneiric
+* CentOS 6
+
+h3. Supported Ubuntu 12.10 Quantal Quetzal
+
+Ubuntu 12.10 Quantal Quetzal had been released Oct 18, 2012.
+
+This release began to support Ubuntu 12.10 by providing deb packages.
+
+h3. Conclusion
+
+See "Release 2.08 - 2012/10/29":/docs/news.html#release-2-08 about detailed changes since 2.07.
+
+Let's search by mroonga!
