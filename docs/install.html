@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Installation Guide &mdash; mroonga v2.07 documentation</title>
+    <title>2. Installation Guide &mdash; mroonga v2.08 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.07',
+        VERSION:     '2.08',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.07 documentation" href="index.html" />
+    <link rel="top" title="mroonga v2.08 documentation" href="index.html" />
     <link rel="next" title="3. User&#39;s guide" href="userguide.html" />
     <link rel="prev" title="1. The characteristics of mroonga" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mroonga v2.07 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.08 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -260,8 +260,36 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </pre></div>
 </div>
 </div>
+<div class="section" id="ubuntu-12-10-quantal-quetzal">
+<h2>2.8. Ubuntu 12.10 Quantal Quetzal<a class="headerlink" href="#ubuntu-12-10-quantal-quetzal" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the security update repository.</p>
+</div>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ quantal universe
+deb-src http://packages.groonga.org/ubuntu/ quantal universe
+</pre></div>
+</div>
+<p>Install</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
 <div class="section" id="centos-5">
-<h2>2.8. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
+<h2>2.9. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
 <p>CentOS 5's MySQL packages should be removed beforehand if installed.</p>
 <p>Remove existing MySQL packages</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum remove &#39;mysql*&#39;
@@ -283,7 +311,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 </div>
 <div class="section" id="centos-6">
-<h2>2.9. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
+<h2>2.10. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
 <p>In CentOS 6, unlike in CentOS 5, we use CentOS's MySQL packages (version 5.1.x). So you don't need to remove CentOS's MySQL packages.</p>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-0.noarch.rpm
@@ -301,7 +329,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 </div>
 <div class="section" id="fedora-17">
-<h2>2.10. Fedora 17<a class="headerlink" href="#fedora-17" title="Permalink to this headline">¶</a></h2>
+<h2>2.11. Fedora 17<a class="headerlink" href="#fedora-17" title="Permalink to this headline">¶</a></h2>
 <p>Install</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-0.noarch.rpm
 % sudo yum makecache
@@ -315,7 +343,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 </div>
 <div class="section" id="mac-os-x">
-<h2>2.11. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
+<h2>2.12. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql
 </pre></div>
@@ -326,29 +354,29 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 </div>
 <div class="section" id="install-from-the-source-code">
-<h2>2.12. Install from the source code<a class="headerlink" href="#install-from-the-source-code" title="Permalink to this headline">¶</a></h2>
+<h2>2.13. Install from the source code<a class="headerlink" href="#install-from-the-source-code" title="Permalink to this headline">¶</a></h2>
 <p>Here we explain how to install from the source code. If your environment is not listed above, you need to do so.</p>
 <div class="section" id="japanese-morphological-analysis-system-mecab">
-<h3>2.12.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="Permalink to this headline">¶</a></h3>
 <p>If you want to use indexes of tokenizing of each morpheme for full text search, install <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> before installing groonga.</p>
 </div>
 <div class="section" id="download">
-<h3>2.12.2. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.2. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
 <p>To install the released version, download the tarball from <a class="reference external" href="http://github.com/mroonga/mroonga/downloads">GitHub's download page</a> .</p>
 <p>To install the latest source code, clone the code from <a class="reference external" href="https://github.com/mroonga/mroonga/">GitHub</a> and invoke <cite>./autogen.sh</cite> (GNU Autotools are required). This way is aimed at skilled developpers. If not, we recommend using the tarball.</p>
 <div class="highlight-none"><div class="highlight"><pre>% git clone https://github.com/mroonga/mroonga.git
-% mroonga
+% cd mroonga
 % ./autogen.sh
 </pre></div>
 </div>
 </div>
 <div class="section" id="requirements">
-<h3>2.12.3. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.3. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>MySQL and groonga should be already installed.</p>
 <p>And MySQL's source code is also required to build mroonga.</p>
 </div>
 <div class="section" id="install-mysql">
-<h3>2.12.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
 <p>Download the latest MySQL 5.5 source code, then build and install it.</p>
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
 <p>Here we assume that we use mysql-5.5.22 and its source code is extracted in the following directory.</p>
@@ -361,13 +389,13 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 </div>
 <div class="section" id="install-groonga">
-<h3>2.12.5. Install groonga<a class="headerlink" href="#install-groonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.5. Install groonga<a class="headerlink" href="#install-groonga" title="Permalink to this headline">¶</a></h3>
 <p>Build and install the latest groonga.</p>
 <p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
 <p>Here we assume that libgroonga is installed in the standard location like /usr/lib etc.</p>
 </div>
 <div class="section" id="build-mroonga">
-<h3>2.12.6. Build mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.6. Build mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>Run configure script by specifying the location of MySQL source code with <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> and the path of mysql_config command with <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
   --with-mysql-source=/usr/local/src/mysql-5.5.22 \
@@ -387,7 +415,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 </div>
 </div>
 <div class="section" id="install-mroonga">
-<h3>2.12.7. Install mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.7. Install mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>By invoking &quot;make install&quot;, ha_mroonga.so will be installed in MySQL's plugin directory.</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -442,18 +470,19 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
 <li><a class="reference internal" href="#ubuntu-11-04-natty-narwhal">2.5. Ubuntu 11.04 Natty Narwhal</a></li>
 <li><a class="reference internal" href="#ubuntu-11-10-oneiric-ocelot">2.6. Ubuntu 11.10 Oneiric Ocelot</a></li>
 <li><a class="reference internal" href="#ubuntu-12-04-precise-pangolin">2.7. Ubuntu 12.04 Precise Pangolin</a></li>
-<li><a class="reference internal" href="#centos-5">2.8. CentOS 5</a></li>
-<li><a class="reference internal" href="#centos-6">2.9. CentOS 6</a></li>
-<li><a class="reference internal" href="#fedora-17">2.10. Fedora 17</a></li>
-<li><a class="reference internal" href="#mac-os-x">2.11. Mac OS X</a></li>
-<li><a class="reference internal" href="#install-from-the-source-code">2.12. Install from the source code</a><ul>
-<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.12.1. Japanese morphological analysis system (MeCab)</a></li>
-<li><a class="reference internal" href="#download">2.12.2. Download</a></li>
-<li><a class="reference internal" href="#requirements">2.12.3. Requirements</a></li>
-<li><a class="reference internal" href="#install-mysql">2.12.4. Install MySQL</a></li>
-<li><a class="reference internal" href="#install-groonga">2.12.5. Install groonga</a></li>
-<li><a class="reference internal" href="#build-mroonga">2.12.6. Build mroonga</a></li>
-<li><a class="reference internal" href="#install-mroonga">2.12.7. Install mroonga</a></li>
+<li><a class="reference internal" href="#ubuntu-12-10-quantal-quetzal">2.8. Ubuntu 12.10 Quantal Quetzal</a></li>
+<li><a class="reference internal" href="#centos-5">2.9. CentOS 5</a></li>
+<li><a class="reference internal" href="#centos-6">2.10. CentOS 6</a></li>
+<li><a class="reference internal" href="#fedora-17">2.11. Fedora 17</a></li>
+<li><a class="reference internal" href="#mac-os-x">2.12. Mac OS X</a></li>
+<li><a class="reference internal" href="#install-from-the-source-code">2.13. Install from the source code</a><ul>
+<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.13.1. Japanese morphological analysis system (MeCab)</a></li>
+<li><a class="reference internal" href="#download">2.13.2. Download</a></li>
+<li><a class="reference internal" href="#requirements">2.13.3. Requirements</a></li>
+<li><a class="reference internal" href="#install-mysql">2.13.4. Install MySQL</a></li>
+<li><a class="reference internal" href="#install-groonga">2.13.5. Install groonga</a></li>
+<li><a class="reference internal" href="#build-mroonga">2.13.6. Build mroonga</a></li>
+<li><a class="reference internal" href="#install-mroonga">2.13.7. Install mroonga</a></li>
 </ul>
 </li>
 </ul>
@@ -500,7 +529,7 @@ deb-src http://packages.groonga.org/ubuntu/ precise universe
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              >previous</a> |</li>
-        <li><a href="index.html">mroonga v2.07 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v2.08 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
