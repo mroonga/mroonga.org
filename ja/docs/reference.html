@@ -105,7 +105,16 @@
 <li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">(column_name,</span> <span class="pre">...))</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">USING</span> <span class="pre">BTREE</span> <span class="pre">(column_name))</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">(column_name))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CAHRSET</span> <span class="pre">UTF8</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">ASCII</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">BINARY</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">CP932</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">EUCJPMS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">KOI8R</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">LATIN1</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">SJIS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UJIS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UTF8</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UTF8MB4</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">ENGINE=mroonga</span> <span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'ENGINE</span> <span class="pre">&quot;InnoDB&quot;'</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">ENGINE=mroonga</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(\`_id\`</span> <span class="pre">INT)</span></tt></li>
@@ -213,11 +222,12 @@
 <div class="section" id="list-of-unavailable-sql-commands">
 <h2>4.2. 利用できないSQLコマンドの一覧<a class="headerlink" href="#list-of-unavailable-sql-commands" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">(...)</span> <span class="pre">CAHRSET</span> <span class="pre">not_utf8</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">上記にないキャラクタセット</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(geometry_column_name)</span> <span class="pre">VALUES</span> <span class="pre">(GeomFromText('LineString(...)'))</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(...)</span> <span class="pre">VALUES</span> <span class="pre">(null)</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">START</span> <span class="pre">TRANSACTION</span></tt></li>
 </ul>
+<p>基本的には、groongaがサポートしているキャラクタセット(EUC-JP/UTF-8/SJIS/LATIN1/KOI8R)はmroongaでもサポートされています。</p>
 </div>
 <div class="section" id="i-found-an-unlisted-sql-command">
 <h2>4.3. リストにないSQLコマンドを見つけました<a class="headerlink" href="#i-found-an-unlisted-sql-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
