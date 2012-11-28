@@ -1,0 +1,71 @@
+---
+layout: post.en
+title: Mroonga 2.09 has been released!
+description: Mroonga 2.09 has been released!
+published: true
+---
+
+h2. Mroonga 2.09 has been released!
+
+"Mroonga 2.09":/docs/news.html#release-2-09 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+This release has backward incompatible changes against against TIMESTAMP value and primary indexed char(N).
+
+TIMESTAMP value is changed to store as UTC timezone. If you have any table that uses TIMESTAMP column with no UTC timezone, please recreate (dump and restore) database.
+
+If you have any table that uses char(N) as primary key, please recreate index.
+
+Dump a database that uses mroonga:
+
+<pre>
+  % mysqldump MY_MROONGA_DATABASE > database-mroonga.dump
+</pre>
+
+Restore a database by modified dump file:
+
+<pre>
+  % mysql -u root MY_MROONGA_DATABASE < database-mroonga.dump
+</pre>
+
+Recreate a index if you use char(N) as primary key:
+
+<pre>
+  mysql> ALTER TABLE table_name DROP PRIMARY KEY;
+  mysql> ALTER TABLE table_name ADD PRIMARY KEY(column_name);
+</pre>
+
+
+There are two topics for this release:
+
+* Supported last_insert_id() function in wrapper mode
+* Improved to use specific MySQL version for mroonga package
+
+h3. Supported last_insert_id() function in wrapper mode
+
+This release began to support last_insert_id() function in
+wrapper mode.
+
+last_insert_id() function itself is able to use in previous version,
+but last_insert_id() returns invalid value in wrapper mode.
+
+The bug was fixed in this release.
+
+h3. Improved to use specific MySQL version for mroonga package
+
+Mroonga requires specific version which is built with MySQL version on build time.
+
+If MySQL package is updated to mismatched version after releasing mroonga latest version, mroonga would not work well.
+
+In this release, mroonga began to require specific version of MySQL which is used to build packages.
+
+It is aimed to avoid the problem of version mismatch between MySQL and mroonga.
+
+h3. Conclusion
+
+See "Release 2.08 - 2012/10/29":/docs/news.html#release-2-08 about detailed changes since 2.07.
+
+Let's search by mroonga!
