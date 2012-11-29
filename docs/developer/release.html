@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6.2. Release procedure (XXX not yet translated) &mdash; mroonga v2.08 documentation</title>
+    <title>6.2. Release procedure (XXX not yet translated) &mdash; mroonga v2.09 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.08',
+        VERSION:     '2.09',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.08 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v2.09 documentation" href="../index.html" />
     <link rel="up" title="6. Developer&#39;s guide" href="../developer.html" />
     <link rel="prev" title="6.1. How to debug" href="debug.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -71,7 +71,7 @@
         <li class="right" >
           <a href="debug.html" title="6.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">mroonga v2.08 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v2.09 documentation</a> &raquo;</li>
           <li><a href="../developer.html" accesskey="U">6. Developer's guide</a> &raquo;</li> 
       </ul>
     </div>  
@@ -109,7 +109,18 @@ v0.6
 <div class="highlight-none"><div class="highlight"><pre>$ make dist
 </pre></div>
 </div>
-<p>そして、作成された <tt class="docutils literal"><span class="pre">tar.gz</span></tt> ファイルを <a class="reference external" href="https://github.com/mroonga/mroonga/downloads">https://github.com/mroonga/mroonga/downloads</a> よりアップロードします。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>以下の作業は初回パッケージ作成時のみ必要です。初回パッケージ作成時にはパッケージ作成に必要なソフトウェアをインストールします。:</p>
+<div class="last highlight-none"><div class="highlight"><pre>$ sudo gem install github_api
+</pre></div>
+</div>
+</div>
+<p>作成された <tt class="docutils literal"><span class="pre">tar.gz</span></tt> ファイルのアップロードを行うには以下のコマンドを実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>$ make upload-to-github
+</pre></div>
+</div>
+<p>これで、 <a class="reference external" href="https://github.com/mroonga/mroonga/downloads">https://github.com/mroonga/mroonga/downloads</a> から <tt class="docutils literal"><span class="pre">tar.gz</span></tt> のダウンロードが行えるようになります。</p>
 </div>
 <div class="section" id="id3">
 <h2>6.2.3. パッケージの作成<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -276,8 +287,15 @@ groongaと組み合わせると問題が解決しているかもしれません�
 </pre></div>
 </div>
 </div>
+<div class="section" id="twitter">
+<h2>6.2.7. Twitterでリリースアナウンスをする<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<p>mroongaブログのリリースエントリには「リンクをあなたのフォロワーに共有する」ためのツイートボタンがあるので、そのボタンを使ってリリースアナウンスします。(画面下部に配置されている)</p>
+<p>このボタンを経由する場合、ツイート内容に自動的にリリースタイトル(「mroonga 2.08リリース」など)とmroongaブログのリリースエントリのURLが挿入されます。</p>
+<p>この作業はmroongaブログの英語版、日本語版それぞれで行います。
+あらかじめgroongaアカウントでログインしておくとアナウンスを円滑に行うことができます。</p>
+</div>
 <div class="section" id="freecode-com">
-<h2>6.2.7. freecode.comへリリース情報を登録<a class="headerlink" href="#freecode-com" title="Permalink to this headline">¶</a></h2>
+<h2>6.2.8. freecode.comへリリース情報を登録<a class="headerlink" href="#freecode-com" title="Permalink to this headline">¶</a></h2>
 <p>mroongaプロジェクトではfreecode.comでもリリース情報を発信しています。</p>
 <p>freecode.comのプロジェクトページは以下の通りです。</p>
 <blockquote>
@@ -286,9 +304,13 @@ groongaと組み合わせると問題が解決しているかもしれません�
 新規リリース情報を登録します。</p>
 <blockquote>
 <div><a class="reference external" href="https://freecode.com/projects/mroonga/releases/new">https://freecode.com/projects/mroonga/releases/new</a></div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">投稿した内容に対するレビューが運営側で実施されるので、反映されるまでしばらく時間がかかります。</p>
+</div>
 </div>
 <div class="section" id="id7">
-<h2>6.2.8. リリース後にやること<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2>6.2.9. リリース後にやること<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>リリースバージョンを以下のようにして更新します。:</p>
 <div class="highlight-none"><div class="highlight"><pre>$ make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
 </pre></div>
@@ -315,8 +337,9 @@ groongaと組み合わせると問題が解決しているかもしれません�
 <li><a class="reference internal" href="#id4">6.2.4. タグを打つ</a></li>
 <li><a class="reference internal" href="#id5">6.2.5. ドキュメントのアップロード</a></li>
 <li><a class="reference internal" href="#id6">6.2.6. リリースメールの送信</a></li>
-<li><a class="reference internal" href="#freecode-com">6.2.7. freecode.comへリリース情報を登録</a></li>
-<li><a class="reference internal" href="#id7">6.2.8. リリース後にやること</a></li>
+<li><a class="reference internal" href="#twitter">6.2.7. Twitterでリリースアナウンスをする</a></li>
+<li><a class="reference internal" href="#freecode-com">6.2.8. freecode.comへリリース情報を登録</a></li>
+<li><a class="reference internal" href="#id7">6.2.9. リリース後にやること</a></li>
 </ul>
 </li>
 </ul>
@@ -355,7 +378,7 @@ groongaと組み合わせると問題が解決しているかもしれません�
         <li class="right" >
           <a href="debug.html" title="6.1. How to debug"
              >previous</a> |</li>
-        <li><a href="../index.html">mroonga v2.08 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v2.09 documentation</a> &raquo;</li>
           <li><a href="../developer.html" >6. Developer's guide</a> &raquo;</li> 
       </ul>
     </div>
