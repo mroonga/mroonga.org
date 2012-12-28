@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.2. Wrapper mode &mdash; mroonga v2.09 documentation</title>
+    <title>3.3.2. Wrapper mode &mdash; mroonga v2.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.09',
+        VERSION:     '2.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.09 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v2.10 documentation" href="../index.html" />
     <link rel="up" title="3. User&#39;s guide" href="../userguide.html" />
     <link rel="next" title="4. Reference" href="../reference.html" />
     <link rel="prev" title="3.3.1. Storage mode" href="storage.html" /> 
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="storage.html" title="3.3.1. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">mroonga v2.09 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v2.10 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" accesskey="U">3. User's guide</a> &raquo;</li> 
       </ul>
     </div>  
@@ -306,58 +306,14 @@ by using MATCH .. AGAINST syntax.</p>
 Assume that some keyword such as 'MySQL' and 'search' are associated with 'fulltext'.</p>
 <p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> function meets above.</p>
 <p>Here is the schema definition for execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>.. include:: mroonga_snippet_storage.rst
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
+  `id` int(11) NOT NULL,
+  `text` text,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `text` (`text`)
+) ENGINE=mroonga COMMENT &#39;engine = &quot;innodb&quot;&#39; DEFAULT CHARSET=utf8
 </pre></div>
 </div>
-<blockquote>
-<div><dl class="docutils">
-<dt>CREATE TABLE <cite>snippet_test</cite> (</dt>
-<dd><cite>id</cite> int(11) NOT NULL,
-<cite>text</cite> text,
-PRIMARY KEY (<cite>id</cite>),
-FULLTEXT KEY <cite>text</cite> (<cite>text</cite>)</dd>
-</dl>
-<p>) ENGINE=mroonga DEFAULT CHARSET=utf8</p>
-</div></blockquote>
-<p>Here is the sample data for execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>insert into snippet_test (id, text) values (1, &#39;An open-source fulltext search engine and column store.&#39;);
-insert into snippet_test (id, text) values (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
-insert into snippet_test (id, text) values (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
-</pre></div>
-</div>
-<p>Here is the results of execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from snippet_test;
-+----+-------------------------------------------------------------------------------------------------+
-| id | text                                                                                            |
-+----+-------------------------------------------------------------------------------------------------+
-|  1 | An open-source fulltext search engine and column store.                                         |
-|  2 | An open-source storage engine for fast fulltext search with MySQL.                              |
-|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. |
-+----+-------------------------------------------------------------------------------------------------+
-3 rows in set (0.00 sec)
-
-mysql&gt; select id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) from snippet_test where match(text) against (&#39;fulltext&#39;);
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| id | text                                                                                            | mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) |
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|  1 | An open-source fulltext search engine and column store.                                         | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
-|  2 | An open-source storage engine for fast fulltext search with MySQL.                              | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
-|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. | ...f &lt;span class=&quot;w2&quot;&gt;MySQL&lt;/span&gt; ...&lt;br&gt;...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;                                                                                                                   |
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-3 rows in set (0.00 sec)
-</pre></div>
-</div>
-<p>The keyword 'fulltext' and associated keyword 'MySQL' and 'search' has been extracted.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>CREATE TABLE <cite>snippet_test</cite> (</dt>
-<dd><cite>id</cite> int(11) NOT NULL,
-<cite>text</cite> text,
-PRIMARY KEY (<cite>id</cite>),
-FULLTEXT KEY <cite>text</cite> (<cite>text</cite>)</dd>
-</dl>
-<p>) ENGINE=mroonga DEFAULT CHARSET=utf8</p>
-</div></blockquote>
 <p>Here is the sample data for execution examples:</p>
 <div class="highlight-none"><div class="highlight"><pre>insert into snippet_test (id, text) values (1, &#39;An open-source fulltext search engine and column store.&#39;);
 insert into snippet_test (id, text) values (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
@@ -543,7 +499,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="3.3.1. Storage mode"
              >previous</a> |</li>
-        <li><a href="../index.html">mroonga v2.09 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v2.10 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" >3. User's guide</a> &raquo;</li> 
       </ul>
     </div>

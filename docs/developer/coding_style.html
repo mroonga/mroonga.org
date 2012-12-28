@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>コーディングスタイル &mdash; mroonga v2.09 documentation</title>
+    <title>コーディングスタイル &mdash; mroonga v2.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.09',
+        VERSION:     '2.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v2.09 documentation" href="../index.html" /> 
+    <link rel="top" title="mroonga v2.10 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -66,7 +66,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../index.html">mroonga v2.09 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">mroonga v2.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -92,38 +92,47 @@
 <h2>言語<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>基本的にすべてC++で記述します。よほどのことがない限りCは使いません。</p>
 <p>よい例:</p>
-<blockquote>
-<div>ha_mroonga.cpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp
+</pre></div>
+</div>
 <p>悪い例（C言語を使っている）:</p>
-<blockquote>
-<div>mrn_sys.c</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>mrn_sys.c
+</pre></div>
+</div>
 </div>
 <div class="section" id="id3">
 <h2>ファイル名<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>ソースコードのファイル名は全て小文字にします。また、単語ごとに&quot;_&quot;で区切ります。</p>
 <p>よい例:</p>
-<blockquote>
-<div>ha_mroonga.cpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp
+</pre></div>
+</div>
 <p>悪い例（大文字を使っている）:</p>
-<blockquote>
-<div>HA_MROONGA.cpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>HA_MROONGA.cpp
+</pre></div>
+</div>
 <p>悪い例（単語を&quot;_&quot;で区切らずにくっつけている）:</p>
-<blockquote>
-<div>hamroonga.cpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>hamroonga.cpp
+</pre></div>
+</div>
 <p>悪い例（単語を&quot;-&quot;で区切っている）:</p>
-<blockquote>
-<div>ha-mroonga.cpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha-mroonga.cpp
+</pre></div>
+</div>
 <p>ソースコードの拡張子 <tt class="docutils literal"><span class="pre">.cpp</span></tt> にします。</p>
 <p>よい例:</p>
-<blockquote>
-<div>ha_mroonga.cpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">.cc</span></tt> を使っている）:</p>
-<blockquote>
-<div>ha_mroonga.cc</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cc
+</pre></div>
+</div>
 <p>ヘッダーファイルの拡張子は <tt class="docutils literal"><span class="pre">.hpp</span></tt> にします。</p>
 <p>よい例:</p>
-<blockquote>
-<div>ha_mroonga.hpp</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.hpp
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">.h</span></tt> を使っている）:</p>
 <blockquote>
 <div>ha_mroonga.h</div></blockquote>
@@ -132,577 +141,564 @@
 <h2>名前空間<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>ヘッダーファイルでは <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></tt> を使わない。ソースコードでは <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></tt> であれば使ってもよい。他の名前空間は使ってはいけない。</p>
 <p>よい例:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>ha_mroonga.cpp:</dt>
-<dd>using namespace std;</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp:
+  using namespace std;
+</pre></div>
+</div>
 <p>悪い例（ヘッダーファイル内で <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></tt> を使っている）:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>ha_mroonga.hpp:</dt>
-<dd>using namespace std;</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.hpp:
+  using namespace std;
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">std</span></tt> 以外の名前空間に対して <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></tt> を使っている）:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>ha_mroonga.cpp:</dt>
-<dd>using namespace zmq;</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp:
+  using namespace zmq;
+</pre></div>
+</div>
 </div>
 <div class="section" id="include">
 <h2><tt class="docutils literal"><span class="pre">include</span></tt> ガード<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h2>
 <p>2重 <tt class="docutils literal"><span class="pre">include</span></tt> を防ぐためのマクロは、ヘッダーファイルの名前をすべて大文字にし、単語の区切りをアンダースコアにしたものにし、最後にアンダースコアをつけて <tt class="docutils literal"><span class="pre">HEADER_FILE_NAME_HPP_</span></tt> という名前にする。</p>
 <p>よい例:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>mrn_db_path.hpp:</dt>
-<dd>#ifndef <a href="#id115"><span class="problematic" id="id116">MRN_DB_PATH_HPP_</span></a>
-#define <a href="#id117"><span class="problematic" id="id118">MRN_DB_PATH_HPP_</span></a>
-...
-#endif // <a href="#id119"><span class="problematic" id="id120">MRN_DB_PATH_HPP_</span></a></dd>
-</dl>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>mrn_db_path.hpp:
+  #ifndef MRN_DB_PATH_HPP_
+  #define MRN_DB_PATH_HPP_
+  ...
+  #endif // MRN_DB_PATH_HPP_
+</pre></div>
+</div>
 <p>悪い例（小文字になっている）:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>mrn_db_path.hpp:</dt>
-<dd>#ifndef <a href="#id121"><span class="problematic" id="id122">mrn_db_path_hpp_</span></a>
-#define <a href="#id123"><span class="problematic" id="id124">mrn_db_path_hpp_</span></a>
-...
-#endif // <a href="#id125"><span class="problematic" id="id126">mrn_db_path_hpp_</span></a></dd>
-</dl>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>mrn_db_path.hpp:
+  #ifndef mrn_db_path_hpp_
+  #define mrn_db_path_hpp_
+  ...
+  #endif // mrn_db_path_hpp_
+</pre></div>
+</div>
 <p>悪い例（アンダースコアが最後ではなく先頭についている）:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>mrn_db_path.hpp:</dt>
-<dd>#ifndef _MRN_DB_PATH_HPP
-#define _MRN_DB_PATH_HPP
-...
-#endif // _MRN_DB_PATH_HPP</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>mrn_db_path.hpp:
+  #ifndef _MRN_DB_PATH_HPP
+  #define _MRN_DB_PATH_HPP
+  ...
+  #endif // _MRN_DB_PATH_HPP
+</pre></div>
+</div>
 </div>
 <div class="section" id="id5">
 <h2>代入<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><tt class="docutils literal"><span class="pre">=</span></tt> の前後に1つスペースを入れる。</p>
 <p>よい例:</p>
-<blockquote>
-<div>int i = 0;</div></blockquote>
-<p>悪い例（スペースが入っていない）;</p>
-<blockquote>
-<div>for (i=0; i&lt;10; ++i) {...}</div></blockquote>
-<p>悪い例（2つスペースが入っている）</p>
-<blockquote>
-<div>int i  = 0;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>int i = 0;
+</pre></div>
+</div>
+<p>悪い例（スペースが入っていない）:</p>
+<div class="highlight-none"><div class="highlight"><pre>for (i=0; i&lt;10; ++i) {...}
+</pre></div>
+</div>
+<p>悪い例（2つスペースが入っている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>int i  = 0;
+</pre></div>
+</div>
 </div>
 <div class="section" id="id6">
 <h2>文字列<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>文字列はポインタと長さで表現する。 <tt class="docutils literal"><span class="pre">\0</span></tt> での終端を仮定しない。</p>
 <p>よい例（本当はもっとすっきりした例がよいけど。。。）:</p>
-<blockquote>
-<div>char <a href="#id7"><span class="problematic" id="id8">*</span></a>raw_data = &quot;table_name column_name column_value&quot;
-char <a href="#id9"><span class="problematic" id="id10">*</span></a>column_name;
+<div class="highlight-none"><div class="highlight"><pre>char *raw_data = &quot;table_name column_name column_value&quot;
+char *column_name;
 size_t column_name_size;
 column_name = raw_data + strlen(&quot;table_name &quot;);
-column_name_size = strlen(&quot;column_name&quot;);</div></blockquote>
+column_name_size = strlen(&quot;column_name&quot;);
+</pre></div>
+</div>
 <p>悪い例（無理やり <tt class="docutils literal"><span class="pre">\0</span></tt> 終端にしている）:</p>
-<blockquote>
-<div>char <a href="#id11"><span class="problematic" id="id12">*</span></a>raw_data = &quot;table_name column_name column_value&quot;
-char <a href="#id13"><span class="problematic" id="id14">*</span></a>column_name;
-column_name = strndup(raw_data + strlen(&quot;table_name &quot;), strlen(&quot;column_name&quot;));</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char *raw_data = &quot;table_name column_name column_value&quot;
+char *column_name;
+column_name = strndup(raw_data + strlen(&quot;table_name &quot;), strlen(&quot;column_name&quot;));
+</pre></div>
+</div>
 <p>ただし、ファイル名など <tt class="docutils literal"><span class="pre">\0</span></tt> が前提であるものに関しては <tt class="docutils literal"><span class="pre">\0</span></tt> 終端を仮定してよい。</p>
 <p>よい例:</p>
-<blockquote>
-<div>char <a href="#id15"><span class="problematic" id="id16">*</span></a>database_path = &quot;db/test.mrn&quot;;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char *database_path = &quot;db/test.mrn&quot;;
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">\0</span></tt> 終端を仮定せず、長さも管理している）:</p>
-<blockquote>
-<div>char <a href="#id17"><span class="problematic" id="id18">*</span></a>database_path = &quot;db/test.mrn&quot;;
-size_t database_path_size = strlen(&quot;db/test.mrn&quot;);</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char *database_path = &quot;db/test.mrn&quot;;
+size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
+</pre></div>
+</div>
 <p><tt class="docutils literal"><span class="pre">std::string</span></tt> は内部でメモリ確保などの処理が発生するので多用しない。</p>
 <p>よい例:</p>
-<blockquote>
-<div>char database_path[MAX_PATH];</div></blockquote>
-<p>悪い例（最大サイズがわかっているのに <tt class="docutils literal"><span class="pre">std::string</span></tt> を使っている）:</p>
-<blockquote>
-<div>std::string database_path;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char database_path[MAX_PATH];
+</pre></div>
 </div>
-<div class="section" id="id19">
-<h2>バッファ<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<p>悪い例（最大サイズがわかっているのに <tt class="docutils literal"><span class="pre">std::string</span></tt> を使っている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>std::string database_path;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>バッファ<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>TODO: ちゃんと考える。</p>
 <p>何度も繰り返し使う領域（バッファ）が必要な場合は <tt class="docutils literal"><span class="pre">GRN_BULK</span></tt> を使う。例えば、カラムの値を取得する領域などである。</p>
 </div>
-<div class="section" id="id20">
-<h2>命名規則<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id21">
-<h3>クラス名<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h2>命名規則<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>クラス名<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>クラスの名前は <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> とする。</p>
 <p>よい例:</p>
-<blockquote>
-<div>class MyClass
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
-}</div></blockquote>
+}
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">snail_case</span></tt> である）:</p>
-<blockquote>
-<div>class my_class
+<div class="highlight-none"><div class="highlight"><pre>class my_class
 {
-}</div></blockquote>
+}
+</pre></div>
+</div>
 <p>ただし、 <tt class="docutils literal"><span class="pre">ha_mroonga</span></tt> などMySQLとのインターフェイスとなるクラスでかつ他の類似のモジュールに命名規則がある場合はそれに従う。</p>
 <p>よい例:</p>
-<blockquote>
-<div>class ha_mroonga: public handler
+<div class="highlight-none"><div class="highlight"><pre>class ha_mroonga: public handler
 {
-}</div></blockquote>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> になっている）:</p>
-<blockquote>
-<div>class HaMroonga: public handler
-{
-}</div></blockquote>
+}
+</pre></div>
 </div>
-<div class="section" id="id22">
-<h3>メンバー変数名<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>悪い例（ <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> になっている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class HaMroonga: public handler
+{
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>メンバー変数名<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>メンバー変数名は <tt class="docutils literal"><span class="pre">snail_case</span></tt> とし、末尾にアンダースコア（ <tt class="docutils literal"><span class="pre">_</span></tt> ）を付ける。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div>char <a href="#id23"><span class="problematic" id="id24">*</span></a><a href="#id127"><span class="problematic" id="id128">my_name_</span></a>;</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> である）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div>char <a href="#id25"><span class="problematic" id="id26">*</span></a><a href="#id129"><span class="problematic" id="id130">MyName_</span></a>;</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>悪い例（末尾にアンダースコアがない）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div>char <a href="#id27"><span class="problematic" id="id28">*</span></a>my_name;</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  char *my_name_;
+}
+</pre></div>
 </div>
-<div class="section" id="id29">
-<h3>読み込み用アクセサ名<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>悪い例（ <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> である）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  char *MyName_;
+}
+</pre></div>
+</div>
+<p>悪い例（末尾にアンダースコアがない）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  char *my_name;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>読み込み用アクセサ名<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>メンバー変数の値を読み込むメソッドの名前はメンバー変数名の末尾のアンダースコアを除いたものにする。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div>char <a href="#id30"><span class="problematic" id="id31">*</span></a><a href="#id131"><span class="problematic" id="id132">my_name_</span></a>;
-const char <a href="#id32"><span class="problematic" id="id33">*</span></a>my_name() {return <a href="#id133"><span class="problematic" id="id134">my_name_</span></a>;};</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>悪い例（末尾にアンダースコアが残っている）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div>char <a href="#id34"><span class="problematic" id="id35">*</span></a><a href="#id135"><span class="problematic" id="id136">my_name_</span></a>;
-const char <a href="#id36"><span class="problematic" id="id37">*</span></a>my_name_() {return <a href="#id137"><span class="problematic" id="id138">my_name_</span></a>;};</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>悪い例（先頭に <tt class="docutils literal"><span class="pre">get_</span></tt> を付けている）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div>char <a href="#id38"><span class="problematic" id="id39">*</span></a><a href="#id139"><span class="problematic" id="id140">my_name_</span></a>;
-const char <a href="#id40"><span class="problematic" id="id41">*</span></a>_my_name() {return <a href="#id141"><span class="problematic" id="id142">my_name_</span></a>;};</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  char *my_name_;
+  const char *my_name() {return my_name_;};
+}
+</pre></div>
 </div>
-<div class="section" id="id42">
-<h3>書き込み用アクセサ名<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<p>悪い例（末尾にアンダースコアが残っている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  char *my_name_;
+  const char *my_name_() {return my_name_;};
+}
+</pre></div>
+</div>
+<p>悪い例（先頭に <tt class="docutils literal"><span class="pre">get_</span></tt> を付けている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  char *my_name_;
+  const char *_my_name() {return my_name_;};
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>書き込み用アクセサ名<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>メンバー変数の値を設定するメソッドの名前は、メンバー変数名の末尾のアンダースコアを除き、先頭に <tt class="docutils literal"><span class="pre">set_</span></tt> を加えたものにする。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id143"><span class="problematic" id="id144">age_</span></a>;
-void set_age(unsigned int age)
-{</p>
-<blockquote>
-<div><a href="#id145"><span class="problematic" id="id146">age_</span></a> = age;</div></blockquote>
-<p>};</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  void set_age(unsigned int age)
+  {
+    age_ = age;
+  };
+}
+</pre></div>
+</div>
 <p>悪い例（末尾にアンダースコアが残っている）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id147"><span class="problematic" id="id148">age_</span></a>;
-void set_age_(unsigned int age)
-{</p>
-<blockquote>
-<div><a href="#id149"><span class="problematic" id="id150">age_</span></a> = age;</div></blockquote>
-<p>};</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  void set_age_(unsigned int age)
+  {
+    age_ = age;
+  };
+}
+</pre></div>
+</div>
 <p>悪い例（先頭に <tt class="docutils literal"><span class="pre">set_</span></tt> ではなく <tt class="docutils literal"><span class="pre">update_</span></tt> を付けている）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id151"><span class="problematic" id="id152">age_</span></a>;
-void update_age(unsigned int age)
-{</p>
-<blockquote>
-<div><a href="#id153"><span class="problematic" id="id154">age_</span></a> = age;</div></blockquote>
-<p>};</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  void update_age(unsigned int age)
+  {
+    age_ = age;
+  };
+}
+</pre></div>
 </div>
 </div>
-<div class="section" id="id43">
-<h2>コピーコンストラクター<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id13">
+<h2>コピーコンストラクター<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <p>基本的にコピーコンストラクターの使用を禁止する。よほどのことがなければ使用しないこと。</p>
 <p>コピーコンストラクターは暗黙的に無駄なコピーが発生する可能性があるためパフォーマンス上の問題がある。コピーではなくポインターやリファレンスを用いること。</p>
 <p>また、デフォルトのコピーコンストラクター実装はメンバー変数のポインターの値をそのままコピーするため、デコンストラクターで二重に解放してしまう危険性がある。そのため、明示的にコピーコンストラクターを定義しない場合は無効にする。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class MyClass
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
-private:</p>
-<blockquote>
-<div>MyClass(const MyClass &amp;);</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>悪い例（コピーコンストラクターを禁止していない）:</p>
-<blockquote>
-<div>class MyClass
-{
-}</div></blockquote>
-<p>悪い例（カスタムコピーコンストラクターを使っている）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id155"><span class="problematic" id="id156">age_</span></a>;
-MyClass(const MyClass &amp;object)
-{</p>
-<blockquote>
-<div><a href="#id157"><span class="problematic" id="id158">age_</span></a> = <a href="#id159"><span class="problematic" id="id160">object.age_</span></a>;</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+private:
+  MyClass(const MyClass &amp;);
+}
+</pre></div>
 </div>
-<div class="section" id="id44">
-<h2>クラスの代入<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h2>
+<p>悪い例（コピーコンストラクターを禁止していない）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+}
+</pre></div>
+</div>
+<p>悪い例（カスタムコピーコンストラクターを使っている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  MyClass(const MyClass &amp;object)
+  {
+    age_ = object.age_;
+  }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>クラスの代入<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p>基本的に定義したクラスの代入を禁止する。よほどのことがなければ使用しないこと。</p>
 <p>代入演算子は暗黙的に無駄なコピーが発生する可能性があるためパフォーマンス上の問題がある。コピーではなくポインターやリファレンスを用いること。</p>
 <p>また、デフォルトの代入演算子の実装はメンバー変数のポインターの値をそのままコピーするため、デコンストラクターで二重に解放してしまう危険性がある。そのため、明示的に代入演算子を定義しない場合は無効にする。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class MyClass
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
-private:</p>
-<blockquote>
-<div>MyClass &amp;operator=(const MyClass &amp;);</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>悪い例（代入を禁止していない）:</p>
-<blockquote>
-<div>class MyClass
-{
-}</div></blockquote>
-<p>悪い例（代入を使っている）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id161"><span class="problematic" id="id162">age_</span></a>;
-MyClass &amp;operator=(const MyClass &amp;object)
-{</p>
-<blockquote>
-<div><a href="#id163"><span class="problematic" id="id164">age_</span></a> = <a href="#id165"><span class="problematic" id="id166">object.age_</span></a>;
-return <a href="#id45"><span class="problematic" id="id46">*</span></a>this;</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+private:
+  MyClass &amp;operator=(const MyClass &amp;);
+}
+</pre></div>
 </div>
-<div class="section" id="id47">
-<h2>引数<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h2>
+<p>悪い例（代入を禁止していない）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+}
+</pre></div>
+</div>
+<p>悪い例（代入を使っている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  MyClass &amp;operator=(const MyClass &amp;object)
+  {
+    age_ = object.age_;
+    return *this;
+  }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h2>引数<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="void">
 <h3>voidを省略<a class="headerlink" href="#void" title="Permalink to this headline">¶</a></h3>
 <p>引数がない場合は <tt class="docutils literal"><span class="pre">void</span></tt> を省略する。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id167"><span class="problematic" id="id168">age_</span></a>;
-unsigned int age()
-{</p>
-<blockquote>
-<div>return <a href="#id169"><span class="problematic" id="id170">age_</span></a>;</div></blockquote>
-<p>};</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  unsigned int age()
+  {
+     return age_;
+  };
+}
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">void</span></tt> を省略していない）:</p>
-<blockquote>
-<div><p>class MyClass
-{</p>
-<blockquote>
-<div><p>unsigned int <a href="#id171"><span class="problematic" id="id172">age_</span></a>;
-unsigned int age(void)
-{</p>
-<blockquote>
-<div>return <a href="#id173"><span class="problematic" id="id174">age_</span></a>;</div></blockquote>
-<p>};</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class MyClass
+{
+  unsigned int age_;
+  unsigned int age(void)
+  {
+     return age_;
+  };
+}
+</pre></div>
+</div>
 </div>
 <div class="section" id="const">
 <h3>入力用引数にはconstを付ける<a class="headerlink" href="#const" title="Permalink to this headline">¶</a></h3>
 <p>入力のみに用いる引数には <tt class="docutils literal"><span class="pre">const</span></tt> を付ける。これは、入力のみに用いる引数である事を明示するためと、間違って引数を変更してしまわないためである。</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class Table
-{</p>
-<blockquote>
-<div><p>void insert(unsigned int id, const char <a href="#id48"><span class="problematic" id="id49">*</span></a>column_name, const char <a href="#id50"><span class="problematic" id="id51">*</span></a>value)
-{</p>
-<blockquote>
-<div>Record <a href="#id52"><span class="problematic" id="id53">*</span></a>record = records[i];
-Column <a href="#id54"><span class="problematic" id="id55">*</span></a>column = columns[column_name];
-column.set_value(value);</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class Table
+{
+  void insert(unsigned int id, const char *column_name, const char *value)
+  {
+     Record *record = records[i];
+     Column *column = columns[column_name];
+     column.set_value(value);
+  }
+}
+</pre></div>
+</div>
 <p>悪い例（入力のみに用いているのに <tt class="docutils literal"><span class="pre">const</span></tt> が付いていない）:</p>
-<blockquote>
-<div><p>class Table
-{</p>
-<blockquote>
-<div><p>void insert(unsigned int id, char <a href="#id56"><span class="problematic" id="id57">*</span></a>column_name, char <a href="#id58"><span class="problematic" id="id59">*</span></a>value)
-{</p>
-<blockquote>
-<div>Record <a href="#id60"><span class="problematic" id="id61">*</span></a>record = records[i];
-Column <a href="#id62"><span class="problematic" id="id63">*</span></a>column = columns[column_name];
-column.set_value(value);</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class Table
+{
+  void insert(unsigned int id, char *column_name, char *value)
+  {
+     Record *record = records[i];
+     Column *column = columns[column_name];
+     column.set_value(value);
+  }
+}
+</pre></div>
 </div>
 </div>
-<div class="section" id="id64">
-<h2>定数<a class="headerlink" href="#id64" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id16">
+<h2>定数<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
 <p>フラグやサイズなどを示す定数には <tt class="docutils literal"><span class="pre">const</span></tt> オブジェクトを用いる。これはデバッガー上でプログラムを走らせているときに名前で値を参照できるようにするためである。</p>
 <p>よい例:</p>
-<blockquote>
-<div>const char <a href="#id65"><span class="problematic" id="id66">*</span></a>MRN_LOG_FILE_PATH = &quot;groonga.log&quot;;</div></blockquote>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">#define</span></tt> を用いている）:</p>
-<blockquote>
-<div>#define MRN_LOG_FILE_PATH &quot;groonga.log&quot;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>const char *MRN_LOG_FILE_PATH = &quot;groonga.log&quot;;
+</pre></div>
 </div>
-<div class="section" id="id67">
-<h2>真偽値<a class="headerlink" href="#id67" title="Permalink to this headline">¶</a></h2>
+<p>悪い例（ <tt class="docutils literal"><span class="pre">#define</span></tt> を用いている）:</p>
+<div class="highlight-none"><div class="highlight"><pre>#define MRN_LOG_FILE_PATH &quot;groonga.log&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h2>真偽値<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="bool">
 <h3>bool型を用いる<a class="headerlink" href="#bool" title="Permalink to this headline">¶</a></h3>
 <p>真偽値には <tt class="docutils literal"><span class="pre">bool</span></tt> 型を用いる。</p>
 <p>よい例:</p>
-<blockquote>
-<div>bool is_searching;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>bool is_searching;
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">int</span></tt> 型を用いている）:</p>
-<blockquote>
-<div>int is_searching;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>int is_searching;
+</pre></div>
+</div>
 </div>
 <div class="section" id="true-false">
 <h3>真偽値のリテラルには <tt class="docutils literal"><span class="pre">true</span></tt> または <tt class="docutils literal"><span class="pre">false</span></tt> を用いる<a class="headerlink" href="#true-false" title="Permalink to this headline">¶</a></h3>
 <p>真偽値の値として <tt class="docutils literal"><span class="pre">true</span></tt> と <tt class="docutils literal"><span class="pre">false</span></tt> はより完結で説明的だからである。</p>
 <p>よい例:</p>
-<blockquote>
-<div>bool is_searching = true;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>bool is_searching = true;
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">0</span></tt> 以外の値を真の値として用いている）:</p>
-<blockquote>
-<div>bool is_searching = 1;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>bool is_searching = 1;
+</pre></div>
 </div>
 </div>
-<div class="section" id="id68">
-<h2>条件式<a class="headerlink" href="#id68" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id69">
-<h3>真偽値は比較しない<a class="headerlink" href="#id69" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id18">
+<h2>条件式<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id19">
+<h3>真偽値は比較しない<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>真偽値の値は <tt class="docutils literal"><span class="pre">boolean_value</span> <span class="pre">==</span> <span class="pre">true</span></tt> などとせず、 <tt class="docutils literal"><span class="pre">boolean_value</span></tt> として条件式に使用する。すでに真偽値の値を真偽値のリテラルと比較することは重複したコードだからである。</p>
 <p>よい例:</p>
-<blockquote>
-<div>boolean is_searching = true;
-if (!is_searching) { ... }</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>boolean is_searching = true;
+if (!is_searching) { ... }
+</pre></div>
+</div>
 <p>悪い例（真偽値のリテラルと比較している）:</p>
-<blockquote>
-<div>boolean is_searching = true;
-if (is_searching == false) { ... }</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>boolean is_searching = true;
+if (is_searching == false) { ... }
+</pre></div>
+</div>
 </div>
 <div class="section" id="null">
 <h3><tt class="docutils literal"><span class="pre">NULL</span></tt> と比較しない<a class="headerlink" href="#null" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">NULL</span></tt> かどうかを条件式に使う場合は <tt class="docutils literal"><span class="pre">value</span> <span class="pre">==</span> <span class="pre">NULL</span></tt> ではなく <tt class="docutils literal"><span class="pre">!value</span></tt> というように書く。多くの言語で <tt class="docutils literal"><span class="pre">NULL</span></tt> に相当する値（たとえばLispの <tt class="docutils literal"><span class="pre">nil</span></tt> ）は偽を表すため、明示的に <tt class="docutils literal"><span class="pre">NULL</span></tt> と比較しなくても意図は伝わるからである。</p>
 <p>よい例:</p>
-<blockquote>
-<div>char <a href="#id70"><span class="problematic" id="id71">*</span></a>name = NULL;
-if (!name) { ... }</div></blockquote>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">NULL</span></tt> と比較している）:</p>
-<blockquote>
-<div>char <a href="#id72"><span class="problematic" id="id73">*</span></a>name = NULL;
-if (name == NULL) { ... }</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char *name = NULL;
+if (!name) { ... }
+</pre></div>
 </div>
-<div class="section" id="id74">
-<h3>数値は比較する<a class="headerlink" href="#id74" title="Permalink to this headline">¶</a></h3>
+<p>悪い例（ <tt class="docutils literal"><span class="pre">NULL</span></tt> と比較している）:</p>
+<div class="highlight-none"><div class="highlight"><pre>char *name = NULL;
+if (name == NULL) { ... }
+</pre></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h3>数値は比較する<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p>CやC++では <tt class="docutils literal"><span class="pre">0</span></tt> は偽、 <tt class="docutils literal"><span class="pre">0</span></tt> 以外は真の値となるが、条件式に数値を使う場合は <tt class="docutils literal"><span class="pre">strcmp(...)</span> <span class="pre">==</span> <span class="pre">0</span></tt> などというように明示的に比較する。</p>
 <p>C++では真偽値に <tt class="docutils literal"><span class="pre">bool</span></tt> を使うためこのような状況は発生しないが、C言語由来のAPIでは <tt class="docutils literal"><span class="pre">int</span></tt> で真偽値を表現している場合が多い。しかし、 <tt class="docutils literal"><span class="pre">int</span></tt> だけでは真偽値として使っているか本当に数値として使っているかがわかりにくいため、 <tt class="docutils literal"><span class="pre">int</span></tt> のときはすべて数値として扱う。</p>
 <p>よい例:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>if (memcmp(value1, value2, value_size) == 0) {</dt>
-<dd>printf(&quot;same value!n&quot;);</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>if (memcmp(value1, value2, value_size) == 0) {
+  printf(&quot;same value!\n&quot;);
+}
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">0</span></tt> を偽の値として扱っている）:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>if (!memcmp(value1, value2, value_size)) {</dt>
-<dd>printf(&quot;same value!n&quot;);</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>if (!memcmp(value1, value2, value_size)) {
+  printf(&quot;same value!\n&quot;);
+}
+</pre></div>
 </div>
 </div>
-<div class="section" id="id75">
-<h2>初期化<a class="headerlink" href="#id75" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id76">
-<h3>メンバー変数の初期化には初期化リストを用いる<a class="headerlink" href="#id76" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id21">
+<h2>初期化<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id22">
+<h3>メンバー変数の初期化には初期化リストを用いる<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <p>無駄な処理を省くためにコンストラクターでのメンバー変数の初期化には初期化リストを用いる。初期化リストを用いないとコンストラクターの処理とコピーコンストラクター・代入処理が行われたりなど非効率である。（後述）</p>
 <p>よい例:</p>
-<blockquote>
-<div><p>class Table
-{</p>
-<blockquote>
-<div>Table(const char <a href="#id77"><span class="problematic" id="id78">*</span></a>name);
-std::string <a href="#id175"><span class="problematic" id="id176">name_</span></a>;</div></blockquote>
-<p>}</p>
-<dl class="docutils">
-<dt>Table::Table(const char <a href="#id79"><span class="problematic" id="id80">*</span></a>name) :</dt>
-<dd>name_(name)</dd>
-</dl>
-</div></blockquote>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">std::string(name)</span></tt> のところでコンストラクターが動き、 <tt class="docutils literal"><span class="pre">name_</span> <span class="pre">=</span> <span class="pre">...</span></tt> のところで代入演算子が動いて2回初期化している）:</p>
-<blockquote>
-<div><p>class Table
-{</p>
-<blockquote>
-<div>Table(const char <a href="#id81"><span class="problematic" id="id82">*</span></a>name);
-std::string <a href="#id177"><span class="problematic" id="id178">name_</span></a>;</div></blockquote>
-<p>}</p>
-<p>Table::Table(const char <a href="#id83"><span class="problematic" id="id84">*</span></a>name)
-{</p>
-<blockquote>
-<div><a href="#id179"><span class="problematic" id="id180">name_</span></a> = std::string(name);</div></blockquote>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>class Table
+{
+  Table(const char *name);
+  std::string name_;
+}
+
+Table::Table(const char *name) :
+  name_(name)
+{
+}
+</pre></div>
 </div>
-<div class="section" id="id85">
-<h3>変数宣言と同時に初期化する<a class="headerlink" href="#id85" title="Permalink to this headline">¶</a></h3>
+<p>悪い例（ <tt class="docutils literal"><span class="pre">std::string(name)</span></tt> のところでコンストラクターが動き、 <tt class="docutils literal"><span class="pre">name_</span> <span class="pre">=</span> <span class="pre">...</span></tt> のところで代入演算子が動いて2回初期化している）:</p>
+<div class="highlight-none"><div class="highlight"><pre>class Table
+{
+  Table(const char *name);
+  std::string name_;
+}
+
+Table::Table(const char *name)
+{
+  name_ = std::string(name);
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id23">
+<h3>変数宣言と同時に初期化する<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <p>変数を宣言したときに同時に初期化する。宣言時に初期化せずに代入して初期化すると、無駄な処理が発生する可能性があるため非効率である。（後述）</p>
 <p>よい例:</p>
-<blockquote>
-<div>std::string name(&quot;users&quot;);</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>std::string name(&quot;users&quot;);
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">std::string()</span></tt> のところでコンストラクターが動き、 <tt class="docutils literal"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">...</span></tt> のところで代入演算子が動いて2回初期化している）:</p>
-<blockquote>
-<div>std::string name;
-name = std::string(&quot;users&quot;);</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>std::string name;
+name = std::string(&quot;users&quot;);
+</pre></div>
 </div>
 </div>
-<div class="section" id="id86">
-<h2>インクリメント・デクリメント<a class="headerlink" href="#id86" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id87">
-<h3>前置形式を用いる<a class="headerlink" href="#id87" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id24">
+<h2>インクリメント・デクリメント<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id25">
+<h3>前置形式を用いる<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <p>後置形式ではオブジェクトのコピーをしなければいけないため非効率である。そのため、できるだけ前置形式を用いる。</p>
 <p>よい例（ <tt class="docutils literal"><span class="pre">int</span></tt> だと効率は変わらないので本当はあんまりよい例ではない）:</p>
-<blockquote>
-<div>for (int i = 0; i &lt; 10; ++i) {
-}</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>for (int i = 0; i &lt; 10; ++i) {
+}
+</pre></div>
+</div>
 <p>悪い例（後置形式を用いている）:</p>
-<blockquote>
-<div>for (int i = 0; i &lt; 10; ++i) {
-}</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>for (int i = 0; i &lt; 10; ++i) {
+}
+</pre></div>
 </div>
 </div>
-<div class="section" id="id88">
-<h2>キャスト<a class="headerlink" href="#id88" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id26">
+<h2>キャスト<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="c">
 <h3>C++のスタイルを用いる<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
 <p>Cスタイルのキャストはなんでもキャストできてしまうため、意図しないキャストにも気付かない可能性がある。例えば、単に <tt class="docutils literal"><span class="pre">const</span></tt> を外したいだけなのに、間違って違う型に変換していても気付けない。C++のキャストでは <tt class="docutils literal"><span class="pre">const</span></tt> を外したいときは <tt class="docutils literal"><span class="pre">const_cast</span></tt> を使用し、型を変換するときは <tt class="docutils literal"><span class="pre">static_cast</span></tt> を指定する。こうすれば、 <tt class="docutils literal"><span class="pre">static_cast</span></tt> で間違って <tt class="docutils literal"><span class="pre">const</span></tt> を外してしまっている場合も気付ける。 <tt class="docutils literal"><span class="pre">reinterpret_cast</span></tt> はどうしても必要なときのみ注意して使う。</p>
 <p>よい例（ <tt class="docutils literal"><span class="pre">const_cast</span></tt> を使っている）:</p>
-<blockquote>
-<div>uchar <a href="#id89"><span class="problematic" id="id90">*</span></a>to_key;
-const ucahr <a href="#id91"><span class="problematic" id="id92">*</span></a>from_key;
-KEY <a href="#id93"><span class="problematic" id="id94">*</span></a>key_info;
+<div class="highlight-none"><div class="highlight"><pre>uchar *to_key;
+const ucahr *from_key;
+KEY *key_info;
 uint key_length;
-key_copy(to_key, const_cast&lt;uchar <a href="#id95"><span class="problematic" id="id96">*</span></a>&gt;from_key, key_info, key_length);</div></blockquote>
+key_copy(to_key, const_cast&lt;uchar *&gt;from_key, key_info, key_length);
+</pre></div>
+</div>
 <p>よい例（ <tt class="docutils literal"><span class="pre">static_cast</span></tt> を使っている）:</p>
-<blockquote>
-<div>int n_hits = 1;
+<div class="highlight-none"><div class="highlight"><pre>int n_hits = 1;
 int n_documents = 10;
-float hit_ratio = (float)(n_hits) / n_documents;</div></blockquote>
+float hit_ratio = (float)(n_hits) / n_documents;
+</pre></div>
+</div>
 <p>よい例（ <tt class="docutils literal"><span class="pre">static_cast</span></tt> では無理なので <tt class="docutils literal"><span class="pre">reinterpret_cast</span></tt> を使っている）:</p>
-<blockquote>
-<div>THD <a href="#id97"><span class="problematic" id="id98">*</span></a>thread = current_thd;
-my_hash_delete(&amp;mrn_allocated_thds, reinterpret_cast&lt;uchar <a href="#id99"><span class="problematic" id="id100">*</span></a>&gt;(thread));</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>THD *thread = current_thd;
+my_hash_delete(&amp;mrn_allocated_thds, reinterpret_cast&lt;uchar *&gt;(thread));
+</pre></div>
+</div>
 <p>悪い例（Cスタイルのキャストを使っている）:</p>
-<blockquote>
-<div>int n_hits = 1;
+<div class="highlight-none"><div class="highlight"><pre>int n_hits = 1;
 int n_documents = 10;
-float hit_ratio = (float)(n_hits) / n_documents;</div></blockquote>
+float hit_ratio = (float)(n_hits) / n_documents;
+</pre></div>
+</div>
 <p>悪い例（ <tt class="docutils literal"><span class="pre">static_cast</span></tt> で十分なのに <tt class="docutils literal"><span class="pre">reinterpret_cast</span></tt> を使っている）:</p>
-<blockquote>
-<div>void <a href="#id101"><span class="problematic" id="id102">*</span></a>value = get_value(key);
-char <a href="#id103"><span class="problematic" id="id104">*</span></a>name;
-name = reinterpret_cast&lt;char <a href="#id105"><span class="problematic" id="id106">*</span></a>&gt;(value);</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>void *value = get_value(key);
+char *name;
+name = reinterpret_cast&lt;char *&gt;(value);
+</pre></div>
 </div>
 </div>
-<div class="section" id="id107">
-<h2>変数宣言<a class="headerlink" href="#id107" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id108">
-<h3>ポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> とリファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> は変数名に寄せる<a class="headerlink" href="#id108" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id27">
+<h2>変数宣言<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id28">
+<h3>ポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> とリファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> は変数名に寄せる<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <p>Cと同様にポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> は型名ではなく変数名に寄せる。これは、以下のように複数の変数を一度に宣言したときに一貫性がなくなるためである。2つめ以降の変数は近くに型名がないため <tt class="docutils literal"><span class="pre">*</span></tt> を寄せる場所がない。</p>
-<blockquote>
-<div>char* key, <a href="#id109"><span class="problematic" id="id110">*</span></a>value;</div></blockquote>
+<p>例:</p>
+<div class="highlight-none"><div class="highlight"><pre>char* key, *value;
+</pre></div>
+</div>
 <p>同様に、リファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> も変数名に寄せる。</p>
 <p>なお、 <tt class="docutils literal"><span class="pre">*</span></tt> や <tt class="docutils literal"><span class="pre">&amp;</span></tt> と型名の間にはスペースを入れない。</p>
 <p>よい例:</p>
-<blockquote>
-<div>char <a href="#id111"><span class="problematic" id="id112">*</span></a>key;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char *key;
+</pre></div>
+</div>
 <p>よい例:</p>
-<blockquote>
-<div>bool is_exist(const std::string &amp;file_name);</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>bool is_exist(const std::string &amp;file_name);
+</pre></div>
+</div>
 <p>悪い例（型名に寄せている）:</p>
-<blockquote>
-<div>char* key;</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre>char* key;
+</pre></div>
 </div>
 </div>
-<div class="section" id="id113">
-<h2>その他<a class="headerlink" href="#id113" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id29">
+<h2>その他<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li>ここに書いていないものについては特にスタイルを定めないが、
@@ -733,8 +729,8 @@ name = reinterpret_cast&lt;char <a href="#id105"><span class="problematic" id="i
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id114">
-<h2>メモ<a class="headerlink" href="#id114" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id30">
+<h2>メモ<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li>動的テンプレートを使わない。（要追加情報。implicit
@@ -763,52 +759,52 @@ template instantiationのことであれば、これはふつうに使わ
 <li><a class="reference internal" href="#include"><tt class="docutils literal"><span class="pre">include</span></tt> ガード</a></li>
 <li><a class="reference internal" href="#id5">代入</a></li>
 <li><a class="reference internal" href="#id6">文字列</a></li>
-<li><a class="reference internal" href="#id19">バッファ</a></li>
-<li><a class="reference internal" href="#id20">命名規則</a><ul>
-<li><a class="reference internal" href="#id21">クラス名</a></li>
-<li><a class="reference internal" href="#id22">メンバー変数名</a></li>
-<li><a class="reference internal" href="#id29">読み込み用アクセサ名</a></li>
-<li><a class="reference internal" href="#id42">書き込み用アクセサ名</a></li>
+<li><a class="reference internal" href="#id7">バッファ</a></li>
+<li><a class="reference internal" href="#id8">命名規則</a><ul>
+<li><a class="reference internal" href="#id9">クラス名</a></li>
+<li><a class="reference internal" href="#id10">メンバー変数名</a></li>
+<li><a class="reference internal" href="#id11">読み込み用アクセサ名</a></li>
+<li><a class="reference internal" href="#id12">書き込み用アクセサ名</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id43">コピーコンストラクター</a></li>
-<li><a class="reference internal" href="#id44">クラスの代入</a></li>
-<li><a class="reference internal" href="#id47">引数</a><ul>
+<li><a class="reference internal" href="#id13">コピーコンストラクター</a></li>
+<li><a class="reference internal" href="#id14">クラスの代入</a></li>
+<li><a class="reference internal" href="#id15">引数</a><ul>
 <li><a class="reference internal" href="#void">voidを省略</a></li>
 <li><a class="reference internal" href="#const">入力用引数にはconstを付ける</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id64">定数</a></li>
-<li><a class="reference internal" href="#id67">真偽値</a><ul>
+<li><a class="reference internal" href="#id16">定数</a></li>
+<li><a class="reference internal" href="#id17">真偽値</a><ul>
 <li><a class="reference internal" href="#bool">bool型を用いる</a></li>
 <li><a class="reference internal" href="#true-false">真偽値のリテラルには <tt class="docutils literal"><span class="pre">true</span></tt> または <tt class="docutils literal"><span class="pre">false</span></tt> を用いる</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id68">条件式</a><ul>
-<li><a class="reference internal" href="#id69">真偽値は比較しない</a></li>
+<li><a class="reference internal" href="#id18">条件式</a><ul>
+<li><a class="reference internal" href="#id19">真偽値は比較しない</a></li>
 <li><a class="reference internal" href="#null"><tt class="docutils literal"><span class="pre">NULL</span></tt> と比較しない</a></li>
-<li><a class="reference internal" href="#id74">数値は比較する</a></li>
+<li><a class="reference internal" href="#id20">数値は比較する</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id75">初期化</a><ul>
-<li><a class="reference internal" href="#id76">メンバー変数の初期化には初期化リストを用いる</a></li>
-<li><a class="reference internal" href="#id85">変数宣言と同時に初期化する</a></li>
+<li><a class="reference internal" href="#id21">初期化</a><ul>
+<li><a class="reference internal" href="#id22">メンバー変数の初期化には初期化リストを用いる</a></li>
+<li><a class="reference internal" href="#id23">変数宣言と同時に初期化する</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id86">インクリメント・デクリメント</a><ul>
-<li><a class="reference internal" href="#id87">前置形式を用いる</a></li>
+<li><a class="reference internal" href="#id24">インクリメント・デクリメント</a><ul>
+<li><a class="reference internal" href="#id25">前置形式を用いる</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id88">キャスト</a><ul>
+<li><a class="reference internal" href="#id26">キャスト</a><ul>
 <li><a class="reference internal" href="#c">C++のスタイルを用いる</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id107">変数宣言</a><ul>
-<li><a class="reference internal" href="#id108">ポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> とリファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> は変数名に寄せる</a></li>
+<li><a class="reference internal" href="#id27">変数宣言</a><ul>
+<li><a class="reference internal" href="#id28">ポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> とリファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> は変数名に寄せる</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id113">その他</a></li>
-<li><a class="reference internal" href="#id114">メモ</a></li>
+<li><a class="reference internal" href="#id29">その他</a></li>
+<li><a class="reference internal" href="#id30">メモ</a></li>
 </ul>
 </li>
 </ul>
@@ -841,7 +837,7 @@ template instantiationのことであれば、これはふつうに使わ
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../index.html">mroonga v2.09 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">mroonga v2.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
