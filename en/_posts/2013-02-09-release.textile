@@ -1,0 +1,86 @@
+---
+layout: post.en
+title: Mroonga 3.00 has been released!
+description: Mroonga 3.00 has been released!
+published: false
+---
+
+Since mroonga 2.00 had been released, there were many shipped improvements and remarkable features for mroonga. So, it is a time to bump version to 3.00! :-)
+
+h2. Mroonga 3.00 has been released!
+
+"Mroonga 3.00":/docs/news.html#release-3-00 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+There are three topics for this release:
+
+* Supported Fedora 18
+* Supported MySQL 5.6.10
+* Supported MySQL compatible COLLATION
+
+h3. Supported Fedora 18
+
+Fedora 18 had been released at Jan 15, 2013 at last. This release began to support Fedora 18.
+
+See how to install mroonga on "Fedora 18":http://mroonga.github.com/docs/install.html#fedora-18 about detail.
+ 
+
+h3. Supported MySQL 5.6.10
+
+This release began to support MySQL 5.6.10. This is the latest "GA release":http://www.oracle.com/us/corporate/press/1904335 about MySQL.
+
+Note that mroonga packages for MySQL 5.6.10 is available on CentOS 5.
+
+If you want to use mroonga package with MySQL 5.6.10 on other platform, you may be able to use "wing repository":http://sourceforge.jp/projects/wing-repo/ provided by wing.
+
+h3. Supported MySQL compatible COLLATION
+
+This release began to support MySQL compatible COLLATION such as @utf8_general_ci@ and @utf8mb4_general_ci@.
+
+Install groonga-normalizer-mysql package if you want to use @utf8_general_ci@ or @utf8mb4_general_ci@. (groonga-normalizer-mysql is installed with mroonga 3.00)
+
+mroonga does not cover all COLLATION like MySQL does. It does normalize only. It delegate to sort the results by MySQL.
+
+Thus, there are the case that grooga's normalized results does not match to MyISAM or InnoDB does.
+
+In this release, you can use MySQL compatible COLLATION. For example, (U+0061 LATIN SMALL LETTER A) is regarded as same as not only (U+0041 LATIN CAPITAL LETTER A) but also (U+00E0 LATIN SMALL LETTER A WITH GRAVE) or (U+00C1 LATIN CAPITAL LETTER A WITH ACUTE).
+
+This is incompatible changes.
+
+Compatibility problem:
+
+* MySQL compatible normalizer is applied to newly added table or column
+* groonga's normalizer(NormalizerAuto) is used for existent table columns
+
+Note that using mroonga 3.00 with existent database, there may be used different normalizer for newly added column.
+
+How to use same normalizer:
+
+* Use non @utf8_general_ci@ COLLATION(unify groonga's normalizer) such as @utf8_roman_ci@:
+
+<pre>
+> ALTER TABLE (table name) MODIFY (column definition) COLLATE 'utf8_roman_ci';
+</pre>
+
+How to confirm COLLATION specific column's:
+
+<pre>
+> SHOW FULL COLUMNS FROM (table name);  
+</pre>
+
+Note:
+
+* Note that non @utf8_general_ci@ COLLATION use groonga's normalizer
+* Don't use @utf8_unicode_ci@ which will be supported in the future release(reserved)
+* Don't use @utf8_bin@ if you want to normalize
+
+If you want to install mroonga from source with MySQL compatible normalizer, please install groonga-normalizer-mysql package.
+
+h3. Conclusion
+
+See "Release 3.00 - 2013/02/09":/docs/news.html#release-3-00 about detailed changes since 2.10.
+
+Let's search by mroonga!
