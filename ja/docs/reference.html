@@ -294,8 +294,52 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-log-level">
-<h3>4.4.4. mroonga_log_level<a class="headerlink" href="#mroonga-log-level" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id1"></span><h3>4.4.4. mroonga_log_level<a class="headerlink" href="#mroonga-log-level" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>mroongaのログの出力レベル。デフォルト値は <tt class="docutils literal"><span class="pre">NOTICE</span></tt> 。</p>
+<p>使用可能な <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> のリストです。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ログレベル</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>NONE</td>
+<td>ログ出力なし。</td>
+</tr>
+<tr class="row-odd"><td>EMERG</td>
+<td>データベースの破損などの緊急に対処が必要なログメッセージを出力する。</td>
+</tr>
+<tr class="row-even"><td>ALERT</td>
+<td>内部的なエラーを示すログを出力する。</td>
+</tr>
+<tr class="row-odd"><td>CRIT</td>
+<td>デッドロックの発生など致命的なログメッセージを出力する。</td>
+</tr>
+<tr class="row-even"><td>ERROR</td>
+<td>mroongaが使用しているAPIのエラーログメッセージを出力する。</td>
+</tr>
+<tr class="row-odd"><td>WARNING</td>
+<td>引数の誤りなどの警告ログメッセージを出力する。</td>
+</tr>
+<tr class="row-even"><td>NOTICE</td>
+<td>設定や状態の変化を示すログメッセージを出力する。</td>
+</tr>
+<tr class="row-odd"><td>INFO</td>
+<td>ファイル操作などの情報をログメッセージとして出力する。</td>
+</tr>
+<tr class="row-even"><td>DEBUG</td>
+<td>デバッグメッセージを出力する。mroonga開発者やバグレポートの際にお勧めします。</td>
+</tr>
+<tr class="row-odd"><td>DUMP</td>
+<td>テストツール向けのダンプログメッセージを出力します。</td>
+</tr>
+</tbody>
+</table>
 <p>ログレベルを <tt class="docutils literal"><span class="pre">DEBUG</span></tt> に変更する例です。 <tt class="docutils literal"><span class="pre">DEBUG</span></tt> レベルにするとデバッグ用のたくさんのメッセージがログに出力されます:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 +-------------------+--------+
@@ -383,7 +427,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-match-escalation-threshold">
-<span id="id1"></span><h3>4.4.8. mroonga_match_escalation_threshold<a class="headerlink" href="#mroonga-match-escalation-threshold" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id2"></span><h3>4.4.8. mroonga_match_escalation_threshold<a class="headerlink" href="#mroonga-match-escalation-threshold" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="http://groonga.org/docs/spec/search.html">groongaの検索の仕様</a> を確認してください。</p>
 <p>デフォルト値はgroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <tt class="docutils literal"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></tt> でデフォルト値を設定できます。</p>
 <p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
