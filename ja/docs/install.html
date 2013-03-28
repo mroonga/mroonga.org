@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. インストールガイド &mdash; mroonga v3.01 documentation</title>
+    <title>2. インストールガイド &mdash; mroonga v3.02 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '3.01',
+        VERSION:     '3.02',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v3.01 documentation" href="index.html" />
+    <link rel="top" title="mroonga v3.02 documentation" href="index.html" />
     <link rel="next" title="3. ユーザガイド" href="userguide.html" />
     <link rel="prev" title="1. mroongaの特徴" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v3.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v3.02 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -557,6 +557,99 @@ deb-src http://packages.groonga.org/ubuntu/ quantal universe
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING soname &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
+<p>To enable invoking groonga query from mroonga, install mroonga_command function.</p>
+<p>以下のようにCREATE FUNCTIONを実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING soname &#39;ha_mroonga.so&#39;;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="install-from-the-source-code-with-mariadb">
+<h2>2.13. MariaDBにバンドルしたソースコードからのインストール<a class="headerlink" href="#install-from-the-source-code-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MariaDBにバンドルしてソースコードからインストールする方法を説明します。パッケージがない環境ではソースコードからインストールすることになります。</p>
+<div class="section" id="id11">
+<h3>2.13.1. 形態素解析(MeCab)について<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>形態素単位でトークナイズした全文検索索引を使用したい場合は、groongaのインストール前に <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> をインストールしてください。</p>
+</div>
+<div class="section" id="id13">
+<h3>2.13.2. ダウンロード<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> から、mroongaのtarballをダウンロードしてください。</p>
+<p><a class="reference external" href="https://downloads.mariadb.org/">downloads.mariadb.org</a> から、MariaDBのtarballをダウンロードしてください。</p>
+</div>
+<div class="section" id="id15">
+<h3>2.13.3. 前提条件<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groongaが既にインストールされている必要があります。</p>
+</div>
+<div class="section" id="id16">
+<h3>2.13.4. groongaのインストール<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groongaの最新版をビルド＆インストールして下さい。</p>
+<p><a class="reference external" href="http://groonga.org/ja/docs/">http://groonga.org/ja/docs/</a></p>
+<p>ここでは/usr/libなどの標準パスにlibgroongaがインストールされているものと仮定します。</p>
+</div>
+<div class="section" id="build-mroonga-with-mariadb">
+<h3>2.13.5. MariaDBとmroongaのビルド<a class="headerlink" href="#build-mroonga-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>MariaDBのtarballの解凍。</p>
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz ./mariadb-10.0.1.tar.gz
+</pre></div>
+</div>
+<p>mroongaのtarballの解凍後、storageディレクトリへ移動。</p>
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz ./mroonga-3.02.tar.gz
+mv ./mroonga-3.02 ./mariadb-10.0.1/storage/
+</pre></div>
+</div>
+<p>&quot;cmake&quot;を実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>cd mariadb-10.0.1
+cmake .
+</pre></div>
+</div>
+<p>その後、&quot;make&quot;を実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>make
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-mroonga-with-mariadb">
+<h3>2.13.6. MariDBとmroongaのインストール<a class="headerlink" href="#install-mroonga-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>&quot;make install&quot;を実行すると&quot;usr/local/mysql&quot;ディレクトリにMariaDBとmroongaが配置されます。</p>
+<div class="highlight-none"><div class="highlight"><pre>make install
+</pre></div>
+</div>
+<p>その後、mysqldを起動し、MariaDBクライアントで接続して&quot;INSTALL PLUGIN&quot;コマンドでインストールします。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
+</pre></div>
+</div>
+<p>以下のように&quot;SHOW ENGINES&quot;コマンドで&quot;mroonga&quot;が表示されればmroongaのインストールは完了です。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
++--------------------+---------+------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                    | Transactions | XA   | Savepoints |
++--------------------+---------+------------------------------------------------------------+--------------+------+------------+
+| CSV                | YES     | CSV storage engine                                         | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                         | NO           | NO   | NO         |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
+| MyISAM             | DEFAULT | MyISAM storage engine                                      | NO           | NO   | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
+| InnoDB             | NO      | Supports transactions, row-level locking, and foreign keys | NULL         | NULL | NULL       |
+| mroonga            | YES     | CJK-ready fulltext search, column store                    | NO           | NO   | NO         |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                     | NO           | NO   | NO         |
++--------------------+---------+------------------------------------------------------------+--------------+------+------------+
+8 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>続いてUDF(ユーザ定義関数)をインストールします。</p>
+<p>INSERTを行った際にgroongaにより割当てられるレコードIDを取得するためのlast_insert_grn_id関数をインストールします。</p>
+<p>以下のようにCREATE FUNCTIONを実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER soname &#39;ha_mroonga.so&#39;;
+</pre></div>
+</div>
+<p>スニペット(キーワード周辺のテキスト)を取得するために、mroonga_snippet関数をインストールします。</p>
+<p>以下のようにCREATE FUNCTIONを実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING soname &#39;ha_mroonga.so&#39;;
+</pre></div>
+</div>
+<p>To enable invoking groonga query from mroonga, install mroonga_command function.</p>
+<p>以下のようにCREATE FUNCTIONを実行します。</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING soname &#39;ha_mroonga.so&#39;;
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -589,6 +682,15 @@ deb-src http://packages.groonga.org/ubuntu/ quantal universe
 <li><a class="reference internal" href="#install-groonga">2.12.5. groongaのインストール</a></li>
 <li><a class="reference internal" href="#build-mroonga">2.12.6. mroongaのビルド</a></li>
 <li><a class="reference internal" href="#install-mroonga">2.12.7. mroongaのインストール</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-from-the-source-code-with-mariadb">2.13. MariaDBにバンドルしたソースコードからのインストール</a><ul>
+<li><a class="reference internal" href="#id11">2.13.1. 形態素解析(MeCab)について</a></li>
+<li><a class="reference internal" href="#id13">2.13.2. ダウンロード</a></li>
+<li><a class="reference internal" href="#id15">2.13.3. 前提条件</a></li>
+<li><a class="reference internal" href="#id16">2.13.4. groongaのインストール</a></li>
+<li><a class="reference internal" href="#build-mroonga-with-mariadb">2.13.5. MariaDBとmroongaのビルド</a></li>
+<li><a class="reference internal" href="#install-mroonga-with-mariadb">2.13.6. MariDBとmroongaのインストール</a></li>
 </ul>
 </li>
 </ul>
@@ -635,7 +737,7 @@ deb-src http://packages.groonga.org/ubuntu/ quantal universe
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v3.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v3.02 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
