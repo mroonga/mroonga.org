@@ -1,0 +1,118 @@
+---
+layout: post.en
+title: Mroonga 3.02 has been released!
+description: Mroonga 3.02 has been released!
+published: false
+---
+
+h2. Mroonga 3.02 has been released!
+
+"Mroonga 3.02":/docs/news.html#release-3-02 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+There are two topics for this release:
+
+* Supported MariaDB 10.0
+* Supported mroonga_command UDF (experimental feature)
+
+h3. Supported MariaDB 10.0
+
+This release began to support MariaDB 10.0.
+
+MariaDB + mroonga package won't be released, please build by yourself if you want.
+
+Here is the concrete procedures "how to build from scratch":http://mroonga.github.com/ja/docs/install.html#install-from-the-source-code-with-mariadb.
+
+h3. Supported @mroonga_command@
+
+This release began to support @mroonga_command@ experimentally.
+
+@mroonga_command@ enables you to execute groonga query directlly from mroonga.
+
+For example, you can call geo location related function which groonga provides.
+
+Here is the sample schema:
+
+<pre>
+  CREATE TABLE shops (
+  id int primary key auto_increment,
+  name text,
+  location GEOMETRY NOT NULL,
+  SPATIAL INDEX(location)
+  ) engine = mroonga, default charset utf8;
+</pre>
+
+Then insert shop data with location information.
+
+<pre>
+  INSERT INTO shops (name, location) VALUES ("Shop A", GeomFromText('POINT(139.796829 35.712013)'));
+  INSERT INTO shops (name, location) VALUES ("Shop B", GeomFromText('POINT(139.711517 35.647701)'));
+</pre>
+
+Confirm inserted data by @mroonga_command@ itself.
+
+<pre>
+  SELECT mroonga_command("select shops");
+</pre>
+
+Here is the output results. You can see insert commands succeeded.
+
+<pre>
+  [
+    [
+      [2],
+      [
+        ["_id","UInt32"],
+        ["_key","Int32"],
+        ["id","Int32"],
+        ["location","WGS84GeoPoint"],
+        ["name","LongText"]
+      ],
+      [1,1,1,"128563247x503268584","Shop A"],
+      [2,2,2,"128331724x502961461","Shop B"]
+    ]
+  ]
+</pre>
+
+Now, try to use built in function which groonga provides.
+
+groonga provides geo location related functions.
+There is the "geo_in_circle":http://groonga.org/docs/reference/functions/geo_in_circle.html function which checks the records within the specified range of the circle.
+
+  
+
+Now, search the shops within the 500 meters from the specific location. Here is the query.
+
+<pre>
+  SELECT mroonga_command("select shops --filter 'geo_in_circle(location, \"35.7119,139.7983\", 500)'");
+</pre>
+
+In the above query, the records are filtered by the results of geo_in_circle() function.
+
+@'--filter'@ option enables to exract records within the 500 meters from the "35.7119,139.7983" geo location.
+
+<pre>
+  [
+    [
+      [1],
+      [
+        ["_id","UInt32"],["_key","Int32"],["id","Int32"],["location","WGS84GeoPoint"],["name","LongText"]
+      ],
+      [1,1,1,"128563247x503268584","Shop A"]
+    ]
+  ]
+</pre>
+
+As a result, you can see that Shop A is within the 500 meters from the specific location.
+
+Note that the output results of @mroonga_command@ is not compatible with normal SQL execution model.
+  
+
+h3. Conclusion
+
+See "Release 3.02 - 2013/03/28":/docs/news.html#release-3-02 about detailed changes since 3.01.
+
+Let's search by mroonga!
