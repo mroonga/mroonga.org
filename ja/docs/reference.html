@@ -549,8 +549,29 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <div class="section" id="limitations">
 <h2>4.6. 制限事項<a class="headerlink" href="#limitations" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>mroongaストレージエンジンにはいくつか制限があります。</p>
+<div class="section" id="limitations-of-table">
+<h3>4.6.1. テーブルの制限事項<a class="headerlink" href="#limitations-of-table" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>テーブルには以下の制限があります。この制限はgroongaに由来します。</p>
+<ul class="simple">
+<li>1つのキーの最大サイズ: 4096Bytes</li>
+<li>キーのサイズを合計した上限値: 4GBytes</li>
+</ul>
+<p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
+</div>
+<div class="section" id="limitations-of-indexing">
+<h3>4.6.2. インデックスの制限事項<a class="headerlink" href="#limitations-of-indexing" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>A full-text index has the following limitations.
+This limitation is derived from groonga and applied to each table.</p>
+<ul class="simple">
+<li>最大レコード数: 268,435,455 (約2億6千万)</li>
+<li>最大語彙数: 268,435,455 (約2億6千万)</li>
+<li>最大インデックスサイズ: 256GByte</li>
+</ul>
+<p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
+<p>テーブルがこの制限に該当するかは <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></tt> や <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></tt> などで確認してください。</p>
+</div>
 <div class="section" id="limitations-about-the-value-of-columns">
-<h3>4.6.1. カラムの値に関する制限事項<a class="headerlink" href="#limitations-about-the-value-of-columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>4.6.3. カラムの値に関する制限事項<a class="headerlink" href="#limitations-about-the-value-of-columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ストレージモードにおいて、DATE、DATETIME型のカラムには制限があります。</p>
 <p>mroongaストレージエンジンは月や日の値に指定された0を1へと自動的に補正します。</p>
 <p>つまり、0月は1月へ、0日は1日として扱います。</p>
@@ -646,7 +667,9 @@ mysql&gt; select * from datetime_limitation;
 </ul>
 </li>
 <li><a class="reference internal" href="#limitations">4.6. 制限事項</a><ul>
-<li><a class="reference internal" href="#limitations-about-the-value-of-columns">4.6.1. カラムの値に関する制限事項</a></li>
+<li><a class="reference internal" href="#limitations-of-table">4.6.1. テーブルの制限事項</a></li>
+<li><a class="reference internal" href="#limitations-of-indexing">4.6.2. インデックスの制限事項</a></li>
+<li><a class="reference internal" href="#limitations-about-the-value-of-columns">4.6.3. カラムの値に関する制限事項</a></li>
 </ul>
 </li>
 </ul>
