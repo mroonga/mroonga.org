@@ -100,19 +100,19 @@ Query OK, 0 rows affected (0.10 sec)
 </pre></div>
 </div>
 <p>We put data by INSERT.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;明日の天気は晴れでしょう。&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll be fine tomorrow.&quot;);
 Query OK, 1 row affected (0.01 sec)
 
-mysql&gt; INSERT INTO diaries (content) VALUES (&quot;明日の天気は雨でしょう。&quot;);
+mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll rain tomorrow&quot;);
 Query OK, 1 row affected (0.00 sec)
 </pre></div>
 </div>
 <p>Try full text search.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;晴れ&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;fine&quot;);
 +----+-----------------------------------------+
 | id | content                                 |
 +----+-----------------------------------------+
-|  1 | 明日の天気は晴れでしょう。 |
+|  1 | It&#39;ll be fine tomorrow. |
 +----+-----------------------------------------+
 1 row in set (0.00 sec)
 </pre></div>
@@ -128,32 +128,32 @@ Query OK, 1 row affected (0.00 sec)
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
 <p>Let's try.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;今日は晴れました。明日も晴れるでしょう。&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO diaries (content) VALUES (&quot;今日は晴れましたが、明日は雨でしょう。&quot;);
+mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
+mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
 +----+--------------------------------------------------------------+------------------------------------+
-| id | content                                                      | MATCH (content) AGAINST (&quot;晴れ&quot;) |
+| id | content                                                      | MATCH (content) AGAINST (&quot;fine&quot;) |
 +----+--------------------------------------------------------------+------------------------------------+
-|  3 | 今日は晴れました。明日も晴れるでしょう。 |                                  2 |
-|  1 | 明日の天気は晴れでしょう。                      |                                  1 |
-|  4 | 今日は晴れましたが、明日は雨でしょう。    |                                  1 |
+|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                  2 |
+|  1 | It&#39;ll be fine tomorrow.                      |                                  1 |
+|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.    |                                  1 |
 +----+--------------------------------------------------------------+------------------------------------+
 3 rows in set (0.00 sec)
 </pre></div>
 </div>
-<p>The result having the search word <tt class="docutils literal"><span class="pre">晴れ</span></tt> more, i.e. <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></tt> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
+<p>The result having the search word <tt class="docutils literal"><span class="pre">fine</span></tt> more, i.e. <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></tt> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
 <p>You can use <tt class="docutils literal"><span class="pre">AS</span></tt> to change the attribute name.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;晴れ&quot;) ORDER BY MATCH (content) AGAINST (&quot;晴れ&quot;) DESC;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
 +----+--------------------------------------------------------------+-------+
 | id | content                                                      | score |
 +----+--------------------------------------------------------------+-------+
-|  3 | 今日は晴れました。明日も晴れるでしょう。 |     2 |
-|  1 | 明日の天気は晴れでしょう。                      |     1 |
-|  4 | 今日は晴れましたが、明日は雨でしょう。    |     1 |
+|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |
+|  1 | It&#39;ll be fine tomorrow.                      |     1 |
+|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.    |     1 |
 +----+--------------------------------------------------------------+-------+
 3 rows in set (0.00 sec)
 </pre></div>
@@ -211,11 +211,11 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;晴れ&quot;) FROM diaries WH
 </dd>
 <dt>TokenDelimit</dt>
 <dd><p class="first">It tokenise by splitting with a white space.</p>
-<p class="last">&quot;映画 ホラー 話題&quot; will be tokenised as &quot;映画&quot;, &quot;ホラー&quot;, &quot;話題&quot;.</p>
+<p class="last">&quot;movie horror topic&quot; will be tokenised as &quot;movie&quot;, &quot;horror&quot;, &quot;topic&quot;.</p>
 </dd>
 <dt>TokenDelimitNull</dt>
 <dd><p class="first">It tokenise by splitting with a null character (\0).</p>
-<p class="last">&quot;映画\0ホラー\0話題&quot; will be tokenised as &quot;映画&quot;, &quot;ホラー&quot;, &quot;話題&quot;.</p>
+<p class="last">&quot;movie\0horror\0topic&quot; will be tokenised as &quot;movie&quot;, &quot;horror&quot;, &quot;topic&quot;.</p>
 </dd>
 <dt>TokenUnigram</dt>
 <dd>It tokenises in unigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 2 letters or more. It is to reduce noises.</dd>
@@ -252,13 +252,13 @@ Query OK, 0 rows affected (0.06 sec)
 </pre></div>
 </div>
 <p>To store data, you create POINT type data by using geomFromText() function like in MyISAM.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO shops VALUES (null, &#39;根津のたいやき&#39;, GeomFromText(&#39;POINT(139.762573 35.720253)&#39;));
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO shops VALUES (null, &#39;Nezu\&#39;s Taiyaki&#39;, GeomFromText(&#39;POINT(139.762573 35.720253)&#39;));
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO shops VALUES (null, &#39;浪花家&#39;, GeomFromText(&#39;POINT(139.796234 35.730061)&#39;));
+mysql&gt; INSERT INTO shops VALUES (null, &#39;Naniwaya&#39;, GeomFromText(&#39;POINT(139.796234 35.730061)&#39;));
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO shops VALUES (null, &#39;柳屋 たい焼き&#39;, GeomFromText(&#39;POINT(139.783981 35.685341)&#39;));
+mysql&gt; INSERT INTO shops VALUES (null, &#39;Yanagiya Taiyaki&#39;, GeomFromText(&#39;POINT(139.783981 35.685341)&#39;));
 Query OK, 1 row affected (0.00 sec)
 </pre></div>
 </div>
@@ -267,7 +267,7 @@ Query OK, 1 row affected (0.00 sec)
 +----+-----------------------+------------------------------------------+
 | id | name                  | AsText(location)                         |
 +----+-----------------------+------------------------------------------+
-|  1 | 根津のたいやき | POINT(139.762572777778 35.7202527777778) |
+|  1 | Nezu&#39;s Taiyaki | POINT(139.762572777778 35.7202527777778) |
 +----+-----------------------+------------------------------------------+
 1 row in set (0.00 sec)
 </pre></div>
@@ -291,16 +291,16 @@ Query OK, 0 rows affected (0.04 sec)
 <p>You can create an index for _id column, but it should be HASH type.</p>
 <p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by groonga, you cannot specify the value when updating.
 So you need to exclude it from setting columns, or you need to use <tt class="docutils literal"><span class="pre">null</span></tt> as its value.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;今夜はさんま。&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;Saury for today&#39;s dinner.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;明日はmroongaをアップデート。&quot;);
+mysql&gt; INSERT INTO memos VALUES (null, &quot;Update mroonga tomorrow.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;帰りにおだんご。&quot;);
+mysql&gt; INSERT INTO memos VALUES (null, &quot;Buy some dumpling on the way home.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;金曜日は肉の日。&quot;);
+mysql&gt; INSERT INTO memos VALUES (null, &quot;Thank God It&#39;s meat day.&quot;);
 Query OK, 1 row affected (0.00 sec)
 </pre></div>
 </div>
@@ -309,16 +309,16 @@ Query OK, 1 row affected (0.00 sec)
 +------+------------------------------------------+
 | _id  | content                                  |
 +------+------------------------------------------+
-|    1 | 今夜はさんま。                    |
-|    2 | 明日はmroongaをアップデート。 |
-|    3 | 帰りにおだんご。                 |
-|    4 | 金曜日は肉の日。                 |
+|    1 | Saury for today&#39;s dinner.                    |
+|    2 | Update mroonga tomorrow. |
+|    3 | Buy some dumpling on the way home.                 |
+|    4 | Thank God It&#39;s meat day.                 |
 +------+------------------------------------------+
 4 rows in set (0.00 sec)
 </pre></div>
 </div>
 <p>By using last_insert_grn_id function, you can also get the record ID that is assigned by the last INSERT.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;冷蔵庫に牛乳が残り1本。&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;Just one bottle of milk in the fridge.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
 mysql&gt; SELECT last_insert_grn_id();
@@ -335,7 +335,7 @@ mysql&gt; SELECT last_insert_grn_id();
 </pre></div>
 </div>
 <p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE memos SET content = &quot;冷蔵庫に牛乳はまだたくさんある。&quot; WHERE _id = last_insert_grn_id();
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE memos SET content = &quot;So much milk in the fridge.&quot; WHERE _id = last_insert_grn_id();
 Query OK, 1 row affected (0.00 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 </pre></div>
@@ -438,8 +438,106 @@ mysql&gt; select id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 </div>
 <p>The keyword 'fulltext' and associated keyword 'MySQL' and 'search' has been extracted.</p>
 </div>
+<div class="section" id="how-to-run-groonga-command">
+<h2>3.3.1.7. How to run groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
+<p>In storage mode, mroonga stores all your data into groonga
+database. You can access groonga database by SQL with mroonga. SQL is
+very powerful but it is not good for some operations such as faceted
+search.</p>
+<p>Faceted search is popular recently. Many online shopping sites such as
+amazon.com and ebay.com support faceted search. Faceted search refines
+the current search by available search parameters before users refine
+their search. And faceted search shows refined searches. Users just
+select a refined search. Users benefit from faceted search:</p>
+<ul class="simple">
+<li>Users don't need to think about how to refine their search.
+Users just select a showed refined search.</li>
+<li>Users don't get boared &quot;not match&quot; page. Faceted search showes only
+refined searches that has one or more matched items.</li>
+</ul>
+<p>Faceted search needs multiple <cite>GROUP BY</cite> operations against searched
+result set. To do faceted search by SQL, multiple <cite>SELECT</cite> requests
+are needed. It is not effective.</p>
+<p>Groonga can do faceted search by only one groonga command. It is
+effective. Groonga has the <cite>select</cite> command that can search records
+with faceted search. Faceted search is called as <cite>drilldown</cite> in
+groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">groonga's document</a> about
+groonga's <cite>select</cite> command.</p>
+<p>Mroonga provides <cite>mroonga_command()</cite> function. You can run groonga
+command in SQL by the function. But you should use only <cite>select</cite>
+command. Other commands that change schema or data may break
+consistency.</p>
+<p>Here is the schema definition for execution examples:</p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE diaries (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  content VARCHAR(255),
+  date DATE,
+  year YEAR,
+  `year_month` VARCHAR(9),
+  tag VARCHAR(32),
+  FULLTEXT INDEX (content)
+) ENGINE = mroonga DEFAULT CHARSET utf8;
+</pre></div>
+</div>
+<p>Here is the sample data for execution examples:</p>
+<div class="highlight-none"><div class="highlight"><pre>INSERT INTO diaries (content, date, year, `year_month`, tag)
+       VALUES (&#39;Groonga is an open-source fulltext search engine and column store.&#39;,
+               &#39;2013-04-08&#39;,
+               &#39;2013&#39;,
+               &#39;2013-04&#39;,
+               &#39;groonga&#39;);
+INSERT INTO diaries (content, date, year, `year_month`, tag)
+       VALUES (&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;,
+               &#39;2013-04-09&#39;,
+               &#39;2013&#39;,
+               &#39;2013-04&#39;,
+               &#39;MySQL&#39;);
+INSERT INTO diaries (content, date, year, `year_month`, tag)
+       VALUES (&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;,
+               &#39;2013-03-29&#39;,
+               &#39;2013&#39;,
+               &#39;2013-03&#39;,
+               &#39;MySQL&#39;);
+</pre></div>
+</div>
+<p>Each record has <cite>groonga</cite> or <cite>MySQL</cite> as <cite>tag</cite>. Each record also has
+<cite>year</cite> and <cite>year_month</cite>. You can use <cite>tag</cite>, <cite>year</cite> and <cite>year_month</cite> as
+faceted search keys.</p>
+<p>Groonga calls faceted search as drilldown. So parameter key in groonga
+is <cite>--drilldown</cite>. Groonga returns search result as JSON. So
+<cite>mroonga_command()</cite> also returns search result as JSON. It is not SQL
+friendly. You need to parse search result JSON by yourself.</p>
+<p>Here is the example of faceted search by all available faceted search
+keys (result JSON is pretty printted):</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;) AS faceted_result;
++-----------------------------+
+| faceted_result              |
++-----------------------------+
+| [[[3],                      |
+|   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |
+|  [[2],                      |
+|   [[&quot;_key&quot;,&quot;ShortText&quot;],    |
+|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
+|   [&quot;groonga&quot;,1],            |
+|   [&quot;MySQL&quot;,2]],             |
+|  [[1],                      |
+|   [[&quot;_key&quot;,&quot;Time&quot;],         |
+|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
+|   [1356998400.0,3]],        |
+|  [[2],                      |
+|   [[&quot;_key&quot;,&quot;ShortText&quot;],    |
+|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
+|   [&quot;2013-04&quot;,2],            |
+|   [&quot;2013-03&quot;,1]]]           |
++-----------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">groonga's select command document</a> for more
+details.</p>
+</div>
 <div class="section" id="logging">
-<h2>3.3.1.7. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.1.8. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
 <p>Here is the example of the log.</p>
@@ -491,7 +589,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="choosing-appropriate-columns">
-<h2>3.3.1.8. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.1.9. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
 <p>Groonga uses one file per column to store data, and mroonga accesses needed columns only when accessing a table to utilise this characteristic.</p>
 <p>This optimisation is done automatically in mroonga internal, you don't need any specific configuration.</p>
 <p>Imagine that we have a table with 20 columns like below.</p>
@@ -513,7 +611,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>In this case above, only columns c1, c2, c11 and c12 are accessed, and we can process the SQL rapidly.</p>
 </div>
 <div class="section" id="optimisation-for-counting-rows">
-<h2>3.3.1.9. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.1.10. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
 <p>In MySQL's storage engine interface, there is no difference between counting rows like COUNT(*) and normal data retrieving by SELECT. So access to data that is not included in SELECT result can happen even if you just want to count rows.</p>
 <p>Tritonn (MySQL + Senna), that is mroonga's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
 <p>Mroonga also has the optimisation for counting rows.</p>
@@ -534,7 +632,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>Note : This optimisation is implemented by using the index. It only works in the case where we records can be specified only by the index.</p>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>3.3.1.10. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.1.11. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>Generally speaking, MySQL can process &quot;ORDER BY&quot; query with almost no cost if we can get records by index, and can process &quot;LIMIT&quot; with low cost by limiting the range of processing data even if the number of query result is very big.</p>
 <p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
 <p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
@@ -592,10 +690,11 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.1.4. How to use geolocation search</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">3.3.1.5. How to get the record ID</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.1.6. How to get snippet (Keyword in context)</a></li>
-<li><a class="reference internal" href="#logging">3.3.1.7. Logging</a></li>
-<li><a class="reference internal" href="#choosing-appropriate-columns">3.3.1.8. Choosing appropriate columns</a></li>
-<li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.1.9. Optimisation for counting rows</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.1.10. Optimisation for ORDER BY LIMIT in full text search</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.1.7. How to run groonga command</a></li>
+<li><a class="reference internal" href="#logging">3.3.1.8. Logging</a></li>
+<li><a class="reference internal" href="#choosing-appropriate-columns">3.3.1.9. Choosing appropriate columns</a></li>
+<li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.1.10. Optimisation for counting rows</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.1.11. Optimisation for ORDER BY LIMIT in full text search</a></li>
 </ul>
 </li>
 </ul>
