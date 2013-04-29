@@ -3,6 +3,60 @@
 News
 ====
 
+.. _release-3-03:
+
+Release 3.03 - 2013/4/29
+-------------------------
+
+Improvements
+^^^^^^^^^^^^
+
+* [doc] Added documentation about table limitations. [groonga-dev,01281]
+  [Reported by Kazuhiro Isobe]
+* [doc] Added ``mroonga_command`` documentation.
+* Supported ``default_tokenizer`` as table parameter in comment.
+* Supported using existing table as lexicon not only "FULLTEXT INDEX",
+  but also normal "INDEX".
+  This change improves compatibility to groonga.
+* Supported MySQL 5.6.11.
+* Supported collation in multiple column index. [groonga-dev,01302]
+  [Reported by Kouhei Tanabe]
+* Supported no parser fulltext index for predictive search by "XXX*"
+  in groonga query syntax.
+* [cmake] Dropped MySQL 5.5.x build support.
+* Supported custom normalizer for FULLTEXT INDEX.
+  Use can specify custom normalizer as a comment.
+  Supported syntax is ``FULLTEXT INDEX (column) COMMENT 'normalizer "NormalizerXXX"'``.
+  [groonga-dev:01303] [Suggested by Kouhei Tanabe]
+* Supported Ubuntu 13.04 Raring Ringtail.
+
+Fixes
+^^^^^
+
+* [storage] Fixed a bug that stored value can't be searched because of
+  unexpected cast for integer. [#1696] [groonga-dev,01266]
+  [Reported by smztks]
+* [wrapper] Fixed a bug that multiple match against returns
+  invalid aggregated count. [#1702] [groonga-dev,01279]
+  [Reported by Masahiro Furuta]
+* Fixed a bug that ``mrn_log_level`` is ignored. [groonga-dev,01290]
+  [Reported by Kazuhiro Isobe]
+* Fixed a bug that mroonga crashes when freeing internal temporary
+  shared object.
+* [doc] Fixed a typo about running mode of storage engine and
+  a long ambiguous sentence. [Reported by Ichiro Suzuki]
+* [mysql55] Fixed a bug that inplace anonymous index recreation cause a crash.
+  [groonga-dev,01319] [Reported by Kouhei Tanabe]
+
+Thanks
+^^^^^^
+
+* smztks
+* Masahiro Furuta
+* Kazuhiro Isobe
+* Kouhei Tanabe
+* Ichiro Suzuki
+
 .. _release-3-02:
 
 
@@ -551,7 +605,7 @@ Improvements
   [Reported by @104yuki_n]
 * [storage mode] Supported Ubuntu Hardy with optimize
   build flags. [Reported by Kazuhiko]
-* Added `logos <http://mroonga.org/logo/>`_ .
+* Added `logos <http://mroonga.github.com/logo/>`_ .
 * Updated HTML design.
 
 Fixes
