@@ -1,0 +1,102 @@
+---
+layout: post.ja
+title: mroonga 3.04リリース
+description: mroonga 3.04をリリースしました！
+published: false
+---
+
+h2. mroonga 3.04リリース
+
+"mroonga 3.04":/ja/docs/news.html#release-3-04 をリリースしました！
+
+h3. インストール/アップグレード方法
+
+それぞれの環境毎のインストール方法: "インストール":/ja/docs/install.html
+
+以前のバージョンからアップグレードする場合には、アップグレード手順に注意が必要です。現在お使いのバージョンごとのアップグレード手順を参照してください。
+
+1.20より前のバージョンからアップグレードする場合は "1.20リリース 2012/01/29":/ja/docs/news.html#release-1-20 にある手順を使ってください。
+
+1.20からアップグレードする場合は "2.00リリース 2012/02/29":/ja/docs/news.html#release-2-00 にある手順を使ってください。
+
+2.00か2.01からアップグレードする場合は、 "2.02リリース 2012/04/29":/ja/docs/news.html#release-2-02 にある手順でパッケージ署名用の新しい鍵をインポートしてください。
+
+2.00以降でストレージモードにてマルチカラムインデックスを使っている場合は "2.02リリース 2012/04/29":/ja/docs/news.html#release-2-03 にある手順でインデックスを作り直してください。
+
+2.04以降でストレージモードにてSETカラムもしくは要素数が256より少ないENUMを使用している場合は、 "2.05リリース 2012/07/29":/ja/docs/news.html#release-2-05 にある手順でデータベースを再作成してください。
+
+2.05以降でマルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は、 "2.08リリース 2012/10/29":/ja/docs/news.html#release-2-08 にある手順でインデックスを再作成してください。
+
+2.08以降でTIMESTAMP型のカラムを使っているテーブルがあれば、データベースを再作成してください。CHAR(N)を主キーとしているテーブルがあれば、インデックスを再作成してください。手順は "2.09リリース 2012/11/29":/ja/docs/news.html#release-2-09 にあります。
+
+今回のリリースの主なトピックは以下の通りです。
+
+* Wプラグマのサポート
+* Debian 8.0 (jessie) のサポート
+
+h3. Wプラグマのサポート
+
+今回のリリースではTritonnの "Wプラグマ":http://qwik.jp/senna/query.html をサポートしました。
+  
+クエリの冒頭に以下の書式で対象となるセクションと重みづけ指定を行うことができます。
+
+<pre>
+*W[数値[:重み][,数値[:重み]]...
+</pre>
+
+Wプラグマの使い方を説明します。まずはサンプルのスキーマです。
+
+<pre>
+CREATE TABLE diaries (
+  id INT PRIMARY KEY,
+  title VARCHAR(255),
+  content TEXT,
+  FULLTEXT INDEX (title, content)
+) ENGINE=mroonga DEFAULT CHARSET=utf8;
+</pre>
+
+これに以下のサンプルデータを投入します。
+  
+<pre>
+INSERT INTO diaries VALUES(1, "Hello", "今日からはじめました。");
+INSERT INTO diaries VALUES(2, "天気", "明日の富士山の天気について");
+INSERT INTO diaries VALUES(3, "富士山", "今日も天気がよくてきれいに見える。");
+</pre>
+
+サンプルデータに対し、Wプラグマを用いてこのサンプルから"天気"を検索してみましょう。
+
+diariesテーブルにはtitle,contentカラムがありますが、contentカラムよりもtitleカラムをより重視したいとします。
+titleカラムに重み10を、contentカラムに重み2を与えることにします。Wプラグマに与える数値とカラムは以下のようになります。
+
+* 0 -> titleカラム
+* 1 -> contentカラム
+
+上記を踏まえたクエリは以下の通りです。
+
+<pre>
+SELECT *, MATCH(title, content)
+          AGAINST("*W0:10,1:2 +天気" in BOOLEAN MODE) AS score
+       FROM diaries
+       WHERE MATCH(title, content)
+             AGAINST("*W0:10,1:2 +天気" in BOOLEAN MODE);
+</pre>
+
+h3. Debian 8.0 (jessie) のサポート
+
+今回のリリースでは、Debian 8.0 (jessie) のサポートを追加しました。
+
+Debian 7.0 (wheezy)が安定板としてリリースされたことに伴い、新たにDebian 8.0 (jessie)のサポートを始めました。
+
+これでjessie(testing)環境でも再びmroongaが使えるようになりました。
+
+これまでの安定版であるDebian 6.0 (squeeze)はold stable扱いとなります。いましばらくはサポートを続ける予定ですがお早めのwheezyへの移行をお勧めします。
+
+いつsqueezeのサポートを切るかについては、別途検討の上でアナウンスします。
+
+jessieでの "インストール手順":http://mroonga.org/ja/docs/install.html#debian-gnu-linux-jessie はドキュメントを参照してください。
+
+h3. さいごに
+
+3.03からの詳細な変更点は "3.04リリース 2013/05/29":/ja/docs/news.html#release-3-04 を確認してください。
+
+それでは、mroongaでガンガン検索してください！
