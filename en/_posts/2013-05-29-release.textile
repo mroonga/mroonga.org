@@ -1,0 +1,92 @@
+---
+layout: post.en
+title: Mroonga 3.04 has been released!
+description: Mroonga 3.04 has been released!
+published: false
+---
+
+h2. Mroonga 3.04 has been released!
+
+"Mroonga 3.04":/docs/news.html#release-3-04 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+There are three topics for this release:
+
+* Supported W pragma
+* Supported Debian 8.0 (jessie)
+
+h3. Supported W pragma
+
+This release began to support "'W' pragma":http://qwik.jp/senna/query.html.
+
+You can specify target section and weight for the head of query.
+
+Here is the syntax of 'W' pragma:
+
+<pre>
+*W[number1[:weight1][,number2[:weight2]]...
+</pre>
+
+Here is the sample schema:
+
+<pre>
+CREATE TABLE diaries (
+  id INT PRIMARY KEY,
+  title VARCHAR(255),
+  content TEXT,
+  FULLTEXT INDEX (title, content)
+) ENGINE=mroonga DEFAULT CHARSET=utf8;
+</pre>
+
+Here is the sample data:
+
+<pre>
+INSERT INTO diaries VALUES(1, "Hello", "Hello to groonga.");
+INSERT INTO diaries VALUES(2, "groonga", "Today's groonga.");
+INSERT INTO diaries VALUES(3, "mroonga", "Today's mroonga.");
+</pre>
+
+Let's search groonga with 'W' pragma.
+
+Note that the value of section about FULLTEXT INDEX is assigned by following rule:
+
+* 0 -> 'title' column
+* 1 -> 'content' column
+
+Consider the case that 10 weight is given to 'title' column, and 2 weight is given to 'content' column.
+
+Here is the query such a case:
+
+<pre>
+SELECT *, MATCH(title, content) AGAINST("*W0:10,1:2 +groonga" in BOOLEAN MODE) AS score
+  FROM diaries
+  WHERE MATCH(title, content) AGAINST("*W0:10,1:2 +groonga" in BOOLEAN MODE);
+</pre>
+
+Here is the output result:
+
+<pre>
+id    title   content score
+1 Hello   Hello to groonga.   2
+2 groonga Today's groonga.    12
+</pre>
+
+The score value of 'id 2' is larger than 'id 1', because title column is more biased than content column by the value of weight.
+ 
+
+h3. Supported Debian 8.0 (jessie)
+
+As Debian 7.0 (wheezy) has been released as a stable, we began to support new Debian testing (Debian 8.0 jessie).
+
+We will support old stable (squeeze) for a while, but we recommends to migrate to wheezy as soon as possible.
+
+We will announce later how long supports them.
+
+h3. Conclusion
+
+See "Release 3.04 - 2013/05/29":/docs/news.html#release-3-04 about detailed changes since 3.03.
+
+Let's search by mroonga!
