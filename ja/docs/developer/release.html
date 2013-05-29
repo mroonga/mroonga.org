@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6.2. リリース手順 &mdash; mroonga v3.03 documentation</title>
+    <title>6.2. リリース手順 &mdash; mroonga v3.04 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.03',
+        VERSION:     '3.04',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v3.03 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v3.04 documentation" href="../index.html" />
     <link rel="up" title="6. 開発者向け情報" href="../developer.html" />
     <link rel="prev" title="6.1. デバッグ方法" href="debug.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -72,7 +72,7 @@
         <li class="right" >
           <a href="debug.html" title="6.1. デバッグ方法"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">mroonga v3.03 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
           <li><a href="../developer.html" accesskey="U">6. 開発者向け情報</a> &raquo;</li> 
       </ul>
     </div>  
@@ -124,7 +124,8 @@ $ make upload
 </div>
 <div class="section" id="id3">
 <h2>6.2.3. パッケージの作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Linux 用にパッケージを作成する必要があります。パッケージは以下の 2 種類に分けることが可能です。</p>
+<p>Linux と Windows 用にパッケージを作成する必要があります。</p>
+<p>Linux 用のパッケージは以下の 2 種類に分けることが可能です。</p>
 <ol class="arabic simple">
 <li>Debian 系</li>
 <li>Red Hat 系</li>
@@ -183,25 +184,98 @@ $ make upload
 </pre></div>
 </div>
 </div>
+<div class="section" id="windows">
+<h3>6.2.3.3. Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>MariaDB 本体を <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">多少変更しないといけない</a>
+ため、Windows 版は MariaDB に mroonga/groonga/groonga-normalizer-mysql
+をバンドルしたパッケージとして作成します。</p>
+<p>まず、 Linux 上で Windows 用のソースを作成します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ cd packages/source
+$ make archive
+</pre></div>
 </div>
-<div class="section" id="id4">
-<h2>6.2.4. タグを打つ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>これで、
+<tt class="docutils literal"><span class="pre">packages/source/files/mariadb-10.0.2-with-mroonga-3.04.zip</span></tt> というよ
+うなファイルができます。これを Windows にコピーします。</p>
+<p>ここからは Windows 上での作業です。</p>
+<p>まず、 <a class="reference external" href="http://wix.codeplex.com/">Windows Installer XML (WiX)</a> をイン
+ストールします。これは MSI 形式のインストーラーを作るために必要です。</p>
+<p>WiX をインストールしたらビルドします。</p>
+<p>まずは、 Linux からコピーしてきた zip を展開します。 Windows 標準の
+zip 展開機能はとても遅いので 7-zip などを使いましょう。展開時間が数 10
+倍違います。 zip を展開すると <tt class="docutils literal"><span class="pre">mariadb-10.0.2-with-mroonga-3.04</span></tt> とい
+うようなフォルダがでてきます。これを <tt class="docutils literal"><span class="pre">source</span></tt> に名前を変更します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>&gt; move mariadb-10.0.2-with-mroonga-3.04 source
+</pre></div>
+</div>
+<p>ソースを準備したらビルドします。ビルド方法は <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/windows">バッチファイル</a> 書
+かれています。抜粋すると以下の通りです。32bit用と64bit用の両方作成して
+いるので似たような手順が2回でていることに注意してください。:</p>
+<div class="highlight-none"><div class="highlight"><pre>&gt; mkdir build-32
+&gt; cd build-32
+&gt; cmake ..\source -G &quot;Visual Studio 10&quot; &gt; config.log
+&gt; cmake --build . --config RelWithDebInfo &gt; build.log
+&gt; cmake --build . --config RelWithDebInfo --target msi &gt; msi.log
+&gt; move *.msi ..\
+&gt; cmake --build . --config RelWithDebInfo --target package &gt; zip.log
+&gt; move *.zip ..\
+&gt; cd ..
+&gt; mkdir build-64
+&gt; cd build-64
+&gt; cmake ..\source -G &quot;Visual Studio 10 Win64&quot; &gt; config.log
+&gt; cmake --build . --config RelWithDebInfo &gt; build.log
+&gt; cmake --build . --config RelWithDebInfo --target msi &gt; msi.log
+&gt; move *.msi ..\
+&gt; cmake --build . --config RelWithDebInfo --target package &gt; zip.log
+&gt; move *.zip ..\
+&gt; cd ..
+</pre></div>
+</div>
+<p>それぞれ30分くらいずつかかります。そのため、合計で1時間くらいかかります。</p>
+<p>完了するとカレントディレクトリに以下のようなファイルができます。</p>
+<ul class="simple">
+<li>mariadb-10.0.2-win32.msi</li>
+<li>mariadb-10.0.2-win32.zip</li>
+<li>mariadb-10.0.2-winx64.msi</li>
+<li>mariadb-10.0.2-winx64.zip</li>
+</ul>
+<p>これを Linux にコピーします。例えば、 Ruby で HTTP サーバーを立てて
+Linux 側からダウンロードする場合は以下のようにします。:</p>
+<div class="highlight-none"><div class="highlight"><pre>&gt; ruby -run -e httpd -- --do-not-reverse-lookup --port 10080 .
+</pre></div>
+</div>
+<p>Linux 側でファイル名を変更します。これだと mroonga のバージョンがわかり
+づらいからです。（TODO: 自動化したい。 zip 内のフォルダ名も変えたい。）:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ mv mariadb-10.0.2-win32.msi \
+    packages/windows/files/mroonga/mariadb-10.0.2-with-mroonga-3.04-win32.msi
+$ mv mariadb-10.0.2-win32.zip \
+    packages/windows/files/mroonga/mariadb-10.0.2-with-mroonga-3.04-win32.zip
+$ mv mariadb-10.0.2-winx64.msi \
+    packages/windows/files/mroonga/mariadb-10.0.2-with-mroonga-3.04-winx64.msi
+$ mv mariadb-10.0.2-winx64.zip \
+    packages/windows/files/mroonga/mariadb-10.0.2-with-mroonga-3.04-winx64.zip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>6.2.4. タグを打つ<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">tag</span></tt> とするとタグが打たれます。</p>
 <div class="highlight-none"><div class="highlight"><pre>$ make tag
 $ git push --tags origin
 </pre></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>6.2.5. ドキュメントのアップロード<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>6.2.5. ドキュメントのアップロード<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ol class="arabic simple">
 <li>GitHub からドキュメントアップロード用のリポジトリ (mroonga.github.com) を clone</li>
 <li>clone済みmroongaディレクトリ内でmake update-documentを実行し、clone したドキュメントアップロード用のリポジトリへ反映する</li>
 <li>mroonga.github.com へコミットを行い GitHub へ push</li>
 </ol>
 </div>
-<div class="section" id="id6">
-<h2>6.2.6. リリースメールの送信<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id8">
+<h2>6.2.6. リリースメールの送信<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>各種メーリングリストにリリースメールを流します。</p>
 <ul class="simple">
 <li><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> 日本語アナウンス</li>
@@ -309,8 +383,8 @@ groongaと組み合わせると問題が解決しているかもしれません�
 <p class="last">投稿した内容に対するレビューが運営側で実施されるので、反映されるまでしばらく時間がかかります。</p>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>6.2.9. リリース後にやること<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id9">
+<h2>6.2.9. リリース後にやること<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>リリースバージョンを以下のようにして更新します。:</p>
 <div class="highlight-none"><div class="highlight"><pre>$ make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
 </pre></div>
@@ -332,14 +406,15 @@ groongaと組み合わせると問題が解決しているかもしれません�
 <li><a class="reference internal" href="#id3">6.2.3. パッケージの作成</a><ul>
 <li><a class="reference internal" href="#debian">6.2.3.1. Debian 系</a></li>
 <li><a class="reference internal" href="#red-hat">6.2.3.2. Red Hat 系</a></li>
+<li><a class="reference internal" href="#windows">6.2.3.3. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4">6.2.4. タグを打つ</a></li>
-<li><a class="reference internal" href="#id5">6.2.5. ドキュメントのアップロード</a></li>
-<li><a class="reference internal" href="#id6">6.2.6. リリースメールの送信</a></li>
+<li><a class="reference internal" href="#id6">6.2.4. タグを打つ</a></li>
+<li><a class="reference internal" href="#id7">6.2.5. ドキュメントのアップロード</a></li>
+<li><a class="reference internal" href="#id8">6.2.6. リリースメールの送信</a></li>
 <li><a class="reference internal" href="#twitter">6.2.7. Twitterでリリースアナウンスをする</a></li>
 <li><a class="reference internal" href="#freecode-com">6.2.8. freecode.comへリリース情報を登録</a></li>
-<li><a class="reference internal" href="#id7">6.2.9. リリース後にやること</a></li>
+<li><a class="reference internal" href="#id9">6.2.9. リリース後にやること</a></li>
 </ul>
 </li>
 </ul>
@@ -378,7 +453,7 @@ groongaと組み合わせると問題が解決しているかもしれません�
         <li class="right" >
           <a href="debug.html" title="6.1. デバッグ方法"
              >前へ</a> |</li>
-        <li><a href="../index.html">mroonga v3.03 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
           <li><a href="../developer.html" >6. 開発者向け情報</a> &raquo;</li> 
       </ul>
     </div>
