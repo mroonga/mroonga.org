@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Limitations &mdash; mroonga v3.04 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.04',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="mroonga v3.04 documentation" href="../index.html" />
+    <link rel="up" title="4. Reference" href="../reference.html" />
+    <link rel="next" title="5. Trouble Shooting" href="troubleshooting.html" />
+    <link rel="prev" title="3. Status variables" href="status_variables.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/reference/limitations.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="5. Trouble Shooting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="status_variables.html" title="3. Status variables"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">4. Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="limitations">
+<h1>4. Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h1>
+<p>There are some limitations in mroonga storage engine.</p>
+<div class="section" id="limitations-of-table">
+<h2>4.1. Limitations of table<a class="headerlink" href="#limitations-of-table" title="Permalink to this headline">¶</a></h2>
+<p>A table has the following limitations.
+This limitation is derived from groonga.</p>
+<ul class="simple">
+<li>The maximum one key size: 4096Bytes</li>
+<li>The maximum total size of keys: 4GBytes</li>
+</ul>
+<p>Keep in mind that these limitations may vary depending on conditions.</p>
+</div>
+<div class="section" id="limitations-of-indexing">
+<h2>4.2. Limitations of indexing<a class="headerlink" href="#limitations-of-indexing" title="Permalink to this headline">¶</a></h2>
+<p>A full-text index has the following limitations.
+This limitation is derived from groonga and applied to each table.</p>
+<ul class="simple">
+<li>The maximum number of records: 268,435,455 (more than 268 million)</li>
+<li>The maximum number of distinct terms: 268,435,455 (more than 268 million)</li>
+<li>The maximum index size: 256GBytes</li>
+</ul>
+<p>Keep in mind that these limitations may vary depending on conditions.</p>
+<p>Confirm by <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></tt> or <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></tt> whether your table data matches to this limitations.</p>
+</div>
+<div class="section" id="limitations-about-the-value-of-columns">
+<h2>4.3. Limitations about the value of columns<a class="headerlink" href="#limitations-about-the-value-of-columns" title="Permalink to this headline">¶</a></h2>
+<p>There is a limitation about DATE, DATETIME column in storage mode.</p>
+<p>mroonga storage engine automatically convert 0 into 1 as the value of month or date.</p>
+<p>Thus, the value 0 is treated as the 1st month (January) of the year or
+the 1st date of the month.</p>
+<p>And more, the value NULL is treated as the value of UNIX time 0 (1970-01-01 00:00:00).</p>
+<p>Here is an example to show behavior described above.</p>
+<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">date_limitation</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="k">input</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="nb">date</span> <span class="nb">DATE</span> <span class="k">DEFAULT</span> <span class="k">NULL</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">datetime_limitation</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="k">input</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">datetime</span> <span class="n">DATETIME</span> <span class="k">DEFAULT</span> <span class="k">NULL</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+
+<span class="c1">-- Test data for date_limitation</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">date_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">date_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">,</span> <span class="ss">&quot;1970-00-00&quot;</span><span class="p">);</span>
+
+<span class="c1">-- Test data for datetime_limitation</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">datetime_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">datetime_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">,</span> <span class="n">datetime</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">,</span> <span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table></div>
+<p>Here is the results of execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from date_limitation;
++----+------------+------------+
+| id | input      | date       |
++----+------------+------------+
+|  1 | NULL       | 1970-01-01 |
+|  2 | 1970-00-00 | 1970-01-01 |
++----+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; select * from datetime_limitation;
++----+---------------------+---------------------+
+| id | input               | datetime            |
++----+---------------------+---------------------+
+|  1 | NULL                | 1970-01-01 00:00:00 |
+|  2 | 1970-00-00 00:00:00 | 1970-01-01 00:00:00 |
++----+---------------------+---------------------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. Limitations</a><ul>
+<li><a class="reference internal" href="#limitations-of-table">4.1. Limitations of table</a></li>
+<li><a class="reference internal" href="#limitations-of-indexing">4.2. Limitations of indexing</a></li>
+<li><a class="reference internal" href="#limitations-about-the-value-of-columns">4.3. Limitations about the value of columns</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="status_variables.html"
+                        title="previous chapter">3. Status variables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="next chapter">5. Trouble Shooting</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/limitations.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="5. Trouble Shooting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="status_variables.html" title="3. Status variables"
+             >previous</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >4. Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, mroonga project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

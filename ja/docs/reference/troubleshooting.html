@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Trouble Shooting &mdash; mroonga v3.04 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.04',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="mroonga v3.04 documentation" href="../index.html" />
+    <link rel="up" title="4. リファレンス" href="../reference.html" />
+    <link rel="next" title="5. コミュニティ" href="../community.html" />
+    <link rel="prev" title="4. 制限事項" href="limitations.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/reference/troubleshooting.html"><img src="../static/us.png" alt="English">English version</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../community.html" title="5. コミュニティ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="limitations.html" title="4. 制限事項"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="trouble-shooting">
+<h1>5. Trouble Shooting<a class="headerlink" href="#trouble-shooting" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>mroongaストレージエンジンにはいくつかFAQがあります。</p>
+<div class="section" id="how-to-avoid-mmap-cannot-allocate-memory-error">
+<h2>5.1. mmap Cannot allocate memoryエラーを回避するには<a class="headerlink" href="#how-to-avoid-mmap-cannot-allocate-memory-error" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ログファイルに以下のようなmmapエラーが存在する場合があります。:</p>
+<div class="highlight-none"><div class="highlight"><pre>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">&lt;13036498944&gt;</span></tt> はこの場合mmapの合計サイズ(約12GB)です。</p>
+<p>以下の観点を確認する必要があります。</p>
+<ul class="simple">
+<li>十分なメモリの空きが存在するか?</li>
+<li>マッピング最大数を超過していないか?</li>
+</ul>
+<p>十分な空きメモリがあるかを調べるために、<tt class="docutils literal"><span class="pre">vmstat</span></tt> コマンドを使うことができます。</p>
+<p>最大マッピング数を超過しているかどうかを確認するために、 <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> の値を調べることができます。</p>
+<p>もしこの問題が <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> の値を調整することで解決するなら、これが原因です。</p>
+<p>groongaはメモリを256KBごとに確保するので、扱えるデータベースのサイズを以下の式で見積ることができます:</p>
+<div class="highlight-none"><div class="highlight"><pre>(database size) = vm.max_map_count * (memory chunks)
+</pre></div>
+</div>
+<p>16GBを超えるデータベースを扱うには、少くとも65536を <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> の値として設定しないといけません。</p>
+<div class="highlight-none"><div class="highlight"><pre>database size (16GB) = vm.max_map_count (65536) * memory chunks (256KB)
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">vm.max_map_count=65536</span></tt> で一時的に <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> を調整することができます。</p>
+<p>その後、設定値を  <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt> もしくは <tt class="docutils literal"><span class="pre">/etc/sysctl.d/*.conf</span></tt> へと保存します。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. Trouble Shooting</a><ul>
+<li><a class="reference internal" href="#how-to-avoid-mmap-cannot-allocate-memory-error">5.1. mmap Cannot allocate memoryエラーを回避するには</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="limitations.html"
+                        title="前の章へ">4. 制限事項</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../community.html"
+                        title="次の章へ">5. コミュニティ</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/troubleshooting.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../community.html" title="5. コミュニティ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="limitations.html" title="4. 制限事項"
+             >前へ</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, mroonga project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

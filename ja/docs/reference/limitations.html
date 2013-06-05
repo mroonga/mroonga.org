@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. 制限事項 &mdash; mroonga v3.04 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.04',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="mroonga v3.04 documentation" href="../index.html" />
+    <link rel="up" title="4. リファレンス" href="../reference.html" />
+    <link rel="next" title="5. Trouble Shooting" href="troubleshooting.html" />
+    <link rel="prev" title="3. ステータス変数の一覧" href="status_variables.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/reference/limitations.html"><img src="../static/us.png" alt="English">English version</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="5. Trouble Shooting"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="status_variables.html" title="3. ステータス変数の一覧"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="limitations">
+<h1>4. 制限事項<a class="headerlink" href="#limitations" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>mroongaストレージエンジンにはいくつか制限があります。</p>
+<div class="section" id="limitations-of-table">
+<h2>4.1. テーブルの制限事項<a class="headerlink" href="#limitations-of-table" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>テーブルには以下の制限があります。この制限はgroongaに由来します。</p>
+<ul class="simple">
+<li>1つのキーの最大サイズ: 4096Bytes</li>
+<li>キーのサイズを合計した上限値: 4GBytes</li>
+</ul>
+<p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
+</div>
+<div class="section" id="limitations-of-indexing">
+<h2>4.2. インデックスの制限事項<a class="headerlink" href="#limitations-of-indexing" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1つのインデックスにおける論理上の上限値は以下のとおりです。テーブルごとに適用されるgroonga由来の制限です。</p>
+<ul class="simple">
+<li>最大レコード数: 268,435,455 (約2億6千万)</li>
+<li>最大語彙数: 268,435,455 (約2億6千万)</li>
+<li>最大インデックスサイズ: 256GByte</li>
+</ul>
+<p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
+<p>テーブルがこの制限に該当するかは <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></tt> や <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></tt> などで確認してください。</p>
+</div>
+<div class="section" id="limitations-about-the-value-of-columns">
+<h2>4.3. カラムの値に関する制限事項<a class="headerlink" href="#limitations-about-the-value-of-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ストレージモードにおいて、DATE、DATETIME型のカラムには制限があります。</p>
+<p>mroongaストレージエンジンは月や日の値に指定された0を1へと自動的に補正します。</p>
+<p>つまり、0月は1月へ、0日は1日として扱います。</p>
+<p>そして、NULL値はUNIX時間の0秒 (1970-01-01)として扱います。</p>
+<p>上記挙動を示す例はこちらです。</p>
+<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">date_limitation</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="k">input</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="nb">date</span> <span class="nb">DATE</span> <span class="k">DEFAULT</span> <span class="k">NULL</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">datetime_limitation</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="k">input</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">datetime</span> <span class="n">DATETIME</span> <span class="k">DEFAULT</span> <span class="k">NULL</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+
+<span class="c1">-- Test data for date_limitation</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">date_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">date_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">,</span> <span class="ss">&quot;1970-00-00&quot;</span><span class="p">);</span>
+
+<span class="c1">-- Test data for datetime_limitation</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">datetime_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">datetime_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">,</span> <span class="n">datetime</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">,</span> <span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table></div>
+<p>実行結果はこちらです。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from date_limitation;
++----+------------+------------+
+| id | input      | date       |
++----+------------+------------+
+|  1 | NULL       | 1970-01-01 |
+|  2 | 1970-00-00 | 1970-01-01 |
++----+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; select * from datetime_limitation;
++----+---------------------+---------------------+
+| id | input               | datetime            |
++----+---------------------+---------------------+
+|  1 | NULL                | 1970-01-01 00:00:00 |
+|  2 | 1970-00-00 00:00:00 | 1970-01-01 00:00:00 |
++----+---------------------+---------------------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. 制限事項</a><ul>
+<li><a class="reference internal" href="#limitations-of-table">4.1. テーブルの制限事項</a></li>
+<li><a class="reference internal" href="#limitations-of-indexing">4.2. インデックスの制限事項</a></li>
+<li><a class="reference internal" href="#limitations-about-the-value-of-columns">4.3. カラムの値に関する制限事項</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="status_variables.html"
+                        title="前の章へ">3. ステータス変数の一覧</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="次の章へ">5. Trouble Shooting</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/limitations.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="5. Trouble Shooting"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="status_variables.html" title="3. ステータス変数の一覧"
+             >前へ</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, mroonga project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

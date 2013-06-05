@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
     <link rel="top" title="mroonga v3.04 documentation" href="index.html" />
-    <link rel="next" title="5. Community" href="community.html" />
+    <link rel="next" title="1. SQL commands" href="reference/sql_commands.html" />
     <link rel="prev" title="3.3.2. Wrapper mode" href="userguide/wrapper.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
@@ -69,7 +69,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="community.html" title="5. Community"
+          <a href="reference/sql_commands.html" title="1. SQL commands"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="userguide/wrapper.html" title="3.3.2. Wrapper mode"
@@ -85,582 +85,41 @@
             
   <div class="section" id="reference">
 <h1>4. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="list-of-available-sql-commands">
-<h2>4.1. List of available SQL commands<a class="headerlink" href="#list-of-available-sql-commands" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">COLUMN</span> <span class="pre">column_name</span> <span class="pre">TEXT</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">SPATIAL</span> <span class="pre">KEY</span> <span class="pre">index_name</span> <span class="pre">(geometry_column_name)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">RENAME</span> <span class="pre">new_table_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">COMMIT</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">ON</span> <span class="pre">table_name(column_name)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">ON</span> <span class="pre">table_name(column_name,</span> <span class="pre">...)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span> <span class="pre">table_name</span> <span class="pre">(...)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">\`table-name-with-hyphen\`</span> <span class="pre">(...)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'parser</span> <span class="pre">&quot;TokenMecab&quot;')</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'parser</span> <span class="pre">&quot;TokenDelimit&quot;,</span> <span class="pre">normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name,</span> <span class="pre">...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">(column_name))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">(column_name,</span> <span class="pre">...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">USING</span> <span class="pre">BTREE</span> <span class="pre">(column_name))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">(column_name))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">ASCII</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">BINARY</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">CP932</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">EUCJPMS</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">KOI8R</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">LATIN1</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">SJIS</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UJIS</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UTF8</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UTF8MB4</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">ENGINE=mroonga</span> <span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'ENGINE</span> <span class="pre">&quot;InnoDB&quot;'</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">ENGINE=mroonga</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(\`_id\`</span> <span class="pre">INT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(\`_id\`</span> <span class="pre">INT,</span> <span class="pre">KEY(_id)</span> <span class="pre">USING</span> <span class="pre">HASH)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BIGINT</span> <span class="pre">UNSIGNED)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BIGINT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BINARY(...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BIT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BLOB)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">CHAR(...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATETIME)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DECIMAL)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DOUBLE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">ENUM(...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">FLOAT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">GEOMETRY</span> <span class="pre">NOT</span> <span class="pre">NULL)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT</span> <span class="pre">UNSIGNED)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">LONGBLOB)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">LONGTEXT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMBLOB)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMINT</span> <span class="pre">UNSIGNED)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMINT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMTEXT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">SET(...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">SMALLINT</span> <span class="pre">UNSIGNED)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">SMALLINT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TEXT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIME)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIMESTAMP)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYBLOB)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYINT</span> <span class="pre">UNSIGNED)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYINT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYTEXT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">VARBINARY(...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">VARCHAR(...))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">YEAR)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT</span> <span class="pre">AUTO_INCREMENT)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATE</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATETIME</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATETIME(fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DECIMAL</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DECIMAL(maximum_number_digits,</span> <span class="pre">fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIME</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIME(fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIMESTAMP</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIMESTAMP(fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">YEAR</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">INT,</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">DOUBLE,</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">FLOAT,</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">CHAR(...),</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">VARCHAR(...),</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TEMPORARY</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">INDEX</span> <span class="pre">column_name</span> <span class="pre">ON</span> <span class="pre">table_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">EXISTS</span> <span class="pre">table_name,</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">\`table-name-with-hyphen\`,</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">table_name,</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TEMPORARY</span> <span class="pre">TABLE</span> <span class="pre">table_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">FLUSH</span> <span class="pre">LOGS</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(geometry_column_name)</span> <span class="pre">VALUES</span> <span class="pre">(GeomFromText('POINT(...)'))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span> <span class="pre">VALUES</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span> <span class="pre">VALUES</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span> <span class="pre">...</span></tt> (for <tt class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></tt>)</li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span> <span class="pre">VALUES</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span> <span class="pre">...</span></tt> (for <tt class="docutils literal"><span class="pre">UNIQUE</span> <span class="pre">KEY</span></tt>)</li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">table_name</span> <span class="pre">(column_name,</span> <span class="pre">...)</span> <span class="pre">SELECT</span> <span class="pre">...</span> <span class="pre">FROM</span> <span class="pre">other_table_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">REPLACE</span> <span class="pre">INTO</span> <span class="pre">table_name</span> <span class="pre">SELECT</span> <span class="pre">...</span> <span class="pre">FROM</span> <span class="pre">other_table_name</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">information_schema.plugins</span> <span class="pre">WHERE</span> <span class="pre">plugin_name</span> <span class="pre">=</span> <span class="pre">&quot;mroonga&quot;</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">FORCE</span> <span class="pre">INDEX(index_name)</span> <span class="pre">WHERE</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">ASC</span> <span class="pre">LIMIT</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">ASC</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">DESC</span> <span class="pre">LIMIT</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">DESC</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*D+</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*D-</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*DOR</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*W</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;+word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name,</span> <span class="pre">...)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MBRContains(GeomFromText('LineString(...)'),</span> <span class="pre">geometry_column_name)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">NOT</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&lt;</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&lt;=</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">=</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&gt;</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&gt;=</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">BETWEEN</span> <span class="pre">...</span> <span class="pre">AND</span> <span class="pre">...</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">IN</span> <span class="pre">(SELECT</span> <span class="pre">sub_column_name</span> <span class="pre">FROM</span> <span class="pre">sub_table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(sub_text_column_name)</span> <span class="pre">AGAINST(&quot;...&quot;))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*,</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">FOUND_ROWS()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">SQL_CALC_FOUND_ROWS</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(...)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">LIMIT</span> <span class="pre">start,n_records</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">last_insert_grn_id()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SET</span> <span class="pre">binlog_format=&quot;MIXED&quot;</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SET</span> <span class="pre">binlog_format=&quot;ROW&quot;</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SET</span> <span class="pre">binlog_format=&quot;STATEMENT&quot;</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">TRUNCATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">UPDATE</span> <span class="pre">table_name</span> <span class="pre">SET</span> <span class="pre">column_name</span> <span class="pre">=</span> <span class="pre">...</span></tt></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/sql_commands.html">1. SQL commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/sql_commands.html#list-of-available-sql-commands">1.1. List of available SQL commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sql_commands.html#list-of-unavailable-sql-commands">1.2. List of unavailable SQL commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sql_commands.html#i-found-an-unlisted-sql-command">1.3. I found an unlisted SQL command</a></li>
 </ul>
-</div>
-<div class="section" id="list-of-unavailable-sql-commands">
-<h2>4.2. List of unavailable SQL commands<a class="headerlink" href="#list-of-unavailable-sql-commands" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">not_listed_charset_above</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(geometry_column_name)</span> <span class="pre">VALUES</span> <span class="pre">(GeomFromText('LineString(...)'))</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(...)</span> <span class="pre">VALUES</span> <span class="pre">(null)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">START</span> <span class="pre">TRANSACTION</span></tt></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/server_variables.html">2. Server variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-default-parser">2.1. mroonga_default_parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-version">2.2. mroonga_libgroonga_version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-log-file">2.3. mroonga_log_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-log-level">2.4. mroonga_log_level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-version">2.5. mroonga_version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-dry-write">2.6. mroonga_dry_write</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-enable-optimization">2.7. mroonga_enable_optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html#mroonga-match-escalation-threshold">2.8. mroonga_match_escalation_threshold</a></li>
 </ul>
-<p>Basically, The character set which groonga supports (EUC-JP/UTF-8/SJIS/LATIN1/KOI8R) is also supported in mroonga.</p>
-</div>
-<div class="section" id="i-found-an-unlisted-sql-command">
-<h2>4.3. I found an unlisted SQL command<a class="headerlink" href="#i-found-an-unlisted-sql-command" title="Permalink to this headline">¶</a></h2>
-<p>If you find unlisted SQL command and confirm whether the SQL command works well or not, we want to list it. Please mail it to <a class="reference external" href="http://groonga.org/docs/community.html">us</a> or send a patch against <a class="reference external" href="https://github.com/mroonga/mroonga/blob/master/doc/source/reference.rst">the source file</a> by pull request system on GitHub.</p>
-</div>
-<div class="section" id="list-of-server-variables">
-<h2>4.4. List of server variables<a class="headerlink" href="#list-of-server-variables" title="Permalink to this headline">¶</a></h2>
-<p>Here are the explanations of server variables that are introduced by mroonga.</p>
-<div class="section" id="mroonga-default-parser">
-<h3>4.4.1. mroonga_default_parser<a class="headerlink" href="#mroonga-default-parser" title="Permalink to this headline">¶</a></h3>
-<p>The default parser of the full text search.
-The default value can be specified by <tt class="docutils literal"><span class="pre">--with-default-parser=PARSER</span></tt> configure argument, whose default value is <tt class="docutils literal"><span class="pre">TokenBigram</span></tt>.</p>
-<p>Here is an example to use <tt class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></tt> as a fulltext search parser. It is used by <tt class="docutils literal"><span class="pre">body_index</span></tt> fulltext index.</p>
-<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_parser</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="n">body</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span>
-<span class="p">)</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="mroonga-libgroonga-version">
-<h3>4.4.2. mroonga_libgroonga_version<a class="headerlink" href="#mroonga-libgroonga-version" title="Permalink to this headline">¶</a></h3>
-<p>The version string of the groonga library.</p>
-<p>Here is an example SQL to confirm the using groonga library version:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_libgroonga_version&#39;;
-+----------------------------+------------------+
-| Variable_name              | Value            |
-+----------------------------+------------------+
-| mroonga_libgroonga_version | 1.2.8-9-gbf05b82 |
-+----------------------------+------------------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-log-file">
-<h3>4.4.3. mroonga_log_file<a class="headerlink" href="#mroonga-log-file" title="Permalink to this headline">¶</a></h3>
-<p>The path of the log file of mroonga. The default value is <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
-<p>Here is an example transcript to change log file to <tt class="docutils literal"><span class="pre">/tmp/mroonga.log</span></tt>:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
-+------------------+-------------+
-| Variable_name    | Value       |
-+------------------+-------------+
-| mroonga_log_file | groonga.log |
-+------------------+-------------+
-1 row in set (0.00 sec)
-
-mysql&gt; SET GLOBAL mroonga_log_file = &quot;/tmp/mroonga.log&quot;;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
-+------------------+------------------+
-| Variable_name    | Value            |
-+------------------+------------------+
-| mroonga_log_file | /tmp/mroonga.log |
-+------------------+------------------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-log-level">
-<span id="id1"></span><h3>4.4.4. mroonga_log_level<a class="headerlink" href="#mroonga-log-level" title="Permalink to this headline">¶</a></h3>
-<p>The output level of mroonga log file. The default value is <tt class="docutils literal"><span class="pre">NOTICE</span></tt>.</p>
-<p>Here is the list of <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> which you can use.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="12%" />
-<col width="88%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Log level</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>NONE</td>
-<td>No logging output.</td>
-</tr>
-<tr class="row-odd"><td>EMERG</td>
-<td>Logging emergency messages such as database corruption.</td>
-</tr>
-<tr class="row-even"><td>ALERT</td>
-<td>Logging alert messages such as internal error.</td>
-</tr>
-<tr class="row-odd"><td>CRIT</td>
-<td>Logging critical messasge such as deadlock.</td>
-</tr>
-<tr class="row-even"><td>ERROR</td>
-<td>Logging error messages such as API error which mroonga use.</td>
-</tr>
-<tr class="row-odd"><td>WARNING</td>
-<td>Logging warning messages such as invalid argument.</td>
-</tr>
-<tr class="row-even"><td>NOTICE</td>
-<td>Logging notice messages such as configuration or status changed.</td>
-</tr>
-<tr class="row-odd"><td>INFO</td>
-<td>Logging informative messages such as file system operation.</td>
-</tr>
-<tr class="row-even"><td>DEBUG</td>
-<td>Logging debug messages.
-Recommend to use for mroonga developer or bug reporter.</td>
-</tr>
-<tr class="row-odd"><td>DUMP</td>
-<td>Logging dump messages.</td>
-</tr>
-</tbody>
-</table>
-<p>Here is an example transcript to change log level to <tt class="docutils literal"><span class="pre">DEBUG</span></tt> that logs many messages for debugging:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
-+-------------------+--------+
-| Variable_name     | Value  |
-+-------------------+--------+
-| mroonga_log_level | NOTICE |
-+-------------------+--------+
-1 row in set (0.00 sec)
-
-mysql&gt; SET GLOBAL mroonga_log_level = &quot;debug&quot;;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_log_level | DEBUG |
-+-------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-version">
-<h3>4.4.5. mroonga_version<a class="headerlink" href="#mroonga-version" title="Permalink to this headline">¶</a></h3>
-<p>The version string of mroonga.</p>
-<p>Here is an example SQL to confirm the running mroonga version:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_version&#39;;
-+-----------------+-------+
-| Variable_name   | Value |
-+-----------------+-------+
-| mroonga_version | 1.10  |
-+-----------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-dry-write">
-<h3>4.4.6. mroonga_dry_write<a class="headerlink" href="#mroonga-dry-write" title="Permalink to this headline">¶</a></h3>
-<p>Whether really write data to groonga database or not. The
-default value is <tt class="docutils literal"><span class="pre">OFF</span></tt> that means data are really written
-to groonga database. Usually we don't need to change the
-value of this variable. This variable is useful for
-benchmark because we can measure processing time MySQL and
-mroonga. It doesn't include groonga's processing time.</p>
-<p>Here is an example SQL to disable writing data to groonga
-database:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_dry_write | OFF   |
-+-------------------+-------+
-1 row in set (0.00 sec)
-
-mysql&gt; SET mroonga_dry_write = true;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_dry_write | ON    |
-+-------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-enable-optimization">
-<h3>4.4.7. mroonga_enable_optimization<a class="headerlink" href="#mroonga-enable-optimization" title="Permalink to this headline">¶</a></h3>
-<p>Whether enable optimization or not. The default value is
-<tt class="docutils literal"><span class="pre">ON</span></tt> that means optimization is enabled. Usually we don't
-need to change the value of this variable. This variable is
-useful for benchmark.</p>
-<p>Here is an example SQL to disable optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
-+-----------------------------+-------+
-| Variable_name               | Value |
-+-----------------------------+-------+
-| mroonga_enable_optimization | ON    |
-+-----------------------------+-------+
-1 row in set (0.00 sec)
-
-mysql&gt; SET mroonga_enable_optimization = false;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
-+-----------------------------+-------+
-| Variable_name               | Value |
-+-----------------------------+-------+
-| mroonga_enable_optimization | OFF   |
-+-----------------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-match-escalation-threshold">
-<span id="id2"></span><h3>4.4.8. mroonga_match_escalation_threshold<a class="headerlink" href="#mroonga-match-escalation-threshold" title="Permalink to this headline">¶</a></h3>
-<p>The threshold to determin whether match method is escalated. See
-<a class="reference external" href="http://groonga.org/docs/spec/search.html">search specification for groonga</a> about match method
-escalation.</p>
-<p>The default value is the same as groonga's default value. It's 0 for
-the default installation. The dafault value can be configured in
-my.cnf or by <tt class="docutils literal"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span>
-<span class="pre">THRESHOLD;</span></tt>. Because this variable's scope is both global and
-session.</p>
-<p>Here is an example to use -1 as a threshold to determin whether match
-method is escalated. -1 means that never escalated.</p>
-<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</pre></div>
-</td></tr></table></div>
-<p>Here is an another example to show behavior change by the variable
-value.</p>
-<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="n">title</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">tags_index</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;parser &quot;TokenDelimit&quot;&#39;</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
-
-<span class="c1">-- Test data</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello groonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;groonga install&quot;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello mroonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;mroonga install&quot;</span><span class="p">);</span>
-
-<span class="c1">-- Matches all records that have &quot;install&quot; tag.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;install&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-<span class="c1">-- 1 Hello groonga!  groonga install</span>
-<span class="c1">-- 2 Hello mroonga!  mroonga install</span>
-
-<span class="c1">-- Matches no records by &quot;gr&quot; tag search because no &quot;gr&quot; tag is used.</span>
-<span class="c1">-- But matches a record that has &quot;groonga&quot; tag because search</span>
-<span class="c1">-- method is escalated and prefix search with &quot;gr&quot; is used.</span>
-<span class="c1">-- The default threshold is 0. It means that no records are matched then</span>
-<span class="c1">-- search method is escalated.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-<span class="c1">-- 1 Hello groonga!  groonga install</span>
-
-<span class="c1">-- Disables escalation.</span>
-<span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<span class="c1">-- No records are matched.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-
-<span class="c1">-- Enables escalation again.</span>
-<span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="c1">-- Matches a record by prefix search with &quot;gr&quot;.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-<span class="c1">-- 1 Hello groonga!  groonga install</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-</div>
-<div class="section" id="list-of-status-variables">
-<h2>4.5. List of status variables<a class="headerlink" href="#list-of-status-variables" title="Permalink to this headline">¶</a></h2>
-<p>Here are the explanations of status variables that are introduced by mroonga.</p>
-<div class="section" id="mroonga-count-skip">
-<h3>4.5.1. Mroonga_count_skip<a class="headerlink" href="#mroonga-count-skip" title="Permalink to this headline">¶</a></h3>
-<p>This value is increased when 'fast line count feature' is used.
-You can use this value to check if the feature is working when you enable it.</p>
-<p>Here is an example how to check it:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
-| Mroonga_count_skip | 0     |
-+--------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="mroonga-fast-order-limit">
-<h3>4.5.2. Mroonga_fast_order_limit<a class="headerlink" href="#mroonga-fast-order-limit" title="Permalink to this headline">¶</a></h3>
-<p>This value is increased when 'fast ORDER BY LIMIT feature' is used.
-You can use this value to check if the feature is working when you enable it.</p>
-<p>Here is an example how to check it:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
-+--------------------------+-------+
-| Variable_name            | Value |
-+--------------------------+-------+
-| Mroonga_fast_order_limit | 0     |
-+--------------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="limitations">
-<h2>4.6. Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
-<p>There are some limitations in mroonga storage engine.</p>
-<div class="section" id="limitations-of-table">
-<h3>4.6.1. Limitations of table<a class="headerlink" href="#limitations-of-table" title="Permalink to this headline">¶</a></h3>
-<p>A table has the following limitations.
-This limitation is derived from groonga.</p>
-<ul class="simple">
-<li>The maximum one key size: 4096Bytes</li>
-<li>The maximum total size of keys: 4GBytes</li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/status_variables.html">3. Status variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/status_variables.html#mroonga-count-skip">3.1. Mroonga_count_skip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/status_variables.html#mroonga-fast-order-limit">3.2. Mroonga_fast_order_limit</a></li>
 </ul>
-<p>Keep in mind that these limitations may vary depending on conditions.</p>
-</div>
-<div class="section" id="limitations-of-indexing">
-<h3>4.6.2. Limitations of indexing<a class="headerlink" href="#limitations-of-indexing" title="Permalink to this headline">¶</a></h3>
-<p>A full-text index has the following limitations.
-This limitation is derived from groonga and applied to each table.</p>
-<ul class="simple">
-<li>The maximum number of records: 268,435,455 (more than 268 million)</li>
-<li>The maximum number of distinct terms: 268,435,455 (more than 268 million)</li>
-<li>The maximum index size: 256GBytes</li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/limitations.html">4. Limitations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/limitations.html#limitations-of-table">4.1. Limitations of table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/limitations.html#limitations-of-indexing">4.2. Limitations of indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/limitations.html#limitations-about-the-value-of-columns">4.3. Limitations about the value of columns</a></li>
 </ul>
-<p>Keep in mind that these limitations may vary depending on conditions.</p>
-<p>Confirm by <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></tt> or <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></tt> whether your table data matches to this limitations.</p>
-</div>
-<div class="section" id="limitations-about-the-value-of-columns">
-<h3>4.6.3. Limitations about the value of columns<a class="headerlink" href="#limitations-about-the-value-of-columns" title="Permalink to this headline">¶</a></h3>
-<p>There is a limitation about DATE, DATETIME column in storage mode.</p>
-<p>mroonga storage engine automatically convert 0 into 1 as the value of month or date.</p>
-<p>Thus, the value 0 is treated as the 1st month (January) of the year or
-the 1st date of the month.</p>
-<p>And more, the value NULL is treated as the value of UNIX time 0 (1970-01-01 00:00:00).</p>
-<p>Here is an example to show behavior described above.</p>
-<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">date_limitation</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="k">input</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="nb">date</span> <span class="nb">DATE</span> <span class="k">DEFAULT</span> <span class="k">NULL</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">datetime_limitation</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="k">input</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="n">datetime</span> <span class="n">DATETIME</span> <span class="k">DEFAULT</span> <span class="k">NULL</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
-
-<span class="c1">-- Test data for date_limitation</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">date_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">date_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">,</span> <span class="ss">&quot;1970-00-00&quot;</span><span class="p">);</span>
-
-<span class="c1">-- Test data for datetime_limitation</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">datetime_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">datetime_limitation</span> <span class="p">(</span><span class="k">input</span><span class="p">,</span> <span class="n">datetime</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">,</span> <span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">);</span>
-</pre></div>
-</td></tr></table></div>
-<p>Here is the results of execution example:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from date_limitation;
-+----+------------+------------+
-| id | input      | date       |
-+----+------------+------------+
-|  1 | NULL       | 1970-01-01 |
-|  2 | 1970-00-00 | 1970-01-01 |
-+----+------------+------------+
-2 rows in set (0.00 sec)
-
-mysql&gt; select * from datetime_limitation;
-+----+---------------------+---------------------+
-| id | input               | datetime            |
-+----+---------------------+---------------------+
-|  1 | NULL                | 1970-01-01 00:00:00 |
-|  2 | 1970-00-00 00:00:00 | 1970-01-01 00:00:00 |
-+----+---------------------+---------------------+
-2 rows in set (0.00 sec)
-</pre></div>
-</div>
-</div>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/troubleshooting.html">5. Trouble Shooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/troubleshooting.html#how-to-avoid-mmap-cannot-allocate-memory-error">5.1. How to avoid mmap Cannot allocate memory error</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 
@@ -670,44 +129,12 @@ mysql&gt; select * from datetime_limitation;
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">4. Reference</a><ul>
-<li><a class="reference internal" href="#list-of-available-sql-commands">4.1. List of available SQL commands</a></li>
-<li><a class="reference internal" href="#list-of-unavailable-sql-commands">4.2. List of unavailable SQL commands</a></li>
-<li><a class="reference internal" href="#i-found-an-unlisted-sql-command">4.3. I found an unlisted SQL command</a></li>
-<li><a class="reference internal" href="#list-of-server-variables">4.4. List of server variables</a><ul>
-<li><a class="reference internal" href="#mroonga-default-parser">4.4.1. mroonga_default_parser</a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-version">4.4.2. mroonga_libgroonga_version</a></li>
-<li><a class="reference internal" href="#mroonga-log-file">4.4.3. mroonga_log_file</a></li>
-<li><a class="reference internal" href="#mroonga-log-level">4.4.4. mroonga_log_level</a></li>
-<li><a class="reference internal" href="#mroonga-version">4.4.5. mroonga_version</a></li>
-<li><a class="reference internal" href="#mroonga-dry-write">4.4.6. mroonga_dry_write</a></li>
-<li><a class="reference internal" href="#mroonga-enable-optimization">4.4.7. mroonga_enable_optimization</a></li>
-<li><a class="reference internal" href="#mroonga-match-escalation-threshold">4.4.8. mroonga_match_escalation_threshold</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#list-of-status-variables">4.5. List of status variables</a><ul>
-<li><a class="reference internal" href="#mroonga-count-skip">4.5.1. Mroonga_count_skip</a></li>
-<li><a class="reference internal" href="#mroonga-fast-order-limit">4.5.2. Mroonga_fast_order_limit</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#limitations">4.6. Limitations</a><ul>
-<li><a class="reference internal" href="#limitations-of-table">4.6.1. Limitations of table</a></li>
-<li><a class="reference internal" href="#limitations-of-indexing">4.6.2. Limitations of indexing</a></li>
-<li><a class="reference internal" href="#limitations-about-the-value-of-columns">4.6.3. Limitations about the value of columns</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="userguide/wrapper.html"
                         title="previous chapter">3.3.2. Wrapper mode</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="community.html"
-                        title="next chapter">5. Community</a></p>
+  <p class="topless"><a href="reference/sql_commands.html"
+                        title="next chapter">1. SQL commands</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="sources/reference.txt"
@@ -737,7 +164,7 @@ mysql&gt; select * from datetime_limitation;
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="community.html" title="5. Community"
+          <a href="reference/sql_commands.html" title="1. SQL commands"
              >next</a> |</li>
         <li class="right" >
           <a href="userguide/wrapper.html" title="3.3.2. Wrapper mode"

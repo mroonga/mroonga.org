@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. SQL commands &mdash; mroonga v3.04 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.04',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="mroonga v3.04 documentation" href="../index.html" />
+    <link rel="up" title="4. リファレンス" href="../reference.html" />
+    <link rel="next" title="2. サーバ変数の一覧" href="server_variables.html" />
+    <link rel="prev" title="4. リファレンス" href="../reference.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/reference/sql_commands.html"><img src="../static/us.png" alt="English">English version</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="server_variables.html" title="2. サーバ変数の一覧"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../reference.html" title="4. リファレンス"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sql-commands">
+<h1>1. SQL commands<a class="headerlink" href="#sql-commands" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>This section describes avaiable SQL commands and unavailable SQL commands.</p>
+<div class="section" id="list-of-available-sql-commands">
+<h2>1.1. 利用可能なSQLコマンドの一覧<a class="headerlink" href="#list-of-available-sql-commands" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">COLUMN</span> <span class="pre">column_name</span> <span class="pre">TEXT</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">SPATIAL</span> <span class="pre">KEY</span> <span class="pre">index_name</span> <span class="pre">(geometry_column_name)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">RENAME</span> <span class="pre">new_table_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">COMMIT</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">ON</span> <span class="pre">table_name(column_name)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">ON</span> <span class="pre">table_name(column_name,</span> <span class="pre">...)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span> <span class="pre">table_name</span> <span class="pre">(...)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">\`table-name-with-hyphen\`</span> <span class="pre">(...)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'parser</span> <span class="pre">&quot;TokenMecab&quot;')</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'parser</span> <span class="pre">&quot;TokenDelimit&quot;,</span> <span class="pre">normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name,</span> <span class="pre">...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">(column_name))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">(column_name,</span> <span class="pre">...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">USING</span> <span class="pre">BTREE</span> <span class="pre">(column_name))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">(column_name))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">ASCII</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">BINARY</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">CP932</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">EUCJPMS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">KOI8R</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">LATIN1</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">SJIS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UJIS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UTF8</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">UTF8MB4</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">ENGINE=mroonga</span> <span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'ENGINE</span> <span class="pre">&quot;InnoDB&quot;'</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span> <span class="pre">ENGINE=mroonga</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(\`_id\`</span> <span class="pre">INT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(\`_id\`</span> <span class="pre">INT,</span> <span class="pre">KEY(_id)</span> <span class="pre">USING</span> <span class="pre">HASH)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BIGINT</span> <span class="pre">UNSIGNED)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BIGINT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BINARY(...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BIT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">BLOB)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">CHAR(...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATETIME)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DECIMAL)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DOUBLE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">ENUM(...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">FLOAT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">GEOMETRY</span> <span class="pre">NOT</span> <span class="pre">NULL)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT</span> <span class="pre">UNSIGNED)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">LONGBLOB)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">LONGTEXT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMBLOB)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMINT</span> <span class="pre">UNSIGNED)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMINT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">MEDIUMTEXT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">SET(...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">SMALLINT</span> <span class="pre">UNSIGNED)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">SMALLINT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TEXT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIME)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIMESTAMP)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYBLOB)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYINT</span> <span class="pre">UNSIGNED)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYINT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TINYTEXT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">VARBINARY(...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">VARCHAR(...))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">YEAR)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT</span> <span class="pre">AUTO_INCREMENT)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">INT</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATE</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATETIME</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DATETIME(fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DECIMAL</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">DECIMAL(maximum_number_digits,</span> <span class="pre">fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIME</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIME(fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIMESTAMP</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">TIMESTAMP(fractional_seconds_precision)</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name</span> <span class="pre">YEAR</span> <span class="pre">PRIMARY</span> <span class="pre">KEY)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">INT,</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">DOUBLE,</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">FLOAT,</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">CHAR(...),</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(column_name1</span> <span class="pre">VARCHAR(...),</span> <span class="pre">column_name2</span> <span class="pre">...,</span> <span class="pre">KEY</span> <span class="pre">(column_name1,</span> <span class="pre">column_name2))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TEMPORARY</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">INDEX</span> <span class="pre">column_name</span> <span class="pre">ON</span> <span class="pre">table_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">EXISTS</span> <span class="pre">table_name,</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">\`table-name-with-hyphen\`,</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">table_name,</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">TEMPORARY</span> <span class="pre">TABLE</span> <span class="pre">table_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">FLUSH</span> <span class="pre">LOGS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(geometry_column_name)</span> <span class="pre">VALUES</span> <span class="pre">(GeomFromText('POINT(...)'))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span> <span class="pre">VALUES</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span> <span class="pre">VALUES</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span> <span class="pre">...</span></tt> (for <tt class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span> <span class="pre">VALUES</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span> <span class="pre">...</span></tt> (for <tt class="docutils literal"><span class="pre">UNIQUE</span> <span class="pre">KEY</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">table_name</span> <span class="pre">(column_name,</span> <span class="pre">...)</span> <span class="pre">SELECT</span> <span class="pre">...</span> <span class="pre">FROM</span> <span class="pre">other_table_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">REPLACE</span> <span class="pre">INTO</span> <span class="pre">table_name</span> <span class="pre">SELECT</span> <span class="pre">...</span> <span class="pre">FROM</span> <span class="pre">other_table_name</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">information_schema.plugins</span> <span class="pre">WHERE</span> <span class="pre">plugin_name</span> <span class="pre">=</span> <span class="pre">&quot;mroonga&quot;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">FORCE</span> <span class="pre">INDEX(index_name)</span> <span class="pre">WHERE</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">ASC</span> <span class="pre">LIMIT</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">ASC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">DESC</span> <span class="pre">LIMIT</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">DESC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*D+</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*D-</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*DOR</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;*W</span> <span class="pre">word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;+word</span> <span class="pre">...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name,</span> <span class="pre">...)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MBRContains(GeomFromText('LineString(...)'),</span> <span class="pre">geometry_column_name)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">NOT</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&lt;</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&lt;=</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">=</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&gt;</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">&gt;=</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">BETWEEN</span> <span class="pre">...</span> <span class="pre">AND</span> <span class="pre">...</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">column_name</span> <span class="pre">IN</span> <span class="pre">(SELECT</span> <span class="pre">sub_column_name</span> <span class="pre">FROM</span> <span class="pre">sub_table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(sub_text_column_name)</span> <span class="pre">AGAINST(&quot;...&quot;))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*,</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(column_name)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">FOUND_ROWS()</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">SQL_CALC_FOUND_ROWS</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table_name</span> <span class="pre">WHERE</span> <span class="pre">MATCH(...)</span> <span class="pre">AGAINST(&quot;...&quot;</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">column_name</span> <span class="pre">LIMIT</span> <span class="pre">start,n_records</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">last_insert_grn_id()</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SET</span> <span class="pre">binlog_format=&quot;MIXED&quot;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SET</span> <span class="pre">binlog_format=&quot;ROW&quot;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SET</span> <span class="pre">binlog_format=&quot;STATEMENT&quot;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">TRUNCATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">UPDATE</span> <span class="pre">table_name</span> <span class="pre">SET</span> <span class="pre">column_name</span> <span class="pre">=</span> <span class="pre">...</span></tt></li>
+</ul>
+</div>
+<div class="section" id="list-of-unavailable-sql-commands">
+<h2>1.2. 利用できないSQLコマンドの一覧<a class="headerlink" href="#list-of-unavailable-sql-commands" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">上記にないキャラクタセット</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(geometry_column_name)</span> <span class="pre">VALUES</span> <span class="pre">(GeomFromText('LineString(...)'))</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(...)</span> <span class="pre">VALUES</span> <span class="pre">(null)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">START</span> <span class="pre">TRANSACTION</span></tt></li>
+</ul>
+<p>基本的には、groongaがサポートしているキャラクタセット(EUC-JP/UTF-8/SJIS/LATIN1/KOI8R)はmroongaでもサポートされています。</p>
+</div>
+<div class="section" id="i-found-an-unlisted-sql-command">
+<h2>1.3. リストにないSQLコマンドを見つけました<a class="headerlink" href="#i-found-an-unlisted-sql-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>もし、あなたがリストにないSQLコマンドを見つけて、そのSQLコマンドが動くかどうかを確認した場合は、そのSQLコマンドをこのリストに追加させてください。そのSQLコマンドを <a class="reference external" href="http://groonga.org/ja/docs/community.html">開発チーム</a> に連絡してもらうか、 <a class="reference external" href="https://github.com/mroonga/mroonga/blob/master/doc/source/reference.rst">ソースファイル</a> に対するパッチをGitHubでpull requestしてくれれば取り込みます！</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. SQL commands</a><ul>
+<li><a class="reference internal" href="#list-of-available-sql-commands">1.1. 利用可能なSQLコマンドの一覧</a></li>
+<li><a class="reference internal" href="#list-of-unavailable-sql-commands">1.2. 利用できないSQLコマンドの一覧</a></li>
+<li><a class="reference internal" href="#i-found-an-unlisted-sql-command">1.3. リストにないSQLコマンドを見つけました</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../reference.html"
+                        title="前の章へ">4. リファレンス</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="server_variables.html"
+                        title="次の章へ">2. サーバ変数の一覧</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/sql_commands.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="server_variables.html" title="2. サーバ変数の一覧"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../reference.html" title="4. リファレンス"
+             >前へ</a> |</li>
+        <li><a href="../index.html">mroonga v3.04 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, mroonga project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
