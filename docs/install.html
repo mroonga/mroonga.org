@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Installation Guide &mdash; mroonga v3.04 documentation</title>
+    <title>2. Installation Guide &mdash; mroonga v3.05 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '3.04',
+        VERSION:     '3.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v3.04 documentation" href="index.html" />
+    <link rel="top" title="mroonga v3.05 documentation" href="index.html" />
     <link rel="next" title="3. User&#39;s guide" href="userguide.html" />
     <link rel="prev" title="1. The characteristics of mroonga" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mroonga v3.04 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v3.05 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -470,24 +470,19 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 are needed for building mroonga for Windows.</p>
 <div class="section" id="installer">
 <h3>2.13.1. Installer<a class="headerlink" href="#installer" title="Permalink to this headline">¶</a></h3>
-<p>For 32-bit environment, download
-<a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.2-mroonga-3.04-win32.msi">mariadb-10.0.2-mroonga-3.04-win32.msi</a>
-and run it.</p>
-<p>For 64-bit environment, download
-<a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.2-mroonga-3.04-winx64.msi">mariadb-10.0.2-mroonga-3.04-winx64.msi</a>
-and run it.</p>
+<p>None for now.</p>
 </div>
 <div class="section" id="zip">
 <h3>2.13.2. Zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
-<p>For 32-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.2-mroonga-3.04-win32.zip">mariadb-10.0.2-mroonga-3.04-win32.zip</a>
+<p>For 32-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.3-mroonga-3.05-win32.zip">mariadb-10.0.3-mroonga-3.05-win32.zip</a>
 and extract it.</p>
-<p>For 64-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.2-mroonga-3.04-winx64.zip">mariadb-10.0.2-mroonga-3.04-winx64.zip</a>
+<p>For 64-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.3-mroonga-3.05-winx64.zip">mariadb-10.0.3-mroonga-3.05-winx64.zip</a>
 and extract it.</p>
 </div>
 <div class="section" id="install-mroonga">
 <h3>2.13.3. Install mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>Start mysqld, connect to it by mysql client, and install it by &quot;INSTALL PLUGIN&quot; command.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 <p>If &quot;mroonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, mroonga is well installed.</p>
@@ -508,17 +503,17 @@ and extract it.</p>
 <p>Next install UDF (User-Defined Function).</p>
 <p>To get the record ID assigned by groonga in INSERT, install last_insert_grn_id function.</p>
 <p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 <p>To enable snippet (keyword in context) UDF, install mroonga_snippet function.</p>
 <p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 <p>To enable invoking groonga query from mroonga, install mroonga_command function.</p>
 <p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 </div>
@@ -807,7 +802,7 @@ cmake .
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              >previous</a> |</li>
-        <li><a href="index.html">mroonga v3.04 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v3.05 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

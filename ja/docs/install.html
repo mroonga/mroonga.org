@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. インストールガイド &mdash; mroonga v3.04 documentation</title>
+    <title>2. インストールガイド &mdash; mroonga v3.05 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '3.04',
+        VERSION:     '3.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="mroonga v3.04 documentation" href="index.html" />
+    <link rel="top" title="mroonga v3.05 documentation" href="index.html" />
     <link rel="next" title="3. ユーザガイド" href="userguide.html" />
     <link rel="prev" title="1. mroongaの特徴" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">mroonga v3.04 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v3.05 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -455,25 +455,20 @@ deb-src http://packages.groonga.org/ubuntu/ raring universe
 </div>
 <div class="section" id="windows">
 <h2>2.13. Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Mroonga binary for Windows is provided with MariaDB binary because
-<a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">some changes</a>
-are needed for building mroonga for Windows.</p>
+<p>mroongaのWindowsバイナリはMariaDBのバイナリと一緒に提供されます。これは、mroongaのWindows版をビルドするのに <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">いくつかの変更が</a> 必要だからです。</p>
 <div class="section" id="installer">
 <h3>2.13.1. インストール:<a class="headerlink" href="#installer" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>None for now.</p>
+<p>準備中</p>
 </div>
 <div class="section" id="zip">
 <h3>2.13.2. Zip<a class="headerlink" href="#zip" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>For 32-bit environment, download <a class="reference external" href="http://packages.groonga.org/tmp/mariadb-10.0.2-win32.zip">mariadb-10.0.2-win32.zip</a>
-and extract it.</p>
-<p>For 64-bit environment, download <a class="reference external" href="http://packages.groonga.org/tmp/mariadb-10.0.2-winx64.zip">mariadb-10.0.2-winx64.zip</a>
-and extract it.</p>
-<p>You need to install mroonga to MariaDB. See also <a href="http://sourceforge.jp/projects/groonga/lists/archive/dev/2013-May/001410.html">[groonga-dev,01410] Windows用mroongaのテストのお願い</a>.</p>
+<p>32bit環境では <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.3-mroonga-3.05-win32.zip">mariadb-10.0.3-mroonga-3.05-win32.zip</a> をダウンロードして展開します。</p>
+<p>64bit環境では <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.3-mroonga-3.05-winx64.zip">mariadb-10.0.3-mroonga-3.05-winx64.zip</a> をダウンロードして展開します。</p>
 </div>
 <div class="section" id="install-mroonga">
 <h3>2.13.3. mroongaのインストール<a class="headerlink" href="#install-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>その後、mysqldを起動し、mysqlクライアントで接続して&quot;INSTALL PLUGIN&quot;コマンドでインストールします。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 <p>以下のように&quot;SHOW ENGINES&quot;コマンドで&quot;mroonga&quot;が表示されればmroongaのインストールは完了です。</p>
@@ -494,17 +489,17 @@ and extract it.</p>
 <p>続いてUDF(ユーザ定義関数)をインストールします。</p>
 <p>INSERTを行った際にgroongaにより割当てられるレコードIDを取得するためのlast_insert_grn_id関数をインストールします。</p>
 <p>以下のようにCREATE FUNCTIONを実行します。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 <p>スニペット(キーワード周辺のテキスト)を取得するために、mroonga_snippet関数をインストールします。</p>
 <p>以下のようにCREATE FUNCTIONを実行します。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 <p>mroongaからgroongaのクエリを実行するために、mroonga_command関数をインストールします。</p>
 <p>以下のようにCREATE FUNCTIONを実行します。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga&#39;;
 </pre></div>
 </div>
 </div>
@@ -535,7 +530,7 @@ and extract it.</p>
 <h3>2.14.4. MySQLのインストール<a class="headerlink" href="#install-mysql" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MySQL 5.5最新版のソースコードをダウンロードし、ビルド＆インストールして下さい。</p>
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
-<p>mysql-5.5.31を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
+<p>Here we assume that we use mysql-5.5.31 and its source code is extracted in the following directory.</p>
 <div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.5.31
 </pre></div>
 </div>
@@ -793,7 +788,7 @@ cmake .
         <li class="right" >
           <a href="characteristic.html" title="1. mroongaの特徴"
              >前へ</a> |</li>
-        <li><a href="index.html">mroonga v3.04 documentation</a> &raquo;</li> 
+        <li><a href="index.html">mroonga v3.05 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
