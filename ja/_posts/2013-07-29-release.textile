@@ -1,0 +1,117 @@
+---
+layout: post.ja
+title: mroonga 3.06リリース
+description: mroonga 3.06をリリースしました！
+published: false
+---
+
+h2. mroonga 3.06リリース
+
+"mroonga 3.06":/ja/docs/news.html#release-3-06 をリリースしました！
+
+h3. インストール/アップグレード方法
+
+それぞれの環境毎のインストール方法: "インストール":/ja/docs/install.html
+
+以前のバージョンからアップグレードする場合には、アップグレード手順に注意が必要です。現在お使いのバージョンごとのアップグレード手順を参照してください。
+
+1.20より前のバージョンからアップグレードする場合は "1.20リリース 2012/01/29":/ja/docs/news.html#release-1-20 にある手順を使ってください。
+
+1.20からアップグレードする場合は "2.00リリース 2012/02/29":/ja/docs/news.html#release-2-00 にある手順を使ってください。
+
+2.00か2.01からアップグレードする場合は、 "2.02リリース 2012/04/29":/ja/docs/news.html#release-2-02 にある手順でパッケージ署名用の新しい鍵をインポートしてください。
+
+2.00以降でストレージモードにてマルチカラムインデックスを使っている場合は "2.02リリース 2012/04/29":/ja/docs/news.html#release-2-03 にある手順でインデックスを作り直してください。
+
+2.04以降でストレージモードにてSETカラムもしくは要素数が256より少ないENUMを使用している場合は、 "2.05リリース 2012/07/29":/ja/docs/news.html#release-2-05 にある手順でデータベースを再作成してください。
+
+2.05以降でマルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は、 "2.08リリース 2012/10/29":/ja/docs/news.html#release-2-08 にある手順でインデックスを再作成してください。
+
+2.08以降でTIMESTAMP型のカラムを使っているテーブルがあれば、データベースを再作成してください。CHAR(N)を主キーとしているテーブルがあれば、インデックスを再作成してください。手順は "2.09リリース 2012/11/29":/ja/docs/news.html#release-2-09 にあります。
+
+今回のリリースの主なトピックは以下の通りです。
+
+* mroonga_action_on_fulltext_query_errorセッション変数をサポート
+* Fedora 19をサポート
+
+h3. @mroonga_action_on_fulltext_query_error@ セッション変数をサポート
+
+今回のリリースでは @mroonga_action_on_fulltext_query_error@ セッション変数をサポートしました。
+
+"mroonga-action-on-fulltext-query-error":http://mroonga.org/ja/docs/reference/server_variables.html#mroonga-action-on-fulltext-query-error は、全文検索クエリを実行したときのエラーをどのように扱うかを制御するための変数です。
+
+これまでクエリのエラーは、エラーを報告し、ログにも出力するようにしていました。
+
+ただし、アプリケーション側でログをとっている場合に、エスケープが適切にできていないときのエラーがその他のシンタックスエラーに埋もれてしまうことがありました。これをなんとかしたいという要望に応えたものです。
+
+以下の4種類を設定することができます。
+
+* ERROR エラーを報告する。ログは無効です。
+* ERROR_AND_LOG エラーを報告する。ログは有効です。(これがデフォルトです)
+* IGNORE エラーを無視する。ログは無効です。
+* IGNORE_AND_LOG エラーを無視する。ログは有効です。(これはInnoDBと同様です)
+
+例えば、以下のようなシンタックスエラーになるクエリ( @(@ が適切にエスケープされていない )を例に考えてみます。
+
+<pre>
+SELECT * FROM `test_mroonga` WHERE MATCH(`main`) AGAINST('(仮)*' IN BOOLEAN MODE);
+</pre>
+
+ERROR_AND_LOGもしくはIGNORE_AND_LOGを設定した場合、以下のようにログが記録されます。
+
+<pre>
+...
+2013-07-26 17:29:03.297739|e|ba4d8940|Syntax error! ((仮)*)
+...
+2013-07-26 17:29:03.300049|e|ba4d8940|failed to parse fulltext search keyword: <(仮)*>: <Syntax error! ((仮)*)>
+...
+</pre>
+
+一方、ERRORもしくはIGNOREを設定した場合、以下のようにログが記録されます。
+
+<pre>
+...
+2013-07-26 17:38:53.847593|e|ba4d8940|Syntax error! ((仮)*)
+...
+</pre>
+
+全文検索のクエリのパースエラーログの記録の有無に影響していることがわかります。
+
+ERRORとIGNOREの違いは @mroonga_action_on_fulltext_query_error@ を表示し、上記の全文検索のクエリを実行したときの様子からわかります。
+
+<pre>
+$ mysql < error.sql
+Variable_name	Value
+mroonga_action_on_fulltext_query_error	ERROR
+ERROR 1064 (42000) at line 23: failed to parse fulltext search keyword: <(仮)*>: <Syntax error! ((仮)*)>
+$
+</pre>
+
+ERRORだと上記のようにエラーが報告されることがわかります。
+
+<pre>
+$ mysql -u root < error.sql
+Variable_name	Value
+mroonga_action_on_fulltext_query_error	IGNORE
+$
+</pre>
+
+IGNOREだと上記のようにエラーが無視されることがわかります。
+
+h3. Fedora 19をサポート
+
+今回のリリースでは、2013年7月2日にリリースされたFedora 19のサポートを始めました。その代りにFedora 18のサポートをやめています。
+
+Fedora 19からはMariaDBが採用されました。それにともないMySQLのパッケージ名も変更されています。
+
+また @sudo yum install mysql@ とするとMariaDBがインストールされるようになるなど、MySQLをインストールすることもできる、という扱いになっています。
+
+MySQL (community-mysql) だけでなくMariaDBに対応したパッケージも提供予定でしたが、動作上の問題が見つかったため、一旦保留しています。
+
+今後のリリースでは、これまで通りMySQLと一緒に使う場合は mysql-mroongaを、MariaDBと一緒に使う場合にはmariadb-mroongaをインストールできるようにする予定です。
+
+h3. さいごに
+
+3.05からの詳細な変更点は "3.06リリース 2013/07/29":/ja/docs/news.html#release-3-06 を確認してください。
+
+それでは、mroongaでガンガン検索してください！
