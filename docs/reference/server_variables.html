@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Server variables &mdash; mroonga v3.05 documentation</title>
+    <title>2. Server variables &mdash; mroonga v3.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.05',
+        VERSION:     '3.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="mroonga v3.05 documentation" href="../index.html" />
+    <link rel="top" title="mroonga v3.06 documentation" href="../index.html" />
     <link rel="up" title="4. Reference" href="../reference.html" />
     <link rel="next" title="3. Status variables" href="status_variables.html" />
     <link rel="prev" title="1. SQL commands" href="sql_commands.html" /> 
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="1. SQL commands"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">mroonga v3.05 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v3.06 documentation</a> &raquo;</li>
           <li><a href="../reference.html" accesskey="U">4. Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -88,8 +88,50 @@
   <div class="section" id="server-variables">
 <h1>2. Server variables<a class="headerlink" href="#server-variables" title="Permalink to this headline">¶</a></h1>
 <p>Here are the explanations of server variables that are introduced by mroonga.</p>
+<div class="section" id="mroonga-action-on-fulltext-query-error">
+<span id="id1"></span><h2>2.1. mroonga_action_on_fulltext_query_error<a class="headerlink" href="#mroonga-action-on-fulltext-query-error" title="Permalink to this headline">¶</a></h2>
+<p>The default behavior of fulltext query error.</p>
+<p>The default value of <tt class="docutils literal"><span class="pre">mroonga_action_on_fulltext_query_error</span></tt> is <tt class="docutils literal"><span class="pre">ERROR_AND_LOG</span></tt>.
+This is the conventional behavior which is equal to old version of mroonga.</p>
+<p>Here is the list of <tt class="docutils literal"><span class="pre">mroonga_action_on_fulltext_query_error</span></tt> which you can use.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ERROR</td>
+<td>Report an error. Logging is disabled.</td>
+</tr>
+<tr class="row-odd"><td>ERROR_AND_LOG</td>
+<td>Report an error. Logging is enabled. (This is the default)</td>
+</tr>
+<tr class="row-even"><td>IGNORE</td>
+<td>Just ignore an error. Logging is disabled.</td>
+</tr>
+<tr class="row-odd"><td>IGNORE_AND_LOG</td>
+<td>Ignore an error, but logging is enabled. (Similar to InnoDB behavior)</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example SQL to confirm the value of <tt class="docutils literal"><span class="pre">mroonga_action_on_fulltext_query_error</span></tt>:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_action_on_fulltext_query_error&#39;;
++----------------------------------------+---------------+
+| Variable_name                          | Value         |
++----------------------------------------+---------------+
+| mroonga_action_on_fulltext_query_error | ERROR_AND_LOG |
++----------------------------------------+---------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
 <div class="section" id="mroonga-default-parser">
-<h2>2.1. mroonga_default_parser<a class="headerlink" href="#mroonga-default-parser" title="Permalink to this headline">¶</a></h2>
+<h2>2.2. mroonga_default_parser<a class="headerlink" href="#mroonga-default-parser" title="Permalink to this headline">¶</a></h2>
 <p>The default parser of the full text search.
 The default value can be specified by <tt class="docutils literal"><span class="pre">--with-default-parser=PARSER</span></tt> configure argument, whose default value is <tt class="docutils literal"><span class="pre">TokenBigram</span></tt>.</p>
 <p>Here is an example to use <tt class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></tt> as a fulltext search parser. It is used by <tt class="docutils literal"><span class="pre">body_index</span></tt> fulltext index.</p>
@@ -108,7 +150,7 @@ The default value can be specified by <tt class="docutils literal"><span class="
 </td></tr></table></div>
 </div>
 <div class="section" id="mroonga-libgroonga-version">
-<h2>2.2. mroonga_libgroonga_version<a class="headerlink" href="#mroonga-libgroonga-version" title="Permalink to this headline">¶</a></h2>
+<h2>2.3. mroonga_libgroonga_version<a class="headerlink" href="#mroonga-libgroonga-version" title="Permalink to this headline">¶</a></h2>
 <p>The version string of the groonga library.</p>
 <p>Here is an example SQL to confirm the using groonga library version:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_libgroonga_version&#39;;
@@ -122,7 +164,7 @@ The default value can be specified by <tt class="docutils literal"><span class="
 </div>
 </div>
 <div class="section" id="mroonga-log-file">
-<h2>2.3. mroonga_log_file<a class="headerlink" href="#mroonga-log-file" title="Permalink to this headline">¶</a></h2>
+<h2>2.4. mroonga_log_file<a class="headerlink" href="#mroonga-log-file" title="Permalink to this headline">¶</a></h2>
 <p>The path of the log file of mroonga. The default value is <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
 <p>Here is an example transcript to change log file to <tt class="docutils literal"><span class="pre">/tmp/mroonga.log</span></tt>:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
@@ -147,7 +189,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-log-level">
-<span id="id1"></span><h2>2.4. mroonga_log_level<a class="headerlink" href="#mroonga-log-level" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>2.5. mroonga_log_level<a class="headerlink" href="#mroonga-log-level" title="Permalink to this headline">¶</a></h2>
 <p>The output level of mroonga log file. The default value is <tt class="docutils literal"><span class="pre">NOTICE</span></tt>.</p>
 <p>Here is the list of <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> which you can use.</p>
 <table border="1" class="docutils">
@@ -217,7 +259,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-version">
-<h2>2.5. mroonga_version<a class="headerlink" href="#mroonga-version" title="Permalink to this headline">¶</a></h2>
+<h2>2.6. mroonga_version<a class="headerlink" href="#mroonga-version" title="Permalink to this headline">¶</a></h2>
 <p>The version string of mroonga.</p>
 <p>Here is an example SQL to confirm the running mroonga version:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_version&#39;;
@@ -231,7 +273,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-dry-write">
-<h2>2.6. mroonga_dry_write<a class="headerlink" href="#mroonga-dry-write" title="Permalink to this headline">¶</a></h2>
+<h2>2.7. mroonga_dry_write<a class="headerlink" href="#mroonga-dry-write" title="Permalink to this headline">¶</a></h2>
 <p>Whether really write data to groonga database or not. The
 default value is <tt class="docutils literal"><span class="pre">OFF</span></tt> that means data are really written
 to groonga database. Usually we don't need to change the
@@ -262,7 +304,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-enable-optimization">
-<h2>2.7. mroonga_enable_optimization<a class="headerlink" href="#mroonga-enable-optimization" title="Permalink to this headline">¶</a></h2>
+<h2>2.8. mroonga_enable_optimization<a class="headerlink" href="#mroonga-enable-optimization" title="Permalink to this headline">¶</a></h2>
 <p>Whether enable optimization or not. The default value is
 <tt class="docutils literal"><span class="pre">ON</span></tt> that means optimization is enabled. Usually we don't
 need to change the value of this variable. This variable is
@@ -290,7 +332,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-match-escalation-threshold">
-<span id="id2"></span><h2>2.8. mroonga_match_escalation_threshold<a class="headerlink" href="#mroonga-match-escalation-threshold" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2>2.9. mroonga_match_escalation_threshold<a class="headerlink" href="#mroonga-match-escalation-threshold" title="Permalink to this headline">¶</a></h2>
 <p>The threshold to determin whether match method is escalated. See
 <a class="reference external" href="http://groonga.org/docs/spec/search.html">search specification for groonga</a> about match method
 escalation.</p>
@@ -395,14 +437,15 @@ value.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2. Server variables</a><ul>
-<li><a class="reference internal" href="#mroonga-default-parser">2.1. mroonga_default_parser</a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-version">2.2. mroonga_libgroonga_version</a></li>
-<li><a class="reference internal" href="#mroonga-log-file">2.3. mroonga_log_file</a></li>
-<li><a class="reference internal" href="#mroonga-log-level">2.4. mroonga_log_level</a></li>
-<li><a class="reference internal" href="#mroonga-version">2.5. mroonga_version</a></li>
-<li><a class="reference internal" href="#mroonga-dry-write">2.6. mroonga_dry_write</a></li>
-<li><a class="reference internal" href="#mroonga-enable-optimization">2.7. mroonga_enable_optimization</a></li>
-<li><a class="reference internal" href="#mroonga-match-escalation-threshold">2.8. mroonga_match_escalation_threshold</a></li>
+<li><a class="reference internal" href="#mroonga-action-on-fulltext-query-error">2.1. mroonga_action_on_fulltext_query_error</a></li>
+<li><a class="reference internal" href="#mroonga-default-parser">2.2. mroonga_default_parser</a></li>
+<li><a class="reference internal" href="#mroonga-libgroonga-version">2.3. mroonga_libgroonga_version</a></li>
+<li><a class="reference internal" href="#mroonga-log-file">2.4. mroonga_log_file</a></li>
+<li><a class="reference internal" href="#mroonga-log-level">2.5. mroonga_log_level</a></li>
+<li><a class="reference internal" href="#mroonga-version">2.6. mroonga_version</a></li>
+<li><a class="reference internal" href="#mroonga-dry-write">2.7. mroonga_dry_write</a></li>
+<li><a class="reference internal" href="#mroonga-enable-optimization">2.8. mroonga_enable_optimization</a></li>
+<li><a class="reference internal" href="#mroonga-match-escalation-threshold">2.9. mroonga_match_escalation_threshold</a></li>
 </ul>
 </li>
 </ul>
@@ -447,7 +490,7 @@ value.</p>
         <li class="right" >
           <a href="sql_commands.html" title="1. SQL commands"
              >previous</a> |</li>
-        <li><a href="../index.html">mroonga v3.05 documentation</a> &raquo;</li>
+        <li><a href="../index.html">mroonga v3.06 documentation</a> &raquo;</li>
           <li><a href="../reference.html" >4. Reference</a> &raquo;</li> 
       </ul>
     </div>
