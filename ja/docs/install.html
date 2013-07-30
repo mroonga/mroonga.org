@@ -417,11 +417,23 @@ deb-src http://packages.groonga.org/ubuntu/ raring universe
 </div>
 <div class="section" id="fedora-19">
 <h2>2.11. Fedora 19<a class="headerlink" href="#fedora-19" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>インストール:</p>
+<p>Fedora 19からはMariaDBがMySQLのデフォルト実装となります。</p>
+<p>mroongaには二つの選択肢があり、一つはMariaDBと一緒に使うこと、もう一つはMySQL (community-mysql)と一緒に使うことです。</p>
+<p>MySQL (community-mysql)向けにmroongaをインストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
 % sudo yum makecache
 % sudo yum install -y mysql-mroonga
 </pre></div>
+</div>
+<p>MariDB向けにmroongaをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
+% sudo yum makecache
+% sudo yum install -y mariadb-mroonga
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">MariaDBとMySQL (community-mysql)パッケージは排他的です。例えば mysql-mroonga を使うには競合している mariadb パッケージをまず削除する必要があります。</p>
 </div>
 <p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>

@@ -426,11 +426,23 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 </div>
 <div class="section" id="fedora-19">
 <h2>2.11. Fedora 19<a class="headerlink" href="#fedora-19" title="Permalink to this headline">¶</a></h2>
-<p>Install</p>
+<p>Since Fedora 19, MariaDB is the default implementation of MySQL.</p>
+<p>So there are two selections for mroonga. One is using with MariaDB, the other is using with MySQL (community-mysql).</p>
+<p>Install mroonga for MySQL (community-mysql):</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
 % sudo yum makecache
 % sudo yum install -y mysql-mroonga
 </pre></div>
+</div>
+<p>Install mroonga with MariaDB:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
+% sudo yum makecache
+% sudo yum install -y mariadb-mroonga
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">MariaDB and MySQL (community-mysql) package are exclusive. For example, if you want to use mysql-mroonga, you need to remove conflicted mariadb packages at first.</p>
 </div>
 <p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer. please install groonga-tokenizer-mecab package.</p>
 <p>Install groonga-tokenizer-mecab package:</p>
