@@ -387,7 +387,8 @@ Install mroonga for MariaDB::
   % sudo yum install -y mariadb-mroonga
 
 .. note::
-  MariaDB and MySQL (community-mysql) package are exclusive. For example, if you want to use mysql-mroonga, you need to remove conflicted mariadb packages at first.
+
+   MariaDB and MySQL (community-mysql) package are exclusive. For example, if you want to use mysql-mroonga, you need to remove conflicted mariadb packages at first.
 
 If you want to use `MeCab <http://mecab.sourceforge.net/>`_ as a tokenizer. please install groonga-tokenizer-mecab package.
 
@@ -450,8 +451,8 @@ For 32-bit environment, download `mariadb-10.0.3-mroonga-3.06-win32.zip
 <http://packages.groonga.org/windows/mroonga/mariadb-10.0.3-mroonga-3.06-win32.zip>`_
 and extract it.
 
-For 64-bit environment, download `mariadb-10.0.3-mroonga-3.06-winx64.zip
-<http://packages.groonga.org/windows/mroonga/mariadb-10.0.3-mroonga-3.06-winx64.zip>`_
+For 64-bit environment, download `mariadb-10.0.4-mroonga-3.07-winx64.zip
+<http://packages.groonga.org/windows/mroonga/mariadb-10.0.4-mroonga-3.07-winx64.zip>`_
 and extract it.
 
 Install mroonga
@@ -715,3 +716,29 @@ To enable invoking groonga query from mroonga, install mroonga_command function.
 Invoke CREATE FUNCTION like the following. ::
 
  mysql> CREATE FUNCTION mroonga_command RETURNS STRING SONAME 'ha_mroonga.so';
+
+
+Upgrade Guide
+-------------
+
+There is a case that incompatible change is introduced at new release.
+It is announced by release announce if new release contains such a incompatible change.
+
+Here is the list of recommended way of upgrading mroonga from old release.
+
+See following URL about upgrade sequence if you use previous version.
+
+If you upgrade prior to 1.20, refer to :ref:`release-1-20`
+
+If you upgrade from 1.20, refer to :ref:`release-2-00`
+
+If you upgrade from 2.00 or 2.01, refer to :ref:`release-2-02`
+
+If you upgrade from 2.00 or later and using multiple column indexes on storage mode, refer to :ref:`release-2-03`
+
+If you upgrade from 2.04 or later and using SET column or ENUM that has the number of elements < 256 in Storage mode, refer to :ref:`release-2-05`
+
+If you upgrade from 2.05 or later and using multiple column indexes against VARCHAR or CHAR, refer to :ref:`release-2-08`
+
+If you upgrade from 2.08 or later and using TIMESTAMP column, please recreate database. If you upgrade from 2.08 or later and using CHAR(N) as primary key, please recreate index. Refer to :ref:`release-2-09` for each case:
+

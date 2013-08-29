@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. Trouble Shooting &mdash; mroonga v3.07 documentation</title>
+    <title>4. UDF (ユーザ定義関数) &mdash; mroonga v3.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="top" title="mroonga v3.07 documentation" href="../index.html" />
     <link rel="up" title="4. リファレンス" href="../reference.html" />
-    <link rel="next" title="5. コミュニティ" href="../community.html" />
-    <link rel="prev" title="5. 制限事項" href="limitations.html" /> 
+    <link rel="next" title="4.1. mroonga_escape" href="udf/mroonga_escape.html" />
+    <link rel="prev" title="3. ステータス変数の一覧" href="status_variables.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -58,7 +58,7 @@
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../../docs/reference/troubleshooting.html"><img src="../static/us.png" alt="English">English version</a></li>
+      <li><a href="../../../docs/reference/udf.html"><img src="../static/us.png" alt="English">English version</a></li>
     </ul>
   </div>
 </div>
@@ -71,10 +71,10 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="../community.html" title="5. コミュニティ"
+          <a href="udf/mroonga_escape.html" title="4.1. mroonga_escape"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="limitations.html" title="5. 制限事項"
+          <a href="status_variables.html" title="3. ステータス変数の一覧"
              accesskey="P">前へ</a> |</li>
         <li><a href="../index.html">mroonga v3.07 documentation</a> &raquo;</li>
           <li><a href="../reference.html" accesskey="U">4. リファレンス</a> &raquo;</li> 
@@ -86,36 +86,24 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="trouble-shooting">
-<h1>6. Trouble Shooting<a class="headerlink" href="#trouble-shooting" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>mroongaストレージエンジンにはいくつかFAQがあります。</p>
-<div class="section" id="how-to-avoid-mmap-cannot-allocate-memory-error">
-<h2>6.1. mmap Cannot allocate memoryエラーを回避するには<a class="headerlink" href="#how-to-avoid-mmap-cannot-allocate-memory-error" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ログファイルに以下のようなmmapエラーが存在する場合があります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">&lt;13036498944&gt;</span></tt> はこの場合mmapの合計サイズ(約12GB)です。</p>
-<p>以下の観点を確認する必要があります。</p>
-<ul class="simple">
-<li><p class="first">十分なメモリの空きが存在するか?</p>
+  <div class="section" id="udf-user-defined-functions">
+<h1>4. UDF (ユーザ定義関数)<a class="headerlink" href="#udf-user-defined-functions" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>mroongaではいくつか便利な機能をUDF (ユーザ定義関数)として提供しています。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="udf/mroonga_escape.html">4.1. mroonga_escape</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_escape.html#summary">4.1.1. 概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_escape.html#syntax">4.1.2. 構文</a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_escape.html#usage">4.1.3. 使いかた</a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_escape.html#parameters">4.1.4. 引数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="udf/mroonga_escape.html#required-parameters">4.1.4.1. 必須引数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="udf/mroonga_escape.html#optional-parameters">4.1.4.2. 省略可能引数</a></li>
+</ul>
 </li>
-<li><p class="first">マッピング最大数を超過していないか?</p>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_escape.html#return-value">4.1.5. 返り値</a></li>
+</ul>
 </li>
 </ul>
-<p>十分な空きメモリがあるかを調べるために、<tt class="docutils literal"><span class="pre">vmstat</span></tt> コマンドを使うことができます。</p>
-<p>最大マッピング数を超過しているかどうかを確認するために、 <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> の値を調べることができます。</p>
-<p>もしこの問題が <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> の値を調整することで解決するなら、これが原因です。</p>
-<p>groongaはメモリを256KBごとに確保するので、扱えるデータベースのサイズを以下の式で見積ることができます:</p>
-<div class="highlight-none"><div class="highlight"><pre>(database size) = vm.max_map_count * (memory chunks)
-</pre></div>
-</div>
-<p>16GBを超えるデータベースを扱うには、少くとも65536を <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> の値として設定しないといけません。</p>
-<div class="highlight-none"><div class="highlight"><pre>database size (16GB) = vm.max_map_count (65536) * memory chunks (256KB)
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">vm.max_map_count=65536</span></tt> で一時的に <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> を調整することができます。</p>
-<p>その後、設定値を  <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt> もしくは <tt class="docutils literal"><span class="pre">/etc/sysctl.d/*.conf</span></tt> へと保存します。</p>
 </div>
 </div>
 
@@ -125,23 +113,15 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">目次</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">6. Trouble Shooting</a><ul>
-<li><a class="reference internal" href="#how-to-avoid-mmap-cannot-allocate-memory-error">6.1. mmap Cannot allocate memoryエラーを回避するには</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>前のトピックへ</h4>
-  <p class="topless"><a href="limitations.html"
-                        title="前の章へ">5. 制限事項</a></p>
+  <p class="topless"><a href="status_variables.html"
+                        title="前の章へ">3. ステータス変数の一覧</a></p>
   <h4>次のトピックへ</h4>
-  <p class="topless"><a href="../community.html"
-                        title="次の章へ">5. コミュニティ</a></p>
+  <p class="topless"><a href="udf/mroonga_escape.html"
+                        title="次の章へ">4.1. mroonga_escape</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
-    <li><a href="../sources/reference/troubleshooting.txt"
+    <li><a href="../sources/reference/udf.txt"
            rel="nofollow">ソースコードを表示</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -168,10 +148,10 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="../community.html" title="5. コミュニティ"
+          <a href="udf/mroonga_escape.html" title="4.1. mroonga_escape"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="limitations.html" title="5. 制限事項"
+          <a href="status_variables.html" title="3. ステータス変数の一覧"
              >前へ</a> |</li>
         <li><a href="../index.html">mroonga v3.07 documentation</a> &raquo;</li>
           <li><a href="../reference.html" >4. リファレンス</a> &raquo;</li> 
