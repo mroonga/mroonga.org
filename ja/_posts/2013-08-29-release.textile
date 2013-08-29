@@ -1,0 +1,60 @@
+---
+layout: post.ja
+title: mroonga 3.07リリース
+description: mroonga 3.07をリリースしました！
+---
+
+h2. mroonga 3.07リリース
+
+"mroonga 3.07":/ja/docs/news.html#release-3-07 をリリースしました！
+
+h3. インストール/アップグレード方法
+
+それぞれの環境毎のインストール方法: "インストール":/ja/docs/install.html
+
+以前のバージョンからアップグレードする場合には、アップグレード手順に注意が必要です。現在お使いのバージョンごとの "アップグレード手順":http://mroonga.org/ja/docs/install.html#upgrade-guide を参照してください。
+
+今回のリリースの主なトピックは以下の通りです。
+
+* mroonga_escapeをサポート
+* MariaDB 10.0.4をサポート
+
+h3. mroonga_escapeをサポート
+
+今回のリリースでは実験的にmroonga_escapeをサポートしました。
+
+mroongaでは、特別な文字(+-><~*()"\:)を含む検索をしたいときなどにはクエリを適切にエスケープしてあげる必要があります。
+
+これは、mroongaがgroongaをベースにしたMySQLのストレージエンジンだからです。mroongaは、MySQL -> mroonga -> groongaといくつかのレイヤで構成されているので、特別扱いする文字が途中で解釈されるという点に注意が必要です。そのあたりの話はQiitaに以前トピックを書きました。
+
+* "mroongaで記号類を含むクエリのシンタックスエラーを回避する方法":http://qiita.com/groonga/items/0ae7f637525c7b5f2cb1
+
+どの文字をどうやってエスケープすれば意図したクエリを実行できるのかというのはちょっとややこしい問題です。
+
+例えば、「(仮)」というのを前方一致検索しようとしたら、クエリは以下のようにエスケープしないといけません。
+
+<pre>
+mysql> SELECT * FROM test_escape WHERE MATCH(content) AGAINST('\\(仮\\)*' IN BOOLEAN MODE);
+</pre>
+
+これを同じようにやってくれるのが、mroonga_escapeです。今回は()をそのまま通常の文字として検索したいので、mroonga_escapeの第二引数に明示的にエスケープしたい文字を指定します。クエリはこんな感じになります。
+  
+<pre>
+mysql> SELECT * FROM test_escape WHERE MATCH(content) AGAINST(mroonga_escape('(仮)*', '()') IN BOOLEAN MODE);
+</pre>
+
+エスケープ対象がはっきり区別できるようになったので、クエリがよりわかりやすくなりました。
+
+h3. MariaDB 10.0.4をサポート
+
+今回のリリースでは、2013年8月16日にリリースされたばかりのMariaDB 10.0.4をサポートしました。
+
+基本的にディストリビューションの提供するパッケージに追従しているので、すぐに試せるのは現状Windows版のみとなっています。(Fedora 19ではMariaDBが採用されていますが、そちらはMariaDB 5.5系です。)
+
+ただし、有志の方が独自にパッケージングしたリポジトリを公開してくれているので、もしCentOS 6で試したいという場合にはwingリポジトリを利用されると良いでしょう。wingリポジトリについては "こちら":http://sourceforge.jp/projects/groonga/lists/archive/dev/2013-July/001559.html を参照してください。
+
+h3. さいごに
+
+3.06からの詳細な変更点は "3.07リリース 2013/07/29":/ja/docs/news.html#release-3-07 を確認してください。
+
+それでは、mroongaでガンガン検索してください！
