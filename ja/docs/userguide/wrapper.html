@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.2. ラッパーモード &mdash; Mroonga v3.09 documentation</title>
+    <title>3.3.2. ラッパーモード &mdash; Mroonga v3.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.09',
+        VERSION:     '3.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v3.09 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v3.10 documentation" href="../index.html" />
     <link rel="up" title="3. ユーザガイド" href="../userguide.html" />
     <link rel="next" title="4. リファレンス" href="../reference.html" />
     <link rel="prev" title="3.3.1. ストレージモード" href="storage.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="storage.html" title="3.3.1. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v3.09 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" accesskey="U">3. ユーザガイド</a> &raquo;</li> 
       </ul>
     </div>  
@@ -261,102 +261,9 @@ Query OK, 0 rows affected (0.00 sec)
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
 <h2>3.3.2.5. スニペットの取得方法 (文脈付き索引)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">ノート</p>
-<p class="last">この機能は実験的です。引数や引数の値が予告なく変更される可能性があります。</p>
-</div>
-<p>キーワードと周辺のテキストを検索結果として取得したいことがあります。</p>
-<p>スニペットは'キーワードと関連するテキスト'を意味します。文脈付き索引ともいいます。</p>
-<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は検索結果からスニペットを取得する方法を提供します。</p>
-<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数の構文:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_snippet(document, max_length, max_count, encoding,
-  skip_leading_spaces, html_escape, prefix, suffix,
-  word1, word1_prefix, word1_suffix,
-  word2, word2_prefix, word2_suffix, ...);
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> の引数の詳細です。</p>
-<dl class="docutils">
-<dt>document</dt>
-<dd><p class="first last">カラム名もしくは文字列を指定。</p>
-</dd>
-<dt>max_length</dt>
-<dd><p class="first last">スニペットの長さの最大バイト数を指定。</p>
-</dd>
-<dt>max_count</dt>
-<dd><p class="first last">スニペットの最大個数を指定。</p>
-</dd>
-<dt>encoding</dt>
-<dd>The encoding of document is required.
-You can specify the value of encoding such as 'ascii_general_ci',
-'cp932_japanese_ci', 'eucjpms_japanese_ci' and so on.</dd>
-<dt>skip_leading_spaces</dt>
-<dd><p class="first last">先頭の空白を無視するかを指定します。1なら無視し、0なら無視しません。</p>
-</dd>
-<dt>html_escape</dt>
-<dd><p class="first last">HTMLのエスケープを行うか指定します。1ならエスケープし、0ならそのまま出力します。</p>
-</dd>
-<dt>prefix</dt>
-<dd><p class="first last">スニペットの開始テキストを指定。</p>
-</dd>
-<dt>suffix</dt>
-<dd><p class="first last">スニペットの終了テキストを指定。</p>
-</dd>
-<dt>wordN</dt>
-<dd><p class="first last">単語を指定。</p>
-</dd>
-<dt>wordN_prefix</dt>
-<dd><p class="first last">N番目の単語の開始テキストを指定。</p>
-</dd>
-<dt>wordN_suffix</dt>
-<dd><p class="first last">N番目の単語の開始テキストを指定。</p>
-</dd>
-</dl>
-<p>mroonga_snippet 関数はユーザ定義関数(UDF)としてmroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
-<p>'fulltext'というキーワードと'MySQL'と'search'という関連語を含む文書の検索をしてみましょう。</p>
-<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は上記のことができます。</p>
-<p>実行例で使用するスキーマ定義はこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
-  `id` int(11) NOT NULL,
-  `text` text,
-  PRIMARY KEY (`id`),
-  FULLTEXT KEY `text` (`text`)
-) ENGINE=mroonga COMMENT &#39;engine = &quot;innodb&quot;&#39; DEFAULT CHARSET=utf8
-</pre></div>
-</div>
-<p>実行例で使用するサンプルデータはこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre>insert into snippet_test (id, text) values (1, &#39;An open-source fulltext search engine and column store.&#39;);
-insert into snippet_test (id, text) values (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
-insert into snippet_test (id, text) values (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
-</pre></div>
-</div>
-<p>実行結果はこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; select * from snippet_test;
-+----+-------------------------------------------------------------------------------------------------+
-| id | text                                                                                            |
-+----+-------------------------------------------------------------------------------------------------+
-|  1 | An open-source fulltext search engine and column store.                                         |
-|  2 | An open-source storage engine for fast fulltext search with MySQL.                              |
-|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. |
-+----+-------------------------------------------------------------------------------------------------+
-3 rows in set (0.00 sec)
-
-mysql&gt; select id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) from snippet_test where match(text) against (&#39;fulltext&#39;);
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| id | text                                                                                            | mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) |
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|  1 | An open-source fulltext search engine and column store.                                         | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
-|  2 | An open-source storage engine for fast fulltext search with MySQL.                              | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
-|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. | ...f &lt;span class=&quot;w2&quot;&gt;MySQL&lt;/span&gt; ...&lt;br&gt;...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;                                                                                                                   |
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-3 rows in set (0.00 sec)
-</pre></div>
-</div>
-<p>'fulltext'というキーワードと関連する'MySQL'と'search'が抽出できました。</p>
+<p>Mroonga provides functionality to get keyword in context.
+It is implemented as 'mroonga_snippet' UDF.</p>
+<p>See <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> about details.</p>
 </div>
 <div class="section" id="logging">
 <h2>3.3.2.6. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -522,12 +429,12 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="3.3.1. ストレージモード"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v3.09 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
           <li><a href="../userguide.html" >3. ユーザガイド</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2013, mroonga project.
+        &copy; Copyright 2009-2013, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 
