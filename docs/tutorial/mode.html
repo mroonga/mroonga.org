@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.2. Mode &mdash; Mroonga v3.11 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.11',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v3.11 documentation" href="../index.html" />
+    <link rel="up" title="3. Tutorial" href="../tutorial.html" />
+    <link rel="next" title="3.3. Storage mode" href="storage.html" />
+    <link rel="prev" title="3.1. Installation check" href="installation_check.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/tutorial/mode.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="storage.html" title="3.3. Storage mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation_check.html" title="3.1. Installation check"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../tutorial.html" accesskey="U">3. Tutorial</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mode">
+<h1>3.2. Mode<a class="headerlink" href="#mode" title="Permalink to this headline">¶</a></h1>
+<p>Mroonga has the following two modes.</p>
+<blockquote>
+<div><ul class="simple">
+<li>storage mode</li>
+<li>wrapper mode</li>
+</ul>
+</div></blockquote>
+<p>With the storage mode, we use groonga for both of the full text search function and the data storage.
+Since all functions of storage engine are realised with groonga, aggregations are fast, that is one of groonga's advantages, and you can manage the database directly by <tt class="docutils literal"><span class="pre">groonga</span></tt> command.</p>
+<p>The structure of the storage mode is the following. You use it instead of existing storage engines like MyISAM or InnoDB</p>
+<div class="figure align-center">
+<img alt="storage mode" src="../images/storage-mode.png" />
+</div>
+<p>With the wrapper mode, groonga is used for full text search function only, and another existing storage engine like InnoDB is used for storing data.
+By using wrapper mode, you combine InnoDB that is well-use as the storage engine and mroonga that is a proven full text search engine, and you can use it as the stable database having the fast full text search function.</p>
+<p>The structure of the wrapper mode is the following. Full text search related operations are done by mroonga, and other operations are done by existing storage engines like MyISAM, InnoDB etc.
+Mroonga is located between SQL Handler that processes SQL and an existing storage engine, thus all data goes through mroonga
+With this way, full text search indexing etc. are done transparently.</p>
+<div class="figure align-center">
+<img alt="wrapper mode" src="../images/wrapper-mode.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation_check.html"
+                        title="previous chapter">3.1. Installation check</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="storage.html"
+                        title="next chapter">3.3. Storage mode</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/tutorial/mode.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="storage.html" title="3.3. Storage mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation_check.html" title="3.1. Installation check"
+             >previous</a> |</li>
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../tutorial.html" >3. Tutorial</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

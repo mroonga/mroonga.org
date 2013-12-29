@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6. Search and Scoring in Mroonga &mdash; Mroonga v3.11 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.11',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v3.11 documentation" href="../index.html" />
+    <link rel="up" title="4. Reference" href="../reference.html" />
+    <link rel="next" title="5. FAQ" href="../faq.html" />
+    <link rel="prev" title="5. Limitations" href="limitations.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/reference/full_text_search.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../faq.html" title="5. FAQ"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="limitations.html" title="5. Limitations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">4. Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="search-and-scoring-in-mroonga">
+<h1>6. Search and Scoring in Mroonga<a class="headerlink" href="#search-and-scoring-in-mroonga" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mroonga-scoring-in-natural-language-mode">
+<h2>6.1. Mroonga Scoring in natural language mode<a class="headerlink" href="#mroonga-scoring-in-natural-language-mode" title="Permalink to this headline">¶</a></h2>
+<p>The search score of Mroonga in natural language mode is a similarity score between query and document. Mroonga's scoring algorithm is as follows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Splitting a query into tokens.</li>
+<li>Removing not matched tokens.</li>
+<li>Calculating weight per token.</li>
+<li>Getting the top N weight tokens.</li>
+<li>Summing up the weight per token which exists in a document, and is one of the top N weight tokens. The total weight is the similarity score for the document and the query.</li>
+</ol>
+</div></blockquote>
+<p>We are showing by example.
+The first thing we create a table and insert data as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre>SET NAMES UTF8;
+CREATE TABLE diaries (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  content TEXT,
+  FULLTEXT INDEX(content)
+) ENGINE mroonga DEFAULT CHARSET UTF8;
+
+INSERT INTO diaries (content) VALUES(&quot;It&#39;ll be fine tomorrow as well.&quot;);
+INSERT INTO diaries (content) VALUES(&quot;It&#39;ll rain tomorrow.&quot;);
+INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
+INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
+</pre></div>
+</div>
+<p>We use a query &quot;fine today&quot; to search.
+The search result is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
+    -&gt;        FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;fine today&quot;)
+    -&gt;        ORDER BY MATCH (content) AGAINST (&quot;fine today&quot;) DESC;
++----+--------------------------------------------------+--------+
+| id | content                                          | score  |
++----+--------------------------------------------------+--------+
+|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. | 131073 |
+|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        | 131073 |
++----+--------------------------------------------------+--------+
+2 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>Now, let us explain how to make the result score &quot;131073&quot;.</p>
+<div class="section" id="splitting-a-query-into-tokens">
+<h3>6.1.1. Splitting a query into tokens<a class="headerlink" href="#splitting-a-query-into-tokens" title="Permalink to this headline">¶</a></h3>
+<p>The default tokenizer splits up the query &quot;fine today&quot; into two tokens as follows:</p>
+<ul class="simple">
+<li>fine</li>
+<li>today</li>
+</ul>
+</div>
+<div class="section" id="removing-not-matched-tokens">
+<h3>6.1.2. Removing not matched tokens<a class="headerlink" href="#removing-not-matched-tokens" title="Permalink to this headline">¶</a></h3>
+<p>We have nothing to do in this case because the tokens exist in documents.</p>
+<ul class="simple">
+<li>fine: include in document id=1,3,4</li>
+<li>today: include in document id=3,4</li>
+</ul>
+</div>
+<div class="section" id="calculating-weight-per-token">
+<h3>6.1.3. Calculating weight per token<a class="headerlink" href="#calculating-weight-per-token" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>fine: 116508(= 1048576 / 9)</li>
+<li>today: 131072(= 1048576 / 8)</li>
+</ul>
+<p>1048576(= 2 ** 20) denotes the number of tokens in all documents. We should get the number from the table, but as a matter of fact, the fixed value is used for simplicity.</p>
+<p>In the fraction 1048576 / 8,  the denominator &quot;8&quot; indicates that the number of document which contains token &quot;today&quot;.</p>
+<p>In the fraction 1048576 / 9,  the denominator &quot;9&quot; means the number of document which contains token &quot;fine&quot;.</p>
+<p>The denominator &quot;8&quot; and &quot;9&quot; are approximate number, strictly speaking, &quot;2&quot; is the correct answer for the number of document that contains &quot;today&quot;, &quot;3&quot; is the correct answer for the number of document that contains &quot;fine&quot;.</p>
+<p>You can check the approximate number of token by using the following query.</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39;--output_columns _key, index --limit -1&quot;) AS groonga_response;
+</pre></div>
+</div>
+<p>The retrieval result of the above query is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre>[[[2],[[&quot;_key&quot;,&quot;ShortText&quot;],[&quot;index&quot;,&quot;diaries&quot;]],[&quot;FINE&quot;,9],[&quot;TODAY&quot;,8]]]
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-the-top-n-weight-tokens">
+<h3>6.1.4. Getting the top N weight tokens<a class="headerlink" href="#getting-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
+<p>The formula for the N is &quot;the number of occurrence of token in document / 8 + 1&quot;</p>
+<p>In this case, N = 2 / 8 + 1 ≒ 1</p>
+<p>The sorted tokens are as follows:</p>
+<ul class="simple">
+<li>today: 131072(= 1048576 / 8)</li>
+<li>fine: 116508(= 1048576 / 9)</li>
+</ul>
+<p>N = 1, then we get &quot;today: 131072(= 1048576 / 8)&quot;.</p>
+</div>
+<div class="section" id="summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">
+<h3>6.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens<a class="headerlink" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>today: include in document id=3,4</li>
+</ul>
+<p>Finally document id 3,4 are hit, the similarity score between query and document(id=3) is 131072 + 1 = 131073 (&quot;1&quot; is the number of occurrence of token &quot;today&quot; in document).</p>
+<p>The similarity score between query and document(id=4) is the same as the score between query and document(id=3).</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6. Search and Scoring in Mroonga</a><ul>
+<li><a class="reference internal" href="#mroonga-scoring-in-natural-language-mode">6.1. Mroonga Scoring in natural language mode</a><ul>
+<li><a class="reference internal" href="#splitting-a-query-into-tokens">6.1.1. Splitting a query into tokens</a></li>
+<li><a class="reference internal" href="#removing-not-matched-tokens">6.1.2. Removing not matched tokens</a></li>
+<li><a class="reference internal" href="#calculating-weight-per-token">6.1.3. Calculating weight per token</a></li>
+<li><a class="reference internal" href="#getting-the-top-n-weight-tokens">6.1.4. Getting the top N weight tokens</a></li>
+<li><a class="reference internal" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">6.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="limitations.html"
+                        title="previous chapter">5. Limitations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../faq.html"
+                        title="next chapter">5. FAQ</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/full_text_search.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../faq.html" title="5. FAQ"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="limitations.html" title="5. Limitations"
+             >previous</a> |</li>
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >4. Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

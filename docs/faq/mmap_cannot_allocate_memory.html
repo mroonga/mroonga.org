@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. Trouble Shooting &mdash; Mroonga v3.10 documentation</title>
+    <title>5.1. How to avoid &#34;mmap Cannot allocate memory&#34; error? &mdash; Mroonga v3.11 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.10',
+        VERSION:     '3.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,10 +24,10 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v3.10 documentation" href="../index.html" />
-    <link rel="up" title="4. Reference" href="../reference.html" />
-    <link rel="next" title="5. Community" href="../community.html" />
-    <link rel="prev" title="5. Limitations" href="limitations.html" /> 
+    <link rel="top" title="Mroonga v3.11 documentation" href="../index.html" />
+    <link rel="up" title="5. FAQ" href="../faq.html" />
+    <link rel="next" title="6. Community" href="../community.html" />
+    <link rel="prev" title="5. FAQ" href="../faq.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -57,7 +57,7 @@
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../ja/docs/reference/troubleshooting.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+      <li><a href="../../ja/docs/faq/mmap_cannot_allocate_memory.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
     </ul>
   </div>
 </div>
@@ -70,13 +70,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../community.html" title="5. Community"
+          <a href="../community.html" title="6. Community"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="limitations.html" title="5. Limitations"
+          <a href="../faq.html" title="5. FAQ"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
-          <li><a href="../reference.html" accesskey="U">4. Reference</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../faq.html" accesskey="U">5. FAQ</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -85,11 +85,14 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="trouble-shooting">
-<h1>6. Trouble Shooting<a class="headerlink" href="#trouble-shooting" title="Permalink to this headline">¶</a></h1>
-<p>There are some frequently asked questions in mroonga storage engine.</p>
-<div class="section" id="how-to-avoid-mmap-cannot-allocate-memory-error">
-<h2>6.1. How to avoid mmap Cannot allocate memory error<a class="headerlink" href="#how-to-avoid-mmap-cannot-allocate-memory-error" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="how-to-avoid-mmap-cannot-allocate-memory-error">
+<h1>5.1. How to avoid &quot;mmap Cannot allocate memory&quot; error?<a class="headerlink" href="#how-to-avoid-mmap-cannot-allocate-memory-error" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="short-answer">
+<h2>5.1.1. Short answer<a class="headerlink" href="#short-answer" title="Permalink to this headline">¶</a></h2>
+<p>Increase <tt class="docutils literal"><span class="pre">vm.max_map_count</span></tt> Linux kernel parameter value.</p>
+</div>
+<div class="section" id="long-answer">
+<h2>5.1.2. Long answer<a class="headerlink" href="#long-answer" title="Permalink to this headline">¶</a></h2>
 <p>There is a case following mmap error in log file:</p>
 <div class="highlight-none"><div class="highlight"><pre>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
 </pre></div>
@@ -124,21 +127,22 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">6. Trouble Shooting</a><ul>
-<li><a class="reference internal" href="#how-to-avoid-mmap-cannot-allocate-memory-error">6.1. How to avoid mmap Cannot allocate memory error</a></li>
+<li><a class="reference internal" href="#">5.1. How to avoid &quot;mmap Cannot allocate memory&quot; error?</a><ul>
+<li><a class="reference internal" href="#short-answer">5.1.1. Short answer</a></li>
+<li><a class="reference internal" href="#long-answer">5.1.2. Long answer</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="limitations.html"
-                        title="previous chapter">5. Limitations</a></p>
+  <p class="topless"><a href="../faq.html"
+                        title="previous chapter">5. FAQ</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../community.html"
-                        title="next chapter">5. Community</a></p>
+                        title="next chapter">6. Community</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../sources/reference/troubleshooting.txt"
+    <li><a href="../sources/faq/mmap_cannot_allocate_memory.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -165,13 +169,13 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../community.html" title="5. Community"
+          <a href="../community.html" title="6. Community"
              >next</a> |</li>
         <li class="right" >
-          <a href="limitations.html" title="5. Limitations"
+          <a href="../faq.html" title="5. FAQ"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
-          <li><a href="../reference.html" >4. Reference</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../faq.html" >5. FAQ</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

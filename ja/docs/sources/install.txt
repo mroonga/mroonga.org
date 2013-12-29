@@ -1,45 +1,14 @@
 .. highlightlang:: none
+.. Mroonga Project
 
 Installation Guide
 ==================
 
-If you use binary packages, MySQL related packages will be also installed when you install mroonga package.
+If you use binary packages, MySQL related packages will be also installed when you install Mroonga package.
 
 We distribute packages for both 32-bit and 64-bit but we recommend that you should use 64-bit package for server. You should use 32-bit package just only for test or development. You will get no memory error with 32-bit package even if you just process medium size data.
 
 Here we explain how to install for each environment.
-
-Debian GNU/Linux squeeze
-------------------------
-
-/etc/apt/sources.list.d/groonga.list::
-
-  deb http://packages.groonga.org/debian/ squeeze main
-  deb-src http://packages.groonga.org/debian/ squeeze main
-
-Install::
-
-  % sudo aptitude update
-  % sudo aptitude -V -D -y --allow-untrusted install groonga-keyring
-  % sudo aptitude update
-  % sudo aptitude -V -D -y install mysql-server-mroonga
-
-If you want to use `MeCab <http://mecab.sourceforge.net/>`_ as a tokenizer. please install groonga-tokenizer-mecab package.
-
-Install groonga-tokenizer-mecab package::
-
-  % sudo aptitude -V -D -y install groonga-tokenizer-mecab
-
-If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.
-
-Install groonga-normalizer-mysql package::
-
-  % sudo aptitude -V -D -y install groonga-normalizer-mysql
-
-.. note::
-
-   If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of groonga is used.
-   MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.
 
 Debian GNU/Linux wheezy
 -----------------------
@@ -135,46 +104,6 @@ Install groonga-normalizer-mysql package::
 .. note::
 
    'utf8_unicode_ci' or 'utf8mb4_unicode_ci' will be supported in the future release.
-
-.. note::
-
-   If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of groonga is used.
-   MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.
-
-Ubuntu 10.04 LTS Lucid Lynx
----------------------------
-
-.. note::
-
-   You need to enable the universe section in Ubuntu's software sources.
-
-.. note::
-
-   You need to enable the security update repository.
-
-/etc/apt/sources.list.d/groonga.list::
-
-  deb http://packages.groonga.org/ubuntu/ lucid universe
-  deb-src http://packages.groonga.org/ubuntu/ lucid universe
-
-Install::
-
-  % sudo apt-get update
-  % sudo apt-get -y --allow-unauthenticated install groonga-keyring
-  % sudo apt-get update
-  % sudo apt-get -y install mysql-server-mroonga
-
-If you want to use `MeCab <http://mecab.sourceforge.net/>`_ as a tokenizer. please install groonga-tokenizer-mecab package.
-
-Install groonga-tokenizer-mecab package::
-
-  % sudo apt-get -y install groonga-tokenizer-mecab
-
-If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.
-
-Install groonga-normalizer-mysql package::
-
-  % sudo apt-get -y install groonga-normalizer-mysql
 
 .. note::
 
@@ -426,20 +355,20 @@ Install groonga-normalizer-mysql package::
    If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of groonga is used.
    MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.
 
-Fedora 19
+Fedora 20
 ---------
 
 Since Fedora 19, MariaDB is the default implementation of MySQL.
 
-So there are two selections for mroonga. One is using with MariaDB, the other is using with MySQL (community-mysql).
+So there are two selections for Mroonga. One is using with MariaDB, the other is using with MySQL (community-mysql).
 
-Install mroonga for MySQL (community-mysql)::
+Install Mroonga for MySQL (community-mysql)::
 
   % sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
   % sudo yum makecache
   % sudo yum install -y mysql-mroonga
 
-Install mroonga for MariaDB::
+Install Mroonga for MariaDB::
 
   % sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
   % sudo yum makecache
@@ -506,22 +435,22 @@ None for now.
 Zip
 ^^^
 
-For 32-bit environment, download `mariadb-10.0.6-mroonga-3.10-win32.zip
-<http://packages.groonga.org/windows/mroonga/mariadb-10.0.6-mroonga-3.10-win32.zip>`_
+For 32-bit environment, download `mariadb-10.0.6-mroonga-3.11-win32.zip
+<http://packages.groonga.org/windows/mroonga/mariadb-10.0.6-mroonga-3.11-win32.zip>`_
 and extract it.
 
-For 64-bit environment, download `mariadb-10.0.6-mroonga-3.10-winx64.zip
-<http://packages.groonga.org/windows/mroonga/mariadb-10.0.6-mroonga-3.10-winx64.zip>`_
+For 64-bit environment, download `mariadb-10.0.6-mroonga-3.11-winx64.zip
+<http://packages.groonga.org/windows/mroonga/mariadb-10.0.6-mroonga-3.11-winx64.zip>`_
 and extract it.
 
-Install mroonga
+Install Mroonga
 ^^^^^^^^^^^^^^^
 
 Start mysqld, connect to it by mysql client, and install it by "INSTALL PLUGIN" command. ::
 
  mysql> INSTALL PLUGIN mroonga SONAME 'ha_mroonga';
 
-If "mroonga" is displayed in "SHOW ENGINES" command result like below, mroonga is well installed. ::
+If "mroonga" is displayed in "SHOW ENGINES" command result like below, Mroonga is well installed. ::
 
  mysql> SHOW ENGINES;
  +------------+---------+------------------------------------------------------------+--------------+------+------------+
@@ -550,7 +479,7 @@ Invoke CREATE FUNCTION like the following. ::
 
  mysql> CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME 'ha_mroonga';
 
-To enable invoking groonga query from mroonga, install mroonga_command function.
+To enable invoking groonga query from Mroonga, install mroonga_command function.
 
 Invoke CREATE FUNCTION like the following. ::
 
@@ -583,7 +512,7 @@ Requirements
 
 MySQL and groonga should be already installed.
 
-And MySQL's source code is also required to build mroonga.
+And MySQL's source code is also required to build Mroonga.
 
 Install MySQL
 ^^^^^^^^^^^^^
@@ -609,7 +538,7 @@ http://groonga.org/docs/
 
 Here we assume that libgroonga is installed in the standard location like /usr/lib etc.
 
-Build mroonga
+Build Mroonga
 ^^^^^^^^^^^^^
 
 Run configure script by specifying the location of MySQL source code with ``--with-mysql-source`` and the path of mysql_config command with ``--with-mysql-config``. ::
@@ -629,7 +558,7 @@ Then invoke "make". ::
 
  make
 
-Install mroonga
+Install Mroonga
 ^^^^^^^^^^^^^^^
 
 By invoking "make install", ha_mroonga.so will be installed in MySQL's plugin directory. ::
@@ -640,7 +569,7 @@ Then start mysqld, connect to it by mysql client, and install it by "INSTALL PLU
 
  mysql> INSTALL PLUGIN mroonga SONAME 'ha_mroonga.so';
 
-If "mroonga" is displayed in "SHOW ENGINES" command result like below, mroonga is well installed. ::
+If "mroonga" is displayed in "SHOW ENGINES" command result like below, Mroonga is well installed. ::
 
  mysql> SHOW ENGINES;
  +------------+---------+------------------------------------------------------------+--------------+------+------------+
@@ -669,7 +598,7 @@ Invoke CREATE FUNCTION like the following. ::
 
  mysql> CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME 'ha_mroonga.so';
 
-To enable invoking groonga query from mroonga, install mroonga_command function.
+To enable invoking groonga query from Mroonga, install mroonga_command function.
 
 Invoke CREATE FUNCTION like the following. ::
 
@@ -689,7 +618,7 @@ If you want to use indexes of tokenizing of each morpheme for full text search, 
 Download
 ^^^^^^^^
 
-Download mroonga tarball from `packages.groonga.org <http://packages.groonga.org/source/mroonga>`_ .
+Download Mroonga tarball from `packages.groonga.org <http://packages.groonga.org/source/mroonga>`_ .
 
 Download MariaDB tarball from `downloads.mariadb.org <https://downloads.mariadb.org/>`_ .
 
@@ -707,14 +636,14 @@ http://groonga.org/docs/
 
 Here we assume that libgroonga is installed in the standard location like /usr/lib etc.
 
-Build mroonga with MariaDB
+Build Mroonga with MariaDB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Uncompress MariaDB tarball. ::
 
  tar xvfz mariadb-10.0.2.tar.gz
 
-Uncompress mroonga tarball then move into storage directory. ::
+Uncompress Mroonga tarball then move into storage directory. ::
 
  tar xvfz mroonga-3.03.tar.gz
  mv mroonga-3.03 mariadb-10.0.2/storage/mroonga/
@@ -728,10 +657,10 @@ Then invoke "make". ::
 
  make
 
-Install mroonga with MariaDB
+Install Mroonga with MariaDB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-By invoking "make install", MariaDB and mroonga will be installed in "/usr/local/mysql" directory. ::
+By invoking "make install", MariaDB and Mroonga will be installed in "/usr/local/mysql" directory. ::
 
  make install
 
@@ -739,7 +668,7 @@ Then start mysqld, connect to it by MariaDB client, and install it by "INSTALL P
 
  mysql> INSTALL PLUGIN mroonga SONAME 'ha_mroonga.so';
 
-If "mroonga" is displayed in "SHOW ENGINES" command result like below, mroonga is well installed. ::
+If "mroonga" is displayed in "SHOW ENGINES" command result like below, Mroonga is well installed. ::
 
  mysql> SHOW ENGINES;
  +--------------------+---------+------------------------------------------------------------+--------------+------+------------+
@@ -770,7 +699,7 @@ Invoke CREATE FUNCTION like the following. ::
 
  mysql> CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME 'ha_mroonga.so';
 
-To enable invoking groonga query from mroonga, install mroonga_command function.
+To enable invoking groonga query from Mroonga, install mroonga_command function.
 
 Invoke CREATE FUNCTION like the following. ::
 
@@ -783,7 +712,7 @@ Upgrade Guide
 There is a case that incompatible change is introduced at new release.
 It is announced by release announce if new release contains such a incompatible change.
 
-Here is the list of recommended way of upgrading mroonga from old release.
+Here is the list of recommended way of upgrading Mroonga from old release.
 
 See following URL about upgrade sequence if you use previous version.
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.1. ストレージモード &mdash; Mroonga v3.10 documentation</title>
+    <title>3.4. ラッパーモード &mdash; Mroonga v3.11 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.10',
+        VERSION:     '3.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v3.10 documentation" href="../index.html" />
-    <link rel="up" title="3. ユーザガイド" href="../userguide.html" />
-    <link rel="next" title="3.3.2. ラッパーモード" href="wrapper.html" />
-    <link rel="prev" title="3. ユーザガイド" href="../userguide.html" /> 
+    <link rel="top" title="Mroonga v3.11 documentation" href="../index.html" />
+    <link rel="up" title="3. チュートリアル" href="../tutorial.html" />
+    <link rel="next" title="4. リファレンス" href="../reference.html" />
+    <link rel="prev" title="3.3. ストレージモード" href="storage.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -58,7 +58,7 @@
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../../docs/userguide/storage.html"><img src="../static/us.png" alt="English">English version</a></li>
+      <li><a href="../../../docs/tutorial/wrapper.html"><img src="../static/us.png" alt="English">English version</a></li>
     </ul>
   </div>
 </div>
@@ -71,13 +71,13 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="wrapper.html" title="3.3.2. ラッパーモード"
+          <a href="../reference.html" title="4. リファレンス"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../userguide.html" title="3. ユーザガイド"
+          <a href="storage.html" title="3.3. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
-          <li><a href="../userguide.html" accesskey="U">3. ユーザガイド</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../tutorial.html" accesskey="U">3. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -86,18 +86,36 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="storage-mode">
-<h1>3.3.1. ストレージモード<a class="headerlink" href="#storage-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>ここでは mroonga におけるストレージモードの利用方法を説明します。</p>
+  <div class="section" id="wrapper-mode">
+<h1>3.4. ラッパーモード<a class="headerlink" href="#wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>ここでは mroonga におけるラッパーモードの利用方法を説明します。</p>
+<div class="section" id="how-to-use-wrapper-mode">
+<h2>3.4.1. ラッパーモードの利用方法<a class="headerlink" href="#how-to-use-wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで mroonga が動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> のように指定するようになっています。</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">現在のところ、ラッパーモードではテーブルに必ずプライマリーキーを設定する必要があります。ストレージモードはこの限りではありません。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p>ラッパーモードでは現在ストレージモードでサポートされていない、以下をサポートしています。</p>
+<ul class="last simple">
+<li><p class="first">null値</p>
+</li>
+<li><p class="first">トランザクション (ストレージエンジンがサポートしている場合。ロールバックするとインデックスの不整合が発生します。インデックスを使った検索に影響するので、その場合にはmroongaのインデックスを再作成します。</p>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="how-to-use-full-text-search">
-<h2>3.3.1.1. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.4.2. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt> とmroongaを指定するところがポイントです。:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
     -&gt;   FULLTEXT INDEX (content)
-    -&gt; ) ENGINE = mroonga DEFAULT CHARSET utf8;
-Query OK, 0 rows affected (0.10 sec)
+    -&gt; ) ENGINE = mroonga COMMENT = &#39;engine &quot;innodb&quot;&#39; DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.52 sec)
 </pre></div>
 </div>
 <p>INSERTでデータを投入してみましょう。</p>
@@ -121,11 +139,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>おぉぉー。検索できましたね。</p>
 </div>
 <div class="section" id="how-to-get-search-score">
-<h2>3.3.1.2. 検索スコアの取得方法<a class="headerlink" href="#how-to-get-search-score" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">ノート</p>
-<p class="last">1.0.0以前のmroongaではMySQLの標準的な検索スコアの取得方法ではなく、 <tt class="docutils literal"><span class="pre">_score</span></tt> という専用のカラムを作成するという独自の方法でした。1.0.0からはMySQLの標準的な取得方法になっています。</p>
-</div>
+<h2>3.4.3. 検索スコアの取得方法<a class="headerlink" href="#how-to-get-search-score" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
 <p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference" href="#score" id="id1">[1]</a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
 <p>それでは実際にやってみましょう。:</p>
@@ -161,7 +175,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </div>
 </div>
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
-<h2>3.3.1.3. 全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.4.4. 全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MySQLは全文検索用のパーサ <a class="footnote-reference" href="#parser" id="id2">[2]</a> を指定する以下のような構文を持っています。:</p>
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
@@ -216,11 +230,11 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </dd>
 <dt>TokenDelimit</dt>
 <dd><p class="first">空白区切りでトークナイズする。</p>
-<p class="last">&quot;movie horror topic&quot; will be tokenised as &quot;movie&quot;, &quot;horror&quot;, &quot;topic&quot;.</p>
+<p class="last">「movie horror topic」をトークナイズすると「movie」、「horror」、「topic」になります。</p>
 </dd>
 <dt>TokenDelimitNull</dt>
 <dd><p class="first">null文字（\0）区切りでトークナイズする。</p>
-<p class="last">&quot;movie\0horror\0topic&quot; will be tokenised as &quot;movie&quot;, &quot;horror&quot;, &quot;topic&quot;.</p>
+<p class="last">「movie\0horror\0topic」をトークナイズすると「movie」、「horror」、「topic」になります。</p>
 </dd>
 <dt>TokenUnigram</dt>
 <dd><p class="first last">ユニグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、2文字以上のトークンも存在する。これはノイズを減らすためである。</p>
@@ -245,191 +259,14 @@ Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
 </div>
-<div class="section" id="how-to-use-geolocation-search">
-<h2>3.3.1.4. 位置情報検索の利用方法<a class="headerlink" href="#how-to-use-geolocation-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ストレージモードでは全文検索だけではなく位置情報検索も高速に実行できます。ただし、MyISAMとは異なりデータとして格納できるのはPOINT型のみです。LINEなどの他のデータ型は保存できません。また、インデックスを用いた高速な検索に対応しているのはMBRContainsだけです。MBRDisjointなどには対応していません。</p>
-<p>位置情報検索を利用する場合のテーブル定義はMyISAMと同様にPOINT型のカラムを定義し、そのカラムに対してSPATIAL INDEXを指定します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE shops (
-    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
-    -&gt;   name VARCHAR(255),
-    -&gt;   location POINT NOT NULL,
-    -&gt;   SPATIAL INDEX (location)
-    -&gt; ) ENGINE = mroonga;
-Query OK, 0 rows affected (0.06 sec)
-</pre></div>
-</div>
-<p>データの登録方法もMyISAMのときと同様にGeomFromText()関数を使って文字列からPOINT型の値を作成します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO shops VALUES (null, &#39;Nezu\&#39;s Taiyaki&#39;, GeomFromText(&#39;POINT(139.762573 35.720253)&#39;));
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; INSERT INTO shops VALUES (null, &#39;Naniwaya&#39;, GeomFromText(&#39;POINT(139.796234 35.730061)&#39;));
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; INSERT INTO shops VALUES (null, &#39;Yanagiya Taiyaki&#39;, GeomFromText(&#39;POINT(139.783981 35.685341)&#39;));
-Query OK, 1 row affected (0.00 sec)
-</pre></div>
-</div>
-<p>池袋駅（139.7101 35.7292）が左上の点、東京駅（139.7662 35.6815）が右下の点となるような長方形内にあるお店を探す場合は以下のようなSELECTになります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT id, name, AsText(location) FROM shops WHERE MBRContains(GeomFromText(&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;), location);
-+----+-----------------------+------------------------------------------+
-| id | name                  | AsText(location)                         |
-+----+-----------------------+------------------------------------------+
-|  1 | Nezu&#39;s Taiyaki | POINT(139.762572777778 35.7202527777778) |
-+----+-----------------------+------------------------------------------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>位置情報で検索できていますね！</p>
-</div>
-<div class="section" id="how-to-get-the-record-id">
-<h2>3.3.1.5. レコードIDの取得方法<a class="headerlink" href="#how-to-get-the-record-id" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>groongaではテーブルにレコードを追加した際にレコードを一意に識別するための番号が割当てられます。</p>
-<p>mroongaではアプリケーションの開発を容易にするため、このレコードIDをSQLで取得できるようになっています。</p>
-<p>レコードIDを取得するためには、テーブル定義時に <tt class="docutils literal"><span class="pre">_id</span></tt> という名前のカラムを作成して下さい。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE memos (
-    -&gt;   _id INT,
-     &gt;   content VARCHAR(255),
-    -&gt;   UNIQUE KEY (_id) USING HASH
-    -&gt; ) ENGINE = mroonga;
-Query OK, 0 rows affected (0.04 sec)
-</pre></div>
-</div>
-<p>_idカラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
-<p>また_idカラムにはインデックスを作成することが可能ですが、HASH形式である必要があります。</p>
-<p>INSERTでテーブルにレコードを追加してみましょう。_idカラムは仮想カラムとして実装されており、また_idの値であるレコードIDはgroongaにより割当てられるため、SQLによる更新時に値を指定することはできません。更新対象から外すか、値に <tt class="docutils literal"><span class="pre">null</span></tt> を使用する必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;Saury for today&#39;s dinner.&quot;);
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; INSERT INTO memos VALUES (null, &quot;Update mroonga tomorrow.&quot;);
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; INSERT INTO memos VALUES (null, &quot;Buy some dumpling on the way home.&quot;);
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; INSERT INTO memos VALUES (null, &quot;Thank God It&#39;s meat day.&quot;);
-Query OK, 1 row affected (0.00 sec)
-</pre></div>
-</div>
-<p>レコードIDを取得するには、_idカラムを含むようにしてSELECTを行います。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM memos;
-+------+------------------------------------------+
-| _id  | content                                  |
-+------+------------------------------------------+
-|    1 | Saury for today&#39;s dinner.                    |
-|    2 | Update mroonga tomorrow. |
-|    3 | Buy some dumpling on the way home.                 |
-|    4 | Thank God It&#39;s meat day.                 |
-+------+------------------------------------------+
-4 rows in set (0.00 sec)
-</pre></div>
-</div>
-<p>また直前のINSERTにより割当てられたレコードIDについては、last_insert_grn_id関数により取得することもできます。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;Just one bottle of milk in the fridge.&quot;);
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; SELECT last_insert_grn_id();
-+----------------------+
-| last_insert_grn_id() |
-+----------------------+
-|                    5 |
-+----------------------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>last_insert_grn_id関数はユーザ定義関数(UDF)としてmroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>ご覧のように_idカラムやlast_insert_grn_id関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; UPDATE memos SET content = &quot;So much milk in the fridge.&quot; WHERE _id = last_insert_grn_id();
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-</pre></div>
-</div>
-</div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>3.3.1.6. スニペットの取得方法 (文脈付き索引)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.4.5. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as 'mroonga_snippet' UDF.</p>
-<p>See <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> about details.</p>
-</div>
-<div class="section" id="how-to-run-groonga-command">
-<h2>3.3.1.7. groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ストレージモードではmroongaはすべてのデータをgroongaのデータベースに保存します。mroongaを使うことでSQLでgroongaのデータベースにアクセスできるようになります。SQLはとても強力ですが、ファセット検索などのようないくつかの操作が得意ではありません。</p>
-<p>最近ではファセット検索は一般的なものになりました。amazon.comやebay.comのように多くのオンラインショッピングサイトがファセット検索をサポートしています。ファセット検索はユーザが検索結果を絞り込む前に絞り込み検索をし、その絞り込み検索の結果を表示します。ユーザは絞りこまれた結果から自分が探しているものを選ぶだけです。ファセット検索を使うとユーザは以下のようなメリットがあります。</p>
-<ul class="simple">
-<li><p class="first">ユーザはどうやって検索結果を絞り込むかを考える必要はありません。単に表示された絞り込み結果から選ぶだけです。</p>
-</li>
-<li><p class="first">ユーザは「見つかりませんでした」ページを見ることがありません。ファセット検索では絞り込んだ結果のうち、ヒットする項目がある結果だけを表示します。</p>
-</li>
-</ul>
-<p>絞り込み検索は検索結果に対して複数の <cite>GROUP BY</cite> 操作を実行する必要があります。SQLでファセット検索をやろうとすると、複数の <cite>SELECT</cite> リクエストが必要になります。これは効率的ではありません。</p>
-<p>groongaは1回のgroongaコマンドでファセット検索をできます。これは効率的です。groongaには <cite>select</cite> コマンドというファセット検索に対応した検索コマンドがあります。groongaではファセット検索は <cite>ドリルダウン（drilldown）</cite> と呼ばれています。groongaの <cite>select</cite> コマンドの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">groongaのドキュメント</a> を参照してください。</p>
-<p>mroongaは <cite>mroonga_command()</cite> 関数を提供しています。この関数を使えばSQLの中で好きなgroongaコマンドを実行できます。しかし、使うのは <cite>select</cite> コマンドだけにしておくべきです。スキーマやデータを変更するコマンドを使うと一貫性が壊れてしまうかもしれません。</p>
-<p>実行例で使用するスキーマ定義はこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE diaries (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  content VARCHAR(255),
-  date DATE,
-  year YEAR,
-  `year_month` VARCHAR(9),
-  tag VARCHAR(32),
-  FULLTEXT INDEX (content)
-) ENGINE = mroonga DEFAULT CHARSET utf8;
-</pre></div>
-</div>
-<p>実行例で使用するサンプルデータはこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre>INSERT INTO diaries (content, date, year, `year_month`, tag)
-       VALUES (&#39;Groonga is an open-source fulltext search engine and column store.&#39;,
-               &#39;2013-04-08&#39;,
-               &#39;2013&#39;,
-               &#39;2013-04&#39;,
-               &#39;groonga&#39;);
-INSERT INTO diaries (content, date, year, `year_month`, tag)
-       VALUES (&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;,
-               &#39;2013-04-09&#39;,
-               &#39;2013&#39;,
-               &#39;2013-04&#39;,
-               &#39;MySQL&#39;);
-INSERT INTO diaries (content, date, year, `year_month`, tag)
-       VALUES (&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;,
-               &#39;2013-03-29&#39;,
-               &#39;2013&#39;,
-               &#39;2013-03&#39;,
-               &#39;MySQL&#39;);
-</pre></div>
-</div>
-<p>各レコードは <cite>tag</cite> として <cite>groonga</cite> と <cite>MySQL</cite> が付いています。各レコードは <cite>year</cite> と <cite>year_month</cite> も持っています。ファセット検索のキーとして <cite>tag</cite> 、 <cite>year</cite> 、 <cite>year_month</cite> を使えます。</p>
-<p>groongaはファセット検索のことをドリルダウンと呼んでいます。そのため、groongaでのパラメータ名は <cite>--drilldown</cite> となっています。groongaは検索結果をJSONで返します。そのため、 <cite>mroonga_command()</cite> も検索結果をJSONで返します。これはSQLらしくありません。JSON形式の検索結果は自分でパースしないといけません。</p>
-<p>以下は利用可能なファセット検索キーをすべて使った例です。（結果のJSONは整形済み）:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;) AS faceted_result;
-+-----------------------------+
-| faceted_result              |
-+-----------------------------+
-| [[[3],                      |
-|   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |
-|  [[2],                      |
-|   [[&quot;_key&quot;,&quot;ShortText&quot;],    |
-|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
-|   [&quot;groonga&quot;,1],            |
-|   [&quot;MySQL&quot;,2]],             |
-|  [[1],                      |
-|   [[&quot;_key&quot;,&quot;Time&quot;],         |
-|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
-|   [1356998400.0,3]],        |
-|  [[2],                      |
-|   [[&quot;_key&quot;,&quot;ShortText&quot;],    |
-|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
-|   [&quot;2013-04&quot;,2],            |
-|   [&quot;2013-03&quot;,1]]]           |
-+-----------------------------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>詳細は <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">groongaのselectコマンドのドキュメント</a> を確認してください。</p>
+<p>詳細は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> を参照してください。</p>
 </div>
 <div class="section" id="logging">
-<h2>3.3.1.8. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.4.6. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
@@ -482,65 +319,22 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </li>
 </ol>
 </div>
-<div class="section" id="choosing-appropriate-columns">
-<h2>3.3.1.9. カラムの刈り込み<a class="headerlink" href="#choosing-appropriate-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>groongaでは各カラムごとにファイルを分けてデータを格納する「カラムストア方式」が採用されており、mroongaではこの特性を活かすためにテーブルアクセス時に必要なカラムに対してのみアクセスを行う実装を行っています。</p>
-<p>この高速化の仕組みはmroonga内部で自動的に行われるため、特に設定などを行う必要はありません。</p>
-<p>例えば以下のようにカラムが20個定義されているテーブルが存在するものと仮定します。</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
-  c1 INT PRIMARY KEY AUTO_INCREMENT,
-  c2 INT,
-  c3 INT,
-  ...
-  c11 VARCHAR(20),
-  c12 VARCHAR(20),
-  ...
-  c20 DATETIME
-) ENGINE = mroonga DEFAULT CHARSET utf8;
-</pre></div>
-</div>
-<p>この時、以下のようなSELECT文が発行される場合、mroongaではSELECT句およびWHERE句で参照しているカラムに対してのみデータの読み取りを行ってSQL文を処理します（内部的に不要なカラムに対してはアクセスしません）。</p>
-<blockquote>
-<div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
-<p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
-</div>
-<div class="section" id="optimisation-for-counting-rows">
-<h2>3.3.1.10. 行カウント高速化<a class="headerlink" href="#optimisation-for-counting-rows" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>COUNT(*)などの行カウントを行う場合と通常のSELECTによるデータ参照を行う場合に対して、従来よりMySQLではストレージエンジンの呼び出しを行う部分(=ストレージエンジンインタフェース)における区別が存在していないため、行数をカウントするだけで良いような場合にもレコードアクセス（SELECTの結果には含まれないデータへのアクセス）が行われる問題があります。</p>
-<p>mroongaの前身であるTritonn(MySQL+Senna)ではこの問題に対して&quot;2indパッチ&quot;という不要なレコードアクセスを省略する仕組みを独自に実装してこの性能問題を回避していました。</p>
-<p>これに引き続き、mroongaでも行カウントを高速化するための仕組みを実装しています。</p>
-<p>例えば以下のSELECT文では不要なカラムデータの読み取りは省略され、必要最小限のコストで行カウントの結果を返すことができます。</p>
-<blockquote>
-<div>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;);</div></blockquote>
-<p>この最適化処理が行われたかどうかはステータス変数で確認することもできます。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
-| Mroonga_count_skip | 1     |
-+--------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>行カウント高速化の処理が行われる度に <tt class="docutils literal"><span class="pre">Mroonga_count_skip</span></tt> ステータス変数がインクリメントされます。</p>
-<p>備考：この高速化機能はインデックスを用いて実装されています。現在のところインデックスアクセスのみでレコードが特定できるパタンでのみ有効に機能します。</p>
-</div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>3.3.1.11. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.4.7. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
 <p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
 <p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
 <p>mroongaでも ORDER BY LIMIT を高速化するための仕組みを実装しています。</p>
-<p>例えば以下のSELECT文では ORDER BY LIMIT は、groonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
+<p>例えば以下のSELECT文では ORDER BY LIMIT は、mroonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
 <div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
 </pre></div>
 </div>
 <p>この最適化処理が行われたかどうかはステータス変数で確認することもできます。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;mroonga_fast_order_limit&#39;;
 +--------------------------+-------+
 | Variable_name            | Value |
 +--------------------------+-------+
-| Mroonga_fast_order_limit | 1     |
+| mroonga_fast_order_limit | 1     |
 +--------------------------+-------+
 1 row in set (0.00 sec)
 </pre></div>
@@ -583,31 +377,27 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">3.3.1. ストレージモード</a><ul>
-<li><a class="reference internal" href="#how-to-use-full-text-search">3.3.1.1. 全文検索の利用方法</a></li>
-<li><a class="reference internal" href="#how-to-get-search-score">3.3.1.2. 検索スコアの取得方法</a></li>
-<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.3.1.3. 全文検索用パーサの変更</a></li>
-<li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.1.4. 位置情報検索の利用方法</a></li>
-<li><a class="reference internal" href="#how-to-get-the-record-id">3.3.1.5. レコードIDの取得方法</a></li>
-<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.1.6. スニペットの取得方法 (文脈付き索引)</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.1.7. groongaコマンドの実行方法</a></li>
-<li><a class="reference internal" href="#logging">3.3.1.8. ログ出力</a></li>
-<li><a class="reference internal" href="#choosing-appropriate-columns">3.3.1.9. カラムの刈り込み</a></li>
-<li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.1.10. 行カウント高速化</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.1.11. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+<li><a class="reference internal" href="#">3.4. ラッパーモード</a><ul>
+<li><a class="reference internal" href="#how-to-use-wrapper-mode">3.4.1. ラッパーモードの利用方法</a></li>
+<li><a class="reference internal" href="#how-to-use-full-text-search">3.4.2. 全文検索の利用方法</a></li>
+<li><a class="reference internal" href="#how-to-get-search-score">3.4.3. 検索スコアの取得方法</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.4.4. 全文検索用パーサの変更</a></li>
+<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.4.5. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
+<li><a class="reference internal" href="#logging">3.4.6. ログ出力</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.4.7. 全文検索時の ORDER BY LIMIT 高速化</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>前のトピックへ</h4>
-  <p class="topless"><a href="../userguide.html"
-                        title="前の章へ">3. ユーザガイド</a></p>
+  <p class="topless"><a href="storage.html"
+                        title="前の章へ">3.3. ストレージモード</a></p>
   <h4>次のトピックへ</h4>
-  <p class="topless"><a href="wrapper.html"
-                        title="次の章へ">3.3.2. ラッパーモード</a></p>
+  <p class="topless"><a href="../reference.html"
+                        title="次の章へ">4. リファレンス</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
-    <li><a href="../sources/userguide/storage.txt"
+    <li><a href="../sources/tutorial/wrapper.txt"
            rel="nofollow">ソースコードを表示（英語）</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -634,13 +424,13 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="wrapper.html" title="3.3.2. ラッパーモード"
+          <a href="../reference.html" title="4. リファレンス"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../userguide.html" title="3. ユーザガイド"
+          <a href="storage.html" title="3.3. ストレージモード"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
-          <li><a href="../userguide.html" >3. ユーザガイド</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../tutorial.html" >3. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

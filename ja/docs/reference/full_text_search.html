@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6. Mroongaにおける検索スコア &mdash; Mroonga v3.11 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.11',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v3.11 documentation" href="../index.html" />
+    <link rel="up" title="4. リファレンス" href="../reference.html" />
+    <link rel="next" title="5. FAQ" href="../faq.html" />
+    <link rel="prev" title="5. 制限事項" href="limitations.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+    <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/reference/full_text_search.html"><img src="../static/us.png" alt="English">English version</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../faq.html" title="5. FAQ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="limitations.html" title="5. 制限事項"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="search-and-scoring-in-mroonga">
+<h1>6. Mroongaにおける検索スコア<a class="headerlink" href="#search-and-scoring-in-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="mroonga-scoring-in-natural-language-mode">
+<h2>6.1. IN NATURAL LANGUAGE MODEにおける検索スコアの算出方法<a class="headerlink" href="#mroonga-scoring-in-natural-language-mode" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>IN NATURAL LANGUAGE MODEでの検索スコアはクエリと文書の類似度になります。スコアは以下の手順に従って算出されます。:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p class="first">クエリをトークンに分割する</p>
+</li>
+<li><p class="first">マッチしないトークンを除去する</p>
+</li>
+<li><p class="first">トークン毎の重みを計算する</p>
+</li>
+<li><p class="first">重みが大きい上位N個のトークンを取り出す</p>
+</li>
+<li><p class="first">上位N個のトークンについて、トークンが出現する文書に重みを足し、すべての重みを足したものがクエリと文書の類似度となる</p>
+</li>
+</ol>
+</div></blockquote>
+<p>具体例を使って説明します。以下のテーブルとデータを用意します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>SET NAMES UTF8;
+CREATE TABLE diaries (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  content TEXT,
+  FULLTEXT INDEX(content)
+) ENGINE mroonga DEFAULT CHARSET UTF8;
+
+INSERT INTO diaries (content) VALUES(&quot;It&#39;ll be fine tomorrow as well.&quot;);
+INSERT INTO diaries (content) VALUES(&quot;It&#39;ll rain tomorrow.&quot;);
+INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
+INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
+</pre></div>
+</div>
+<p>このとき、以下のように「fine today」で類似文書検索したとします。検索の結果は以下となります。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
+    -&gt;        FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;fine today&quot;)
+    -&gt;        ORDER BY MATCH (content) AGAINST (&quot;fine today&quot;) DESC;
++----+--------------------------------------------------+--------+
+| id | content                                          | score  |
++----+--------------------------------------------------+--------+
+|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. | 131073 |
+|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        | 131073 |
++----+--------------------------------------------------+--------+
+2 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>このときのスコア&quot;131073&quot;の算出の具体的な挙動は以下となります。</p>
+<div class="section" id="splitting-a-query-into-tokens">
+<h3>6.1.1. クエリをトークンに分割する<a class="headerlink" href="#splitting-a-query-into-tokens" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>クエリ「fine today」をトークンに分割します。デフォルトトークナイザーは以下の二つのトークンにします。</p>
+<ul class="simple">
+<li>fine</li>
+<li>today</li>
+</ul>
+</div>
+<div class="section" id="removing-not-matched-tokens">
+<h3>6.1.2. マッチしないトークンを除去する<a class="headerlink" href="#removing-not-matched-tokens" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>今回はすべてのトークンがどれかの文書に含まれているのでここでは取り除かれません。</p>
+<ul class="simple">
+<li><p class="first">fine: 文書id = 1,3,4</p>
+</li>
+<li><p class="first">today: 文書id = 3,4</p>
+</li>
+</ul>
+</div>
+<div class="section" id="calculating-weight-per-token">
+<h3>6.1.3. トークン毎の重みを計算する<a class="headerlink" href="#calculating-weight-per-token" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>fine: 116508(= 1048576 / 9)</li>
+<li>today: 131072(= 1048576 / 8)</li>
+</ul>
+<p>(= ...)が重みの計算式です。 &quot;1048576&quot;（= 2 ** 20）は文書全体に含まれるトークン数を表しています。 本当はテーブルなどから情報を取得してくるなどして正しい値を使いたいところですが、今のところ固定値になっています。</p>
+<p>&quot;1048576 / 8&quot;の分母の&quot;8&quot;はトークン「today」を含む文書数になります。</p>
+<p>&quot;1048576 / 9&quot;の分母の&quot;9&quot;はトークン「fine」を含む文書数になります。</p>
+<p>&quot;8&quot;と&quot;9&quot;はトークンを含む文書がいくつあるかの概算値です。本当は「today」を含む文書数は&quot;2&quot;,「fine」を含む文書数は&quot;3&quot;ですが、概算値なのでずれています。</p>
+<p>概算値は以下のように確認できます。</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39;--output_columns _key, index --limit -1&quot;) AS groonga_response;
+</pre></div>
+</div>
+<p>The retrieval result of the above query is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre>[[[2],[[&quot;_key&quot;,&quot;ShortText&quot;],[&quot;index&quot;,&quot;diaries&quot;]],[&quot;FINE&quot;,9],[&quot;TODAY&quot;,8]]]
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-the-top-n-weight-tokens">
+<h3>6.1.4. 重みが大きい上位N個のトークンを取り出す<a class="headerlink" href="#getting-the-top-n-weight-tokens" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Nは以下の式で求めています。N = マッチしたトークン数 / 8 + 1</p>
+<p>今回は「マッチしたトークン数」が2なので「2 / 8 + 1 = 1」で N = 1です。</p>
+<p>マッチしたトークンを重み順に並び替えると以下の通りです。</p>
+<ul class="simple">
+<li>today: 131072(= 1048576 / 8)</li>
+<li>fine: 116508(= 1048576 / 9)</li>
+</ul>
+<p>このうち上位1件なのでtoday: 131072(= 1048576 / 8)だけが残ります。</p>
+</div>
+<div class="section" id="summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">
+<h3>6.1.5. 上位N個のトークンについて、トークンが出現する文書に重みを足す<a class="headerlink" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">today: 文書id = 3,4</p>
+</li>
+</ul>
+<p>Finally document id 3,4 are hit, the similarity score between query and document(id=3) is 131072 + 1 = 131073 (&quot;1&quot; is the number of occurrence of token &quot;today&quot; in document).</p>
+<p>The similarity score between query and document(id=4) is the same as the score between query and document(id=3).</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6. Mroongaにおける検索スコア</a><ul>
+<li><a class="reference internal" href="#mroonga-scoring-in-natural-language-mode">6.1. IN NATURAL LANGUAGE MODEにおける検索スコアの算出方法</a><ul>
+<li><a class="reference internal" href="#splitting-a-query-into-tokens">6.1.1. クエリをトークンに分割する</a></li>
+<li><a class="reference internal" href="#removing-not-matched-tokens">6.1.2. マッチしないトークンを除去する</a></li>
+<li><a class="reference internal" href="#calculating-weight-per-token">6.1.3. トークン毎の重みを計算する</a></li>
+<li><a class="reference internal" href="#getting-the-top-n-weight-tokens">6.1.4. 重みが大きい上位N個のトークンを取り出す</a></li>
+<li><a class="reference internal" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">6.1.5. 上位N個のトークンについて、トークンが出現する文書に重みを足す</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="limitations.html"
+                        title="前の章へ">5. 制限事項</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../faq.html"
+                        title="次の章へ">5. FAQ</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/full_text_search.txt"
+           rel="nofollow">ソースコードを表示（英語）</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../faq.html" title="5. FAQ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="limitations.html" title="5. 制限事項"
+             >前へ</a> |</li>
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >4. リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2013, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

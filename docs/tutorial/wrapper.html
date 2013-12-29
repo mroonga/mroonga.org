@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3.2. Wrapper mode &mdash; Mroonga v3.10 documentation</title>
+    <title>3.4. Wrapper mode &mdash; Mroonga v3.11 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.10',
+        VERSION:     '3.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,10 +24,10 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v3.10 documentation" href="../index.html" />
-    <link rel="up" title="3. User&#39;s guide" href="../userguide.html" />
+    <link rel="top" title="Mroonga v3.11 documentation" href="../index.html" />
+    <link rel="up" title="3. Tutorial" href="../tutorial.html" />
     <link rel="next" title="4. Reference" href="../reference.html" />
-    <link rel="prev" title="3.3.1. Storage mode" href="storage.html" /> 
+    <link rel="prev" title="3.3. Storage mode" href="storage.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -57,7 +57,7 @@
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../ja/docs/userguide/wrapper.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+      <li><a href="../../ja/docs/tutorial/wrapper.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
     </ul>
   </div>
 </div>
@@ -73,10 +73,10 @@
           <a href="../reference.html" title="4. Reference"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="storage.html" title="3.3.1. Storage mode"
+          <a href="storage.html" title="3.3. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
-          <li><a href="../userguide.html" accesskey="U">3. User's guide</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../tutorial.html" accesskey="U">3. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -86,10 +86,10 @@
           <div class="body">
             
   <div class="section" id="wrapper-mode">
-<h1>3.3.2. Wrapper mode<a class="headerlink" href="#wrapper-mode" title="Permalink to this headline">¶</a></h1>
+<h1>3.4. Wrapper mode<a class="headerlink" href="#wrapper-mode" title="Permalink to this headline">¶</a></h1>
 <p>Here we explain how to use wrapper mode of mroonga</p>
 <div class="section" id="how-to-use-wrapper-mode">
-<h2>3.3.2.1. How to use wrapper mode<a class="headerlink" href="#how-to-use-wrapper-mode" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.1. How to use wrapper mode<a class="headerlink" href="#how-to-use-wrapper-mode" title="Permalink to this headline">¶</a></h2>
 <p>In wrapper mode, mroonga works in wrapping an existing storage engine. To specify the wrapped storage engine, we use SQL comment like <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> for now.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -105,7 +105,7 @@
 </div>
 </div>
 <div class="section" id="how-to-use-full-text-search">
-<h2>3.3.2.2. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.2. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -136,7 +136,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>Yes, full text search works.</p>
 </div>
 <div class="section" id="how-to-get-search-score">
-<h2>3.3.2.3. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.3. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
 <p>Let's try.</p>
@@ -172,7 +172,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </div>
 </div>
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
-<h2>3.3.2.4. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.4. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference" href="#parser" id="id2">[2]</a> for full text search.</p>
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
@@ -253,13 +253,13 @@ Query OK, 0 rows affected (0.00 sec)
 </div>
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>3.3.2.5. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.5. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as 'mroonga_snippet' UDF.</p>
 <p>See <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> about details.</p>
 </div>
 <div class="section" id="logging">
-<h2>3.3.2.6. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.6. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
 <p>Here is the example of the log.</p>
@@ -311,7 +311,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>3.3.2.7. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.7. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>Generally speaking, MySQL can process &quot;ORDER BY&quot; query with almost no cost if we can get records by index, and can process &quot;LIMIT&quot; with low cost by limiting the range of processing data even if the number of query result is very big.</p>
 <p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
 <p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
@@ -362,27 +362,27 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">3.3.2. Wrapper mode</a><ul>
-<li><a class="reference internal" href="#how-to-use-wrapper-mode">3.3.2.1. How to use wrapper mode</a></li>
-<li><a class="reference internal" href="#how-to-use-full-text-search">3.3.2.2. How to use full text search</a></li>
-<li><a class="reference internal" href="#how-to-get-search-score">3.3.2.3. How to get search score</a></li>
-<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.3.2.4. How to specify the parser for full text search</a></li>
-<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.2.5. How to get snippet (Keyword in context)</a></li>
-<li><a class="reference internal" href="#logging">3.3.2.6. Logging</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.3.2.7. Optimisation for ORDER BY LIMIT in full text search</a></li>
+<li><a class="reference internal" href="#">3.4. Wrapper mode</a><ul>
+<li><a class="reference internal" href="#how-to-use-wrapper-mode">3.4.1. How to use wrapper mode</a></li>
+<li><a class="reference internal" href="#how-to-use-full-text-search">3.4.2. How to use full text search</a></li>
+<li><a class="reference internal" href="#how-to-get-search-score">3.4.3. How to get search score</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">3.4.4. How to specify the parser for full text search</a></li>
+<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.4.5. How to get snippet (Keyword in context)</a></li>
+<li><a class="reference internal" href="#logging">3.4.6. Logging</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">3.4.7. Optimisation for ORDER BY LIMIT in full text search</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="storage.html"
-                        title="previous chapter">3.3.1. Storage mode</a></p>
+                        title="previous chapter">3.3. Storage mode</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../reference.html"
                         title="next chapter">4. Reference</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../sources/userguide/wrapper.txt"
+    <li><a href="../sources/tutorial/wrapper.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -412,10 +412,10 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
           <a href="../reference.html" title="4. Reference"
              >next</a> |</li>
         <li class="right" >
-          <a href="storage.html" title="3.3.1. Storage mode"
+          <a href="storage.html" title="3.3. Storage mode"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v3.10 documentation</a> &raquo;</li>
-          <li><a href="../userguide.html" >3. User's guide</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v3.11 documentation</a> &raquo;</li>
+          <li><a href="../tutorial.html" >3. Tutorial</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
