@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Installation Guide &mdash; Mroonga v3.11 documentation</title>
+    <title>2. Installation Guide &mdash; Mroonga v3.12 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '3.11',
+        VERSION:     '3.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v3.11 documentation" href="index.html" />
+    <link rel="top" title="Mroonga v3.12 documentation" href="index.html" />
     <link rel="next" title="3. Tutorial" href="tutorial.html" />
     <link rel="prev" title="1. The characteristics of mroonga" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -36,9 +36,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
@@ -62,7 +60,7 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -74,14 +72,14 @@
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Mroonga v3.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v3.12 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="installation-guide">
 <h1>2. Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
@@ -472,46 +470,35 @@ are needed for building mroonga for Windows.</p>
 </div>
 <div class="section" id="zip">
 <h3>2.13.2. Zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
-<p>For 32-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.6-with-mroonga-3.11-win32.zip">mariadb-10.0.6-with-mroonga-3.11-win32.zip</a>
+<p>For 32-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.7-with-mroonga-3.12-win32.zip">mariadb-10.0.7-with-mroonga-3.12-win32.zip</a>
 and extract it.</p>
-<p>For 64-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.6-with-mroonga-3.11-winx64.zip">mariadb-10.0.6-with-mroonga-3.11-winx64.zip</a>
+<p>For 64-bit environment, download <a class="reference external" href="http://packages.groonga.org/windows/mroonga/mariadb-10.0.7-with-mroonga-3.12-winx64.zip">mariadb-10.0.7-with-mroonga-3.12-winx64.zip</a>
 and extract it.</p>
 </div>
 <div class="section" id="install-mroonga">
 <h3>2.13.3. Install Mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
-<p>Start mysqld, connect to it by mysql client, and install it by &quot;INSTALL PLUGIN&quot; command.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga&#39;;
+<p>Zip packages are pre-configured for easy to use, so no need to execute &quot;INSTALL PLUGIN&quot; and install UDF.</p>
+<p>Just start mysqld by following command.:</p>
+<div class="highlight-none"><div class="highlight"><pre>&gt; mysqld.exe --defautls-file=.\MY-PREFERRED-INI.ini --console
 </pre></div>
 </div>
-<p>If &quot;mroonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, Mroonga is well installed.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| mroonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
-| MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
-| InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
-| MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-6 rows in set (0.00 sec)
-</pre></div>
-</div>
-<p>Next install UDF (User-Defined Function).</p>
-<p>To get the record ID assigned by groonga in INSERT, install last_insert_grn_id function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga&#39;;
-</pre></div>
-</div>
-<p>To enable snippet (keyword in context) UDF, install mroonga_snippet function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga&#39;;
-</pre></div>
-</div>
-<p>To enable invoking groonga query from Mroonga, install mroonga_command function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga&#39;;
+<p>Each zip package contains ini files (my-small.ini, my-medium.ini, my-large.ini and so on), choose preferred ini file which meets on your demand.</p>
+<p>Next connect to MariaDB by following command.:</p>
+<div class="highlight-none"><div class="highlight"><pre>&gt; mysql.exe
+MariaDB [(none)]&gt; SHOW ENGINES;
++--------------------+---------+------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                    | Transactions | XA   | Savepoints |
++--------------------+---------+------------------------------------------------------------+--------------+------+------------+
+| CSV                | YES     | CSV storage engine                                         | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                         | NO           | NO   | NO         |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                      | NO           | NO   | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
+| mroonga            | YES     | CJK-ready fulltext search, column store                    | NO           | NO   | NO         |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                     | NO           | NO   | NO         |
++--------------------+---------+------------------------------------------------------------+--------------+------+------------+
+8 rows in set (0.00 sec)
 </pre></div>
 </div>
 </div>
@@ -728,7 +715,7 @@ It is announced by release announce if new release contains such a incompatible 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -781,12 +768,14 @@ It is announced by release announce if new release contains such a incompatible 
   <h4>Next topic</h4>
   <p class="topless"><a href="tutorial.html"
                         title="next chapter">3. Tutorial</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="sources/install.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="sources/install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -803,7 +792,7 @@ It is announced by release announce if new release contains such a incompatible 
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -815,10 +804,10 @@ It is announced by release announce if new release contains such a incompatible 
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of mroonga"
              >previous</a> |</li>
-        <li><a href="index.html">Mroonga v3.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v3.12 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>

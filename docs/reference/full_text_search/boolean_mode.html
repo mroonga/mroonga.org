@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6.1. Mroonga full text Search in Boolean mode &mdash; Mroonga v3.12 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v3.12 documentation" href="../../index.html" />
+    <link rel="up" title="6. Full text Search" href="../full_text_search.html" />
+    <link rel="next" title="6.2. Search and Scoring in Mroonga" href="scoring.html" />
+    <link rel="prev" title="6. Full text Search" href="../full_text_search.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+  <body role="document">
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../ja/docs/reference/full_text_search/boolean_mode.html"><img src="../../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="scoring.html" title="6.2. Search and Scoring in Mroonga"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../full_text_search.html" title="6. Full text Search"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Mroonga v3.12 documentation</a> &raquo;</li>
+          <li><a href="../../reference.html" >4. Reference</a> &raquo;</li>
+          <li><a href="../full_text_search.html" accesskey="U">6. Full text Search</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mroonga-full-text-search-in-boolean-mode">
+<h1>6.1. Mroonga full text Search in Boolean mode<a class="headerlink" href="#mroonga-full-text-search-in-boolean-mode" title="Permalink to this headline">¶</a></h1>
+<p>Mroonga can perform boolean full-text searches using the &quot;IN BOOLEAN MODE&quot; modifier.</p>
+<p>When building a boolean search query, Mroonga supports the use of qualifiers which MySQL support, and original pragmas.</p>
+<p>These qualifiers and pragmas can change the relative rank of search results.</p>
+<p>In the case of a search string not using neither a qualifier nor a pragma, the search results that contain the search string will be rated higher.
+Edit</p>
+<div class="section" id="mroonga-supports-the-following-qualifiers">
+<h2>6.1.1. Mroonga supports the following qualifiers<a class="headerlink" href="#mroonga-supports-the-following-qualifiers" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Modifier</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>＋</td>
+<td>A leading plus sign indicates that this word must be present in each row that is returned.</td>
+</tr>
+<tr class="row-odd"><td>ー</td>
+<td>A leading minus sign indicates that this word must not be present in any of the rows that are returned.</td>
+</tr>
+<tr class="row-even"><td>＊</td>
+<td>The asterisk serves as the truncation (or wildcard) operator.</td>
+</tr>
+<tr class="row-odd"><td>&quot;</td>
+<td>A phrase that is enclosed within double quote (“&quot;”) characters matches only rows that contain the phrase literally, as it was typed.</td>
+</tr>
+<tr class="row-even"><td>( )</td>
+<td>Parentheses group words into subexpressions.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pragma">
+<h2>6.1.2. Pragma<a class="headerlink" href="#pragma" title="Permalink to this headline">¶</a></h2>
+<p>You can embed pragma at the head of query for specifying how to execute.</p>
+<p>The pragma must exist in the beginning of a query. (Don't put a blank into a head of the query)</p>
+<div class="section" id="d-pragma">
+<h3>6.1.2.1. D pragma<a class="headerlink" href="#d-pragma" title="Permalink to this headline">¶</a></h3>
+<p>D pragma is a form for specifying which operation should be execute when an individual operator is omitted.</p>
+<p>The syntax of D pragma is as follows. You can choose one of the three operators, either &quot;OR&quot;, &quot;+&quot;, or &quot;-&quot;.</p>
+<div class="highlight-python"><div class="highlight"><pre>*D[operator]
+</pre></div>
+</div>
+</div>
+<div class="section" id="w-pragma">
+<h3>6.1.2.2. W pragma<a class="headerlink" href="#w-pragma" title="Permalink to this headline">¶</a></h3>
+<p>W pragma is a form for specifying target section and its weight when using multiple-column index.</p>
+<p>You can specify the multiple of the weight for every section. The default value of the weight is set to 1.</p>
+<p>The weight is omissible, and a negative value is allowed.</p>
+<p>The syntax of W pragma is as follows. A section number is begun not from 0 but from 1.</p>
+<div class="highlight-python"><div class="highlight"><pre>*W[number1[:weight1][,number2[:weight2]]...
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples">
+<h3>6.1.2.3. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>We show you how to rank in boolean mode using the following schema and data.</p>
+<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE books (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX title_index (title)
+) ENGINE=mroonga default charset utf8;
+
+INSERT INTO books (title) VALUES (
+  &#39;MySQL&#39;
+);
+
+INSERT INTO books (title) VALUES (
+  &#39;MySQL Groonga&#39;
+);
+
+INSERT INTO books (title) VALUES (
+  &#39;MySQL Groonga Mroonga&#39;
+);
+</pre></div>
+</div>
+<div class="section" id="no-operator-and-pragma">
+<h4>6.1.2.3.1. (no operator and pragma)<a class="headerlink" href="#no-operator-and-pragma" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;Groonga Mroonga&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>Rows that contain even one word will be ranked higher.</p>
+<p>A row score is set to 1 when the row contains a single word.</p>
+<p>A row score is set to 2 when the row contains both words.</p>
+<p>Here is the search result:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     1 |
+| MySQL Groonga Mroonga |     2 |
++-----------------------+-------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>6.1.2.3.2. ＋<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;+Groonga +Mroonga&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;+Groonga +Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains both words. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     0 |
+| MySQL Groonga Mroonga |     2 |
++-----------------------+-------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>6.1.2.3.3. ー<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;-Groonga -Mroonga&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;-Groonga -Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that does not contain both words. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     1 |
+| MySQL Groonga         |     0 |
+| MySQL Groonga Mroonga |     0 |
++-----------------------+-------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>6.1.2.3.4. ＊<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;M*&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;M*&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains &quot;MySQL&quot; or &quot;Mroonga&quot;. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     1 |
+| MySQL Groonga         |     1 |
+| MySQL Groonga Mroonga |     2 |
++-----------------------+-------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>6.1.2.3.5. &quot;<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>We use a query '&quot;Groonga Mroonga&quot;' to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;&quot;Groonga Mroonga&quot;&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains a phrase that matches &quot;Groonga Mroonga&quot;. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     0 |
+| MySQL Groonga Mroonga |     1 |
++-----------------------+-------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>6.1.2.3.6. ()<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;+MySQL +(Groonga Mroonga)&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;+MySQL +(Groonga Mroonga)&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains &quot;MySQL&quot; and &quot;Groonga&quot;, or &quot;MySQL&quot; and &quot;Mroonga&quot;, or &quot;MySQL&quot; and &quot;Groonga&quot; and &quot;Mroonga&quot;.</p>
+<p>The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     2 |
+| MySQL Groonga Mroonga |     3 |
++-----------------------+-------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="d">
+<h4>6.1.2.3.7. '*D+'<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;*D+ Groonga Mroonga&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;*D+ Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains &quot;Groonga&quot; and &quot;Mroonga&quot;. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     0 |
+| MySQL Groonga Mroonga |     2 |
++-----------------------+-------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h4>6.1.2.3.8. '*D-'<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>We use a query &quot;'*D- Groonga Mroonga&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;*D- Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains &quot;Groonga&quot;, and does not contain &quot;Mroonga&quot;. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     1 |
+| MySQL Groonga Mroonga |     0 |
++-----------------------+-------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="dor">
+<h4>6.1.2.3.9. '*DOR'<a class="headerlink" href="#dor" title="Permalink to this headline">¶</a></h4>
+<p>We use &quot;*DOR Groonga Mroonga&quot; to search.:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;*DOR Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains &quot;Groonga&quot; or &quot;Mroonga&quot;. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
+| title                 | score |
++-----------------------+-------+
+| MySQL                 |     0 |
+| MySQL Groonga         |     1 |
+| MySQL Groonga Mroonga |     2 |
++-----------------------+-------+
+3 rows in set (0.00 sec)
+</pre></div>
+</div>
+<p>We show you how to rank in multiple-column index using the following schema and data.:</p>
+<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE books (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  `comment` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX content_index (title, comment)
+) engine=mroonga default charset utf8;
+
+INSERT INTO books (title, comment) VALUES (
+  &#39;MySQL&#39;, &#39;MySQL Introduction&#39;
+);
+
+INSERT INTO books (title, comment) VALUES (
+  &#39;MySQL Groonga&#39;, &#39;Groonga Introduction&#39;
+);
+
+INSERT INTO books (title, comment) VALUES (
+  &#39;MySQL Groonga Mroonga&#39;, &#39;Mroonga Introduction&#39;
+);
+</pre></div>
+</div>
+<p>Consider the case that 10 weight is given to ‘title’ column, and 1 weight is given to ‘comment’ column, and use &quot;Groonga&quot; to search.</p>
+<p>Here is the query such a case:</p>
+<div class="highlight-python"><div class="highlight"><pre>SELECT title, comment, MATCH (title,comment) AGAINST(&#39;*W1:10,2:1 +Groonga&#39; IN BOOLEAN MODE) AS score FROM books;
+</pre></div>
+</div>
+<p>The search result is a row that contains &quot;Groonga&quot;. The row score is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>+-----------------------+----------------------+-------+
+| title                 | comment              | score |
++-----------------------+----------------------+-------+
+| MySQL                 | MySQL Introduction   |     0 |
+| MySQL Groonga         | Groonga Introduction |    11 |
+| MySQL Groonga Mroonga | Mroonga Introduction |    10 |
++-----------------------+----------------------+-------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>The row score is set to 11 that the 'title' and 'comment&quot; column contain &quot;Groonga&quot;, and the row score is set to 10 that only 'title' column contains &quot;Groonga&quot;.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6.1. Mroonga full text Search in Boolean mode</a><ul>
+<li><a class="reference internal" href="#mroonga-supports-the-following-qualifiers">6.1.1. Mroonga supports the following qualifiers</a></li>
+<li><a class="reference internal" href="#pragma">6.1.2. Pragma</a><ul>
+<li><a class="reference internal" href="#d-pragma">6.1.2.1. D pragma</a></li>
+<li><a class="reference internal" href="#w-pragma">6.1.2.2. W pragma</a></li>
+<li><a class="reference internal" href="#examples">6.1.2.3. Examples</a><ul>
+<li><a class="reference internal" href="#no-operator-and-pragma">6.1.2.3.1. (no operator and pragma)</a></li>
+<li><a class="reference internal" href="#id1">6.1.2.3.2. ＋</a></li>
+<li><a class="reference internal" href="#id2">6.1.2.3.3. ー</a></li>
+<li><a class="reference internal" href="#id3">6.1.2.3.4. ＊</a></li>
+<li><a class="reference internal" href="#id4">6.1.2.3.5. &quot;</a></li>
+<li><a class="reference internal" href="#id5">6.1.2.3.6. ()</a></li>
+<li><a class="reference internal" href="#d">6.1.2.3.7. '*D+'</a></li>
+<li><a class="reference internal" href="#id6">6.1.2.3.8. '*D-'</a></li>
+<li><a class="reference internal" href="#dor">6.1.2.3.9. '*DOR'</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../full_text_search.html"
+                        title="previous chapter">6. Full text Search</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="scoring.html"
+                        title="next chapter">6.2. Search and Scoring in Mroonga</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../sources/reference/full_text_search/boolean_mode.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="scoring.html" title="6.2. Search and Scoring in Mroonga"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../full_text_search.html" title="6. Full text Search"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Mroonga v3.12 documentation</a> &raquo;</li>
+          <li><a href="../../reference.html" >4. Reference</a> &raquo;</li>
+          <li><a href="../full_text_search.html" >6. Full text Search</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2009-2014, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
