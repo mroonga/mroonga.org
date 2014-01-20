@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. mroongaの特徴 &mdash; Mroonga v3.11 documentation</title>
+    <title>1. Mroongaの特徴 &mdash; Mroonga v3.11 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -43,7 +43,7 @@
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
-      <span class="project">mroonga</span>
+      <span class="project">Mroonga</span>
       <span class="separator">-</span>
       <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
     </a>
@@ -85,52 +85,52 @@
           <div class="body">
             
   <div class="section" id="the-characteristics-of-mroonga">
-<h1>1. mroongaの特徴<a class="headerlink" href="#the-characteristics-of-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1. Mroongaの特徴<a class="headerlink" href="#the-characteristics-of-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="what-is-mroonga">
-<h2>1.1. mroongaとは<a class="headerlink" href="#what-is-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroongaは全文検索エンジンであるgroongaをベースとしたMySQLのストレージエンジンです。</p>
-<p>MySQLではver5.1からPluggable Storage Engineインタフェースが採用され、以前よりも柔軟に独自のストレージエンジンを利用できるようになりました。そこでgroongaにストレージエンジンインタフェースを実装し、MySQL経由でもgroongaを利用できるようにしました。</p>
-<p>mroongaを経由することでgroongaをSQLコマンドでも利用することができるようになります。</p>
+<h2>1.1. Mroongaとは<a class="headerlink" href="#what-is-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mroongaは全文検索エンジンであるGroongaをベースとしたMySQLのストレージエンジンです。</p>
+<p>MySQLではver5.1からPluggable Storage Engineインタフェースが採用され、以前よりも柔軟に独自のストレージエンジンを利用できるようになりました。そこでGroongaにストレージエンジンインタフェースを実装し、MySQL経由でもGroongaを利用できるようにしました。</p>
+<p>Mroongaを経由することでGroongaをSQLコマンドでも利用することができるようになります。</p>
 </div>
 <div class="section" id="the-successor-of-tritonn">
 <h2>1.2. Tritonnの後継<a class="headerlink" href="#the-successor-of-tritonn" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>MySQLで日本語全文検索を実現するための方法として、MySQLにgroongaの前身である全文検索ライブラリSennaを組み込んだプロダクトをTritonnプロジェクトから開発・リリースされて来ました。mroongaはその後継プロダクトとなります。</p>
+<p>MySQLで日本語全文検索を実現するための方法として、MySQLにGroongaの前身である全文検索ライブラリSennaを組み込んだプロダクトをTritonnプロジェクトから開発・リリースされて来ました。Mroongaはその後継プロダクトとなります。</p>
 </div>
 <div class="section" id="running-as-a-mysql-plugin">
 <h2>1.3. MySQLのプラグインとして動作<a class="headerlink" href="#running-as-a-mysql-plugin" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TritonnではMySQLサーバのソースコードを直接修正していましたので、使用するためには利用者がソースから自分でビルドするか、あるいはTritonnプロジェクトが配布するバイナリを使う必要がありました（MySQL本家が配布する公式バイナリを利用できませんでした）。</p>
-<p>一方、mroongaはPluggable Storage Engineインタフェースを利用した独立したプログラム(共有ライブラリ)であるため、MySQLの公式バイナリに手を加えずにプラグインとして動的にロードして利用することが可能となっています。これによりTritonnよりもさらに手軽に利用できるようになりました。</p>
+<p>一方、MroongaはPluggable Storage Engineインタフェースを利用した独立したプログラム(共有ライブラリ)であるため、MySQLの公式バイナリに手を加えずにプラグインとして動的にロードして利用することが可能となっています。これによりTritonnよりもさらに手軽に利用できるようになりました。</p>
 </div>
 <div class="section" id="faster-index-update">
 <h2>1.4. 更新性能の向上<a class="headerlink" href="#faster-index-update" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Sennaと比較するとgroongaではインデックス追加/更新時のスループットが大幅に改善されています。</p>
-<p>mroongaでもこの更新性能の向上の恩恵を受けています。</p>
+<p>Sennaと比較するとGroongaではインデックス追加/更新時のスループットが大幅に改善されています。</p>
+<p>Mroongaでもこの更新性能の向上の恩恵を受けています。</p>
 </div>
 <div class="section" id="faster-search">
 <h2>1.5. 検索性能の向上<a class="headerlink" href="#faster-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TritonnではMyISAMストレージエンジンを利用していたため、データ更新(インデックス更新)が発生するとテーブル全体に排他ロックがかかり、検索処理が阻害される問題がありました。</p>
-<p>mroongaではこの問題がなくなり(参照ロックフリー)、特にデータ更新が多いケースでの検索性能が向上しています。</p>
+<p>Mroongaではこの問題がなくなり(参照ロックフリー)、特にデータ更新が多いケースでの検索性能が向上しています。</p>
 </div>
 <div class="section" id="geolocation-search">
 <h2>1.6. 位置情報検索のサポート<a class="headerlink" href="#geolocation-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>groongaには全文検索機能だけではなく、インデックスを利用した高速な位置情報検索機能があります。また、MySQLにも位置情報検索のための記法があります。mroongaでは、groongaの位置情報検索機能を使ってMySQLの位置情報の記法で書かれたSQLを実行するため、高速に位置情報検索を行うことができます。</p>
+<p>Groongaには全文検索機能だけではなく、インデックスを利用した高速な位置情報検索機能があります。また、MySQLにも位置情報検索のための記法があります。Mroongaでは、Groongaの位置情報検索機能を使ってMySQLの位置情報の記法で書かれたSQLを実行するため、高速に位置情報検索を行うことができます。</p>
 </div>
 <div class="section" id="sharing-the-same-groonga-storage">
-<h2>1.7. groongaストレージファイル経由でのシステム連携<a class="headerlink" href="#sharing-the-same-groonga-storage" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroongaではgroongaのDB APIを使用してデータの格納を行っています。この時作成されるストレージファイルはgroonga単体でデータ管理を行う場合と同じフォーマットとなります。つまり以下のような使い方も可能となります。</p>
+<h2>1.7. Groongaストレージファイル経由でのシステム連携<a class="headerlink" href="#sharing-the-same-groonga-storage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MroongaではGroongaのDB APIを使用してデータの格納を行っています。この時作成されるストレージファイルはGroonga単体でデータ管理を行う場合と同じフォーマットとなります。つまり以下のような使い方も可能となります。</p>
 <ul class="simple">
-<li><p class="first">mroonga(MySQL)経由で格納したデータをgroongaサーバ(単体)の高度な検索機能を利用して検索</p>
+<li><p class="first">Mroonga(MySQL)経由で格納したデータをGroongaサーバ(単体)の高度な検索機能を利用して検索</p>
 </li>
-<li><p class="first">groongaサーバ(単体)経由で格納したデータをmroonga(MySQL)経由で参照</p>
+<li><p class="first">Groongaサーバ(単体)経由で格納したデータをMroonga(MySQL)経由で参照</p>
 </li>
 </ul>
-<p>またgroongaのストレージファイルは複数プロセスや複数スレッドで共有することができますので、同じストレージファイルに対して複数パタンでの同時アクセスも可能です。</p>
+<p>またGroongaのストレージファイルは複数プロセスや複数スレッドで共有することができますので、同じストレージファイルに対して複数パタンでの同時アクセスも可能です。</p>
 </div>
 <div class="section" id="associate-with-other-storage-engines">
 <h2>1.8. 他のストレージエンジンとの連携<a class="headerlink" href="#associate-with-other-storage-engines" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroongaには2つの動作モードがあります。</p>
-<p>1つが「ストレージモード」で、データストアも検索機能もすべてgroongaを使うモードです。これがデフォルトのモードです。上述の参照ロックフリーなgroongaの性能特性をフルに活かした高速なデータ更新・全文検索・位置情報検索が特長です。一方、トランザクションなどの機能は提供されません。</p>
-<p>もう1つが「ラッパーモード」で、MyISAMやInnoDBといった他のストレージエンジンに <em>全文検索機能だけ</em> を追加するモードです。このモードではトランザクションなど他のストレージエンジンがサポートしている機能に加えてgroongaの高速な全文検索機能を利用することができます。一方、groongaの参照ロックフリーな特性は活かすことができません。また、更新処理は他のストレージエンジンがボトルネックになることが多いでしょう。</p>
+<p>Mroongaには2つの動作モードがあります。</p>
+<p>1つが「ストレージモード」で、データストアも検索機能もすべてGroongaを使うモードです。これがデフォルトのモードです。上述の参照ロックフリーなGroongaの性能特性をフルに活かした高速なデータ更新・全文検索・位置情報検索が特長です。一方、トランザクションなどの機能は提供されません。</p>
+<p>もう1つが「ラッパーモード」で、MyISAMやInnoDBといった他のストレージエンジンに <em>全文検索機能だけ</em> を追加するモードです。このモードではトランザクションなど他のストレージエンジンがサポートしている機能に加えてGroongaの高速な全文検索機能を利用することができます。一方、Groongaの参照ロックフリーな特性は活かすことができません。また、更新処理は他のストレージエンジンがボトルネックになることが多いでしょう。</p>
 </div>
 <div class="section" id="supported-platforms">
 <h2>1.9. サポートしているプラットフォーム<a class="headerlink" href="#supported-platforms" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -149,14 +149,14 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">1. mroongaの特徴</a><ul>
-<li><a class="reference internal" href="#what-is-mroonga">1.1. mroongaとは</a></li>
+<li><a class="reference internal" href="#">1. Mroongaの特徴</a><ul>
+<li><a class="reference internal" href="#what-is-mroonga">1.1. Mroongaとは</a></li>
 <li><a class="reference internal" href="#the-successor-of-tritonn">1.2. Tritonnの後継</a></li>
 <li><a class="reference internal" href="#running-as-a-mysql-plugin">1.3. MySQLのプラグインとして動作</a></li>
 <li><a class="reference internal" href="#faster-index-update">1.4. 更新性能の向上</a></li>
 <li><a class="reference internal" href="#faster-search">1.5. 検索性能の向上</a></li>
 <li><a class="reference internal" href="#geolocation-search">1.6. 位置情報検索のサポート</a></li>
-<li><a class="reference internal" href="#sharing-the-same-groonga-storage">1.7. groongaストレージファイル経由でのシステム連携</a></li>
+<li><a class="reference internal" href="#sharing-the-same-groonga-storage">1.7. Groongaストレージファイル経由でのシステム連携</a></li>
 <li><a class="reference internal" href="#associate-with-other-storage-engines">1.8. 他のストレージエンジンとの連携</a></li>
 <li><a class="reference internal" href="#supported-platforms">1.9. サポートしているプラットフォーム</a></li>
 </ul>
