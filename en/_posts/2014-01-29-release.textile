@@ -17,6 +17,8 @@ Here is the topics for this release:
 * Supported to customize lock timeout
 * Improved compatibility with Tritonn's W pragma
 
+If you are using pragma in SQLs, you need change your query for Mroonga 3.12 or later.
+
 h3. Supported to customize lock timeout
 
 In this release, it makes lock timeout customizable now.
@@ -48,6 +50,32 @@ After:
 By above changes, Mroonga's behaviour is same as Tritonn.
 
 As this is imcopatible changes, please check existing query which is affected.
+
+Here is the concrete example using multiple column index for title column and comment column.
+
+<pre>
+CREATE TABLE books (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  `comment` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX content_index (title, comment)
+) engine=mroonga default charset utf8;
+</pre>
+
+In the previous versions, as Mroonga uses 0-origin, here is the query which uses 10 weight for title column, 1 weight for comment column.
+
+<pre>
+SELECT title, comment, MATCH (title,comment) AGAINST('*W0:10,1:1 +Groonga' IN BOOLEAN MODE) AS score FROM books;
+</pre>
+
+The title column matches section number 0, the comment column matches section number 1 in above query.
+
+After Mroonga 3.12, as Mroonga uses 1-origin, the title column matches section number 1, the comment column matches section number 2 in above query. Here is the rewrited query for Mroonga 3.12 or later.
+
+<pre>
+SELECT title, comment, MATCH (title,comment) AGAINST('*W1:10,2:1 +Groonga' IN BOOLEAN MODE) AS score FROM books;
+</pre>
 
 h3. Conclusion
 
