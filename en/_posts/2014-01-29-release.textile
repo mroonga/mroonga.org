@@ -1,0 +1,56 @@
+---
+layout: post.en
+title: Mroonga 3.12 has been released!
+description: Mroonga 3.12 has been released!
+---
+
+h2. Mroonga 3.12 has been released!
+
+"Mroonga 3.12":/docs/news.html#release-3-12 has been released!
+
+Mroonga is a MySQL storage engine that supports fast fulltext search and geolocation search. It is CJK ready. It uses groonga as a storage and fulltext search engine.
+
+How to install: "Install":/docs/install.html
+
+Here is the topics for this release:
+
+* Supported to customize lock timeout
+* Improved compatibility with Tritonn's W pragma
+
+h3. Supported to customize lock timeout
+
+In this release, it makes lock timeout customizable now.
+
+In the previous versions, lock timeout is hard-coded in source code. You need to modify source code if you want to change the value of it.
+
+Now, Mroonga supports to customize lock timeout. Here is the sample to change lock timeout in 1000ms:
+
+<pre>
+SET GLOBAL mroonga_lock_timeout = 1000;
+</pre>
+
+Note that Groonga 3.1.2 is required.
+
+h3. Improved compatibility with Tritonn's W pragma
+
+In this release, we improved compatibility with Tritonn's W pragma.
+
+Before:
+
+  * Mroonga uses omitted section as weight 0.
+  * Mroonga uses 0-origin as section number.
+
+After:
+
+  * Mroonga uses omitted section as weight 1.
+  * Mroonga uses 1-origin as section number.
+
+By above changes, Mroonga's behaviour is same as Tritonn.
+
+As this is imcopatible changes, please check existing query which is affected.
+
+h3. Conclusion
+
+See "Release 3.12 - 2014/01/29":/docs/news.html#release-3-12 about detailed changes since 3.11.
+
+Let's search by Mroonga!
