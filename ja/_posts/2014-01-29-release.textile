@@ -19,7 +19,7 @@ h3. インストール/アップグレード方法
 * ロックタイムアウトを動的に変更できるようになりました
 * WプラグマのTritonnとの互換性を改善しました
 
-Wプラグマの挙動については、これまでと非互換な変更となっているので注意してください。該当する場合にはクエリの修正が必要となります。
+Wプラグマの挙動については、これまでと非互換な変更となっているので注意してください。Wプラグマを使ったクエリの修正が必要です。
 
 h3. ロックタイムアウトを動的に変更できるようになりました
 
@@ -47,7 +47,33 @@ Tritonn由来でWプラグマというマルチカラムインデックスでカ
 
 また、これにあわせてセクションを省略したときの重みが0だったのを1に変更しました。これもTritonnと同じになるように修正したものです。
 
-Wプラグマを使っている既存のクエリーで上記変更の影響を受けるものがあれば修正する必要があります。
+Wプラグマを使っている既存のクエリーはすべてこの変更の影響を受けます。
+
+移行するための具体的な例を次に示します。サンプルとしてtitleカラムとcommentカラムに対するマルチカラムインデックスを設定しているとします。
+
+<pre>
+CREATE TABLE books (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  `comment` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX content_index (title, comment)
+) engine=mroonga default charset utf8;
+</pre>
+
+従来のWプラグマでは0オリジンなので、titleカラムの重みを10にし、commentカラムの重みを1にして検索するクエリは次のようになります。
+
+<pre>
+SELECT title, comment, MATCH (title,comment) AGAINST('*W0:10,1:1 +Groonga' IN BOOLEAN MODE) AS score FROM books;
+</pre>
+
+0オリジンなので、titleカラムは0番目のセクション、commentカラムは1番目のセクションに対応しています。
+
+3.12以降では、1オリジンなので、titleカラムは1番目のセクション、commentカラムは2番目のセクションに対応します。同じクエリをMroonga 3.12対応にするには次のように書き換えます。
+
+<pre>
+SELECT title, comment, MATCH (title,comment) AGAINST('*W1:10,2:1 +Groonga' IN BOOLEAN MODE) AS score FROM books;
+</pre>
 
 h3. さいごに
 
