@@ -327,7 +327,44 @@ Install::
 CentOS 6
 --------
 
+In CentOS 6, we use CentOS's SCL MySQL packages (version 5.5.x) since Mroonga 4.01 release.
+
+Install::
+
+  % sudo yum install centos-release-SCL
+  % sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+  % sudo yum makecache
+  % sudo yum install -y mysql mysql55-mysql-server
+  % sudo /etc/init.d/mysql55-mysqld start
+  % sudo yum install -y mysql55-mroonga
+  (% sudo scl enable mysql55 mysqladmin -u root password 'new-password')
+
+If you want to use `MeCab <http://mecab.sourceforge.net/>`_ as a tokenizer. please install groonga-tokenizer-mecab package.
+
+Install groonga-tokenizer-mecab package::
+
+  % sudo yum install -y groonga-tokenizer-mecab
+
+If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.
+
+Install groonga-normalizer-mysql package::
+
+  % sudo yum install -y install groonga-normalizer-mysql
+
+.. note::
+
+   If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
+   MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.
+
+
+CentOS 6 (Deprecated)
+---------------------
+
 In CentOS 6, unlike in CentOS 5, we use CentOS's MySQL packages (version 5.1.x). So you don't need to remove CentOS's MySQL packages.
+
+.. note::
+
+   Since Mroonga 4.01 release, mysql-mroonga package is marked as deprecated. Please use mysql55-mroonga package instead.
 
 Install::
 
@@ -406,6 +443,12 @@ Install::
 
   % brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql
 
+If you want to use `MeCab <http://mecab.sourceforge.net/>`_ as a tokenizer. please add '--with-mecab' option to install Groonga with MeCab support.
+
+Install with MeCab support::
+
+  % brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql --with-mecab
+
 .. seealso:: `mroonga/homebrew on GitHub <https://github.com/mroonga/homebrew>`_
 
 
@@ -435,12 +478,12 @@ None for now.
 Zip
 ^^^
 
-For 32-bit environment, download `mariadb-10.0.7-with-mroonga-4.00-win32.zip
-<http://packages.groonga.org/windows/mroonga/mariadb-10.0.7-with-mroonga-4.00-win32.zip>`_
+For 32-bit environment, download `mariadb-10.0.9-with-mroonga-4.01-win32.zip
+<http://packages.groonga.org/windows/mroonga/mariadb-10.0.9-with-mroonga-4.01-win32.zip>`_
 and extract it.
 
-For 64-bit environment, download `mariadb-10.0.7-with-mroonga-4.00-winx64.zip
-<http://packages.groonga.org/windows/mroonga/mariadb-10.0.7-with-mroonga-4.00-winx64.zip>`_
+For 64-bit environment, download `mariadb-10.0.9-with-mroonga-4.01-winx64.zip
+<http://packages.groonga.org/windows/mroonga/mariadb-10.0.9-with-mroonga-4.01-winx64.zip>`_
 and extract it.
 
 Install Mroonga
@@ -591,6 +634,11 @@ Invoke CREATE FUNCTION like the following. ::
 
  mysql> CREATE FUNCTION mroonga_command RETURNS STRING SONAME 'ha_mroonga.so';
 
+To enable escaping given string properly, install mroonga_escape function.
+
+Invoke CREATE FUNCTION like the following. ::
+
+ mysql> CREATE FUNCTION mroonga_escape RETURNS STRING SONAME 'ha_mroonga.so';
 
 Install from the source code with MariaDB
 -----------------------------------------
@@ -692,6 +740,11 @@ Invoke CREATE FUNCTION like the following. ::
 
  mysql> CREATE FUNCTION mroonga_command RETURNS STRING SONAME 'ha_mroonga.so';
 
+To enable escaping given string properly, install mroonga_escape function.
+
+Invoke CREATE FUNCTION like the following. ::
+
+ mysql> CREATE FUNCTION mroonga_escape RETURNS STRING SONAME 'ha_mroonga.so';
 
 Upgrade Guide
 -------------
