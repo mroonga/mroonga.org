@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.1. mroonga_escape &mdash; Mroonga v4.01 documentation</title>
+    <title>4.1. mroonga_escape &mdash; Mroonga v4.02 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '4.01',
+        VERSION:     '4.02',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.01 documentation" href="../../index.html" />
+    <link rel="top" title="Mroonga v4.02 documentation" href="../../index.html" />
     <link rel="up" title="4. UDF (User Defined Functions)" href="../udf.html" />
     <link rel="next" title="4.2. mroonga_snippet" href="mroonga_snippet.html" />
     <link rel="prev" title="4. UDF (User Defined Functions)" href="../udf.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="../udf.html" title="4. UDF (User Defined Functions)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Mroonga v4.01 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
           <li><a href="../../reference.html" >4. Reference</a> &raquo;</li>
           <li><a href="../udf.html" accesskey="U">4. UDF (User Defined Functions)</a> &raquo;</li> 
       </ul>
@@ -101,7 +101,15 @@ It also accepts parameter what character should be escaped.</p>
 </div>
 <div class="section" id="usage">
 <h2>4.1.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<p>Here is the example query which use special characters to be escaped:</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT * FROM `symbols` WHERE MATCH(`content`) AGAINST(mroonga_escape(&quot;+hello_world()&quot;, &quot;()&quot;) IN BOOLEAN MODE);
+</pre></div>
+</div>
+<p>Here is the example about special characters which is escaped:</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_escape(&quot;+-&lt;&gt;~*()\&quot;\:&quot;);
+&#39;\\+\\-\\&lt;\\&gt;\\~\\*\\(\\)\\&quot;\\:
+</pre></div>
+</div>
 </div>
 <div class="section" id="parameters">
 <h2>4.1.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
@@ -119,6 +127,7 @@ It also accepts parameter what character should be escaped.</p>
 <div class="section" id="special-characters">
 <h4>4.1.4.2.1. <tt class="docutils literal"><span class="pre">special_characters</span></tt><a class="headerlink" href="#special-characters" title="Permalink to this headline">¶</a></h4>
 <p>It specifies characters to escape.</p>
+<p>The default value is <tt class="docutils literal"><span class="pre">+-&lt;&gt;~*()&quot;:</span></tt>.</p>
 </div>
 </div>
 </div>
@@ -198,7 +207,7 @@ It also accepts parameter what character should be escaped.</p>
         <li class="right" >
           <a href="../udf.html" title="4. UDF (User Defined Functions)"
              >previous</a> |</li>
-        <li><a href="../../index.html">Mroonga v4.01 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
           <li><a href="../../reference.html" >4. Reference</a> &raquo;</li>
           <li><a href="../udf.html" >4. UDF (User Defined Functions)</a> &raquo;</li> 
       </ul>

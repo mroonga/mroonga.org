@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News &mdash; Mroonga v4.01 documentation</title>
+    <title>News &mdash; Mroonga v4.02 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.01',
+        VERSION:     '4.02',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.01 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v4.02 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -64,7 +64,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="index.html">Mroonga v4.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.02 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -75,10 +75,56 @@
             
   <div class="section" id="news">
 <h1>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="release-4-01-2014-03-29">
-<span id="release-4-01"></span><h2>Release 4.01 - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="release-4-02-2014-04-29">
+<span id="release-4-02"></span><h2>Release 4.02 - 2014/04/29<a class="headerlink" href="#release-4-02-2014-04-29" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Supported MariaDB 10.0.10 [#2460] [Reported by Kazuhiko Shiozaki]</li>
+<li>Supported MySQL 5.6.17.</li>
+<li>Supported Ubuntu 14.04 LTS Trusty Tahr.</li>
+<li>Enabled MariaDB bundled build.</li>
+<li>Dropped Ubuntu 12.10 Quantal Quetzal support.</li>
+<li>[doc] Updated MySQL version. [GitHub#8] [Patch by cosmo0920]</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>[storage] Stopped to use truncate for <tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></tt>.
+[groonga-dev,02222] [Reported by GMO Media, Inc.]</li>
+<li>[wrapper] Stopped to use truncate for <tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></tt>.</li>
+<li>[storage] Fixed a bug that inplace alter table with no primary key
+crashes. [groonga-dev,02227] [Reported by GMO Media, Inc.]</li>
+<li>[storage] Fixed a bug that <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">function(vector_reference_column)</span></tt>
+doesn't work.
+[groonga-dev,02234] [Reported by Naoya Murakami]</li>
+<li>Fixed a bug that setting the current value to <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt>
+or <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt> crash.
+[GitHub#6] [Patch by Satoshi MITANI]</li>
+<li>Fixed a bug that <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt> in my.cnf or command line option
+is ignored.
+[GitHub#7] [Patch by GMO Media, Inc.]</li>
+<li>Fixed a bug that deleting by primary key doesn't update unique index.
+[groonga-dev,02244] [Reported by Akihiro Tsukui]</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Kazuhiko Shiozaki</li>
+<li>GMO Media, Inc.</li>
+<li>Naoya Murakami</li>
+<li>Satoshi MITANI</li>
+<li>Akihiro Tsukui</li>
+<li>cosmo0920</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-4-01-2014-03-29">
+<span id="release-4-01"></span><h2>Release 4.01 - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported MariaDB 10.0.9 [#2387] [Reported by Kazuhiko Shiozaki]</li>
 <li>Supported ten or more sections in W pragma [#2348] [groonga-dev,02138]
@@ -86,8 +132,8 @@
 <li>[rpm][centos] Supported SCL MySQL package on CentOS 6.</li>
 </ul>
 </div>
-<div class="section" id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage] Fixed a bug that ALTER TABLE with fulltext index which refer to table causes mysqld crash.
 [#2327] [groonga-dev,02130] [Reported by Naoya Murakami]</li>
@@ -95,8 +141,8 @@
 [GitHub#5] [Patch by Naoya Murakami]</li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>yoku0825</li>
 <li>Naoya Murakami</li>
@@ -109,16 +155,16 @@
 <ul class="simple">
 <li>Bump version to 4.00! We recommend to upgrade because crash bug and updating issue are fixed now!</li>
 </ul>
-<div class="section" id="id1">
-<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Dropped Ubuntu 13.04 (Raring Ringtail) support.</li>
 <li>[storage] Supported to search with empty string.
 [#2214] [groonga-dev,02052] [Reported by Naoya Murakami]</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed a crash bug that bulk inserting null value into geometry column which has NOT NULL constraint.
 [#2281] [groonga-dev,02095] [Reported by yoku]</li>
@@ -127,8 +173,8 @@ UPDATE. In the previous versions, such a query can't update the value of column 
 [#2263] [Reported Masahiro Nagano]</li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h3>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Thanks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>yoku</li>
 <li>Naoya Murakami</li>
@@ -138,8 +184,8 @@ UPDATE. In the previous versions, such a query can't update the value of column 
 </div>
 <div class="section" id="release-3-12-2014-01-29">
 <span id="release-3-12"></span><h2>Release 3.12 - 2014/01/29<a class="headerlink" href="#release-3-12-2014-01-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Added a new system variable <em class="xref std std-ref">mroonga_lock_timeout</em>. By changing this global variable,
 You can customize Groonga's lock timeout dynamically.</li>
@@ -149,8 +195,8 @@ Mroonga uses omitted section as weight 1. This behaviour is same as Tritonn.
 [#2152] [Patch by Kenji Maruyama]</li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h3>Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed a crash bug on FLUSH TABLES during SELECT MATCH AGAINST ... [#2137] [Reported by yoku]</li>
 <li>Fixed wrong implementation for &quot;W&quot; pragma. It was changed to 1-origin. [#2151]
@@ -161,8 +207,8 @@ This is incompatible change, please check existing query which use &quot;W&quot;
 [groonga-dev,02052] [Reported by Naoya Murakami]</li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h3>Thanks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>Thanks<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>yoku</li>
 <li>Naoya Murakami</li>
@@ -171,8 +217,8 @@ This is incompatible change, please check existing query which use &quot;W&quot;
 </div>
 <div class="section" id="release-3-11-2013-12-29">
 <span id="release-3-11"></span><h2>Release 3.11 - 2013/12/29<a class="headerlink" href="#release-3-11-2013-12-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id7">
-<h3>Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>Improvements<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[deb] Dropped Debian 6.0 (squeeze) support.</li>
 <li>[deb] Dropped Ubuntu 10.04 (lucid) support.</li>
@@ -196,16 +242,16 @@ Note that it requres Groonga 3.1.1 or later. [groonga-dev,01943] [Suggested by y
 <li>Dropped mysql-mroonga package on CentOS 5. Use mysql55-mroonga package instead.</li>
 </ul>
 </div>
-<div class="section" id="id8">
-<h3>Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>Fixes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage] Fixed a bug that MySQL crashes on 'LOCK TABLE .. READ' when dumping/restoring. [#2098]</li>
 <li>Fixed wrong implementation for &quot;*D-&quot; pragma. [#2099]</li>
 <li>Fixed a memory leak on full text search. It affects such as &quot;MATCH AGAINST ... ORDER BY LIMIT ...&quot;. [#2144]</li>
 </ul>
 </div>
-<div class="section" id="id9">
-<h3>Thanks<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>Thanks<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Horikoshi Yuki</li>
 <li>yoku</li>
@@ -214,15 +260,15 @@ Note that it requres Groonga 3.1.1 or later. [groonga-dev,01943] [Suggested by y
 </div>
 <div class="section" id="release-3-10-2013-11-29">
 <span id="release-3-10"></span><h2>Release 3.10 - 2013/11/29<a class="headerlink" href="#release-3-10-2013-11-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id10">
-<h3>Improvements<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>Improvements<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported MariaDB 10.0.6.</li>
 <li>[plugin][mroonga_snippet] Improved to report not supported charset in error message.</li>
 </ul>
 </div>
-<div class="section" id="id11">
-<h3>Fixes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>Fixes<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed multi range read disk sweep issue. [groonga-dev,01715] [#1959]
 The problem that query which has &quot;WHERE IN (...)&quot; clause causes an error is fixed. [Reported by Kimura]</li>
@@ -237,8 +283,8 @@ The problem that query which has &quot;WHERE IN (...)&quot; clause causes an err
 special column. [#2085] [Reported by Alexander Barkov]</li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h3>Thanks<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>Thanks<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kimura</li>
 <li>Alexander Barkov</li>
@@ -247,8 +293,8 @@ special column. [#2085] [Reported by Alexander Barkov]</li>
 </div>
 <div class="section" id="release-3-09-2013-10-29">
 <span id="release-3-09"></span><h2>Release 3.09 - 2013/10/29<a class="headerlink" href="#release-3-09-2013-10-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id13">
-<h3>Improvements<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>Improvements<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported Ubuntu 13.10 (Saucy Salamander).</li>
 <li>[rpm][centos] Supported rpm packages for MySQL 5.5 on CentOS 5.
@@ -256,8 +302,8 @@ It provides mysql55-mroonga to support mysql55-mysql packages.
 [groonga-dev,01860] [Reported by WING]</li>
 </ul>
 </div>
-<div class="section" id="id14">
-<h3>Fixes<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>Fixes<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[wrapper] Fixed a memory leak. It occurs when wrapper
 handler doesn't destroy mutexes properly. MyISAM is known
@@ -266,8 +312,8 @@ as effected storage engine.</li>
 [#2015] [groonga-dev,01867] [Reported by Ichiro Yasuda]</li>
 </ul>
 </div>
-<div class="section" id="id15">
-<h3>Thanks<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>Thanks<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>WING</li>
 <li>Ichiro Yasuda</li>
@@ -276,8 +322,8 @@ as effected storage engine.</li>
 </div>
 <div class="section" id="release-3-08-2013-9-29">
 <span id="release-3-08"></span><h2>Release 3.08 - 2013/9/29<a class="headerlink" href="#release-3-08-2013-9-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id16">
-<h3>Improvements<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3>Improvements<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[doc] Added missing description about wrapper mode specific issue.
 [groonga-dev,01747] [Reported by Kazuhiro Isobe]</li>
@@ -291,8 +337,8 @@ as effected storage engine.</li>
 [Reported by WING]</li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h3>Fixes<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id20">
+<h3>Fixes<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed a bug that mroonga is accidentally removed on upgrade. [#1918]
 [Reported by &#64;ceekz]</li>
@@ -301,8 +347,8 @@ as effected storage engine.</li>
 This memory leak occurs when log file name is changed.</li>
 </ul>
 </div>
-<div class="section" id="id18">
-<h3>Thanks<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h3>Thanks<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kazuhiro Isobe</li>
 <li>Tomoatsu Shimada</li>
@@ -314,8 +360,8 @@ This memory leak occurs when log file name is changed.</li>
 </div>
 <div class="section" id="release-3-07-2013-8-29">
 <span id="release-3-07"></span><h2>Release 3.07 - 2013/8/29<a class="headerlink" href="#release-3-07-2013-8-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id19">
-<h3>Improvements<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id22">
+<h3>Improvements<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Added <a class="reference internal" href="reference/udf/mroonga_escape.html"><em>mroonga_escape</em></a> UDF which escapes special characters in query
 for BOOLEAN MODE. [groonga-dev,01576] [Suggested by Kouhei Tanabe]</li>
@@ -324,8 +370,8 @@ for BOOLEAN MODE. [groonga-dev,01576] [Suggested by Kouhei Tanabe]</li>
 <li>Supported MariaDB 10.0.4. [Reported by WING] [Reported by yoku ts]</li>
 </ul>
 </div>
-<div class="section" id="id20">
-<h3>Fixes<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3>Fixes<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[mariadb] Fixed a crash bug when installing plugin on Windows.</li>
 <li>[storage][mysql55] Fixed a bug that changing column that has index fails.
@@ -338,8 +384,8 @@ It should be indexed to handle COLLATION properly.</li>
 <li>Fixed a bug that missing internal flag causes crash on MySQL 5.6.13.</li>
 </ul>
 </div>
-<div class="section" id="id21">
-<h3>Thanks<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id24">
+<h3>Thanks<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kouhei Tanabe</li>
 <li>Chang</li>
@@ -350,8 +396,8 @@ It should be indexed to handle COLLATION properly.</li>
 </div>
 <div class="section" id="release-3-06-2013-7-29">
 <span id="release-3-06"></span><h2>Release 3.06 - 2013/7/29<a class="headerlink" href="#release-3-06-2013-7-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id22">
-<h3>Improvements<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id25">
+<h3>Improvements<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Added <a class="reference internal" href="reference/server_variables.html#mroonga-action-on-fulltext-query-error"><em>mroonga_action_on_fulltext_query_error</em></a> session variable.
 This affects how to report errors about invalid escape.
@@ -364,8 +410,8 @@ storage engine which supports transaction.</li>
 <li>Dropped Fedora 18 support.</li>
 </ul>
 </div>
-<div class="section" id="id23">
-<h3>Thanks<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id26">
+<h3>Thanks<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kouhei Tanabe</li>
 <li>Naoya Murakami</li>
@@ -374,8 +420,8 @@ storage engine which supports transaction.</li>
 </div>
 <div class="section" id="release-3-05-2013-6-29">
 <span id="release-3-05"></span><h2>Release 3.05 - 2013/6/29<a class="headerlink" href="#release-3-05-2013-6-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id24">
-<h3>Improvements<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id27">
+<h3>Improvements<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Added warnings for truncated date data. [#1768] [Suggested by Y.Kentaro]</li>
 <li>Supported MySQL 5.6.12. [Reported by WING]</li>
@@ -384,8 +430,8 @@ storage engine which supports transaction.</li>
 [#1760] [Reported by WING]</li>
 </ul>
 </div>
-<div class="section" id="id25">
-<h3>Fixes<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id28">
+<h3>Fixes<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed a bug that three or more sections in W pragma doesn't work.
 [#1770] [Reported by shizuin]</li>
@@ -400,8 +446,8 @@ is specified. [Reported by &#64;memorycraft]</li>
 are used same time. [#1778] [Reported by Y.Kentaro]</li>
 </ul>
 </div>
-<div class="section" id="id26">
-<h3>Thanks<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id29">
+<h3>Thanks<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Y.Kentaro</li>
 <li>WING</li>
@@ -413,8 +459,8 @@ are used same time. [#1778] [Reported by Y.Kentaro]</li>
 </div>
 <div class="section" id="release-3-04-2013-5-29">
 <span id="release-3-04"></span><h2>Release 3.04 - 2013/5/29<a class="headerlink" href="#release-3-04-2013-5-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id27">
-<h3>Improvements<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id30">
+<h3>Improvements<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Improved MariaDB 10.0.2 support. [#1729]</li>
 <li>[doc] Updated supported SQL command list. [Reported by Y.Kentaro]</li>
@@ -439,8 +485,8 @@ deleted. [#1738]</li>
 <li>Supported Debian 8.0 (jessie)</li>
 </ul>
 </div>
-<div class="section" id="id28">
-<h3>Fixes<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id31">
+<h3>Fixes<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed a bug that empty query search causes SEGV.
 [groonga-dev,01346] [Reported by Nakai Kanako]</li>
@@ -455,8 +501,8 @@ deleted. [#1738]</li>
 engine name causes a missing table. [Reported by Y.Kentaro]</li>
 </ul>
 </div>
-<div class="section" id="id29">
-<h3>Thanks<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id32">
+<h3>Thanks<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Y.Kentaro</li>
 <li>Nakai Kanako</li>
@@ -469,8 +515,8 @@ engine name causes a missing table. [Reported by Y.Kentaro]</li>
 </div>
 <div class="section" id="release-3-03-2013-4-29">
 <span id="release-3-03"></span><h2>Release 3.03 - 2013/4/29<a class="headerlink" href="#release-3-03-2013-4-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id30">
-<h3>Improvements<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id33">
+<h3>Improvements<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[doc] Added documentation about table limitations. [groonga-dev,01281]
 [Reported by Kazuhiro Isobe]</li>
@@ -492,8 +538,8 @@ Supported syntax is <tt class="docutils literal"><span class="pre">FULLTEXT</spa
 <li>Supported Ubuntu 13.04 Raring Ringtail.</li>
 </ul>
 </div>
-<div class="section" id="id31">
-<h3>Fixes<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id34">
+<h3>Fixes<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage] Fixed a bug that stored value can't be searched because of
 unexpected cast for integer. [#1696] [groonga-dev,01266]
@@ -511,8 +557,8 @@ a long ambiguous sentence. [Reported by Ichiro Suzuki]</li>
 [groonga-dev,01319] [Reported by Kouhei Tanabe]</li>
 </ul>
 </div>
-<div class="section" id="id32">
-<h3>Thanks<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id35">
+<h3>Thanks<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>smztks</li>
 <li>Masahiro Furuta</li>
@@ -524,8 +570,8 @@ a long ambiguous sentence. [Reported by Ichiro Suzuki]</li>
 </div>
 <div class="section" id="release-3-02-2013-3-29">
 <span id="release-3-02"></span><h2>Release 3.02 - 2013/3/29<a class="headerlink" href="#release-3-02-2013-3-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id33">
-<h3>Improvements<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3>Improvements<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Improved bundling to MariaDB 10.0 for Linux. [#1644]</li>
 <li>Added the value of list documentation about <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt>
@@ -534,8 +580,8 @@ in reference manual. [groonga-dev,01255] [Reported by Kazuhiro Isobe]</li>
 This UDF supports to send query directly to <tt class="docutils literal"><span class="pre">groonga</span></tt>.</li>
 </ul>
 </div>
-<div class="section" id="id34">
-<h3>Fixes<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id37">
+<h3>Fixes<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed a bug that less than conditional expression on WHERE clause doesn't work
 for multiple nullable column index. [groonga-dev,01253] [#1670]
@@ -545,8 +591,8 @@ This bug may occurs when recreating indexes by DISABLE KEYS/ENABLE KEYS. [#1671]
 [Reported by keigo ito]</li>
 </ul>
 </div>
-<div class="section" id="id35">
-<h3>Thanks<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id38">
+<h3>Thanks<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kazuhiro Isobe</li>
 <li>Horikoshi Yuki</li>
@@ -556,24 +602,24 @@ This bug may occurs when recreating indexes by DISABLE KEYS/ENABLE KEYS. [#1671]
 </div>
 <div class="section" id="release-3-01-2013-2-28">
 <span id="release-3-01"></span><h2>Release 3.01 - 2013/2/28<a class="headerlink" href="#release-3-01-2013-2-28" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id36">
-<h3>Improvements<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id39">
+<h3>Improvements<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported <tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> and <tt class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></tt>.
 Note that <tt class="docutils literal"><span class="pre">groonga-normalizer-mysql</span></tt> &gt;= 1.0.1 is required.</li>
 <li>[experimental] Supported foreign key for storage mode. [#1612]</li>
 </ul>
 </div>
-<div class="section" id="id37">
-<h3>Fixes<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id40">
+<h3>Fixes<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed groonga derived bug that the records in specific range returns 0 records
 unexpectedly. [groonga-dev,01192] [Reported by b senboku]</li>
 <li>Fixed to disable DTrace by default for Mac OS X.</li>
 </ul>
 </div>
-<div class="section" id="id38">
-<h3>Thanks<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id41">
+<h3>Thanks<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>b senboku</li>
 </ul>
@@ -581,8 +627,8 @@ unexpectedly. [groonga-dev,01192] [Reported by b senboku]</li>
 </div>
 <div class="section" id="release-3-00-2013-2-9">
 <span id="release-3-00"></span><h2>Release 3.00 - 2013/2/9<a class="headerlink" href="#release-3-00-2013-2-9" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id39">
-<h3>Improvements<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id42">
+<h3>Improvements<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported Fedora 18.</li>
 <li>Dropped Fedora 17 support.</li>
@@ -591,15 +637,15 @@ compatible normalizer.</li>
 <li>[rpm][centos] Supported MySQL 5.6.10 on CentOS 5.</li>
 </ul>
 </div>
-<div class="section" id="id40">
-<h3>Fixes<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id43">
+<h3>Fixes<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage] Fixed a groonga derived bug that unique key doesn't
 match mixed case keyword. [groonga-dev,01187] [Reported by Kouhei Tanabe]</li>
 </ul>
 </div>
-<div class="section" id="id41">
-<h3>Thanks<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id44">
+<h3>Thanks<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kouhei Tanabe</li>
 </ul>
@@ -607,8 +653,8 @@ match mixed case keyword. [groonga-dev,01187] [Reported by Kouhei Tanabe]</li>
 </div>
 <div class="section" id="release-2-10-2012-12-29">
 <span id="release-2-10"></span><h2>Release 2.10 - 2012/12/29<a class="headerlink" href="#release-2-10-2012-12-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id42">
-<h3>Improvements<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id45">
+<h3>Improvements<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported to use ENABLE KEYS/DISABLE KEYS against table whose charset is
 different from system charset. [Reported by &#64;kokoronavi]</li>
@@ -619,16 +665,16 @@ This change improves search speed against <tt class="docutils literal"><span cla
 <li>Dropped Ubuntu 11.04 (Natty Narwhal) support.</li>
 </ul>
 </div>
-<div class="section" id="id43">
-<h3>Fixes<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id46">
+<h3>Fixes<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[rpm][centos] Fixed to use MySQL 5.1.66-2 on CentOS 6. [Reported by &#64;wakisuke.ua]</li>
 <li>Fixed a bug that <tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></tt> with <tt class="docutils literal"><span class="pre">INNER</span> <span class="pre">JOIN</span></tt> syntax causes an error.
 [Reported by ooshiro]</li>
 </ul>
 </div>
-<div class="section" id="id44">
-<h3>Thanks<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id47">
+<h3>Thanks<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;kokoronavi</li>
 <li>&#64;wakisuke.ua</li>
@@ -663,16 +709,16 @@ please recreate index.</p>
 mysql&gt; ALTER TABLE table_name ADD PRIMARY KEY(column_name);
 </pre></div>
 </div>
-<div class="section" id="id45">
-<h3>Improvements<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id48">
+<h3>Improvements<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[rpm][centos] Supported MySQL 5.5.28 on CentOS 5.</li>
 <li>[rpm][centos] Supported MySQL 5.1.61 on CentOS 6.</li>
 <li>[wrapper mode] Supported last_insert_id() [#1540] [Reported by &#64;soundkitchen]</li>
 </ul>
 </div>
-<div class="section" id="id46">
-<h3>Fixes<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id49">
+<h3>Fixes<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[mysql51] Fixed crash bug by checking existence of utf8mb4.
 MySQL 5.1 doesn't have utf8mb4. [groonga-dev,01069] [Reported by wakisuke]</li>
@@ -686,8 +732,8 @@ it has one more spaces at the last and require index recreation.</li>
 This is backward incompatible change.</li>
 </ul>
 </div>
-<div class="section" id="id47">
-<h3>Thanks<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id50">
+<h3>Thanks<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;soundkitchen</li>
 <li>wakisuke</li>
@@ -709,8 +755,8 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
 </div>
 </div>
-<div class="section" id="id48">
-<h3>Improvements<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id51">
+<h3>Improvements<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Supported <tt class="docutils literal"><span class="pre">INFORMATION_SCHEMA.TABLES.DATA_LENGTH</span></tt>.
 [Suggested by &#64;9m]</li>
@@ -719,8 +765,8 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <li>[rpm][fedora] Supported MySQL 5.5.28.</li>
 </ul>
 </div>
-<div class="section" id="id49">
-<h3>Fixes<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id52">
+<h3>Fixes<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Fixed unique judge problem of multiple column unique index
 with date column. [groonga-dev,01041] [#1495] [Reported by jd fonc]</li>
@@ -733,8 +779,8 @@ with date column. [groonga-dev,01041] [#1495] [Reported by jd fonc]</li>
 [groonga-dev,01061] [Reported by Kazuhiro Isobe]</li>
 </ul>
 </div>
-<div class="section" id="id50">
-<h3>Thanks<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id53">
+<h3>Thanks<a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;9m</li>
 <li>warp kawada</li>
@@ -747,23 +793,23 @@ with date column. [groonga-dev,01041] [#1495] [Reported by jd fonc]</li>
 </div>
 <div class="section" id="release-2-07-2012-09-29">
 <span id="release-2-07"></span><h2>Release 2.07 - 2012/09/29<a class="headerlink" href="#release-2-07-2012-09-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id51">
-<h3>Improvements<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id54">
+<h3>Improvements<a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[deb] Enabled AppArmor configuration for MeCab. [Reported by &#64;Qurage]</li>
 <li>[storage mode][experimental] Added mroonga_snippet() function. [#1442]</li>
 </ul>
 </div>
-<div class="section" id="id52">
-<h3>Fixes<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id55">
+<h3>Fixes<a class="headerlink" href="#id55" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[rpm] Fixed <tt class="docutils literal"><span class="pre">groonga_required_version</span></tt>. [groonga-dev,01033] [Reported by wing]</li>
 <li>Fixed datetime out of range problems. [groonga-dev,01035] [#1476]
 [Reported by Nakatani Munetaka]</li>
 </ul>
 </div>
-<div class="section" id="id53">
-<h3>Thanks<a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id56">
+<h3>Thanks<a class="headerlink" href="#id56" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;Qurage</li>
 <li>wing</li>
@@ -779,14 +825,14 @@ with date column. [groonga-dev,01041] [#1495] [Reported by jd fonc]</li>
 But this release depends on new functionality introduced at groonga 2.0.6.
 Note that you must use mroonga 2.06 with groonga 2.0.6.</p>
 </div>
-<div class="section" id="id54">
-<h3>Improvements<a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id57">
+<h3>Improvements<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported &quot;-WORD&quot; syntax in BOOLEAN MODE.</li>
 </ul>
 </div>
-<div class="section" id="id55">
-<h3>Fixes<a class="headerlink" href="#id55" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id58">
+<h3>Fixes<a class="headerlink" href="#id58" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed nallowing records by &quot;order by&quot; clause with fulltext condition.
 [groonga-dev,00977] [#1422] [Reported by Nakatani Munetaka]</li>
@@ -795,8 +841,8 @@ Note that you must use mroonga 2.06 with groonga 2.0.6.</p>
 [groonga-dev,01009] [Reported by wing]</li>
 </ul>
 </div>
-<div class="section" id="id56">
-<h3>Thanks<a class="headerlink" href="#id56" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id59">
+<h3>Thanks<a class="headerlink" href="#id59" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;nabebeb</li>
 <li>wing</li>
@@ -855,8 +901,8 @@ a MySQL's system table.</p>
 </pre></div>
 </div>
 <p>Now, we can use mroonga 2.05.</p>
-<div class="section" id="id57">
-<h3>Improvements<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id60">
+<h3>Improvements<a class="headerlink" href="#id60" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Supported index for SET column.</li>
 <li>[rpm] Supported MySQL 5.5.25a.</li>
@@ -870,14 +916,14 @@ MEDIUMINT UNSIGNED/INT UNSIGNED/BIGINT UNSIGNED type.</li>
 </div>
 <div class="section" id="release-2-04-2012-06-29">
 <span id="release-2-04"></span><h2>Release 2.04 - 2012/06/29<a class="headerlink" href="#release-2-04-2012-06-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id58">
-<h3>Improvements<a class="headerlink" href="#id58" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id61">
+<h3>Improvements<a class="headerlink" href="#id61" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[wrapper mode] Supported disable/enable keys in bulk insert. [#1311]</li>
 </ul>
 </div>
-<div class="section" id="id59">
-<h3>Fixes<a class="headerlink" href="#id59" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id62">
+<h3>Fixes<a class="headerlink" href="#id62" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed to disable query cache with transaction. [#1384]</li>
 <li>Disabled partition explicitly. [#1391]</li>
@@ -889,8 +935,8 @@ variable. [#1404] [Reported by &#64;nabebeb]</li>
 [groonga-dev,00914] [#1392] [Suggested by Kazuhiro Isobe]</li>
 </ul>
 </div>
-<div class="section" id="id60">
-<h3>Thanks<a class="headerlink" href="#id60" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id63">
+<h3>Thanks<a class="headerlink" href="#id63" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kazuhiro Isobe</li>
 <li>&#64;nabebeb</li>
@@ -911,8 +957,8 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
 </div>
 </div>
-<div class="section" id="id61">
-<h3>Improvements<a class="headerlink" href="#id61" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id64">
+<h3>Improvements<a class="headerlink" href="#id64" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Supported disable/enable keys in bulk insert.
 [#1310]</li>
@@ -927,8 +973,8 @@ convension such as centos-release and fedora-release.</li>
 See <a class="reference internal" href="install.html"><em>Installation Guide</em></a> about details.</li>
 </ul>
 </div>
-<div class="section" id="id62">
-<h3>Fixes<a class="headerlink" href="#id62" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id65">
+<h3>Fixes<a class="headerlink" href="#id65" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed build failure on Mac OS X.</li>
 <li>[wrapper mode] Fixed a bug that searching in transaction reports not
@@ -942,8 +988,8 @@ found error.
 [#1379][groonga-dev,00902] [Reported by Kenji Doi]</li>
 </ul>
 </div>
-<div class="section" id="id63">
-<h3>Thanks<a class="headerlink" href="#id63" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id66">
+<h3>Thanks<a class="headerlink" href="#id66" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Takken Ishibashi</li>
 <li>Iwai, Masaharu</li>
@@ -982,8 +1028,8 @@ you have <tt class="docutils literal"><span class="pre">SET</span></tt> type and
 dump your table before upgrade and restore your table after
 upgrade.</p>
 </div>
-<div class="section" id="id64">
-<h3>Improvements<a class="headerlink" href="#id64" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id67">
+<h3>Improvements<a class="headerlink" href="#id67" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Added workaround for build for GCC 4.7 and MySQL 5.5.22.
 The combination makes build error with <tt class="docutils literal"><span class="pre">-Wdeprecated</span></tt> gcc
@@ -1008,8 +1054,8 @@ of phrase search for <tt class="docutils literal"><span class="pre">MATCH</span>
 <li>Supported Ubuntu 12.04 Precise Pangolin.</li>
 </ul>
 </div>
-<div class="section" id="id65">
-<h3>Fixes<a class="headerlink" href="#id65" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id68">
+<h3>Fixes<a class="headerlink" href="#id68" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Fixed wrong key length is used.</li>
 <li>Fixed a crash bug that is caused when searching with updaging very large
@@ -1022,8 +1068,8 @@ inverted index. [#1321]
 combination. [#1319] [groonga-dev,00736] [Reported by Takayuki Honda]</li>
 </ul>
 </div>
-<div class="section" id="id66">
-<h3>Thanks<a class="headerlink" href="#id66" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id69">
+<h3>Thanks<a class="headerlink" href="#id69" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Takashi Kawano</li>
 <li>&#64;boss_sato</li>
@@ -1037,8 +1083,8 @@ combination. [#1319] [groonga-dev,00736] [Reported by Takayuki Honda]</li>
 </div>
 <div class="section" id="release-2-01-2012-03-29">
 <span id="release-2-01"></span><h2>Release 2.01 - 2012/03/29<a class="headerlink" href="#release-2-01-2012-03-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id67">
-<h3>Improvements<a class="headerlink" href="#id67" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id70">
+<h3>Improvements<a class="headerlink" href="#id70" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported MySQL 5.5.22.</li>
 <li>Supported MySQL 5.1.62.</li>
@@ -1074,8 +1120,8 @@ build flags. [Reported by Kazuhiko]</li>
 <li>Updated HTML design.</li>
 </ul>
 </div>
-<div class="section" id="id68">
-<h3>Fixes<a class="headerlink" href="#id68" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id71">
+<h3>Fixes<a class="headerlink" href="#id71" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Fixed a memory leak.</li>
 <li>[storage mode] Fixed a bug that search by multi column
@@ -1091,8 +1137,8 @@ may return broken value on 32bit environment.
 return 0. [groonga-dev,00736] [Reported by Takayuki Honda]</li>
 </ul>
 </div>
-<div class="section" id="id69">
-<h3>Thanks<a class="headerlink" href="#id69" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id72">
+<h3>Thanks<a class="headerlink" href="#id72" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;ytaka5</li>
 <li>&#64;104yuki_n</li>
@@ -1152,8 +1198,8 @@ a MySQL's system table.</p>
 </pre></div>
 </div>
 <p>Now, we can use mroonga 2.00.</p>
-<div class="section" id="id70">
-<h3>Improvements<a class="headerlink" href="#id70" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id73">
+<h3>Improvements<a class="headerlink" href="#id73" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported MySQL 5.5.21.</li>
 <li>Required groonga 2.0.0 or later.</li>
@@ -1188,15 +1234,15 @@ geometry type like <tt class="docutils literal"><span class="pre">LineString</sp
 <tt class="docutils literal"><span class="pre">INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</span></tt>. [#1195]</li>
 </ul>
 </div>
-<div class="section" id="id71">
-<h3>Fixes<a class="headerlink" href="#id71" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id74">
+<h3>Fixes<a class="headerlink" href="#id74" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[rpm] Changed to ensure re-install plugin.</li>
 <li>[doc] Fixed wrong storage engine name. [Reported by Tomoatsu Shimada]</li>
 </ul>
 </div>
-<div class="section" id="id72">
-<h3>Thanks<a class="headerlink" href="#id72" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id75">
+<h3>Thanks<a class="headerlink" href="#id75" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;camyuy</li>
 <li>Takahiro Nagai</li>
@@ -1279,8 +1325,8 @@ a MySQL's system table.</p>
 </pre></div>
 </div>
 <p>Now, we can use mroonga 1.20.</p>
-<div class="section" id="id73">
-<h3>Improvements<a class="headerlink" href="#id73" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id76">
+<h3>Improvements<a class="headerlink" href="#id76" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported MySQL 5.5.20.</li>
 <li>Supported MySQL 5.1.61.</li>
@@ -1302,8 +1348,8 @@ groonga data types.</li>
 DATE, DATETIME and TIMESTAMP type values.</li>
 </ul>
 </div>
-<div class="section" id="id74">
-<h3>Fixes<a class="headerlink" href="#id74" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id77">
+<h3>Fixes<a class="headerlink" href="#id77" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[debian] Fixed wrong mysql-server-groonga version in
 replaces and breaks. [Reported by &#64;ytaka5]</li>
@@ -1311,8 +1357,8 @@ replaces and breaks. [Reported by &#64;ytaka5]</li>
 <li>[wrapper mode] Fixed a memory leak. [Reported by montywi]</li>
 </ul>
 </div>
-<div class="section" id="id75">
-<h3>Thanks<a class="headerlink" href="#id75" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id78">
+<h3>Thanks<a class="headerlink" href="#id78" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;ytaka5</li>
 <li>Hidekazu Tanaka</li>
@@ -1324,8 +1370,8 @@ replaces and breaks. [Reported by &#64;ytaka5]</li>
 </div>
 <div class="section" id="release-1-11-2011-12-29">
 <span id="release-1-11"></span><h2>Release 1.11 - 2011/12/29<a class="headerlink" href="#release-1-11-2011-12-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id76">
-<h3>Improvements<a class="headerlink" href="#id76" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id79">
+<h3>Improvements<a class="headerlink" href="#id79" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Supported MySQL 5.5.19.</li>
 <li>Supported MySQL 5.6.4.</li>
@@ -1340,8 +1386,8 @@ eucjpms, ujis and koi8r charset. [#1160] [Reported by nobody]</li>
 delete. [#1224] [Reported by Koichi Shishikura]</li>
 </ul>
 </div>
-<div class="section" id="id77">
-<h3>Fixes<a class="headerlink" href="#id77" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id80">
+<h3>Fixes<a class="headerlink" href="#id80" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] Fixed a bug that full text search on a
 table without primary key returns empty results. [#1193]
@@ -1351,8 +1397,8 @@ table without primary key returns empty results. [#1193]
 used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 </ul>
 </div>
-<div class="section" id="id78">
-<h3>Thanks<a class="headerlink" href="#id78" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id81">
+<h3>Thanks<a class="headerlink" href="#id81" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kazuhiko Shiozaki</li>
 <li>Arnaud Fontaine</li>
@@ -1367,8 +1413,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <p>Since this release, this project and product is called
 &quot;mroonga&quot; instead of &quot;groonga storage engine&quot;.</p>
 <p>This release introduces MariaDB support and fixes several bugs.</p>
-<div class="section" id="id79">
-<h3>Improvements<a class="headerlink" href="#id79" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id82">
+<h3>Improvements<a class="headerlink" href="#id82" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>rename to &quot;mroonga&quot; from &quot;groonga storage engine&quot;. #1170</li>
 <li>add groonga_libgroonga_version and groonga_version variables. #1158</li>
@@ -1390,8 +1436,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>[rpm] support i386.</li>
 </ul>
 </div>
-<div class="section" id="id80">
-<h3>Fixes<a class="headerlink" href="#id80" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id83">
+<h3>Fixes<a class="headerlink" href="#id83" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode] fix a bug that REPLACE INTO with TEXT column does not work. #1153 [Reported by Kazuhiko]</li>
 <li>[wrapper mode] fix a bug that INSERT inside LOCK TABLE does not work with InnoDB. #1154 [Reported by Kazuhiko]</li>
@@ -1399,8 +1445,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>fix a crash bug when FORCE INDEX with unknown key is used. #1181 [Reported by Takahiro Nagai]</li>
 </ul>
 </div>
-<div class="section" id="id81">
-<h3>Thanks<a class="headerlink" href="#id81" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id84">
+<h3>Thanks<a class="headerlink" href="#id84" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kazuhiko</li>
 <li>Horikoshi Yuki</li>
@@ -1412,8 +1458,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <div class="section" id="release-1-0-1-2011-10-29">
 <span id="release-1-0-1"></span><h2>Release 1.0.1 - 2011/10/29<a class="headerlink" href="#release-1-0-1-2011-10-29" title="Permalink to this headline">¶</a></h2>
 <p>The important changes in this release are the enhancement of geolocation search and the improvement of dynamic index modification in storage mode.</p>
-<div class="section" id="id82">
-<h3>Improvements<a class="headerlink" href="#id82" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id85">
+<h3>Improvements<a class="headerlink" href="#id85" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage mode][wrapper mode] support reopening a database by <cite>flush tables</cite>.</li>
 <li>[wrapper mode] support geolocation index. (Only Point type can be stored in a column. Search using index is only available for MBRContains).</li>
@@ -1431,8 +1477,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>support Ubuntu 11.10 Oneiric Ocelot.</li>
 </ul>
 </div>
-<div class="section" id="id83">
-<h3>Fixes<a class="headerlink" href="#id83" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id86">
+<h3>Fixes<a class="headerlink" href="#id86" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>fix a bug that we have no results if we specify '+' at the beginning of the query in boolean mode. [reported by Hajime Nishiyama]</li>
 <li>[Fedora] fix package dependencies. [reported by Takahiro Nagai]</li>
@@ -1440,8 +1486,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>[storage mode] fix a bug that index will not be correctly created if <cite>varchar</cite> is used in a multi-column index. #1143 [reported by Takahiro Nagai]</li>
 </ul>
 </div>
-<div class="section" id="id84">
-<h3>Thanks<a class="headerlink" href="#id84" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id87">
+<h3>Thanks<a class="headerlink" href="#id87" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>&#64;yoshi_ken</li>
 <li>Hajime Nishiyama</li>
@@ -1450,10 +1496,10 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 </div>
 </div>
 <div class="section" id="release-1-0-0">
-<span id="id85"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="Permalink to this headline">¶</a></h2>
+<span id="id88"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="Permalink to this headline">¶</a></h2>
 <p>初回リリースから約1年経って、初のメジャーリリース！</p>
-<div class="section" id="id86">
-<h3>改良<a class="headerlink" href="#id86" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id89">
+<h3>改良<a class="headerlink" href="#id89" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[ラッパーモード] drop index対応。 #1040</li>
 <li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
@@ -1470,8 +1516,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</li>
 </ul>
 </div>
-<div class="section" id="id87">
-<h3>修正<a class="headerlink" href="#id87" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id90">
+<h3>修正<a class="headerlink" href="#id90" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</li>
 <li>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</li>
@@ -1479,8 +1525,8 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</li>
 </ul>
 </div>
-<div class="section" id="id88">
-<h3>感謝<a class="headerlink" href="#id88" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id91">
+<h3>感謝<a class="headerlink" href="#id91" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Isao Sugimotoさん</li>
 <li>&#64;zaubermaerchenさん</li>
@@ -1518,187 +1564,193 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">News</a><ul>
-<li><a class="reference internal" href="#release-4-01-2014-03-29">Release 4.01 - 2014/03/29</a><ul>
+<li><a class="reference internal" href="#release-4-02-2014-04-29">Release 4.02 - 2014/04/29</a><ul>
 <li><a class="reference internal" href="#improvements">Improvements</a></li>
 <li><a class="reference internal" href="#fixes">Fixes</a></li>
 <li><a class="reference internal" href="#thanks">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-4-00-2014-02-09">Release 4.00 - 2014/02/09</a><ul>
+<li><a class="reference internal" href="#release-4-01-2014-03-29">Release 4.01 - 2014/03/29</a><ul>
 <li><a class="reference internal" href="#id1">Improvements</a></li>
 <li><a class="reference internal" href="#id2">Fixes</a></li>
 <li><a class="reference internal" href="#id3">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-12-2014-01-29">Release 3.12 - 2014/01/29</a><ul>
+<li><a class="reference internal" href="#release-4-00-2014-02-09">Release 4.00 - 2014/02/09</a><ul>
 <li><a class="reference internal" href="#id4">Improvements</a></li>
 <li><a class="reference internal" href="#id5">Fixes</a></li>
 <li><a class="reference internal" href="#id6">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-11-2013-12-29">Release 3.11 - 2013/12/29</a><ul>
+<li><a class="reference internal" href="#release-3-12-2014-01-29">Release 3.12 - 2014/01/29</a><ul>
 <li><a class="reference internal" href="#id7">Improvements</a></li>
 <li><a class="reference internal" href="#id8">Fixes</a></li>
 <li><a class="reference internal" href="#id9">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-10-2013-11-29">Release 3.10 - 2013/11/29</a><ul>
+<li><a class="reference internal" href="#release-3-11-2013-12-29">Release 3.11 - 2013/12/29</a><ul>
 <li><a class="reference internal" href="#id10">Improvements</a></li>
 <li><a class="reference internal" href="#id11">Fixes</a></li>
 <li><a class="reference internal" href="#id12">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-09-2013-10-29">Release 3.09 - 2013/10/29</a><ul>
+<li><a class="reference internal" href="#release-3-10-2013-11-29">Release 3.10 - 2013/11/29</a><ul>
 <li><a class="reference internal" href="#id13">Improvements</a></li>
 <li><a class="reference internal" href="#id14">Fixes</a></li>
 <li><a class="reference internal" href="#id15">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-08-2013-9-29">Release 3.08 - 2013/9/29</a><ul>
+<li><a class="reference internal" href="#release-3-09-2013-10-29">Release 3.09 - 2013/10/29</a><ul>
 <li><a class="reference internal" href="#id16">Improvements</a></li>
 <li><a class="reference internal" href="#id17">Fixes</a></li>
 <li><a class="reference internal" href="#id18">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-07-2013-8-29">Release 3.07 - 2013/8/29</a><ul>
+<li><a class="reference internal" href="#release-3-08-2013-9-29">Release 3.08 - 2013/9/29</a><ul>
 <li><a class="reference internal" href="#id19">Improvements</a></li>
 <li><a class="reference internal" href="#id20">Fixes</a></li>
 <li><a class="reference internal" href="#id21">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-06-2013-7-29">Release 3.06 - 2013/7/29</a><ul>
+<li><a class="reference internal" href="#release-3-07-2013-8-29">Release 3.07 - 2013/8/29</a><ul>
 <li><a class="reference internal" href="#id22">Improvements</a></li>
-<li><a class="reference internal" href="#id23">Thanks</a></li>
+<li><a class="reference internal" href="#id23">Fixes</a></li>
+<li><a class="reference internal" href="#id24">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-05-2013-6-29">Release 3.05 - 2013/6/29</a><ul>
-<li><a class="reference internal" href="#id24">Improvements</a></li>
-<li><a class="reference internal" href="#id25">Fixes</a></li>
+<li><a class="reference internal" href="#release-3-06-2013-7-29">Release 3.06 - 2013/7/29</a><ul>
+<li><a class="reference internal" href="#id25">Improvements</a></li>
 <li><a class="reference internal" href="#id26">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-04-2013-5-29">Release 3.04 - 2013/5/29</a><ul>
+<li><a class="reference internal" href="#release-3-05-2013-6-29">Release 3.05 - 2013/6/29</a><ul>
 <li><a class="reference internal" href="#id27">Improvements</a></li>
 <li><a class="reference internal" href="#id28">Fixes</a></li>
 <li><a class="reference internal" href="#id29">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-03-2013-4-29">Release 3.03 - 2013/4/29</a><ul>
+<li><a class="reference internal" href="#release-3-04-2013-5-29">Release 3.04 - 2013/5/29</a><ul>
 <li><a class="reference internal" href="#id30">Improvements</a></li>
 <li><a class="reference internal" href="#id31">Fixes</a></li>
 <li><a class="reference internal" href="#id32">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-02-2013-3-29">Release 3.02 - 2013/3/29</a><ul>
+<li><a class="reference internal" href="#release-3-03-2013-4-29">Release 3.03 - 2013/4/29</a><ul>
 <li><a class="reference internal" href="#id33">Improvements</a></li>
 <li><a class="reference internal" href="#id34">Fixes</a></li>
 <li><a class="reference internal" href="#id35">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-01-2013-2-28">Release 3.01 - 2013/2/28</a><ul>
+<li><a class="reference internal" href="#release-3-02-2013-3-29">Release 3.02 - 2013/3/29</a><ul>
 <li><a class="reference internal" href="#id36">Improvements</a></li>
 <li><a class="reference internal" href="#id37">Fixes</a></li>
 <li><a class="reference internal" href="#id38">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-3-00-2013-2-9">Release 3.00 - 2013/2/9</a><ul>
+<li><a class="reference internal" href="#release-3-01-2013-2-28">Release 3.01 - 2013/2/28</a><ul>
 <li><a class="reference internal" href="#id39">Improvements</a></li>
 <li><a class="reference internal" href="#id40">Fixes</a></li>
 <li><a class="reference internal" href="#id41">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-10-2012-12-29">Release 2.10 - 2012/12/29</a><ul>
+<li><a class="reference internal" href="#release-3-00-2013-2-9">Release 3.00 - 2013/2/9</a><ul>
 <li><a class="reference internal" href="#id42">Improvements</a></li>
 <li><a class="reference internal" href="#id43">Fixes</a></li>
 <li><a class="reference internal" href="#id44">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-09-2012-11-29">Release 2.09 - 2012/11/29</a><ul>
+<li><a class="reference internal" href="#release-2-10-2012-12-29">Release 2.10 - 2012/12/29</a><ul>
 <li><a class="reference internal" href="#id45">Improvements</a></li>
 <li><a class="reference internal" href="#id46">Fixes</a></li>
 <li><a class="reference internal" href="#id47">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-08-2012-10-29">Release 2.08 - 2012/10/29</a><ul>
+<li><a class="reference internal" href="#release-2-09-2012-11-29">Release 2.09 - 2012/11/29</a><ul>
 <li><a class="reference internal" href="#id48">Improvements</a></li>
 <li><a class="reference internal" href="#id49">Fixes</a></li>
 <li><a class="reference internal" href="#id50">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-07-2012-09-29">Release 2.07 - 2012/09/29</a><ul>
+<li><a class="reference internal" href="#release-2-08-2012-10-29">Release 2.08 - 2012/10/29</a><ul>
 <li><a class="reference internal" href="#id51">Improvements</a></li>
 <li><a class="reference internal" href="#id52">Fixes</a></li>
 <li><a class="reference internal" href="#id53">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-06-2012-08-29">Release 2.06 - 2012/08/29</a><ul>
+<li><a class="reference internal" href="#release-2-07-2012-09-29">Release 2.07 - 2012/09/29</a><ul>
 <li><a class="reference internal" href="#id54">Improvements</a></li>
 <li><a class="reference internal" href="#id55">Fixes</a></li>
 <li><a class="reference internal" href="#id56">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-05-2012-07-29">Release 2.05 - 2012/07/29</a><ul>
+<li><a class="reference internal" href="#release-2-06-2012-08-29">Release 2.06 - 2012/08/29</a><ul>
 <li><a class="reference internal" href="#id57">Improvements</a></li>
+<li><a class="reference internal" href="#id58">Fixes</a></li>
+<li><a class="reference internal" href="#id59">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-2-05-2012-07-29">Release 2.05 - 2012/07/29</a><ul>
+<li><a class="reference internal" href="#id60">Improvements</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-2-04-2012-06-29">Release 2.04 - 2012/06/29</a><ul>
-<li><a class="reference internal" href="#id58">Improvements</a></li>
-<li><a class="reference internal" href="#id59">Fixes</a></li>
-<li><a class="reference internal" href="#id60">Thanks</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-03-2012-05-29">Release 2.03 - 2012/05/29</a><ul>
 <li><a class="reference internal" href="#id61">Improvements</a></li>
 <li><a class="reference internal" href="#id62">Fixes</a></li>
 <li><a class="reference internal" href="#id63">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-02-2012-04-29">Release 2.02 - 2012/04/29</a><ul>
+<li><a class="reference internal" href="#release-2-03-2012-05-29">Release 2.03 - 2012/05/29</a><ul>
 <li><a class="reference internal" href="#id64">Improvements</a></li>
 <li><a class="reference internal" href="#id65">Fixes</a></li>
 <li><a class="reference internal" href="#id66">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-01-2012-03-29">Release 2.01 - 2012/03/29</a><ul>
+<li><a class="reference internal" href="#release-2-02-2012-04-29">Release 2.02 - 2012/04/29</a><ul>
 <li><a class="reference internal" href="#id67">Improvements</a></li>
 <li><a class="reference internal" href="#id68">Fixes</a></li>
 <li><a class="reference internal" href="#id69">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-2-00-2012-02-29">Release 2.00 - 2012/02/29</a><ul>
+<li><a class="reference internal" href="#release-2-01-2012-03-29">Release 2.01 - 2012/03/29</a><ul>
 <li><a class="reference internal" href="#id70">Improvements</a></li>
 <li><a class="reference internal" href="#id71">Fixes</a></li>
 <li><a class="reference internal" href="#id72">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-1-20-2012-01-29">Release 1.20 - 2012/01/29</a><ul>
+<li><a class="reference internal" href="#release-2-00-2012-02-29">Release 2.00 - 2012/02/29</a><ul>
 <li><a class="reference internal" href="#id73">Improvements</a></li>
 <li><a class="reference internal" href="#id74">Fixes</a></li>
 <li><a class="reference internal" href="#id75">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-1-11-2011-12-29">Release 1.11 - 2011/12/29</a><ul>
+<li><a class="reference internal" href="#release-1-20-2012-01-29">Release 1.20 - 2012/01/29</a><ul>
 <li><a class="reference internal" href="#id76">Improvements</a></li>
 <li><a class="reference internal" href="#id77">Fixes</a></li>
 <li><a class="reference internal" href="#id78">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-1-10-2011-11-29">Release 1.10 - 2011/11/29</a><ul>
+<li><a class="reference internal" href="#release-1-11-2011-12-29">Release 1.11 - 2011/12/29</a><ul>
 <li><a class="reference internal" href="#id79">Improvements</a></li>
 <li><a class="reference internal" href="#id80">Fixes</a></li>
 <li><a class="reference internal" href="#id81">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-1-0-1-2011-10-29">Release 1.0.1 - 2011/10/29</a><ul>
+<li><a class="reference internal" href="#release-1-10-2011-11-29">Release 1.10 - 2011/11/29</a><ul>
 <li><a class="reference internal" href="#id82">Improvements</a></li>
 <li><a class="reference internal" href="#id83">Fixes</a></li>
 <li><a class="reference internal" href="#id84">Thanks</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#release-1-0-1-2011-10-29">Release 1.0.1 - 2011/10/29</a><ul>
+<li><a class="reference internal" href="#id85">Improvements</a></li>
+<li><a class="reference internal" href="#id86">Fixes</a></li>
+<li><a class="reference internal" href="#id87">Thanks</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
-<li><a class="reference internal" href="#id86">改良</a></li>
-<li><a class="reference internal" href="#id87">修正</a></li>
-<li><a class="reference internal" href="#id88">感謝</a></li>
+<li><a class="reference internal" href="#id89">改良</a></li>
+<li><a class="reference internal" href="#id90">修正</a></li>
+<li><a class="reference internal" href="#id91">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">Past releases</a></li>
@@ -1736,7 +1788,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="index.html">Mroonga v4.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.02 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
