@@ -1,0 +1,45 @@
+---
+layout: post.ja
+title: Mroonga 4.02リリース！
+description: Mroonga 4.02をリリースしました！
+---
+
+h2. Mroonga 4.02リリース！
+
+"Mroonga 4.02":/ja/docs/news.html#release-4-02 をリリースしました！
+
+Mroongaは高速な全文検索と位置情報検索が特長のMySQLのストレージエンジンです。国産のストレージエンジンなので日本語のサポートが充実しています。Mroongaはストレージと全文検索エンジンにGroongaを使っています。
+
+* インストール方法: "インストール":/ja/docs/install.html
+* アップグレード方法: "アップグレードガイド":/ja/docs/install.html#upgrade-guide
+
+今回のリリースの主なトピックは次の通りです。
+
+* MariaDB 10.0.10 GAをサポート
+* 多くのバグを修正
+
+h3. MariaDB 10.0.10 GAをサポート
+
+2014年3月31日に "MariaDB 10.0.10 GA (General Availability)":https://blog.mariadb.org/the-mariadb-foundation-announces-general-availability-of-mariadb-10/ がリリースされました。Mroonga 4.02でMariaDB 10.0.10をサポートしました。MariaDB 10.0.10でMroongaを使うことができます。
+
+"Windows用のバイナリー":/ja/docs/install.html#windows も提供しています。このバイナリーは "cosmo0920":https://github.com/cosmo0920 さんがビルドしてくれました。ありがとうございます！
+
+h3. 多くのバグを修正
+
+このリリースでは多くのバグを修正しました。これらのバグの多くはユーザーから報告してもらいました。ありがとうございます！
+
+このリリースで修正した問題は次の通りです。
+
+* [ストレージモード] @DELETE FROM table@ のときにtruncateを使わないようにした。 "[groonga-dev,02222]":http://sourceforge.jp/projects/groonga/lists/archive/dev/2014-April/002224.html [GMOメディア株式会社さんが報告]
+* [ラッパーモード] @DELETE FROM table@ のときにtruncateを使わないようにした。
+* [ストレージモード] プライマリーキーがないテーブルをinplate alter tableするとクラッシュする問題を修正しました。 "[groonga-dev,02227]":http://sourceforge.jp/projects/groonga/lists/archive/dev/2014-April/002229.html [GMOメディア株式会社さんが報告]
+* [ストレージモード] @ORDER BY function(vector_reference_column)@ が動かない問題を修正しました。 "[groonga-dev,02234]":http://sourceforge.jp/projects/groonga/lists/archive/dev/2014-April/002236.html [村上さんが報告]
+* mroonga_default_parser あるいは mroonga_log_file に現在の値と同じ値を設定するとクラッシュする問題を修正しました。 "[GitHub#6]":https://github.com/mroonga/mroonga/pull/6 [Satoshi MITANIさんがパッチ提供]
+* my.cnfやコマンドラインオプションで mroonga_lock_timeoutを指定しても無視される問題を修正しました。 "[GitHub#7]":https://github.com/mroonga/mroonga/pull/7 [GMOメディア株式会社さんがパッチ提供]
+* プライマリーキーを指定してレコードを削除するとユニークインデックスが更新されない問題を修正しました。 [groonga-dev,02244]":http://sourceforge.jp/projects/groonga/lists/archive/dev/2014-April/002246.html [津久井玲宏さんが報告]
+
+h3. さいごに
+
+4.01からの詳細な変更点は "4.02リリース - 2014/04/29":/ja/docs/news.html#release-4-02 を確認してください。
+
+それでは、Mroongaでガンガン検索してください！
