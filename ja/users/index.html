@@ -8,72 +8,6 @@ title: 利用者のみなさん
   <p>みなさんのノートパソコンに<a href="../sticker/">Mroongaのステッカー</a>を貼ってください！</p>
 </div>
 
-<section id="bizreach">
-  <h2>Bizreach</h2>
-  <p><a href="http://www.bizreach.jp/">年収1000万円以上の転職サイト Bizreach（ビズリーチ）</a></p>
-  <p>主に、職務経歴書情報の全文検索で使用しています。</p>
-  <p>以前は、MySQL（MyISAM）のFulltext Searchを利用していましたが、職務経歴書情報は、一レコードの量が大きく（平均3000文字程度、英語日本語混在）、Insertにとても時間がかかっていました。数秒かかることもしばしば。。Groonga + Mroongaに変えてからは、0.1〜0.2秒程度になり、しかも、ロックフリー、動的更新可能なので、参照ロック待ちも無くサクサクです。</p>
-  <p>また、検索時に関しても、MySQLの際は、アプリ側でNgramしてから、Insertしていました。日本語検索で、完全一致検索をしようとすると、フレーズ検索するしかなく、完全転置索引ではないので、めちゃくちゃ遅かったです。数秒かかったりしてました。MroongaでもNgramのParserを使用していますが、10〜20倍のパフォーマンスになり、0.1sをきっています。</p>
-  <p>現状10万弱のレコードで、問題なく安定稼働中です。本当にありがとうございます。</p>
-</section>
-
-<section id="sinsai.info">
-  <h2>sinsai.info</h2>
-  <p><a href="http://sinsai.info/">sinsai.info 東日本大震災 | みんなでつくる復興支援プラットフォーム</a></p>
-  <p>「sinsai.info 東日本大震災 | みんなでつくる復興支援プラットフォーム」は2011年3月11日に日本で発生した東北沖地震の復興を支援するために作られました。</p>
-</section>
-
-<section id="bbs-title-search">
-  <h2>２ちゃんねる・PINKちゃんねる過去ログスレッドタイトル検索</h2>
-  <p><a href="http://search.takatyan.info/">２ちゃんねる・PINKちゃんねる過去ログスレッドタイトル検索</a></p>
-  <p>２ちゃんねるとPINKちゃんねるの過去ログに対するスレッドタイトル検索を提供しています。</p>
-  <p>以前はSenna + tritonnでしたが移行しました。２ちゃんねるのほうは現在4千万レコードの巨大テーブルになっていますが、実用的な速度での検索を提供できています。</p>
-</section>
-
-<section id="laybrick">
-  <h2>LayBrick beta</h2>
-  <p><a href="http://laybrick.com/">LayBrick beta TwitterとFacebookをひとつに。</a></p>
-  <p>LayBrickは、パーソナル検索可能なTwitter、Facebook、Instagramクライアントです。各サービスを同時に閲覧できるだけでなく、豊富な検索オプションで、あなただけの情報網から必要な情報を探しだすことができるのが特徴です。</p>
-  <p>Twitterのツイート、Facebookの投稿やリンクの概要、Instagramのキャプションなどをデータベースに保存し、Mroongaラッパーモード(ストレージエンジンはInnoDB)で全文検索できるようにしました。Senna＋Tritonnより自由度が高くなって、本当に素晴らしいです。今後とも期待しております。</p>
-</section>
-
-<section id="ikea-hikaku.com">
-  <h2>ikea-hikaku.com</h2>
-  <p><a href="http://ikea-hikaku.com/">IKEA通販価格比較.com</a></p>
-  <p>IKEA通販価格比較.comは、IKEA製品全9,625件の通販/買い物代行価格を比較紹介するサイトです。</p>
-  <p>「MroongaはMySQLの全文検索エンジンです。サーバーはUbuntuを使用していて、apt-get でさくっとインストールできて超カンタンでした。（既存のmysqlを置き換えようとしたらうまくいかなくて新規セットアップしましたが）」</p>
-  <p><a href="http://www.akiyan.com/blog/archives/2012/09/launched-ikea-tsuhan-kakaku-hikaku-com.html">IKEA製品の通販価格比較サイト『IKEA通販価格比較.com』を作りました</a> 開発裏話より</p>
-</section>
-
-<section id="honyakustar">
-  <h2>HONYAKU STAR</h2>
-  <p><a href="http://honyakustar.com">新しい日/英辞書</a></p>
-  <p>Honyaku Starは、世界一総合的で、かつ自由なオンラインの日英辞書およびコーパスになることを目標としています。Honyaku Starは、単なる辞書ではなく、日英対訳コーパスでもあります。すなわち、あなたが検索した語句の用例や文脈を提供できる、対訳テキストのデータベースでもあるのです。単語や語句は、いくつもの妥当な訳語に対応していることが少なくありません。様々な異なる文脈での使用例を見ることによって、異なる意味や適切な使い方を理解することができます。Honyaku Starで検索すれば、辞書の検索結果と、用例を同時に得ることができます。</p>
-  <p>Honyaku Starの中ではLinux, PHP, Perl, MySQL, そして全文検索エンジンMroongaが使われています。</p>
-</section>
-
-<section id="rec.to">
-  <h2>rec.to</h2>
-  <p><a href="http://rec.to">Twitterログ保存サービス</a></p>
-  <p>rec.toは、Twitterのログを保存するサービスです。類似サービスとして老舗の<a href="http://twilog.org/">Twilog</a>がありますが、非公開アカウントに対応(本人と非公開アカウントのフォロワーのみ閲覧可能)しているのが特徴です。アイコンの変更も保存しているのでアイコン履歴を見ることもできます。</p>
-  <p>rec.toでは全文検索エンジンとしてMroongaが使われています。</p>
-</section>
-
-<section id="nanapi">
-  <h2>nanapi</h2>
-  <p><a href="http://nanapi.jp/">nanapi - 生活を便利にするレシピサイト -</a></p>
-  <p>Groonga + <a href="http://mroonga.org/">Mroonga</a>の組み合わせで利用。</p>
-  <p>nanapiは恋愛から生活ネタ、Webサービスの使い方まであらゆる生活のHowtoを集めているサイトです。</p>
-</section>
-
-<section id="chikamap">
-  <h2>全国最新地価マップ</h2>
-  <p><a href="http://chikamap.com/">全国最新地価マップ 最新2012年 48,216件から検索可能</a></p>
-  <p><a href="http://ranguba.org/rroonga/ja/">Rroonga</a> + <a href="http://mroonga.org/ja/">Mroonga</a>の組み合わせで利用。</p>
-  <p>chikamap.comは中古住宅・土地購入の際に参考になる地価履歴やその周辺の公共施設・交通機関などの基本的な情報を地図から表示するためのサイトです。</p>
-  <p><a href="http://gihyo.jp/dev/clip/01/groonga">隔週連載groonga</a>に事例紹介記事「<a href="http://gihyo.jp/dev/clip/01/groonga/0002">第2回 groongaをRuby On Railsでも使ってみた ～chikamap.comの事例から</a>」があります。</p>
-</section>
-
 <section id="patentfield">
   <h2>PatentField</h2>
   <p><a href="http://patentfield.com/">PatentField | 無料特許検索</a></p>
@@ -84,4 +18,70 @@ title: 利用者のみなさん
   <p>全文検索、ドリルダウン検索、近傍検索、スニペットといったほぼ全ての検索機能およびデータストア機能をGroongaにより実現しています。ドリルダウン検索により特許分類、出願人、発明者、リーガルステータス等の煩雑なデータ項目を直感的に絞り込むことができます。</p>
 
   <p>最大レコード数は1,000万以上、最大データサイズは400GiBを超えていますが、概ね高速に全文検索できています。</p>
+</section>
+
+<section id="chikamap">
+  <h2>全国最新地価マップ</h2>
+  <p><a href="http://chikamap.com/">全国最新地価マップ 最新2012年 48,216件から検索可能</a></p>
+  <p><a href="http://ranguba.org/rroonga/ja/">Rroonga</a> + <a href="http://mroonga.org/ja/">Mroonga</a>の組み合わせで利用。</p>
+  <p>chikamap.comは中古住宅・土地購入の際に参考になる地価履歴やその周辺の公共施設・交通機関などの基本的な情報を地図から表示するためのサイトです。</p>
+  <p><a href="http://gihyo.jp/dev/clip/01/groonga">隔週連載groonga</a>に事例紹介記事「<a href="http://gihyo.jp/dev/clip/01/groonga/0002">第2回 groongaをRuby On Railsでも使ってみた ～chikamap.comの事例から</a>」があります。</p>
+</section>
+
+<section id="nanapi">
+  <h2>nanapi</h2>
+  <p><a href="http://nanapi.jp/">nanapi - 生活を便利にするレシピサイト -</a></p>
+  <p>Groonga + <a href="http://mroonga.org/">Mroonga</a>の組み合わせで利用。</p>
+  <p>nanapiは恋愛から生活ネタ、Webサービスの使い方まであらゆる生活のHowtoを集めているサイトです。</p>
+</section>
+
+<section id="rec.to">
+  <h2>rec.to</h2>
+  <p><a href="http://rec.to">Twitterログ保存サービス</a></p>
+  <p>rec.toは、Twitterのログを保存するサービスです。類似サービスとして老舗の<a href="http://twilog.org/">Twilog</a>がありますが、非公開アカウントに対応(本人と非公開アカウントのフォロワーのみ閲覧可能)しているのが特徴です。アイコンの変更も保存しているのでアイコン履歴を見ることもできます。</p>
+  <p>rec.toでは全文検索エンジンとしてMroongaが使われています。</p>
+</section>
+
+<section id="honyakustar">
+  <h2>HONYAKU STAR</h2>
+  <p><a href="http://honyakustar.com">新しい日/英辞書</a></p>
+  <p>Honyaku Starは、世界一総合的で、かつ自由なオンラインの日英辞書およびコーパスになることを目標としています。Honyaku Starは、単なる辞書ではなく、日英対訳コーパスでもあります。すなわち、あなたが検索した語句の用例や文脈を提供できる、対訳テキストのデータベースでもあるのです。単語や語句は、いくつもの妥当な訳語に対応していることが少なくありません。様々な異なる文脈での使用例を見ることによって、異なる意味や適切な使い方を理解することができます。Honyaku Starで検索すれば、辞書の検索結果と、用例を同時に得ることができます。</p>
+  <p>Honyaku Starの中ではLinux, PHP, Perl, MySQL, そして全文検索エンジンMroongaが使われています。</p>
+</section>
+
+<section id="ikea-hikaku.com">
+  <h2>ikea-hikaku.com</h2>
+  <p><a href="http://ikea-hikaku.com/">IKEA通販価格比較.com</a></p>
+  <p>IKEA通販価格比較.comは、IKEA製品全9,625件の通販/買い物代行価格を比較紹介するサイトです。</p>
+  <p>「MroongaはMySQLの全文検索エンジンです。サーバーはUbuntuを使用していて、apt-get でさくっとインストールできて超カンタンでした。（既存のmysqlを置き換えようとしたらうまくいかなくて新規セットアップしましたが）」</p>
+  <p><a href="http://www.akiyan.com/blog/archives/2012/09/launched-ikea-tsuhan-kakaku-hikaku-com.html">IKEA製品の通販価格比較サイト『IKEA通販価格比較.com』を作りました</a> 開発裏話より</p>
+</section>
+
+<section id="laybrick">
+  <h2>LayBrick beta</h2>
+  <p><a href="http://laybrick.com/">LayBrick beta TwitterとFacebookをひとつに。</a></p>
+  <p>LayBrickは、パーソナル検索可能なTwitter、Facebook、Instagramクライアントです。各サービスを同時に閲覧できるだけでなく、豊富な検索オプションで、あなただけの情報網から必要な情報を探しだすことができるのが特徴です。</p>
+  <p>Twitterのツイート、Facebookの投稿やリンクの概要、Instagramのキャプションなどをデータベースに保存し、Mroongaラッパーモード(ストレージエンジンはInnoDB)で全文検索できるようにしました。Senna＋Tritonnより自由度が高くなって、本当に素晴らしいです。今後とも期待しております。</p>
+</section>
+
+<section id="bbs-title-search">
+  <h2>２ちゃんねる・PINKちゃんねる過去ログスレッドタイトル検索</h2>
+  <p><a href="http://search.takatyan.info/">２ちゃんねる・PINKちゃんねる過去ログスレッドタイトル検索</a></p>
+  <p>２ちゃんねるとPINKちゃんねるの過去ログに対するスレッドタイトル検索を提供しています。</p>
+  <p>以前はSenna + tritonnでしたが移行しました。２ちゃんねるのほうは現在4千万レコードの巨大テーブルになっていますが、実用的な速度での検索を提供できています。</p>
+</section>
+
+<section id="sinsai.info">
+  <h2>sinsai.info</h2>
+  <p><a href="http://sinsai.info/">sinsai.info 東日本大震災 | みんなでつくる復興支援プラットフォーム</a></p>
+  <p>「sinsai.info 東日本大震災 | みんなでつくる復興支援プラットフォーム」は2011年3月11日に日本で発生した東北沖地震の復興を支援するために作られました。</p>
+</section>
+
+<section id="bizreach">
+  <h2>Bizreach</h2>
+  <p><a href="http://www.bizreach.jp/">年収1000万円以上の転職サイト Bizreach（ビズリーチ）</a></p>
+  <p>主に、職務経歴書情報の全文検索で使用しています。</p>
+  <p>以前は、MySQL（MyISAM）のFulltext Searchを利用していましたが、職務経歴書情報は、一レコードの量が大きく（平均3000文字程度、英語日本語混在）、Insertにとても時間がかかっていました。数秒かかることもしばしば。。Groonga + Mroongaに変えてからは、0.1〜0.2秒程度になり、しかも、ロックフリー、動的更新可能なので、参照ロック待ちも無くサクサクです。</p>
+  <p>また、検索時に関しても、MySQLの際は、アプリ側でNgramしてから、Insertしていました。日本語検索で、完全一致検索をしようとすると、フレーズ検索するしかなく、完全転置索引ではないので、めちゃくちゃ遅かったです。数秒かかったりしてました。MroongaでもNgramのParserを使用していますが、10〜20倍のパフォーマンスになり、0.1sをきっています。</p>
+  <p>現状10万弱のレコードで、問題なく安定稼働中です。本当にありがとうございます。</p>
 </section>
