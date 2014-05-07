@@ -256,8 +256,46 @@ deb-src http://packages.groonga.org/ubuntu/ saucy universe
 MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
 </div>
 </div>
+<div class="section" id="ubuntu-14-04-trusty-tahr">
+<h2>2.6. Ubuntu 14.04 Trusty Tahr<a class="headerlink" href="#ubuntu-14-04-trusty-tahr" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the universe section in Ubuntu's software sources.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to enable the security update repository.</p>
+</div>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ trusty universe
+deb-src http://packages.groonga.org/ubuntu/ trusty universe
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
+<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
+<p>Install groonga-normalizer-mysql package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-normalizer-mysql
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
+MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
+</div>
+</div>
 <div class="section" id="centos-5">
-<h2>2.6. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
+<h2>2.7. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
 <p>In CentOS 5, we use CentOS's MySQL packages (version 5.5.x) since Mroonga 3.09 release.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
@@ -285,7 +323,7 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 </div>
 </div>
 <div class="section" id="centos-5-deprecated">
-<h2>2.7. CentOS 5 (Deprecated)<a class="headerlink" href="#centos-5-deprecated" title="Permalink to this headline">¶</a></h2>
+<h2>2.8. CentOS 5 (Deprecated)<a class="headerlink" href="#centos-5-deprecated" title="Permalink to this headline">¶</a></h2>
 <p>The old version of Mroonga had also provided MySQL 5.6 packages as exceptional case. This is obsolete and not recommended way.
 The mysql-mroonga package is deprecated on CentOS 5 since Mroonga 3.09.
 We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
@@ -305,7 +343,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div>
 </div>
 <div class="section" id="centos-6">
-<h2>2.8. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
+<h2>2.9. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
 <p>In CentOS 6, we use CentOS's SCL MySQL packages (version 5.5.x) since Mroonga 4.01 release.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install centos-release-SCL
@@ -334,7 +372,7 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 </div>
 </div>
 <div class="section" id="centos-6-deprecated">
-<h2>2.9. CentOS 6 (Deprecated)<a class="headerlink" href="#centos-6-deprecated" title="Permalink to this headline">¶</a></h2>
+<h2>2.10. CentOS 6 (Deprecated)<a class="headerlink" href="#centos-6-deprecated" title="Permalink to this headline">¶</a></h2>
 <p>In CentOS 6, unlike in CentOS 5, we use CentOS's MySQL packages (version 5.1.x). So you don't need to remove CentOS's MySQL packages.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -366,7 +404,7 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 </div>
 </div>
 <div class="section" id="fedora-20">
-<h2>2.10. Fedora 20<a class="headerlink" href="#fedora-20" title="Permalink to this headline">¶</a></h2>
+<h2>2.11. Fedora 20<a class="headerlink" href="#fedora-20" title="Permalink to this headline">¶</a></h2>
 <p>Since Fedora 19, MariaDB is the default implementation of MySQL.</p>
 <p>So there are two selections for Mroonga. One is using with MariaDB, the other is using with MySQL (community-mysql).</p>
 <p>Install Mroonga for MySQL (community-mysql):</p>
@@ -406,7 +444,7 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 </div>
 </div>
 <div class="section" id="mac-os-x">
-<h2>2.11. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
+<h2>2.12. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql
 </pre></div>
@@ -422,12 +460,17 @@ MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_gene
 </div>
 </div>
 <div class="section" id="windows">
-<h2>2.12. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<h2>2.13. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga binary for Windows is provided with MariaDB binary because
 <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">some changes</a>
 are needed for building mroonga for Windows.</p>
 <div class="section" id="installer">
-<h3>2.12.1. Installer<a class="headerlink" href="#installer" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.1. Installer<a class="headerlink" href="#installer" title="Permalink to this headline">¶</a></h3>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">The following MSI files don't work yet. Please use zip files below
+or help us to creating MSI files that work well.</p>
+</div>
 <p>Download MSI file and execute it. You need to choose a MSI for your
 environment.</p>
 <p>Choose <tt class="docutils literal"><span class="pre">win32</span></tt> version for 32-bit environment, <tt class="docutils literal"><span class="pre">winx64</span></tt> version
@@ -440,7 +483,7 @@ for 64-bit environment:</p>
 </div></blockquote>
 </div>
 <div class="section" id="zip">
-<h3>2.12.2. Zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.2. Zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
 <p>Download zip file and extract it. You need to choose a zip for your
 environment.</p>
 <p>Choose <tt class="docutils literal"><span class="pre">win32</span></tt> version for 32-bit environment, <tt class="docutils literal"><span class="pre">winx64</span></tt> version
@@ -453,7 +496,7 @@ for 64-bit environment:</p>
 </div></blockquote>
 </div>
 <div class="section" id="install-mroonga">
-<h3>2.12.3. Install Mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.13.3. Install Mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>Zip packages are pre-configured for easy to use, so no need to execute &quot;INSTALL PLUGIN&quot; and install UDF.</p>
 <p>Just start mysqld by following command.:</p>
 <div class="highlight-none"><div class="highlight"><pre>&gt; mysqld.exe --defautls-file=.\MY-PREFERRED-INI.ini --console
@@ -481,14 +524,14 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="install-from-the-source-code">
-<h2>2.13. Install from the source code<a class="headerlink" href="#install-from-the-source-code" title="Permalink to this headline">¶</a></h2>
+<h2>2.14. Install from the source code<a class="headerlink" href="#install-from-the-source-code" title="Permalink to this headline">¶</a></h2>
 <p>Here we explain how to install from the source code. If your environment is not listed above, you need to do so.</p>
 <div class="section" id="japanese-morphological-analysis-system-mecab">
-<h3>2.13.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="Permalink to this headline">¶</a></h3>
+<h3>2.14.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="Permalink to this headline">¶</a></h3>
 <p>If you want to use indexes of tokenizing of each morpheme for full text search, install <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> before installing Groonga.</p>
 </div>
 <div class="section" id="download">
-<h3>2.13.2. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<h3>2.14.2. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
 <p>To install the released version, download the tarball from <a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> .</p>
 <p>To install the latest source code, clone the code from <a class="reference external" href="https://github.com/mroonga/mroonga/">GitHub</a> and invoke <cite>./autogen.sh</cite> (GNU Autotools are required). This way is aimed at skilled developpers. If not, we recommend using the tarball.</p>
 <div class="highlight-none"><div class="highlight"><pre>% git clone https://github.com/mroonga/mroonga.git
@@ -498,12 +541,12 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="requirements">
-<h3>2.13.3. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<h3>2.14.3. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>MySQL and Groonga should be already installed.</p>
 <p>And MySQL's source code is also required to build Mroonga.</p>
 </div>
 <div class="section" id="install-mysql">
-<h3>2.13.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
+<h3>2.14.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
 <p>Download the latest MySQL 5.6 source code, then build and install it.</p>
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
 <p>Here we assume that we use mysql-5.6.17 and its source code is extracted in the following directory.</p>
@@ -516,13 +559,13 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="install-groonga">
-<h3>2.13.5. Install Groonga<a class="headerlink" href="#install-groonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.14.5. Install Groonga<a class="headerlink" href="#install-groonga" title="Permalink to this headline">¶</a></h3>
 <p>Build and install the latest Groonga.</p>
 <p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
 <p>Here we assume that libgroonga is installed in the standard location like /usr/lib etc.</p>
 </div>
 <div class="section" id="build-mroonga">
-<h3>2.13.6. Build Mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
+<h3>2.14.6. Build Mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
 <p>Run configure script by specifying the location of MySQL source code with <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> and the path of mysql_config command with <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
   --with-mysql-source=/usr/local/src/mysql-5.6.17 \
@@ -541,8 +584,8 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </pre></div>
 </div>
 </div>
-<div class="section" id="id11">
-<h3>2.13.7. Install Mroonga<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>2.14.7. Install Mroonga<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>By invoking &quot;make install&quot;, ha_mroonga.so will be installed in MySQL's plugin directory.</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -590,40 +633,40 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="install-from-the-source-code-with-mariadb">
-<h2>2.14. Install from the source code with MariaDB<a class="headerlink" href="#install-from-the-source-code-with-mariadb" title="Permalink to this headline">¶</a></h2>
+<h2>2.15. Install from the source code with MariaDB<a class="headerlink" href="#install-from-the-source-code-with-mariadb" title="Permalink to this headline">¶</a></h2>
 <p>Here we explain how to install from the source code with MariaDB. If your environment is not listed above, you need to do so.</p>
-<div class="section" id="id12">
-<h3>2.14.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>2.15.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>If you want to use indexes of tokenizing of each morpheme for full text search, install <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> before installing Groonga.</p>
 </div>
-<div class="section" id="id14">
-<h3>2.14.2. Download<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>2.15.2. Download<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>Download Mroonga tarball from <a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> .</p>
 <p>Download MariaDB tarball from <a class="reference external" href="https://downloads.mariadb.org/">downloads.mariadb.org</a> .</p>
 </div>
-<div class="section" id="id16">
-<h3>2.14.3. Requirements<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>2.15.3. Requirements<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>Groonga should be already installed.</p>
 </div>
-<div class="section" id="id17">
-<h3>2.14.4. Install Groonga<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>2.15.4. Install Groonga<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>Build and install the latest Groonga.</p>
 <p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
 <p>Here we assume that libgroonga is installed in the standard location like /usr/lib etc.</p>
 </div>
 <div class="section" id="build-mroonga-with-mariadb">
-<h3>2.14.5. Build Mroonga with MariaDB<a class="headerlink" href="#build-mroonga-with-mariadb" title="Permalink to this headline">¶</a></h3>
+<h3>2.15.5. Build Mroonga with MariaDB<a class="headerlink" href="#build-mroonga-with-mariadb" title="Permalink to this headline">¶</a></h3>
 <p>Uncompress MariaDB tarball.</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mariadb-10.0.2.tar.gz
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz mariadb-10.0.10.tar.gz
 </pre></div>
 </div>
 <p>Uncompress Mroonga tarball then move into storage directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-3.03.tar.gz
-mv mroonga-3.03 mariadb-10.0.2/storage/mroonga/
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-4.02.tar.gz
+mv mroonga-4.02 mariadb-10.0.10/storage/mroonga/
 </pre></div>
 </div>
 <p>Run &quot;cmake&quot;.</p>
-<div class="highlight-none"><div class="highlight"><pre>cd mariadb-10.0.2
+<div class="highlight-none"><div class="highlight"><pre>cd mariadb-10.0.10
 cmake .
 </pre></div>
 </div>
@@ -633,7 +676,7 @@ cmake .
 </div>
 </div>
 <div class="section" id="install-mroonga-with-mariadb">
-<h3>2.14.6. Install Mroonga with MariaDB<a class="headerlink" href="#install-mroonga-with-mariadb" title="Permalink to this headline">¶</a></h3>
+<h3>2.15.6. Install Mroonga with MariaDB<a class="headerlink" href="#install-mroonga-with-mariadb" title="Permalink to this headline">¶</a></h3>
 <p>By invoking &quot;make install&quot;, MariaDB and Mroonga will be installed in &quot;/usr/local/mysql&quot; directory.</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -683,7 +726,7 @@ cmake .
 </div>
 </div>
 <div class="section" id="upgrade-guide">
-<h2>2.15. Upgrade Guide<a class="headerlink" href="#upgrade-guide" title="Permalink to this headline">¶</a></h2>
+<h2>2.16. Upgrade Guide<a class="headerlink" href="#upgrade-guide" title="Permalink to this headline">¶</a></h2>
 <p>There is a case that incompatible change is introduced at new release.
 It is announced by release announce if new release contains such a incompatible change.</p>
 <p>Here is the list of recommended way of upgrading Mroonga from old release.</p>
@@ -712,38 +755,39 @@ It is announced by release announce if new release contains such a incompatible 
 <li><a class="reference internal" href="#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
 <li><a class="reference internal" href="#ubuntu-12-04-precise-pangolin">2.4. Ubuntu 12.04 Precise Pangolin</a></li>
 <li><a class="reference internal" href="#ubuntu-13-10-saucy-salamander">2.5. Ubuntu 13.10 Saucy Salamander</a></li>
-<li><a class="reference internal" href="#centos-5">2.6. CentOS 5</a></li>
-<li><a class="reference internal" href="#centos-5-deprecated">2.7. CentOS 5 (Deprecated)</a></li>
-<li><a class="reference internal" href="#centos-6">2.8. CentOS 6</a></li>
-<li><a class="reference internal" href="#centos-6-deprecated">2.9. CentOS 6 (Deprecated)</a></li>
-<li><a class="reference internal" href="#fedora-20">2.10. Fedora 20</a></li>
-<li><a class="reference internal" href="#mac-os-x">2.11. Mac OS X</a></li>
-<li><a class="reference internal" href="#windows">2.12. Windows</a><ul>
-<li><a class="reference internal" href="#installer">2.12.1. Installer</a></li>
-<li><a class="reference internal" href="#zip">2.12.2. Zip</a></li>
-<li><a class="reference internal" href="#install-mroonga">2.12.3. Install Mroonga</a></li>
+<li><a class="reference internal" href="#ubuntu-14-04-trusty-tahr">2.6. Ubuntu 14.04 Trusty Tahr</a></li>
+<li><a class="reference internal" href="#centos-5">2.7. CentOS 5</a></li>
+<li><a class="reference internal" href="#centos-5-deprecated">2.8. CentOS 5 (Deprecated)</a></li>
+<li><a class="reference internal" href="#centos-6">2.9. CentOS 6</a></li>
+<li><a class="reference internal" href="#centos-6-deprecated">2.10. CentOS 6 (Deprecated)</a></li>
+<li><a class="reference internal" href="#fedora-20">2.11. Fedora 20</a></li>
+<li><a class="reference internal" href="#mac-os-x">2.12. Mac OS X</a></li>
+<li><a class="reference internal" href="#windows">2.13. Windows</a><ul>
+<li><a class="reference internal" href="#installer">2.13.1. Installer</a></li>
+<li><a class="reference internal" href="#zip">2.13.2. Zip</a></li>
+<li><a class="reference internal" href="#install-mroonga">2.13.3. Install Mroonga</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-from-the-source-code">2.13. Install from the source code</a><ul>
-<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.13.1. Japanese morphological analysis system (MeCab)</a></li>
-<li><a class="reference internal" href="#download">2.13.2. Download</a></li>
-<li><a class="reference internal" href="#requirements">2.13.3. Requirements</a></li>
-<li><a class="reference internal" href="#install-mysql">2.13.4. Install MySQL</a></li>
-<li><a class="reference internal" href="#install-groonga">2.13.5. Install Groonga</a></li>
-<li><a class="reference internal" href="#build-mroonga">2.13.6. Build Mroonga</a></li>
-<li><a class="reference internal" href="#id11">2.13.7. Install Mroonga</a></li>
+<li><a class="reference internal" href="#install-from-the-source-code">2.14. Install from the source code</a><ul>
+<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.14.1. Japanese morphological analysis system (MeCab)</a></li>
+<li><a class="reference internal" href="#download">2.14.2. Download</a></li>
+<li><a class="reference internal" href="#requirements">2.14.3. Requirements</a></li>
+<li><a class="reference internal" href="#install-mysql">2.14.4. Install MySQL</a></li>
+<li><a class="reference internal" href="#install-groonga">2.14.5. Install Groonga</a></li>
+<li><a class="reference internal" href="#build-mroonga">2.14.6. Build Mroonga</a></li>
+<li><a class="reference internal" href="#id12">2.14.7. Install Mroonga</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-from-the-source-code-with-mariadb">2.14. Install from the source code with MariaDB</a><ul>
-<li><a class="reference internal" href="#id12">2.14.1. Japanese morphological analysis system (MeCab)</a></li>
-<li><a class="reference internal" href="#id14">2.14.2. Download</a></li>
-<li><a class="reference internal" href="#id16">2.14.3. Requirements</a></li>
-<li><a class="reference internal" href="#id17">2.14.4. Install Groonga</a></li>
-<li><a class="reference internal" href="#build-mroonga-with-mariadb">2.14.5. Build Mroonga with MariaDB</a></li>
-<li><a class="reference internal" href="#install-mroonga-with-mariadb">2.14.6. Install Mroonga with MariaDB</a></li>
+<li><a class="reference internal" href="#install-from-the-source-code-with-mariadb">2.15. Install from the source code with MariaDB</a><ul>
+<li><a class="reference internal" href="#id13">2.15.1. Japanese morphological analysis system (MeCab)</a></li>
+<li><a class="reference internal" href="#id15">2.15.2. Download</a></li>
+<li><a class="reference internal" href="#id17">2.15.3. Requirements</a></li>
+<li><a class="reference internal" href="#id18">2.15.4. Install Groonga</a></li>
+<li><a class="reference internal" href="#build-mroonga-with-mariadb">2.15.5. Build Mroonga with MariaDB</a></li>
+<li><a class="reference internal" href="#install-mroonga-with-mariadb">2.15.6. Install Mroonga with MariaDB</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#upgrade-guide">2.15. Upgrade Guide</a></li>
+<li><a class="reference internal" href="#upgrade-guide">2.16. Upgrade Guide</a></li>
 </ul>
 </li>
 </ul>

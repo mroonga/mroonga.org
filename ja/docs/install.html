@@ -252,8 +252,45 @@ deb-src http://packages.groonga.org/ubuntu/ saucy universe
 <p class="last">MySQL互換のCOLLATIONを指定しない場合には、MySQLと互換性のないGroongaの照合順序が使われます。MySQL互換な大文字・小文字を区別しないCOLLATIONは'utf8_general_ci'、'utf8mb4_general_ci'、'utf8_unicode_ci'、'utf8mb4_unicode_ci'です。</p>
 </div>
 </div>
+<div class="section" id="ubuntu-14-04-trusty-tahr">
+<h2>2.6. Ubuntu 14.04 Trusty Tahr<a class="headerlink" href="#ubuntu-14-04-trusty-tahr" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">Ubuntu本家のuniverseセクションもインストール対象としておくこと</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">セキュリティアップデートリポジトリもインストール対象としておくこと</p>
+</div>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/ubuntu/ trusty universe
+deb-src http://packages.groonga.org/ubuntu/ trusty universe
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get -y --allow-unauthenticated install groonga-keyring
+% sudo apt-get update
+% sudo apt-get -y install mysql-server-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
+<p>MySQL互換のCOLLATIONとして'utf8_general_ci'や'utf8mb4_general_ci'、'utf8_unicode_ci'や'utf8mb4_unicode_ci'を使うには、groonga-normalizer-mysqlパッケージをインストールしてください。</p>
+<p>groonga-normalizer-mysqlをインストール:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get -y install groonga-normalizer-mysql
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">MySQL互換のCOLLATIONを指定しない場合には、MySQLと互換性のないGroongaの照合順序が使われます。MySQL互換な大文字・小文字を区別しないCOLLATIONは'utf8_general_ci'、'utf8mb4_general_ci'、'utf8_unicode_ci'、'utf8mb4_unicode_ci'です。</p>
+</div>
+</div>
 <div class="section" id="centos-5">
-<h2>2.6. CentOS 5<a class="headerlink" href="#centos-5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.7. CentOS 5<a class="headerlink" href="#centos-5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 5では、Mroonga 3.09のリリースからディストリビューション由来のMySQLパッケージ（MySQL 5.5系）を利用します。</p>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
@@ -280,10 +317,8 @@ deb-src http://packages.groonga.org/ubuntu/ saucy universe
 </div>
 </div>
 <div class="section" id="centos-5-deprecated">
-<h2>2.7. CentOS 5 (非推奨)<a class="headerlink" href="#centos-5-deprecated" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>The old version of Mroonga had also provided MySQL 5.6 packages as exceptional case. This is obsolete and not recommended way.
-The mysql-mroonga package is deprecated on CentOS 5 since Mroonga 3.09.
-We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
+<h2>2.8. CentOS 5 (非推奨)<a class="headerlink" href="#centos-5-deprecated" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以前のMroongaは例外的にMySQL 5.6のパッケージも提供していました。このMySQL 5.6のパッケージは廃止しました。Mroonga 3.09からCentOS 5のmysql-mroongaは非推奨になっています。CentOS 5ではmysql55-mroongaパッケージを使うことを推奨します。</p>
 <p>既にディストリビューション由来のMySQLパッケージがインストール済みの場合には事前に削除する必要があります。</p>
 <p>既存のMySQLパッケージを削除:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum remove &#39;mysql*&#39;
@@ -300,7 +335,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div>
 </div>
 <div class="section" id="centos-6">
-<h2>2.8. CentOS 6<a class="headerlink" href="#centos-6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.9. CentOS 6<a class="headerlink" href="#centos-6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6では、Mroonga 4.01のリリースからCentOSのSCLを使ったMySQLパッケージ（MySQL 5.5系）を利用します。</p>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install centos-release-SCL
@@ -328,7 +363,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div>
 </div>
 <div class="section" id="centos-6-deprecated">
-<h2>2.9. CentOS 6（非推奨）<a class="headerlink" href="#centos-6-deprecated" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.10. CentOS 6（非推奨）<a class="headerlink" href="#centos-6-deprecated" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6用のパッケージはCentOS 5用のパッケージと違い、ディストリビューション由来のMySQLパッケージ（MySQL 5.1系）を利用します。そのため、ディストリビューション由来のMySQLを削除する必要はありません。</p>
 <div class="admonition note">
 <p class="first admonition-title">ノート</p>
@@ -359,7 +394,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div>
 </div>
 <div class="section" id="fedora-20">
-<h2>2.10. Fedora 20<a class="headerlink" href="#fedora-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.11. Fedora 20<a class="headerlink" href="#fedora-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Fedora 19からはMariaDBがMySQLのデフォルト実装となります。</p>
 <p>Mroongaには二つの選択肢があり、一つはMariaDBと一緒に使うこと、もう一つはMySQL (community-mysql)と一緒に使うことです。</p>
 <p>MySQL (community-mysql)向けにMroongaをインストール:</p>
@@ -398,7 +433,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div>
 </div>
 <div class="section" id="mac-os-x">
-<h2>2.11. Mac OS X<a class="headerlink" href="#mac-os-x" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.12. Mac OS X<a class="headerlink" href="#mac-os-x" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql
 </pre></div>
@@ -410,14 +445,18 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">参考</p>
-<p class="last"><a class="reference external" href="https://github.com/mroonga/homebrew">mroonga/homebrew on GitHub</a></p>
+<p class="last"><a class="reference external" href="https://github.com/mroonga/homebrew">GitHubにあるmroonga/homebrew</a></p>
 </div>
 </div>
 <div class="section" id="windows">
-<h2>2.12. Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.13. Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>mroongaのWindowsバイナリはMariaDBのバイナリと一緒に提供されます。これは、mroongaのWindows版をビルドするのに <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">いくつかの変更が</a> 必要だからです。</p>
 <div class="section" id="installer">
-<h3>2.12.1. インストーラー<a class="headerlink" href="#installer" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.13.1. インストーラー<a class="headerlink" href="#installer" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last">以下のMSIファイルは動きません。zipファイルを使うか、正常に動くMSIファイルの作成に協力をお願いします。</p>
+</div>
 <p>MSIファイルをダウンロードして実行してください。環境に合わせてMSIを選んでください。</p>
 <p>32-bit環境なら <tt class="docutils literal"><span class="pre">win32</span></tt> バージョンを選んでください。64-bit環境なら <tt class="docutils literal"><span class="pre">winx64</span></tt> を選んでください。</p>
 <blockquote>
@@ -428,7 +467,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div></blockquote>
 </div>
 <div class="section" id="zip">
-<h3>2.12.2. Zip<a class="headerlink" href="#zip" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.13.2. Zip<a class="headerlink" href="#zip" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>zipファイルをダウンロードして展開してください。環境に合わせてzipファイルを選ぶ必要があります</p>
 <p>32-bit環境なら <tt class="docutils literal"><span class="pre">win32</span></tt> バージョンを選んでください。64-bit環境なら <tt class="docutils literal"><span class="pre">winx64</span></tt> を選んでください。</p>
 <blockquote>
@@ -439,7 +478,7 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </div></blockquote>
 </div>
 <div class="section" id="install-mroonga">
-<h3>2.12.3. Mroongaのインストール<a class="headerlink" href="#install-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.13.3. Mroongaのインストール<a class="headerlink" href="#install-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ZIPパッケージはあらかじめ設定済みなので、&quot;INSTALL PLUGIN&quot;やUDFのインストールは不要です。</p>
 <p>mysqldを起動します。:</p>
 <div class="highlight-none"><div class="highlight"><pre>&gt; mysqld.exe --defautls-file=.\MY-PREFERRED-INI.ini --console
@@ -467,14 +506,14 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="install-from-the-source-code">
-<h2>2.13. ソースコードからのインストール<a class="headerlink" href="#install-from-the-source-code" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.14. ソースコードからのインストール<a class="headerlink" href="#install-from-the-source-code" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ソースコードからインストールする方法を説明します。パッケージがない環境ではソースコードからインストールすることになります。</p>
 <div class="section" id="japanese-morphological-analysis-system-mecab">
-<h3>2.13.1. 形態素解析(MeCab)について<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.14.1. 形態素解析(MeCab)について<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>形態素単位でトークナイズした全文検索索引を使用したい場合は、Groongaのインストール前に <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> をインストールしてください。</p>
 </div>
 <div class="section" id="download">
-<h3>2.13.2. ダウンロード<a class="headerlink" href="#download" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.14.2. ダウンロード<a class="headerlink" href="#download" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>リリース版のソースコードを利用する場合は <a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> からtarballをダウンロードしてください。</p>
 <p>最新のソースコードを利用する場合は <a class="reference external" href="https://github.com/mroonga/mroonga/">GitHub</a> からcloneして <cite>./autogen.sh</cite> を実行してください。（GNU Autotoolsが必要です。）この方法は開発に慣れた方向けなので、そうでない方はtarballを使うことをお勧めします。:</p>
 <div class="highlight-none"><div class="highlight"><pre>% git clone https://github.com/mroonga/mroonga.git
@@ -484,12 +523,12 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="requirements">
-<h3>2.13.3. 前提条件<a class="headerlink" href="#requirements" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.14.3. 前提条件<a class="headerlink" href="#requirements" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MySQLおよびGroongaが既にインストールされている必要があります。</p>
 <p>またMroongaをビルドするためにはMySQLのソースコードも必要です。</p>
 </div>
 <div class="section" id="install-mysql">
-<h3>2.13.4. MySQLのインストール<a class="headerlink" href="#install-mysql" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.14.4. MySQLのインストール<a class="headerlink" href="#install-mysql" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MySQL 5.6最新版のソースコードをダウンロードし、ビルド＆インストールして下さい。</p>
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
 <p>mysql-5.6.17を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
@@ -502,13 +541,13 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="install-groonga">
-<h3>2.13.5. Groongaのインストール<a class="headerlink" href="#install-groonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.14.5. Groongaのインストール<a class="headerlink" href="#install-groonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Groongaの最新版をビルド＆インストールしてください。</p>
 <p><a class="reference external" href="http://groonga.org/ja/docs/">http://groonga.org/ja/docs/</a></p>
 <p>ここでは/usr/libなどの標準パスにlibgroongaがインストールされているものと仮定します。</p>
 </div>
 <div class="section" id="build-mroonga">
-<h3>2.13.6. Mroongaのビルド<a class="headerlink" href="#build-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.14.6. Mroongaのビルド<a class="headerlink" href="#build-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下のように <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> でMySQLソースコードディレクトリ、 <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt> でmysql_configコマンドのパスを指定してconfigureを実行します。</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure \
   --with-mysql-source=/usr/local/src/mysql-5.6.17 \
@@ -527,8 +566,8 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </pre></div>
 </div>
 </div>
-<div class="section" id="id11">
-<h3>2.13.7. Mroongaのインストール<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id12">
+<h3>2.14.7. Mroongaのインストール<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>&quot;make install&quot;を実行するとMySQLのプラグイン用ディレクトリにha_mroonga.soが配置されます。</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -576,40 +615,40 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </div>
 </div>
 <div class="section" id="install-from-the-source-code-with-mariadb">
-<h2>2.14. MariaDBにバンドルしたソースコードからのインストール<a class="headerlink" href="#install-from-the-source-code-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.15. MariaDBにバンドルしたソースコードからのインストール<a class="headerlink" href="#install-from-the-source-code-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MariaDBにバンドルしてソースコードからインストールする方法を説明します。パッケージがない環境ではソースコードからインストールすることになります。</p>
-<div class="section" id="id12">
-<h3>2.14.1. 形態素解析(MeCab)について<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id13">
+<h3>2.15.1. 形態素解析(MeCab)について<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>形態素単位でトークナイズした全文検索索引を使用したい場合は、Groongaのインストール前に <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> をインストールしてください。</p>
 </div>
-<div class="section" id="id14">
-<h3>2.14.2. ダウンロード<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id15">
+<h3>2.15.2. ダウンロード<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> から、Mroongaのtarballをダウンロードしてください。</p>
 <p><a class="reference external" href="https://downloads.mariadb.org/">downloads.mariadb.org</a> から、MariaDBのtarballをダウンロードしてください。</p>
 </div>
-<div class="section" id="id16">
-<h3>2.14.3. 前提条件<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id17">
+<h3>2.15.3. 前提条件<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>groongaが既にインストールされている必要があります。</p>
 </div>
-<div class="section" id="id17">
-<h3>2.14.4. Groongaのインストール<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id18">
+<h3>2.15.4. Groongaのインストール<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Groongaの最新版をビルド＆インストールしてください。</p>
 <p><a class="reference external" href="http://groonga.org/ja/docs/">http://groonga.org/ja/docs/</a></p>
 <p>ここでは/usr/libなどの標準パスにlibgroongaがインストールされているものと仮定します。</p>
 </div>
 <div class="section" id="build-mroonga-with-mariadb">
-<h3>2.14.5. MariaDBとMroongaのビルド<a class="headerlink" href="#build-mroonga-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.15.5. MariaDBとMroongaのビルド<a class="headerlink" href="#build-mroonga-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MariaDBのtarballの解凍。</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mariadb-10.0.2.tar.gz
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz mariadb-10.0.10.tar.gz
 </pre></div>
 </div>
 <p>Mroongaのtarballの解凍後、storageディレクトリへ移動。</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-3.03.tar.gz
-mv mroonga-3.03 mariadb-10.0.2/storage/mroonga/
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-4.02.tar.gz
+mv mroonga-4.02 mariadb-10.0.10/storage/mroonga/
 </pre></div>
 </div>
 <p>&quot;cmake&quot;を実行します。</p>
-<div class="highlight-none"><div class="highlight"><pre>cd mariadb-10.0.2
+<div class="highlight-none"><div class="highlight"><pre>cd mariadb-10.0.10
 cmake .
 </pre></div>
 </div>
@@ -619,7 +658,7 @@ cmake .
 </div>
 </div>
 <div class="section" id="install-mroonga-with-mariadb">
-<h3>2.14.6. MariaDBとMroongaのインストール<a class="headerlink" href="#install-mroonga-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>2.15.6. MariaDBとMroongaのインストール<a class="headerlink" href="#install-mroonga-with-mariadb" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>&quot;make install&quot;を実行すると&quot;usr/local/mysql&quot;ディレクトリにMariaDBとMroongaが配置されます。</p>
 <div class="highlight-none"><div class="highlight"><pre>make install
 </pre></div>
@@ -669,7 +708,7 @@ cmake .
 </div>
 </div>
 <div class="section" id="upgrade-guide">
-<h2>2.15. アップグレードガイド<a class="headerlink" href="#upgrade-guide" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.16. アップグレードガイド<a class="headerlink" href="#upgrade-guide" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>非互換な変更が新しいリリースでもたらされることがあります。もし、そういった非互換がはいる場合にはリリースアナウンスでアナウンスします。</p>
 <p>古いバージョンからMroongaをアップグレードする推奨方法のリストがこちらです。</p>
 <p>以前のバージョンをお使いなら、アップグレード手順について次のURLを参照してください。</p>
@@ -697,38 +736,39 @@ cmake .
 <li><a class="reference internal" href="#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
 <li><a class="reference internal" href="#ubuntu-12-04-precise-pangolin">2.4. Ubuntu 12.04 Precise Pangolin</a></li>
 <li><a class="reference internal" href="#ubuntu-13-10-saucy-salamander">2.5. Ubuntu 13.10 Saucy Salamander</a></li>
-<li><a class="reference internal" href="#centos-5">2.6. CentOS 5</a></li>
-<li><a class="reference internal" href="#centos-5-deprecated">2.7. CentOS 5 (非推奨)</a></li>
-<li><a class="reference internal" href="#centos-6">2.8. CentOS 6</a></li>
-<li><a class="reference internal" href="#centos-6-deprecated">2.9. CentOS 6（非推奨）</a></li>
-<li><a class="reference internal" href="#fedora-20">2.10. Fedora 20</a></li>
-<li><a class="reference internal" href="#mac-os-x">2.11. Mac OS X</a></li>
-<li><a class="reference internal" href="#windows">2.12. Windows</a><ul>
-<li><a class="reference internal" href="#installer">2.12.1. インストーラー</a></li>
-<li><a class="reference internal" href="#zip">2.12.2. Zip</a></li>
-<li><a class="reference internal" href="#install-mroonga">2.12.3. Mroongaのインストール</a></li>
+<li><a class="reference internal" href="#ubuntu-14-04-trusty-tahr">2.6. Ubuntu 14.04 Trusty Tahr</a></li>
+<li><a class="reference internal" href="#centos-5">2.7. CentOS 5</a></li>
+<li><a class="reference internal" href="#centos-5-deprecated">2.8. CentOS 5 (非推奨)</a></li>
+<li><a class="reference internal" href="#centos-6">2.9. CentOS 6</a></li>
+<li><a class="reference internal" href="#centos-6-deprecated">2.10. CentOS 6（非推奨）</a></li>
+<li><a class="reference internal" href="#fedora-20">2.11. Fedora 20</a></li>
+<li><a class="reference internal" href="#mac-os-x">2.12. Mac OS X</a></li>
+<li><a class="reference internal" href="#windows">2.13. Windows</a><ul>
+<li><a class="reference internal" href="#installer">2.13.1. インストーラー</a></li>
+<li><a class="reference internal" href="#zip">2.13.2. Zip</a></li>
+<li><a class="reference internal" href="#install-mroonga">2.13.3. Mroongaのインストール</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-from-the-source-code">2.13. ソースコードからのインストール</a><ul>
-<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.13.1. 形態素解析(MeCab)について</a></li>
-<li><a class="reference internal" href="#download">2.13.2. ダウンロード</a></li>
-<li><a class="reference internal" href="#requirements">2.13.3. 前提条件</a></li>
-<li><a class="reference internal" href="#install-mysql">2.13.4. MySQLのインストール</a></li>
-<li><a class="reference internal" href="#install-groonga">2.13.5. Groongaのインストール</a></li>
-<li><a class="reference internal" href="#build-mroonga">2.13.6. Mroongaのビルド</a></li>
-<li><a class="reference internal" href="#id11">2.13.7. Mroongaのインストール</a></li>
+<li><a class="reference internal" href="#install-from-the-source-code">2.14. ソースコードからのインストール</a><ul>
+<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.14.1. 形態素解析(MeCab)について</a></li>
+<li><a class="reference internal" href="#download">2.14.2. ダウンロード</a></li>
+<li><a class="reference internal" href="#requirements">2.14.3. 前提条件</a></li>
+<li><a class="reference internal" href="#install-mysql">2.14.4. MySQLのインストール</a></li>
+<li><a class="reference internal" href="#install-groonga">2.14.5. Groongaのインストール</a></li>
+<li><a class="reference internal" href="#build-mroonga">2.14.6. Mroongaのビルド</a></li>
+<li><a class="reference internal" href="#id12">2.14.7. Mroongaのインストール</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-from-the-source-code-with-mariadb">2.14. MariaDBにバンドルしたソースコードからのインストール</a><ul>
-<li><a class="reference internal" href="#id12">2.14.1. 形態素解析(MeCab)について</a></li>
-<li><a class="reference internal" href="#id14">2.14.2. ダウンロード</a></li>
-<li><a class="reference internal" href="#id16">2.14.3. 前提条件</a></li>
-<li><a class="reference internal" href="#id17">2.14.4. Groongaのインストール</a></li>
-<li><a class="reference internal" href="#build-mroonga-with-mariadb">2.14.5. MariaDBとMroongaのビルド</a></li>
-<li><a class="reference internal" href="#install-mroonga-with-mariadb">2.14.6. MariaDBとMroongaのインストール</a></li>
+<li><a class="reference internal" href="#install-from-the-source-code-with-mariadb">2.15. MariaDBにバンドルしたソースコードからのインストール</a><ul>
+<li><a class="reference internal" href="#id13">2.15.1. 形態素解析(MeCab)について</a></li>
+<li><a class="reference internal" href="#id15">2.15.2. ダウンロード</a></li>
+<li><a class="reference internal" href="#id17">2.15.3. 前提条件</a></li>
+<li><a class="reference internal" href="#id18">2.15.4. Groongaのインストール</a></li>
+<li><a class="reference internal" href="#build-mroonga-with-mariadb">2.15.5. MariaDBとMroongaのビルド</a></li>
+<li><a class="reference internal" href="#install-mroonga-with-mariadb">2.15.6. MariaDBとMroongaのインストール</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#upgrade-guide">2.15. アップグレードガイド</a></li>
+<li><a class="reference internal" href="#upgrade-guide">2.16. アップグレードガイド</a></li>
 </ul>
 </li>
 </ul>
