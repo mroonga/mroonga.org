@@ -88,12 +88,12 @@
 <p>Here we explain how to use storage mode of Mroonga</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.3.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
+<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
     -&gt;   FULLTEXT INDEX (content)
-    -&gt; ) ENGINE = mroonga DEFAULT CHARSET utf8;
+    -&gt; ) ENGINE = Mroonga DEFAULT CHARSET utf8;
 Query OK, 0 rows affected (0.10 sec)
 </pre></div>
 </div>
@@ -247,7 +247,7 @@ Query OK, 0 rows affected (0.00 sec)
     -&gt;   name VARCHAR(255),
     -&gt;   location POINT NOT NULL,
     -&gt;   SPATIAL INDEX (location)
-    -&gt; ) ENGINE = mroonga;
+    -&gt; ) ENGINE = Mroonga;
 Query OK, 0 rows affected (0.06 sec)
 </pre></div>
 </div>
@@ -283,7 +283,7 @@ Query OK, 1 row affected (0.00 sec)
     -&gt;   _id INT,
      &gt;   content VARCHAR(255),
     -&gt;   UNIQUE KEY (_id) USING HASH
-    -&gt; ) ENGINE = mroonga;
+    -&gt; ) ENGINE = Mroonga;
 Query OK, 0 rows affected (0.04 sec)
 </pre></div>
 </div>
@@ -348,8 +348,8 @@ It is implemented as 'mroonga_snippet' UDF.</p>
 <p>See <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> about details.</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
-<h2>3.3.7. How to run groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
-<p>In storage mode, mroonga stores all your data into Groonga
+<h2>3.3.7. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
+<p>In storage mode, Mroonga stores all your data into Groonga
 database. You can access Groonga database by SQL with Mroonga. SQL is
 very powerful but it is not good for some operations such as faceted
 search.</p>
@@ -385,7 +385,7 @@ consistency.</p>
   `year_month` VARCHAR(9),
   tag VARCHAR(32),
   FULLTEXT INDEX (content)
-) ENGINE = mroonga DEFAULT CHARSET utf8;
+) ENGINE = Mroonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
@@ -511,10 +511,10 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
   c12 VARCHAR(20),
   ...
   c20 DATETIME
-) ENGINE = mroonga DEFAULT CHARSET utf8;
+) ENGINE = Mroonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
-<p>When we run SELECT phrase like the following, mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
+<p>When we run SELECT phrase like the following, Mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
 <blockquote>
 <div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
 <p>In this case above, only columns c1, c2, c11 and c12 are accessed, and we can process the SQL rapidly.</p>
@@ -599,7 +599,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.4. How to use geolocation search</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">3.3.5. How to get the record ID</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.6. How to get snippet (Keyword in context)</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.7. How to run groonga command</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.7. How to run Groonga command</a></li>
 <li><a class="reference internal" href="#logging">3.3.8. Logging</a></li>
 <li><a class="reference internal" href="#choosing-appropriate-columns">3.3.9. Choosing appropriate columns</a></li>
 <li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.10. Optimisation for counting rows</a></li>

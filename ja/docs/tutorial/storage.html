@@ -89,12 +89,12 @@
 <p>ここでは Mroonga におけるストレージモードの利用方法を説明します。</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.3.1. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt> とmroongaを指定するところがポイントです。:</p>
+<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
     -&gt;   FULLTEXT INDEX (content)
-    -&gt; ) ENGINE = mroonga DEFAULT CHARSET utf8;
+    -&gt; ) ENGINE = Mroonga DEFAULT CHARSET utf8;
 Query OK, 0 rows affected (0.10 sec)
 </pre></div>
 </div>
@@ -252,7 +252,7 @@ Query OK, 0 rows affected (0.00 sec)
     -&gt;   name VARCHAR(255),
     -&gt;   location POINT NOT NULL,
     -&gt;   SPATIAL INDEX (location)
-    -&gt; ) ENGINE = mroonga;
+    -&gt; ) ENGINE = Mroonga;
 Query OK, 0 rows affected (0.06 sec)
 </pre></div>
 </div>
@@ -288,7 +288,7 @@ Query OK, 1 row affected (0.00 sec)
     -&gt;   _id INT,
      &gt;   content VARCHAR(255),
     -&gt;   UNIQUE KEY (_id) USING HASH
-    -&gt; ) ENGINE = mroonga;
+    -&gt; ) ENGINE = Mroonga;
 Query OK, 0 rows affected (0.04 sec)
 </pre></div>
 </div>
@@ -352,8 +352,8 @@ It is implemented as 'mroonga_snippet' UDF.</p>
 <p>詳細は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> を参照してください。</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
-<h2>3.3.7. groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>In storage mode, mroonga stores all your data into Groonga
+<h2>3.3.7. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>In storage mode, Mroonga stores all your data into Groonga
 database. You can access Groonga database by SQL with Mroonga. SQL is
 very powerful but it is not good for some operations such as faceted
 search.</p>
@@ -376,7 +376,7 @@ search.</p>
   `year_month` VARCHAR(9),
   tag VARCHAR(32),
   FULLTEXT INDEX (content)
-) ENGINE = mroonga DEFAULT CHARSET utf8;
+) ENGINE = Mroonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
 <p>実行例で使用するサンプルデータはこちら:</p>
@@ -497,10 +497,10 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
   c12 VARCHAR(20),
   ...
   c20 DATETIME
-) ENGINE = mroonga DEFAULT CHARSET utf8;
+) ENGINE = Mroonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
-<p>When we run SELECT phrase like the following, mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
+<p>When we run SELECT phrase like the following, Mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
 <blockquote>
 <div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
 <p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
@@ -569,7 +569,8 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <table class="docutils footnote" frame="void" id="parser" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In groonga, we call it a 'tokeniser'.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">Groongaではトークナイザーと呼んでいる。</p>
+</td></tr>
 </tbody>
 </table>
 </div>
@@ -590,7 +591,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.4. 位置情報検索の利用方法</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">3.3.5. レコードIDの取得方法</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.6. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.7. groongaコマンドの実行方法</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.7. How to run Groonga command</a></li>
 <li><a class="reference internal" href="#logging">3.3.8. ログ出力</a></li>
 <li><a class="reference internal" href="#choosing-appropriate-columns">3.3.9. カラムの刈り込み</a></li>
 <li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.10. 行カウント高速化</a></li>
