@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.4. Wrapper mode &mdash; Mroonga v4.02 documentation</title>
+    <title>3.4. Wrapper mode &mdash; Mroonga v4.03 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.02',
+        VERSION:     '4.03',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.02 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.03 documentation" href="../index.html" />
     <link rel="up" title="3. Tutorial" href="../tutorial.html" />
     <link rel="next" title="4. Reference" href="../reference.html" />
     <link rel="prev" title="3.3. Storage mode" href="storage.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="storage.html" title="3.3. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">3. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
@@ -85,10 +85,10 @@
             
   <div class="section" id="wrapper-mode">
 <h1>3.4. Wrapper mode<a class="headerlink" href="#wrapper-mode" title="Permalink to this headline">¶</a></h1>
-<p>Here we explain how to use wrapper mode of mroonga</p>
+<p>Here we explain how to use wrapper mode of Mroonga</p>
 <div class="section" id="how-to-use-wrapper-mode">
 <h2>3.4.1. How to use wrapper mode<a class="headerlink" href="#how-to-use-wrapper-mode" title="Permalink to this headline">¶</a></h2>
-<p>In wrapper mode, mroonga works in wrapping an existing storage engine. To specify the wrapped storage engine, we use SQL comment like <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> for now.</p>
+<p>In wrapper mode, Mroonga works in wrapping an existing storage engine. To specify the wrapped storage engine, we use SQL comment like <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> for now.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">For now, a primary key is mandatory in wrapper mode. That is not the case with storage mode.</p>
@@ -98,13 +98,13 @@
 <p>Wrapper mode supports the followings, that are not supported in storage mode for now.</p>
 <ul class="last simple">
 <li>null value</li>
-<li>transaction (if storage engine supports. Note that rollback causes mismatch of indexes, it may affects search results, so recreate index of mroonga in such a case.)</li>
+<li>transaction (if storage engine supports. Note that rollback causes mismatch of indexes, it may affects search results, so recreate index of Mroonga in such a case.)</li>
 </ul>
 </div>
 </div>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.4.2. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
+<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
@@ -175,7 +175,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
-<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in mroonga, tokenisers that are added in groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
+<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in Mroonga, tokenisers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
@@ -234,7 +234,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <dt>TokenTrigram</dt>
 <dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
 </dl>
-<p>You can specify the default parser by passing <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> option in <tt class="docutils literal"><span class="pre">configure</span></tt> when you build mroonga.</p>
+<p>You can specify the default parser by passing <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> option in <tt class="docutils literal"><span class="pre">configure</span></tt> when you build Mroonga.</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
 </pre></div>
 </div>
@@ -314,7 +314,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
 <p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
 <p>Mroonga also has the optimisation for ORDER BY LIMIT.</p>
-<p>In the SELECT example below, ORDER BY LIMIT is processed in mroonga only and the minimal records are passed to MySQL.</p>
+<p>In the SELECT example below, ORDER BY LIMIT is processed in Mroonga only and the minimal records are passed to MySQL.</p>
 <div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
 </pre></div>
 </div>
@@ -346,7 +346,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <table class="docutils footnote" frame="void" id="parser" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In groonga, we call it a 'tokeniser'.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In Groonga, we call it a 'tokeniser'.</td></tr>
 </tbody>
 </table>
 </div>
@@ -414,7 +414,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="3.3. Storage mode"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >3. Tutorial</a> &raquo;</li> 
       </ul>
     </div>

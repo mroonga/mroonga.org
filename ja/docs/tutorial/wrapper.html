@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.4. ラッパーモード &mdash; Mroonga v4.02 documentation</title>
+    <title>3.4. ラッパーモード &mdash; Mroonga v4.03 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.02',
+        VERSION:     '4.03',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.02 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.03 documentation" href="../index.html" />
     <link rel="up" title="3. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4. リファレンス" href="../reference.html" />
     <link rel="prev" title="3.3. ストレージモード" href="storage.html" /> 
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="storage.html" title="3.3. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">3. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
@@ -86,10 +86,10 @@
             
   <div class="section" id="wrapper-mode">
 <h1>3.4. ラッパーモード<a class="headerlink" href="#wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>ここでは mroonga におけるラッパーモードの利用方法を説明します。</p>
+<p>ここでは Mroonga におけるラッパーモードの利用方法を説明します。</p>
 <div class="section" id="how-to-use-wrapper-mode">
 <h2>3.4.1. ラッパーモードの利用方法<a class="headerlink" href="#how-to-use-wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで mroonga が動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> のように指定するようになっています。</p>
+<p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで Mroonga が動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;innodb&quot;'</span></tt> のように指定するようになっています。</p>
 <div class="admonition note">
 <p class="first admonition-title">ノート</p>
 <p class="last">現在のところ、ラッパーモードではテーブルに必ずプライマリーキーを設定する必要があります。ストレージモードはこの限りではありません。</p>
@@ -100,14 +100,14 @@
 <ul class="last simple">
 <li><p class="first">null値</p>
 </li>
-<li><p class="first">トランザクション (ストレージエンジンがサポートしている場合。ロールバックするとインデックスの不整合が発生します。インデックスを使った検索に影響するので、その場合にはmroongaのインデックスを再作成します。</p>
+<li><p class="first">トランザクション (ストレージエンジンがサポートしている場合。ロールバックするとインデックスの不整合が発生します。インデックスを使った検索に影響するので、その場合にはMroongaのインデックスを再作成します。)</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.4.2. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt> とmroongaを指定するところがポイントです。:</p>
+<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
@@ -178,7 +178,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
-<p>しかし、この構文を利用する場合は、あらかじめすべてのパーサをMySQLに登録しておく必要があります。一方、groongaはトークナイザー（MySQLでいうパーサ）を動的に追加することができます。そのため、mroognaでもこの構文を採用するとgroonga側に動的に追加されたトークナイザーに対応できなくなります。groongaに動的に追加されるトークナイザーにはMeCabを用いたトークナイザーもあり、この制限に縛られることは利便性を損なうと判断し、以下のようなコメントを用いた独自の構文を採用することにしました。:</p>
+<p>しかし、この構文を利用する場合は、あらかじめすべてのパーサをMySQLに登録しておく必要があります。一方、Groongaはトークナイザー（MySQLでいうパーサ）を動的に追加することができます。そのため、Mroongaでもこの構文を採用するとGroonga側に動的に追加されたトークナイザーに対応できなくなります。Groongaに動的に追加されるトークナイザーにはMeCabを用いたトークナイザーもあり、この制限に縛られることは利便性を損なうと判断し、以下のようなコメントを用いた独自の構文を採用することにしました。:</p>
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
@@ -265,7 +265,7 @@ It is implemented as 'mroonga_snippet' UDF.</p>
 </div>
 <div class="section" id="logging">
 <h2>3.4.6. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroongaではデフォルトでログの出力を行うようになっています。</p>
+<p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
 <div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
@@ -322,8 +322,8 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
 <p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
 <p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
-<p>mroongaでも ORDER BY LIMIT を高速化するための仕組みを実装しています。</p>
-<p>例えば以下のSELECT文では ORDER BY LIMIT は、mroonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
+<p>Mroongaでも ORDER BY LIMIT を高速化するための仕組みを実装しています。</p>
+<p>例えば以下のSELECT文では ORDER BY LIMIT は、Mroonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
 <div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
 </pre></div>
 </div>
@@ -360,7 +360,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <table class="docutils footnote" frame="void" id="parser" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">groongaではトークナイザーと呼んでいる。</p>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first last">Groongaではトークナイザーと呼んでいる。</p>
 </td></tr>
 </tbody>
 </table>
@@ -429,7 +429,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="3.3. ストレージモード"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >3. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>

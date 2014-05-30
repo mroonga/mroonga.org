@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3. Storage mode &mdash; Mroonga v4.02 documentation</title>
+    <title>3.3. Storage mode &mdash; Mroonga v4.03 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.02',
+        VERSION:     '4.03',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.02 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.03 documentation" href="../index.html" />
     <link rel="up" title="3. Tutorial" href="../tutorial.html" />
     <link rel="next" title="3.4. Wrapper mode" href="wrapper.html" />
     <link rel="prev" title="3.2. Mode" href="mode.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="mode.html" title="3.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">3. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
@@ -85,7 +85,7 @@
             
   <div class="section" id="storage-mode">
 <h1>3.3. Storage mode<a class="headerlink" href="#storage-mode" title="Permalink to this headline">¶</a></h1>
-<p>Here we explain how to use storage mode of mroonga</p>
+<p>Here we explain how to use storage mode of Mroonga</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.3.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>After confirming the installation, let's create a table. The important point is to specify mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">mroonga</span></tt>.</p>
@@ -121,7 +121,7 @@ Query OK, 1 row affected (0.00 sec)
 <h2>3.3.2. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In version 1.0.0 or before, mroonga used a special column named <tt class="docutils literal"><span class="pre">_score</span></tt> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
+<p class="last">In version 1.0.0 or before, Mroonga used a special column named <tt class="docutils literal"><span class="pre">_score</span></tt> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
 </div>
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
@@ -163,7 +163,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
-<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in mroonga, tokenisers that are added in groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
+<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokeniser, that is a parser in MySQL. So if use this syntax in Mroonga, tokenisers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
@@ -277,7 +277,7 @@ Query OK, 1 row affected (0.00 sec)
 <div class="section" id="how-to-get-the-record-id">
 <h2>3.3.5. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
 <p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
-<p>To make the development of applications easier, you can get this record ID by SQL in mroonga</p>
+<p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
 <p>To get the record ID, you need to create a column named <tt class="docutils literal"><span class="pre">_id</span></tt> when you create a table.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE memos (
     -&gt;   _id INT,
@@ -289,7 +289,7 @@ Query OK, 0 rows affected (0.04 sec)
 </div>
 <p>Tye typo of _id column should be integer one (TINYINT, SMALLINT, MEDIUMINT, INT or BIGINT).</p>
 <p>You can create an index for _id column, but it should be HASH type.</p>
-<p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by groonga, you cannot specify the value when updating.
+<p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
 So you need to exclude it from setting columns, or you need to use <tt class="docutils literal"><span class="pre">null</span></tt> as its value.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;Saury for today&#39;s dinner.&quot;);
 Query OK, 1 row affected (0.00 sec)
@@ -330,7 +330,7 @@ mysql&gt; SELECT last_insert_grn_id();
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>last_insert_grn_id function is included in mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
+<p>last_insert_grn_id function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
@@ -349,8 +349,8 @@ It is implemented as 'mroonga_snippet' UDF.</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
 <h2>3.3.7. How to run groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
-<p>In storage mode, mroonga stores all your data into groonga
-database. You can access groonga database by SQL with mroonga. SQL is
+<p>In storage mode, mroonga stores all your data into Groonga
+database. You can access Groonga database by SQL with Mroonga. SQL is
 very powerful but it is not good for some operations such as faceted
 search.</p>
 <p>Faceted search is popular recently. Many online shopping sites such as
@@ -370,8 +370,8 @@ are needed. It is not effective.</p>
 <p>Groonga can do faceted search by only one groonga command. It is
 effective. Groonga has the <cite>select</cite> command that can search records
 with faceted search. Faceted search is called as <cite>drilldown</cite> in
-groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">groonga's document</a> about
-groonga's <cite>select</cite> command.</p>
+Groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga's document</a> about
+Groonga's <cite>select</cite> command.</p>
 <p>Mroonga provides <cite>mroonga_command()</cite> function. You can run groonga
 command in SQL by the function. But you should use only <cite>select</cite>
 command. Other commands that change schema or data may break
@@ -412,7 +412,7 @@ INSERT INTO diaries (content, date, year, `year_month`, tag)
 <p>Each record has <cite>groonga</cite> or <cite>MySQL</cite> as <cite>tag</cite>. Each record also has
 <cite>year</cite> and <cite>year_month</cite>. You can use <cite>tag</cite>, <cite>year</cite> and <cite>year_month</cite> as
 faceted search keys.</p>
-<p>Groonga calls faceted search as drilldown. So parameter key in groonga
+<p>Groonga calls faceted search as drilldown. So parameter key in Groonga
 is <cite>--drilldown</cite>. Groonga returns search result as JSON. So
 <cite>mroonga_command()</cite> also returns search result as JSON. It is not SQL
 friendly. You need to parse search result JSON by yourself.</p>
@@ -442,7 +442,7 @@ keys (result JSON is pretty printted):</p>
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">groonga's select command document</a> for more
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga's select command document</a> for more
 details.</p>
 </div>
 <div class="section" id="logging">
@@ -499,8 +499,8 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </div>
 <div class="section" id="choosing-appropriate-columns">
 <h2>3.3.9. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
-<p>Groonga uses one file per column to store data, and mroonga accesses needed columns only when accessing a table to utilise this characteristic.</p>
-<p>This optimisation is done automatically in mroonga internal, you don't need any specific configuration.</p>
+<p>Groonga uses one file per column to store data, and Mroonga accesses needed columns only when accessing a table to utilise this characteristic.</p>
+<p>This optimisation is done automatically in Mroonga internal, you don't need any specific configuration.</p>
 <p>Imagine that we have a table with 20 columns like below.</p>
 <div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
   c1 INT PRIMARY KEY AUTO_INCREMENT,
@@ -522,7 +522,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <div class="section" id="optimisation-for-counting-rows">
 <h2>3.3.10. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
 <p>In MySQL's storage engine interface, there is no difference between counting rows like COUNT(*) and normal data retrieving by SELECT. So access to data that is not included in SELECT result can happen even if you just want to count rows.</p>
-<p>Tritonn (MySQL + Senna), that is mroonga's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
+<p>Tritonn (MySQL + Senna), that is Mroonga's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
 <p>Mroonga also has the optimisation for counting rows.</p>
 <p>In the following SELECT, for example, needless read of columns are skipped and you can get the result of counting rows with the minimal cost.</p>
 <blockquote>
@@ -650,7 +650,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="3.2. Mode"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.02 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >3. Tutorial</a> &raquo;</li> 
       </ul>
     </div>

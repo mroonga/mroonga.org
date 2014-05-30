@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>8. Developer&#39;s guide &mdash; Mroonga v4.02 documentation</title>
+    <title>8. Developer&#39;s guide &mdash; Mroonga v4.03 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.02',
+        VERSION:     '4.03',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.02 documentation" href="index.html" />
+    <link rel="top" title="Mroonga v4.03 documentation" href="index.html" />
     <link rel="next" title="8.1. How to debug" href="developer/debug.html" />
     <link rel="prev" title="7.2. How to contribute in documentation topics" href="contribution/documentation.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -72,7 +72,7 @@
         <li class="right" >
           <a href="contribution/documentation.html" title="7.2. How to contribute in documentation topics"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Mroonga v4.02 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.03 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -107,7 +107,7 @@
 </div>
 <div class="section" id="how-we-are-developing">
 <h2>8.3. How we are developing<a class="headerlink" href="#how-we-are-developing" title="Permalink to this headline">¶</a></h2>
-<p>We, the mroonga development project, are doing Ticket Driven Development by using a BTS named Redmine.</p>
+<p>We, the Mroonga development project, are doing Ticket Driven Development by using a BTS named Redmine.</p>
 <p>The location of our Redmine site is the following.</p>
 <p><a class="reference external" href="http://redmine.groonga.org/projects/show/mroonga">http://redmine.groonga.org/projects/show/mroonga</a></p>
 <p>Developments are done per ticket.</p>
@@ -202,7 +202,7 @@ Please create a ticket first and describe your idea there.</p>
 </div>
 <div class="section" id="adding-and-running-tests">
 <h2>8.10. Adding and running tests<a class="headerlink" href="#adding-and-running-tests" title="Permalink to this headline">¶</a></h2>
-<p>We use two kinds of regression tests to manage the quality of mroonga.</p>
+<p>We use two kinds of regression tests to manage the quality of Mroonga.</p>
 <dl class="docutils">
 <dt>SQL tests</dt>
 <dd>When you add features or fix bugs that can be confirmed by SQL queries, please always add SQL tests. You might think that performance improvements cannot be confirmed with SQL, but some can be still well tested by using status variables or information_schema plugin etc.</dd>
@@ -218,13 +218,45 @@ Please create a ticket first and describe your idea there.</p>
 </div>
 <div class="section" id="adding-and-updating-documents">
 <h2>8.11. Adding and updating documents<a class="headerlink" href="#adding-and-updating-documents" title="Permalink to this headline">¶</a></h2>
-<p>We use Sphinx for the documentation of mroonga.</p>
+<p>We use Sphinx for the documentation of Mroonga.</p>
 <p>We write documents in ReStructuredText format and we convert them to HTML etc.</p>
-<p>The source files of documents are files having .rst extension in &quot;doc/ja/source&quot; directory.</p>
+<p>The source files of documents are files having .rst extension in &quot;doc/source&quot; directory.</p>
 <p>When you add or modify them, please try to build by &quot;make html&quot; etc. and confirm that no syntax error happens.</p>
 <p>Documents are published in <a class="reference external" href="http://mroonga.org">http://mroonga.org</a> . Since we are using github's web site feature, they will be updated each time when HTML files are pushed to <a class="reference external" href="http://github.com/mroonga/mroonga.github.com">http://github.com/mroonga/mroonga.github.com</a> repository. We push to mroonga.github.com repository after confirming the consistency between documents and current released version.</p>
 <p>So you can just push to mroonga repository to push documents for each ticket.</p>
-<p>To avoid the issue that directory names of sphinx's output cannot be used in github, we prepare sphinx2github.sh script in &quot;doc/en/source&quot; directory. When you commit to mroonga.github.com repository, please modify sphinx's output files by using this script beforehand.</p>
+<p>The details are as follows.</p>
+<div class="section" id="installing-sphinx">
+<h3>8.11.1. Installing Sphinx<a class="headerlink" href="#installing-sphinx" title="Permalink to this headline">¶</a></h3>
+<p>You don't need to install Sphinx by yourself because Mroonga clones the latest Sphinx from Sphinx repository automatically. You just need to install Mercurial.</p>
+</div>
+<div class="section" id="build-mroonga">
+<h3>8.11.2. Build Mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
+<p>In order to enables documentation generation, you should run configure script with &quot;--enable-document&quot; option as follows.</p>
+<div class="highlight-none"><div class="highlight"><pre>% ./configure --enable-document --with-mysql-source=(your mysql source directory)
+% make
+% make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-a-document">
+<h3>8.11.3. Adding a document<a class="headerlink" href="#adding-a-document" title="Permalink to this headline">¶</a></h3>
+<p>Write a document in ReStructuredText format, and save the document with .rst extension in &quot;doc/source&quot; directory.</p>
+<p>See reStructuredText (reST) <a class="reference external" href="http://sphinx-doc.org/latest/rest.html">concepts and syntax</a> about how to
+write a document in ReStructuredText format.</p>
+</div>
+<div class="section" id="confirm-generated-document">
+<h3>8.11.4. Confirm generated document<a class="headerlink" href="#confirm-generated-document" title="Permalink to this headline">¶</a></h3>
+<p>You can generate HTML files by the following command.</p>
+<div class="highlight-none"><div class="highlight"><pre>% cd doc/locale/en
+% make html
+</pre></div>
+</div>
+<p>You can confirm generated HTML document in web browser, after generating HTML files.</p>
+<p>Here we show an example of using Firefox.</p>
+<div class="highlight-none"><div class="highlight"><pre>% firefox html/characteristic.html
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -245,7 +277,13 @@ Please create a ticket first and describe your idea there.</p>
 <li><a class="reference internal" href="#development-environment">8.8. Development environment</a></li>
 <li><a class="reference internal" href="#contents-of-the-source-tree">8.9. Contents of the source tree</a></li>
 <li><a class="reference internal" href="#adding-and-running-tests">8.10. Adding and running tests</a></li>
-<li><a class="reference internal" href="#adding-and-updating-documents">8.11. Adding and updating documents</a></li>
+<li><a class="reference internal" href="#adding-and-updating-documents">8.11. Adding and updating documents</a><ul>
+<li><a class="reference internal" href="#installing-sphinx">8.11.1. Installing Sphinx</a></li>
+<li><a class="reference internal" href="#build-mroonga">8.11.2. Build Mroonga</a></li>
+<li><a class="reference internal" href="#adding-a-document">8.11.3. Adding a document</a></li>
+<li><a class="reference internal" href="#confirm-generated-document">8.11.4. Confirm generated document</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -292,7 +330,7 @@ Please create a ticket first and describe your idea there.</p>
         <li class="right" >
           <a href="contribution/documentation.html" title="7.2. How to contribute in documentation topics"
              >previous</a> |</li>
-        <li><a href="index.html">Mroonga v4.02 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.03 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

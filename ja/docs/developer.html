@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>8. 開発者向け情報 &mdash; Mroonga v4.02 documentation</title>
+    <title>8. 開発者向け情報 &mdash; Mroonga v4.03 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.02',
+        VERSION:     '4.03',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.02 documentation" href="index.html" />
+    <link rel="top" title="Mroonga v4.03 documentation" href="index.html" />
     <link rel="next" title="8.1. デバッグ方法" href="developer/debug.html" />
     <link rel="prev" title="7.2. How to contribute in documentation topics" href="contribution/documentation.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="contribution/documentation.html" title="7.2. How to contribute in documentation topics"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">Mroonga v4.02 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.03 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -108,7 +108,7 @@
 </div>
 <div class="section" id="how-we-are-developing">
 <h2>8.3. 開発手法について<a class="headerlink" href="#how-we-are-developing" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroonga開発プロジェクトではBTSの1つであるRedmineを用いたチケット駆動開発を実施しています。</p>
+<p>Mroonga開発プロジェクトではBTSの1つであるRedmineを用いたチケット駆動開発を実施しています。</p>
 <p>Redmineは以下のサイトで運用されています。</p>
 <p><a class="reference external" href="http://redmine.groonga.org/projects/show/mroonga">http://redmine.groonga.org/projects/show/mroonga</a></p>
 <p>開発の作業はチケット単位で行っています。</p>
@@ -226,7 +226,7 @@
 </div>
 <div class="section" id="adding-and-running-tests">
 <h2>8.10. テストコードの追加と実行について<a class="headerlink" href="#adding-and-running-tests" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroongaではプログラムの品質管理のため、2種類の回帰テストを用いています。</p>
+<p>Mroongaではプログラムの品質管理のため、2種類の回帰テストを用いています。</p>
 <dl class="docutils">
 <dt>SQL tests</dt>
 <dd><p class="first last">SQL実行により動作確認を行えるような機能追加/バグ修正に関しては必ずSQLテストを追加して下さい。高速化機能などは一見するとSQLによる動作確認ができないように見える場合もありますが、ステータス変数やinformation_schemaプラグインなどを使用することで上手くテストできるものもあります。</p>
@@ -244,13 +244,45 @@
 </div>
 <div class="section" id="adding-and-updating-documents">
 <h2>8.11. ドキュメントの追加と変更について<a class="headerlink" href="#adding-and-updating-documents" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroongaではドキュメント作成にSphinxを使用しています。</p>
+<p>Mroongaではドキュメント作成にSphinxを使用しています。</p>
 <p>ドキュメントはReStructuredText形式でソースファイルを書き、HTML形式などにビルドしています。</p>
-<p>ドキュメントのソースファイルは&quot;doc/ja/source&quot;ディレクトリにある拡張子が.rstのファイルです。</p>
+<p>The source files of documents are files having .rst extension in &quot;doc/source&quot; directory.</p>
 <p>加筆修正を行ったら&quot;make html&quot;等でビルドして構文エラーが起きないことを確認して下さい。</p>
 <p>ドキュメントの実際の公開場所は <a class="reference external" href="http://mroonga.org">http://mroonga.org</a> で、これはgithubのサイト機能を使用しているため <a class="reference external" href="http://github.com/mroonga/mroonga.github.com">http://github.com/mroonga/mroonga.github.com</a> レポジトリに最新のHTML出力ファイルをpushすることで更新が行われる仕組みとなっていますが、mroonga.github.comレポジトリへのpushは現リリースバージョンとの整合性などを確認した上で別のタイミングでpushします。</p>
 <p>従って、各チケットに対するドキュメントのpushはmroongaレポジトリに対するpushのみで構いません。</p>
-<p>またsphinxの出力するディレクトリ名がgithubで使用できない問題を回避するため、&quot;doc/ja/source&quot;ディレクトリにてsphinx2github.shスクリプトを用意しています。mroonga.github.comにcommitする場合にはこのスクリプトを実行してsphinxの生成したファイルを修正して置きましょう。</p>
+<p>The details are as follows.</p>
+<div class="section" id="installing-sphinx">
+<h3>8.11.1. Installing Sphinx<a class="headerlink" href="#installing-sphinx" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>You don't need to install Sphinx by yourself because Mroonga clones the latest Sphinx from Sphinx repository automatically. You just need to install Mercurial.</p>
+</div>
+<div class="section" id="build-mroonga">
+<h3>8.11.2. Build Mroonga<a class="headerlink" href="#build-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>In order to enables documentation generation, you should run configure script with &quot;--enable-document&quot; option as follows.</p>
+<div class="highlight-none"><div class="highlight"><pre>% ./configure --enable-document --with-mysql-source=(your mysql source directory)
+% make
+% make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-a-document">
+<h3>8.11.3. Adding a document<a class="headerlink" href="#adding-a-document" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Write a document in ReStructuredText format, and save the document with .rst extension in &quot;doc/source&quot; directory.</p>
+<p>See reStructuredText (reST) <a class="reference external" href="http://sphinx-doc.org/latest/rest.html">concepts and syntax</a> about how to
+write a document in ReStructuredText format.</p>
+</div>
+<div class="section" id="confirm-generated-document">
+<h3>8.11.4. Confirm generated document<a class="headerlink" href="#confirm-generated-document" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>You can generate HTML files by the following command.</p>
+<div class="highlight-none"><div class="highlight"><pre>% cd doc/locale/en
+% make html
+</pre></div>
+</div>
+<p>You can confirm generated HTML document in web browser, after generating HTML files.</p>
+<p>Here we show an example of using Firefox.</p>
+<div class="highlight-none"><div class="highlight"><pre>% firefox html/characteristic.html
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -271,7 +303,13 @@
 <li><a class="reference internal" href="#development-environment">8.8. 開発環境</a></li>
 <li><a class="reference internal" href="#contents-of-the-source-tree">8.9. ソースディレクトリ解説</a></li>
 <li><a class="reference internal" href="#adding-and-running-tests">8.10. テストコードの追加と実行について</a></li>
-<li><a class="reference internal" href="#adding-and-updating-documents">8.11. ドキュメントの追加と変更について</a></li>
+<li><a class="reference internal" href="#adding-and-updating-documents">8.11. ドキュメントの追加と変更について</a><ul>
+<li><a class="reference internal" href="#installing-sphinx">8.11.1. Installing Sphinx</a></li>
+<li><a class="reference internal" href="#build-mroonga">8.11.2. Build Mroonga</a></li>
+<li><a class="reference internal" href="#adding-a-document">8.11.3. Adding a document</a></li>
+<li><a class="reference internal" href="#confirm-generated-document">8.11.4. Confirm generated document</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -318,7 +356,7 @@
         <li class="right" >
           <a href="contribution/documentation.html" title="7.2. How to contribute in documentation topics"
              >前へ</a> |</li>
-        <li><a href="index.html">Mroonga v4.02 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.03 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
