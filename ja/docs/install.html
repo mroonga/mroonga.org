@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. インストールガイド &mdash; Mroonga v4.03 documentation</title>
+    <title>2. インストールガイド &mdash; Mroonga v4.04 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.03',
+        VERSION:     '4.04',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.03 documentation" href="index.html" />
+    <link rel="top" title="Mroonga v4.04 documentation" href="index.html" />
     <link rel="next" title="3. チュートリアル" href="tutorial.html" />
     <link rel="prev" title="1. Mroongaの特徴" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -37,7 +37,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
@@ -61,7 +63,7 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -73,14 +75,14 @@
         <li class="right" >
           <a href="characteristic.html" title="1. Mroongaの特徴"
              accesskey="P">前へ</a> |</li>
-        <li><a href="index.html">Mroonga v4.03 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.04 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="installation-guide">
 <h1>2. インストールガイド<a class="headerlink" href="#installation-guide" title="このヘッドラインへのパーマリンク">¶</a></h1>
@@ -168,10 +170,6 @@ deb-src http://packages.groonga.org/debian/ unstable main
 <p>groonga-normalizer-mysqlをインストール:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-normalizer-mysql
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">ノート</p>
-<p class="last">'utf8_unicode_ci'や'utf8mb4_unicode_ci'は今後のリリースでサポート予定です。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">ノート</p>
@@ -274,7 +272,7 @@ deb-src http://packages.groonga.org/debian/ unstable main
 % sudo yum install -y mysql55-mysql-server
 % sudo /etc/init.d/mysql55-mysqld start
 % sudo yum install -y mysql55-mroonga
-(% sudo scl enable mysql55 mysqladmin -u root password &#39;new-password&#39;)
+(% sudo scl enable mysql55 &quot;mysqladmin -u root password &#39;new-password&#39;&quot;)
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
@@ -402,8 +400,8 @@ deb-src http://packages.groonga.org/debian/ unstable main
 <p>32-bit環境なら <tt class="docutils literal"><span class="pre">win32</span></tt> バージョンを選んでください。64-bit環境なら <tt class="docutils literal"><span class="pre">winx64</span></tt> を選んでください。</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.03/mariadb-10.0.11-with-mroonga-4.03-win32.zip">mariadb-10.0.11-with-mroonga-4.03-win32.zip</a></li>
-<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.03/mariadb-10.0.11-with-mroonga-4.03-winx64.zip">mariadb-10.0.11-with-mroonga-4.03-winx64.zip</a></li>
+<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.04/mariadb-10.0.12-with-mroonga-4.04-win32.zip">mariadb-10.0.12-with-mroonga-4.04-win32.zip</a></li>
+<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.04/mariadb-10.0.12-with-mroonga-4.04-winx64.zip">mariadb-10.0.12-with-mroonga-4.04-winx64.zip</a></li>
 </ul>
 </div></blockquote>
 </div>
@@ -573,8 +571,8 @@ MariaDB [(none)]&gt; SHOW ENGINES;
 </pre></div>
 </div>
 <p>Mroongaのtarballの解凍後、storageディレクトリへ移動。</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-4.03.tar.gz
-mv mroonga-4.03 mariadb-10.0.11/storage/mroonga/
+<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-4.04.tar.gz
+mv mroonga-4.04 mariadb-10.0.11/storage/mroonga/
 </pre></div>
 </div>
 <p>&quot;cmake&quot;を実行します。</p>
@@ -642,13 +640,13 @@ cmake .
 <p>非互換な変更が新しいリリースでもたらされることがあります。もし、そういった非互換がはいる場合にはリリースアナウンスでアナウンスします。</p>
 <p>古いバージョンからMroongaをアップグレードする推奨方法のリストがこちらです。</p>
 <p>以前のバージョンをお使いなら、アップグレード手順について次のURLを参照してください。</p>
-<p>1.20以前からアップグレードするなら、 <a class="reference internal" href="news.html#release-1-20"><em>1.20リリース - 2012/01/29</em></a> <a class="reference internal" href="news.html#release-1-20"><em>1.20リリース - 2012/01/29</em></a> を参照してください。</p>
-<p>1.20からアップグレードするなら、 <a class="reference internal" href="news.html#release-2-00"><em>2.00リリース - 2012/02/29</em></a> を参照してください。</p>
-<p>2.00もしくは2.01からアップグレードするなら、 <a class="reference internal" href="news.html#release-2-02"><em>2.02リリース - 2012/04/29</em></a> を参照してください。</p>
-<p>もし2.00以降でマルチカラムインデックスをストレージモードで使用しているなら、 <a class="reference internal" href="news.html#release-2-03"><em>2.03リリース - 2012/05/29</em></a> を参照してください。</p>
-<p>もし2.04以降で256マルチカラムインデックスをストレージモードで使用しているなら、 <a class="reference internal" href="news.html#release-2-03"><em>2.03 リリース</em></a> を参照してください。2.04以降でストレージモードにてSETカラムもしくは要素数が256より少ないENUMを使用している場合は、 <a class="reference internal" href="news.html#release-2-05"><em>2.05リリース - 2012/07/29</em></a> を参照してください。</p>
-<p>2.05以降でマルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は、 <a class="reference internal" href="news.html#release-2-08"><em>2.08リリース - 2012/10/29</em></a> を参照してください。</p>
-<p>2.08以降でTIMESTAMP型のカラムを使っているテーブルがあれば、データベースを再作成してください。CHAR(N)を主キーとしているテーブルがあれば、インデックスを再作成してください。 それぞれについては <a class="reference internal" href="news.html#release-2-09"><em>2.09リリース - 2012/11/29</em></a> を参照してください。</p>
+<p>1.20以前からアップグレードするなら、 <a class="reference internal" href="news.html#release-1-20"><em>1.20リリース - 2012/01/29</em></a> <a class="reference internal" href="news.html#release-1-20"><em>1.20 リリース</em></a> を参照してください。</p>
+<p>1.20からアップグレードするなら、 <a class="reference internal" href="news.html#release-2-00"><em>2.00 リリース</em></a> を参照してください。</p>
+<p>2.00もしくは2.01からアップグレードするなら、 <a class="reference internal" href="news.html#release-2-02"><em>2.02 リリース</em></a> を参照してください。</p>
+<p>もし2.00以降でマルチカラムインデックスをストレージモードで使用しているなら、 <a class="reference internal" href="news.html#release-2-03"><em>2.03 リリース</em></a> を参照してください。</p>
+<p>もし2.04以降で256マルチカラムインデックスをストレージモードで使用しているなら、 <a class="reference internal" href="news.html#release-2-03"><em>2.03 リリース</em></a> を参照してください。2.04以降でストレージモードにてSETカラムもしくは要素数が256より少ないENUMを使用している場合は、 <a class="reference internal" href="news.html#release-2-05"><em>2.05 リリース</em></a> を参照してください。</p>
+<p>2.05以降でマルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は、 <a class="reference internal" href="news.html#release-2-08"><em>2.08 リリース</em></a> を参照してください。</p>
+<p>2.08以降でTIMESTAMP型のカラムを使っているテーブルがあれば、データベースを再作成してください。CHAR(N)を主キーとしているテーブルがあれば、インデックスを再作成してください。 それぞれについては <a class="reference internal" href="news.html#release-2-09"><em>2.09 リリース</em></a> を参照してください。</p>
 </div>
 </div>
 
@@ -656,7 +654,7 @@ cmake .
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">目次</a></h3>
   <ul>
@@ -707,14 +705,12 @@ cmake .
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="tutorial.html"
                         title="次の章へ">3. チュートリアル</a></p>
-  <div role="note" aria-label="source link">
-    <h3>このページ</h3>
-    <ul class="this-page-menu">
-      <li><a href="sources/install.txt"
-            rel="nofollow">ソースコードを表示（英語）</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/install.txt"
+           rel="nofollow">ソースコードを表示（英語）</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>クイック検索</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -731,7 +727,7 @@ cmake .
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -743,10 +739,10 @@ cmake .
         <li class="right" >
           <a href="characteristic.html" title="1. Mroongaの特徴"
              >前へ</a> |</li>
-        <li><a href="index.html">Mroonga v4.03 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.04 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>

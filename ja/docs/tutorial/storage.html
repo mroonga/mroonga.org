@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.3. ストレージモード &mdash; Mroonga v4.03 documentation</title>
+    <title>3.3. ストレージモード &mdash; Mroonga v4.04 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.03',
+        VERSION:     '4.04',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.03 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.04 documentation" href="../index.html" />
     <link rel="up" title="3. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="3.4. ラッパーモード" href="wrapper.html" />
     <link rel="prev" title="3.2. モード" href="mode.html" /> 
@@ -38,7 +38,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -62,7 +64,7 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -74,7 +76,7 @@
         <li class="right" >
           <a href="mode.html" title="3.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.04 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">3. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
@@ -82,14 +84,14 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="storage-mode">
 <h1>3.3. ストレージモード<a class="headerlink" href="#storage-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>ここでは Mroonga におけるストレージモードの利用方法を説明します。</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>3.3.1. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></tt>.</p>
+<p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></tt> とMroongaを指定するところがポイントです。:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
@@ -352,11 +354,8 @@ It is implemented as 'mroonga_snippet' UDF.</p>
 <p>詳細は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> を参照してください。</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
-<h2>3.3.7. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>In storage mode, Mroonga stores all your data into Groonga
-database. You can access Groonga database by SQL with Mroonga. SQL is
-very powerful but it is not good for some operations such as faceted
-search.</p>
+<h2>3.3.7. Groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ストレージモードではMroongaはすべてのデータをGroongaのデータベースに保存します。Mroongaを使うことでSQLでGroongaのデータベースにアクセスできるようになります。SQLはとても強力ですが、ファセット検索などのようないくつかの操作が得意ではありません。</p>
 <p>最近ではファセット検索は一般的なものになりました。amazon.comやebay.comのように多くのオンラインショッピングサイトがファセット検索をサポートしています。ファセット検索はユーザが検索結果を絞り込む前に絞り込み検索をし、その絞り込み検索の結果を表示します。ユーザは絞りこまれた結果から自分が探しているものを選ぶだけです。ファセット検索を使うとユーザは以下のようなメリットがあります。</p>
 <ul class="simple">
 <li><p class="first">ユーザはどうやって検索結果を絞り込むかを考える必要はありません。単に表示された絞り込み結果から選ぶだけです。</p>
@@ -500,7 +499,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 ) ENGINE = Mroonga DEFAULT CHARSET utf8;
 </pre></div>
 </div>
-<p>When we run SELECT phrase like the following, Mroonga reads data from columns that are referred by SELECT phrase and WHERE phrase only (and it does not access columns that not required internally).</p>
+<p>この時、以下のようなSELECT文が発行される場合、MroongaではSELECT句およびWHERE句で参照しているカラムに対してのみデータの読み取りを行ってSQL文を処理します（内部的に不要なカラムに対してはアクセスしません）。</p>
 <blockquote>
 <div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
 <p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
@@ -580,7 +579,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
@@ -591,7 +590,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-geolocation-search">3.3.4. 位置情報検索の利用方法</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">3.3.5. レコードIDの取得方法</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">3.3.6. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.7. How to run Groonga command</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">3.3.7. Groongaコマンドの実行方法</a></li>
 <li><a class="reference internal" href="#logging">3.3.8. ログ出力</a></li>
 <li><a class="reference internal" href="#choosing-appropriate-columns">3.3.9. カラムの刈り込み</a></li>
 <li><a class="reference internal" href="#optimisation-for-counting-rows">3.3.10. 行カウント高速化</a></li>
@@ -606,14 +605,12 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="wrapper.html"
                         title="次の章へ">3.4. ラッパーモード</a></p>
-  <div role="note" aria-label="source link">
-    <h3>このページ</h3>
-    <ul class="this-page-menu">
-      <li><a href="../sources/tutorial/storage.txt"
-            rel="nofollow">ソースコードを表示（英語）</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/tutorial/storage.txt"
+           rel="nofollow">ソースコードを表示（英語）</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -630,7 +627,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -642,11 +639,11 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="3.2. モード"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.03 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.04 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >3. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
