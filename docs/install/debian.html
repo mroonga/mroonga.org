@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.3. Debian GNU/Linux &mdash; Mroonga v4.05 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v4.05 documentation" href="../index.html" />
+    <link rel="up" title="2. Install" href="../install.html" />
+    <link rel="next" title="2.4. Ubuntu" href="ubuntu.html" />
+    <link rel="prev" title="2.2. OS X" href="os_x.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+  <body role="document">
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/install/debian.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ubuntu.html" title="2.4. Ubuntu"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="os_x.html" title="2.2. OS X"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+          <li><a href="../install.html" accesskey="U">2. Install</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="debian-gnu-linux">
+<h1>2.3. Debian GNU/Linux<a class="headerlink" href="#debian-gnu-linux" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to install Mroonga related deb packages on
+Debian GNU/Linux. You can install them by <tt class="docutils literal"><span class="pre">apt</span></tt>.</p>
+<p>We distribute both 32-bit and 64-bit packages but we strongly
+recommend a 64-bit package for server. You should use a 32-bit package
+just only for tests or development. You will encounter an out of
+memory error with a 32-bit package even if you just process medium
+size data.</p>
+<div class="section" id="wheezy">
+<h2>2.3.1. wheezy<a class="headerlink" href="#wheezy" title="Permalink to this headline">¶</a></h2>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ wheezy main
+deb-src http://packages.groonga.org/debian/ wheezy main
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get install -y --allow-unauthenticated groonga-keyring
+% sudo apt-get update
+% sudo apt-get install -y -V groonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
+<div class="section" id="jessie">
+<h2>2.3.2. jessie<a class="headerlink" href="#jessie" title="Permalink to this headline">¶</a></h2>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ jessie main
+deb-src http://packages.groonga.org/debian/ jessie main
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get install -y --allow-unauthenticated groonga-keyring
+% sudo apt-get update
+% sudo apt-get install -y -V groonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
+<div class="section" id="sid">
+<h2>2.3.3. sid<a class="headerlink" href="#sid" title="Permalink to this headline">¶</a></h2>
+<p>/etc/apt/sources.list.d/groonga.list:</p>
+<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ unstable main
+deb-src http://packages.groonga.org/debian/ unstable main
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
+% sudo apt-get install -y --allow-unauthenticated groonga-keyring
+% sudo apt-get update
+% sudo apt-get install -y -V groonga
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.3. Debian GNU/Linux</a><ul>
+<li><a class="reference internal" href="#wheezy">2.3.1. wheezy</a></li>
+<li><a class="reference internal" href="#jessie">2.3.2. jessie</a></li>
+<li><a class="reference internal" href="#sid">2.3.3. sid</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="os_x.html"
+                        title="previous chapter">2.2. OS X</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ubuntu.html"
+                        title="next chapter">2.4. Ubuntu</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/install/debian.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ubuntu.html" title="2.4. Ubuntu"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="os_x.html" title="2.2. OS X"
+             >previous</a> |</li>
+        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+          <li><a href="../install.html" >2. Install</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2009-2014, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
