@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>8.1. デバッグ方法 &mdash; Mroonga v4.04 documentation</title>
+    <title>9.1. デバッグ方法 &mdash; Mroonga v4.05 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.04',
+        VERSION:     '4.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.04 documentation" href="../index.html" />
-    <link rel="up" title="8. 開発者向け情報" href="../developer.html" />
-    <link rel="next" title="8.2. リリース手順" href="release.html" />
-    <link rel="prev" title="8. 開発者向け情報" href="../developer.html" /> 
+    <link rel="top" title="Mroonga v4.05 documentation" href="../index.html" />
+    <link rel="up" title="9. 開発者向け情報" href="../developer.html" />
+    <link rel="next" title="9.2. リリース手順" href="release.html" />
+    <link rel="prev" title="9. 開発者向け情報" href="../developer.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -38,9 +38,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -64,39 +62,39 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="release.html" title="8.2. リリース手順"
+          <a href="release.html" title="9.2. リリース手順"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../developer.html" title="8. 開発者向け情報"
+          <a href="../developer.html" title="9. 開発者向け情報"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.04 documentation</a> &raquo;</li>
-          <li><a href="../developer.html" accesskey="U">8. 開発者向け情報</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+          <li><a href="../developer.html" accesskey="U">9. 開発者向け情報</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="how-to-debug">
-<h1>8.1. デバッグ方法<a class="headerlink" href="#how-to-debug" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>9.1. デバッグ方法<a class="headerlink" href="#how-to-debug" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="building-for-debugging">
-<h2>8.1.1. デバッグ用ビルド方法<a class="headerlink" href="#building-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>9.1.1. デバッグ用ビルド方法<a class="headerlink" href="#building-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>デバッグ用にビルドすることにより、gdb上でのシンボル解決など開発時に得られる情報が多くなります。そのため、開発時はデバッグ用にMySQLとMroongaをビルドします。</p>
 <div class="admonition note">
 <p class="first admonition-title">ノート</p>
 <p class="last">片方だけデバッグ用ビルドにすると構造体のサイズなどが異なってしまうため、mroongaがロードできなかったり、実行時にassertに引っかかったりしてうまく動作しません。</p>
 </div>
 <div class="section" id="how-to-build-mysql-for-debugging">
-<h3>8.1.1.1. MySQLのデバッグ用ビルド方法<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.1.1.1. MySQLのデバッグ用ビルド方法<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a> にある通り、CMakeのオプションに <tt class="docutils literal"><span class="pre">-DWITH_DEBUG=yes</span></tt> オプションを渡すことでデバッグ用にビルドすることができます。</p>
 <p>ダウンロードからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-none"><div class="highlight"><pre>% mkdir -p ~/work/
@@ -110,7 +108,7 @@
 </div>
 </div>
 <div class="section" id="how-tom-build-mroonga-for-debugging">
-<h3>8.1.1.2. mroongaのデバッグ用ビルド方法<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.1.1.2. mroongaのデバッグ用ビルド方法<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>mroongaはconfigureのオプションに <tt class="docutils literal"><span class="pre">--with-debug</span></tt> を渡すことでデバッグ用にビルドすることができます。</p>
 <p>リポジトリのcloneからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-none"><div class="highlight"><pre>% cd ~/work/
@@ -128,10 +126,10 @@
 </div>
 </div>
 <div class="section" id="more-about-run-sql-test-sh">
-<h2>8.1.2. run-sql-test.sh を使いこなす<a class="headerlink" href="#more-about-run-sql-test-sh" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>9.1.2. run-sql-test.sh を使いこなす<a class="headerlink" href="#more-about-run-sql-test-sh" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>run-sql-test.sh はデバッグの友。ここでは、その便利な使い方の一例をご紹介します。</p>
 <div class="section" id="run-the-specified-test-only">
-<h3>8.1.2.1. 指定したテストを実行する<a class="headerlink" href="#run-the-specified-test-only" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.1.2.1. 指定したテストを実行する<a class="headerlink" href="#run-the-specified-test-only" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>何もオプションを渡さずに run-sql-test.sh を実行すると <tt class="docutils literal"><span class="pre">test/sql/t/</span></tt> 以下にある全てのテスト (<tt class="docutils literal"><span class="pre">*.test</span></tt>) が実行されてしまいます。</p>
 <p>特定のテストだけを実行したい、という場合は次のようにしてテスト名を --do-test オプションに渡します。</p>
 <div class="highlight-none"><div class="highlight"><pre>./test/run-sql-test.sh --do-test=foobar
@@ -139,12 +137,12 @@
 </div>
 </div>
 <div class="section" id="see-the-trace">
-<h3>8.1.2.2. トレースを見る<a class="headerlink" href="#see-the-trace" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.1.2.2. トレースを見る<a class="headerlink" href="#see-the-trace" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>次のようにして <tt class="docutils literal"><span class="pre">--debug</span></tt> オプションをつけてテストを実行すると、関数の呼び出しなどが記録されます。この呼び出しは <tt class="docutils literal"><span class="pre">${MySQLの作業ディレクトリ}/${MySQLのバージョン}/mysql-test/var/log/mysqld.1.trace</span></tt> に格納されます。</p>
 <p>新しく関数を作成した場合は MRN_DBUG_ENTER_FUNCTION 関数の先頭に配置し、関数の呼び出しを記録するようにすると良いでしょう。</p>
 </div>
 <div class="section" id="invoking-gdb">
-<h3>8.1.2.3. GDB を立ち上げる<a class="headerlink" href="#invoking-gdb" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.1.2.3. GDB を立ち上げる<a class="headerlink" href="#invoking-gdb" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">--gdb</span></tt> オプションを指定することで、テストを実行する際に GDB を用いてデバッグを行うことができます。</p>
 <div class="highlight-none"><div class="highlight"><pre>./test/run-sql-test.sh --gdb
 </pre></div>
@@ -157,20 +155,20 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">8.1. デバッグ方法</a><ul>
-<li><a class="reference internal" href="#building-for-debugging">8.1.1. デバッグ用ビルド方法</a><ul>
-<li><a class="reference internal" href="#how-to-build-mysql-for-debugging">8.1.1.1. MySQLのデバッグ用ビルド方法</a></li>
-<li><a class="reference internal" href="#how-tom-build-mroonga-for-debugging">8.1.1.2. mroongaのデバッグ用ビルド方法</a></li>
+<li><a class="reference internal" href="#">9.1. デバッグ方法</a><ul>
+<li><a class="reference internal" href="#building-for-debugging">9.1.1. デバッグ用ビルド方法</a><ul>
+<li><a class="reference internal" href="#how-to-build-mysql-for-debugging">9.1.1.1. MySQLのデバッグ用ビルド方法</a></li>
+<li><a class="reference internal" href="#how-tom-build-mroonga-for-debugging">9.1.1.2. mroongaのデバッグ用ビルド方法</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#more-about-run-sql-test-sh">8.1.2. run-sql-test.sh を使いこなす</a><ul>
-<li><a class="reference internal" href="#run-the-specified-test-only">8.1.2.1. 指定したテストを実行する</a></li>
-<li><a class="reference internal" href="#see-the-trace">8.1.2.2. トレースを見る</a></li>
-<li><a class="reference internal" href="#invoking-gdb">8.1.2.3. GDB を立ち上げる</a></li>
+<li><a class="reference internal" href="#more-about-run-sql-test-sh">9.1.2. run-sql-test.sh を使いこなす</a><ul>
+<li><a class="reference internal" href="#run-the-specified-test-only">9.1.2.1. 指定したテストを実行する</a></li>
+<li><a class="reference internal" href="#see-the-trace">9.1.2.2. トレースを見る</a></li>
+<li><a class="reference internal" href="#invoking-gdb">9.1.2.3. GDB を立ち上げる</a></li>
 </ul>
 </li>
 </ul>
@@ -179,16 +177,18 @@
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="../developer.html"
-                        title="前の章へ">8. 開発者向け情報</a></p>
+                        title="前の章へ">9. 開発者向け情報</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="release.html"
-                        title="次の章へ">8.2. リリース手順</a></p>
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/developer/debug.txt"
-           rel="nofollow">ソースコードを表示（英語）</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="次の章へ">9.2. リリース手順</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/developer/debug.txt"
+            rel="nofollow">ソースコードを表示（英語）</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -205,23 +205,23 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="release.html" title="8.2. リリース手順"
+          <a href="release.html" title="9.2. リリース手順"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../developer.html" title="8. 開発者向け情報"
+          <a href="../developer.html" title="9. 開発者向け情報"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.04 documentation</a> &raquo;</li>
-          <li><a href="../developer.html" >8. 開発者向け情報</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+          <li><a href="../developer.html" >9. 開発者向け情報</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>

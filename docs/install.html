@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Installation Guide &mdash; Mroonga v4.04 documentation</title>
+    <title>2. Install &mdash; Mroonga v4.05 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.04',
+        VERSION:     '4.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.04 documentation" href="index.html" />
-    <link rel="next" title="3. Tutorial" href="tutorial.html" />
+    <link rel="top" title="Mroonga v4.05 documentation" href="index.html" />
+    <link rel="next" title="2.1. Windows" href="install/windows.html" />
     <link rel="prev" title="1. The characteristics of Mroonga" href="characteristic.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
@@ -36,9 +36,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
@@ -62,610 +60,96 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="tutorial.html" title="3. Tutorial"
+          <a href="install/windows.html" title="2.1. Windows"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of Mroonga"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Mroonga v4.04 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.05 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <div class="section" id="installation-guide">
-<h1>2. Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
-<p>If you use binary packages, MySQL related packages will be also installed when you install Mroonga package.</p>
-<p>We distribute packages for both 32-bit and 64-bit but we recommend that you should use 64-bit package for server. You should use 32-bit package just only for test or development. You will get no memory error with 32-bit package even if you just process medium size data.</p>
-<p>Here we explain how to install for each environment.</p>
-<div class="section" id="debian-gnu-linux-wheezy">
-<h2>2.1. Debian GNU/Linux wheezy<a class="headerlink" href="#debian-gnu-linux-wheezy" title="Permalink to this headline">¶</a></h2>
-<p>/etc/apt/sources.list.d/groonga.list:</p>
-<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ wheezy main
-deb-src http://packages.groonga.org/debian/ wheezy main
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
-% sudo apt-get install -y --allow-unauthenticated groonga-keyring
-% sudo apt-get update
-% sudo apt-get install -y -V groonga
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="debian-gnu-linux-jessie">
-<h2>2.2. Debian GNU/Linux jessie<a class="headerlink" href="#debian-gnu-linux-jessie" title="Permalink to this headline">¶</a></h2>
-<p>/etc/apt/sources.list.d/groonga.list:</p>
-<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ jessie main
-deb-src http://packages.groonga.org/debian/ jessie main
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
-% sudo apt-get install -y --allow-unauthenticated groonga-keyring
-% sudo apt-get update
-% sudo apt-get install -y -V groonga
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="debian-gnu-linux-sid">
-<h2>2.3. Debian GNU/Linux sid<a class="headerlink" href="#debian-gnu-linux-sid" title="Permalink to this headline">¶</a></h2>
-<p>/etc/apt/sources.list.d/groonga.list:</p>
-<div class="highlight-none"><div class="highlight"><pre>deb http://packages.groonga.org/debian/ unstable main
-deb-src http://packages.groonga.org/debian/ unstable main
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
-% sudo apt-get install -y --allow-unauthenticated groonga-keyring
-% sudo apt-get update
-% sudo apt-get install -y -V groonga
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="ubuntu">
-<h2>2.4. Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h2>
-<p>The Mroonga APT repository for Ubuntu uses PPA (Personal Package
-Archive) on Launchpad. You can install Mroonga by APT from the PPA.</p>
-<p>Here are supported Ubuntu versions:</p>
-<blockquote>
-<div><ul class="simple">
-<li>12.04 LTS Precise Pangolin</li>
-<li>13.10 Saucy Salamander</li>
-<li>14.04 LTS Trusty Tahr</li>
+  <div class="section" id="install">
+<h1>2. Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to install Mroonga on each
+environment. There are packages for major platforms. It's recommended
+that you use package instead of building Mroonga by yourself. But
+don't warry. There is a document about building Mroonga from source.</p>
+<p>We distribute both 32-bit and 64-bit packages but we strongly
+recommend a 64-bit package for server. You should use a 32-bit package
+just only for tests or development. You will encounter an out of
+memory error with a 32-bit package even if you just process medium
+size data.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/windows.html">2.1. Windows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html#installer">2.1.1. Installer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html#zip">2.1.2. Zip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html#build-from-source-with-mariadb">2.1.3. Build from source with MariaDB</a></li>
 </ul>
-</div></blockquote>
-<p>Enable the universe repository and the security update repository to
-install Mroonga:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V software-properties-common lsb-release
-% sudo add-apt-repository -y universe
-% sudo add-apt-repository &quot;deb http://security.ubuntu.com/ubuntu $(lsb_release --short --codename)-security main restricted&quot;
-</pre></div>
-</div>
-<p>Add the <tt class="docutils literal"><span class="pre">ppa:groonga/ppa</span></tt> PPA to your system:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo add-apt-repository -y ppa:groonga/ppa
-% sudo apt-get update
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V mysql-server-mroonga
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y -V groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="centos-5">
-<h2>2.5. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 5, we use CentOS's MySQL packages (version 5.5.x) since Mroonga 3.09 release.</p>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mysql55-mysql-server
-% sudo /etc/init.d/mysql55-mysqld start
-% sudo yum install -y mysql55-mroonga
-(% sudo scl enable mysql55 mysqladmin -u root password &#39;new-password&#39;)
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y install groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="centos-5-deprecated">
-<h2>2.6. CentOS 5 (Deprecated)<a class="headerlink" href="#centos-5-deprecated" title="Permalink to this headline">¶</a></h2>
-<p>The old version of Mroonga had also provided MySQL 5.6 packages as exceptional case. This is obsolete and not recommended way.
-The mysql-mroonga package is deprecated on CentOS 5 since Mroonga 3.09.
-We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
-<p>CentOS 5's MySQL packages should be removed beforehand if installed.</p>
-<p>Remove existing MySQL packages</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove &#39;mysql*&#39;
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y MySQL-server
-% sudo service mysql start
-% sudo yum install -y mysql-mroonga
-(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
-</pre></div>
-</div>
-</div>
-<div class="section" id="centos-6">
-<h2>2.7. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 6, we use CentOS's SCL MySQL packages (version 5.5.x) since Mroonga 4.01 release.</p>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install centos-release-SCL
-% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mysql55-mysql-server
-% sudo /etc/init.d/mysql55-mysqld start
-% sudo yum install -y mysql55-mroonga
-(% sudo scl enable mysql55 &quot;mysqladmin -u root password &#39;new-password&#39;&quot;)
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y install groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="centos-6-deprecated">
-<h2>2.8. CentOS 6 (Deprecated)<a class="headerlink" href="#centos-6-deprecated" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 6, unlike in CentOS 5, we use CentOS's MySQL packages (version 5.1.x). So you don't need to remove CentOS's MySQL packages.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since Mroonga 4.01 release, mysql-mroonga package is marked as deprecated. Please use mysql55-mroonga package instead.</p>
-</div>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mysql-server
-% sudo service mysqld start
-% sudo yum install -y mysql-mroonga
-(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y install groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="fedora-20">
-<h2>2.9. Fedora 20<a class="headerlink" href="#fedora-20" title="Permalink to this headline">¶</a></h2>
-<p>Since Fedora 19, MariaDB is the default implementation of MySQL.</p>
-<p>So there are two selections for Mroonga. One is using with MariaDB, the other is using with MySQL (community-mysql).</p>
-<p>Install Mroonga for MySQL (community-mysql):</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mysql-mroonga
-</pre></div>
-</div>
-<p>Install Mroonga for MariaDB:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mariadb-mroonga
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">MariaDB and MySQL (community-mysql) package are exclusive. For example, if you want to use mysql-mroonga, you need to remove conflicted mariadb packages at first.</p>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
-</pre></div>
-</div>
-<p>If you want to use MySQL compatible COLLATION such as 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' or 'utf8mb4_unicode_ci', please install groonga-normalizer-mysql package.</p>
-<p>Install groonga-normalizer-mysql package:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y install groonga-normalizer-mysql
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you don't specify MySQL compatible case insensitive COLLATION, MySQL incompatible COLLATION of Groonga is used.
-MySQL compatible case insensitive COLLATION are 'utf8_general_ci', 'utf8mb4_general_ci', 'utf8_unicode_ci' and 'utf8mb4_unicode_ci'.</p>
-</div>
-</div>
-<div class="section" id="mac-os-x">
-<h2>2.10. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install with <tt class="docutils literal"><span class="pre">--with-mecab</span></tt> option.</p>
-<p>Install with MeCab support:</p>
-<div class="highlight-none"><div class="highlight"><pre>% brew install https://raw.github.com/mroonga/homebrew/master/mroonga.rb --use-homebrew-mysql --with-mecab
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference external" href="https://github.com/mroonga/homebrew">mroonga/homebrew on GitHub</a></p>
-</div>
-</div>
-<div class="section" id="windows">
-<h2>2.11. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
-<p>Mroonga binary for Windows is provided with MariaDB binary because
-<a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">some changes</a>
-are needed for building mroonga for Windows.</p>
-<div class="section" id="installer">
-<h3>2.11.1. Installer<a class="headerlink" href="#installer" title="Permalink to this headline">¶</a></h3>
-<div class="admonition caution">
-<p class="first admonition-title">Caution</p>
-<p class="last">The following MSI files don't work yet. Please use zip files below
-or help us to creating MSI files that work well.</p>
-</div>
-<p>Download MSI file and execute it. You need to choose a MSI for your
-environment.</p>
-<p>Choose <tt class="docutils literal"><span class="pre">win32</span></tt> version for 32-bit environment, <tt class="docutils literal"><span class="pre">winx64</span></tt> version
-for 64-bit environment:</p>
-<blockquote>
-<div><ul class="simple">
-<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.02/mariadb-10.0.10-with-mroonga-4.02-win32.msi">mariadb-10.0.10-with-mroonga-4.02-win32.msi</a></li>
-<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.02/mariadb-10.0.10-with-mroonga-4.02-winx64.msi">mariadb-10.0.10-with-mroonga-4.02-winx64.msi</a></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/os_x.html">2.2. OS X</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/os_x.html#id1">2.2.1. Homebrew</a></li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="zip">
-<h3>2.11.2. Zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
-<p>Download zip file and extract it. You need to choose a zip for your
-environment.</p>
-<p>Choose <tt class="docutils literal"><span class="pre">win32</span></tt> version for 32-bit environment, <tt class="docutils literal"><span class="pre">winx64</span></tt> version
-for 64-bit environment:</p>
-<blockquote>
-<div><ul class="simple">
-<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.04/mariadb-10.0.12-with-mroonga-4.04-win32.zip">mariadb-10.0.12-with-mroonga-4.04-win32.zip</a></li>
-<li><a class="reference external" href="https://github.com/mroonga/mroonga/releases/download/v4.04/mariadb-10.0.12-with-mroonga-4.04-winx64.zip">mariadb-10.0.12-with-mroonga-4.04-winx64.zip</a></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/debian.html">2.3. Debian GNU/Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html#wheezy">2.3.1. wheezy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html#jessie">2.3.2. jessie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html#sid">2.3.3. sid</a></li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="install-mroonga">
-<h3>2.11.3. Install Mroonga<a class="headerlink" href="#install-mroonga" title="Permalink to this headline">¶</a></h3>
-<p>Zip packages are pre-configured for easy to use, so no need to execute &quot;INSTALL PLUGIN&quot; and install UDF.</p>
-<p>Just start mysqld by following command.:</p>
-<div class="highlight-none"><div class="highlight"><pre>&gt; mysqld.exe --defautls-file=.\MY-PREFERRED-INI.ini --console
-</pre></div>
-</div>
-<p>Each zip package contains ini files (my-small.ini, my-medium.ini, my-large.ini and so on), choose preferred ini file which meets on your demand.</p>
-<p>Next connect to MariaDB by following command.:</p>
-<div class="highlight-none"><div class="highlight"><pre>&gt; mysql.exe
-MariaDB [(none)]&gt; SHOW ENGINES;
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine             | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-| CSV                | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| PERFORMANCE_SCHEMA | YES     | Performance Schema                                         | NO           | NO   | NO         |
-| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-| MyISAM             | YES     | MyISAM storage engine                                      | NO           | NO   | NO         |
-| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
-| mroonga            | YES     | CJK-ready fulltext search, column store                    | NO           | NO   | NO         |
-| Aria               | YES     | Crash-safe tables with MyISAM heritage                     | NO           | NO   | NO         |
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-8 rows in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="install-from-the-source-code">
-<h2>2.12. Install from the source code<a class="headerlink" href="#install-from-the-source-code" title="Permalink to this headline">¶</a></h2>
-<p>Here we explain how to install from the source code. If your environment is not listed above, you need to do so.</p>
-<div class="section" id="japanese-morphological-analysis-system-mecab">
-<h3>2.12.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#japanese-morphological-analysis-system-mecab" title="Permalink to this headline">¶</a></h3>
-<p>If you want to use indexes of tokenizing of each morpheme for full text search, install <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> before installing Groonga.</p>
-</div>
-<div class="section" id="download">
-<h3>2.12.2. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
-<p>To install the released version, download the tarball from <a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> .</p>
-<p>To install the latest source code, clone the code from <a class="reference external" href="https://github.com/mroonga/mroonga/">GitHub</a> and invoke <cite>./autogen.sh</cite> (GNU Autotools are required). This way is aimed at skilled developpers. If not, we recommend using the tarball.</p>
-<div class="highlight-none"><div class="highlight"><pre>% git clone https://github.com/mroonga/mroonga.git
-% cd mroonga
-% ./autogen.sh
-</pre></div>
-</div>
-</div>
-<div class="section" id="requirements">
-<h3>2.12.3. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
-<p>MySQL and Groonga should be already installed.</p>
-<p>And MySQL's source code is also required to build Mroonga.</p>
-</div>
-<div class="section" id="install-mysql">
-<h3>2.12.4. Install MySQL<a class="headerlink" href="#install-mysql" title="Permalink to this headline">¶</a></h3>
-<p>Download the latest MySQL 5.6 source code, then build and install it.</p>
-<p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a></p>
-<p>Here we assume that we use mysql-5.6.17 and its source code is extracted in the following directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.6.17
-</pre></div>
-</div>
-<p>And we assume that MySQL is installed in the following directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/mysql
-</pre></div>
-</div>
-</div>
-<div class="section" id="install-groonga">
-<h3>2.12.5. Install Groonga<a class="headerlink" href="#install-groonga" title="Permalink to this headline">¶</a></h3>
-<p>Build and install the latest Groonga.</p>
-<p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
-<p>Here we assume that libgroonga is installed in the standard location like /usr/lib etc.</p>
-</div>
-<div class="section" id="build-mroonga">
-<h3>2.12.6. Build Mroonga<a class="headerlink" href="#build-mroonga" title="Permalink to this headline">¶</a></h3>
-<p>Run configure script by specifying the location of MySQL source code with <tt class="docutils literal"><span class="pre">--with-mysql-source</span></tt> and the path of mysql_config command with <tt class="docutils literal"><span class="pre">--with-mysql-config</span></tt>.</p>
-<div class="highlight-none"><div class="highlight"><pre>./configure \
-  --with-mysql-source=/usr/local/src/mysql-5.6.17 \
-  --with-mysql-config=/usr/local/mysql/bin/mysql_config
-</pre></div>
-</div>
-<p>If Groonga is not installed in the standard location like /usr/lib, you need to specify its location by PKG_CONFIG_PATH. For example, if Groonga is installed with <tt class="docutils literal"><span class="pre">--prefix=$HOME/local</span></tt>, do like the following</p>
-<div class="highlight-none"><div class="highlight"><pre>./configure \
-  PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig \
-  --with-mysql-source=/usr/local/src/mysql-5.6.17 \
-  --with-mysql-config=/usr/local/mysql/bin/mysql_config
-</pre></div>
-</div>
-<p>Then invoke &quot;make&quot;.</p>
-<div class="highlight-none"><div class="highlight"><pre>make
-</pre></div>
-</div>
-</div>
-<div class="section" id="id10">
-<h3>2.12.7. Install Mroonga<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>By invoking &quot;make install&quot;, ha_mroonga.so will be installed in MySQL's plugin directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>make install
-</pre></div>
-</div>
-<p>Then start mysqld, connect to it by mysql client, and install it by &quot;INSTALL PLUGIN&quot; command.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>If &quot;mroonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, Mroonga is well installed.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| mroonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
-| MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
-| InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
-| MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-6 rows in set (0.00 sec)
-</pre></div>
-</div>
-<p>Next install UDF (User-Defined Function).</p>
-<p>To get the record ID assigned by Groonga in INSERT, install last_insert_grn_id function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>To enable snippet (keyword in context) UDF, install mroonga_snippet function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>To enable invoking Groonga query from Mroonga, install mroonga_command function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>To escape an user input query properly, install mroonga_escape function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_escape RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="install-from-the-source-code-with-mariadb">
-<h2>2.13. Install from the source code with MariaDB<a class="headerlink" href="#install-from-the-source-code-with-mariadb" title="Permalink to this headline">¶</a></h2>
-<p>Here we explain how to install from the source code with MariaDB. If your environment is not listed above, you need to do so.</p>
-<div class="section" id="id11">
-<h3>2.13.1. Japanese morphological analysis system (MeCab)<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>If you want to use indexes of tokenizing of each morpheme for full text search, install <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> before installing Groonga.</p>
-</div>
-<div class="section" id="id13">
-<h3>2.13.2. Download<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<p>Download Mroonga tarball from <a class="reference external" href="http://packages.groonga.org/source/mroonga">packages.groonga.org</a> .</p>
-<p>Download MariaDB tarball from <a class="reference external" href="https://downloads.mariadb.org/">downloads.mariadb.org</a> .</p>
-</div>
-<div class="section" id="id15">
-<h3>2.13.3. Requirements<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p>Groonga should be already installed.</p>
-</div>
-<div class="section" id="id16">
-<h3>2.13.4. Install Groonga<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>Build and install the latest Groonga.</p>
-<p><a class="reference external" href="http://groonga.org/docs/">http://groonga.org/docs/</a></p>
-<p>Here we assume that libgroonga is installed in the standard location like /usr/lib etc.</p>
-</div>
-<div class="section" id="build-mroonga-with-mariadb">
-<h3>2.13.5. Build Mroonga with MariaDB<a class="headerlink" href="#build-mroonga-with-mariadb" title="Permalink to this headline">¶</a></h3>
-<p>Uncompress MariaDB tarball.</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mariadb-10.0.11.tar.gz
-</pre></div>
-</div>
-<p>Uncompress Mroonga tarball then move into storage directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>tar xvfz mroonga-4.04.tar.gz
-mv mroonga-4.04 mariadb-10.0.11/storage/mroonga/
-</pre></div>
-</div>
-<p>Run &quot;cmake&quot;.</p>
-<div class="highlight-none"><div class="highlight"><pre>cd mariadb-10.0.11
-cmake .
-</pre></div>
-</div>
-<p>Then invoke &quot;make&quot;.</p>
-<div class="highlight-none"><div class="highlight"><pre>make
-</pre></div>
-</div>
-</div>
-<div class="section" id="install-mroonga-with-mariadb">
-<h3>2.13.6. Install Mroonga with MariaDB<a class="headerlink" href="#install-mroonga-with-mariadb" title="Permalink to this headline">¶</a></h3>
-<p>By invoking &quot;make install&quot;, MariaDB and Mroonga will be installed in &quot;/usr/local/mysql&quot; directory.</p>
-<div class="highlight-none"><div class="highlight"><pre>make install
-</pre></div>
-</div>
-<p>Then start mysqld, connect to it by MariaDB client, and install it by &quot;INSTALL PLUGIN&quot; command.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>If &quot;mroonga&quot; is displayed in &quot;SHOW ENGINES&quot; command result like below, Mroonga is well installed.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine             | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-| CSV                | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| PERFORMANCE_SCHEMA | YES     | Performance Schema                                         | NO           | NO   | NO         |
-| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-| MyISAM             | DEFAULT | MyISAM storage engine                                      | NO           | NO   | NO         |
-| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| InnoDB             | NO      | Supports transactions, row-level locking, and foreign keys | NULL         | NULL | NULL       |
-| mroonga            | YES     | CJK-ready fulltext search, column store                    | NO           | NO   | NO         |
-| Aria               | YES     | Crash-safe tables with MyISAM heritage                     | NO           | NO   | NO         |
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-8 rows in set (0.01 sec)
-</pre></div>
-</div>
-<p>Next install UDF (User-Defined Function).</p>
-<p>To get the record ID assigned by Groonga in INSERT, install last_insert_grn_id function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>To enable snippet (keyword in context) UDF, install mroonga_snippet function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>To enable invoking Groonga query from Mroonga, install mroonga_command function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_command RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-<p>To escape an user input query properly, install mroonga_escape function.</p>
-<p>Invoke CREATE FUNCTION like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_escape RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="upgrade-guide">
-<h2>2.14. Upgrade Guide<a class="headerlink" href="#upgrade-guide" title="Permalink to this headline">¶</a></h2>
-<p>There is a case that incompatible change is introduced at new release.
-It is announced by release announce if new release contains such a incompatible change.</p>
-<p>Here is the list of recommended way of upgrading Mroonga from old release.</p>
-<p>See following URL about upgrade sequence if you use previous version.</p>
-<p>If you upgrade prior to 1.20, refer to <a class="reference internal" href="news.html#release-1-20"><em>Release 1.20 - 2012/01/29</em></a></p>
-<p>If you upgrade from 1.20, refer to <a class="reference internal" href="news.html#release-2-00"><em>Release 2.00 - 2012/02/29</em></a></p>
-<p>If you upgrade from 2.00 or 2.01, refer to <a class="reference internal" href="news.html#release-2-02"><em>Release 2.02 - 2012/04/29</em></a></p>
-<p>If you upgrade from 2.00 or later and using multiple column indexes on storage mode, refer to <a class="reference internal" href="news.html#release-2-03"><em>Release 2.03 - 2012/05/29</em></a></p>
-<p>If you upgrade from 2.04 or later and using SET column or ENUM that has the number of elements &lt; 256 in Storage mode, refer to <a class="reference internal" href="news.html#release-2-05"><em>Release 2.05 - 2012/07/29</em></a></p>
-<p>If you upgrade from 2.05 or later and using multiple column indexes against VARCHAR or CHAR, refer to <a class="reference internal" href="news.html#release-2-08"><em>Release 2.08 - 2012/10/29</em></a></p>
-<p>If you upgrade from 2.08 or later and using TIMESTAMP column, please recreate database. If you upgrade from 2.08 or later and using CHAR(N) as primary key, please recreate index. Refer to <a class="reference internal" href="news.html#release-2-09"><em>Release 2.09 - 2012/11/29</em></a> for each case:</p>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/ubuntu.html">2.4. Ubuntu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/ubuntu.html#ppa-personal-package-archive">2.4.1. PPA (Personal Package Archive)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/centos.html">2.5. CentOS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#centos-5">2.5.1. CentOS 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#centos-5-deprecated">2.5.2. CentOS 5 (Deprecated)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#centos-6">2.5.3. CentOS 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#centos-6-deprecated">2.5.4. CentOS 6 (Deprecated)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/fedora.html">2.6. Fedora</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/fedora.html#fedora-20">2.6.1. Fedora 20</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/others.html">2.7. Others</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/others.html#dependencies">2.7.1. Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#tools">2.7.1.1. Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#libraries">2.7.1.2. Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#mysql">2.7.1.3. MySQL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/others.html#build-from-source">2.7.2. Build from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#configure">2.7.2.1. <tt class="docutils literal"><span class="pre">configure</span></tt></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-mysql-source-path">2.7.2.1.1. <tt class="docutils literal"><span class="pre">--with-mysql-source=PATH</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-mysql-build-path">2.7.2.1.2. <tt class="docutils literal"><span class="pre">--with-mysql-build=PATH</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-mysql-config-path">2.7.2.1.3. <tt class="docutils literal"><span class="pre">--with-mysql-config=PATH</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-default-parser-parser">2.7.2.1.4. <tt class="docutils literal"><span class="pre">--with-default-parser=PARSER</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#prefix-path">2.7.2.1.5. <tt class="docutils literal"><span class="pre">--prefix=PATH</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#pkg-config-path-path">2.7.2.1.6. <tt class="docutils literal"><span class="pre">PKG_CONFIG_PATH=PATH</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#make">2.7.2.2. <tt class="docutils literal"><span class="pre">make</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#make-install">2.7.2.3. <tt class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#mysql-u-root-install-sql">2.7.2.4. <tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">&lt;</span> <span class="pre">install.sql</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 
@@ -673,63 +157,22 @@ It is announced by release announce if new release contains such a incompatible 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">2. Installation Guide</a><ul>
-<li><a class="reference internal" href="#debian-gnu-linux-wheezy">2.1. Debian GNU/Linux wheezy</a></li>
-<li><a class="reference internal" href="#debian-gnu-linux-jessie">2.2. Debian GNU/Linux jessie</a></li>
-<li><a class="reference internal" href="#debian-gnu-linux-sid">2.3. Debian GNU/Linux sid</a></li>
-<li><a class="reference internal" href="#ubuntu">2.4. Ubuntu</a></li>
-<li><a class="reference internal" href="#centos-5">2.5. CentOS 5</a></li>
-<li><a class="reference internal" href="#centos-5-deprecated">2.6. CentOS 5 (Deprecated)</a></li>
-<li><a class="reference internal" href="#centos-6">2.7. CentOS 6</a></li>
-<li><a class="reference internal" href="#centos-6-deprecated">2.8. CentOS 6 (Deprecated)</a></li>
-<li><a class="reference internal" href="#fedora-20">2.9. Fedora 20</a></li>
-<li><a class="reference internal" href="#mac-os-x">2.10. Mac OS X</a></li>
-<li><a class="reference internal" href="#windows">2.11. Windows</a><ul>
-<li><a class="reference internal" href="#installer">2.11.1. Installer</a></li>
-<li><a class="reference internal" href="#zip">2.11.2. Zip</a></li>
-<li><a class="reference internal" href="#install-mroonga">2.11.3. Install Mroonga</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-from-the-source-code">2.12. Install from the source code</a><ul>
-<li><a class="reference internal" href="#japanese-morphological-analysis-system-mecab">2.12.1. Japanese morphological analysis system (MeCab)</a></li>
-<li><a class="reference internal" href="#download">2.12.2. Download</a></li>
-<li><a class="reference internal" href="#requirements">2.12.3. Requirements</a></li>
-<li><a class="reference internal" href="#install-mysql">2.12.4. Install MySQL</a></li>
-<li><a class="reference internal" href="#install-groonga">2.12.5. Install Groonga</a></li>
-<li><a class="reference internal" href="#build-mroonga">2.12.6. Build Mroonga</a></li>
-<li><a class="reference internal" href="#id10">2.12.7. Install Mroonga</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-from-the-source-code-with-mariadb">2.13. Install from the source code with MariaDB</a><ul>
-<li><a class="reference internal" href="#id11">2.13.1. Japanese morphological analysis system (MeCab)</a></li>
-<li><a class="reference internal" href="#id13">2.13.2. Download</a></li>
-<li><a class="reference internal" href="#id15">2.13.3. Requirements</a></li>
-<li><a class="reference internal" href="#id16">2.13.4. Install Groonga</a></li>
-<li><a class="reference internal" href="#build-mroonga-with-mariadb">2.13.5. Build Mroonga with MariaDB</a></li>
-<li><a class="reference internal" href="#install-mroonga-with-mariadb">2.13.6. Install Mroonga with MariaDB</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#upgrade-guide">2.14. Upgrade Guide</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="characteristic.html"
                         title="previous chapter">1. The characteristics of Mroonga</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="tutorial.html"
-                        title="next chapter">3. Tutorial</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="sources/install.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <p class="topless"><a href="install/windows.html"
+                        title="next chapter">2.1. Windows</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="sources/install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -746,22 +189,22 @@ It is announced by release announce if new release contains such a incompatible 
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="tutorial.html" title="3. Tutorial"
+          <a href="install/windows.html" title="2.1. Windows"
              >next</a> |</li>
         <li class="right" >
           <a href="characteristic.html" title="1. The characteristics of Mroonga"
              >previous</a> |</li>
-        <li><a href="index.html">Mroonga v4.04 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v4.05 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>

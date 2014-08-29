@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Server variables &mdash; Mroonga v4.04 documentation</title>
+    <title>2. Server variables &mdash; Mroonga v4.05 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.04',
+        VERSION:     '4.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.04 documentation" href="../index.html" />
-    <link rel="up" title="4. Reference" href="../reference.html" />
+    <link rel="top" title="Mroonga v4.05 documentation" href="../index.html" />
+    <link rel="up" title="5. Reference" href="../reference.html" />
     <link rel="next" title="3. Status variables" href="status_variables.html" />
     <link rel="prev" title="1. SQL commands" href="sql_commands.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -37,9 +37,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -63,7 +61,7 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -75,15 +73,15 @@
         <li class="right" >
           <a href="sql_commands.html" title="1. SQL commands"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.04 documentation</a> &raquo;</li>
-          <li><a href="../reference.html" accesskey="U">4. Reference</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">5. Reference</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="server-variables">
 <h1>2. Server variables<a class="headerlink" href="#server-variables" title="Permalink to this headline">¶</a></h1>
@@ -426,13 +424,38 @@ value.</p>
 </pre></div>
 </td></tr></table></div>
 </div>
+<div class="section" id="mroonga-vector-column-delimiter">
+<span id="id4"></span><h2>2.10. mroonga_vector_column_delimiter<a class="headerlink" href="#mroonga-vector-column-delimiter" title="Permalink to this headline">¶</a></h2>
+<p>The delimiter when outputting a vector column.  The default value is a white space.</p>
+<p>Here is an example SQL to change the delimiter to a semicolon from a white space:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
++---------------------------------+-------+
+| Variable_name                   | Value |
++---------------------------------+-------+
+| mroonga_vector_column_delimiter |       |
++---------------------------------+-------+
+1 row in set (0.00 sec)
+
+
+mysql&gt; SET GLOBAL mroonga_vector_column_delimiter = &#39;;&#39;;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
++---------------------------------+-------+
+| Variable_name                   | Value |
++---------------------------------+-------+
+| mroonga_vector_column_delimiter | ;     |
++---------------------------------+-------+
+</pre></div>
+</div>
+</div>
 </div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -446,6 +469,7 @@ value.</p>
 <li><a class="reference internal" href="#mroonga-dry-write">2.7. mroonga_dry_write</a></li>
 <li><a class="reference internal" href="#mroonga-enable-optimization">2.8. mroonga_enable_optimization</a></li>
 <li><a class="reference internal" href="#mroonga-match-escalation-threshold">2.9. mroonga_match_escalation_threshold</a></li>
+<li><a class="reference internal" href="#mroonga-vector-column-delimiter">2.10. mroonga_vector_column_delimiter</a></li>
 </ul>
 </li>
 </ul>
@@ -456,12 +480,14 @@ value.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="status_variables.html"
                         title="next chapter">3. Status variables</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/reference/server_variables.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/reference/server_variables.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -478,7 +504,7 @@ value.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -490,11 +516,11 @@ value.</p>
         <li class="right" >
           <a href="sql_commands.html" title="1. SQL commands"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.04 documentation</a> &raquo;</li>
-          <li><a href="../reference.html" >4. Reference</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >5. Reference</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
