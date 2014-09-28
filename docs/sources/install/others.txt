@@ -44,8 +44,11 @@ Libraries
 
 Here are required libraries:
 
-  * `Groonga <http://groonga.org/>`_.
-  * `groonga-normalizer-mysql <https://github.com/groonga/groonga-normalizer-mysql>`_.
+  * `Groonga <http://groonga.org/>`_. (If you use package, install
+    development package such as ``libgroonga-dev`` for deb or
+    ``groonga-devel`` for RPM.)
+  * `groonga-normalizer-mysql
+    <https://github.com/groonga/groonga-normalizer-mysql>`_.
 
 Here are optional libraries:
 
@@ -74,6 +77,17 @@ extracted in the following directory::
 
   /usr/local/src/mysql-5.6.32
 
+Then build in the following directory::
+
+  /usr/local/build/mysql-5.6.32
+
+Here are command lines to build and install MySQL::
+
+  % cd /usr/local/build/mysql-5.6.32
+  % cmake /usr/local/src/mysql-5.6.32
+  % make
+  % sudo make install
+
 And we assume that MySQL is installed in the following directory::
 
   /usr/local/mysql
@@ -84,11 +98,12 @@ Build from source
 Mroonga uses GNU build system. So the following is the simplest build
 steps::
 
-  % wget http://packages.groonga.org/source/mroonga/mroonga-4.05.tar.gz
-  % tar xvzf mroonga-4.05.tar.gz
-  % cd mroonga-4.05
+  % wget http://packages.groonga.org/source/mroonga/mroonga-4.06.tar.gz
+  % tar xvzf mroonga-4.06.tar.gz
+  % cd mroonga-4.06
   % ./configure \
       --with-mysql-source=/usr/local/src/mysql-5.6.32 \
+      --with-mysql-build=/usr/local/build/mysql-5.6.32 \
       --with-mysql-config=/usr/local/mysql/bin/mysql_config
   % make
   % sudo make install

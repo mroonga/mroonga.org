@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.7. その他 &mdash; Mroonga v4.05 documentation</title>
+    <title>2.7. その他 &mdash; Mroonga v4.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.05',
+        VERSION:     '4.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.05 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.06 documentation" href="../index.html" />
     <link rel="up" title="2. インストール" href="../install.html" />
     <link rel="next" title="3. アップグレード" href="../upgrade.html" />
     <link rel="prev" title="2.6. Fedora" href="fedora.html" /> 
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="fedora.html" title="2.6. Fedora"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
           <li><a href="../install.html" accesskey="U">2. インストール</a> &raquo;</li> 
       </ul>
     </div>  
@@ -124,9 +124,10 @@
 <p>必須のライブラリー:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p class="first"><a class="reference external" href="http://groonga.org/ja/">Groonga</a>.</p>
+<li><p class="first"><a class="reference external" href="http://groonga.org/ja/">Groonga</a> 。（もしパッケージを使うなら、開発用パッケージをインストールしてください。debなら <tt class="docutils literal"><span class="pre">libgroonga-dev</span></tt> で、RPMなら <tt class="docutils literal"><span class="pre">groonga-devel</span></tt> です。）</p>
 </li>
-<li><a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a>.</li>
+<li><p class="first"><a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a> 。</p>
+</li>
 </ul>
 </div></blockquote>
 <p>あるとよいライブラリー:</p>
@@ -154,6 +155,17 @@
 <div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.6.32
 </pre></div>
 </div>
+<p>次のディレクトリーでビルドします:</p>
+<div class="highlight-none"><div class="highlight"><pre>/usr/local/build/mysql-5.6.32
+</pre></div>
+</div>
+<p>次のコマンドラインはMySQLをビルド・インストールするコマンドラインです:</p>
+<div class="highlight-none"><div class="highlight"><pre>% cd /usr/local/build/mysql-5.6.32
+% cmake /usr/local/src/mysql-5.6.32
+% make
+% sudo make install
+</pre></div>
+</div>
 <p>MySQLのバイナリが以下にインストールされているものと仮定します:</p>
 <div class="highlight-none"><div class="highlight"><pre>/usr/local/mysql
 </pre></div>
@@ -163,11 +175,12 @@
 <div class="section" id="build-from-source">
 <h2>2.7.2. ソースからビルド<a class="headerlink" href="#build-from-source" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MroongaはGNUビルドシステムを使っています。以下は一番簡単なビルド手順です:</p>
-<div class="highlight-none"><div class="highlight"><pre>% wget http://packages.groonga.org/source/mroonga/mroonga-4.05.tar.gz
-% tar xvzf mroonga-4.05.tar.gz
-% cd mroonga-4.05
+<div class="highlight-none"><div class="highlight"><pre>% wget http://packages.groonga.org/source/mroonga/mroonga-4.06.tar.gz
+% tar xvzf mroonga-4.06.tar.gz
+% cd mroonga-4.06
 % ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.32 \
+    --with-mysql-build=/usr/local/build/mysql-5.6.32 \
     --with-mysql-config=/usr/local/mysql/bin/mysql_config
 % make
 % sudo make install
@@ -271,11 +284,11 @@
 <div class="highlight-none"><div class="highlight"><pre>% make -j4
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">make</span></tt> で何かエラーが発生した場合は、そのエラーをレポートしてください: <a class="reference internal" href="../contribution/report.html"><em>How to report a bug</em></a></p>
+<p><tt class="docutils literal"><span class="pre">make</span></tt> で何かエラーが発生した場合は、そのエラーをレポートしてください: <a class="reference internal" href="../contribution/report.html"><em>見つけたバグを報告するには</em></a></p>
 </div>
 <div class="section" id="make-install">
 <h3>2.7.2.3. <tt class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></tt><a class="headerlink" href="#make-install" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>これでビルドしたMroongaをインストールできます！::&lt;</p>
+<p>これでビルドしたMroongaをインストールできます！:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo make install
 </pre></div>
 </div>
@@ -371,7 +384,7 @@
         <li class="right" >
           <a href="fedora.html" title="2.6. Fedora"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.05 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
           <li><a href="../install.html" >2. インストール</a> &raquo;</li> 
       </ul>
     </div>
