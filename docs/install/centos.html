@@ -96,7 +96,8 @@ memory error with a 32-bit package even if you just process medium
 size data.</p>
 <div class="section" id="centos-5">
 <h2>2.5.1. CentOS 5<a class="headerlink" href="#centos-5" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 5, we use CentOS's MySQL packages (version 5.5.x) since Mroonga 3.09 release.</p>
+<p>We use CentOS's MySQL packages (version 5.5.x) on CentOS 5 since
+Mroonga 3.09 release.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 % sudo yum makecache
@@ -106,38 +107,20 @@ size data.</p>
 (% sudo scl enable mysql55 mysqladmin -u root password &#39;new-password&#39;)
 </pre></div>
 </div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
 <p>Install groonga-tokenizer-mecab package:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
-<div class="section" id="centos-5-deprecated">
-<h2>2.5.2. CentOS 5 (Deprecated)<a class="headerlink" href="#centos-5-deprecated" title="Permalink to this headline">¶</a></h2>
-<p>The old version of Mroonga had also provided MySQL 5.6 packages as exceptional case. This is obsolete and not recommended way.
-The mysql-mroonga package is deprecated on CentOS 5 since Mroonga 3.09.
-We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
-<p>CentOS 5's MySQL packages should be removed beforehand if installed.</p>
-<p>Remove existing MySQL packages</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove &#39;mysql*&#39;
-</pre></div>
-</div>
+<div class="section" id="centos-6-with-the-official-mysql-package">
+<h2>2.5.2. CentOS 6 (with the official MySQL package)<a class="headerlink" href="#centos-6-with-the-official-mysql-package" title="Permalink to this headline">¶</a></h2>
+<p>We can use CentOS's SCL MySQL packages (version 5.5.x) on CentOS 6
+since Mroonga 4.01 release.</p>
 <p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y MySQL-server
-% sudo service mysql start
-% sudo yum install -y mysql-mroonga
-(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
-</pre></div>
-</div>
-</div>
-<div class="section" id="centos-6">
-<h2>2.5.3. CentOS 6<a class="headerlink" href="#centos-6" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 6, we use CentOS's SCL MySQL packages (version 5.5.x) since Mroonga 4.01 release.</p>
-<p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install centos-release-SCL
-% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y centos-release-SCL
+% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 % sudo yum makecache
 % sudo yum install -y mysql55-mysql-server
 % sudo /etc/init.d/mysql55-mysqld start
@@ -151,33 +134,32 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="centos-6-deprecated">
-<h2>2.5.4. CentOS 6 (Deprecated)<a class="headerlink" href="#centos-6-deprecated" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 6, unlike in CentOS 5, we use CentOS's MySQL packages (version 5.1.x). So you don't need to remove CentOS's MySQL packages.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since Mroonga 4.01 release, mysql-mroonga package is marked as deprecated. Please use mysql55-mroonga package instead.</p>
-</div>
+<div class="section" id="centos-6-with-the-oracle-mysql-package">
+<h2>2.5.3. CentOS 6 (with the Oracle MySQL package)<a class="headerlink" href="#centos-6-with-the-oracle-mysql-package" title="Permalink to this headline">¶</a></h2>
+<p>We can use Oracle's MySQL packages (version 5.6.x) on on CentOS 6
+since Mroonga 4.04 release.</p>
 <p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+% sudo yum install -y http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm
 % sudo yum makecache
-% sudo yum install -y mysql-server
+% sudo yum install -y mysql-community-server
 % sudo service mysqld start
-% sudo yum install -y mysql-mroonga
-(% /usr/bin/mysqladmin -u root password &#39;new-password&#39;)
+% sudo yum install -y mysql-community-mroonga
+(% sudo mysqladmin -u root password &#39;new-password&#39;)
 </pre></div>
 </div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
 <p>Install groonga-tokenizer-mecab package:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
 </div>
 </div>
-<div class="section" id="centos-7">
-<h2>2.5.5. CentOS 7<a class="headerlink" href="#centos-7" title="Permalink to this headline">¶</a></h2>
-<p>In CentOS 7, we use CentOS's MariaDB packages (version 5.5.x).</p>
+<div class="section" id="centos-7-with-the-official-mariadb-package">
+<h2>2.5.4. CentOS 7 (with the official MariaDB package)<a class="headerlink" href="#centos-7-with-the-official-mariadb-package" title="Permalink to this headline">¶</a></h2>
+<p>We can use CentOS's MariaDB packages (version 5.5.x) on CentOS 7.</p>
 <p>Install:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 % sudo yum makecache
 % sudo yum install -y mariadb-server
 % sudo systemctl start mariadb
@@ -185,7 +167,28 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
 (% sudo mysqladmin -u root password &#39;new-password&#39;)
 </pre></div>
 </div>
-<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
+<div class="section" id="centos-7-with-the-oracle-mysql-package">
+<h2>2.5.5. CentOS 7 (with the Oracle MySQL package)<a class="headerlink" href="#centos-7-with-the-oracle-mysql-package" title="Permalink to this headline">¶</a></h2>
+<p>We can use Oracle's MySQL packages (version 5.6.x) on CentOS 7.</p>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+% sudo yum install -y http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+% sudo yum makecache
+% sudo yum install -y mysql-community-server
+% sudo service mysqld start
+% sudo yum install -y mysql-community-mroonga
+(% sudo mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
 <p>Install groonga-tokenizer-mecab package:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
 </pre></div>
@@ -203,10 +206,10 @@ We recommend to use mysql55-mroonga pakcages on CentOS 5.</p>
   <ul>
 <li><a class="reference internal" href="#">2.5. CentOS</a><ul>
 <li><a class="reference internal" href="#centos-5">2.5.1. CentOS 5</a></li>
-<li><a class="reference internal" href="#centos-5-deprecated">2.5.2. CentOS 5 (Deprecated)</a></li>
-<li><a class="reference internal" href="#centos-6">2.5.3. CentOS 6</a></li>
-<li><a class="reference internal" href="#centos-6-deprecated">2.5.4. CentOS 6 (Deprecated)</a></li>
-<li><a class="reference internal" href="#centos-7">2.5.5. CentOS 7</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-official-mysql-package">2.5.2. CentOS 6 (with the official MySQL package)</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-package">2.5.3. CentOS 6 (with the Oracle MySQL package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-official-mariadb-package">2.5.4. CentOS 7 (with the official MariaDB package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-package">2.5.5. CentOS 7 (with the Oracle MySQL package)</a></li>
 </ul>
 </li>
 </ul>
