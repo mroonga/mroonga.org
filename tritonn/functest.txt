@@ -1,0 +1,53 @@
+*テスト結果
+回帰テスト結果を公開しています。実行手順は以下です。
+{{{
+cd mysql-test
+./mysql-test-run.pl --force --udiff
+./mysql-test-run.pl --force --udiff --suite=senna
+./mysql-test-run.pl --force --udiff --suite=mecab
+}}}
+
+**mysql-5.0.45-tritonn-1.0.6回帰テスト結果
+特に問題はありませんでした。
+:ビルド&テスト環境
+-Linux  2.6.9-55.ELxenU
+-glibc 2.3.4
+-NPTL 2.3.4
+-gcc 3.4.6
+-mysql-5.0.45-tritonn-1.0.6
+-senna-1.0.9
+-mecab-0.96
+-mecab-ipadic-2.7.0-20070801
+※mecabおよび辞書の文字コードはutf8を使用。
+
+:使用したconfigureオプション
+{{{
+./configure \
+'--prefix=/usr/local/mysql' \
+'--localstatedir=/usr/local/mysql/data' \
+'--libexecdir=/usr/local/mysql/bin' \
+'--with-comment=MySQL Community Server (GPL) (portions (c) Tritonn Project)' \
+'--with-server-suffix=-modified' \
+'--enable-thread-safe-client' \
+'--enable-local-infile' \
+'--with-pic' \
+'--with-fast-mutexes' \
+'--with-client-ldflags=-static' \
+'--with-mysqld-ldflags=-static' \
+'--with-zlib-dir=bundled' \
+'--with-big-tables' \
+'--with-yassl' \
+'--with-readline' \
+'--with-archive-storage-engine' \
+'--with-blackhole-storage-engine' \
+'--with-ndbcluster' \
+'--with-csv-storage-engine' \
+'--with-example-storage-engine' \
+'--with-federated-storage-engine' \
+'--with-innodb' \
+'--with-extra-charsets=all' \
+'--with-senna' \
+'--with-mecab'
+}}}
+:ログファイル
+,{{file(mecab.log)}},{{file(senna.log)}},{{file(test.log)}}

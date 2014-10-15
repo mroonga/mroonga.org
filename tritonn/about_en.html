@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>What is Tritonn? - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>What is Tritonn?</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><div class="body"
+><div class="section"
+><p
+>Tritonn is a patched version of MySQL that supports better fulltext search function with <a class="external" href="http://qwik.jp/senna/"
+>Senna</a
+>.</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="News"
+>News</h2
+><div class="body"
+><div class="section"
+><h3
+>2010/08/18 groonga storage engine is now released FOR TESTING.</h3
+><p
+>groonga storage engine, that is a Pluggable Storage Engine for MySQL 5.1 or later, is now released for testing purpose.
+(<a class="external" href="http://groonga.org/"
+>groonga</a
+> is the successor product of Senna).</p
+>
+<p
+>Visit its web site for the detail.</p
+><ul
+><li
+><a class="external" href="http://mroonga.github.com/"
+>http://mroonga.github.com/</a
+></li
+></ul
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="9874218cd2549e7cff46fa008deb6a03"
+>Why Tritonn?</h2
+><div class="body"
+><div class="section"
+><p
+>MySQL version after 3.23.23 supports FULLTEXT index. With it, MySQL can execute the full-text search for the field of VARCHAR and TEXT type. But, MySQL's fulltext search implementation has the following problems:</p
+>
+<ul
+><li
+>Insufficient Japanese/Chinese/Korean support</li
+><li
+>Slow phrase search</li
+><li
+>Slow update</li
+></ul
+>
+<p
+>With Tritonn, you get M17N fulltext search function, faster phrase search, and faster update WITHOUT modifying your application.</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="Features"
+>Features</h2
+><div class="body"
+><div class="section"
+><ul
+><li
+>Supports MySQL version 5.0 and 5.1</li
+><li
+>MATCH AGAINST query support in BOOLEAN MODE and defaulut mode(NLQ MODE)</li
+><li
+>In BOOLEAN MODE, you can use all operators like +, -, &lt;, &gt;, (, ), ~, *, &quot;.</li
+><li
+>Supports Japanese encoding EUC, SJIS</li
+><li
+>Supports Unicode with UTF8</li
+><li
+>Supports normalization. In UTF8, NFKC normalization supported</li
+><li
+>Supports similar document search</li
+><li
+>Supports near words search</li
+><li
+>Supports MyISAM storage engines.</li
+><li
+>Supports snippet(KWIC) function with MySQL user defined functions.</li
+><li
+>Supports Japanese word's index(with MeCab), N-gram(bi-gram) index and space delimited index.</li
+><li
+>2ind patch enables MySQL to use FULLTEXT index and normal b-tree index bothly at one time.</li
+></ul
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="Example"
+>Example</h2
+><div class="body"
+><div class="section"
+><p
+>The following is an example of MySQL's fulltext search with English text, that works as expected.</p
+>
+<div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; SET NAMES utf8;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>[test] &gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX idx (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;I have a pen.&quot;), (&quot;May I Help You?&quot;), (&quot;Have a nice day.&quot;);</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>Query OK, 3 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>Records: 3  Duplicates: 0  Warnings: 0</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;nice&quot;);</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>| c1               |</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>| Have a nice day. |</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>And the following is an example of MySQL's fulltext search with Japanese text, whose result is empty.</p
+>
+<div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; drop table t1;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>[test] &gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX idx (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES(&quot;私はペンを持っています。&quot;), (&quot;いらっしゃいませ～&quot;), (&quot;良い一日を。&quot;);</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>Query OK, 3 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>Records: 3  Duplicates: 0  Warnings: 0</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;良い&quot;);</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>Empty set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>This is because MySQL's fulltext implementation splits text into 'keywords' by spaces. But in Japanese text, words are not separated by spaces.</p
+>
+<p
+>And the following is an example of Tritonn's fulltext search with Japanese text, that works as expected.</p
+>
+<div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;良い&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1               |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>| 良い一日を。     |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>Empty set (0.00 sec)</span
+>
+</pre
+></div
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="References"
+>References</h2
+><div class="body"
+><div class="section"
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/query_en.html"
+>Query Syntax - Senna</a
+></li
+></ul
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="Mailing_List"
+>Mailing List</h2
+><div class="body"
+><div class="section"
+><ul
+><li
+><a class="external" href="http://lists.sourceforge.jp/mailman/listinfo/tritonn-dev"
+>http://lists.sourceforge.jp/mailman/listinfo/tritonn-dev</a
+></li
+></ul
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="Slide"
+>Slide</h2
+><div class="body"
+><div class="section"
+><ul
+><li
+>Tritonn - MySQL with Senna <div class="ref"
+><a href="tritonn.files/tritonn-eng.pdf"
+><img alt="tritonn-eng.pdf" class="icon" src="theme/i/broken.gif"
+/><br
+/>tritonn-eng.pdf</a
+></div
+></li
+></ul
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

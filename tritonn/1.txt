@@ -1,0 +1,187 @@
+*(旧)ビルド方法
+このページはtritonn-1.0.3以前まで採用していた、Tritonn patchによるビルド方法を説明しています。tritonn-1.0.3以上をお使いの方は[[ビルド方法|howtobuild]]ページをご覧下さい。
+
+*インストール
+**手順
+Tritonn(MySQL+Senna)を使うためには以下の手順でインストールを行います。MeCabを使用しない場合には、Sennaのインストールから開始して構いません。
++MeCabのインストール
++MeCabの辞書をインストール
++Sennaのインストール
++MySQLにTritonnパッチを適用
++MySQLのインストール
+
+**MeCabのインストール
+Sennaでは形態素解析によるキーワード抽出を行う場合、形態素解析エンジンのMeCabを利用しています。
+-http://mecab.sourceforge.net/
+そこでまずMeCabをインストールする必要があります。
+
+MeCabのダウンロード
+-http://sourceforge.net/project/showfiles.php?group_id=177856&package_id=204917
+
+ダウンロードしたtarballファイルを展開したら、以下のようにビルド/インストールします。
+{{{
+./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+}}}
+MeCabのデフォルトの文字コードはeucjpです。それ以外の文字コードを使用する場合には--with-charsetオプションを使用して文字コードを指定するのを忘れないようにしましょう。
+
+**MeCabの辞書をインストール
+MeCabは形態素解析を行うために日本語の辞書を必要とします。そこで、次に辞書のインストールを行います。
+
+mecab-ipa辞書のダウンロード
+-http://sourceforge.net/project/showfiles.php?group_id=177856&package_id=205275
+
+ダウンロードしたtarballファイルを展開したら、以下のようにビルド/インストールします。
+{{{
+./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+}}}
+デフォルトの文字コードはeucjpです。それ以外の文字コードを使用する場合には--with-charsetオプションを使用して文字コードを指定するのを忘れないようにしましょう。
+
+**Sennaのインストール
+Sennaのダウンロード
+-http://sourceforge.jp/projects/senna/files/
+
+Tritonnパッチは利用するMySQLとSennaのバージョンをそれぞれ想定して作成されています。例えば以下のリリースのTritonnパッチはMySQL 5.0.37とSenna 1.0.2を想定しています。
+-tritonn-1.0.0.mysql-5.0.37.senna-1.0.2.tar.gz
+異なるバージョンではビルドできない、正常に動作しないなどの可能性がありますので、バージョンを合わせるようにして下さい。
+
+ダウンロードしたtarballファイルを展開したら、以下のようにビルド/インストールします。
+{{{
+./configure --prefix=/usr
+make
+sudo make install
+}}}
+Sennaでは文字コードをconfigure時に指定する必要はありません。MySQLからインデックスを作成する際に、テーブル/カラムの文字コード情報を取得してそれに対応した文字コードが使用されるようになっています。
+
+MeCabを利用しない場合には、configureのところで以下のように実行します。
+{{{
+./configure --prefix=/usr --without-mecab
+}}}
+
+**MySQLにTritonnパッチを適用
+MySQLのソース配布版を入手します。
+
+MySQL Enterprise Serverのソース配布版はこちらです。
+-ftp://ftp.mysql.com/pub/mysql/src
+
+MySQL Community Serverソース配布版はこちらです。
+-http://dev.mysql.com/downloads/
+
+ソース配布版を展開し、Tritonnパッチを当てます。
+{{{
+tar zxf mysql-5.0.37.tar.gz
+cd mysql-5.0.37
+patch -p1 < ../mysql-5.0.37.senna.diff
+}}}
+
+patchコマンドを実行した際、HunkやFailedが発生しなければ、パッチ適用成功です。
+
+**MySQLのインストール
+TritonnパッチはAutoconf、Automake、Bisonなどの入力ファイルをいじっているため、configureの前にいくつか必要な処理があります。
+{{{
+libtoolize -c -f
+aclocal-1.9
+autoheader
+automake-1.9 -c -a -i
+autoconf
+touch sql/sql_yacc.yy
+}}}
+これらを行った後、通常のソース配布版のビルドと同様、ビルドしていきます。
+{{{
+./configure \
+ --prefix=/usr/local/mysql \
+ --localstatedir=/usr/local/mysql/data \
+ --libexecdir=/usr/local/mysql/bin \
+ --enable-thread-safe-client \
+ --enable-local-infile \
+ --enable-assembler \
+ --with-pic \
+ --with-fast-mutexes \
+ --disable-shared \
+ --with-zlib-dir=bundled \
+ --with-big-tables \
+ --with-yassl \
+ --with-readline \
+ --with-archive-storage-engine \
+ --with-blackhole-storage-engine \
+ --with-example-storage-engine \
+ --with-federated-storage-engine \
+ --with-innodb \
+ --with-extra-charsets=complex \
+ --with-senna --with-mecab
+
+make
+sudo make install
+}}}
+configureオプションとして"--with-senna"および"--with-mecab"が必要です。MeCabを利用しない場合には"--with-senna"のみ必要となります。
+
+その他のconfigureオプションについては、mysqlbugスクリプトを参考にすると良いでしょう。バイナリ配布版のmysqlbugスクリプトの中に、バイナリ配布版がビルドされた際のconfigureオプションが記述されています。上記のconfigure例はその内容を活用したものです。
+
+*起動確認
+**MeCabの確認
+MeCabを利用する場合には、まずMeCabと辞書のインストールが成功しているかどうかを確認しましょう。
+
+MeCabにはコマンドラインから実行する対話型プログラムが用意されています。
+{{code
+mir@t43:~$ mecab
+すもももももももものうち
+すもも  名詞,一般,*,*,*,*,すもも,スモモ,スモモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+うち    名詞,非自立,副詞可能,*,*,*,うち,ウチ,ウチ
+EOS
+}}
+
+**MySQLの確認
+mysql_install_dbを実行してMySQLのインストールを行ったら、mysqldを起動します。
+
+それからmysqlコマンドラインクライアントで接続し、testデータベースで以下のように実行します。
+{{code
+[test] > CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.04 sec)
+
+[test] > SHOW SENNA STATUS\G
+*************************** 1. row ***************************
+                  Table: t1
+               Key_name: ft
+            Column_name: c1
+               Encoding: utf8
+             Index_type: NGRAM
+              Normalize: ON
+            Split_alpha: OFF
+            Split_digit: OFF
+           Split_symbol: OFF
+     Initial_n_segments: 512
+        Senna_keys_size: 0
+   Senna_keys_file_size: 4268032
+     Senna_lexicon_size: 0
+Senna_lexicon_file_size: 4268032
+     Senna_inv_seg_size: 167936
+   Senna_inv_chunk_size: 135168
+1 row in set (0.00 sec)
+
+[test] > INSERT INTO t1 VALUES ("すもももももももものうち");
+Query OK, 1 row affected (0.04 sec)
+
+[test] > INSERT INTO t1 VALUES ("生麦生米生卵");
+Query OK, 1 row affected (0.00 sec)
+
+[test] > INSERT INTO t1 VALUES ("東京特許許可局");
+Query OK, 1 row affected (0.00 sec)
+
+[test] > SELECT * FROM t1 WHERE MATCH(c1) AGAINST("特許");
++-----------------------+
+| c1                    |
++-----------------------+
+| 東京特許許可局 |
++-----------------------+
+1 row in set (0.00 sec)
+}}
+
+以上でインストールおよび起動確認は完了です。

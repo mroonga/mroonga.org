@@ -1,0 +1,400 @@
+*Tritonnプロジェクト
+
+[[English|about_en]] | Japanese
+
+*お知らせ
+初めての方はまずは"[[Tritonnとは|about]]"をご覧下さい。
+
+*最新ニュース
+**2010/08/18 groongaストレージエンジンのテストリリース
+MySQL 5.1対応の全文検索エンジンである「groongaストレージエンジン」をテストリリースしました。（"groonga"はSennaの後継プロダクトとなります。）
+
+groongaストレージエンジンのサイトを立ち上げました。
+-http://mroonga.github.com/
+
+**2009/11/26 MySQL 5.0.87へのアップデートリリース(2) (Linux向けバイナリ配布版)
+Linux向けバイナリtarball版とRPM版のリリースも行いました。
+
+senna、mecab-ipadicについては前回リリースと同じバージョンとなりますが、ビルドオプションが異なるためRPM版についてはtritonn-1.0.12aというリリース表記を使用しています。
+
+宜しくお願いします。
+
+**2009/11/16 MySQL 5.0.87へのアップデートリリース
+現在のMySQL 5.0系の最新版である5.0.87向けのソース配布版およびold-styleパッチをリリースしました！
+
+https://sourceforge.jp/projects/tritonn/releases/
+
+今回のリリースはMySQL 5.0系最新版へのアップデートが目的です。Tritonn自体のバージョンは1.0.12のままです。
+
+他のパッケージについても時間が取れ次第、随時リリースして行きます。
+
+宜しくお願いいたします。
+
+**2009/03/23 Tritonn公式サイト障害&復旧のお知らせ
+
+Tritonnにご関心をお寄せいただきありがとうございます。
+
+先週の中頃からTritonn公式サイトにアクセスできない状況が続いておりました。これは当方の不注意によりサイト全体が削除されてしまったことが原因と考えております。
+
+現在、過去のバックアップデータを用いてサイトは復旧しております。バックアップデータ(2007年10月)以降に追記されたドキュメントにつきましては可能なページに関しては順次反映させていく予定です。
+
+ご不便をおかけいたしまして申し訳ございませんが、何卒ご理解を賜りますよう宜しくお願いいたします。
+
+**2008/12/29 Tritonn 1.0.12リリース
+Tritonn 1.0.12をリリースしましたのでお知らせさせていただきます。
+
+※Windows版ではmecab未対応のためN-Gramのみとなります。
+
+以下よりお試し下さい。
+
+http://sourceforge.jp/projects/tritonn/
+
+【Tritonn 1.0.12のソフトウェア構成バージョン】
+-MySQL 5.0.67
+-Senna 1.1.4
+-MeCab 0.97
+-mecab-ipadic 2.7.0-20070801
+
+今回の変更により、ソースからビルドする際にはSenna 1.1.4以上が必要となっております。
+
+■リリースファイルの追加
+-Linux x86/x86_64のRPM版にてMySQL-develパッケージを新たにリリースに含めるようになりました。
+
+■機能追加
+-Senna呼び出し中のKILLコマンド実行に対応(thanks to Kazuho Okuさん)
+
+■バグ修正
+-USING句を2重に使用した場合の適用値が本家と異なっていた問題を修正
+-sql_yacc.yyのshift/reduceエラー修正
+
+よろしくお願いいたします。
+
+**2008/11/11 Tritonn 1.0.11リリース
+Tritonn 1.0.11をリリースしましたのでお知らせさせていただきます。
+
+現在、Tritonn 1.0.11はソースコード&パッチのみの配布となっています。バイナリ配布はこの後段階的に行っていく予定です。
+
+アップデート
+-対応MySQLのバージョンをver5.0.67にアップデートしました
+
+バグ修正
+-2ind有効時に集合関数の結果がおかしくなる不具合の追加修正
+
+以下よりお試し下さい。
+
+http://sourceforge.jp/projects/tritonn/
+
+**2008/06/17 Tritonn 1.0.10リリース
+Tritonn 1.0.10をリリースしましたのでお知らせさせていただきます。
+
+今回からWindows版バイナリの配布も行います。以下の6つの形式での
+配布を行っています。
+
+- Linux tarball x86版
+- Linux RPM x86版
+- Linux tarball x86_64版
+- Linux RPM x86_64版
+- Windows non-installer版
+- Windows x64 non-installer版
+
+以下よりお試し下さい。
+
+http://sourceforge.jp/projects/tritonn/
+
+【Tritonn 1.0.10のソフトウェア構成バージョン】
+-MySQL 5.0.51a
+-Senna 1.1.3
+-MeCab 0.97
+-mecab-ipadic 2.7.0-20070801
+
+今回の変更により、ソースからビルドする際にはSenna 1.1.3以上が
+必要となっております。
+
+【変更点とバグ修正】
+-"--with-debug"有効時にSHOW SENNA STATUSがassertionエラーとなる不具合の修正
+-mi_rename実行時にmysqldが落ちる原因の修正
+-SHOW SENNA STATUSをSenna 1.1.1以上に対応
+-MECAB_STATIC有効時にetc/mecabrcをmecab_newの引数に渡すように変更
+-KWIC関数にてSEN_SNIP_SKIP_LEADING_SPACESに対応
+-2ind有効時に集合関数の結果がおかしくなる不具合の修正
+
+詳細にご興味のある方は、tritonn-devメーリングリストへご登録下さい。
+
+http://lists.sourceforge.jp/mailman/listinfo/tritonn-dev
+
+よろしくお願いいたします。
+
+**2008/02/01 Tritonn 1.0.9リリース
+Tritonn 1.0.9をリリースしましたのでお知らせさせていただきます。
+
+今回もLinux x86/x86_64向けのtarballバイナリとRPMバイナリ、ソースを一式リリースしております。以下のURLよりお試し下さい。
+
+http://sourceforge.jp/projects/tritonn/
+
+今回は2ind機能の不具合の修正を行った他、セキュリティ面での修正による緊急リリースが行われたMySQL
+5.0.51aに対応したこと、Senna 1.1.0に対応したことがリリースの特徴になります。
+
+※これらの事情を鑑み、Tritonn 1.0.9へのアップグレードを推奨いたします。
+
+【Tritonn 1.0.9のソフトウェア構成バージョン】
+-MySQL 5.0.51a
+-Senna 1.0.10
+-MeCab 0.96
+-mecab-ipadic 2.7.0-20070801
+
+【変更点とバグ修正】
+-2ind機能をONにしてFORCE INDEXを使用した場合の不具合を修正。
+
+詳細にご興味のある方は、tritonn-devメーリングリストへご登録下さい。
+
+http://lists.sourceforge.jp/mailman/listinfo/tritonn-dev
+
+よろしくお願いいたします。
+
+**2007/12/18 Tritonn 1.0.8リリース
+Tritonn 1.0.8をリリースしました!　まずはsource tarballから。
+http://sourceforge.jp/projects/tritonn/files/?release_id=28539#28539
+
+この後、順次、tarball binary、RPM関連をUPしていきます。
+
+以下、Tritonn 1.0.8での変更点です。
+
+-MySQL 5.0.51に対応しました。
+-senna.logのdebugレベルで出力されるログを減らすように調整しました。ログデバッグを以前よりも容易に行えるようになります。
+-SHOW SENNA STATUS実行時にVIEWが対象の場合にmysqldが落ちる不具合を修正しました。
+-SHOW CREATE TABLEおよびmysqldumpにて、USING情報が出力されるようになりました。
+-Tritonn 1.0.7にてDELIMITEDフラグが機能しなくなった問題を修正しました。
+-null値を含むカラムに対するKWIC関数の処理の不具合を修正しました。
+-一時テーブルがディスク上に作成されるSELECTが同時に実行されるとmysqldが落ちるケースがあった問題を修正しました。
+
+**2007/10/31 Tritonn 1.0.7 リリースのお知らせ（バイナリ配布開始）
+MySQL 5.0.45向けのTritonnの新しいバージョン ver1.0.7をリリースいたしました！
+
+今回のリリースからバイナリ版の提供を開始しています。またこれに合わせ、
+http://qwik.jp/tritonn/ の内容も刷新しました。
+
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/
+
+【リリースパッケージの追加】
+-Linux 32bit(x86)向けのRPMバイナリパッケージ
+-Linux 32bit(x86)向けのtarballバイナリパッケージ
+-Linux 64bit(Intel64/AMD64)向けのRPMバイナリパッケージ
+-Linux 64bit(Intel64/AMD64)向けのtarballバイナリパッケージ
+
+【仕様変更】
+-USING句で何も指定しなかった場合に作成されるインデックスを従来のmecabからngramに変更しました。
+
+【機能追加】
+-USING句で新たにMECABを指定できるようにしました。
+-上記仕様変更に伴う互換性のためのオプションとして、mysqldの起動オプション(my.cnf)に--senna-index-typeを追加しました。ngram/mecabのどちらかを指定可能。ここでmecabを指定することで、従来通りUSING句で何も指定しなかった場合に暗黙的にmecabによるインデックスの作成を行わせることが可能です。
+-上記オプションはSETコマンドで動的に変更することが可能です。
+
+【バグ修正】
+-MySQLのconfigure時に--with-debugを指定するとコンパイルエラーが発生した問題を修正。
+-条件無しdeleteを実行するとインデックスのフラグ情報が欠けてしまう問題を修正。
+-null値を含むカラムをKWIC関数に渡すとmysqldプロセスが落ちる問題を修正。
+
+今後ともご愛顧の程よろしくお願いいたします。
+
+
+**2007/10/09 "Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル" 掲載のお知らせ
+tritonn-1.0.5で追加したKWIC表示機能(KWIC関数)とRuby on Railsを用いたチュートリアルを掲載しました。
+
+以下のページからご覧下さい。
+-http://qwik.jp/tritonn/rortutorial.html
+
+**2007/10/03 試験的バイナリ配布のお知らせ
+
+Tritonnプロジェクトでは、今後計画しているsourceforgeでのTritonnバイナリ(MySQL+Senna+MeCab)の配布のための最初のステップとして、まずOSC2007 Tokyo/FallのTritonnブースにてCD-Rでのバイナリの配布を行います！
+
+ブースで焼き焼きしつつお渡しするつもりですので、今週金曜/土曜のOSCにご来場の際にはぜひTritonnブースにもお立ち寄り下さい。
+
+なお、今回対象としているのは以下のプラットフォームです。
+-Windows 32bit版
+-Linux 32bit版(glibc 2.3.4以上）
+
+**2007/09/29 mysql-5.0.45-tritonn-1.0.6 リリース
+MySQL 5.0.45向けのTritonnの新しいバージョン ver1.0.6をリリースいたしました！
+
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/files/
+
+:バグ修正
+-KWIC関数の第3引数（切り出す文書の最大数）を2以上に値に指定しても1つしか切り出されなかった問題を修正。
+
+必要Sennaバージョンは1.0.5以上です（据え置き）。
+
+**2007/09/11 mysql-5.0.45-tritonn-1.0.5 リリース
+MySQL 5.0.45に対応したTritonnの新しいバージョン ver1.0.5をリリースいたしました！必要Sennaバージョンは1.0.5以上です（据え置き）。
+
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/files/
+
+:機能追加
+-KWIC(Keyword in Context)表示を行うためのkwic関数(MySQLの組込みSQL関数)を実装。これはSenna本体に同梱されているsnippetユーザ定義関数を機能的に置き換えるためのもの。
+-インデックス作成時に指定可能なフラグとして、SPLIT_ALPHA、SPLIT_DIGIT、SPLIT_SYMBOLを追加。これらのフラグにより、Unicode正規化機能を使う場合の英単語の取扱いを詳細に指定できる。
+:機能改良
+-"SHOW SENNA STATUS"コマンドの出力に"Sectionalize"を追加。マルチセクション機能を利用しているインデックスの場合、SectionalizeがONとなる。
+:バグ修正
+-データベースを選択していない状態で"SHOW SENNA STATUS"が実行された場合に返すエラーコードをER_BAD_DB_ERROR(1049)からより適切なER_NO_DB_ERROR(1046)に修正。
+
+今後とも宜しくお願いいたします。
+
+**2007/08/31 MySQLユーザカンファレンス2007 Tokyo
+9/11-12にて開催予定のMySQLユーザカンファレンス2007 Tokyoの住商情報システムの展示ブースにて、Tritonnのデモが展示される予定です。また9/12にはTritonn開発者mir(池田徹郎)による技術セッションも行われます。
+
+http://www.mysql-ucj2007.jp/
+
+MySQLユーザカンファレンスにご参加の際はぜひお立ちより下さい!
+
+**2007/08/28 OSC2007 Tokyo/Fallに出展します
+Tritonnプロジェクトはオープンソースカンファレンス2007 Tokyo/Fallに出展することになりましたー！
+
+http://www.ospn.jp/osc2007-fall/
+
+ブースの出展とミニセミナーの開催を行う予定です。皆様のご来場をお待ちしております！
+
+**2007/08/25 mysql-5.0.45-tritonn-1.0.4リリース
+Tritonn 1.0.4をリリースしました。MySQL 5.0.45をベースにしています。必要SennaバージョンはSenna 1.0.5以上です。
+
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/files/
+
+今回のリリースでの変更点は以下です。
+-マルチセクション機能のバグ修正
+-対象MySQLのバージョンをMySQL 5.0.45にアップデート
+
+tritonn-1.0.3ではマルチセクション機能が正しく機能していませんでした。ご迷惑をお掛けしましたことをお詫び申し上げます。
+
+またTritonn 1.0.4のリリースに伴って、Tritonn公式サイト(http://qwik.jp/tritonn)の各ドキュメントを大幅に更新しています。Tritonnではver1.0.2からver1.0.3に上がる際に、それまでのパッチ配布方式からソース一式配布方式へと変更を行いましたが、ドキュメントの更新が今回のリリースにてやっと完了となりました。こちらもご不便をお掛けしましたことをお詫び申し上げます。
+
+また今回のタイミングで過去のリリースファイルを整理しています。ダウンロードページをご覧いただくとお気づきになると思うのですが、Tritonnパッチとして配布していたリリース物をまとめて並べています。
+
+今後ともTritonnプロジェクトおよびSennaをよろしくお願いいたします。
+
+**2007/07/20 mysql-5.0.41-tritonn-1.0.3リリース
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/files/
+
+変更点は主にBug Fixとなります。詳しくはChangelogを御覧下さい。　なお、今回のリリースから配布形式をパッチ単体ではなく、MySQLのソースコードにパッチ組み込んだ形に変更しました。
+
+なお、配布形式の変更に伴って構築手順も簡略化されました。
+
+以前はMySQLのソースコードにTritonnパッチを適用し、さらに以下のような一連のコマンドを実行する必要がありました。
+{{{
+libtoolize -c -f
+aclocal-1.9
+autoheader
+automake-1.9 -c -a -i
+autoconf
+touch sql/sql_yacc.yy
+}}}
+
+パッチを組み込んだ形での配布とすることにより他の一般的なソフトウェアと同様のステップでコンパイルできるようになりました。
+上記の一連のコマンドはもはや実行する必要はありません。　
+
+tarボールを展開したらconfigure --with-senna && make && make installでビルド、インストールが完了します。必要に応じてconfigureオプションを追加してコンパイルして下さい。
+
+※Senna 1.0.5以上を事前にインストールしておく必要があります。
+
+**2007/06/25 MoSQLにTritonnが採用される
+日本MySQLユーザ会の有志によって公開された「MySQL 互換の断然日本語が使いやすいオープンソースデータベース」ことMoSQL(もえすきゅーえる） にTritonnが採用されました！
+
+http://mosql.jp/index.php/
+
+今のところMoSQL 5.0.37にTritonn 1.0.2のパッチが当てられています。
+
+※Tritonnプロジェクトではこういった利用例、組込み例を募集しております！情報をお持ちの方はご連絡をお待ちしております！
+
+**2007/06/03 MySQL 5.0.41用パッチ修正
+存在しないソースファイルにパッチを当てていた部分を取り除きました。
+＊前回のリリースでも機能に支障はありませんが、パッチにゴミが混入していますのでこれからご利用の方はこちらをご使用下さい。
+
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/files/
+
+**2007/05/21 MySQL 5.0.41対応
+tritonn-1.0.2をMySQL Community Edition 5.0.41に対応させました。
+機能の追加・変更・削除はありません。
+
+ダウンロードはこちらから： http://sourceforge.jp/projects/tritonn/files/
+
+**2007/04/12 MySQL 4.1対応
+tritonn-1.0.2をベースにMySQL 4.1.22 + Senna 1.0.4に対応したパッチをリリースしました！
+
+MySQL 4.1対応のリリースはTritonnプロジェクトとしては初のリリースになります。
+
+内容的にはtritonn-1.0.2ベースになります。
+
+ダウンロードはこちらから: http://sourceforge.jp/projects/tritonn/files/
+
+**2007/04/09 tritonn-1.0.2リリース
+MySQL 5.0.36/5.0.37向けの新しいリリースを行いました。
+
+ダウンロードはこちらから: http://sourceforge.jp/projects/tritonn/files/
+
+安定性の向上とログ出力関連の改善が主眼です。
+tritonn-1.0.2へのアップグレードを推奨いたします。
+
+:機能改良
+- TRUNCATE TABLEがUSING情報に対応するようになりました。(id=10248)
+- tritonnが出力するログを大幅に改良しました。ログの出力設定に応じて適切なログを出力するようになっています。debugレベルに設定すると、全てのSenna APIの呼出しをトレースできるようになっています。(id=10238)
+- MySQLのconfigureオプションで--with-mecabを指定しなかった場合、libmecabはリンクされないようになり、またindex_typeのデフォルト値もmecabではなくngramとなるようになりました。(id=10168)
+
+:バグ修正
+- CREATE TABLE tbl LIKEでmysqldが落ちてしまう問題の修正(id=10245)
+- FULLTEXT未対応のテーブルにMATCH検索をboolean modeで行った場合にmysqldが落ちてしまう問題の修正(id=10197)
+- TRUNCATE TABLEでmysqldが落ちてしまう問題の修正(id=10184)
+- libmysqldのビルドができなかった問題の修正(id=10208)
+
+mysqld落ちバグの連発でスミマセン。。。これらを潰したことで安定性は相当あがったかと思います。またdebugレベルのログはSenna API呼出し周りのトラブルシューティングにかなり役立つと思います。
+
+**2007/04/09 制限事項ページの追加
+"[[limitation]]"ページを追加しました。
+
+tritonn開発側で認識している制限事項をつらつらと書いていきます。
+
+**2007/04/02 Javaバインディング開発サブプロジェクトが誕生
+Sennaプロジェクトに新たにJavaバインディング開発サブプロジェクトが誕生しました。
+
+http://sourceforge.jp/projects/senna-java/
+
+嬉しいニュースですね！
+
+**2007/03/28 トラブルシューティング事例ページの追加
+"[[trouble]]"ページを追加しました。
+
+tritonnを使う場合、現在はMySQLにソースコードパッチをあてて、自力でコンパイルする必要があります。この時、ツールのバージョンやビルドの仕方などにより、ビルドが上手く出来ない場合もあります。そんな場合に助けとなるような情報を集めたページを作りたいと思います。
+
+**2007/03/22 tritonn-1.0.1リリース
+以下の2パタンに対応したパッチをリリースしました！！
+-MySQL 5.0.36 + Senna 1.0.3
+-MySQL 5.0.37 + Senna 1.0.3
+
+ダウンロードはこちらから。
+-http://sourceforge.jp/projects/tritonn/files/
+
+tritonn-1.0.0との違いは以下です。
+-DROP INDEX時にSENファイルが残ってしまうケースが存在した問題の修正
+
+MySQLはver5.0系については"Enterprise Edition"と"Community Edition"の2系統に分けてリリースを管理しています。従って、Tritonnプロジェクトにおいても両者の最新版にキャッチアップさせる形でパッチをリリースしようと考えております。
+
+**2007/03/16 OSC2007 Tokyo/Spring
+オープンソースカンファレンス2007 Tokyo/Springにて「MySQL+Sennaによる全文検索」と題した技術セミナーを行いました。
+
+ご来場いただいた方々ありがとうございました。
+
+当日使用したプレゼンテーション資料をこちらにアップしてあります。
+-[[http://qwik.jp/tritonn/presentation.html]]
+
+**2007/03/16 tritonn-1.0.0.mysql-5.0.37.senna-1.0.2リリース
+MySQL ver5.0.37およびSenna ver1.0.2に対応したパッチをリリースしました。
+
+本リリースはTritonnプロジェクトにおける初のリリースです。
+
+こちらからダウンロードすることができます。
+-http://sourceforge.jp/projects/tritonn/files/?release_id=24556#24556
+
+**2007/03/16 Tritonnプロジェクト立ち上げ
+MySQLに全文検索エンジンのSennaを組み込むためのパッチを開発・保守するプロジェクトとしてTritonnプロジェクトを立ち上げました。
+
+MySQLバインディングパッチは従来はSennaプロジェクトによって提供されてきましたが、このたび、MySQLバインディングパッチの開発に関してはサブプロジェクト"Tritonn"を新たに立ち上げ、開発/保守を行っていくこととなりました。
+
+どうぞよろしくおねがいいたします。
+
+by Tritonn開発者一同

@@ -1,0 +1,175 @@
+*ChangeLog
+* Tritonn 1.0.12
+2008/12/29
+
+【Tritonn 1.0.12のソフトウェア構成バージョン】
+-MySQL 5.0.67
+-Senna 1.1.4
+-MeCab 0.97
+-mecab-ipadic 2.7.0-20070801
+
+■リリースファイルの追加
+-Linux x86/x86_64のRPM版にてMySQL-develパッケージを新たにリリースに含めるようになりました。
+
+■機能追加
+-Senna呼び出し中のKILLコマンド実行に対応(thanks to Kazuho Okuさん)
+
+■バグ修正
+-USING句を2重に使用した場合の適用値が本家と異なっていた問題を修正
+-sql_yacc.yyのshift/reduceエラー修正
+
+* Tritonn 1.0.11
+2008/11/11
+
+アップデート
+-対応MySQLのバージョンをver5.0.67にアップデートしました
+
+バグ修正
+-2ind有効時に集合関数の結果がおかしくなる不具合の追加修正
+
+* Tritonn 1.0.10
+2008/06/17
+
+今回からWindows版バイナリの配布も行います。以下の6つの形式での
+配布を行っています。
+
+- Linux tarball x86版
+- Linux RPM x86版
+- Linux tarball x86_64版
+- Linux RPM x86_64版
+- Windows non-installer版
+- Windows x64 non-installer版
+
+【Tritonn 1.0.10のソフトウェア構成バージョン】
+-MySQL 5.0.51a
+-Senna 1.1.3
+-MeCab 0.97
+-mecab-ipadic 2.7.0-20070801
+
+今回の変更により、ソースからビルドする際にはSenna 1.1.3以上が
+必要となっております。
+
+【変更点とバグ修正】
+-"--with-debug"有効時にSHOW SENNA STATUSがassertionエラーとなる不具合の修正
+-mi_rename実行時にmysqldが落ちる原因の修正
+-SHOW SENNA STATUSをSenna 1.1.1以上に対応
+-MECAB_STATIC有効時にetc/mecabrcをmecab_newの引数に渡すように変更
+-KWIC関数にてSEN_SNIP_SKIP_LEADING_SPACESに対応
+-2ind有効時に集合関数の結果がおかしくなる不具合の修正
+
+* Tritonn 1.0.9
+2008/02/01
+
+【Tritonn 1.0.9のソフトウェア構成バージョン】
+-MySQL 5.0.51a
+-Senna 1.0.10
+-MeCab 0.96
+-mecab-ipadic 2.7.0-20070801
+
+【変更点とバグ修正】
+-2ind機能をONにしてFORCE INDEXを使用した場合の不具合を修正。
+
+* Tritonn 1.0.8
+2007/12/18
+
+-MySQL 5.0.51に対応しました。
+-senna.logのdebugレベルで出力されるログを減らすように調整しました。ログデバッグを以前よりも容易に行えるようになります。
+-SHOW SENNA STATUS実行時にVIEWが対象の場合にmysqldが落ちる不具合を修正しました。
+-SHOW CREATE TABLEおよびmysqldumpにて、USING情報が出力されるようになりました。
+-Tritonn 1.0.7にてDELIMITEDフラグが機能しなくなった問題を修正しました。
+-null値を含むカラムに対するKWIC関数の処理の不具合を修正しました。
+-一時テーブルがディスク上に作成されるSELECTが同時に実行されるとmysqldが落ちるケースがあった問題を修正しました。
+
+* Tritonn 1.0.7
+2007/10/31
+
+【リリースパッケージの追加】
+-Linux 32bit(x86)向けのRPMバイナリパッケージ
+-Linux 32bit(x86)向けのtarballバイナリパッケージ
+-Linux 64bit(Intel64/AMD64)向けのRPMバイナリパッケージ
+-Linux 64bit(Intel64/AMD64)向けのtarballバイナリパッケージ
+
+【仕様変更】
+-USING句で何も指定しなかった場合に作成されるインデックスを従来のmecabからngramに変更しました。
+
+【機能追加】
+-USING句で新たにMECABを指定できるようにしました。
+-上記仕様変更に伴う互換性のためのオプションとして、mysqldの起動オプション(my.cnf)に--senna-index-typeを追加しました。ngram/mecabのどちらかを指定可能。ここでmecabを指定することで、従来通りUSING句で何も指定しなかった場合に暗黙的にmecabによるインデックスの作成を行わせることが可能です。
+-上記オプションはSETコマンドで動的に変更することが可能です。
+
+【バグ修正】
+-MySQLのconfigure時に--with-debugを指定するとコンパイルエラーが発生した問題を修正。
+-条件無しdeleteを実行するとインデックスのフラグ情報が欠けてしまう問題を修正。
+-null値を含むカラムをKWIC関数に渡すとmysqldプロセスが落ちる問題を修正。
+
+今後ともご愛顧の程よろしくお願いいたします。
+
+* mysql-5.0.45-tritonn-1.0.6
+2007/09/29
+
+:バグ修正
+-KWIC関数の第3引数（切り出す文書の最大数）を2以上に値に指定しても1つしか切り出されなかった問題を修正。
+
+必要Sennaバージョンは1.0.5以上です（据え置き）。
+
+*mysql-5.0.45-tritonn-1.0.5
+2007/09/10
+:機能追加
+-KWIC(Keyword in Context)表示を行うためのkwic関数(MySQLの組込みSQL関数)を実装。これはSenna本体に同梱されているsnippetユーザ定義関数を機能的に置き換えるためのもの。
+-インデックス作成時に指定可能なフラグとして、SPLIT_ALPHA、SPLIT_DIGIT、SPLIT_SYMBOLを追加。これらのフラグにより、Unicode正規化機能を使う場合の英単語の取扱いを詳細に指定できる。
+:機能改良
+-"SHOW SENNA STATUS"コマンドの出力に"Sectionalize"を追加。マルチセクション機能を利用しているインデックスの場合、SectionalizeがONとなる。
+:バグ修正
+-データベースを選択していない状態で"SHOW SENNA STATUS"が実行された場合に返すエラーコードをER_BAD_DB_ERROR(1049)からより適切なER_NO_DB_ERROR(1046)に修正。
+(必要Sennaバージョン 1.0.5以上)
+
+*mysql-5.0.45-tritonn-1.0.4
+2007/08/25
+-MySQL 5.0.45に対応
+-マルチセクション機能に関するバグの修正
+(必要Sennaバージョン 1.0.5以上)
+
+*mysql-5.0.41-tritonn-1.0.3
+2007/07/20
+-配布方式をMySQLソースパッケージに対するdiffパッチから、パッチ適用済みソースパッケージに変更。
+-プロダクトバージョン表記をmysql-X.X.X-tritonn-X.X.X方式に変更。
+-マルチセクション機能を実装。
+(必要Sennaバージョン 1.0.5以上)
+
+*tritonn-1.0.2-mysql-5.0.41-senna-1.0.5
+2007/05/21
+-tritonn-1.0.2-mysql-5.0.37-senna-1.0.4をMySQL 5.0.41に対応。
+
+*tritonn-1.0.2-mysql-4.1.22-senna-1.0.4
+2007/04/12
+-tritonn-1.0.2-mysql-5.0.37-senna-1.0.4をMySQL 4.1.22に対応。
+
+*tritonn-1.0.2-mysql-5.0.36-senna-1.0.4
+2007/04/09
+-tritonn-1.0.2-mysql-5.0.37-senna-1.0.4をMySQL 5.0.36に対応。
+
+*tritonn-1.0.2-mysql-5.0.37-senna-1.0.4
+2007/04/09
+:機能改良
+-TRUNCATE TABLEがUSING情報に対応するようになりました。
+-tritonnが出力するログを大幅に改良しました。ログの出力設定に応じて適切なログを出力するようになっています。debugレベルに設定すると、全てのSenna APIの呼出しをトレースできるようになっています。
+-MySQLのconfigureオプションで--with-mecabを指定しなかった場合、libmecabはリンクされないようになり、またindex_typeのデフォルト値もmecabではなくngramとなるようになりました。
+
+:バグ修正
+-CREATE TABLE tbl LIKEでmysqldが落ちてしまう問題の修正。
+-FULLTEXT未対応のテーブルにMATCH検索をboolean modeで行った場合にmysqldが落ちてしまう問題の修正。
+-TRUNCATE TABLEでmysqldが落ちてしまう問題の修正。
+-libmysqldのビルドができなかった問題の修正。
+
+*tritonn-1.0.1-mysql-5.0.36-senna-1.0.3
+2007/03/22 
+-ritonn-1.0.1-mysql-5.0.37-senna-1.0.3をMySQL 5.0.36に対応。
+
+*tritonn-1.0.1-mysql-5.0.37-senna-1.0.3
+2007/03/22
+-DROP INDEX時にSENファイルが残ってしまうケースが存在した問題の修正。
+
+*tritonn-1.0.0.mysql-5.0.37.senna-1.0.2
+2007/03/16
+-新規リリース。
+

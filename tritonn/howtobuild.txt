@@ -1,0 +1,158 @@
+* Tritonnのビルド方法
+ここではLinux上でTritonnをビルドする方法を説明しています。他のOSについては機会があれば。。。
+
+Tritonn patch (tritonn-1.0.2以下)を使用する場合のビルド方法は[[(旧)ビルド方法]]ページに移動しました。
+
+*ビルドの大まかな流れ
++MeCabをビルド
++Sennaをビルド
++Tritonnをビルド
+
+Tritonnをビルドするためには、事前にSennaのライブラリ(libsenna)がビルドされている必要があります。またSennaをビルドするためには、MeCabのライブラリと辞書が事前にビルドされている必要があります(非MeCabなビルド方法は後述)。そこで上記のような手順でビルドを行います。
+
+Tritonnのビルドを開始する前にすでにMeCabやSennaがマシンにインストールされている方は、いきなりTritonnのビルドを初めても構いません。ただし、TritonnはSennaのAPIを呼び出している関係上、各バージョンごとに必要Sennaバージョンが存在します。必要Sennaバージョンについては[[制限事項|limitation]]のページを参照して下さい。
+
+*MeCabをビルドする
+MeCabのより正確なビルド方法についてはMeCabの公式サイト(http://mecab.sourceforge.net/)を参照して下さい。
+
+ここではTritonn開発者が採用しているMeCabのビルド手順を記しておきます。
+
+**MeCabのビルド手順例
+以下のページから最新のMeCab本体と辞書(mecab-ipadic)をダウンロードする。
+
+http://sourceforge.net/project/showfiles.php?group_id=177856
+
+mecabのビルド
+{{{
+./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+}}}
+mecab-ipadicのインストール
+{{{
+./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+}}}
+上記configureは文字コードにutf8を指定している例です。MeCabのデフォルトの文字コードはeucjpです。
+
+*Sennaをビルドする
+Sennaのより正確なビルド方法についてはSennaの公式サイト(http://qwik.jp/senna/FrontPageJ.html)を参照して下さい。
+
+ここではTritonn開発者が採用しているMeCabのビルド手順を記しておきます。
+
+**Sennaのビルド手順例
+以下のページから最新のSennaソースコードをダウンロードする。
+
+http://sourceforge.jp/projects/senna/files/
+
+Sennaのビルド
+{{{
+./configure --prefix=/usr
+make
+sudo make install
+}}}
+
+*Tritonnをビルドする
+ではいよいよTritonnのビルドです。
+
+Tritonnをビルドする場合、configureオプションとして--with-sennaと--with-mecabを付与する必要があります。その他のconfigureオプションについては全てMySQL本家と同じです。
+
+最も単純なビルド方法は以下になります。
+{{{
+./configure --with-senna --with-mecab
+make
+sudo make install
+}}}
+
+おめでとうございます!　これでTritonnのビルドは完了です。
+
+*非MeCab環境でビルドしたい方向け
+Tritonn(MySQL+Senna)は使いたいけれどもMeCabは使わないよという人向けの情報です。
+
+==mecab-ipadicに含まれるIPA辞書はライセンスがIPAライセンスというライセンスであり、これは商用での利用を禁止しています。ビジネスでTritonnを使われる方はmecab-ipadicの代わりにmecab-jumandicを使うか、あるいは非MeCabにすることを検討されると良いと思います。== これは誤報だったようです。お騒がせしてすみませんでした。
+
+MeCabを使わない場合には、Sennaのビルドの時に--without-mecabを付けておく必要があります。そうしないとSennaのconfigureが通りません。
+
+Senna:
+{{{
+./configure --prefix=/usr --without-mecab
+make
+sudo make install
+}}}
+
+さらにその上で、Tritonnのビルドの際には--with-sennaのみを付与します。--with-mecabは不要です。
+
+Tritonn:
+{{{
+./configure --with-senna
+make
+sudo make install
+}}}
+
+この時、注意すべきことが１点あります。以前にMeCabがインストールされていたような場合には、上記の方法でビルドを行ってもlibmecabにリンクしてしまう問題があります。非MeCabなビルドを行う際には/usr/lib等のリンカ・パス上にlibmecabが存在しないようにしてから行って下さい。
+
+*上級者向けTips
+**configureオプションの決め方
+
+Tritonnのビルド時のconfigureオプションをいろいろ工夫したいとお考えの場合、既存のMySQL公式バイナリのconfigureオプションを参考にすると良いです。
+
+MySQLバイナリを展開するとbin/mysqlbugというシェルスクリプトが存在します。このファイルを開くと以下のような記述が見付かります。
+{{{
+# This is set by configure
+COMP_ENV_INFO="CC='ccache gcc'  CFLAGS=''  CXX='ccache gcc'  CXXFLAGS=''  LDFLAGS=''  ASFLAGS=''"
+CONFIGURE_LINE="./configure '--prefix=/usr/local/mysql' '--localstatedir=/usr/local/mysql/data' '--libe
+xecdir=/usr/local/mysql/bin' '--with-comment=MySQL Community Server (GPL)' '--with-server-suffix=' '--e
+nable-thread-safe-client' '--enable-local-infile' '--enable-assembler' '--with-pic' '--with-fast-mutexe
+s' '--with-client-ldflags=-static' '--with-mysqld-ldflags=-static' '--with-zlib-dir=bundled' '--with-bi
+g-tables' '--with-yassl' '--with-readline' '--with-archive-storage-engine' '--with-blackhole-storage-en
+gine' '--with-ndbcluster' '--with-csv-storage-engine' '--with-example-storage-engine' '--with-federated
+-storage-engine' '--with-innodb' '--with-extra-charsets=all' 'CC=ccache gcc' 'CXX=ccache gcc'"
+}}}
+これはビルドの際にconfigureスクリプトが受け取った情報が記録されたもので、これを真似してconfigureオプションを決めると、MySQL公式バイナリに近い設定のバイナリとしてビルドすることができます。
+
+例えば、Tritonn開発者はmysql-5.0.45-tritonn-1.0.4をリリース前にビルドしてテストする際に、上記のようにmysql-5.0.45のmysqlbugを参考にして以下のようなconfigureオプションを使用しています。
+{{{
+CC='gcc'  CFLAGS='-g'  CXX='gcc'  CXXFLAGS='-g'  LDFLAGS=''  ASFLAGS='' \
+./configure \
+'--prefix=/usr/local/mysql' \
+'--localstatedir=/usr/local/mysql/data' \
+'--libexecdir=/usr/local/mysql/bin' \
+'--with-comment=MySQL Community Server (GPL)' \
+'--with-server-suffix=' \
+'--enable-thread-safe-client' \
+'--enable-local-infile' \
+'--enable-assembler' \
+'--with-pic' \
+'--with-fast-mutexes' \
+'--with-client-ldflags=-static' \
+'--with-mysqld-ldflags=-static' \
+'--with-zlib-dir=bundled' \
+'--with-big-tables' \
+'--with-yassl' \
+'--with-readline' \
+'--with-archive-storage-engine' \
+'--with-blackhole-storage-engine' \
+'--with-ndbcluster' \
+'--with-csv-storage-engine' \
+'--with-example-storage-engine' \
+'--with-federated-storage-engine' \
+'--with-innodb' \
+'--with-extra-charsets=all' \
+'--with-senna' '--with-mecab'
+}}}
+
+**make installを使わないという選択
+make installを行うと、configure時に指定したprefixの場所へインストールが行われます(prefixを指定していない場合には/usrに)。
+
+しかしMySQL公式バイナリはmake installを行ったものとは実は少々違いがあります。ささいな違いなのですが、例えばmysql_install_dbの位置がちょっと違う、また公式バイナリの方が相対パスでの処理ができるなどちょっと賢いなどです。
+
+これはこれで別に大きな問題ではないのですが、こだわりたい方もいらっしゃるでしょう。その場合は、makeを行った後に、以下を実行することをお薦めします。
+{{{
+scripts/make_binary_distribution --no-strip
+}}}
+これはトップディレクトリにバイナリのtarballを作ってくれるスクリプトです。この時、mysql_install_dbなどの位置や内容がこっそり変更されて、公式バイナリと同じ状態になります。
+
+またオプションの--no-stripも好みによりますが、つけておいた方がいいです。--no-stripを付けない場合、make_binary_distributionスクリプトはmysqldをstripしてしまいます。そうするとmysqldが落ちるような障害が発生したときの解析の難易度があがります。(stripのメリットとしては高速化されるといわれていますが、mysqldの場合はあまり大きなメリットは得られないようです。)
+
+ちなみに、make bin-distも似たような処理が行われますが、make bin-distは--no-strip無しでmake_binary_distributionスクリプトを呼び出すため、stripされてしまうので注意が必要です。

@@ -1,0 +1,62 @@
+* トラブルシューティング事例
+「うまく動作しない」「ビルドに失敗した」などのトラブル体験を集めています。
+
+*上手く検索できない場合のトラブルシューティング
+**検索結果が0件になってしまう
+mecabを使っている場合
+:問題
+無事インストールが終わって試しにテーブルを作ってSELECT ... MATCH検索を実行してみたら、予想に反して結果が0件になってしまった。SELECT ...LIKE検索だとちゃんとでてくる。
+:解決
+MySQL/Sennaの文字コードとMeCabの文字コードが異なっている可能性があります。
+
+mysqldに--senna-logオプションをつけて起動し、ログファイル（MySQLのデータディレクトリ配下のsenna.log）に警告メッセージがでていないかどうかを確認しましょう。
+
+例えば以下のようにutf8を指定してテーブルを作成したとします。
+{{{
+CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft (c1)) DEFAULT CHARSET utf8;
+}}}
+この場合、MeCabと辞書は以下のように--with-charsetでutf8を付与してビルドされている必要があります。
+{{{
+./configure --prefix=/usr --with-charset=utf8
+}}}
+MeCabのデフォルトの文字コードはeucjpですので、eucjp(MySQLでの文字コード名でいうとujisまたはeucjpms)を使用する場合にのみ、--with-charsetは省略可能です。
+
+MeCab本体は--with-charsetをつけたけれども辞書にはつけるのを忘れた、というようなケースもありますので一度ご確認下さい。
+
+*ビルド時のトラブルシューティング
+**make時にbisonのエラーがでた
+バージョン:tritonn-1.0.1.mysql-5.0.37.senna-1.0.3にて
+:問題
+make実行時、sql/sql_yacc.yyをbisonがコンパイルする際に次のようなエラーがでた。Bisonはver1.75を利用。
+{{{
+mir@t43:/hoge/tritonn/dev/mysql-5.0.37.senna/sql$ make
+bison -y -p MYSQL -d --debug --verbose sql_yacc.yy
+sql_yacc.yy:6793.13: parse error, unexpected ":", expecting ";" or "|"
+make: *** [sql_yacc.cc] エラー 1 
+}}}
+:解決
+本来、MySQLはBison 1.75でビルド可能とドキュメントに書かれていますが、MySQL 5.0.37に新しく含まれたコードがBison 1.75に対応していないことが原因です。
+http://dev.mysql.com/doc/refman/5.0/en/installing-source-tree.html
+
+これはMySQLのバグとして扱われています。そのうちMySQL本体側にて修正されるかもしれません。
+http://bugs.mysql.com/bug.php?id=27433
+
+Bisonのバージョンをver2.3などの新しいものにすることで回避が可能です。
+
+**autoconf時にエラーが出た
+バージョン:tritonn-1.0.1.mysql-5.0.37.senna-1.0.3にて
+:問題
+autoconf実行時に以下のようなエラーが出た。
+{{{
+configure.in:680: error: possibly undefined macro: AS_HELP_STRING
+If this token and others are legitimate, please use m4_pattern_allow.
+See the Autoconf documentation.
+}}}
+:解決
+autoconfのバージョンが古いことが考えられます。MySQLをソースからビルドする際にautoconfを使用する場合には、MySQL 5.0ではautoconf 2.58以上が必要とされています。
+
+http://dev.mysql.com/doc/refman/5.0/en/installing-source-tree.html
+
+このエラーはAS_HELP_STRINGマクロがautoconf 2.58未満には含まれていないことに起因していると考えられます。
+
+

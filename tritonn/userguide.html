@@ -1,0 +1,1819 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>ユーザガイド - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>ユーザガイド</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><h2 id="03ff87b1276549a07fe2f88b3c288ab9"
+>起動確認</h2
+><div class="body"
+><div class="section"
+>
+<h3
+>MySQLの確認</h3
+><p
+>mysql_install_dbを実行してMySQLのインストールを行ったら、mysqldを起動します。</p
+>
+<p
+>それからmysqlコマンドラインクライアントで接続し、testデータベースで以下のように実行します。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>Query OK, 0 rows affected (0.04 sec)</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>[test] &gt; SHOW SENNA STATUS\G</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>*************************** 1. row ***************************</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>                  Table: t1</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>               Key_name: ft</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>            Column_name: c1</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>               Encoding: utf8</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>             Index_type: NGRAM</span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>              Normalize: ON</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>            Split_alpha: OFF</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>            Split_digit: OFF</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>           Split_symbol: OFF</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>     Initial_n_segments: 512</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>        Senna_keys_size: 0</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>   Senna_keys_file_size: 4268032</span
+>
+<span class="line even" style="background:url(.num/18.png) no-repeat;"
+>     Senna_lexicon_size: 0</span
+>
+<span class="line odd" style="background:url(.num/19.png) no-repeat;"
+>Senna_lexicon_file_size: 4268032</span
+>
+<span class="line even" style="background:url(.num/20.png) no-repeat;"
+>     Senna_inv_seg_size: 167936</span
+>
+<span class="line odd" style="background:url(.num/21.png) no-repeat;"
+>   Senna_inv_chunk_size: 135168</span
+>
+<span class="line even" style="background:url(.num/22.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/23.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/24.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;すもももももももものうち&quot;);</span
+>
+<span class="line odd" style="background:url(.num/25.png) no-repeat;"
+>Query OK, 1 row affected (0.04 sec)</span
+>
+<span class="line even" style="background:url(.num/26.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/27.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;生麦生米生卵&quot;);</span
+>
+<span class="line even" style="background:url(.num/28.png) no-repeat;"
+>Query OK, 1 row affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/29.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/30.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;東京特許許可局&quot;);</span
+>
+<span class="line odd" style="background:url(.num/31.png) no-repeat;"
+>Query OK, 1 row affected (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/32.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/33.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;特許&quot;);</span
+>
+<span class="line even" style="background:url(.num/34.png) no-repeat;"
+>+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/35.png) no-repeat;"
+>| c1                    |</span
+>
+<span class="line even" style="background:url(.num/36.png) no-repeat;"
+>+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/37.png) no-repeat;"
+>| 東京特許許可局 |</span
+>
+<span class="line even" style="background:url(.num/38.png) no-repeat;"
+>+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/39.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>以上でインストールおよび起動確認は完了です。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="eb30623113e9159d6885e1538364f1f0"
+>DDL文の独自拡張</h2
+><div class="body"
+><div class="section"
+><p
+>&quot;CREATE TABLE&quot;、&quot;CREATE INDEX&quot;、&quot;ALTER TABLE&quot;の構文の独自拡張を行っています。</p
+>
+<p
+>生成する Senna の各種パラメータを指定できます。</p
+>
+<h3
+>インデックスタイプの指定</h3
+>
+<p
+>NGRAMインデックス, 単語インデックス, DELIMITEDインデックスの3種のいずれかを選択できます。</p
+>
+<dl
+><dt
+>NGRAMインデックスを作成する場合</dt
+></dl
+>
+<p
+>インデックスタイプを指定しなければNGRAMインデックスが使用されます。またUSING NGRAMで指定することも可能です。</p
+>
+<p
+>(例)</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    FULLTEXT INDEX USING NGRAM (text)
+  );</pre
+>
+<dl
+><dt
+>単語(mecab)インデックスを作成する場合</dt
+></dl
+>
+<p
+>USING MECABを指定すると、単語インデックスが使用されます。</p
+>
+<p
+>(例)</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    FULLTEXT INDEX USING MECAB (text)
+  );</pre
+>
+<dl
+><dt
+>DELIMITEDインデックスを作成する場合</dt
+></dl
+>
+<p
+>USING DELIMITEDを指定すると、空白で区切られた文字列単位でインデックスを作成します。</p
+>
+<p
+>(例)</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    FULLTEXT INDEX USING DELIMITED (text)
+  );</pre
+>
+<dl
+><dt
+>MySQLの素のfulltext indexを作成する(sennaインデックスを使用しない)場合</dt
+></dl
+>
+<p
+>USING NO SENNAを指定します。</p
+>
+<p
+>(例)</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    FULLTEXT INDEX USING NO SENNA (text)
+  );</pre
+>
+<h3
+>正規化機能の使用/不使用</h3
+>
+<p
+>デフォルトでは正規化機能が有効になります。
+無効化するためには、USING NO NORMALIZEを指定します。</p
+>
+<p
+>(例) 正規化なしでNGRAMインデックスを作成する場合</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    FULLTEXT INDEX USING NGRAM, NO NORMALIZE (text)
+  );</pre
+>
+<h3
+>マルチセクション機能の使用/不使用</h3
+><p
+>tritonn-1.0.4より。</p
+>
+<p
+>デフォルトではマルチセクション機能は有効になりません。有効にするためには、USING SECTIONALIZEを指定します。</p
+>
+<p
+>(例) NGRAMインデックスを指定しつつマルチセクション機能を利用する場合</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    text2 TEXT NOT NULL,
+    FULLTEXT INDEX USING NGRAM, SECTIONALIZE (text, text2)
+  );</pre
+>
+<h3
+>INITIAL_N_SEGMENTS指定</h3
+>
+<p
+>USING 数値を指定することによって、INITIAL_N_SEGMENTS
+(インデックスバッファ領域の初期値)をインデックス作成時に設定できます。</p
+>
+<p
+>(例) INITIAL_N_SEGMENTS=2048でインデックスを作成する場合</p
+>
+<pre
+>  CREATE TABLE test (
+    id INTEGER AUTO_INCREMENT,
+    PRIMARY KEY (id),
+    text TEXT NOT NULL,
+    FULLTEXT INDEX USING SENNA, 2048 (text)
+  );</pre
+>
+<p
+>指定した数値 * 256KBのメモリ領域が対象のインデックスに対して割り当てられるようになります。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="adf175af316978bd841db337fc989e75"
+>全文検索の利用方法</h2
+><div class="body"
+><div class="section"
+><h3
+>基本的な検索</h3
+><p
+>MySQLでは全文検索を行うためにはMATCH...AGAINST構文を使用します。Tritonnはこれを踏襲していますので、全文検索を行うためには同様にMATCH...AGAINSTを利用します。</p
+><pre
+>SELECT * FROM tbl WHERE MATCH(col) AGAINST(&quot;検索キーワード&quot;);</pre
+>
+<p
+>改めて順を追って説明します。</p
+>
+<p
+>まず以下の様に文字列型カラムを含むようなテーブルが必要です。ここではdocumentカラムに文字列データを格納していきます。</p
+><pre
+>CREATE TABLE t1 (id INT, document TEXT);</pre
+><p
+>この格納対象のカラムはCHAR、VARCHAR、TEXT系などの文字列データを格納するデータ型のカラムである必要があります（それ以外のデータ型だとFULLTEXTインデックスが作成できません。）</p
+>
+<p
+>文字コードを明示的に指定したい場合には、以下のように指定してください。</p
+><pre
+>CREATE TABLE t1 (id INT, document TEXT) DEFAULT CHARSET utf8;</pre
+><p
+>Tritonnではutf8、cp932、sjis、eucjpms、ujis、koi8r、latin1といった文字コードに対応しています。</p
+>
+<p
+>次にFULLTEXTインデックスを作成します。</p
+><pre
+>CREATE FULLTEXT INDEX ft USING NGRAM ON t1(document);</pre
+><p
+>インデックスの作成はテーブル定義時に同時に行っても良いですし、データを投入した後でも構いません。</p
+>
+<p
+>データを投入します。これは特に通常のテーブルの使い方と変わりありません。INSERT文で投入しても良いですし、まとめてインポートしても構いません。</p
+><pre
+>INSERT INTO t1 VALUES (1, &quot;すもももももももものうち&quot;);
+INSERT INTO t1 VALUES (2, &quot;生麦生米生卵&quot;);
+INSERT INTO t1 VALUES (3, &quot;東京特許許可局&quot;);</pre
+><p
+>既にFULLTEXTインデックスが定義済みであれば、INSERTのタイミングでインデックスが逐次更新され、最新の状態になっています。</p
+>
+<p
+>これで全文検索を行う準備ができました。後はMATCH...AGAINSTを使用したSELECT文を実行するだけです。</p
+><pre
+>SELECT * FROM t1 WHERE MATCH(document) AGAINST(&quot;特許&quot;);</pre
+>
+<p
+>実行結果</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; SELECT * FROM t1 WHERE MATCH(document) AGAINST(&quot;特許&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| id   | document              |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    3 | 東京特許許可局 |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>+------+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>これは全文検索インデックスを介した検索ですので大変高速です。</p
+>
+<p
+>全文検索を使わずに、以下のようにLIKE演算子を使う方法でも検索そのものはできますが、「LIKE演算子+先頭ワイルドカード」ではインデックスが利かずテーブルの全走査が発生しますので、よほどデータ量が少ない場合を除いてLIKE演算子では十分な性能を得ることができません。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; SELECT * FROM t1 WHERE document LIKE '%特許%';</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| id   | document              |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    3 | 東京特許許可局 |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>+------+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<h3
+>boolean modeの利用（演算子の利用）</h3
+><p
+>Tritonnではboolean modeの利用をサポートしています。</p
+>
+<p
+>boolean modeを使うと以下のような検索を行えるようになります。</p
+><ul
+><li
+>キーワードAを含み、かつキーワードBを含む文書の検索(いわゆるAND検索）</li
+><li
+>キーワードAまたはキーワードBを含む文書の検索(いわゆるOR検索)</li
+></ul
+>
+<p
+>例えば「東京」と「神奈川」を含み、「埼玉」を含まない文書を検索する場合には以下のようなSELECT文になります。</p
+><pre
+>SELECT * FROM t1 WHERE MATCH(document) AGAINST(&quot;+東京 +神奈川 -埼玉&quot; IN BOOLEAN MODE);</pre
+><p
+>AGAINST句の括弧の末尾に&quot;IN BOOLEAN MODE&quot;とつけることで演算子が利用できるようになります。</p
+>
+<p
+>もちろん、これ以外にも様々な高度な検索を行えます。Tritonnで利用可能な演算子はSenna単体の場合とまったく同じですので、詳細はこちらをご覧下さい。
+<a class="external" href="http://qwik.jp/senna/query.html"
+>http://qwik.jp/senna/query.html</a
+></p
+>
+<h3
+>スコアの取得方法とその利用方法</h3
+><p
+>スコアとは検索キーワードとヒットしたレコードの関係性の高さを表す指標のことです。</p
+>
+<p
+>以下のようなテーブルがあるものとします。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select * from t1;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1                                                                          |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>| はずれ                                                                   |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>| 埼玉から東京に引っ越した。                                     |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>| 東京から東京に引っ越した。                                     |</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>| 東京から東京に引っ越したあとまた東京に引っ越した。 |</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>+-----------------------------------------------------------------------------+</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>4 rows in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>ここで検索キーワードを&quot;東京&quot;として検索すると3件ヒットしますが、&quot;東京&quot;を何回含むのかはレコードにより異なるため、スコアも異なります。</p
+>
+<p
+>スコアの値を取得する場合には、WHERE句だけでなくSELECT句にもMATCH...AGAINST構文を使用して下さい。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select match(c1) against(&quot;東京&quot;) as score, c1 from t1 where match(c1) against(&quot;東京&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+-------+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| score | c1                                                                          |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+-------+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|     1 | 埼玉から東京に引っ越した。                                     |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>|     2 | 東京から東京に引っ越した。                                     |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>|     3 | 東京から東京に引っ越したあとまた東京に引っ越した。 |</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>+-------+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>3 rows in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>全文検索では「検索キーワードとの関連性の高いレコードから順に画面に出力する」といったようなユースケースが良くあると思います。この場合、スコアを大きい順にソートすることで取得結果を関連性の高い順にすることができます。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select match(c1) against(&quot;東京&quot;) as score, c1 from t1 where match(c1) against(&quot;東京&quot;) order by score desc;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+-------+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| score | c1                                                                          |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+-------+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|     3 | 東京から東京に引っ越したあとまた東京に引っ越した。 |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>|     2 | 東京から東京に引っ越した。                                     |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>|     1 | 埼玉から東京に引っ越した。                                     |</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>+-------+-----------------------------------------------------------------------------+</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>3 rows in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<h3
+>正規化機能を利用した検索</h3
+><p
+>TritonnではUSING句で明示的に&quot;NO NORMALIZE&quot;を指定しない限り、デフォルトでは全文検索インデックスにNORMALIZE属性(正規化機能ON)を付与しています。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; show create table t1\G</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>*************************** 1. row ***************************</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>       Table: t1</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>Create Table: CREATE TABLE `t1` (</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>  `c1` int(11) default NULL,</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>  `c2` text,</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>  FULLTEXT KEY `ft` USING NGRAM, NORMALIZE, 512 (`c2`)</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>) ENGINE=MyISAM DEFAULT CHARSET=utf8</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>この正規化機能により、若干ではありますが入力データの揺れを吸収させることが可能です。</p
+>
+<p
+>以下のようなデータを想定します。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select * from t1;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+--------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1   | c2           |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+--------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    1 | aa           |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>|    2 | AA           |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>|    3 | ａａ       |</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>|    4 | ＡＡ       |</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>|    5 | 11           |</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>|    6 | １１       |</span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>|    7 | ああ       |</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>|    8 | アア       |</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>|    9 | ｱｱ       |</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>|   10 | ゴゴ       |</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>|   11 | ｺﾞｺﾞ |</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>+------+--------------+</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>11 rows in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>アルファベットについては「大文字小文字」「全角半角」の違いが吸収されます。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select * from t1 where match(c2) against(&quot;AA&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1   | c2     |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    1 | aa     |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>|    2 | AA     |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>|    3 | ａａ |</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>|    4 | ＡＡ |</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>4 rows in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>数字については「大文字小文字」の違いが吸収されます。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select * from t1 where match(c2) against(&quot;11&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1   | c2     |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    5 | 11     |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>|    6 | １１ |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>2 rows in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>平仮名と片仮名の違いは吸収されません。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select * from t1 where match(c2) against(&quot;ああ&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1   | c2     |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    7 | ああ |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>片仮名の「全角半角」の違いは吸収されます。また濁点を含む文字であっても吸収されます。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mysql&gt; select * from t1 where match(c2) against(&quot;アア&quot;);</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1   | c2     |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>|    8 | アア |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>|    9 | ｱｱ |</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>+------+--------+</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>2 rows in set (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>mysql&gt; select * from t1 where match(c2) against(&quot;ゴゴ&quot;);</span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>+------+--------------+</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>| c1   | c2           |</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>+------+--------------+</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>|   10 | ゴゴ       |</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>|   11 | ｺﾞｺﾞ |</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>+------+--------------+</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>2 rows in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>例えば「野球」で検索したら「ベースボール」を含むレコードをヒットさせるような検索はTritonn単独では行えません。こうしたいわゆる「あいまい検索」を実現するためには入力データをあらかじめ加工しておくなどの工夫を行ってください。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="f5c79fc5c181a5dee33f87af7eb54ae9"
+>マルチセクション機能</h2
+><div class="body"
+><div class="section"
+><h3
+>マルチセクション機能について</h3
+><p
+>複数のカラムによるインデックス(複合キー)の使い勝手を向上させる機能です。複合キーが必要となるような場合にマルチセクション機能を利用すると以下のようなメリットがあります。</p
+><ul
+><li
+>メモリの節約ができる</li
+><li
+>検索結果スコアの重み付けができる</li
+></ul
+>
+<p
+>デフォルトではマルチセクション機能は無効です。インデックス作成時にSECIONALIZEと指定することでマルチセクション機能が利用できるようになります。</p
+>
+<p
+>例:</p
+><pre
+>  CREATE TABLE test (
+    id INT PRIMARY KEY,
+    title VARCHAR(100),
+    summary TEXT,
+    body MEDIUMTEXT,
+    FULLTEXT INDEX USING NGRAM, SECTIONALIZE (title, summary, body)
+  );</pre
+>
+<p
+>マルチセクション機能を利用せずに複合キーを利用することは可能です。マルチセクション機能を利用しない複合キーの場合、各カラムごとの検索を行うことができません。上記を例にあげると、例えば&quot;ベンチマーク結果&quot;というキーワードで検索を行う場合、titleのみに対して検索を行うといったようなことができません。マルチセクション機能を利用しない複合キーでは、全てのカラムが検索対象になります。</p
+>
+<p
+>従って、&quot;ベンチマーク結果&quot;というキーワードを含むレコードを検索することはできますが、どのカラムに含まれるかを特定したり、重み付けをしたりすることはできません。どうしてもそういったことを行う場合には、複合キーの他に、カラム単独でインデックスを追加作成するなどが必要でした。</p
+>
+<p
+>しかし、マルチセクション機能を利用した場合、複合キーをひとつ作るだけで、特定のカラムのみを対象とした検索も、重み付けも行うことができるようになります。これによりメモリの節約ができると同時に、カラムの重み付けを利用することができます。</p
+>
+<h3
+>マルチセクション対応のインデックス作成方法</h3
+><p
+>tritonn-1.0.4より。</p
+>
+<p
+>USING句に&quot;SECTIONALIZE&quot;を指定して複合キーを作成します。</p
+>
+<pre
+>ALTER TABLE t1 ADD FULLTEXT INDEX ft USING NGRAM, SECTIONALIZE (c2,c3,c4);</pre
+>
+<h3
+>マルチセクション対応の検索方法</h3
+>
+<p
+>BOOLEAN MODEで*W演算子を使って指定します。*Wの後にセクション番号を指定します。</p
+>
+<p
+>c3のみを検索対象としたい場合。</p
+>
+<pre
+>SELECT * FROM t1 WHERE MATCH(c2,c3,c4) AGAINST(&quot;*W2 キーワード&quot; IN BOOLEAN MODE);</pre
+>
+<p
+>c2とc3のみを検索対象にしたい場合。</p
+>
+<pre
+>SELECT * FROM t1 WHERE MATCH(c2,c3,c4) AGAINST(&quot;*W1,2 キーワード&quot; IN BOOLEAN MODE);</pre
+>
+<p
+>重み付けの方法</p
+>
+<pre
+>書式：*Wセクション番号[:スコアの倍率],...</pre
+>
+<p
+>c2を3倍、c3を2倍、c4を1倍で評価したい場合</p
+>
+<pre
+>SELECT * FROM t1 WHERE MATCH(c2,c3,c4) AGAINST(&quot;*W1:3,2:2,3:1 キーワード&quot; IN BOOLEAN MODE);</pre
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="bd6743f18177b252fa23eeb5f23d552d"
+>KWIC表示機能</h2
+><div class="body"
+><div class="section"
+><h3
+>kwic関数とは?</h3
+><p
+>kwic関数とは、KWIC(keyword in context)表示を行うためのSQL関数です。簡単に言うと、Google検索を行ったときに出てくる「ヒットした各ページごとの100文字くらいかたまり」を作るための関数になります。</p
+>
+<p
+>従来はTritonnではkwic関数は提供しておらず、Senna本体からMySQLのユーザ定義関数(UDF)のsnippet UDFとして提供されていました。しかしユーザ定義関数にはPrepared Statementで使用できないなどを始めとするいくつかのデメリットもあり、以前からsnippet UDFをMySQLのnativeなSQL関数として実装したいという思いがありました。</p
+>
+<p
+>今回、kwic関数としてTritonnで実装したことにより、これまで以上に手軽にKWIC表示機能をアプリケーションで実装することができます。またUDFと比べた場合の性能面の向上も期待できます。</p
+>
+<h3
+>kwic関数の使用例</h3
+>
+<p
+>ここでは&quot;埼玉&quot;をキーワードとして、その前後あわせて60バイト分を表示しています。また最後尾に&quot; ...&quot;を付与しています(Googleの真似)。</p
+><pre
+>[test] &gt; set names utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] &gt; create table t1 (c1 text) default charset utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] &gt; insert into t1 values (&quot;今日は東京に行きます。明日は埼玉に行きます。明後日は千葉に行きます。その後、横浜に戻ります。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+[test] &gt; select kwic(c1, 60, 1, 0, &quot;&quot;, &quot; ...&quot;, &quot;埼玉&quot;, &quot;&lt;span id=word&gt;&quot;, &quot;&lt;/span&gt;&quot;) from t1;
++---------------------------------------------------------------------------------------+
+| snippet(c1, 60, 1, 0, &quot;&quot;, &quot; ...&quot;, &quot;埼玉&quot;, &quot;&lt;span id=word&gt;&quot;, &quot;&lt;/span&gt;&quot;)              |
++---------------------------------------------------------------------------------------+
+| に行きます。明日は&lt;span id=word&gt;埼玉&lt;/span&gt;に行きます。明後日 ... | 
++---------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+</pre
+><p
+>&quot;埼玉&quot;の前後にタグを付けていますので、cssなどで強調表示したりすることも可能です。</p
+>
+<p
+>この例ではwhere句に条件を付けずに実行していることにお気づきになると思います。kwic関数は文字列関数の一種であり、FULLTEXTインデックスによる検索とは無関係に使用することもできます。</p
+>
+<p
+>とはいえ、今回kwic関数を追加したのはもちろん、以下のSQL文のようにMATCH検索と絡めて使用するためです。</p
+><pre
+>SELECT kwic(c1, 60, 1, 0, &quot;&quot;, &quot; ...&quot;, &quot;埼玉&quot;, &quot;&lt;span id=word&gt;&quot;, &quot;&lt;/span&gt;&quot;) FROM t1 WHERE MATCH(c1) AGAINST(&quot;埼玉&quot;);
+</pre
+><p
+>これにより、Tritonnによる日本語全文検索を利用したアプリケーションの開発が、より一層、手軽にできるようになると思います。</p
+>
+<h3
+>kwic関数の構文</h3
+>
+<p
+>kwic関数は大変引数の多い関数です。</p
+><pre
+>SELECT kwic(文書, 切り出す文書の最大バイト数, 切り出す文書の最大個数,  
+  htmlエンコーディングの有無, snippetの開始タグ, snippetの終了タグ, 
+  単語1, 単語1の前につけられるタグ, 単語1の後につけられるタグ, 
+  単語2, 単語2の前につけられるタグ, 単語2の後につけられるタグ, ...);
+</pre
+><p
+>注意点：snippet UDFでは文書の文字コードを引数で指定する必要がありましたが、kwic関数では不要となりました。（テーブル定義情報からカラムごとの文字コードを取得できるため。）</p
+>
+<p
+>htmlエンコーディングの有無は、0か1を指定ください。 1の場合は文書中の&lt;,&gt;をそれぞれ&amp;lt;,&amp;gt;に変換して出力します。</p
+>
+<p
+>例は以下のとおりです。</p
+><pre
+>SELECT kwic(body, 120, 3, 
+  1, '...', '...&lt;br&gt;\n', 
+  '検索', '&lt;span class=&quot;word1&quot;&gt;', '&lt;/span&gt;', 
+  '実験', '&lt;span class=&quot;word2&quot;&gt;', '&lt;/span&gt;'
+)
+FROM contents
+WHERE MATCH(body) AGAINST('*D+ 検索 実験' IN BOOLEAN MODE)
+LIMIT 0,10;
+</pre
+>
+<h3
+>不正な引数に対するエラーと警告について</h3
+>
+<p
+>snippet UDFでは構文にマッチしない引数が渡された場合、主にエラーを返すことでユーザに通知していました。しかし今回新しく実装したkwic関数では、引数の数が足りない場合や不正な値が渡された際、エラーや警告を返すことはしない実装にしています。</p
+>
+<p
+>このあたりの仕様は悩んだところなのですが、MySQLの文字列関数の実装に倣うことにしました。(郷に入れば郷に従え、ということで。)</p
+>
+<p
+>簡単にまとめると以下のような仕様を決めて実装しています。</p
+><ul
+><li
+>引数にnullが含まれる場合(1つでも)、nullを返します。</li
+><li
+>引数の数が不適切な場合(引数の数は、9個、12個、15個...である必要があります)、空文字&quot;&quot;を返します。</li
+><li
+>引数の値が不適切な場合(長さを指定する場所で0以下の値を与えるなど)、空文字&quot;&quot;を返します。</li
+></ul
+>
+<p
+>これはconcat関数やleft関数、right関数などの既存のMySQLの文字列系SQL関数の振舞いと同じです。</p
+>
+<p
+>ただしkwic関数は引数の大変多いSQL関数ですから、これだけだと慣れないうちはアプリケーション開発の際に戸惑うこともあるかもしれません。</p
+>
+<p
+>そこで、kwic関数にこうした不正な引数が与えられた場合にはログファイルにその内容を出力することとしました。不正な引数に対するログ出力はレベル&quot;WARN&quot;で行われます。従って、&quot;INFO&quot;等の標準的なログレベルを設定しておけば、senna.logで確認することが可能になります。</p
+><pre
+>./mysqld --senna-log --senna-log-level=info &amp;
+</pre
+><p
+>不正な引数が指定された場合、ログには以下のような出力が行われます。</p
+>
+<p
+>これは9番目の引数がnullであったために、戻り値としてnullを返したことを示すログです。</p
+><pre
+>09/01:00:46:48.041479|w|1| kwic argument #9 is null 
+</pre
+><p
+>これは引数が8個しか指定されなかったために、戻り値として空文字が返されたことを示すログです。</p
+><pre
+>09/01:00:47:03.089207|w|1| Incorrect number of arguments for kwic: 8 
+</pre
+><p
+>これは3番目の引数(snippetの最大個数、1以上の値が指定されている必要がある)が-1であったために、戻り値として空文字が返されたことを示すログです。</p
+><pre
+>09/01:00:47:25.655209|w|1| kwic argument #3 must be positive value, passed -1 
+</pre
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="0cb0baa8b27d86e9233f601a9cc9cc4f"
+>2ind機能(2インデックス同時使用機能)</h2
+><div class="body"
+><div class="section"
+><p
+>注意：2ind機能はまだ安定度合いとしてはβ段階にあります。実際に利用する前に有効かどうか、利用環境で問題は無いかどうかをご確認の上、使用してください。</p
+>
+<h3
+>2ind patchとは</h3
+>
+<p
+>MySQLではクエリを実行する際、１つのテーブルに対してFULLTEXTインデックスと他のインデックスを組み合わせて利用（インデックスマージ）することができません。従ってFULLTEXTインデックスを用いる用いた場合、以下のような問題が生じます。</p
+>
+<p
+>1. limit指定で出力を制限しても応答が遅い問題</p
+>
+<pre
+>  select columns from table where match(a) against(b) limit 1000, 10</pre
+>
+<p
+>のように、オフセットに大きな値を指定するとテーブルスキャンが発生し、
+応答が遅くなります。</p
+>
+<p
+>2. count(*)等で件数を取得するだけでも応答が遅い問題</p
+>
+<pre
+>  select count(*) from table where match(a) against(b);</pre
+>
+<p
+>のように件数を取得するだけでもテーブルスキャンが発生し、
+応答が遅くなります。</p
+>
+<p
+>3. 全文検索以外の条件で絞り込む処理が遅い問題</p
+>
+<pre
+>  select columns from table where match(a) against(b) and c like 'hoge%';</pre
+>
+<p
+>のように、全文検索以外に他のカラムに関する条件を指定した場合、
+そのカラムにインデックスが張られていてもテーブルスキャンが発生し、
+応答が遅くなります。</p
+>
+<p
+>4. 全文検索以外の条件でソートする処理が遅い問題</p
+>
+<pre
+>  select columns from table where match(a) against(b) order by c;</pre
+>
+<p
+>のように、ソート条件を指定した場合、そのカラムにインデックスが張られていてもテーブルスキャンが発生し、応答が遅くなります。。</p
+>
+<p
+>このような問題を解決するために、MySQLが全文検索用のインデックスと通常のインデックスの両方を併用できるようにする2ind機能が利用できます。</p
+>
+<p
+>以前は2ind patchとしてパッチファイルが分かれていましたが、Tritonnでは2ind機能は本体に統合され、サーバ変数でOn/Offを行います。</p
+>
+<h3
+>2ind機能を有効化する方法</h3
+><p
+>Tritonnパッチをあてると、MySQLのサーバ変数（SESSIONスコープ）に&quot;senna_2ind&quot;という変数が追加されます。</p
+>
+<p
+>my.cnfあるいはmysqldの起動オプションで&quot;--senna-2ind&quot;を指定するか、あるいは各接続にて以下のようにSETコマンドでONを設定してください。</p
+><pre
+>mysql&gt; SET SESSION senna_2ind=ON;
+</pre
+>
+<p
+>SETコマンドを使用することで、2ind機能の利用を動的にOn/Offすることができます。</p
+>
+<h3
+>2ind機能の使い方</h3
+><ul
+><li
+>1. 2.のパタンについては、特に意識することなく、通常通りにSQLを発行するだけで2ind機能の効果が得られます。</li
+><li
+>3. 4.のパタンについては、絞り込みやソート時に使用したいインデックスを以下のように明示的に指定する必要があります。</li
+></ul
+><pre
+>  select columns from table force index(c) where match(a) against(b) and c like 'hoge%';
+
+  select columns from table force index(c) where match(a) against(b) order by c;</pre
+>
+<p
+>(主キーであれば force index(PRIMARY) のように指定します)</p
+>
+<h3
+>2ind機能の注意点</h3
+>
+<ul
+><li
+>前述の4つのクエリパタン以外では効果が得られるとは限りません。全文検索条件で大量のレコードがヒットすることによって発生するディスクI/Oが性能阻害要因である場合にのみ効果が期待できます。</li
+><li
+>2ind-patchはMySQLがもともと備えているインデックスを利用します。高い検索パフォーマンスを出すためには、key_buffer_sizeなど、もともとのMySQLのインデックスに対するパラメータを調整する必要があります。</li
+></ul
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="fe5e27b4b3cc155675fb6c428415101b"
+>ログ管理</h2
+><div class="body"
+><div class="section"
+><p
+>Tritonnパッチを適用するとMySQLにログに関する2つのサーバ変数が追加されます。</p
+><dl
+><dt
+>senna-log</dt
+><dd
+>senna.logファイルの出力を有効にするためのサーバ変数。デフォルトはOFF。</dd
+><dd
+>mysqld --senna-logと指定(あるいはmy.cnfに記述)することで、データディレクトリにsenna.logファイルを出力するようになります。</dd
+><dd
+>出力される内容はログレベルの設定に依存します。</dd
+></dl
+>
+<dl
+><dt
+>senna-log-level</dt
+><dd
+>senna.logファイルを出力する場合、そのログレベルを設定するためのサーバ変数。デフォルトはNOTICE。</dd
+><dd
+>mysqld --senna-log --senna-log-level=DEBUGなどと指定(あるいはmy.cnfに記述）することで、指定したレベルに基づくログ出力を行えます。</dd
+></dl
+>
+<p
+>設定可能なログのレベルと内容は以下の通りです。</p
+>
+<table
+><tr
+><td
+>ログレベル</td
+><td
+>レベルの意味するところ</td
+><td
+>対象</td
+><td
+>実例</td
+></tr
+><tr
+><td
+>NONE</td
+><td
+>何もなし</td
+><td
+>使わない</td
+><td
+>使わない</td
+></tr
+><tr
+><td
+>EMERG</td
+><td
+>非常に危険な状態</td
+><td
+>即落ちの状態</td
+><td
+>今すぐSennaを強制終了しなければならないエラー</td
+></tr
+><tr
+><td
+>ALERT</td
+><td
+>早急に対処が必要</td
+><td
+>Senna外部要因エラー</td
+><td
+>malloc失敗、diskfull等、本来ありえない外部状態によって引き起こされるエラー。</td
+></tr
+><tr
+><td
+>CRIT</td
+><td
+>致命的なエラー</td
+><td
+>復旧できないエラー</td
+><td
+>インデックス破損など</td
+></tr
+><tr
+><td
+>ERROR</td
+><td
+>一般的なエラー</td
+><td
+>復旧できるエラー</td
+></tr
+><tr
+><td
+>WARNING</td
+><td
+>システムからの警告</td
+><td
+>警告</td
+><td
+>渡されるパラメータが間違っているなど</td
+></tr
+><tr
+><td
+>NOTICE</td
+><td
+>システムからの通知</td
+><td
+>運用状態で常には増えない情報</td
+><td
+>インデックス開いた・閉じたなど</td
+></tr
+><tr
+><td
+>INFO</td
+><td
+>システムからの情報</td
+><td
+>運用状態で常に増える情報</td
+><td
+>検索クエリの中身・結果など</td
+></tr
+><tr
+><td
+>DEBUG</td
+><td
+>デバッグ用</td
+><td
+>Senna開発用情報</td
+><td
+>各種デバッグプリント</td
+></tr
+><tr
+><td
+>DUMP</td
+><td
+>なんでも</td
+><td
+>使わない</td
+><td
+>使わない</td
+></tr
+></table
+>
+<p
+>senna.logファイルそのものの動的なOn/Offは行えません。その代わりにログ出力レベルの動的な変更が行えます。</p
+>
+<p
+>ログ出力レベルを動的に変更するためには、SETコマンドを使用します。</p
+>
+<p
+>従って、普段はNOTICE(デフォルト)以上のみ出力されるようにしておき、何かトラブルシューティングを行うような際にDEBUGレベルなどに一時的に変更すると良いでしょう。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="15052ce6816e681d959ff725d189cde3"
+>メタ情報と統計情報</h2
+><div class="body"
+><div class="section"
+><p
+>Tritonnパッチを適用するとMySQLに新しく&quot;SHOW SENNA STATUS&quot;というSQLコマンドが追加されます。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; SHOW SENNA STATUS\G</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>*************************** 1. row ***************************</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>                  Table: t1</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>               Key_name: ft</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>            Column_name: c1</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>               Encoding: utf8</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>             Index_type: NGRAM</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>              Normalize: ON</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>            Split_alpha: OFF</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>            Split_digit: OFF</span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>           Split_symbol: OFF</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>     Initial_n_segments: 512</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>        Senna_keys_size: 3</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>   Senna_keys_file_size: 8462336</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>     Senna_lexicon_size: 43</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>Senna_lexicon_file_size: 8462336</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>     Senna_inv_seg_size: 3051520</span
+>
+<span class="line even" style="background:url(.num/18.png) no-repeat;"
+>   Senna_inv_chunk_size: 135168</span
+>
+<span class="line odd" style="background:url(.num/19.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>&quot;SHOW SENNA STATUS&quot;を実行すると、現在接続中のテーブルに含まれる全てのFULLTEXTインデックスについての情報を1行ずつ出力します。WHERE句でデータベース名を、LIKE句でテーブル名のパタンを指定することもできます。</p
+>
+<p
+>各項目の意味は以下の通りです。</p
+>
+<table
+><tr
+><td
+>フィールド名</td
+><td
+>値の意味するところ</td
+></tr
+><tr
+><td
+>Table</td
+><td
+>FULLTEXTインデックスが張られているテーブル名</td
+></tr
+><tr
+><td
+>Key_name</td
+><td
+>FULLTEXTインデックスの名前</td
+></tr
+><tr
+><td
+>Column_name</td
+><td
+>インデックスの対象のカラム名</td
+></tr
+><tr
+><td
+>Encoding</td
+><td
+>インデックスに使用されている文字コード</td
+></tr
+><tr
+><td
+>Index_type</td
+><td
+>使用しているインデックスの種類（mecab/ngram/delimited）</td
+></tr
+><tr
+><td
+>Normalize</td
+><td
+>Unicode正規化機能のOn/Off</td
+></tr
+><tr
+><td
+>Split_alpha</td
+><td
+>現在は特に意味は無し</td
+></tr
+><tr
+><td
+>Split_digit</td
+><td
+>現在は特に意味は無し</td
+></tr
+><tr
+><td
+>Split_symbol</td
+><td
+>現在は特に意味は無し</td
+></tr
+><tr
+><td
+>Initial_n_segments</td
+><td
+>インデックスバッファ領域の初期値</td
+></tr
+><tr
+><td
+>Senna_keys_size</td
+><td
+>シンボル表 (.SEN) のレコード数の合計</td
+></tr
+><tr
+><td
+>Senna_keys_file_size</td
+><td
+>シンボル表 (.SEN) のファイルサイズの合計</td
+></tr
+><tr
+><td
+>Senna_lexicon_size</td
+><td
+>語彙テーブル (.SEN.I) のレコード数の合計</td
+></tr
+><tr
+><td
+>Senna_lexicon_file_size</td
+><td
+>語彙テーブル (.SEN.I) のファイルサイズの合計</td
+></tr
+><tr
+><td
+>Senna_inv_seg_size</td
+><td
+>転置テーブルのバッファ (.SEN.i) のファイルサイズ</td
+></tr
+><tr
+><td
+>Senna_inv_chunk_size</td
+><td
+>転置テーブル (.SEN.i.c) のファイルサイズ</td
+></tr
+></table
+>
+<p
+>これらの情報は、マルチカラムインデックスの場合には各カラムごとに出力されます。</p
+>
+<p
+>作成したFULLTEXTインデックスが意図した通りに作成できているのかの確認、値がちゃんとインデックスに格納されているのかについての確認などに利用可能です。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="40500899443a755bcd5eb474491ad596"
+>メモリの使用と注意点</h2
+><div class="body"
+><div class="section"
+>
+<h3
+>Tritonnが使用するメモリ</h3
+>
+<p
+>Tritonnが使用するメモリは、MySQL本体が使用する部分とSennaが使用する部分により構成されます。</p
+>
+<p
+>MySQL本体が使用するメモリの詳細については以下を参照して下さい。</p
+>
+<p
+><a class="external" href="http://dev.mysql.com/doc/refman/5.1/ja/memory-use.html"
+>http://dev.mysql.com/doc/refman/5.1/ja/memory-use.html</a
+></p
+>
+<p
+>MySQL本体が使用するメモリはおよそ以下のように考えることができます。</p
+>
+<ul
+><li
+>グローバルな領域：key_buffer_size、innodb_buffer_pool_size、query_cache_sizeなどにより設定されるプロセス単位の領域</li
+><li
+>ローカルな領域：read_buffer_size、sort_buffer_sizeなどにより設定される各接続(スレッド)単位の領域</li
+></ul
+>
+<p
+>【重要】TritonnおよびSenna自身はkey_bufferを使用しません。全文検索のためにkey_buffer_sizeを大きく取る必要はありません。</p
+>
+<p
+>これに加えてTritonnではSennaインデックスごとの領域が必要になります。Sennaではインデックスファイルを
+mmapによりメモリ上で扱っており、使用するメモリ量は各インデックスのファイルサイズに依存します。</p
+>
+<ul
+><li
+>.SENファイル：MyISAMのキーとSennaの内部文書IDのマッピングを行うファイルです。mmapされます。</li
+><li
+>.SEN.lファイル:語彙文字列と語彙IDのマッピングを行うファイルです。mmapされます。</li
+><li
+>.SEN.iファイル:転置インデックスを書き込むためのバッファです。mmapされます。</li
+><li
+>.SEN.i.cファイル:転置インデックス本体です。mmapされません。</li
+></ul
+>
+<p
+>【重要】これらはインデックス単位で作られます。MySQLサーバ内に複数のインデックスがあればその数だけ対象となります。</p
+>
+<p
+>.SENファイルはレコード件数の増加に従い大きくなります。サイズを制御することはできません。</p
+>
+<p
+>.SEN.lファイルは登録済み語彙の数に従い大きくなります。サイズを制御することはできませんが、
+レコード件数の増加に対して語彙数の増加は逓減するので一定規模で落ち着く傾向があります。</p
+>
+<p
+>.SEN.iファイルはパラメータでサイズを指定可能です。.SEN.iファイルのサイズを指定するには、
+インデックス作成時に以下のようにUSING句に数値を指定します。</p
+>
+<p
+>CREATE FULLTEXT INDEX ft USING 1024 ON t1(c1);</p
+>
+<p
+>.SEN.iファイルはここで指定された数値*256KBのサイズとなります。デフォルトは512=128MBです。</p
+>
+<p
+>【補足】各種SENファイルは実際にはブロック単位でmmap/munmapされますので挙動としてはもう少し複雑なものとなります。</p
+>
+<h3
+>メモリ使用量計算方法</h3
+>
+<p
+>従って、メモリ使用量は以下のように計算できます。</p
+>
+<p
+>Tritonnメモリ合計値 = </p
+><pre
+> ${MySQLのグローバルなメモリ合計値} 
+ + ${MySQLのローカルなメモリ合計値} * max_connections * 稼働率
+ + SUM(各インデックスの.SEN/.SEN.l/.SEN.iファイルサイズの合計) </pre
+>
+<p
+>MySQL本体が使用するメモリ量については、以下のサイトで公開されているツール&quot;mymemcheck&quot;も役立ちます！ </p
+><ul
+><li
+><a class="external" href="http://dsas.blog.klab.org/archives/50860867.html"
+>http://dsas.blog.klab.org/archives/50860867.html</a
+></li
+></ul
+>
+<h3
+>32bit Linuxでの注意点と対策</h3
+>
+<p
+>32bitシステムではアドレス空間が4GBという制約がありますが、ユーザプロセス(mysqld)が利用可能
+なのは実際にはLinuxでは3GBまでという制限値があります。</p
+>
+<p
+>上記計算式で制限値を超える場合には、「mysqldがメモリ不足でエラーとなる or 落ちる」
+「インデックスが壊れる」といった障害が発生する可能性があります注意して下さい。</p
+>
+<p
+>その場合には以下のような対策を検討して下さい。</p
+>
+<ul
+><li
+>OSを64bitのものに変更する</li
+><li
+>インデックスの数を減らす(または統合する)ことでメモリ使用量を減らす</li
+><li
+>USING &lt;数値&gt;を小さくしてメモリ使用量を減らす</li
+><li
+>key_buffer_size、innodb_buffer_pool_size等のMySQLのメモリ使用量を減らす</li
+><li
+>topコマンドでmysqldを監視して制限値に達する前に&quot;flush tables&quot;でメモリを解放する</li
+></ul
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

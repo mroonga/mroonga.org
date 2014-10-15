@@ -1,0 +1,717 @@
+*ユーザガイド
+
+*起動確認
+
+**MySQLの確認
+mysql_install_dbを実行してMySQLのインストールを行ったら、mysqldを起動します。
+
+それからmysqlコマンドラインクライアントで接続し、testデータベースで以下のように実行します。
+{{code
+[test] > CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.04 sec)
+
+[test] > SHOW SENNA STATUS\G
+*************************** 1. row ***************************
+                  Table: t1
+               Key_name: ft
+            Column_name: c1
+               Encoding: utf8
+             Index_type: NGRAM
+              Normalize: ON
+            Split_alpha: OFF
+            Split_digit: OFF
+           Split_symbol: OFF
+     Initial_n_segments: 512
+        Senna_keys_size: 0
+   Senna_keys_file_size: 4268032
+     Senna_lexicon_size: 0
+Senna_lexicon_file_size: 4268032
+     Senna_inv_seg_size: 167936
+   Senna_inv_chunk_size: 135168
+1 row in set (0.00 sec)
+
+[test] > INSERT INTO t1 VALUES ("すもももももももものうち");
+Query OK, 1 row affected (0.04 sec)
+
+[test] > INSERT INTO t1 VALUES ("生麦生米生卵");
+Query OK, 1 row affected (0.00 sec)
+
+[test] > INSERT INTO t1 VALUES ("東京特許許可局");
+Query OK, 1 row affected (0.00 sec)
+
+[test] > SELECT * FROM t1 WHERE MATCH(c1) AGAINST("特許");
++-----------------------+
+| c1                    |
++-----------------------+
+| 東京特許許可局 |
++-----------------------+
+1 row in set (0.00 sec)
+}}
+
+以上でインストールおよび起動確認は完了です。
+
+*DDL文の独自拡張
+"CREATE TABLE"、"CREATE INDEX"、"ALTER TABLE"の構文の独自拡張を行っています。
+
+生成する Senna の各種パラメータを指定できます。
+
+** インデックスタイプの指定
+
+NGRAMインデックス, 単語インデックス, DELIMITEDインデックスの3種のいずれかを選択できます。
+
+:NGRAMインデックスを作成する場合
+
+インデックスタイプを指定しなければNGRAMインデックスが使用されます。またUSING NGRAMで指定することも可能です。
+
+(例)
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     FULLTEXT INDEX USING NGRAM (text)
+   );
+
+:単語(mecab)インデックスを作成する場合
+
+USING MECABを指定すると、単語インデックスが使用されます。
+
+(例)
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     FULLTEXT INDEX USING MECAB (text)
+   );
+
+:DELIMITEDインデックスを作成する場合
+
+USING DELIMITEDを指定すると、空白で区切られた文字列単位でインデックスを作成します。
+
+(例)
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     FULLTEXT INDEX USING DELIMITED (text)
+   );
+
+:MySQLの素のfulltext indexを作成する(sennaインデックスを使用しない)場合
+
+USING NO SENNAを指定します。
+
+(例)
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     FULLTEXT INDEX USING NO SENNA (text)
+   );
+
+** 正規化機能の使用/不使用
+
+デフォルトでは正規化機能が有効になります。
+無効化するためには、USING NO NORMALIZEを指定します。
+
+(例) 正規化なしでNGRAMインデックスを作成する場合
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     FULLTEXT INDEX USING NGRAM, NO NORMALIZE (text)
+   );
+
+** マルチセクション機能の使用/不使用
+tritonn-1.0.4より。
+
+デフォルトではマルチセクション機能は有効になりません。有効にするためには、USING SECTIONALIZEを指定します。
+
+(例) NGRAMインデックスを指定しつつマルチセクション機能を利用する場合
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     text2 TEXT NOT NULL,
+     FULLTEXT INDEX USING NGRAM, SECTIONALIZE (text, text2)
+   );
+
+** INITIAL_N_SEGMENTS指定
+
+USING 数値を指定することによって、INITIAL_N_SEGMENTS
+(インデックスバッファ領域の初期値)をインデックス作成時に設定できます。
+
+(例) INITIAL_N_SEGMENTS=2048でインデックスを作成する場合
+
+   CREATE TABLE test (
+     id INTEGER AUTO_INCREMENT,
+     PRIMARY KEY (id),
+     text TEXT NOT NULL,
+     FULLTEXT INDEX USING SENNA, 2048 (text)
+   );
+
+指定した数値 * 256KBのメモリ領域が対象のインデックスに対して割り当てられるようになります。
+
+*全文検索の利用方法
+**基本的な検索
+MySQLでは全文検索を行うためにはMATCH...AGAINST構文を使用します。Tritonnはこれを踏襲していますので、全文検索を行うためには同様にMATCH...AGAINSTを利用します。
+ SELECT * FROM tbl WHERE MATCH(col) AGAINST("検索キーワード");
+
+改めて順を追って説明します。
+
+まず以下の様に文字列型カラムを含むようなテーブルが必要です。ここではdocumentカラムに文字列データを格納していきます。
+ CREATE TABLE t1 (id INT, document TEXT);
+この格納対象のカラムはCHAR、VARCHAR、TEXT系などの文字列データを格納するデータ型のカラムである必要があります（それ以外のデータ型だとFULLTEXTインデックスが作成できません。）
+
+文字コードを明示的に指定したい場合には、以下のように指定してください。
+ CREATE TABLE t1 (id INT, document TEXT) DEFAULT CHARSET utf8;
+Tritonnではutf8、cp932、sjis、eucjpms、ujis、koi8r、latin1といった文字コードに対応しています。
+
+次にFULLTEXTインデックスを作成します。
+ CREATE FULLTEXT INDEX ft USING NGRAM ON t1(document);
+インデックスの作成はテーブル定義時に同時に行っても良いですし、データを投入した後でも構いません。
+
+データを投入します。これは特に通常のテーブルの使い方と変わりありません。INSERT文で投入しても良いですし、まとめてインポートしても構いません。
+ INSERT INTO t1 VALUES (1, "すもももももももものうち");
+ INSERT INTO t1 VALUES (2, "生麦生米生卵");
+ INSERT INTO t1 VALUES (3, "東京特許許可局");
+既にFULLTEXTインデックスが定義済みであれば、INSERTのタイミングでインデックスが逐次更新され、最新の状態になっています。
+
+これで全文検索を行う準備ができました。後はMATCH...AGAINSTを使用したSELECT文を実行するだけです。
+ SELECT * FROM t1 WHERE MATCH(document) AGAINST("特許");
+
+実行結果
+{{code
+mysql> SELECT * FROM t1 WHERE MATCH(document) AGAINST("特許");
++------+-----------------------+
+| id   | document              |
++------+-----------------------+
+|    3 | 東京特許許可局 |
++------+-----------------------+
+1 row in set (0.00 sec)
+}}
+これは全文検索インデックスを介した検索ですので大変高速です。
+
+全文検索を使わずに、以下のようにLIKE演算子を使う方法でも検索そのものはできますが、「LIKE演算子+先頭ワイルドカード」ではインデックスが利かずテーブルの全走査が発生しますので、よほどデータ量が少ない場合を除いてLIKE演算子では十分な性能を得ることができません。
+{{code
+mysql> SELECT * FROM t1 WHERE document LIKE '%特許%';
++------+-----------------------+
+| id   | document              |
++------+-----------------------+
+|    3 | 東京特許許可局 |
++------+-----------------------+
+1 row in set (0.00 sec)
+}}
+
+**boolean modeの利用（演算子の利用）
+Tritonnではboolean modeの利用をサポートしています。
+
+boolean modeを使うと以下のような検索を行えるようになります。
+-キーワードAを含み、かつキーワードBを含む文書の検索(いわゆるAND検索）
+-キーワードAまたはキーワードBを含む文書の検索(いわゆるOR検索)
+
+例えば「東京」と「神奈川」を含み、「埼玉」を含まない文書を検索する場合には以下のようなSELECT文になります。
+ SELECT * FROM t1 WHERE MATCH(document) AGAINST("+東京 +神奈川 -埼玉" IN BOOLEAN MODE);
+AGAINST句の括弧の末尾に"IN BOOLEAN MODE"とつけることで演算子が利用できるようになります。
+
+もちろん、これ以外にも様々な高度な検索を行えます。Tritonnで利用可能な演算子はSenna単体の場合とまったく同じですので、詳細はこちらをご覧下さい。
+http://qwik.jp/senna/query.html
+
+**スコアの取得方法とその利用方法
+スコアとは検索キーワードとヒットしたレコードの関係性の高さを表す指標のことです。
+
+以下のようなテーブルがあるものとします。
+{{code
+mysql> select * from t1;
++-----------------------------------------------------------------------------+
+| c1                                                                          |
++-----------------------------------------------------------------------------+
+| はずれ                                                                   |
+| 埼玉から東京に引っ越した。                                     |
+| 東京から東京に引っ越した。                                     |
+| 東京から東京に引っ越したあとまた東京に引っ越した。 |
++-----------------------------------------------------------------------------+
+4 rows in set (0.00 sec)
+}}
+ここで検索キーワードを"東京"として検索すると3件ヒットしますが、"東京"を何回含むのかはレコードにより異なるため、スコアも異なります。
+
+スコアの値を取得する場合には、WHERE句だけでなくSELECT句にもMATCH...AGAINST構文を使用して下さい。
+{{code
+mysql> select match(c1) against("東京") as score, c1 from t1 where match(c1) against("東京");
++-------+-----------------------------------------------------------------------------+
+| score | c1                                                                          |
++-------+-----------------------------------------------------------------------------+
+|     1 | 埼玉から東京に引っ越した。                                     |
+|     2 | 東京から東京に引っ越した。                                     |
+|     3 | 東京から東京に引っ越したあとまた東京に引っ越した。 |
++-------+-----------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+}}
+
+全文検索では「検索キーワードとの関連性の高いレコードから順に画面に出力する」といったようなユースケースが良くあると思います。この場合、スコアを大きい順にソートすることで取得結果を関連性の高い順にすることができます。
+{{code
+mysql> select match(c1) against("東京") as score, c1 from t1 where match(c1) against("東京") order by score desc;
++-------+-----------------------------------------------------------------------------+
+| score | c1                                                                          |
++-------+-----------------------------------------------------------------------------+
+|     3 | 東京から東京に引っ越したあとまた東京に引っ越した。 |
+|     2 | 東京から東京に引っ越した。                                     |
+|     1 | 埼玉から東京に引っ越した。                                     |
++-------+-----------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+}}
+
+**正規化機能を利用した検索
+TritonnではUSING句で明示的に"NO NORMALIZE"を指定しない限り、デフォルトでは全文検索インデックスにNORMALIZE属性(正規化機能ON)を付与しています。
+{{code
+mysql> show create table t1\G
+*************************** 1. row ***************************
+       Table: t1
+Create Table: CREATE TABLE `t1` (
+  `c1` int(11) default NULL,
+  `c2` text,
+  FULLTEXT KEY `ft` USING NGRAM, NORMALIZE, 512 (`c2`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)
+}}
+この正規化機能により、若干ではありますが入力データの揺れを吸収させることが可能です。
+
+以下のようなデータを想定します。
+{{code
+mysql> select * from t1;
++------+--------------+
+| c1   | c2           |
++------+--------------+
+|    1 | aa           |
+|    2 | AA           |
+|    3 | ａａ       |
+|    4 | ＡＡ       |
+|    5 | 11           |
+|    6 | １１       |
+|    7 | ああ       |
+|    8 | アア       |
+|    9 | ｱｱ       |
+|   10 | ゴゴ       |
+|   11 | ｺﾞｺﾞ |
++------+--------------+
+11 rows in set (0.00 sec)
+}}
+アルファベットについては「大文字小文字」「全角半角」の違いが吸収されます。
+{{code
+mysql> select * from t1 where match(c2) against("AA");
++------+--------+
+| c1   | c2     |
++------+--------+
+|    1 | aa     |
+|    2 | AA     |
+|    3 | ａａ |
+|    4 | ＡＡ |
++------+--------+
+4 rows in set (0.00 sec)
+}}
+数字については「大文字小文字」の違いが吸収されます。
+{{code
+mysql> select * from t1 where match(c2) against("11");
++------+--------+
+| c1   | c2     |
++------+--------+
+|    5 | 11     |
+|    6 | １１ |
++------+--------+
+2 rows in set (0.00 sec)
+}}
+平仮名と片仮名の違いは吸収されません。
+{{code
+mysql> select * from t1 where match(c2) against("ああ");
++------+--------+
+| c1   | c2     |
++------+--------+
+|    7 | ああ |
++------+--------+
+1 row in set (0.00 sec)
+}}
+片仮名の「全角半角」の違いは吸収されます。また濁点を含む文字であっても吸収されます。
+{{code
+mysql> select * from t1 where match(c2) against("アア");
++------+--------+
+| c1   | c2     |
++------+--------+
+|    8 | アア |
+|    9 | ｱｱ |
++------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from t1 where match(c2) against("ゴゴ");
++------+--------------+
+| c1   | c2           |
++------+--------------+
+|   10 | ゴゴ       |
+|   11 | ｺﾞｺﾞ |
++------+--------------+
+2 rows in set (0.00 sec)
+}}
+例えば「野球」で検索したら「ベースボール」を含むレコードをヒットさせるような検索はTritonn単独では行えません。こうしたいわゆる「あいまい検索」を実現するためには入力データをあらかじめ加工しておくなどの工夫を行ってください。
+
+*マルチセクション機能
+**マルチセクション機能について
+複数のカラムによるインデックス(複合キー)の使い勝手を向上させる機能です。複合キーが必要となるような場合にマルチセクション機能を利用すると以下のようなメリットがあります。
+-メモリの節約ができる
+-検索結果スコアの重み付けができる
+
+デフォルトではマルチセクション機能は無効です。インデックス作成時にSECIONALIZEと指定することでマルチセクション機能が利用できるようになります。
+
+例:
+   CREATE TABLE test (
+     id INT PRIMARY KEY,
+     title VARCHAR(100),
+     summary TEXT,
+     body MEDIUMTEXT,
+     FULLTEXT INDEX USING NGRAM, SECTIONALIZE (title, summary, body)
+   );
+
+マルチセクション機能を利用せずに複合キーを利用することは可能です。マルチセクション機能を利用しない複合キーの場合、各カラムごとの検索を行うことができません。上記を例にあげると、例えば"ベンチマーク結果"というキーワードで検索を行う場合、titleのみに対して検索を行うといったようなことができません。マルチセクション機能を利用しない複合キーでは、全てのカラムが検索対象になります。
+
+従って、"ベンチマーク結果"というキーワードを含むレコードを検索することはできますが、どのカラムに含まれるかを特定したり、重み付けをしたりすることはできません。どうしてもそういったことを行う場合には、複合キーの他に、カラム単独でインデックスを追加作成するなどが必要でした。
+
+しかし、マルチセクション機能を利用した場合、複合キーをひとつ作るだけで、特定のカラムのみを対象とした検索も、重み付けも行うことができるようになります。これによりメモリの節約ができると同時に、カラムの重み付けを利用することができます。
+
+**マルチセクション対応のインデックス作成方法
+tritonn-1.0.4より。
+
+USING句に"SECTIONALIZE"を指定して複合キーを作成します。
+
+ ALTER TABLE t1 ADD FULLTEXT INDEX ft USING NGRAM, SECTIONALIZE (c2,c3,c4);
+
+**マルチセクション対応の検索方法
+
+BOOLEAN MODEで*W演算子を使って指定します。*Wの後にセクション番号を指定します。
+
+c3のみを検索対象としたい場合。
+
+ SELECT * FROM t1 WHERE MATCH(c2,c3,c4) AGAINST("*W2 キーワード" IN BOOLEAN MODE);
+
+c2とc3のみを検索対象にしたい場合。
+
+ SELECT * FROM t1 WHERE MATCH(c2,c3,c4) AGAINST("*W1,2 キーワード" IN BOOLEAN MODE);
+
+重み付けの方法
+
+ 書式：*Wセクション番号[:スコアの倍率],...
+
+c2を3倍、c3を2倍、c4を1倍で評価したい場合
+
+ SELECT * FROM t1 WHERE MATCH(c2,c3,c4) AGAINST("*W1:3,2:2,3:1 キーワード" IN BOOLEAN MODE);
+
+*KWIC表示機能
+**kwic関数とは?
+kwic関数とは、KWIC(keyword in context)表示を行うためのSQL関数です。簡単に言うと、Google検索を行ったときに出てくる「ヒットした各ページごとの100文字くらいかたまり」を作るための関数になります。
+
+従来はTritonnではkwic関数は提供しておらず、Senna本体からMySQLのユーザ定義関数(UDF)のsnippet UDFとして提供されていました。しかしユーザ定義関数にはPrepared Statementで使用できないなどを始めとするいくつかのデメリットもあり、以前からsnippet UDFをMySQLのnativeなSQL関数として実装したいという思いがありました。
+
+今回、kwic関数としてTritonnで実装したことにより、これまで以上に手軽にKWIC表示機能をアプリケーションで実装することができます。またUDFと比べた場合の性能面の向上も期待できます。
+
+**kwic関数の使用例
+
+ここでは"埼玉"をキーワードとして、その前後あわせて60バイト分を表示しています。また最後尾に" ..."を付与しています(Googleの真似)。
+{{{
+[test] > set names utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] > create table t1 (c1 text) default charset utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] > insert into t1 values ("今日は東京に行きます。明日は埼玉に行きます。明後日は千葉に行きます。その後、横浜に戻ります。");
+Query OK, 1 row affected (0.00 sec)
+
+[test] > select kwic(c1, 60, 1, 0, "", " ...", "埼玉", "<span id=word>", "</span>") from t1;
++---------------------------------------------------------------------------------------+
+| snippet(c1, 60, 1, 0, "", " ...", "埼玉", "<span id=word>", "</span>")              |
++---------------------------------------------------------------------------------------+
+| に行きます。明日は<span id=word>埼玉</span>に行きます。明後日 ... | 
++---------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+}}}
+"埼玉"の前後にタグを付けていますので、cssなどで強調表示したりすることも可能です。
+
+この例ではwhere句に条件を付けずに実行していることにお気づきになると思います。kwic関数は文字列関数の一種であり、FULLTEXTインデックスによる検索とは無関係に使用することもできます。
+
+とはいえ、今回kwic関数を追加したのはもちろん、以下のSQL文のようにMATCH検索と絡めて使用するためです。
+{{{
+SELECT kwic(c1, 60, 1, 0, "", " ...", "埼玉", "<span id=word>", "</span>") FROM t1 WHERE MATCH(c1) AGAINST("埼玉");
+}}}
+これにより、Tritonnによる日本語全文検索を利用したアプリケーションの開発が、より一層、手軽にできるようになると思います。
+
+**kwic関数の構文
+
+kwic関数は大変引数の多い関数です。
+{{{
+SELECT kwic(文書, 切り出す文書の最大バイト数, 切り出す文書の最大個数,  
+  htmlエンコーディングの有無, snippetの開始タグ, snippetの終了タグ, 
+  単語1, 単語1の前につけられるタグ, 単語1の後につけられるタグ, 
+  単語2, 単語2の前につけられるタグ, 単語2の後につけられるタグ, ...);
+}}}
+注意点：snippet UDFでは文書の文字コードを引数で指定する必要がありましたが、kwic関数では不要となりました。（テーブル定義情報からカラムごとの文字コードを取得できるため。）
+
+htmlエンコーディングの有無は、0か1を指定ください。 1の場合は文書中の<,>をそれぞれ&lt;,&gt;に変換して出力します。
+
+例は以下のとおりです。
+{{{
+SELECT kwic(body, 120, 3, 
+  1, '...', '...<br>\n', 
+  '検索', '<span class="word1">', '</span>', 
+  '実験', '<span class="word2">', '</span>'
+)
+FROM contents
+WHERE MATCH(body) AGAINST('*D+ 検索 実験' IN BOOLEAN MODE)
+LIMIT 0,10;
+}}}
+
+**不正な引数に対するエラーと警告について
+
+snippet UDFでは構文にマッチしない引数が渡された場合、主にエラーを返すことでユーザに通知していました。しかし今回新しく実装したkwic関数では、引数の数が足りない場合や不正な値が渡された際、エラーや警告を返すことはしない実装にしています。
+
+このあたりの仕様は悩んだところなのですが、MySQLの文字列関数の実装に倣うことにしました。(郷に入れば郷に従え、ということで。)
+
+簡単にまとめると以下のような仕様を決めて実装しています。
+-引数にnullが含まれる場合(1つでも)、nullを返します。
+-引数の数が不適切な場合(引数の数は、9個、12個、15個...である必要があります)、空文字""を返します。
+-引数の値が不適切な場合(長さを指定する場所で0以下の値を与えるなど)、空文字""を返します。
+
+これはconcat関数やleft関数、right関数などの既存のMySQLの文字列系SQL関数の振舞いと同じです。
+
+ただしkwic関数は引数の大変多いSQL関数ですから、これだけだと慣れないうちはアプリケーション開発の際に戸惑うこともあるかもしれません。
+
+そこで、kwic関数にこうした不正な引数が与えられた場合にはログファイルにその内容を出力することとしました。不正な引数に対するログ出力はレベル"WARN"で行われます。従って、"INFO"等の標準的なログレベルを設定しておけば、senna.logで確認することが可能になります。
+{{{
+./mysqld --senna-log --senna-log-level=info &
+}}}
+不正な引数が指定された場合、ログには以下のような出力が行われます。
+
+これは9番目の引数がnullであったために、戻り値としてnullを返したことを示すログです。
+{{{
+09/01:00:46:48.041479|w|1| kwic argument #9 is null 
+}}}
+これは引数が8個しか指定されなかったために、戻り値として空文字が返されたことを示すログです。
+{{{
+09/01:00:47:03.089207|w|1| Incorrect number of arguments for kwic: 8 
+}}}
+これは3番目の引数(snippetの最大個数、1以上の値が指定されている必要がある)が-1であったために、戻り値として空文字が返されたことを示すログです。
+{{{
+09/01:00:47:25.655209|w|1| kwic argument #3 must be positive value, passed -1 
+}}}
+
+*2ind機能(2インデックス同時使用機能)
+注意：2ind機能はまだ安定度合いとしてはβ段階にあります。実際に利用する前に有効かどうか、利用環境で問題は無いかどうかをご確認の上、使用してください。
+
+** 2ind patchとは
+
+MySQLではクエリを実行する際、１つのテーブルに対してFULLTEXTインデックスと他のインデックスを組み合わせて利用（インデックスマージ）することができません。従ってFULLTEXTインデックスを用いる用いた場合、以下のような問題が生じます。
+
+1. limit指定で出力を制限しても応答が遅い問題
+
+   select columns from table where match(a) against(b) limit 1000, 10
+
+のように、オフセットに大きな値を指定するとテーブルスキャンが発生し、
+応答が遅くなります。
+
+2. count(*)等で件数を取得するだけでも応答が遅い問題
+
+   select count(*) from table where match(a) against(b);
+
+のように件数を取得するだけでもテーブルスキャンが発生し、
+応答が遅くなります。
+
+3. 全文検索以外の条件で絞り込む処理が遅い問題
+
+   select columns from table where match(a) against(b) and c like 'hoge%';
+
+のように、全文検索以外に他のカラムに関する条件を指定した場合、
+そのカラムにインデックスが張られていてもテーブルスキャンが発生し、
+応答が遅くなります。
+
+4. 全文検索以外の条件でソートする処理が遅い問題
+
+   select columns from table where match(a) against(b) order by c;
+
+のように、ソート条件を指定した場合、そのカラムにインデックスが張られていてもテーブルスキャンが発生し、応答が遅くなります。。
+
+このような問題を解決するために、MySQLが全文検索用のインデックスと通常のインデックスの両方を併用できるようにする2ind機能が利用できます。
+
+以前は2ind patchとしてパッチファイルが分かれていましたが、Tritonnでは2ind機能は本体に統合され、サーバ変数でOn/Offを行います。
+
+** 2ind機能を有効化する方法
+Tritonnパッチをあてると、MySQLのサーバ変数（SESSIONスコープ）に"senna_2ind"という変数が追加されます。
+
+my.cnfあるいはmysqldの起動オプションで"--senna-2ind"を指定するか、あるいは各接続にて以下のようにSETコマンドでONを設定してください。
+{{{
+mysql> SET SESSION senna_2ind=ON;
+}}}
+
+SETコマンドを使用することで、2ind機能の利用を動的にOn/Offすることができます。
+
+** 2ind機能の使い方
+- 1. 2.のパタンについては、特に意識することなく、通常通りにSQLを発行するだけで2ind機能の効果が得られます。
+- 3. 4.のパタンについては、絞り込みやソート時に使用したいインデックスを以下のように明示的に指定する必要があります。
+   select columns from table force index(c) where match(a) against(b) and c like 'hoge%';
+ 
+   select columns from table force index(c) where match(a) against(b) order by c;
+
+(主キーであれば force index(PRIMARY) のように指定します)
+
+** 2ind機能の注意点
+
+-前述の4つのクエリパタン以外では効果が得られるとは限りません。全文検索条件で大量のレコードがヒットすることによって発生するディスクI/Oが性能阻害要因である場合にのみ効果が期待できます。
+-2ind-patchはMySQLがもともと備えているインデックスを利用します。高い検索パフォーマンスを出すためには、key_buffer_sizeなど、もともとのMySQLのインデックスに対するパラメータを調整する必要があります。
+
+*ログ管理
+Tritonnパッチを適用するとMySQLにログに関する2つのサーバ変数が追加されます。
+:senna-log
+::senna.logファイルの出力を有効にするためのサーバ変数。デフォルトはOFF。
+::mysqld --senna-logと指定(あるいはmy.cnfに記述)することで、データディレクトリにsenna.logファイルを出力するようになります。
+::出力される内容はログレベルの設定に依存します。
+
+:senna-log-level
+::senna.logファイルを出力する場合、そのログレベルを設定するためのサーバ変数。デフォルトはNOTICE。
+::mysqld --senna-log --senna-log-level=DEBUGなどと指定(あるいはmy.cnfに記述）することで、指定したレベルに基づくログ出力を行えます。
+
+設定可能なログのレベルと内容は以下の通りです。
+
+,ログレベル,レベルの意味するところ,対象,実例
+,NONE,何もなし,使わない,使わない
+,EMERG,非常に危険な状態,即落ちの状態,今すぐSennaを強制終了しなければならないエラー
+,ALERT,早急に対処が必要,Senna外部要因エラー,malloc失敗、diskfull等、本来ありえない外部状態によって引き起こされるエラー。
+,CRIT,致命的なエラー,復旧できないエラー,インデックス破損など
+,ERROR,一般的なエラー,復旧できるエラー,
+,WARNING,システムからの警告,警告,渡されるパラメータが間違っているなど
+,NOTICE,システムからの通知,運用状態で常には増えない情報,インデックス開いた・閉じたなど
+,INFO,システムからの情報,運用状態で常に増える情報,検索クエリの中身・結果など
+,DEBUG,デバッグ用,Senna開発用情報,各種デバッグプリント
+,DUMP,なんでも,使わない,使わない
+
+senna.logファイルそのものの動的なOn/Offは行えません。その代わりにログ出力レベルの動的な変更が行えます。
+
+ログ出力レベルを動的に変更するためには、SETコマンドを使用します。
+
+従って、普段はNOTICE(デフォルト)以上のみ出力されるようにしておき、何かトラブルシューティングを行うような際にDEBUGレベルなどに一時的に変更すると良いでしょう。
+
+*メタ情報と統計情報
+Tritonnパッチを適用するとMySQLに新しく"SHOW SENNA STATUS"というSQLコマンドが追加されます。
+{{code
+[test] > SHOW SENNA STATUS\G
+*************************** 1. row ***************************
+                  Table: t1
+               Key_name: ft
+            Column_name: c1
+               Encoding: utf8
+             Index_type: NGRAM
+              Normalize: ON
+            Split_alpha: OFF
+            Split_digit: OFF
+           Split_symbol: OFF
+     Initial_n_segments: 512
+        Senna_keys_size: 3
+   Senna_keys_file_size: 8462336
+     Senna_lexicon_size: 43
+Senna_lexicon_file_size: 8462336
+     Senna_inv_seg_size: 3051520
+   Senna_inv_chunk_size: 135168
+1 row in set (0.00 sec)
+}}
+"SHOW SENNA STATUS"を実行すると、現在接続中のテーブルに含まれる全てのFULLTEXTインデックスについての情報を1行ずつ出力します。WHERE句でデータベース名を、LIKE句でテーブル名のパタンを指定することもできます。
+
+各項目の意味は以下の通りです。
+
+,フィールド名,値の意味するところ
+,Table,FULLTEXTインデックスが張られているテーブル名
+,Key_name,FULLTEXTインデックスの名前
+,Column_name,インデックスの対象のカラム名
+,Encoding,インデックスに使用されている文字コード
+,Index_type,使用しているインデックスの種類（mecab/ngram/delimited）
+,Normalize,Unicode正規化機能のOn/Off
+,Split_alpha,現在は特に意味は無し
+,Split_digit,現在は特に意味は無し
+,Split_symbol,現在は特に意味は無し
+,Initial_n_segments,インデックスバッファ領域の初期値
+,Senna_keys_size,シンボル表 (.SEN) のレコード数の合計
+,Senna_keys_file_size,シンボル表 (.SEN) のファイルサイズの合計
+,Senna_lexicon_size,語彙テーブル (.SEN.I) のレコード数の合計
+,Senna_lexicon_file_size,語彙テーブル (.SEN.I) のファイルサイズの合計
+,Senna_inv_seg_size,転置テーブルのバッファ (.SEN.i) のファイルサイズ
+,Senna_inv_chunk_size,転置テーブル (.SEN.i.c) のファイルサイズ
+
+これらの情報は、マルチカラムインデックスの場合には各カラムごとに出力されます。
+
+作成したFULLTEXTインデックスが意図した通りに作成できているのかの確認、値がちゃんとインデックスに格納されているのかについての確認などに利用可能です。
+
+*メモリの使用と注意点
+
+**Tritonnが使用するメモリ
+
+Tritonnが使用するメモリは、MySQL本体が使用する部分とSennaが使用する部分により構成されます。
+
+MySQL本体が使用するメモリの詳細については以下を参照して下さい。
+
+http://dev.mysql.com/doc/refman/5.1/ja/memory-use.html
+
+MySQL本体が使用するメモリはおよそ以下のように考えることができます。
+
+- グローバルな領域：key_buffer_size、innodb_buffer_pool_size、query_cache_sizeなどにより設定されるプロセス単位の領域
+- ローカルな領域：read_buffer_size、sort_buffer_sizeなどにより設定される各接続(スレッド)単位の領域
+
+【重要】TritonnおよびSenna自身はkey_bufferを使用しません。全文検索のためにkey_buffer_sizeを大きく取る必要はありません。
+
+これに加えてTritonnではSennaインデックスごとの領域が必要になります。Sennaではインデックスファイルを
+mmapによりメモリ上で扱っており、使用するメモリ量は各インデックスのファイルサイズに依存します。
+
+- .SENファイル：MyISAMのキーとSennaの内部文書IDのマッピングを行うファイルです。mmapされます。
+- .SEN.lファイル:語彙文字列と語彙IDのマッピングを行うファイルです。mmapされます。
+- .SEN.iファイル:転置インデックスを書き込むためのバッファです。mmapされます。
+- .SEN.i.cファイル:転置インデックス本体です。mmapされません。
+
+【重要】これらはインデックス単位で作られます。MySQLサーバ内に複数のインデックスがあればその数だけ対象となります。
+
+.SENファイルはレコード件数の増加に従い大きくなります。サイズを制御することはできません。
+
+.SEN.lファイルは登録済み語彙の数に従い大きくなります。サイズを制御することはできませんが、
+レコード件数の増加に対して語彙数の増加は逓減するので一定規模で落ち着く傾向があります。
+
+.SEN.iファイルはパラメータでサイズを指定可能です。.SEN.iファイルのサイズを指定するには、
+インデックス作成時に以下のようにUSING句に数値を指定します。
+
+CREATE FULLTEXT INDEX ft USING 1024 ON t1(c1);
+
+.SEN.iファイルはここで指定された数値*256KBのサイズとなります。デフォルトは512=128MBです。
+
+【補足】各種SENファイルは実際にはブロック単位でmmap/munmapされますので挙動としてはもう少し複雑なものとなります。
+
+**メモリ使用量計算方法
+
+従って、メモリ使用量は以下のように計算できます。
+
+Tritonnメモリ合計値 = 
+  ${MySQLのグローバルなメモリ合計値} 
+  + ${MySQLのローカルなメモリ合計値} * max_connections * 稼働率
+  + SUM(各インデックスの.SEN/.SEN.l/.SEN.iファイルサイズの合計) 
+
+MySQL本体が使用するメモリ量については、以下のサイトで公開されているツール"mymemcheck"も役立ちます！ 
+- http://dsas.blog.klab.org/archives/50860867.html
+
+**32bit Linuxでの注意点と対策
+
+32bitシステムではアドレス空間が4GBという制約がありますが、ユーザプロセス(mysqld)が利用可能
+なのは実際にはLinuxでは3GBまでという制限値があります。
+
+上記計算式で制限値を超える場合には、「mysqldがメモリ不足でエラーとなる or 落ちる」
+「インデックスが壊れる」といった障害が発生する可能性があります注意して下さい。
+
+その場合には以下のような対策を検討して下さい。
+
+- OSを64bitのものに変更する
+- インデックスの数を減らす(または統合する)ことでメモリ使用量を減らす
+- USING <数値>を小さくしてメモリ使用量を減らす
+- key_buffer_size、innodb_buffer_pool_size等のMySQLのメモリ使用量を減らす
+- topコマンドでmysqldを監視して制限値に達する前に"flush tables"でメモリを解放する

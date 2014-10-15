@@ -1,0 +1,97 @@
+*What is Tritonn?
+Tritonn is a patched version of MySQL that supports better fulltext search function with [[Senna|http://qwik.jp/senna/]].
+
+*News
+**2010/08/18 groonga storage engine is now released FOR TESTING.
+groonga storage engine, that is a Pluggable Storage Engine for MySQL 5.1 or later, is now released for testing purpose.
+([[groonga|http://groonga.org/]] is the successor product of Senna).
+
+Visit its web site for the detail.
+-http://mroonga.github.com/
+
+*Why Tritonn?
+MySQL version after 3.23.23 supports FULLTEXT index. With it, MySQL can execute the full-text search for the field of VARCHAR and TEXT type. But, MySQL's fulltext search implementation has the following problems:
+
+-Insufficient Japanese/Chinese/Korean support
+-Slow phrase search
+-Slow update
+
+With Tritonn, you get M17N fulltext search function, faster phrase search, and faster update WITHOUT modifying your application.
+
+*Features
+-Supports MySQL version 5.0 and 5.1
+-MATCH AGAINST query support in BOOLEAN MODE and defaulut mode(NLQ MODE)
+-In BOOLEAN MODE, you can use all operators like +, -, <, >, (, ), ~, *, ".
+-Supports Japanese encoding EUC, SJIS
+-Supports Unicode with UTF8
+-Supports normalization. In UTF8, NFKC normalization supported
+-Supports similar document search
+-Supports near words search
+-Supports MyISAM storage engines.
+-Supports snippet(KWIC) function with MySQL user defined functions.
+-Supports Japanese word's index(with MeCab), N-gram(bi-gram) index and space delimited index.
+-2ind patch enables MySQL to use FULLTEXT index and normal b-tree index bothly at one time.
+
+*Example
+The following is an example of MySQL's fulltext search with English text, that works as expected.
+
+{{code
+[test] > SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] > CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX idx (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] > INSERT INTO t1 VALUES ("I have a pen."), ("May I Help You?"), ("Have a nice day.");
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+[test] > SELECT * FROM t1 WHERE MATCH(c1) AGAINST("nice");
++------------------+
+| c1               |
++------------------+
+| Have a nice day. |
++------------------+
+1 row in set (0.00 sec)
+}}
+
+And the following is an example of MySQL's fulltext search with Japanese text, whose result is empty.
+
+{{code
+[test] > drop table t1;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] > CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX idx (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+[test] > INSERT INTO t1 VALUES("私はペンを持っています。"), ("いらっしゃいませ～"), ("良い一日を。");
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+[test] > SELECT * FROM t1 WHERE MATCH(c1) AGAINST("良い");
+Empty set (0.00 sec)
+}}
+
+This is because MySQL's fulltext implementation splits text into 'keywords' by spaces. But in Japanese text, words are not separated by spaces.
+
+And the following is an example of Tritonn's fulltext search with Japanese text, that works as expected.
+
+{{code
+[test] > SELECT * FROM t1 WHERE MATCH(c1) AGAINST("良い");
++------------------+
+| c1               |
++------------------+
+| 良い一日を。     |
++------------------+
+1 row in set (0.00 sec)
+Empty set (0.00 sec)
+}}
+
+*References
+-[[Query Syntax - Senna|http://qwik.jp/senna/query_en.html]]
+
+*Mailing List
+-http://lists.sourceforge.jp/mailman/listinfo/tritonn-dev
+
+*Slide
+-Tritonn - MySQL with Senna {{file(tritonn-eng.pdf)}}

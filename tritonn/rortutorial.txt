@@ -1,0 +1,348 @@
+*Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル
+*0 Tritonnのセットアップ
+**Windowsの場合
+mysql-5.0.45-tritonn-1.0.6-win32.zipを解凍し、C:\mysqlに配置する。
+
+環境変数PATHに"C:\mysql\bin"を追加する。(マイコンピュータ→プロパティ→詳細設定→環境変数で設定)
+
+C:\my.iniに以下のように記述する。(これは必須ではないが、推奨)
+{{{
+[mysqld]
+character-set-server=utf8
+skip-character-set-client-handshake
+}}}
+mysqldをサービスに登録する。
+{{{
+cd C:\mysql\bin
+mysqld.exe --install MySQL
+}}}
+MySQLを起動する。
+{{{
+net start MySQL
+}}}
+**Linuxの場合
+mysql-5.0.45-tritonn-1.0.6-linux-i686を解凍し、/usr/local/mysqlに配置する。
+
+/etc/my.cnfを以下のように編集する。(これは必須ではないが、推奨)
+{{{
+[mysqld]
+character-set-server=utf8
+skip-character-set-client-handshake
+}}}
+※この時、以前に設定されたと思われる値(basedirやdatadir、socket、portなど)が残っていると上手く動作しないので注意する。
+
+ファイルのアクセス権限を設定する。
+{{{
+cd /usr/local/mysql
+chown -R root:mysql *
+chown -R mysql:mysql data
+}}}
+データベースを初期化する。
+{{{
+scripts/mysql_install_db
+}}}
+MySQLを起動する。
+{{{
+bin/mysqld_safe -umysql &
+}}}
+
+*1 アプリケーションの生成から入力フォーム作成まで
+**事前準備
+Railsを開発するフォルダを決めます。　
+>例：C:\work
+
+**Rails アプリケーションの作成
+コマンドプロンプトを開きます。
+事前準備で用意したディレクトリで以下のコマンドを入力します。
+>rails rordemo
+このコマンドを実行することで、
+自動にアプリケーションの一式が作られます。
+
+**DB作成
+*****MySQLでWebアプリケーション用のデータベースを作成する
+MySQLに接続
+{{{
+mysql -uroot
+}}}
+データベースを作成
+{{{
+create database rordemo_development;
+}}}
+
+*****テーブルの作成 　
+テーブルを作成し、以下に保存
+>[/rordemo/db/create.sql]
+{{{
+DROP TABLE IF EXISTS `articles`;
+
+CREATE TABLE `articles` (
+  `id` int(11) NOT NULL auto_increment,
+  `date` datetime NOT NULL default '2007-10-04 00:00:00',
+  `content` longtext,
+  PRIMARY KEY  (`id`),
+  FULLTEXT KEY `ft` USING NGRAM (`content`)
+) ENGINE=MyISAM;
+}}}
+*****作ったテーブルをDBに挿入
+{{{
+mysql rordemo_development <db/create.sql -u root -h localhost
+}}}
+
+**Railsとデータベースの連携
+　次に、Railsからデータベースを参照できるようにします。
+>[rordemo/config/database.ymi]
+このファイルの中の以下の部分に注目してください。
+{{{
+username: root
+password:
+host: localhost
+}}}
+　この設定をを自分の環境に合わせて変更します。
+　今回はそのままで変更はありません。
+{{{
+development:
+adapter: mysql
+database: rordemo_development
+username: root
+password:
+host: localhost
+
+test:
+adapter: mysql
+database: rordemo_test
+username: root
+password:
+host: localhost
+
+production:
+adapter: mysql
+database: rordemo_production
+username: root
+password:
+host: localhost
+}}}
+
+**日本語の設定
+２箇所のファイルの書き換えを行います。
+>[config/enveronment.rb]
+に以下のコードを先頭に追加
+{{{
+$KCODE="utf8"
+}}}
+
+>[app/controllers/appllication.rb]
+を以下のように変更。これにより、作成ファイル全てにutf8が適応されます。
+{{{
+class ApplicationController < ActionController::Base
+ before_filter :set_charset
+  private
+  def set_charset
+    headers["Content-Type"] = "text/html; charset=utf8"
+  end
+end
+}}}
+
+**入力フォームの作成
+generateを使用することで、簡単に入力フォームか作成されます。
+>ruby script/generate scaffold Article Admin
+作成されるファイルは以下のとおり。
+{{{
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/admin
+      exists  app/views/layouts/
+      exists  test/functional/
+  dependency  model
+      exists    app/models/
+      exists    test/unit/
+      exists    test/fixtures/
+      create    app/models/article.rb
+      create    test/unit/article_test.rb
+      create    test/fixtures/articles.yml
+      create  app/views/admin/_form.rhtml
+      create  app/views/admin/list.rhtml
+      create  app/views/admin/show.rhtml
+      create  app/views/admin/new.rhtml
+      create  app/views/admin/edit.rhtml
+      create  app/controllers/admin_controller.rb
+      create  test/functional/admin_controller_test.rb
+      create  app/helpers/admin_helper.rb
+      create  app/views/layouts/admin.rhtml
+      create  public/stylesheets/scaffold.css
+}}}
+
+これで一番簡単な入力フォームの完成！
+
+**ページの閲覧
+*****サーバ起動
+これで一通りのパーツがそろいました。RailsにはWEBrickと呼ばれるwebサーバが同梱されていますので、
+それを利用してページが見られるか確認しましょう。
+{{{
+ruby script/server
+=> Booting WEBrick...
+=> Rails application started on http://0.0.0.0:3000
+=> Ctrl-C to shutdown server; call with --help for options
+[2007-10-03 17:40:29] INFO WEBrick 1.3.1
+[2007-10-03 17:40:29] INFO ruby 1.8.6 (2007-09-23) [i386-mswin32]
+[2007-10-03 17:40:29] INFO WEBrick::HTTPServer#start: pid=6108 port=3000
+}}}
+(停止は Ctrl+c)
+
+*****ページの閲覧
+>http://localhost:3000/admin
+これで見られたら、第一段階が終了。
+
+>注）これからファイルのページの更新を行いますが、そのたびにサーバは停止しておくのがよいでしょう。
+
+*２ 検索機能の追加
+**ページのの作成
+generate を利用して、検索を行うページを作成します。
+>ruby script/generate controller Search index
+以下のファイルが追加されます。
+{{{
+exists app/controllers/
+exists app/helpers/
+create app/views/search
+exists test/functional/
+create app/controllers/search_controller.rb
+create test/functional/search_controller_test.rb
+create app/helpers/search_helper.rb
+create app/views/search/index.rhtml
+}}}
+Searchは作成するコントローラ名で、indexはSearchコントローラにindex()メソッドをひとつ持たせるという意味になります。
+ここで最初のメソッドにindexとつけた理由は、「http://localhost:3000/search/」と入力した場合に自動的にindexメソッドが呼び出されるからです。
+このようにRailsでは、コントローラを呼び出す際に明示的にアクションを指定していないと自動的にindex()アクションが呼び出されるようになっています。
+
+**ページの閲覧
+再びWebrickサーバを起動し、以下にアクセス
+>http://localhost:3000/search/
+
+{{img("./rortutorial.files/search_index1.jpg")}}
+
+まだ雛形を作成しただけなのでこの様な画面がいればOK.
+**検索フォームの作成
+
+*****追加すべきファイル
+
+*****コントローラにメソッドを追加
+>[app/controllers/search_controller.rb]
+を以下のデータに変更します。
+{{{
+class SearchController < ApplicationController
+#def index
+# @articles = Article.items
+#end
+def search_text
+@articles = Article.search_text(params[:query])
+flash.now[:notice] = "Search result#{@articles.size}found."
+render(:action => 'search_text')
+end
+end
+}}}
+*****モデルにメソッドを追加
+>[app/models/article.rb]
+を以下のデータに変更
+{{{
+class Article < ActiveRecord::Base
+def self.search_text(query)
+
+find_by_sql(["
+select date, match(content) against (?) as score, 
+kwic(content, 150,3,1,'',' ... ', ?, '<span id=word>', '</span>') as snippet
+from articles where match(content) against(?) order by score desc limit 20", 
+             "#{query}","#{query}", "#{query}"])
+end
+end
+}}}
+
+
+*****ビューの作成と編集
+>[app/views/search/search_text.rhtml]
+を新規作成し、以下のように編集。
+{{{
+<html>
+<body>
+<table cellpadding="5" cellspacing="0">
+
+  <% for article in @articles %>
+  <tr valign="top" class="catalogentry">
+
+<td align="left">
+<p>date <%=article.date%><p>
+<p>score <%=article.score%><p>
+<p>snippet <%=article.snippet%><p>
+</td>
+
+</tr>
+  <tr><td colspan="2"><div class="separator">&nbsp;</div></td></tr>
+  <% end %>
+</table>
+</body>
+</html>
+}}}
+====
+>[app/views/search/index.rhtml]
+を以下のデータに変更する。
+{{{
+<html>
+<body>
+<p><label for="article_title"><b>検索</b></label></br>
+<%= form_tag(:action => :search_text) %>
+<%= text_field(:query,nil) -%><%= submit_tag "検索実行" %></p>
+<%= end_form_tag %>
+<br>
+</body>
+</html>
+}}}
+
+**ページの閲覧
+再びWebrickサーバを起動し、以下にアクセス
+>http://localhost:3000/search/
+
+{{img("./rortutorial.files/search_image.jpg")}}
+
+これで検索ページが表示されれば成功！
+
+{{file(search_image.jpg)}}
+
+**スタイルシートのカスタマイズ
+>[app/views/search/search_text.rhtml]
+を編集し、検索結果ページにスタイルシートを適用するように設定しましょう。
+{{{
+<head>
+<link href="/stylesheets/scaffold.css" media="all" rel="Stylesheet" type="text/css" />
+</head>
+}}}
+>[public/stylesheets/scaffold.css]
+にキーワードに対応したスタイルを追記します。
+ #word {
+   background-color: #faf
+ }
+これで検索結果画面のキーワード部分に背景色がつきます。
+
+**リンクの追加
+後は好みでリンクを追加すると良いかもしれません。
+
+今のままだとページ間の移動がしにくいパタンがあるのでリンクをいくつか追加します。
+>[app/views/search/search_text.rhtml]
+ページ先頭に以下の一行を追加。
+{{{
+<%= link_to 'Back', :action => '' %>
+}}}
+これで検索結果画面から、検索画面へ戻れるようになります。
+>[app/views/search/index.rhtml]
+ページ末尾に以下の一行を追加。
+{{{
+<a href="../admin/">閲覧/登録</a>
+}}}
+これで検索画面から、記事登録/閲覧画面へ飛べるようになります。
+>[app/views/admin/list.rhtml]
+ページ末尾に以下の一行を追加。
+{{{
+<br /><a href="../search">検索</a>
+}}}
+これで記事登録/閲覧画面から検索画面に飛べるようになります。
+
+{{file(search_index1.jpg)}}
+
+{{file(search_image.jpg)}}

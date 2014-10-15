@@ -1,0 +1,505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>Tritonnのビルド方法 - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>Tritonnのビルド方法</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><div class="body"
+><div class="section"
+><p
+>ここではLinux上でTritonnをビルドする方法を説明しています。他のOSについては機会があれば。。。</p
+>
+<p
+>Tritonn patch (tritonn-1.0.2以下)を使用する場合のビルド方法は<a href="1.html"
+>(旧)ビルド方法</a
+>ページに移動しました。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="ab5bc3d9aa1dc852de6c8ad9c4ad6985"
+>ビルドの大まかな流れ</h2
+><div class="body"
+><div class="section"
+><ol
+><li
+>MeCabをビルド</li
+><li
+>Sennaをビルド</li
+><li
+>Tritonnをビルド</li
+></ol
+>
+<p
+>Tritonnをビルドするためには、事前にSennaのライブラリ(libsenna)がビルドされている必要があります。またSennaをビルドするためには、MeCabのライブラリと辞書が事前にビルドされている必要があります(非MeCabなビルド方法は後述)。そこで上記のような手順でビルドを行います。</p
+>
+<p
+>Tritonnのビルドを開始する前にすでにMeCabやSennaがマシンにインストールされている方は、いきなりTritonnのビルドを初めても構いません。ただし、TritonnはSennaのAPIを呼び出している関係上、各バージョンごとに必要Sennaバージョンが存在します。必要Sennaバージョンについては<a href="limitation.html"
+>制限事項</a
+>のページを参照して下さい。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="23cd601a0978b0e0d70dcabb4692c166"
+>MeCabをビルドする</h2
+><div class="body"
+><div class="section"
+><p
+>MeCabのより正確なビルド方法についてはMeCabの公式サイト(<a class="external" href="http://mecab.sourceforge.net/)"
+>http://mecab.sourceforge.net/)</a
+>を参照して下さい。</p
+>
+<p
+>ここではTritonn開発者が採用しているMeCabのビルド手順を記しておきます。</p
+>
+<h3
+>MeCabのビルド手順例</h3
+><p
+>以下のページから最新のMeCab本体と辞書(mecab-ipadic)をダウンロードする。</p
+>
+<p
+><a class="external" href="http://sourceforge.net/project/showfiles.php?group_id=177856"
+>http://sourceforge.net/project/showfiles.php?group_id=177856</a
+></p
+>
+<p
+>mecabのビルド</p
+><pre
+>./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+</pre
+><p
+>mecab-ipadicのインストール</p
+><pre
+>./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+</pre
+><p
+>上記configureは文字コードにutf8を指定している例です。MeCabのデフォルトの文字コードはeucjpです。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="68275ed93a3906ba827b9d71bd89277b"
+>Sennaをビルドする</h2
+><div class="body"
+><div class="section"
+><p
+>Sennaのより正確なビルド方法についてはSennaの公式サイト(<a class="external" href="http://qwik.jp/senna/FrontPageJ.html)"
+>http://qwik.jp/senna/FrontPageJ.html)</a
+>を参照して下さい。</p
+>
+<p
+>ここではTritonn開発者が採用しているMeCabのビルド手順を記しておきます。</p
+>
+<h3
+>Sennaのビルド手順例</h3
+><p
+>以下のページから最新のSennaソースコードをダウンロードする。</p
+>
+<p
+><a class="external" href="http://sourceforge.jp/projects/senna/files/"
+>http://sourceforge.jp/projects/senna/files/</a
+></p
+>
+<p
+>Sennaのビルド</p
+><pre
+>./configure --prefix=/usr
+make
+sudo make install
+</pre
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="da393c720c9e02203480cea4c4d56550"
+>Tritonnをビルドする</h2
+><div class="body"
+><div class="section"
+><p
+>ではいよいよTritonnのビルドです。</p
+>
+<p
+>Tritonnをビルドする場合、configureオプションとして--with-sennaと--with-mecabを付与する必要があります。その他のconfigureオプションについては全てMySQL本家と同じです。</p
+>
+<p
+>最も単純なビルド方法は以下になります。</p
+><pre
+>./configure --with-senna --with-mecab
+make
+sudo make install
+</pre
+>
+<p
+>おめでとうございます!　これでTritonnのビルドは完了です。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="003457358bff1710a0664c7e2e66114e"
+>非MeCab環境でビルドしたい方向け</h2
+><div class="body"
+><div class="section"
+><p
+>Tritonn(MySQL+Senna)は使いたいけれどもMeCabは使わないよという人向けの情報です。</p
+>
+<p
+><del
+>mecab-ipadicに含まれるIPA辞書はライセンスがIPAライセンスというライセンスであり、これは商用での利用を禁止しています。ビジネスでTritonnを使われる方はmecab-ipadicの代わりにmecab-jumandicを使うか、あるいは非MeCabにすることを検討されると良いと思います。</del
+> これは誤報だったようです。お騒がせしてすみませんでした。</p
+>
+<p
+>MeCabを使わない場合には、Sennaのビルドの時に--without-mecabを付けておく必要があります。そうしないとSennaのconfigureが通りません。</p
+>
+<p
+>Senna:</p
+><pre
+>./configure --prefix=/usr --without-mecab
+make
+sudo make install
+</pre
+>
+<p
+>さらにその上で、Tritonnのビルドの際には--with-sennaのみを付与します。--with-mecabは不要です。</p
+>
+<p
+>Tritonn:</p
+><pre
+>./configure --with-senna
+make
+sudo make install
+</pre
+>
+<p
+>この時、注意すべきことが１点あります。以前にMeCabがインストールされていたような場合には、上記の方法でビルドを行ってもlibmecabにリンクしてしまう問題があります。非MeCabなビルドを行う際には/usr/lib等のリンカ・パス上にlibmecabが存在しないようにしてから行って下さい。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="fa2752d151dfec1089093f2cfa7e1ef1"
+>上級者向けTips</h2
+><div class="body"
+><div class="section"
+><h3
+>configureオプションの決め方</h3
+>
+<p
+>Tritonnのビルド時のconfigureオプションをいろいろ工夫したいとお考えの場合、既存のMySQL公式バイナリのconfigureオプションを参考にすると良いです。</p
+>
+<p
+>MySQLバイナリを展開するとbin/mysqlbugというシェルスクリプトが存在します。このファイルを開くと以下のような記述が見付かります。</p
+><pre
+># This is set by configure
+COMP_ENV_INFO=&quot;CC='ccache gcc'  CFLAGS=''  CXX='ccache gcc'  CXXFLAGS=''  LDFLAGS=''  ASFLAGS=''&quot;
+CONFIGURE_LINE=&quot;./configure '--prefix=/usr/local/mysql' '--localstatedir=/usr/local/mysql/data' '--libe
+xecdir=/usr/local/mysql/bin' '--with-comment=MySQL Community Server (GPL)' '--with-server-suffix=' '--e
+nable-thread-safe-client' '--enable-local-infile' '--enable-assembler' '--with-pic' '--with-fast-mutexe
+s' '--with-client-ldflags=-static' '--with-mysqld-ldflags=-static' '--with-zlib-dir=bundled' '--with-bi
+g-tables' '--with-yassl' '--with-readline' '--with-archive-storage-engine' '--with-blackhole-storage-en
+gine' '--with-ndbcluster' '--with-csv-storage-engine' '--with-example-storage-engine' '--with-federated
+-storage-engine' '--with-innodb' '--with-extra-charsets=all' 'CC=ccache gcc' 'CXX=ccache gcc'&quot;
+</pre
+><p
+>これはビルドの際にconfigureスクリプトが受け取った情報が記録されたもので、これを真似してconfigureオプションを決めると、MySQL公式バイナリに近い設定のバイナリとしてビルドすることができます。</p
+>
+<p
+>例えば、Tritonn開発者はmysql-5.0.45-tritonn-1.0.4をリリース前にビルドしてテストする際に、上記のようにmysql-5.0.45のmysqlbugを参考にして以下のようなconfigureオプションを使用しています。</p
+><pre
+>CC='gcc'  CFLAGS='-g'  CXX='gcc'  CXXFLAGS='-g'  LDFLAGS=''  ASFLAGS='' \
+./configure \
+'--prefix=/usr/local/mysql' \
+'--localstatedir=/usr/local/mysql/data' \
+'--libexecdir=/usr/local/mysql/bin' \
+'--with-comment=MySQL Community Server (GPL)' \
+'--with-server-suffix=' \
+'--enable-thread-safe-client' \
+'--enable-local-infile' \
+'--enable-assembler' \
+'--with-pic' \
+'--with-fast-mutexes' \
+'--with-client-ldflags=-static' \
+'--with-mysqld-ldflags=-static' \
+'--with-zlib-dir=bundled' \
+'--with-big-tables' \
+'--with-yassl' \
+'--with-readline' \
+'--with-archive-storage-engine' \
+'--with-blackhole-storage-engine' \
+'--with-ndbcluster' \
+'--with-csv-storage-engine' \
+'--with-example-storage-engine' \
+'--with-federated-storage-engine' \
+'--with-innodb' \
+'--with-extra-charsets=all' \
+'--with-senna' '--with-mecab'
+</pre
+>
+<h3
+>make installを使わないという選択</h3
+><p
+>make installを行うと、configure時に指定したprefixの場所へインストールが行われます(prefixを指定していない場合には/usrに)。</p
+>
+<p
+>しかしMySQL公式バイナリはmake installを行ったものとは実は少々違いがあります。ささいな違いなのですが、例えばmysql_install_dbの位置がちょっと違う、また公式バイナリの方が相対パスでの処理ができるなどちょっと賢いなどです。</p
+>
+<p
+>これはこれで別に大きな問題ではないのですが、こだわりたい方もいらっしゃるでしょう。その場合は、makeを行った後に、以下を実行することをお薦めします。</p
+><pre
+>scripts/make_binary_distribution --no-strip
+</pre
+><p
+>これはトップディレクトリにバイナリのtarballを作ってくれるスクリプトです。この時、mysql_install_dbなどの位置や内容がこっそり変更されて、公式バイナリと同じ状態になります。</p
+>
+<p
+>またオプションの--no-stripも好みによりますが、つけておいた方がいいです。--no-stripを付けない場合、make_binary_distributionスクリプトはmysqldをstripしてしまいます。そうするとmysqldが落ちるような障害が発生したときの解析の難易度があがります。(stripのメリットとしては高速化されるといわれていますが、mysqldの場合はあまり大きなメリットは得られないようです。)</p
+>
+<p
+>ちなみに、make bin-distも似たような処理が行われますが、make bin-distは--no-strip無しでmake_binary_distributionスクリプトを呼び出すため、stripされてしまうので注意が必要です。</p
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

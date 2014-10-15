@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>Tritonn性能検証 - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>Tritonn性能検証</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><div class="body"
+><div class="section"
+><p
+>TritonnパッチはMySQLからSennaを使えるようにして、MySQL+Sennaによる高速全文検索を実現するためのものです。従って性能に関しては非常に重視しています。このページではTritonn開発者による性能検証の情報などを公開していく予定です。</p
+>
+<p
+>性能面についてのバグが見つかった場合には、SourceForgeのバグ管理システムを利用して管理していく予定です。</p
+><ul
+><li
+><a class="external" href="http://sourceforge.jp/projects/tritonn/"
+>http://sourceforge.jp/projects/tritonn/</a
+></li
+></ul
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="581c910366e36f7919608a4d40e53829"
+>MySQL5.0.34+Senna1.0.1 on Linux2.6+AMD64</h2
+><div class="body"
+><div class="section"
+><p
+>OSC2007にて発表した内容です。</p
+><h3
+>テスト環境</h3
+><dl
+><dt
+>ハードウェア／ソフトウェア構成</dt
+></dl
+><p
+>以下のハードウェア／ソフトウェア構成にて行っています。</p
+><table
+><tr
+><td
+>機種</td
+><td
+>HP ProLiant 385</td
+></tr
+><tr
+><td
+>CPU</td
+><td
+>AMD Dual Core Opteron 2.6GHz *2 (1MB L2 cache *2)</td
+></tr
+><tr
+><td
+>RAM</td
+><td
+>DDR-SDRAM ECC PC3200 8GB</td
+></tr
+><tr
+><td
+>DISK</td
+><td
+>SAS 2.5inch 10000rpm 72GB *4</td
+></tr
+><tr
+><td
+>RAID</td
+><td
+>BBWC付き 256MB</td
+></tr
+><tr
+><td
+>OS</td
+><td
+>Miracle Linux 4.0 (Asianux 2.0) / Linux Kernel 2.6.9-11AXCustom</td
+></tr
+><tr
+><td
+>アーキテクチャ</td
+><td
+>x86_64 (EM64T/AMD64)</td
+></tr
+><tr
+><td
+>MySQL</td
+><td
+>ver5.0.34</td
+></tr
+><tr
+><td
+>Senna</td
+><td
+>ver1.0.1</td
+></tr
+><tr
+><td
+>Tritonn</td
+><td
+>ver1.0.0の少し前</td
+></tr
+></table
+>
+<dl
+><dt
+>チューニング値</dt
+></dl
+><p
+>以下の値を使用しています。</p
+><table
+><tr
+><td
+>mysql</td
+><td
+>myisam_sort_buffer_size</td
+><td
+>1024MB</td
+></tr
+><tr
+><td
+>mysql</td
+><td
+>key_buffer_size</td
+><td
+>1024MB</td
+></tr
+><tr
+><td
+>senna</td
+><td
+>initial_n_segments</td
+><td
+>2048</td
+></tr
+></table
+>
+<dl
+><dt
+>テストに使用したデータ</dt
+></dl
+><p
+><a class="external" href="http://ja.wikipedia.org/wiki/Wikipedia:%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89"
+>日本語版Wikipediaのダンプデータ</a
+>
+から記事本体のテキストデータを抽出したもの。</p
+>
+<p
+>以下のテーブルに格納した所、約57万行、MYDファイルサイズ1.4GB、平均行長2300バイトになった。</p
+><pre
+>CREATE TABLE t1 (
+  c1 INT PRIMARY KEY AUTO_INCREMENT,
+  c2 TEXT
+) ENGINE = MyISAM DEFAULT CHARSET utf8;
+</pre
+>
+<dl
+><dt
+>負荷ツール</dt
+></dl
+><p
+><a class="external" href="http://mbench.sourceforge.jp"
+>mbench</a
+>をMySQL C APIを使用してC言語で再実装したもの。表に出せるクオリティではないのでまだOSS化はしていません。。。</p
+>
+<dl
+><dt
+>ノード構成</dt
+></dl
+><p
+>サーバ用として上記のハードウェア1台と、クライアント用としてThinkPad T43を1台の構成。</p
+>
+<h3
+>インデックスの構築</h3
+><p
+>前提条件として、テーブル作成、データ格納を行った後、以下のSQL文を実行して計測。</p
+><pre
+>CREATE FULLTEXT INDEX ft USING NORMALIZE, 2048 ON t1(c2);
+CREATE FULLTEXT INDEX ft USING NGRAM, NORMALIZE, 2048 ON t1(c2);
+</pre
+><p
+>これにより、データサイズ1.4GB/57万行の時のmecabとngramそれぞれのインデックス構築速度が分かる。</p
+>
+<dl
+><dt
+>結果</dt
+></dl
+><p
+>ファイルサイズはngramの方が大きくなってしまうものの、速度自体はこちらの方が速い。</p
+><table
+><tr
+><td
+>index_type</td
+><td
+>要した時間</td
+><td
+>スループット</td
+><td
+>SENファイルのサイズ合計</td
+><td
+>SENファイル内の語彙数</td
+></tr
+><tr
+><td
+>mecab</td
+><td
+>18分22秒</td
+><td
+>513.7行/秒</td
+><td
+>1.47GB</td
+><td
+>417万語</td
+></tr
+><tr
+><td
+>ngram</td
+><td
+>14分32秒</td
+><td
+>649.2行/秒</td
+><td
+>2.13GB</td
+><td
+>523万語</td
+></tr
+></table
+>
+<dl
+><dt
+>捕捉事項</dt
+></dl
+><ul
+><li
+>myisam_sort_buffer_sizeを大きくすると性能UP</li
+><li
+>initial_n_segmentsを大きくすると性能UP</li
+><li
+>myisam_repair_threadsは無関係</li
+></ul
+>
+<h3
+>検索性能比較</h3
+><p
+>あらかじめ10接続を作成しておき、mecab、ngram、インデックス無しのテーブルに対して、2分間、ラッシュ検索を実施。</p
+>
+<p
+>mecab/ngramに対しては以下のSQL文を繰り返し実行。いわゆる全文検索。</p
+><pre
+>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;キーワード&quot;);
+</pre
+><p
+>インデックス無しについては以下のSQL文を繰り返し実行。いわゆる部分一致検索。</p
+><pre
+>SELECT COUNT(*) FROM t1 WHERE c2 LIKE '%キーワード%';
+</pre
+>
+<p
+>このとき使用するキーワードは、あらかじめ用意した約6万の日本語の名詞の中から各接続ごとに1万個選んでおき、それぞれがその選んでおいたものを使用している。</p
+>
+<p
+>※ただし、ここで使用している名詞そのものはmecab-ipadicから抽出しているので、mecabに有利な結果が出やすいというのも考慮する必要あり。</p
+>
+<dl
+><dt
+>結果（複数回計測した値の平均値）</dt
+></dl
+><p
+>※OSのファイルキャッシュの影響を著しく受けるため、OSのファイルキャッシュに十分乗り切った状態で計測している。</p
+><table
+><tr
+><td
+>index_type</td
+><td
+>スループット</td
+><td
+>平均レスポンス</td
+><td
+>相対値</td
+></tr
+><tr
+><td
+>mecab</td
+><td
+>3190.7 クエリ/秒</td
+><td
+>3.1 ミリ秒</td
+><td
+>10293 倍</td
+></tr
+><tr
+><td
+>ngram</td
+><td
+>1235.3 クエリ/秒</td
+><td
+>8.1 ミリ秒</td
+><td
+>3985 倍</td
+></tr
+><tr
+><td
+>インデックス無し</td
+><td
+>0.31 クエリ/秒</td
+><td
+>31.2 秒</td
+><td
+>1</td
+></tr
+></table
+><p
+>部分一致検索（LIKE演算子）が圧倒的に遅い。データ量が数MBなら両者の差は少ないかもしれないが、ある程度以上大きくなってくると部分一致検索では太刀打が出来なくなる。</p
+>
+<p
+>mecabの方がngramに比べて断然速い。とはいえ、ngramのほうもスループット／平均レスポンスともに十分実用可能な範囲と思われる。</p
+>
+<dl
+><dt
+>補足</dt
+></dl
+><ul
+><li
+>ラッシュ時の同時接続数を1～増やしていくと、CPUコア数まではスケールする。</li
+><li
+>さらに同時接続数を増やすと、スループットが伸び無い分、平均レスポンスが低下していく。</li
+></ul
+>
+<h3
+>更新性能比較</h3
+><p
+>あらかじめ10接続を作成しておき、mecab、ngram、インデックス無しのテーブルに対して、2分間、ラッシュ更新を実施。</p
+>
+<p
+>以下のSQL文を繰り返し実行。</p
+><pre
+>INSERT INTO t1 (c2) SELECT c2 FROM t1_copy WHERE c1 = キー;
+</pre
+><p
+>t1_copyはt1テーブルと同じデータを持つ別のテーブル。ここでも、日本語の文章として意味のあるものを入力データに使用する必要があったため、bestな案ではないが、この方法を採用した。&quot;キー&quot;には事前にランダムで選んでおいた数値(t1_copyに実在する数値)を使用。</p
+>
+<dl
+><dt
+>結果</dt
+></dl
+><p
+>※OSのファイルキャッシュの影響を著しく受けるため、OSのファイルキャッシュに十分乗り切った状態で計測している。</p
+><table
+><tr
+><td
+>index_type</td
+><td
+>スループット</td
+><td
+>平均レスポンス</td
+><td
+>相対値</td
+></tr
+><tr
+><td
+>mecab</td
+><td
+>246.7 行/秒</td
+><td
+>43.7 ミリ秒</td
+><td
+>0.38 倍</td
+></tr
+><tr
+><td
+>ngram</td
+><td
+>254.3 行/秒</td
+><td
+>40.5 ミリ秒</td
+><td
+>0.40 倍</td
+></tr
+><tr
+><td
+>インデックス無し</td
+><td
+>641.2 行/秒</td
+><td
+>15.6 ミリ秒</td
+><td
+>1</td
+></tr
+></table
+>
+<p
+>インデックス無しの時に比べると、mecab/ngram双方とも半分弱に低下。</p
+>
+<p
+>今回は平均行長が2300バイトもあるため、そもそもかなり重たいINSERTであった。平均行長がもっと短い場合には、絶対値はそれぞれもっと向上する。</p
+>
+<dl
+><dt
+>補足</dt
+></dl
+><ul
+><li
+>MyISAMでは更新時に1CPUしか処理が行われないため、更新処理についてはマルチコアのメリットは受けられない。</li
+></ul
+>
+<h3
+>まとめ</h3
+><p
+>MySQL+Sennaを使うと、MySQLのみの場合に比べて全文検索処理についておよそ以下のような傾向があると考えられる。</p
+><ul
+><li
+>検索性能が数千倍にあがる</li
+><li
+>更新性能が半分以下に落ちる</li
+></ul
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

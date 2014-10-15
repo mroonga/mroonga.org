@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>(旧)ビルド方法 - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>(旧)ビルド方法</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><div class="body"
+><div class="section"
+><p
+>このページはtritonn-1.0.3以前まで採用していた、Tritonn patchによるビルド方法を説明しています。tritonn-1.0.3以上をお使いの方は<a href="howtobuild.html"
+>ビルド方法</a
+>ページをご覧下さい。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="fc15e7ac6b856803a02e256da1b0a52a"
+>インストール</h2
+><div class="body"
+><div class="section"
+><h3
+>手順</h3
+><p
+>Tritonn(MySQL+Senna)を使うためには以下の手順でインストールを行います。MeCabを使用しない場合には、Sennaのインストールから開始して構いません。</p
+><ol
+><li
+>MeCabのインストール</li
+><li
+>MeCabの辞書をインストール</li
+><li
+>Sennaのインストール</li
+><li
+>MySQLにTritonnパッチを適用</li
+><li
+>MySQLのインストール</li
+></ol
+>
+<h3
+>MeCabのインストール</h3
+><p
+>Sennaでは形態素解析によるキーワード抽出を行う場合、形態素解析エンジンのMeCabを利用しています。</p
+><ul
+><li
+><a class="external" href="http://mecab.sourceforge.net/"
+>http://mecab.sourceforge.net/</a
+></li
+></ul
+><p
+>そこでまずMeCabをインストールする必要があります。</p
+>
+<p
+>MeCabのダウンロード</p
+><ul
+><li
+><a class="external" href="http://sourceforge.net/project/showfiles.php?group_id=177856&amp;package_id=204917"
+>http://sourceforge.net/project/showfiles.php?group_id=177856&amp;package_id=204917</a
+></li
+></ul
+>
+<p
+>ダウンロードしたtarballファイルを展開したら、以下のようにビルド/インストールします。</p
+><pre
+>./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+</pre
+><p
+>MeCabのデフォルトの文字コードはeucjpです。それ以外の文字コードを使用する場合には--with-charsetオプションを使用して文字コードを指定するのを忘れないようにしましょう。</p
+>
+<h3
+>MeCabの辞書をインストール</h3
+><p
+>MeCabは形態素解析を行うために日本語の辞書を必要とします。そこで、次に辞書のインストールを行います。</p
+>
+<p
+>mecab-ipa辞書のダウンロード</p
+><ul
+><li
+><a class="external" href="http://sourceforge.net/project/showfiles.php?group_id=177856&amp;package_id=205275"
+>http://sourceforge.net/project/showfiles.php?group_id=177856&amp;package_id=205275</a
+></li
+></ul
+>
+<p
+>ダウンロードしたtarballファイルを展開したら、以下のようにビルド/インストールします。</p
+><pre
+>./configure --prefix=/usr --with-charset=utf8
+make
+sudo make install
+</pre
+><p
+>デフォルトの文字コードはeucjpです。それ以外の文字コードを使用する場合には--with-charsetオプションを使用して文字コードを指定するのを忘れないようにしましょう。</p
+>
+<h3
+>Sennaのインストール</h3
+><p
+>Sennaのダウンロード</p
+><ul
+><li
+><a class="external" href="http://sourceforge.jp/projects/senna/files/"
+>http://sourceforge.jp/projects/senna/files/</a
+></li
+></ul
+>
+<p
+>Tritonnパッチは利用するMySQLとSennaのバージョンをそれぞれ想定して作成されています。例えば以下のリリースのTritonnパッチはMySQL 5.0.37とSenna 1.0.2を想定しています。</p
+><ul
+><li
+>tritonn-1.0.0.mysql-5.0.37.senna-1.0.2.tar.gz</li
+></ul
+><p
+>異なるバージョンではビルドできない、正常に動作しないなどの可能性がありますので、バージョンを合わせるようにして下さい。</p
+>
+<p
+>ダウンロードしたtarballファイルを展開したら、以下のようにビルド/インストールします。</p
+><pre
+>./configure --prefix=/usr
+make
+sudo make install
+</pre
+><p
+>Sennaでは文字コードをconfigure時に指定する必要はありません。MySQLからインデックスを作成する際に、テーブル/カラムの文字コード情報を取得してそれに対応した文字コードが使用されるようになっています。</p
+>
+<p
+>MeCabを利用しない場合には、configureのところで以下のように実行します。</p
+><pre
+>./configure --prefix=/usr --without-mecab
+</pre
+>
+<h3
+>MySQLにTritonnパッチを適用</h3
+><p
+>MySQLのソース配布版を入手します。</p
+>
+<p
+>MySQL Enterprise Serverのソース配布版はこちらです。</p
+><ul
+><li
+><a class="external" href="ftp://ftp.mysql.com/pub/mysql/src"
+>ftp://ftp.mysql.com/pub/mysql/src</a
+></li
+></ul
+>
+<p
+>MySQL Community Serverソース配布版はこちらです。</p
+><ul
+><li
+><a class="external" href="http://dev.mysql.com/downloads/"
+>http://dev.mysql.com/downloads/</a
+></li
+></ul
+>
+<p
+>ソース配布版を展開し、Tritonnパッチを当てます。</p
+><pre
+>tar zxf mysql-5.0.37.tar.gz
+cd mysql-5.0.37
+patch -p1 &lt; ../mysql-5.0.37.senna.diff
+</pre
+>
+<p
+>patchコマンドを実行した際、HunkやFailedが発生しなければ、パッチ適用成功です。</p
+>
+<h3
+>MySQLのインストール</h3
+><p
+>TritonnパッチはAutoconf、Automake、Bisonなどの入力ファイルをいじっているため、configureの前にいくつか必要な処理があります。</p
+><pre
+>libtoolize -c -f
+aclocal-1.9
+autoheader
+automake-1.9 -c -a -i
+autoconf
+touch sql/sql_yacc.yy
+</pre
+><p
+>これらを行った後、通常のソース配布版のビルドと同様、ビルドしていきます。</p
+><pre
+>./configure \
+ --prefix=/usr/local/mysql \
+ --localstatedir=/usr/local/mysql/data \
+ --libexecdir=/usr/local/mysql/bin \
+ --enable-thread-safe-client \
+ --enable-local-infile \
+ --enable-assembler \
+ --with-pic \
+ --with-fast-mutexes \
+ --disable-shared \
+ --with-zlib-dir=bundled \
+ --with-big-tables \
+ --with-yassl \
+ --with-readline \
+ --with-archive-storage-engine \
+ --with-blackhole-storage-engine \
+ --with-example-storage-engine \
+ --with-federated-storage-engine \
+ --with-innodb \
+ --with-extra-charsets=complex \
+ --with-senna --with-mecab
+
+make
+sudo make install
+</pre
+><p
+>configureオプションとして&quot;--with-senna&quot;および&quot;--with-mecab&quot;が必要です。MeCabを利用しない場合には&quot;--with-senna&quot;のみ必要となります。</p
+>
+<p
+>その他のconfigureオプションについては、mysqlbugスクリプトを参考にすると良いでしょう。バイナリ配布版のmysqlbugスクリプトの中に、バイナリ配布版がビルドされた際のconfigureオプションが記述されています。上記のconfigure例はその内容を活用したものです。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="03ff87b1276549a07fe2f88b3c288ab9"
+>起動確認</h2
+><div class="body"
+><div class="section"
+><h3
+>MeCabの確認</h3
+><p
+>MeCabを利用する場合には、まずMeCabと辞書のインストールが成功しているかどうかを確認しましょう。</p
+>
+<p
+>MeCabにはコマンドラインから実行する対話型プログラムが用意されています。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>mir@t43:~$ mecab</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>すもももももももものうち</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>すもも  名詞,一般,*,*,*,*,すもも,スモモ,スモモ</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>も      助詞,係助詞,*,*,*,*,も,モ,モ</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>もも    名詞,一般,*,*,*,*,もも,モモ,モモ</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>も      助詞,係助詞,*,*,*,*,も,モ,モ</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>もも    名詞,一般,*,*,*,*,もも,モモ,モモ</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>の      助詞,連体化,*,*,*,*,の,ノ,ノ</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>うち    名詞,非自立,副詞可能,*,*,*,うち,ウチ,ウチ</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>EOS</span
+>
+</pre
+></div
+>
+<h3
+>MySQLの確認</h3
+><p
+>mysql_install_dbを実行してMySQLのインストールを行ったら、mysqldを起動します。</p
+>
+<p
+>それからmysqlコマンドラインクライアントで接続し、testデータベースで以下のように実行します。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>Query OK, 0 rows affected (0.04 sec)</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>[test] &gt; SHOW SENNA STATUS\G</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>*************************** 1. row ***************************</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>                  Table: t1</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>               Key_name: ft</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>            Column_name: c1</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>               Encoding: utf8</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+>             Index_type: NGRAM</span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>              Normalize: ON</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>            Split_alpha: OFF</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>            Split_digit: OFF</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>           Split_symbol: OFF</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>     Initial_n_segments: 512</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>        Senna_keys_size: 0</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>   Senna_keys_file_size: 4268032</span
+>
+<span class="line even" style="background:url(.num/18.png) no-repeat;"
+>     Senna_lexicon_size: 0</span
+>
+<span class="line odd" style="background:url(.num/19.png) no-repeat;"
+>Senna_lexicon_file_size: 4268032</span
+>
+<span class="line even" style="background:url(.num/20.png) no-repeat;"
+>     Senna_inv_seg_size: 167936</span
+>
+<span class="line odd" style="background:url(.num/21.png) no-repeat;"
+>   Senna_inv_chunk_size: 135168</span
+>
+<span class="line even" style="background:url(.num/22.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/23.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/24.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;すもももももももものうち&quot;);</span
+>
+<span class="line odd" style="background:url(.num/25.png) no-repeat;"
+>Query OK, 1 row affected (0.04 sec)</span
+>
+<span class="line even" style="background:url(.num/26.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/27.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;生麦生米生卵&quot;);</span
+>
+<span class="line even" style="background:url(.num/28.png) no-repeat;"
+>Query OK, 1 row affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/29.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/30.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;東京特許許可局&quot;);</span
+>
+<span class="line odd" style="background:url(.num/31.png) no-repeat;"
+>Query OK, 1 row affected (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/32.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/33.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;特許&quot;);</span
+>
+<span class="line even" style="background:url(.num/34.png) no-repeat;"
+>+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/35.png) no-repeat;"
+>| c1                    |</span
+>
+<span class="line even" style="background:url(.num/36.png) no-repeat;"
+>+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/37.png) no-repeat;"
+>| 東京特許許可局 |</span
+>
+<span class="line even" style="background:url(.num/38.png) no-repeat;"
+>+-----------------------+</span
+>
+<span class="line odd" style="background:url(.num/39.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>以上でインストールおよび起動確認は完了です。</p
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

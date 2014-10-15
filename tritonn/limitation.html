@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>制限事項 - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>制限事項</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><div class="body"
+><div class="section"
+><p
+>このページにはtritonnを使った場合の制限事項をまとめています。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="7f3bea86e484b86b7ff29a4d4b745ee1"
+>必要となるSennaのバージョン</h2
+><div class="body"
+><div class="section"
+><p
+>Tritonnのバージョンごとに、必要となるSennaのバージョンをまとめました。</p
+><table
+><tr
+><td
+><em
+>Tritonnのバージョン</em
+></td
+><td
+><em
+>必要となるSennaのバージョン</em
+></td
+></tr
+><tr
+><td
+>Tritonn 1.0.4</td
+><td
+>Senna 1.0.5以上</td
+></tr
+><tr
+><td
+>Tritonn 1.0.3</td
+><td
+>Senna 1.0.5以上</td
+></tr
+><tr
+><td
+>Tritonn 1.0.2</td
+><td
+>Senna 1.0.4以上</td
+></tr
+><tr
+><td
+>Tritonn 1.0.1</td
+><td
+>Senna 1.0.3以上</td
+></tr
+><tr
+><td
+>Tritonn 1.0.0</td
+><td
+>Senna 1.0.2以上</td
+></tr
+></table
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="5879d37d371ea92b38d0a20f1dbd3c9b"
+>不具合関連</h2
+><div class="body"
+><div class="section"
+><h3
+>REPAIR TABLE t1 USE_FRMを実行するとUSING句情報が落ちる</h3
+><p
+>tritonn-1.0.2.mysql-5.0.37.senna-1.0.4にて。</p
+><dl
+><dt
+>制限事項</dt
+></dl
+><p
+>以下のようにテーブルを作った上で、USE_FRM付きのREPAIR TABLEを使用するとUSING句で指定した情報が落ちます。</p
+><pre
+>mysql&gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM, 1024) DEFAULT CHARSET = utf8;
+
+mysql&gt; REPAIR TABLE t1 USE_FRM;
+
+mysql&gt; SHOW SENNA STATUS\G
+</pre
+><dl
+><dt
+>回避方法</dt
+></dl
+><p
+>ALTER TABLEあるいはDROP/CREATE INDEX構文を使ってインデックスを再定義して下さい。</p
+>
+<h3
+>TRUNCATE TABLE t1を実行するとUSING句情報が落ちる</h3
+><p
+>tritonn-1.0.2.mysql-5.0.37.senna-1.0.4にて。</p
+><dl
+><dt
+>制限事項</dt
+></dl
+><p
+>以下のようにテーブルを作った上で、TRUNCATE TABLEを使用するとUSING句で指定した情報が落ちます。</p
+><pre
+>mysql&gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM, 1024) DEFAULT CHARSET = utf8;
+
+mysql&gt; TRUNCATE TABLE t1;
+
+mysql&gt; SHOW SENNA STATUS\G
+</pre
+><dl
+><dt
+>回避方法</dt
+></dl
+><p
+>ALTER TABLEあるいはDROP/CREATE INDEX構文を使ってインデックスを再定義して下さい。</p
+>
+<h3
+>CREATE TABLE t2 LIKE t1を実行するとUSING句情報が落ちる</h3
+><p
+>tritonn-1.0.2.mysql-5.0.37.senna-1.0.4にて。</p
+><dl
+><dt
+>制限事項</dt
+></dl
+><p
+>以下のようにテーブルを作った上で、CREATE TABLE LIKEを使用するとUSING句で指定した情報が落ちます。</p
+><pre
+>mysql&gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM, 1024) DEFAULT CHARSET = utf8;
+
+mysql&gt; CREATE TABLE t2 LIKE t1;
+
+mysql&gt; SHOW SENNA STATUS\G
+</pre
+><dl
+><dt
+>回避方法</dt
+></dl
+><p
+>ALTER TABLEあるいはDROP/CREATE INDEX構文を使ってインデックスを再定義して下さい。</p
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

@@ -1,0 +1,508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns:v="urn:schemas-microsoft-com:vml"
+><head
+><title
+>Tritonnとは - qwik.jp/tritonn</title
+><link href="theme/css/base.css" media="screen,tv" rel="stylesheet" type="text/css"
+/><link href="theme/css/base.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="theme/qwikborder/qwikborder.css" media="screen,tv,print" rel="stylesheet" type="text/css"
+/><link href="rss.xml" rel="alternate" title="RSS 0.91" type="application/rss+xml"
+/><script src="theme/js/base.js" type="text/javascript"
+></script
+><script src="theme/js/niftypp.js" type="text/javascript"
+></script
+><script src="theme/js/se_hilite_jp.js" type="text/javascript"
+></script
+></head
+><body onload="qwik_onload();"
+><div class="container"
+><div class="main"
+><!--adminmenu--><!--toc--><h1
+>Tritonnとは</h1
+><!--body_enter--><div class="body_main"
+><div class="day"
+><div class="body"
+><div class="section"
+><p
+>TritonnはMySQLから全文検索エンジンSennaを利用可能にするための改造を行うプロジェクトです。</p
+>
+<p
+>以前はMySQLに当てるパッチを開発するプロジェクトでしたが、現在は1歩進めてMySQLの改造版ソースを開発するプロジェクトとして活動しています。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="86002bff466eef261b27346a1c27663b"
+>なぜTritonnが必要なの？</h2
+><div class="body"
+><div class="section"
+><p
+>簡単に言うと以下の2点からTritonnプロジェクトが必要と考えています。</p
+><ul
+><li
+>MySQLには日本語データに対する全文検索を行うための十分な機能が実装されていません。</li
+><li
+>MySQLでは全文検索を行うための実装面での十分な高速化が行われていません。</li
+></ul
+>
+<h3
+>どんな機能が不足しているのか</h3
+>
+<p
+>現在、MySQLには日本語環境で使用するための十分な全文検索機能が実装されていません。</p
+>
+<p
+>例えば英語の場合、以下のように全文検索をすることができますが、、、</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; SET NAMES utf8;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>[test] &gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX idx (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES (&quot;I have a pen.&quot;), (&quot;May I Help You?&quot;), (&quot;Have a nice day.&quot;);</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>Query OK, 3 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>Records: 3  Duplicates: 0  Warnings: 0</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;nice&quot;);</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/13.png) no-repeat;"
+>| c1               |</span
+>
+<span class="line even" style="background:url(.num/14.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/15.png) no-repeat;"
+>| Have a nice day. |</span
+>
+<span class="line even" style="background:url(.num/16.png) no-repeat;"
+>+------------------+</span
+>
+<span class="line odd" style="background:url(.num/17.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>日本語の場合、結果が0件になってしまいます。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; drop table t1;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+></span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>[test] &gt; CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX idx (c1)) ENGINE = MyISAM DEFAULT CHARSET utf8;</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>Query OK, 0 rows affected (0.00 sec)</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>[test] &gt; INSERT INTO t1 VALUES(&quot;私はペンを持っています。&quot;), (&quot;いらっしゃいませ～&quot;), (&quot;良い一日を。&quot;);</span
+>
+<span class="line even" style="background:url(.num/8.png) no-repeat;"
+>Query OK, 3 rows affected (0.00 sec)</span
+>
+<span class="line odd" style="background:url(.num/9.png) no-repeat;"
+>Records: 3  Duplicates: 0  Warnings: 0</span
+>
+<span class="line even" style="background:url(.num/10.png) no-repeat;"
+></span
+>
+<span class="line odd" style="background:url(.num/11.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE MATCH(c1) AGAINST(&quot;良い&quot;);</span
+>
+<span class="line even" style="background:url(.num/12.png) no-repeat;"
+>Empty set (0.00 sec)</span
+>
+</pre
+></div
+>
+<p
+>なぜこのようなことが起きるかというと、これはMySQLのFULLTEXTインデックスのキーワード抽出を行うパーサが「半角スペースで区切られているものをキーワードとして認識する」という実装になっているためです。欧米の言語は通常、単語と単語の間は半角スペースで区切られていますので十分機能しますが、日本語の場合はそうではないためキーワードの抽出を行えません。</p
+>
+<p
+>例えば、「私はペンを持っています。」を例にすると、あらかじめ「私 は ペン を 持って いま す 。」のように半角スペースで区切っておけば(分かち書きと言います）現在のMySQLでも日本語全文検索を行うことができます。しかしMySQLに入力するデータをあらかじめ分かち書きするのは、その分処理が増えるのでできれば避けたいですし、オリジナルのデータと別に分かち書きしたデータを用意しなければならないのは効率が良くありません。</p
+>
+<p
+>こうした問題があることから、FULLTEXTインデックスを使った全文検索ではなく、LIKE演算子を使った部分一致検索を用いるケースもあります。</p
+><div class="code"
+><pre
+><span class="line odd" style="background:url(.num/1.png) no-repeat;"
+>[test] &gt; SELECT * FROM t1 WHERE c1 LIKE &quot;%良い%&quot;;</span
+>
+<span class="line even" style="background:url(.num/2.png) no-repeat;"
+>+--------------------+</span
+>
+<span class="line odd" style="background:url(.num/3.png) no-repeat;"
+>| c1                 |</span
+>
+<span class="line even" style="background:url(.num/4.png) no-repeat;"
+>+--------------------+</span
+>
+<span class="line odd" style="background:url(.num/5.png) no-repeat;"
+>| 良い一日を。       |</span
+>
+<span class="line even" style="background:url(.num/6.png) no-repeat;"
+>+--------------------+</span
+>
+<span class="line odd" style="background:url(.num/7.png) no-repeat;"
+>1 row in set (0.00 sec)</span
+>
+</pre
+></div
+><p
+>このようにLIKE演算子への引数の先頭と末尾にワイルドカード'%'を指定することで、文中のどの位置に指定のキーワードが含まれていたとしても、捜し出すことができます。</p
+>
+<p
+>しかしながら、このLIKE演算子による部分一致検索には、別の問題があります。部分一致検索を行う場合、インデックスを一切使用することができなくなってしまうため、テーブルのフルスキャンが発生します。これはテーブルサイズが非常に小さい時には問題にならないかもしれませんが、テーブルサイズの増大と共に、あっというまに性能問題となって表に出てきます。</p
+>
+<p
+>従って、MySQLで日本語環境で全文検索を行うためには、何か新しい手段が必要となっていました。Tritonn（MySQL+Senna）はまさにこれら問題を解決するためのものです。</p
+>
+<h3
+>どんな実装上の高速化が必要なのか？</h3
+><p
+>MySQLの全文検索用インデックス(FULLTEXTインデックス)は「転置インデックス」という方式に基づいた実装が行われています。転置インデックスとは、簡単に言うと「任意のキーワードを含むレコードの識別子をあらかじめ記録しておく形式のインデックス」というものです。</p
+>
+<p
+>例えば&quot;apple&quot;というキーワードがあったとします。この&quot;apple&quot;を含むレコードを検索する時、もし転置インデックスがなければ、テーブルをフルスキャンして、1レコードずつ&quot;apple&quot;が含まれているかどうかをチェックする必要があります。ここで転置インデックスがある場合、転置インデックス内に&quot;apple&quot;が登録されているかどうかをまず走査し、見つかった場合にはそこに既に&quot;apple&quot;を含むレコードの識別子が記録されていますので、テーブルをスキャンすること無しに、該当のレコードを特定できます。</p
+>
+<p
+>しかしながら、多くのケースではこれだけでは十分ではありません。</p
+>
+<p
+>上記の例のように「りんご」を検索キーワードとする場合はおそらく単純な転置インデックスにより高速に処理することができますが、例えば「デジタル式腕時計」という検索キーワードで検索する場合を考えてみましょう。</p
+>
+<p
+>「りんご」と同様に「デジタル式腕時計」というキーで転置インデックスに登録していれば問題ありませんが、「デジタル式腕時計」は以下の4つの単語に分解されて転置インデックスに登録されることが想定されます。</p
+><ul
+><li
+>デジタル</li
+><li
+>式</li
+><li
+>腕</li
+><li
+>時計</li
+></ul
+>
+<p
+>なぜなら、このように分解しておかないと「デジタル」で検索されたとき、あるいは「時計」で検索されたときに対応できないからです。</p
+>
+<p
+>単純な転置インデックスの場合、「デジタル式腕時計」で検索された時、まず「デジタル」を含むレコードを探します。これは転置インデックスを走査することで効率よく見つけることができます。しかしここで見つかったレコードは例えば「デジタルカメラ」を含むレコードがヒットしている可能性もあるわけです。そこで、一度見つけたレコード群の中から、さらに「式」「腕」「時計」を順番通りに含んでいるかどうかをチェックしていくことになります。</p
+>
+<p
+>この時、最初に転置インデックスを使って見つけたレコード群の数が少なければさほど大きな処理とはなりませんが、多数のレコードがヒットするようなメジャーな単語で検索する場合にはこの部分の処理時間が問題となります。またこれはレコード総数が増えるほど、問題が顕著になっていきますので、大容量データに対する全文検索としては単純な転置インデックスでは弱いということになります。</p
+>
+<p
+>この問題を回避するため、Sennaでは「完全転置インデックス」という方式でインデックスを実装しています。完全転置インデックスとは、インデックス内に各キーワードを含むレコードの識別子だけでなく、そのレコード内でのそのキーワードの出現位置についても記録する方式のインデックスです。</p
+>
+<p
+>先ほどの「デジタル式腕時計」の例でいうと、完全転置インデックスの場合は「デジタル」「式」「腕」「時計」それぞれのインデックスにレコード識別子と位置情報が記録されていますので、インデックスを走査するだけで「デジタル式腕時計」を含むレコードを特定することができます。これによりテーブルからのレコード読み込み数を最小化することができ、大容量データでの全文検索に強い構造になっています。</p
+>
+<p
+>この反面、完全転置インデックスは単純な転置インデックスに比べるとインデックスが保持する情報が増えるため更新のオーバーヘッドの増加とインデックスファイルサイズの増加が起きるデメリットがあります。しかしながら、大容量データに対する全文検索を考慮すると、完全転置インデックスの方が総合的に見てメリットが大きいと見ています。</p
+>
+
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="a38bae5e65743d1eabe5b44683e3639a"
+>Tritonnを使うとMySQLはどう変わるの？</h2
+><div class="body"
+><div class="section"
+><p
+>Tritonnでは、MySQLのFULLTEXTインデックスの処理にMyISAMのビルトインのFULLTEXTではなく、Sennaを使うようにソースコードを改変しています。</p
+>
+<img alt="./about.files/mysql-senna-arch.gif" src="./about.files/mysql-senna-arch.gif"
+/>
+<p
+>またSennaを管理するためのSQLコマンドや変数などを追加するために、MySQLの上位層のソースファイルに対しても改変を行っていますが、本質的な部分においては基本的にはMyISAMに対する改造という内容になっています。</p
+>
+<p
+>従いまして、MySQLにこのパッチを適用した場合、変わるのは基本的にはMyISAMのFULLTEXTインデックスの振る舞いのみで、後はこれまでと同様となっています。またこの図をご覧頂くとお分かりになるかと思いますが、MySQLへアクセスするアプリケーションから見ると、MySQLの上位層がSennaを隠蔽しているため、アプリケーション側で特にSennaを意識する必要はありません。</p
+>
+<p
+>従って、これまでとほぼ同じ感覚でMySQLを利用することができます。</p
+>
+</div
+><!--section--></div
+><!--body--></div
+><!--day--><div class="day"
+><h2 id="df583f809cd858f4c4129ee250f6bcb2"
+>連絡先</h2
+><div class="body"
+><div class="section"
+><p
+>元々Sennaを使っている人の多くはMySQL+Sennaを使っている人だと思いましたので、特にTritonn専用のMLは設けていません。何かありましたら、こちら（Senna本家のML）へお越し下さい。</p
+><ul
+><li
+>senna-dev@sourceforge.jp</li
+></ul
+>
+
+<div class="ref"
+><a href="tritonn.files/mysql-senna-arch.gif"
+><img alt="mysql-senna-arch.gif" class="icon" src="theme/i/broken.gif"
+/><br
+/>mysql-senna-arch.gif</a
+></div
+></div
+><!--section--></div
+><!--body--></div
+><!--day--></div
+><!--body_main--><div class="body_leave" id="body_leave"
+><div class="day"
+><div class="comment"
+><div class="caption"
+><div class="page_attribute"
+>
+
+
+<span class="attribute"
+>生成時間: <em
+>__qwik_page_generate_time__秒</em
+></span
+>
+<span class="files_site_total"
+>添付ファイル合計: 404KB</span
+></div
+></div
+></div
+></div
+></div
+><!--body_leave--></div
+><!--main--><div class="sidebar"
+><h2
+>コンテンツ</h2
+><ul
+><li
+><a href="FrontPage.html"
+>最新ニュース</a
+></li
+><li
+><a href="about.html"
+>Tritonnとは</a
+></li
+><li
+><a href="license.html"
+>ライセンス</a
+></li
+><li
+><a href="support.html"
+>サポート</a
+></li
+><li
+><a href="download.html"
+>ダウンロード</a
+></li
+><li
+><a href="userguide.html"
+>ユーザガイド</a
+></li
+><li
+><a href="rortutorial.html"
+>RoRチュートリアル</a
+></li
+><li
+><a href="limitation.html"
+>制限事項</a
+></li
+><li
+><a href="ChangeLog.html"
+>ChangeLog</a
+></li
+><li
+><a href="perftest.html"
+>ベンチマーク結果</a
+></li
+><li
+><a href="howtobuild.html"
+>ソースビルド方法</a
+></li
+><li
+><a href="presentation.html"
+>プレゼン資料</a
+></li
+></ul
+>
+<h2
+>関係者リンク</h2
+><ul
+><li
+><a class="external" href="http://qwik.jp/senna/FrontPageJ.html"
+>Senna公式ページ</a
+></li
+><li
+><a class="external" href="http://d.hatena.ne.jp/mir"
+>開発者mirのブログ</a
+></li
+></ul
+>
+<h2
+>スポンサー</h2
+><ul
+><li
+><a class="external" href="http://www.scs.co.jp/mysql/senna.html"
+>住商情報システム</a
+></li
+></ul
+>
+<h2
+>検索</h2
+><form action=".search"
+><input name="q"
+/><input type="submit" value="検索"
+/></form
+>
+
+
+
+<h2
+>最新の更新</h2
+><div class="recent"
+><ul
+><li
+><a href="about_en.html" title="2010-08-19 19:04:45"
+>What is Tritonn?</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="FrontPage.html" title="2010-08-18 20:56:46"
+>Tritonnプロジェクト</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="userguide.html" title="2010-03-10 09:47:58"
+>ユーザガイド</a
+> <span class="ago"
+>4年前</span
+></li
+><li
+><a href="download.html" title="2009-03-23 17:40:29"
+>ダウンロード</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="ChangeLog.html" title="2009-03-23 17:39:02"
+>ChangeLog</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="support.html" title="2009-03-23 16:50:07"
+>Tritonnのサポート</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="rortutorial.html" title="2009-03-23 16:48:16"
+>Ruby on Rails + Tritonnによるらくらく全文検索+KWIC表示のチュートリアル</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="presentation.html" title="2009-03-23 16:34:05"
+>プレゼンテーション資料</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="perftest.html" title="2009-03-23 16:33:35"
+>Tritonn性能検証</a
+> <span class="ago"
+>5年前</span
+></li
+><li
+><a href="functest.html" title="2009-03-23 16:33:16"
+>テスト結果</a
+> <span class="ago"
+>5年前</span
+></li
+></ul
+><p class="recent"
+><a href="RecentList.html"
+><em
+>もっと前の情報</em
+></a
+></p
+></div
+>
+<h2
+>サイト機能</h2
+><ul
+><li
+><a href="TitleList.html"
+>Title List</a
+></li
+><li
+><a href="RecentList.html"
+>Recent List</a
+></li
+></ul
+><a class="rss-button" href="rss.xml"
+><span
+>RSS</span
+></a
+><a class="rss-button" href="atom.xml"
+><span
+>ATOM</span
+></a
+>
+<h2
+>なかのひと</h2
+><a href="http://nakanohito.jp/"
+><img border="0" src="http://nakanohito.jp/an/?u=121531&amp;h=492494&amp;w=48"
+/></a
+>
+</div
+><!--sidebar--><div class="footer"
+><span title="__qwik_page_generate_time__"
+>powered by <a href="http://qwik.jp/"
+>qwikWeb</a
+></span
+></div
+><!--footer--></div
+><!--container--></body
+></html
+>

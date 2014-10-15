@@ -1,0 +1,54 @@
+* 制限事項
+このページにはtritonnを使った場合の制限事項をまとめています。
+
+*必要となるSennaのバージョン
+Tritonnのバージョンごとに、必要となるSennaのバージョンをまとめました。
+,''Tritonnのバージョン'',''必要となるSennaのバージョン''
+,Tritonn 1.0.4,Senna 1.0.5以上
+,Tritonn 1.0.3,Senna 1.0.5以上
+,Tritonn 1.0.2,Senna 1.0.4以上
+,Tritonn 1.0.1,Senna 1.0.3以上
+,Tritonn 1.0.0,Senna 1.0.2以上
+
+*不具合関連
+**REPAIR TABLE t1 USE_FRMを実行するとUSING句情報が落ちる
+tritonn-1.0.2.mysql-5.0.37.senna-1.0.4にて。
+:制限事項
+以下のようにテーブルを作った上で、USE_FRM付きのREPAIR TABLEを使用するとUSING句で指定した情報が落ちます。
+{{{
+mysql> CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM, 1024) DEFAULT CHARSET = utf8;
+
+mysql> REPAIR TABLE t1 USE_FRM;
+
+mysql> SHOW SENNA STATUS\G
+}}}
+:回避方法
+ALTER TABLEあるいはDROP/CREATE INDEX構文を使ってインデックスを再定義して下さい。
+
+**TRUNCATE TABLE t1を実行するとUSING句情報が落ちる
+tritonn-1.0.2.mysql-5.0.37.senna-1.0.4にて。
+:制限事項
+以下のようにテーブルを作った上で、TRUNCATE TABLEを使用するとUSING句で指定した情報が落ちます。
+{{{
+mysql> CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM, 1024) DEFAULT CHARSET = utf8;
+
+mysql> TRUNCATE TABLE t1;
+
+mysql> SHOW SENNA STATUS\G
+}}}
+:回避方法
+ALTER TABLEあるいはDROP/CREATE INDEX構文を使ってインデックスを再定義して下さい。
+
+**CREATE TABLE t2 LIKE t1を実行するとUSING句情報が落ちる
+tritonn-1.0.2.mysql-5.0.37.senna-1.0.4にて。
+:制限事項
+以下のようにテーブルを作った上で、CREATE TABLE LIKEを使用するとUSING句で指定した情報が落ちます。
+{{{
+mysql> CREATE TABLE t1 (c1 TEXT, FULLTEXT INDEX ft USING NGRAM, 1024) DEFAULT CHARSET = utf8;
+
+mysql> CREATE TABLE t2 LIKE t1;
+
+mysql> SHOW SENNA STATUS\G
+}}}
+:回避方法
+ALTER TABLEあるいはDROP/CREATE INDEX構文を使ってインデックスを再定義して下さい。
