@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. ストレージモード &mdash; Mroonga v4.06 documentation</title>
+    <title>4.3. ストレージモード &mdash; Mroonga v4.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.06',
+        VERSION:     '4.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.06 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.07 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4.4. ラッパーモード" href="wrapper.html" />
     <link rel="prev" title="4.2. モード" href="mode.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
@@ -245,8 +245,189 @@ Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
 </div>
+<div class="section" id="how-to-specify-the-normalizer">
+<h2>4.3.4. ノーマライザーの指定方法<a class="headerlink" href="#how-to-specify-the-normalizer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mroongaは、文書のエンコーディング(照合順序)に応じたノーマライザーを使用します。これはテキストをトークナイズするときとテーブルのキーを保存するときに使われます。</p>
+<p><tt class="docutils literal"><span class="pre">utf8_general_ci</span></tt> または <tt class="docutils literal"><span class="pre">utf8mb4_general_ci</span></tt> の場合、<tt class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></tt> ノーマライザーが使用されます。</p>
+<p><tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> または <tt class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></tt> の場合、<tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> ノーマライザーが使用されます。</p>
+<p><tt class="docutils literal"><span class="pre">utf8_bin</span></tt> の場合、ノーマライザーは使用されません。</p>
+<p>以下は、 <tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> の照合順序を指定して <tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> ノーマライザーを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; CREATE TABLE diaries (
+    -&gt;   day DATE PRIMARY KEY,
+    -&gt;   content VARCHAR(64) NOT NULL,
+    -&gt;   FULLTEXT INDEX (content)
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Mroongaは、Groongaのノーマライザーを指定する以下のような構文を持っています。:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+</pre></div>
+</div>
+<p>Groongaのノーマライザーの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/normalizers.html">Groongaのドキュメント</a> を参照してください。</p>
+<p>以下は、<tt class="docutils literal"><span class="pre">NormalizerAuto</span></tt> のノーマライザーを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; CREATE TABLE diaries (
+    -&gt;   day DATE PRIMARY KEY,
+    -&gt;   content VARCHAR(64) NOT NULL,
+    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+Query OK, 0 rows affected (0.19 sec)
+
+mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
+Empty set (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-specify-the-token-filters">
+<h2>4.3.5. トークンフィルターの指定方法<a class="headerlink" href="#how-to-specify-the-token-filters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mroongaは、Groongaのトークンフィルターを指定する以下のような構文を持っています。:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
+</pre></div>
+</div>
+<p>以下は、<tt class="docutils literal"><span class="pre">TokenFilterStem</span></tt> のトークンフィルターを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT mroonga_command(&#39;register token_filters/stem&#39;);
++------------------------------------------------+
+| mroonga_command(&#39;register token_filters/stem&#39;) |
++------------------------------------------------+
+| true                                           |
++------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; CREATE TABLE memos (
+    -&gt; id INT NOT NULL PRIMARY KEY,
+    -&gt; content TEXT NOT NULL,
+    -&gt; FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql&gt; INSERT INTO memos VALUES (1, &quot;I develop Groonga&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (2, &quot;I&#39;m developing Groonga&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (3, &quot;I developed Groonga&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM memos
+    -&gt; WHERE MATCH (content) AGAINST (&quot;+develops&quot; IN BOOLEAN MODE);
++----+------------------------+
+| id | content                |
++----+------------------------+
+|  1 | I develop Groonga      |
+|  2 | I&#39;m developing Groonga |
+|  3 | I developed Groonga    |
++----+------------------------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>Groongaのトークンフィルターの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/token_filters.html">Groongaのドキュメント</a> を参照してください。</p>
+<p>以下は、<tt class="docutils literal"><span class="pre">TokenFilterStopWord</span></tt> のトークンフィルターを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT mroonga_command(&quot;register token_filters/stop_word&quot;);
++-----------------------------------------------------+
+| mroonga_command(&quot;register token_filters/stop_word&quot;) |
++-----------------------------------------------------+
+| true                                                |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; CREATE TABLE terms (
+    -&gt;   term VARCHAR(64) NOT NULL PRIMARY KEY,
+    -&gt;   is_stop_word BOOL NOT NULL
+    -&gt; ) Engine=Mroonga COMMENT=&#39;default_tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39; DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql&gt; CREATE TABLE memos (
+    -&gt;   id INT NOT NULL PRIMARY KEY,
+    -&gt;   content TEXT NOT NULL,
+    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;table &quot;terms&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.17 sec)
+
+mysql&gt;
+mysql&gt; INSERT INTO terms VALUES (&quot;and&quot;, true);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (1, &quot;Hello&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (2, &quot;Hello and Good-bye&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (3, &quot;Good-bye&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM memos
+    -&gt;   WHERE MATCH (content) AGAINST (&quot;+\&quot;Hello and\&quot;&quot; IN BOOLEAN MODE);
++----+--------------------+
+| id | content            |
++----+--------------------+
+|  1 | Hello              |
+|  2 | Hello and Good-bye |
++----+--------------------+
+2 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>これは、全文検索用の語彙表テーブルを指定する方法を使用しています。</p>
+</div>
+<div class="section" id="how-to-specify-groonga-s-column-flags">
+<h2>4.3.6. Groongaのカラムフラグの指定方法<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mroongaは、Groongaのカラムフラグを指定する以下のような構文を持っています。:</p>
+<div class="highlight-none"><div class="highlight"><pre>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+</pre></div>
+</div>
+<p>以下は、<tt class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></tt> フラグを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE entries (
+    -&gt;   id INT UNSIGNED PRIMARY KEY,
+    -&gt;   content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.12 sec)
+</pre></div>
+</div>
+<p>Groongaのカラムフラグの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/column_create.html#parameters">Groongaのドキュメント</a> を参照してください。</p>
+</div>
 <div class="section" id="how-to-use-geolocation-search">
-<h2>4.3.4. 位置情報検索の利用方法<a class="headerlink" href="#how-to-use-geolocation-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.7. 位置情報検索の利用方法<a class="headerlink" href="#how-to-use-geolocation-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ストレージモードでは全文検索だけではなく位置情報検索も高速に実行できます。ただし、MyISAMとは異なりデータとして格納できるのはPOINT型のみです。LINEなどの他のデータ型は保存できません。また、インデックスを用いた高速な検索に対応しているのはMBRContainsだけです。MBRDisjointなどには対応していません。</p>
 <p>位置情報検索を利用する場合のテーブル定義はMyISAMと同様にPOINT型のカラムを定義し、そのカラムに対してSPATIAL INDEXを指定します。:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE shops (
@@ -282,7 +463,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>位置情報で検索できていますね！</p>
 </div>
 <div class="section" id="how-to-get-the-record-id">
-<h2>4.3.5. レコードIDの取得方法<a class="headerlink" href="#how-to-get-the-record-id" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.8. レコードIDの取得方法<a class="headerlink" href="#how-to-get-the-record-id" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Groongaではテーブルにレコードを追加した際にレコードを一意に識別するための番号が割当てられます。</p>
 <p>Mroongaではアプリケーションの開発を容易にするため、このレコードIDをSQLで取得できるようになっています。</p>
 <p>レコードIDを取得するためには、テーブル定義時に <tt class="docutils literal"><span class="pre">_id</span></tt> という名前のカラムを作成して下さい。</p>
@@ -348,13 +529,13 @@ Rows matched: 1  Changed: 1  Warnings: 0
 </div>
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>4.3.6. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.9. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as 'mroonga_snippet' UDF.</p>
 <p>詳細は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> を参照してください。</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
-<h2>4.3.7. Groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.10. Groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ストレージモードではMroongaはすべてのデータをGroongaのデータベースに保存します。Mroongaを使うことでSQLでGroongaのデータベースにアクセスできるようになります。SQLはとても強力ですが、ファセット検索などのようないくつかの操作が得意ではありません。</p>
 <p>最近ではファセット検索は一般的なものになりました。amazon.comやebay.comのように多くのオンラインショッピングサイトがファセット検索をサポートしています。ファセット検索はユーザが検索結果を絞り込む前に絞り込み検索をし、その絞り込み検索の結果を表示します。ユーザは絞りこまれた結果から自分が探しているものを選ぶだけです。ファセット検索を使うとユーザは以下のようなメリットがあります。</p>
 <ul class="simple">
@@ -429,7 +610,7 @@ INSERT INTO diaries (content, date, year, `year_month`, tag)
 <p>詳細は <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">Groongaのselectコマンドのドキュメント</a> を確認してください。</p>
 </div>
 <div class="section" id="logging">
-<h2>4.3.8. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.11. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
@@ -483,7 +664,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="choosing-appropriate-columns">
-<h2>4.3.9. カラムの刈り込み<a class="headerlink" href="#choosing-appropriate-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.12. カラムの刈り込み<a class="headerlink" href="#choosing-appropriate-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Groongaでは各カラムごとにファイルを分けてデータを格納する「カラムストア方式」が採用されており、Mroongaではこの特性を活かすためにテーブルアクセス時に必要なカラムに対してのみアクセスを行う実装を行っています。</p>
 <p>この高速化の仕組みはMroonga内部で自動的に行われるため、特に設定などを行う必要はありません。</p>
 <p>例えば以下のようにカラムが20個定義されているテーブルが存在するものと仮定します。</p>
@@ -505,7 +686,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
 </div>
 <div class="section" id="optimisation-for-counting-rows">
-<h2>4.3.10. 行カウント高速化<a class="headerlink" href="#optimisation-for-counting-rows" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.13. 行カウント高速化<a class="headerlink" href="#optimisation-for-counting-rows" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>COUNT(*)などの行カウントを行う場合と通常のSELECTによるデータ参照を行う場合に対して、従来よりMySQLではストレージエンジンの呼び出しを行う部分(=ストレージエンジンインタフェース)における区別が存在していないため、行数をカウントするだけで良いような場合にもレコードアクセス（SELECTの結果には含まれないデータへのアクセス）が行われる問題があります。</p>
 <p>Mroongaの前身であるTritonn(MySQL+Senna)ではこの問題に対して&quot;2indパッチ&quot;という不要なレコードアクセスを省略する仕組みを独自に実装してこの性能問題を回避していました。</p>
 <p>これに引き続き、Mroongaでも行カウントを高速化するための仕組みを実装しています。</p>
@@ -526,7 +707,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>備考：この高速化機能はインデックスを用いて実装されています。現在のところインデックスアクセスのみでレコードが特定できるパタンでのみ有効に機能します。</p>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>4.3.11. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.14. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
 <p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
 <p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
@@ -587,14 +768,17 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-full-text-search">4.3.1. 全文検索の利用方法</a></li>
 <li><a class="reference internal" href="#how-to-get-search-score">4.3.2. 検索スコアの取得方法</a></li>
 <li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">4.3.3. 全文検索用パーサの変更</a></li>
-<li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.4. 位置情報検索の利用方法</a></li>
-<li><a class="reference internal" href="#how-to-get-the-record-id">4.3.5. レコードIDの取得方法</a></li>
-<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.6. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.7. Groongaコマンドの実行方法</a></li>
-<li><a class="reference internal" href="#logging">4.3.8. ログ出力</a></li>
-<li><a class="reference internal" href="#choosing-appropriate-columns">4.3.9. カラムの刈り込み</a></li>
-<li><a class="reference internal" href="#optimisation-for-counting-rows">4.3.10. 行カウント高速化</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.3.11. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-normalizer">4.3.4. ノーマライザーの指定方法</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-token-filters">4.3.5. トークンフィルターの指定方法</a></li>
+<li><a class="reference internal" href="#how-to-specify-groonga-s-column-flags">4.3.6. Groongaのカラムフラグの指定方法</a></li>
+<li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.7. 位置情報検索の利用方法</a></li>
+<li><a class="reference internal" href="#how-to-get-the-record-id">4.3.8. レコードIDの取得方法</a></li>
+<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.10. Groongaコマンドの実行方法</a></li>
+<li><a class="reference internal" href="#logging">4.3.11. ログ出力</a></li>
+<li><a class="reference internal" href="#choosing-appropriate-columns">4.3.12. カラムの刈り込み</a></li>
+<li><a class="reference internal" href="#optimisation-for-counting-rows">4.3.13. 行カウント高速化</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.3.14. 全文検索時の ORDER BY LIMIT 高速化</a></li>
 </ul>
 </li>
 </ul>
@@ -639,7 +823,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>

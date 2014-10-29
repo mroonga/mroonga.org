@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. Storage mode &mdash; Mroonga v4.06 documentation</title>
+    <title>4.3. Storage mode &mdash; Mroonga v4.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.06',
+        VERSION:     '4.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.06 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.07 documentation" href="../index.html" />
     <link rel="up" title="4. Tutorial" href="../tutorial.html" />
     <link rel="next" title="4.4. Wrapper mode" href="wrapper.html" />
     <link rel="prev" title="4.2. Mode" href="mode.html" /> 
@@ -75,7 +75,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
@@ -240,8 +240,192 @@ Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
 </div>
+<div class="section" id="how-to-specify-the-normalizer">
+<h2>4.3.4. How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Permalink to this headline">¶</a></h2>
+<p>Mroonga uses normalizer corresponding to the encoding of document.
+It is used when tokenizing text and storing table key.</p>
+<p>It is used <tt class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></tt> normalizer when the encoding is
+<tt class="docutils literal"><span class="pre">utf8_general_ci</span></tt> or <tt class="docutils literal"><span class="pre">utf8mb4_general_ci</span></tt>.</p>
+<p>It is used <tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> normalizer when the encoding is
+<tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> or <tt class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></tt>.</p>
+<p>It isn't used normalizer when the encoding is <tt class="docutils literal"><span class="pre">utf8_bin</span></tt>.</p>
+<p>Here is an example that uses <tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> normalizer by specifying <tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt>.:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; CREATE TABLE diaries (
+    -&gt;   day DATE PRIMARY KEY,
+    -&gt;   content VARCHAR(64) NOT NULL,
+    -&gt;   FULLTEXT INDEX (content)
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Mroonga has the following syntax to specify Groonga's normalizer:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+</pre></div>
+</div>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga's document</a> document about Groonga's normalizer.</p>
+<p>Here is an example that uses <tt class="docutils literal"><span class="pre">NormalizerAuto</span></tt> normalizer:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; CREATE TABLE diaries (
+    -&gt;   day DATE PRIMARY KEY,
+    -&gt;   content VARCHAR(64) NOT NULL,
+    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+Query OK, 0 rows affected (0.19 sec)
+
+mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
+Empty set (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-specify-the-token-filters">
+<h2>4.3.5. How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Permalink to this headline">¶</a></h2>
+<p>Mroonga has the following syntax to specify Groonga's token filters.:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
+</pre></div>
+</div>
+<p>Here is an example that uses <tt class="docutils literal"><span class="pre">TokenFilterStem</span></tt> token filter.:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT mroonga_command(&#39;register token_filters/stem&#39;);
++------------------------------------------------+
+| mroonga_command(&#39;register token_filters/stem&#39;) |
++------------------------------------------------+
+| true                                           |
++------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; CREATE TABLE memos (
+    -&gt; id INT NOT NULL PRIMARY KEY,
+    -&gt; content TEXT NOT NULL,
+    -&gt; FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql&gt; INSERT INTO memos VALUES (1, &quot;I develop Groonga&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (2, &quot;I&#39;m developing Groonga&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (3, &quot;I developed Groonga&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM memos
+    -&gt; WHERE MATCH (content) AGAINST (&quot;+develops&quot; IN BOOLEAN MODE);
++----+------------------------+
+| id | content                |
++----+------------------------+
+|  1 | I develop Groonga      |
+|  2 | I&#39;m developing Groonga |
+|  3 | I developed Groonga    |
++----+------------------------+
+3 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/token_filters.html">Groonga's document</a> document about Groonga's token filter.</p>
+<p>Here is an example that uses <tt class="docutils literal"><span class="pre">TokenFilterStopWord</span></tt> token filter.:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT mroonga_command(&quot;register token_filters/stop_word&quot;);
++-----------------------------------------------------+
+| mroonga_command(&quot;register token_filters/stop_word&quot;) |
++-----------------------------------------------------+
+| true                                                |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; CREATE TABLE terms (
+    -&gt;   term VARCHAR(64) NOT NULL PRIMARY KEY,
+    -&gt;   is_stop_word BOOL NOT NULL
+    -&gt; ) Engine=Mroonga COMMENT=&#39;default_tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39; DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql&gt; CREATE TABLE memos (
+    -&gt;   id INT NOT NULL PRIMARY KEY,
+    -&gt;   content TEXT NOT NULL,
+    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;table &quot;terms&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.17 sec)
+
+mysql&gt;
+mysql&gt; INSERT INTO terms VALUES (&quot;and&quot;, true);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (1, &quot;Hello&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (2, &quot;Hello and Good-bye&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; INSERT INTO memos VALUES (3, &quot;Good-bye&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM memos
+    -&gt;   WHERE MATCH (content) AGAINST (&quot;+\&quot;Hello and\&quot;&quot; IN BOOLEAN MODE);
++----+--------------------+
+| id | content            |
++----+--------------------+
+|  1 | Hello              |
+|  2 | Hello and Good-bye |
++----+--------------------+
+2 rows in set (0.01 sec)
+</pre></div>
+</div>
+<p>It's used that specifying the lexicon table for fulltext search.</p>
+</div>
+<div class="section" id="how-to-specify-groonga-s-column-flags">
+<h2>4.3.6. How to specify Groonga's column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Permalink to this headline">¶</a></h2>
+<p>Mroonga has the following syntax to specify Groonga's column flags:</p>
+<div class="highlight-none"><div class="highlight"><pre>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+</pre></div>
+</div>
+<p>Here is an example that uses <tt class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></tt> flag.:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE entries (
+    -&gt;   id INT UNSIGNED PRIMARY KEY,
+    -&gt;   content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.12 sec)
+</pre></div>
+</div>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/column_create.html#parameters">Groonga's document</a> document about Groonga's column flags.</p>
+</div>
 <div class="section" id="how-to-use-geolocation-search">
-<h2>4.3.4. How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.7. How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Permalink to this headline">¶</a></h2>
 <p>In storage mode, you can use fast geolocation search in addition to full text search. But unlike MyISAM, you can only store POINT type data. You cannot store other types data like LINE. And fast search using index only supports MBRContains. It does not support MBRDisjoint.</p>
 <p>For the table definition for geolocation search, you need to define a POINT type column like in MyISAM and define SPATIAL INDEX for it.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE shops (
@@ -277,7 +461,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>Here you can search by geolocation!</p>
 </div>
 <div class="section" id="how-to-get-the-record-id">
-<h2>4.3.5. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.8. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
 <p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
 <p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
 <p>To get the record ID, you need to create a column named <tt class="docutils literal"><span class="pre">_id</span></tt> when you create a table.</p>
@@ -344,13 +528,13 @@ Rows matched: 1  Changed: 1  Warnings: 0
 </div>
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>4.3.6. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.9. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as 'mroonga_snippet' UDF.</p>
 <p>See <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> about details.</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
-<h2>4.3.7. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.10. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
 <p>In storage mode, Mroonga stores all your data into Groonga
 database. You can access Groonga database by SQL with Mroonga. SQL is
 very powerful but it is not good for some operations such as faceted
@@ -448,7 +632,7 @@ keys (result JSON is pretty printted):</p>
 details.</p>
 </div>
 <div class="section" id="logging">
-<h2>4.3.8. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.11. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
 <p>Here is the example of the log.</p>
@@ -500,7 +684,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="choosing-appropriate-columns">
-<h2>4.3.9. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.12. Choosing appropriate columns<a class="headerlink" href="#choosing-appropriate-columns" title="Permalink to this headline">¶</a></h2>
 <p>Groonga uses one file per column to store data, and Mroonga accesses needed columns only when accessing a table to utilise this characteristic.</p>
 <p>This optimisation is done automatically in Mroonga internal, you don't need any specific configuration.</p>
 <p>Imagine that we have a table with 20 columns like below.</p>
@@ -522,7 +706,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>In this case above, only columns c1, c2, c11 and c12 are accessed, and we can process the SQL rapidly.</p>
 </div>
 <div class="section" id="optimisation-for-counting-rows">
-<h2>4.3.10. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.13. Optimisation for counting rows<a class="headerlink" href="#optimisation-for-counting-rows" title="Permalink to this headline">¶</a></h2>
 <p>In MySQL's storage engine interface, there is no difference between counting rows like COUNT(*) and normal data retrieving by SELECT. So access to data that is not included in SELECT result can happen even if you just want to count rows.</p>
 <p>Tritonn (MySQL + Senna), that is Mroonga's predecessor, introduced &quot;2ind patch&quot; to skip needless access to data and solved this performance issue.</p>
 <p>Mroonga also has the optimisation for counting rows.</p>
@@ -543,7 +727,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>Note : This optimisation is implemented by using the index. It only works in the case where we records can be specified only by the index.</p>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>4.3.11. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.14. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>Generally speaking, MySQL can process &quot;ORDER BY&quot; query with almost no cost if we can get records by index, and can process &quot;LIMIT&quot; with low cost by limiting the range of processing data even if the number of query result is very big.</p>
 <p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
 <p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
@@ -598,14 +782,17 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-full-text-search">4.3.1. How to use full text search</a></li>
 <li><a class="reference internal" href="#how-to-get-search-score">4.3.2. How to get search score</a></li>
 <li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">4.3.3. How to specify the parser for full text search</a></li>
-<li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.4. How to use geolocation search</a></li>
-<li><a class="reference internal" href="#how-to-get-the-record-id">4.3.5. How to get the record ID</a></li>
-<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.6. How to get snippet (Keyword in context)</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.7. How to run Groonga command</a></li>
-<li><a class="reference internal" href="#logging">4.3.8. Logging</a></li>
-<li><a class="reference internal" href="#choosing-appropriate-columns">4.3.9. Choosing appropriate columns</a></li>
-<li><a class="reference internal" href="#optimisation-for-counting-rows">4.3.10. Optimisation for counting rows</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.3.11. Optimisation for ORDER BY LIMIT in full text search</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-normalizer">4.3.4. How to specify the normalizer</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-token-filters">4.3.5. How to specify the token filters</a></li>
+<li><a class="reference internal" href="#how-to-specify-groonga-s-column-flags">4.3.6. How to specify Groonga's column flags</a></li>
+<li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.7. How to use geolocation search</a></li>
+<li><a class="reference internal" href="#how-to-get-the-record-id">4.3.8. How to get the record ID</a></li>
+<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.10. How to run Groonga command</a></li>
+<li><a class="reference internal" href="#logging">4.3.11. Logging</a></li>
+<li><a class="reference internal" href="#choosing-appropriate-columns">4.3.12. Choosing appropriate columns</a></li>
+<li><a class="reference internal" href="#optimisation-for-counting-rows">4.3.13. Optimisation for counting rows</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.3.14. Optimisation for ORDER BY LIMIT in full text search</a></li>
 </ul>
 </li>
 </ul>
@@ -650,7 +837,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>

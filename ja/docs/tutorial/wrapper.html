@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.4. ラッパーモード &mdash; Mroonga v4.06 documentation</title>
+    <title>4.4. ラッパーモード &mdash; Mroonga v4.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.06',
+        VERSION:     '4.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.06 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.07 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="5. リファレンス" href="../reference.html" />
     <link rel="prev" title="4.3. ストレージモード" href="storage.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
@@ -259,14 +259,87 @@ Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
 </div>
+<div class="section" id="how-to-specify-the-normalizer">
+<h2>4.4.5. ノーマライザーの指定方法<a class="headerlink" href="#how-to-specify-the-normalizer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mroongaは、文書のエンコーディング(照合順序)に応じたノーマライザーを使用します。これはテキストをトークナイズするときとテーブルのキーを保存するときに使われます。</p>
+<p><tt class="docutils literal"><span class="pre">utf8_general_ci</span></tt> または <tt class="docutils literal"><span class="pre">utf8mb4_general_ci</span></tt> の場合、<tt class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></tt> ノーマライザーが使用されます。</p>
+<p><tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> または <tt class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></tt> の場合、<tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> ノーマライザーが使用されます。</p>
+<p><tt class="docutils literal"><span class="pre">utf8_bin</span></tt> の場合、ノーマライザーは使用されません。</p>
+<p>以下は、 <tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> の照合順序を指定して <tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> ノーマライザーを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; CREATE TABLE diaries (
+    -&gt;   day DATE PRIMARY KEY,
+    -&gt;   content VARCHAR(64) NOT NULL,
+    -&gt;   FULLTEXT INDEX (content)
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Mroongaは、Groongaのノーマライザーを指定する以下のような構文を持っています。:</p>
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+</pre></div>
+</div>
+<p>Groongaのノーマライザーの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/normalizers.html">Groongaのドキュメント</a> を参照してください。</p>
+<p>以下は、<tt class="docutils literal"><span class="pre">NormalizerAuto</span></tt> のノーマライザーを使用する例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; CREATE TABLE diaries (
+    -&gt;   day DATE PRIMARY KEY,
+    -&gt;   content VARCHAR(64) NOT NULL,
+    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+Query OK, 0 rows affected (0.19 sec)
+
+mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
+Empty set (0.00 sec)
+
+mysql&gt; SELECT * FROM diaries
+    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
++------------+-----------------------------------------+
+| day        | content                                 |
++------------+-----------------------------------------+
+| 2013-04-23 | ブラックコーヒーを飲んだ。 |
++------------+-----------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>4.4.5. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.4.6. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as 'mroonga_snippet' UDF.</p>
 <p>詳細は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> を参照してください。</p>
 </div>
 <div class="section" id="logging">
-<h2>4.4.6. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.4.7. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <tt class="docutils literal"><span class="pre">groonga.log</span></tt> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
@@ -320,7 +393,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>4.4.7. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.4.8. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
 <p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
 <p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
@@ -382,9 +455,10 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-use-full-text-search">4.4.2. 全文検索の利用方法</a></li>
 <li><a class="reference internal" href="#how-to-get-search-score">4.4.3. 検索スコアの取得方法</a></li>
 <li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">4.4.4. 全文検索用パーサの変更</a></li>
-<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.4.5. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
-<li><a class="reference internal" href="#logging">4.4.6. ログ出力</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.4.7. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+<li><a class="reference internal" href="#how-to-specify-the-normalizer">4.4.5. ノーマライザーの指定方法</a></li>
+<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.4.6. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
+<li><a class="reference internal" href="#logging">4.4.7. ログ出力</a></li>
+<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.4.8. 全文検索時の ORDER BY LIMIT 高速化</a></li>
 </ul>
 </li>
 </ul>
@@ -429,7 +503,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.06 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>
