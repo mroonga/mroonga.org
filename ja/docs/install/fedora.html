@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.6. Fedora &mdash; Mroonga v4.07 documentation</title>
+    <title>2.6. Fedora &mdash; Mroonga v4.08 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.07',
+        VERSION:     '4.08',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.07 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.08 documentation" href="../index.html" />
     <link rel="up" title="2. インストール" href="../install.html" />
     <link rel="next" title="2.7. その他" href="others.html" />
     <link rel="prev" title="2.5. CentOS" href="centos.html" /> 
@@ -38,9 +38,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -64,7 +62,7 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -76,7 +74,7 @@
         <li class="right" >
           <a href="centos.html" title="2.5. CentOS"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.08 documentation</a> &raquo;</li>
           <li><a href="../install.html" accesskey="U">2. インストール</a> &raquo;</li> 
       </ul>
     </div>  
@@ -84,37 +82,17 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="fedora">
 <h1>2.6. Fedora<a class="headerlink" href="#fedora" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>このセクションではFedora上でMroonga関連のRPMパッケージをインストールする方法を説明します。これらのパッケージは <tt class="docutils literal"><span class="pre">yum</span></tt> でインストールできます。</p>
-<p>32-bit用と64-bit用のパッケージを配布していますが、サーバ用途には64-bitパッケージを利用することをオススメします。32-bit用パッケージはテスト用か開発用にだけ使って下さい。32-bit用パッケージを使った場合は、中程度のサイズのデータでもメモリ不足エラーになることがあります。</p>
 <div class="section" id="fedora-20">
 <h2>2.6.1. Fedora 20<a class="headerlink" href="#fedora-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Fedora 19からはMariaDBがMySQLのデフォルト実装となります。</p>
-<p>Mroongaには二つの選択肢があり、一つはMariaDBと一緒に使うこと、もう一つはMySQL (community-mysql)と一緒に使うことです。</p>
-<p>MySQL (community-mysql)向けにMroongaをインストール:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mysql-mroonga
-</pre></div>
+<p>Fedora 20のパッケージは提供していません。</p>
 </div>
-<p>MariaDB向けにMroongaをインストール:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo rpm -ivh http://packages.groonga.org/fedora/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum makecache
-% sudo yum install -y mariadb-mroonga
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">注釈</p>
-<p class="last">MariaDBとMySQL (community-mysql)パッケージは排他的です。例えば mysql-mroonga を使うには競合している mariadb パッケージをまず削除する必要があります。</p>
-</div>
-<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
-<p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
-</pre></div>
-</div>
+<div class="section" id="fedora-21-comming-soon">
+<h2>2.6.2. Fedora 21(Comming soon)<a class="headerlink" href="#fedora-21-comming-soon" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Fedora 21ではMariaDB 10.0.xが採用されました。MroongaはMariaDB 10.0.15以降バンドルされるようになったので、いずれMariaDBをインストールすることで使えるようになるはずです。</p>
 </div>
 </div>
 
@@ -122,12 +100,13 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2.6. Fedora</a><ul>
 <li><a class="reference internal" href="#fedora-20">2.6.1. Fedora 20</a></li>
+<li><a class="reference internal" href="#fedora-21-comming-soon">2.6.2. Fedora 21(Comming soon)</a></li>
 </ul>
 </li>
 </ul>
@@ -138,12 +117,14 @@
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="others.html"
                         title="次の章へ">2.7. その他</a></p>
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/install/fedora.txt"
-           rel="nofollow">ソースコードを表示（英語）</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/install/fedora.txt"
+            rel="nofollow">ソースコードを表示（英語）</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -160,7 +141,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -172,11 +153,11 @@
         <li class="right" >
           <a href="centos.html" title="2.5. CentOS"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.08 documentation</a> &raquo;</li>
           <li><a href="../install.html" >2. インストール</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>

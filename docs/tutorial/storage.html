@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. Storage mode &mdash; Mroonga v4.07 documentation</title>
+    <title>4.3. Storage mode &mdash; Mroonga v4.08 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.07',
+        VERSION:     '4.08',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.07 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.08 documentation" href="../index.html" />
     <link rel="up" title="4. Tutorial" href="../tutorial.html" />
     <link rel="next" title="4.4. Wrapper mode" href="wrapper.html" />
     <link rel="prev" title="4.2. Mode" href="mode.html" /> 
@@ -37,9 +37,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -63,7 +61,7 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -75,7 +73,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.08 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,14 +81,14 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="storage-mode">
 <h1>4.3. Storage mode<a class="headerlink" href="#storage-mode" title="Permalink to this headline">¶</a></h1>
 <p>Here we explain how to use storage mode of Mroonga</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>4.3.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <tt class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></tt>.</p>
+<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
@@ -123,7 +121,7 @@ Query OK, 1 row affected (0.00 sec)
 <h2>4.3.2. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In version 1.0.0 or before, Mroonga used a special column named <tt class="docutils literal"><span class="pre">_score</span></tt> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
+<p class="last">In version 1.0.0 or before, Mroonga used a special column named <code class="docutils literal"><span class="pre">_score</span></code> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
 </div>
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
@@ -145,8 +143,8 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 3 rows in set (0.00 sec)
 </pre></div>
 </div>
-<p>The result having the search word <tt class="docutils literal"><span class="pre">fine</span></tt> more, i.e. <tt class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></tt> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
-<p>You can use <tt class="docutils literal"><span class="pre">AS</span></tt> to change the attribute name.</p>
+<p>The result having the search word <code class="docutils literal"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
+<p>You can use <code class="docutils literal"><span class="pre">AS</span></code> to change the attribute name.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
 +----+--------------------------------------------------------------+-------+
 | id | content                                                      | score |
@@ -171,12 +169,12 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><tt class="docutils literal"><span class="pre">COMMENT</span></tt> in <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> variable described below.</p>
+<p class="last"><code class="docutils literal"><span class="pre">COMMENT</span></code> in <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> variable described below.</p>
 </div>
 <p>You can specify one of following values as the parser.</p>
 <dl class="docutils">
 <dt>off</dt>
-<dd>It does not tokenize at all. Use &quot;off&quot; if you want to treat <tt class="docutils literal"><span class="pre">content</span></tt> as is. For example, this value is used for prefix search.</dd>
+<dd>It does not tokenize at all. Use &quot;off&quot; if you want to treat <code class="docutils literal"><span class="pre">content</span></code> as is. For example, this value is used for prefix search.</dd>
 <dt>TokenBigram</dt>
 <dd><p class="first">It tokenises in bigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 3 letters or more. It is to reduce noises.</p>
 <p class="last">This is the default value.</p>
@@ -224,11 +222,11 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <dt>TokenTrigram</dt>
 <dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
 </dl>
-<p>You can specify the default parser by passing <tt class="docutils literal"><span class="pre">--with-default-parser</span></tt> option in <tt class="docutils literal"><span class="pre">configure</span></tt> when you build mroonga</p>
+<p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-parser</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build mroonga</p>
 <div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
 </pre></div>
 </div>
-<p>Or you can set <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
 <div class="highlight-none"><div class="highlight"><pre>[mysqld]
 mroonga_default_parser=TokenMecab
@@ -244,12 +242,12 @@ Query OK, 0 rows affected (0.00 sec)
 <h2>4.3.4. How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga uses normalizer corresponding to the encoding of document.
 It is used when tokenizing text and storing table key.</p>
-<p>It is used <tt class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></tt> normalizer when the encoding is
-<tt class="docutils literal"><span class="pre">utf8_general_ci</span></tt> or <tt class="docutils literal"><span class="pre">utf8mb4_general_ci</span></tt>.</p>
-<p>It is used <tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> normalizer when the encoding is
-<tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> or <tt class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></tt>.</p>
-<p>It isn't used normalizer when the encoding is <tt class="docutils literal"><span class="pre">utf8_bin</span></tt>.</p>
-<p>Here is an example that uses <tt class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></tt> normalizer by specifying <tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt>.:</p>
+<p>It is used <code class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></code> normalizer when the encoding is
+<code class="docutils literal"><span class="pre">utf8_general_ci</span></code> or <code class="docutils literal"><span class="pre">utf8mb4_general_ci</span></code>.</p>
+<p>It is used <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer when the encoding is
+<code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> or <code class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></code>.</p>
+<p>It isn't used normalizer when the encoding is <code class="docutils literal"><span class="pre">utf8_bin</span></code>.</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer by specifying <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code>.:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
 Query OK, 0 rows affected (0.00 sec)
 
@@ -287,7 +285,7 @@ mysql&gt; SELECT * FROM diaries
 </pre></div>
 </div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga's document</a> document about Groonga's normalizer.</p>
-<p>Here is an example that uses <tt class="docutils literal"><span class="pre">NormalizerAuto</span></tt> normalizer:</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
 Query OK, 0 rows affected (0.00 sec)
 
@@ -322,7 +320,7 @@ mysql&gt; SELECT * FROM diaries
 <div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
 </pre></div>
 </div>
-<p>Here is an example that uses <tt class="docutils literal"><span class="pre">TokenFilterStem</span></tt> token filter.:</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStem</span></code> token filter.:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT mroonga_command(&#39;register token_filters/stem&#39;);
 +------------------------------------------------+
 | mroonga_command(&#39;register token_filters/stem&#39;) |
@@ -360,7 +358,7 @@ mysql&gt; SELECT * FROM memos
 </pre></div>
 </div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/token_filters.html">Groonga's document</a> document about Groonga's token filter.</p>
-<p>Here is an example that uses <tt class="docutils literal"><span class="pre">TokenFilterStopWord</span></tt> token filter.:</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> token filter.:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT mroonga_command(&quot;register token_filters/stop_word&quot;);
 +-----------------------------------------------------+
 | mroonga_command(&quot;register token_filters/stop_word&quot;) |
@@ -414,7 +412,7 @@ mysql&gt; SELECT * FROM memos
 <div class="highlight-none"><div class="highlight"><pre>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
 </pre></div>
 </div>
-<p>Here is an example that uses <tt class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></tt> flag.:</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code> flag.:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE entries (
     -&gt;   id INT UNSIGNED PRIMARY KEY,
     -&gt;   content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
@@ -464,7 +462,7 @@ Query OK, 1 row affected (0.00 sec)
 <h2>4.3.8. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
 <p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
 <p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
-<p>To get the record ID, you need to create a column named <tt class="docutils literal"><span class="pre">_id</span></tt> when you create a table.</p>
+<p>To get the record ID, you need to create a column named <code class="docutils literal"><span class="pre">_id</span></code> when you create a table.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE memos (
     -&gt;   _id INT,
      &gt;   content VARCHAR(255),
@@ -476,7 +474,7 @@ Query OK, 0 rows affected (0.04 sec)
 <p>Tye typo of _id column should be integer one (TINYINT, SMALLINT, MEDIUMINT, INT or BIGINT).</p>
 <p>You can create an index for _id column, but it should be HASH type.</p>
 <p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
-So you need to exclude it from setting columns, or you need to use <tt class="docutils literal"><span class="pre">null</span></tt> as its value.</p>
+So you need to exclude it from setting columns, or you need to use <code class="docutils literal"><span class="pre">null</span></code> as its value.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO memos VALUES (null, &quot;Saury for today&#39;s dinner.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
@@ -634,7 +632,7 @@ details.</p>
 <div class="section" id="logging">
 <h2>4.3.11. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
-<p>Log files are located in MySQL's data directory with the filename  <tt class="docutils literal"><span class="pre">groonga.log</span></tt>.</p>
+<p>Log files are located in MySQL's data directory with the filename  <code class="docutils literal"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
 <div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
@@ -642,7 +640,7 @@ details.</p>
 </pre></div>
 </div>
 <p>The default log level is NOTICE, i.e. we have important information only and we don't have debug information etc.).</p>
-<p>You can get the log level by <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> system variable, that is a global variable. You can also modify it dynamically by using SET phrase.</p>
+<p>You can get the log level by <code class="docutils literal"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 +-------------------+--------+
 | Variable_name     | Value  |
@@ -679,7 +677,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>See <a class="reference internal" href="../reference/server_variables.html#mroonga-log-level"><em>mroonga_log_level</em></a> about details.</p>
 <p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
 <ol class="arabic simple">
-<li>change the file name of <tt class="docutils literal"><span class="pre">groonga.log</span></tt> (by using OS's mv command etc.).</li>
+<li>change the file name of <code class="docutils literal"><span class="pre">groonga.log</span></code> (by using OS's mv command etc.).</li>
 <li>invoke &quot;FLUSH LOGS&quot; in MySQL server (by mysql command or mysqladmin command).</li>
 </ol>
 </div>
@@ -723,7 +721,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">Mroonga_count_skip</span></tt> status variable value is increased.</p>
+<p>Each time the optimisation for counting rows works, <code class="docutils literal"><span class="pre">Mroonga_count_skip</span></code> status variable value is increased.</p>
 <p>Note : This optimisation is implemented by using the index. It only works in the case where we records can be specified only by the index.</p>
 </div>
 <div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
@@ -746,7 +744,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p>Each time the optimisation for counting rows works, <tt class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></tt> status variable value is increased.</p>
+<p>Each time the optimisation for counting rows works, <code class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></code> status variable value is increased.</p>
 <p>Note : This optimisation is targeting queries like &quot;select ... match against order by _score desc limit X, Y&quot; only, and it works if all of the following conditions are right.</p>
 <ul class="simple">
 <li>WHERE phrase has &quot;match...against&quot; only</li>
@@ -774,7 +772,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -803,12 +801,14 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
   <h4>Next topic</h4>
   <p class="topless"><a href="wrapper.html"
                         title="next chapter">4.4. Wrapper mode</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/tutorial/storage.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/tutorial/storage.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -825,7 +825,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -837,11 +837,11 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.07 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.08 documentation</a> &raquo;</li>
           <li><a href="../tutorial.html" >4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2014, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
