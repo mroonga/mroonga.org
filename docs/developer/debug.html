@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9.1. How to debug &mdash; Mroonga v4.08 documentation</title>
+    <title>9.1. How to debug &mdash; Mroonga v4.09 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.08',
+        VERSION:     '4.09',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.08 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v4.09 documentation" href="../index.html" />
     <link rel="up" title="9. Developer&#39;s guide" href="../developer.html" />
     <link rel="next" title="9.2. Release procedure (XXX not yet translated)" href="release.html" />
     <link rel="prev" title="9. Developer&#39;s guide" href="../developer.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="../developer.html" title="9. Developer&#39;s guide"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.08 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.09 documentation</a> &raquo;</li>
           <li><a href="../developer.html" accesskey="U">9. Developer's guide</a> &raquo;</li> 
       </ul>
     </div>  
@@ -95,7 +95,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 </div>
 <div class="section" id="how-to-build-mysql-for-debugging">
 <h3>9.1.1.1. How to build MySQL for debugging<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="Permalink to this headline">¶</a></h3>
-<p>As you can see in <a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a>, you can build MySQL for debugging by passing <code class="docutils literal"><span class="pre">-DWITH_DEBUG=yes</span></code> option in CMAKE options.</p>
+<p>As you can see in <a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a>, you can build MySQL for debugging by passing <tt class="docutils literal"><span class="pre">-DWITH_DEBUG=yes</span></tt> option in CMAKE options.</p>
 <p>The procedure from download to build is the following.</p>
 <div class="highlight-none"><div class="highlight"><pre>% mkdir -p ~/work/
 % cd ~/work/
@@ -109,7 +109,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 </div>
 <div class="section" id="how-tom-build-mroonga-for-debugging">
 <h3>9.1.1.2. How tom build mroonga for debugging<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Permalink to this headline">¶</a></h3>
-<p>You can build mroonga for debugging by passing <code class="docutils literal"><span class="pre">--with-debug</span></code> in configure options.</p>
+<p>You can build mroonga for debugging by passing <tt class="docutils literal"><span class="pre">--with-debug</span></tt> in configure options.</p>
 <p>The procedure from cloning repository to build is the following.</p>
 <div class="highlight-none"><div class="highlight"><pre>% cd ~/work/
 % git clone git@github.com:mroonga/mroonga.git
@@ -120,7 +120,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 </pre></div>
 </div>
 <p>When you successfully build both, please invoke tests like the following.
-If you get <code class="docutils literal"><span class="pre">[pass]</span></code> for all tests, you succeeded to build for debugging.</p>
+If you get <tt class="docutils literal"><span class="pre">[pass]</span></tt> for all tests, you succeeded to build for debugging.</p>
 <div class="highlight-none"><div class="highlight"><pre>% test/run-sql-test.sh
 </pre></div>
 </div>
@@ -132,7 +132,7 @@ If you get <code class="docutils literal"><span class="pre">[pass]</span></code>
 Here we show some examples of its usage.</p>
 <div class="section" id="run-the-specified-test-only">
 <h3>9.1.2.1. Run the specified test only<a class="headerlink" href="#run-the-specified-test-only" title="Permalink to this headline">¶</a></h3>
-<p>When you invoke run-sql-test.sh without any option, all tests under <code class="docutils literal"><span class="pre">test/sql/t/</span></code> will be invoked.</p>
+<p>When you invoke run-sql-test.sh without any option, all tests under <tt class="docutils literal"><span class="pre">test/sql/t/</span></tt> will be invoked.</p>
 <p>So if you want to run certain tests only, you can specify the test name in --do-test option.</p>
 <div class="highlight-none"><div class="highlight"><pre>./test/run-sql-test.sh --do-test=foobar
 </pre></div>
@@ -140,13 +140,13 @@ Here we show some examples of its usage.</p>
 </div>
 <div class="section" id="see-the-trace">
 <h3>9.1.2.2. See the trace<a class="headerlink" href="#see-the-trace" title="Permalink to this headline">¶</a></h3>
-<p>When you run tests by adding <code class="docutils literal"><span class="pre">--debug</span></code> option like the following, function calls information is recorded.
-This information is stored in <code class="docutils literal"><span class="pre">${MySQL's</span> <span class="pre">working</span> <span class="pre">directory}/${MySQL</span> <span class="pre">version}/mysql-test/var/log/mysqld.1.trace</span></code>.</p>
+<p>When you run tests by adding <tt class="docutils literal"><span class="pre">--debug</span></tt> option like the following, function calls information is recorded.
+This information is stored in <tt class="docutils literal"><span class="pre">${MySQL's</span> <span class="pre">working</span> <span class="pre">directory}/${MySQL</span> <span class="pre">version}/mysql-test/var/log/mysqld.1.trace</span></tt>.</p>
 <p>When you add a new function, it would be a good idea to put it in the beginning of MRN_DBUG_ENTER_FUNCTION function and record its calls.</p>
 </div>
 <div class="section" id="invoking-gdb">
 <h3>9.1.2.3. Invoking GDB<a class="headerlink" href="#invoking-gdb" title="Permalink to this headline">¶</a></h3>
-<p>By adding <code class="docutils literal"><span class="pre">--gdb</span></code> option, you can debug with GDB when you run tests.</p>
+<p>By adding <tt class="docutils literal"><span class="pre">--gdb</span></tt> option, you can debug with GDB when you run tests.</p>
 <div class="highlight-none"><div class="highlight"><pre>./test/run-sql-test.sh --gdb
 </pre></div>
 </div>
@@ -220,7 +220,7 @@ This information is stored in <code class="docutils literal"><span class="pre">$
         <li class="right" >
           <a href="../developer.html" title="9. Developer&#39;s guide"
              >previous</a> |</li>
-        <li><a href="../index.html">Mroonga v4.08 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v4.09 documentation</a> &raquo;</li>
           <li><a href="../developer.html" >9. Developer's guide</a> &raquo;</li> 
       </ul>
     </div>
