@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.4.2. mroonga_snippet &mdash; Mroonga v4.10 documentation</title>
+    <title>4.2. mroonga_snippet &mdash; Mroonga v4.10 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../../static/translations.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="top" title="Mroonga v4.10 documentation" href="../../index.html" />
-    <link rel="up" title="5.4. UDF (ユーザ定義関数)" href="../udf.html" />
-    <link rel="next" title="5.5. 制限事項" href="../limitations.html" />
-    <link rel="prev" title="5.4.1. mroonga_escape" href="mroonga_escape.html" /> 
+    <link rel="up" title="4. UDF (ユーザ定義関数)" href="../udf.html" />
+    <link rel="next" title="5. 制限事項" href="../limitations.html" />
+    <link rel="prev" title="4.1. mroonga_escape" href="mroonga_escape.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -38,7 +38,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../../">
@@ -62,41 +64,41 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="../limitations.html" title="5.5. 制限事項"
+          <a href="../limitations.html" title="5. 制限事項"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.4.1. mroonga_escape"
+          <a href="mroonga_escape.html" title="4.1. mroonga_escape"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">Mroonga v4.10 documentation</a> &raquo;</li>
           <li><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
-          <li><a href="../udf.html" accesskey="U">5.4. UDF (ユーザ定義関数)</a> &raquo;</li> 
+          <li><a href="../udf.html" accesskey="U">4. UDF (ユーザ定義関数)</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="mroonga-snippet">
-<h1>5.4.2. mroonga_snippet<a class="headerlink" href="#mroonga-snippet" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>4.2. mroonga_snippet<a class="headerlink" href="#mroonga-snippet" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="summary">
-<h2>5.4.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> UDFは文脈付き索引を取得する機能を提供します。</p>
+<h2>4.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> UDFは文脈付き索引を取得する機能を提供します。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">この機能は実験的です。引数や引数の値が予告なく変更される可能性があります。</p>
 </div>
 </div>
 <div class="section" id="syntax">
-<h2>5.4.2.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.2.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>mroonga_snippetには必須引数と省略可能引数とがあります。:</p>
 <div class="highlight-none"><div class="highlight"><pre>mroonga_snippet document
                 max_length
@@ -113,19 +115,19 @@
 </div>
 </div>
 <div class="section" id="usage">
-<h2>5.4.2.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.2.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>キーワードと周辺のテキストを検索結果として取得したいことがあります。</p>
 <p>スニペットは'キーワードと関連するテキスト'を意味します。文脈付き索引ともいいます。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数は検索結果からスニペットを取得する方法を提供します。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> UDFはストレージモードとラッパーモードいずれでも使
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は検索結果からスニペットを取得する方法を提供します。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> UDFはストレージモードとラッパーモードいずれでも使
 えます。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
 <p>'fulltext'というキーワードと'MySQL'と'search'という関連語を含む文書の検索をしてみましょう。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数は上記のことができます。</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> 関数は上記のことができます。</p>
 <p>実行例のスキーマ定義(ストレージモード)はこちらです:</p>
 <div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
@@ -175,30 +177,30 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 <p>The keyword 'fulltext' and associated keyword 'MySQL' and 'search' has been extracted.</p>
 </div>
 <div class="section" id="parameters">
-<h2>5.4.2.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.2.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="required-parameters">
-<h3>5.4.2.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>4.2.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>多くの必須引数があります。</p>
 <div class="section" id="document">
-<h4>5.4.2.4.1.1. <code class="docutils literal"><span class="pre">document</span></code><a class="headerlink" href="#document" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.1. <tt class="docutils literal"><span class="pre">document</span></tt><a class="headerlink" href="#document" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>カラム名もしくは文字列が必要です。</p>
 </div></blockquote>
 </div>
 <div class="section" id="max-length">
-<h4>5.4.2.4.1.2. <code class="docutils literal"><span class="pre">max_length</span></code><a class="headerlink" href="#max-length" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.2. <tt class="docutils literal"><span class="pre">max_length</span></tt><a class="headerlink" href="#max-length" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>スニペットの最大長(バイト単位)が必要です。</p>
 </div></blockquote>
 </div>
 <div class="section" id="max-count">
-<h4>5.4.2.4.1.3. <code class="docutils literal"><span class="pre">max_count</span></code><a class="headerlink" href="#max-count" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.3. <tt class="docutils literal"><span class="pre">max_count</span></tt><a class="headerlink" href="#max-count" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>スニペットの最大要素数Nが必要です。</p>
 </div></blockquote>
 </div>
 <div class="section" id="encoding">
-<h4>5.4.2.4.1.4. <code class="docutils literal"><span class="pre">encoding</span></code><a class="headerlink" href="#encoding" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.4. <tt class="docutils literal"><span class="pre">encoding</span></tt><a class="headerlink" href="#encoding" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>文書のエンコーティング(照合順序)を指定します。エンコーディングとして
 'ascii_general_ci'や'cp932_japanese_ci'、'eucjpms_japanese_ci'などが指
@@ -206,48 +208,48 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 </div></blockquote>
 </div>
 <div class="section" id="skip-leading-spaces">
-<h4>5.4.2.4.1.5. <code class="docutils literal"><span class="pre">skip_leading_spaces</span></code><a class="headerlink" href="#skip-leading-spaces" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.5. <tt class="docutils literal"><span class="pre">skip_leading_spaces</span></tt><a class="headerlink" href="#skip-leading-spaces" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>先頭の空白を無視するかを指定します。1なら無視し、0なら無視しません。</p>
 </div></blockquote>
 </div>
 <div class="section" id="html-escape">
-<h4>5.4.2.4.1.6. <code class="docutils literal"><span class="pre">html_escape</span></code><a class="headerlink" href="#html-escape" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.6. <tt class="docutils literal"><span class="pre">html_escape</span></tt><a class="headerlink" href="#html-escape" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>HTMLのエスケープを行うかを指定します。1ならエスケープし、0ならそのまま
 出力します。</p>
 </div></blockquote>
 </div>
 <div class="section" id="prefix">
-<h4>5.4.2.4.1.7. <code class="docutils literal"><span class="pre">prefix</span></code><a class="headerlink" href="#prefix" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.7. <tt class="docutils literal"><span class="pre">prefix</span></tt><a class="headerlink" href="#prefix" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>スニペットの開始テキストを指定します。</p>
 </div></blockquote>
 </div>
 <div class="section" id="suffix">
-<h4>5.4.2.4.1.8. <code class="docutils literal"><span class="pre">suffix</span></code><a class="headerlink" href="#suffix" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.1.8. <tt class="docutils literal"><span class="pre">suffix</span></tt><a class="headerlink" href="#suffix" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>スニペットの終了テキストを指定します。</p>
 </div></blockquote>
 </div>
 </div>
 <div class="section" id="optional-parameters">
-<h3>5.4.2.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>省略可能な引数として <code class="docutils literal"><span class="pre">wordN</span></code> と開始テキスト、終了テキストがあります。</p>
+<h3>4.2.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>省略可能な引数として <tt class="docutils literal"><span class="pre">wordN</span></tt> と開始テキスト、終了テキストがあります。</p>
 <div class="section" id="wordn">
-<h4>5.4.2.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code><a class="headerlink" href="#wordn" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.2.1. <tt class="docutils literal"><span class="pre">wordN</span></tt><a class="headerlink" href="#wordn" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>任意の単語指定します。</p>
 </div></blockquote>
 </div>
 <div class="section" id="wordn-prefix">
-<h4>5.4.2.4.2.2. <code class="docutils literal"><span class="pre">wordN_prefix</span></code><a class="headerlink" href="#wordn-prefix" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.2.2. <tt class="docutils literal"><span class="pre">wordN_prefix</span></tt><a class="headerlink" href="#wordn-prefix" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>N番目の単語の開始テキストを指定します。</p>
 </div></blockquote>
 </div>
 <div class="section" id="wordn-suffix">
-<h4>5.4.2.4.2.3. <code class="docutils literal"><span class="pre">wordN_suffix</span></code><a class="headerlink" href="#wordn-suffix" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>4.2.4.2.3. <tt class="docutils literal"><span class="pre">wordN_suffix</span></tt><a class="headerlink" href="#wordn-suffix" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <blockquote>
 <div><p>N番目の単語の終了テキストを指定します。</p>
 </div></blockquote>
@@ -255,7 +257,7 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 </div>
 </div>
 <div class="section" id="return-value">
-<h2>5.4.2.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.2.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>スニペット文字列を返します。</p>
 </div>
 </div>
@@ -264,53 +266,51 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.4.2. mroonga_snippet</a><ul>
-<li><a class="reference internal" href="#summary">5.4.2.1. 概要</a></li>
-<li><a class="reference internal" href="#syntax">5.4.2.2. 構文</a></li>
-<li><a class="reference internal" href="#usage">5.4.2.3. 使いかた</a></li>
-<li><a class="reference internal" href="#parameters">5.4.2.4. 引数</a><ul>
-<li><a class="reference internal" href="#required-parameters">5.4.2.4.1. 必須引数</a><ul>
-<li><a class="reference internal" href="#document">5.4.2.4.1.1. <code class="docutils literal"><span class="pre">document</span></code></a></li>
-<li><a class="reference internal" href="#max-length">5.4.2.4.1.2. <code class="docutils literal"><span class="pre">max_length</span></code></a></li>
-<li><a class="reference internal" href="#max-count">5.4.2.4.1.3. <code class="docutils literal"><span class="pre">max_count</span></code></a></li>
-<li><a class="reference internal" href="#encoding">5.4.2.4.1.4. <code class="docutils literal"><span class="pre">encoding</span></code></a></li>
-<li><a class="reference internal" href="#skip-leading-spaces">5.4.2.4.1.5. <code class="docutils literal"><span class="pre">skip_leading_spaces</span></code></a></li>
-<li><a class="reference internal" href="#html-escape">5.4.2.4.1.6. <code class="docutils literal"><span class="pre">html_escape</span></code></a></li>
-<li><a class="reference internal" href="#prefix">5.4.2.4.1.7. <code class="docutils literal"><span class="pre">prefix</span></code></a></li>
-<li><a class="reference internal" href="#suffix">5.4.2.4.1.8. <code class="docutils literal"><span class="pre">suffix</span></code></a></li>
+<li><a class="reference internal" href="#">4.2. mroonga_snippet</a><ul>
+<li><a class="reference internal" href="#summary">4.2.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">4.2.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">4.2.3. 使いかた</a></li>
+<li><a class="reference internal" href="#parameters">4.2.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">4.2.4.1. 必須引数</a><ul>
+<li><a class="reference internal" href="#document">4.2.4.1.1. <tt class="docutils literal"><span class="pre">document</span></tt></a></li>
+<li><a class="reference internal" href="#max-length">4.2.4.1.2. <tt class="docutils literal"><span class="pre">max_length</span></tt></a></li>
+<li><a class="reference internal" href="#max-count">4.2.4.1.3. <tt class="docutils literal"><span class="pre">max_count</span></tt></a></li>
+<li><a class="reference internal" href="#encoding">4.2.4.1.4. <tt class="docutils literal"><span class="pre">encoding</span></tt></a></li>
+<li><a class="reference internal" href="#skip-leading-spaces">4.2.4.1.5. <tt class="docutils literal"><span class="pre">skip_leading_spaces</span></tt></a></li>
+<li><a class="reference internal" href="#html-escape">4.2.4.1.6. <tt class="docutils literal"><span class="pre">html_escape</span></tt></a></li>
+<li><a class="reference internal" href="#prefix">4.2.4.1.7. <tt class="docutils literal"><span class="pre">prefix</span></tt></a></li>
+<li><a class="reference internal" href="#suffix">4.2.4.1.8. <tt class="docutils literal"><span class="pre">suffix</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#optional-parameters">5.4.2.4.2. 省略可能引数</a><ul>
-<li><a class="reference internal" href="#wordn">5.4.2.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code></a></li>
-<li><a class="reference internal" href="#wordn-prefix">5.4.2.4.2.2. <code class="docutils literal"><span class="pre">wordN_prefix</span></code></a></li>
-<li><a class="reference internal" href="#wordn-suffix">5.4.2.4.2.3. <code class="docutils literal"><span class="pre">wordN_suffix</span></code></a></li>
+<li><a class="reference internal" href="#optional-parameters">4.2.4.2. 省略可能引数</a><ul>
+<li><a class="reference internal" href="#wordn">4.2.4.2.1. <tt class="docutils literal"><span class="pre">wordN</span></tt></a></li>
+<li><a class="reference internal" href="#wordn-prefix">4.2.4.2.2. <tt class="docutils literal"><span class="pre">wordN_prefix</span></tt></a></li>
+<li><a class="reference internal" href="#wordn-suffix">4.2.4.2.3. <tt class="docutils literal"><span class="pre">wordN_suffix</span></tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#return-value">5.4.2.5. 返り値</a></li>
+<li><a class="reference internal" href="#return-value">4.2.5. 返り値</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="mroonga_escape.html"
-                        title="前の章へ">5.4.1. mroonga_escape</a></p>
+                        title="前の章へ">4.1. mroonga_escape</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="../limitations.html"
-                        title="次の章へ">5.5. 制限事項</a></p>
-  <div role="note" aria-label="source link">
-    <h3>このページ</h3>
-    <ul class="this-page-menu">
-      <li><a href="../../sources/reference/udf/mroonga_snippet.txt"
-            rel="nofollow">ソースコードを表示（英語）</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+                        title="次の章へ">5. 制限事項</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../sources/reference/udf/mroonga_snippet.txt"
+           rel="nofollow">ソースコードを表示（英語）</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>クイック検索</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -327,24 +327,24 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="../limitations.html" title="5.5. 制限事項"
+          <a href="../limitations.html" title="5. 制限事項"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.4.1. mroonga_escape"
+          <a href="mroonga_escape.html" title="4.1. mroonga_escape"
              >前へ</a> |</li>
         <li><a href="../../index.html">Mroonga v4.10 documentation</a> &raquo;</li>
           <li><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
-          <li><a href="../udf.html" >5.4. UDF (ユーザ定義関数)</a> &raquo;</li> 
+          <li><a href="../udf.html" >4. UDF (ユーザ定義関数)</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
