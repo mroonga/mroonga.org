@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9.1. デバッグ方法 &mdash; Mroonga v4.10 documentation</title>
+    <title>9.1. デバッグ方法 &mdash; Mroonga v5.00 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.10',
+        VERSION:     '5.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.10 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v5.00 documentation" href="../index.html" />
     <link rel="up" title="9. 開発者向け情報" href="../developer.html" />
     <link rel="next" title="9.2. リリース手順" href="release.html" />
     <link rel="prev" title="9. 開発者向け情報" href="../developer.html" /> 
@@ -38,9 +38,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -64,7 +62,7 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -76,7 +74,7 @@
         <li class="right" >
           <a href="../developer.html" title="9. 開発者向け情報"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.10 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li>
           <li><a href="../developer.html" accesskey="U">9. 開発者向け情報</a> &raquo;</li> 
       </ul>
     </div>  
@@ -84,7 +82,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="how-to-debug">
 <h1>9.1. デバッグ方法<a class="headerlink" href="#how-to-debug" title="このヘッドラインへのパーマリンク">¶</a></h1>
@@ -97,7 +95,7 @@
 </div>
 <div class="section" id="how-to-build-mysql-for-debugging">
 <h3>9.1.1.1. MySQLのデバッグ用ビルド方法<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a> にある通り、CMakeのオプションに <tt class="docutils literal"><span class="pre">-DWITH_DEBUG=yes</span></tt> オプションを渡すことでデバッグ用にビルドすることができます。</p>
+<p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a> にある通り、CMakeのオプションに <code class="docutils literal"><span class="pre">-DWITH_DEBUG=yes</span></code> オプションを渡すことでデバッグ用にビルドすることができます。</p>
 <p>ダウンロードからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-none"><div class="highlight"><pre>% mkdir -p ~/work/
 % cd ~/work/
@@ -111,7 +109,7 @@
 </div>
 <div class="section" id="how-tom-build-mroonga-for-debugging">
 <h3>9.1.1.2. mroongaのデバッグ用ビルド方法<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>mroongaはconfigureのオプションに <tt class="docutils literal"><span class="pre">--with-debug</span></tt> を渡すことでデバッグ用にビルドすることができます。</p>
+<p>mroongaはconfigureのオプションに <code class="docutils literal"><span class="pre">--with-debug</span></code> を渡すことでデバッグ用にビルドすることができます。</p>
 <p>リポジトリのcloneからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-none"><div class="highlight"><pre>% cd ~/work/
 % git clone git@github.com:mroonga/mroonga.git
@@ -121,7 +119,7 @@
 % make
 </pre></div>
 </div>
-<p>無事にビルドができたら以下のようにテストを実行してください。すべてのテストが <tt class="docutils literal"><span class="pre">[pass]</span></tt> になればデバッグ用ビルドは成功しています。:</p>
+<p>無事にビルドができたら以下のようにテストを実行してください。すべてのテストが <code class="docutils literal"><span class="pre">[pass]</span></code> になればデバッグ用ビルドは成功しています。:</p>
 <div class="highlight-none"><div class="highlight"><pre>% test/run-sql-test.sh
 </pre></div>
 </div>
@@ -132,7 +130,7 @@
 <p>run-sql-test.sh はデバッグの友。ここでは、その便利な使い方の一例をご紹介します。</p>
 <div class="section" id="run-the-specified-test-only">
 <h3>9.1.2.1. 指定したテストを実行する<a class="headerlink" href="#run-the-specified-test-only" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>何もオプションを渡さずに run-sql-test.sh を実行すると <tt class="docutils literal"><span class="pre">test/sql/t/</span></tt> 以下にある全てのテスト (<tt class="docutils literal"><span class="pre">*.test</span></tt>) が実行されてしまいます。</p>
+<p>何もオプションを渡さずに run-sql-test.sh を実行すると <code class="docutils literal"><span class="pre">test/sql/t/</span></code> 以下にある全てのテスト (<code class="docutils literal"><span class="pre">*.test</span></code>) が実行されてしまいます。</p>
 <p>特定のテストだけを実行したい、という場合は次のようにしてテスト名を --do-test オプションに渡します。</p>
 <div class="highlight-none"><div class="highlight"><pre>./test/run-sql-test.sh --do-test=foobar
 </pre></div>
@@ -140,12 +138,12 @@
 </div>
 <div class="section" id="see-the-trace">
 <h3>9.1.2.2. トレースを見る<a class="headerlink" href="#see-the-trace" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>次のようにして <tt class="docutils literal"><span class="pre">--debug</span></tt> オプションをつけてテストを実行すると、関数の呼び出しなどが記録されます。この呼び出しは <tt class="docutils literal"><span class="pre">${MySQLの作業ディレクトリ}/${MySQLのバージョン}/mysql-test/var/log/mysqld.1.trace</span></tt> に格納されます。</p>
+<p>次のようにして <code class="docutils literal"><span class="pre">--debug</span></code> オプションをつけてテストを実行すると、関数の呼び出しなどが記録されます。この呼び出しは <code class="docutils literal"><span class="pre">${MySQLの作業ディレクトリ}/${MySQLのバージョン}/mysql-test/var/log/mysqld.1.trace</span></code> に格納されます。</p>
 <p>新しく関数を作成した場合は MRN_DBUG_ENTER_FUNCTION 関数の先頭に配置し、関数の呼び出しを記録するようにすると良いでしょう。</p>
 </div>
 <div class="section" id="invoking-gdb">
 <h3>9.1.2.3. GDB を立ち上げる<a class="headerlink" href="#invoking-gdb" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><tt class="docutils literal"><span class="pre">--gdb</span></tt> オプションを指定することで、テストを実行する際に GDB を用いてデバッグを行うことができます。</p>
+<p><code class="docutils literal"><span class="pre">--gdb</span></code> オプションを指定することで、テストを実行する際に GDB を用いてデバッグを行うことができます。</p>
 <div class="highlight-none"><div class="highlight"><pre>./test/run-sql-test.sh --gdb
 </pre></div>
 </div>
@@ -157,7 +155,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
@@ -183,12 +181,14 @@
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="release.html"
                         title="次の章へ">9.2. リリース手順</a></p>
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/developer/debug.txt"
-           rel="nofollow">ソースコードを表示（英語）</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/developer/debug.txt"
+            rel="nofollow">ソースコードを表示（英語）</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -205,7 +205,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -217,11 +217,11 @@
         <li class="right" >
           <a href="../developer.html" title="9. 開発者向け情報"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v4.10 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li>
           <li><a href="../developer.html" >9. 開発者向け情報</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>お知らせ &mdash; Mroonga v4.10 documentation</title>
+    <title>お知らせ &mdash; Mroonga v5.00 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.10',
+        VERSION:     '5.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v4.10 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v5.00 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -35,9 +35,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
@@ -61,2033 +59,293 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="index.html">Mroonga v4.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="news">
 <h1>お知らせ<a class="headerlink" href="#news" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="release-4-10-2015-01-29">
-<span id="release-4-10"></span><h2>4.10リリース - 2015-01-29<a class="headerlink" href="#release-4-10-2015-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>このリリースにはユニークインデックスのバグ修正が含まれています。もし、ストレージモードでユニークインデックスを使っている場合はデータが壊れている可能性があります。ストレージモードでユニークインデックスを使っている場合はこのバージョンへアップグレードし、アップグレード後にユニークインデックスを再構築することをオススメします。</p>
-<p>ユニークインデックスを含むすべてのインデックスを再構築するSQL文は次の通りです。:</p>
-<div class="highlight-none"><div class="highlight"><pre>ALTER TABLE ${YOUR_TABLE} DISABLE KEYS;
-ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></tt> をしたときに「レコードが重複している」というエラーがでるかもしれません。もし、このエラーがでた場合は、データを確認の上、重複を解消してください。</p>
-<p>次のようなケースがあった場合、前述のようにデータが壊れます。</p>
-<blockquote>
-<div><ul class="simple">
-<li><p class="first">ユニークインデックスを作成する。</p>
-</li>
-<li><p class="first">データを挿入する。</p>
-</li>
-<li><p class="first">重複したデータを挿入する。エラーが報告される。</p>
-</li>
-<li><p class="first">再度重複したデータを挿入する。エラーなく重複したデータが挿入できてしまう。</p>
+<div class="section" id="release-5-00-2015-02-09">
+<span id="release-5-00"></span><h2>5.00リリース - 2015/02/09<a class="headerlink" href="#release-5-00-2015-02-09" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p class="first">5.00になりました！</p>
 </li>
 </ul>
-</div></blockquote>
 <div class="section" id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">[ストレージモード] FULLTEXT INDEXのCOMMENTに参照テーブルが指定してあるときに、オフラインインデックス構築ができるようになりました。 オフラインインデックス構築には <tt class="docutils literal"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt> を実行してから <tt class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></tt> を実行します。[村上さんが報告]</p>
+<li><p class="first">[appveyor] WindowsでのCIを <a class="reference external" href="http://www.appveyor.com/">AppVeyor</a> で行うようになりました。Windowsでビルドに失敗したのがすぐにわかるようになりました。<a class="reference external" href="mailto:groonga-mysql-commit&#37;&#52;&#48;lists&#46;sourceforge">groonga-mysql-commit<span>&#64;</span>lists<span>&#46;</span>sourceforge</a>.jpを購読するとビルドの状態を知ることができます。</p>
 </li>
-<li><p class="first">[rpm][centos] CentOS 7でMySQL 5.6.22向けにビルドするようにしました。[groonga-dev,03047] [各務さんが報告]</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 7でMariaDB 5.5.40-2向けにビルドするようにしました。</p>
-</li>
-<li><p class="first">[ストレージモード][mysql56] <tt class="docutils literal"><span class="pre">ADD</span> <span class="pre">UNIQUE</span> <span class="pre">INDEX</span></tt> で重複したときのエラーを報告するようにしました。[kazeburoさんが報告]</p>
+<li><p class="first">[rpm][centos] CentOS 7でMySQL 5.6.23向けにビルドするようにしました。[groonga-dev,03083] [青地さんが報告]</p>
 </li>
 </ul>
 </div>
 <div class="section" id="fixes">
 <h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">[ストレージモード] 参照テーブルがエラーで意図せず削除される不具合を修正しました。これはたとえば FULLTEXT INDEXのコメントに <tt class="docutils literal"><span class="pre">'table</span> <span class="pre">&quot;terms&quot;'</span></tt> が指定されていたら、「terms」テーブルのインデックスを作成しているときにエラーが発生すると、「terms」テーブルが削除されてしまうということです。</p>
-</li>
-<li><p class="first">[ストレージモード] ユニークインデックスに対し重複したエントリを挿入しようとすると、重複によるエラーでインデックスが削除されてしまう不具合を修正しました。この不具合でインデックスの一貫性が損なわれてしまうので、Mroongaをアップグレードしたあとにインデックスを再構築しなおしてください。[kazeburoさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></tt> が機能していなかった問題を修正しました。この不具合には挿入に失敗したあとの更新処理で既存の他のレコードを変更してしまう可能性があります。[kazeburoさんが報告]</p>
+<li><p class="first">[cmake] ビッグエンディアンのサポートを明示的に無効にしました。</p>
 </li>
 </ul>
 </div>
 <div class="section" id="thanks">
 <h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">村上さん</p>
+<li><p class="first">青地さん</p>
 </li>
-<li><p class="first">各務さん</p>
-</li>
-<li><p class="first">kazeburoさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-09-2014-12-29">
-<span id="release-4-09"></span><h2>4.09リリース - 2014-12-29<a class="headerlink" href="#release-4-09-2014-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id1">
-<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[rpm] CentOS 6用のパッケージがMySQL 5.6.22に対応しました。 [&#64;oreradioさんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">()</span> <span class="pre">AGAINST</span> <span class="pre">('...'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt> の構文をカスタマイズする <a class="reference internal" href="reference/server_variables.html#mroonga-boolean-mode-syntax-flags"><em>mroonga_boolean_mode_syntax_flags</em></a> を追加しました。</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;none&quot;'</span></tt> というようにノーマライザーとして <tt class="docutils literal"><span class="pre">none</span></tt> を指定することでノーマライザーなしの <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> を作れるようにしました。</p>
-</li>
-<li><p class="first">自動で作られたレコードでもプライマリーキーの値を参照できるようになりました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id2">
-<h3>感謝<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;oreradioさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-08-2014-11-29">
-<span id="release-4-08"></span><h2>4.08リリース - 2014/11/29<a class="headerlink" href="#release-4-08-2014-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id3">
-<h3>改良<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[deb] Ubuntu 12.04をTravis-CI向けに再度サポートしました。</p>
-</li>
-<li><p class="first">[test] パフォーマンススキーマをチェックするスクリプトを追加しました。 [Elena Stepanovaさんがパッチ提供]</p>
-</li>
-<li><p class="first">[rpm] MySQL 5.5.40 をCentOS 6と7でサポートしました。 [groonga-dev,02955] [西山さんが報告]</p>
-</li>
-<li><p class="first">[doc] カラムサイズに関する <a class="reference internal" href="reference/limitations.html"><em>制限事項</em></a> を追記しました。</p>
-</li>
-<li><p class="first">[ストレージモード] 主キーの指定が必要なクエリに主キーが指定されていなかったときのチェック漏れを修正しました。[groonga-dev,02963] [lkashiharaさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id4">
-<h3>修正<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] 存在しないMySQLバージョンの記述を削除しました。[groonga-dev,02899] [GMOメディア株式会社さんが報告]</p>
-</li>
-<li><p class="first">[doc] CentOS 5のインストール手順で不要なSCL関連の記述を削除しました。</p>
-</li>
-<li><p class="first">[doc] CentOS 5と6では <tt class="docutils literal"><span class="pre">service</span></tt> コマンドをMySQLの起動に使うようにしました。</p>
-</li>
-<li><p class="first">[doc] CentOS 7では <tt class="docutils literal"><span class="pre">systemctl</span></tt> コマンドをMySQLの起動に使うようにしました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id5">
-<h3>感謝<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">GMOメディア株式会社さん</p>
-</li>
-<li><p class="first">Elena Stepanovaさん</p>
-</li>
-<li><p class="first">西山さん</p>
-</li>
-<li><p class="first">kashiharaさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-07-2014-10-29">
-<span id="release-4-07"></span><h2>4.07リリース - 2014/10/29<a class="headerlink" href="#release-4-07-2014-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id6">
-<h3>改良<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージ] 非推奨である <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">DELAYED</span></tt> をエラーとして扱うようにしました。 [GitHub#20] [MDEV#6837] [Elena Stepanovaさんが報告]</p>
-</li>
-<li><p class="first">[ストレージ][mariadb10] ユニークインデックスを追加するときに重複がある場合、適切なエラーメッセージを表示するようにしました。 [GitHub#19] [Elena Stepanovaさんが報告]</p>
-</li>
-<li><p class="first">[cmake] 不要なコンパイラフラグのチェックメッセージを表示しないようにしました。 [GitHub#22]</p>
-</li>
-<li><p class="first">トークンフィルターをテーブルもしくはインデックスのコメントに指定できるようにしました。 [GitHub#25] [村上さんがパッチ提供]</p>
-</li>
-<li><p class="first">[mroonga_command] mroonga_commandを使うときにすでにGroongaのデータベースの有無を気にしなくてもよくなりました。以前はMroongaを使ったテーブルが存在している必要がありました。</p>
-</li>
-<li><p class="first">[storage] テーブルのコメントにノーマライザーを指定できるようにしました。 [GitHub#27] [村上さんがパッチ提供]</p>
-</li>
-<li><p class="first">[ストレージ] カラムの圧縮フラグをサポートしました。 (<tt class="docutils literal"><span class="pre">COMPRESS_LZ4</span></tt>, <tt class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></tt>) [GitHub#32] [村上さんがパッチ提供]</p>
-</li>
-<li><p class="first"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-support-lz4"><em>mroonga_libgroonga_support_lz4</em></a> と <a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-support-zlib"><em>mroonga_libgroonga_support_zlib</em></a>  システム変数を追加しました。 [GitHub#33,#34,#35] [村上さんがパッチ提供]</p>
-</li>
-<li><p class="first">MySQL 5.1対応をやめました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id7">
-<h3>修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージ][mariadb10] 不適切なロックのせいでクラッシュする不具合を修正しました。 [GitHub#18] [Elena Stepanovaさんが報告]</p>
-</li>
-<li><p class="first">[ストレージ] signed tinyintでオーバーフローしていた問題を修正しました。 [GitHub#29]</p>
-</li>
-<li><p class="first">[doc] ノーマライザーに関するマークアップを修正しました。 [GitHub#32] [村上さんがパッチ提供]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id8">
-<h3>感謝<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Elena Stepanovaさん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-06-2014-09-29">
-<span id="release-4-06"></span><h2>4.06リリース - 2014/09/29<a class="headerlink" href="#release-4-06-2014-09-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id9">
-<h3>改良<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] Groongaの開発パッケージについて説明を追加しました。</p>
-</li>
-<li><p class="first">[doc] GitHub issue trackerの使用を推奨するようにしました。</p>
-</li>
-<li><p class="first">[deb] Debian jessieとsidのサポートを終了しました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id10">
-<h3>修正<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] マルチカラムインデックスを使った検索で空のレコードが返ってくる不具合を修正しました。この不具合は次の2つの条件を満たすと発生します。1つめは、カラムがマルチカラムインデックスによってインデックスが作成されており、ORDERとWHERE句に指定されていること。2つめが、マルチカラムインデックスに指定した最初のカラムがORDERで使われていないことです。[#2651] [foamcentime, 村上さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id11">
-<h3>感謝<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">foamcentimeさん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-05-2014-08-29">
-<span id="release-4-05"></span><h2>4.05リリース - 2014/08/29<a class="headerlink" href="#release-4-05-2014-08-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id12">
-<h3>改良<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Ubuntu 13.10 (Saucy Salamander)のサポートをやめました。</p>
-</li>
-<li><p class="first">サーバー変数として <a class="reference internal" href="reference/server_variables.html#mroonga-vector-column-delimiter"><em>mroonga_vector_column_delimiter</em></a> を追加しました。ベクターカラムのデリミタを変更するのに使います。[GitHub#16] [村上さんがパッチ提供]</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 6/7にて公式リポジトリにあるMySQL 5.6をサポートしました。mysql56-community-mroongaパッケージを使ってください。[mikoさんがパッチ提供]</p>
-</li>
-<li><p class="first">[doc] インストール手順に含めていたアップグレードガイドを移動しました。<a class="reference internal" href="upgrade.html"><em>アップグレード</em></a> として参照できます。</p>
-</li>
-<li><p class="first">MariaDB 10.0.13に対応しました。</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 7をサポートしました。mariadb-mroongaパッケージを提供しています。このパッケージはバンドルされているMariaDBを使います。 [groonga-dev,02604] [宮脇さんがテスト協力][河田さんがテスト協力]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id13">
-<h3>修正<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] Mroonga 4.04のリリースエントリでMySQLのバージョンが間違っていたのを修正しました。[_so4さんが報告]</p>
-</li>
-<li><p class="first">[doc] インストール手順で明示的にインストールする必要のなくなったgroonga-normalizer-mysqlパッケージについて削除しました。</p>
-</li>
-<li><p class="first">[ストレージモード] uniqueインデックスが残ったままで、プライマリーキーのduplicateエラーが発生する不具合を修正しました。[groonga-dev,02633] [6elzさんが報告]</p>
-</li>
-<li><p class="first">[doc] 別のディレクトリでドキュメントをビルドできない不具合を修正しました。[groonga-dev,02652] [cosmo0920さんが報告]</p>
-</li>
-<li><p class="first">ストレージエンジンの表記に&quot;Mroonga&quot;を使うようにしました。</p>
-</li>
-<li><p class="first">[ストレージモード] テーブルを参照するインデックスがコメントで指定(<tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">'table</span> <span class="pre">&quot;XXX&quot;'</span></tt>)されていると削除できない不具合を修正しました。[groonga-dev,02677] [村上さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id14">
-<h3>感謝<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">_so4さん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-<li><p class="first">mikoさん</p>
-</li>
-<li><p class="first">6elzさん</p>
-</li>
-<li><p class="first">cosmo0920さん</p>
-</li>
-<li><p class="first">宮脇さん</p>
-</li>
-<li><p class="first">河田さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-04-2014-07-29">
-<span id="release-4-04"></span><h2>4.04リリース - 2014/07/29<a class="headerlink" href="#release-4-04-2014-07-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id15">
-<h3>改良<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Groongaとgroonga-normalizer-mysql特有のテストファイルをMariaDBバンドル版には含めないようにしました。これはファイル名が長すぎる問題があるためです。 [groonga-dev,02391] [横山昌史さんが報告]</p>
-</li>
-<li><p class="first">[doc] <a class="reference internal" href="developer.html"><em>開発者向け情報</em></a> を更新しました。</p>
-</li>
-<li><p class="first">妥当な日時であるかのチェックを32-bit環境で追加しました。[Tashiroさんがパッチ提供]</p>
-</li>
-<li><p class="first">[ストレージモード] INPLACE ALTER TABLEでカラムを追加削除できるようになりました。[#2277] [GitHub#12] [村上さんがパッチ提供]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id16">
-<h3>修正<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[rpm][centos] CentOSでMySQL 5.5.37でビルドするようにしました。[吉田さんが報告]</p>
-</li>
-<li><p class="first">Mac OSでの大文字/小文字特有の問題を回避するためにテストのテーブル名は小文字を使うようにしました。[Tashiroさんがパッチ提供]</p>
-</li>
-<li><p class="first">VC++ 2013でのビルドエラーを修正しました。[GitHub#10] [cosmo0920さんがパッチ提供]</p>
-</li>
-<li><p class="first">[doc] CentOS6 SCLでのインストール手順で二重引用符が抜けているのを修正しました。[GitHub#11] [村上さんがパッチ提供]</p>
-</li>
-<li><p class="first">[ストレージモード] ALTER TABLE CHANGEでカラムを変更しようとするとクラッシュする問題を修正しました。[#2637]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id17">
-<h3>感謝<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">吉田光男さん</p>
-</li>
-<li><p class="first">横山昌史さん</p>
-</li>
-<li><p class="first">Toshihisa Tashiroさん</p>
-</li>
-<li><p class="first">cosmo0920さん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-03-2014-05-29">
-<span id="release-4-03"></span><h2>4.03リリース - 2014/05/29<a class="headerlink" href="#release-4-03-2014-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id18">
-<h3>改良<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] MariaDBのバージョンを更新しました。 [cosmo0920さんがパッチ提供]</p>
-</li>
-<li><p class="first">夏時間をサポートしました。 [#2385]</p>
-</li>
-<li><p class="first">Ubuntuパッケージの配布サイトをLaunchpadのPPAに移行しました。詳細は <a class="reference internal" href="install.html"><em>インストール</em></a> を参照してください。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id19">
-<h3>修正<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] <a class="reference internal" href="install.html"><em>インストール</em></a> の間違ったコマンドラインを修正しました。 [吉田光男さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id20">
-<h3>感謝<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">cosmo0920さん</p>
-</li>
-<li><p class="first">吉田光男さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-02-2014-04-29">
-<span id="release-4-02"></span><h2>4.02リリース - 2014/04/29<a class="headerlink" href="#release-4-02-2014-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id21">
-<h3>改良<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MariaDB 10.0.10に対応しました。 [#2460] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">MySQL 5.6.17に対応しました。</p>
-</li>
-<li><p class="first">Ubuntu 14.04 LTS Trusty Tahrに対応しました。</p>
-</li>
-<li><p class="first">MariaDBにバンドルした状態でビルドできるようにしました。</p>
-</li>
-<li><p class="first">Ubuntu 12.10 Quantal Quetzalの対応をやめました。</p>
-</li>
-<li><p class="first">[doc] MySQLのバージョンを更新しました。 [GitHub#8] [cosmo0920さんがパッチ提供]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id22">
-<h3>修正<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></tt> のときにtruncateを使わないようにしました。 [groonga-dev,02222] [GMOメディア株式会社さんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] <tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></tt> のときにtruncateを使わないようにしました。</p>
-</li>
-<li><p class="first">[ストレージモード] プライマリーキーがないテーブルをinplate alter tableするとクラッシュする問題を修正しました。 [groonga-dev,02227] [GMOメディア株式会社さんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">function(vector_reference_column)</span></tt> が動かない問題を修正しました。 [groonga-dev,02234] [村上さんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> あるいは <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt> に現在の値と同じ値を設定するとクラッシュする問題を修正しました。 [GitHub#6] [Satoshi MITANIさんがパッチ提供]</p>
-</li>
-<li><p class="first">my.cnfやコマンドラインオプションで <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt> を指定しても無視される問題を修正しました。 [GitHub#7] [GMOメディア株式会社さんがパッチ提供]</p>
-</li>
-<li><p class="first">プライマリーキーを指定してレコードを削除するとユニークインデックスが更新されない問題を修正しました。 [groonga-dev,02244] [津久井玲宏さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id23">
-<h3>感謝<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">かずひこさん</p>
-</li>
-<li><p class="first">GMOメディア株式会社さん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-<li><p class="first">Satoshi MITANIさん</p>
-</li>
-<li><p class="first">津久井玲宏さん</p>
-</li>
-<li><p class="first">cosmo0920さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-01-2014-03-29">
-<span id="release-4-01"></span><h2>4.01リリース - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id24">
-<h3>改良<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MariaDB 10.0.9に対応しました。 [#2387] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">10以上のセクションをWプラグマで扱えるようにしました。[#2348] [groonga-dev,02138] [yoku0825さんが報告]</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 6にてSCLのMySQLパッケージに対応しました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id25">
-<h3>修正<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] テーブル参照型のフルテキストインデックスをALTER TABLEしようとするとmysqldがクラッシュする問題を修正しました。 [#2327] [groonga-dev,02130] [村上さんが報告]</p>
-</li>
-<li><p class="first">[doc] &quot;Mroongaの特徴&quot;でMroonga/Groongaを大文字表記するようにしました。[GitHub#5] [村上さんがパッチ提供]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id26">
-<h3>感謝<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">yokuさん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-<li><p class="first">かずひこさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-4-00-2014-02-09">
-<span id="release-4-00"></span><h2>4.00リリース - 2014/02/29<a class="headerlink" href="#release-4-00-2014-02-09" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><p class="first">バージョン4.00になりました。クラッシュする不具合や更新時の不具合が修正されたのでアップグレードをおすすめします。</p>
-</li>
-</ul>
-<div class="section" id="id27">
-<h3>改良<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Ubuntu 13.04 Raring Ringtailのサポートをやめました。</p>
-</li>
-<li><p class="first">[ストレージモード] 空の文字列でも検索できるようにしました。 [#2214] [groonga-dev,02052] [村上さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id28">
-<h3>修正<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">NULL値をNOT NULL制約のあるgeometryカラムに対してインサートしようとするとクラッシュする不具合を修正しました。 [#2281] [groonga-dev,02095] [yokuさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] ON DUPLICATE KEY UPDATEにより、既存のレコードが意図せず削除される不具合を修正しました。以前のバージョンではカラムの値を正しく更新できていませんでした。 [#2263] [長野雅広さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id29">
-<h3>感謝<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">yokuさん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-<li><p class="first">長野雅広さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-12-2014-01-29">
-<span id="release-3-12"></span><h2>3.12リリース - 2014/01/29<a class="headerlink" href="#release-3-12-2014-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id30">
-<h3>改良<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">システム変数 <em class="xref std std-ref">mroonga_lock_timeout</em> を追加しました。この変更で、Groongaのロックタイムアウトを動的に変更できるようになりました。</p>
-</li>
-<li><p class="first">Tritonnの&quot;W&quot;プラグマとの互換性を改善しました。以前のバージョンでは、Mroongaは省略したセクションの重みを0としていました。この変更で、省略時
-のセクションの重みを1にしています。これはTritonnと同じ振舞いです。[#2152] [丸山さんがパッチ提供]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id31">
-<h3>修正<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">SELECT MATCH AGAINST ... クエリ実行中にFLUSH TABLESを実行するとクラッシュする不具合を修正しました。 [#2137] [yokuさんが報告]</p>
-</li>
-<li><p class="first">&quot;W&quot;プラグマの実装の誤りを修正しました。1オリジンに修正しています。以前のバージョンでは、0オリジンとして実装されていましたが、これはTritonnとは互換性がありませんでした。これは非互換な変更なので、既存の&quot;W&quot;プラグマを使ったクエリを確認してください。 [#2151]</p>
-</li>
-<li><p class="first">空のレコードを否定で検索すると重複した結果が返ってくる不具合を修正しました。 [#2215] [groonga-dev,02052] [村上さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id32">
-<h3>感謝<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">yokuさん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-11-2013-12-29">
-<span id="release-3-11"></span><h2>3.11リリース - 2013/12/29<a class="headerlink" href="#release-3-11-2013-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id33">
-<h3>改良<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[deb] Debian 6.0 (squeeze)のサポートを終了しました。</p>
-</li>
-<li><p class="first">[deb] Ubuntu 10.04 (lucid)のサポートを終了しました。</p>
-</li>
-<li><p class="first">[ストレージモード] &quot;MATCH AGAINST AND INT_COLUMN OPERATOR XXX ORDER BY LIMIT&quot;というクエリでも最適化が効くようになりました。&quot;OPERATOR&quot;でサポートしている演算子は'&lt;'、'&gt;'、'&lt;='と'&gt;='です。 [groonga-dev,01940] [堀越さんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] &quot;MATCH AGAINST AND DATETIME_COLUMN OPERATOR XXX ORDER BY LIMIT&quot;というクエリでも最適化が効くようになりました。&quot;OPERATOR&quot;でサポートしている演算子は'&lt;'、'&gt;'、'&lt;='と'&gt;='です。[groonga-dev,01940] [yokuさんが提案]</p>
-</li>
-<li><p class="first">[ストレージモード] &quot;MATCH AGAINST AND TIME_COLUMN OPERATOR XXX ORDER BY LIMIT&quot;というクエリでも最適化が効くようになりました。&quot;OPERATOR&quot;でサポートしている演算子は'&lt;'、'&gt;'、'&lt;='と'&gt;='です。</p>
-</li>
-<li><p class="first">[doc] 'ユーザーガイド'を'チュートリアルに変更しました。</p>
-</li>
-<li><p class="first">[doc] 'FAQ'のセクションをドキュメントへ追加しました。</p>
-</li>
-<li><p class="first">[doc] 全文検索を独立したセクションにしました。</p>
-</li>
-<li><p class="first">[ストレージモード] 'BETWEEN'をINT,DATETIME,TIME型のカラムに対してサポートしました。Groonga 3.1.1以降が必要であることに注意してください。 [groonga-dev,01943] [yokuさんが提案]</p>
-</li>
-<li><p class="first">MariaDB 10.0.7 (まだリリースされていないバージョン) をサポートしました。[#1964]</p>
-</li>
-<li><p class="first">Microsoft Visual Studio 2008以前でのビルドサポートを終了しました。</p>
-</li>
-<li><p class="first">Fedora 19対応を終了しました。</p>
-</li>
-<li><p class="first">Fedora 20に対応しました。</p>
-</li>
-<li><p class="first">CentOS 5でmysql-mroongaパッケージの提供を終了しました。これからはmysql55-mroongaパッケージを使ってください。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id34">
-<h3>修正<a class="headerlink" href="#id34" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] ダンプやリストア中の'LOCK TABLE .. READ'でMySQLがクラッシュする不具合を修正しました。[#2098]</p>
-</li>
-<li><p class="first">&quot;*D-&quot;プラグマの挙動を間違って実装していたのを修正しました。 [#2099]</p>
-</li>
-<li><p class="first">全文検索時のメモリリークを修正しました。&quot;MATCH AGAINST ... ORDER BY LIMIT ...&quot;といったクエリがこの影響を受けます。 [#2144]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id35">
-<h3>感謝<a class="headerlink" href="#id35" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Horikoshi Yukiさん</p>
-</li>
-<li><p class="first">yokuさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-10-2013-11-29">
-<span id="release-3-10"></span><h2>3.10リリース - 2013/11/29<a class="headerlink" href="#release-3-10-2013-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id36">
-<h3>改良<a class="headerlink" href="#id36" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MariaDB 10.0.6に対応しました。</p>
-</li>
-<li><p class="first">[プラグイン][mroonga_snippet] サポートしていない文字コードをエラー時に
-報告するようにしました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id37">
-<h3>修正<a class="headerlink" href="#id37" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Disk Sweep Multi Range Read(DS-MRR)と呼ばれる最適化に関する問題を修正しまし
-た。この問題ではクエリの &quot;WHERE IN (...)&quot; という条件節でエラーを引き
-起こしていました。[木村さんが報告]</p>
-</li>
-<li><p class="first">MariaDBの開発版(trunk)でセグメンテーションフォルトが発生していた問題を
-修正しました。</p>
-</li>
-<li><p class="first">位置情報を保存するカラムが'REPLACE INTO'や'INSERT ON DUPLICATE KEY
-UPDATE'クエリで適切に更新できない不具合を修正しました。</p>
-</li>
-<li><p class="first">Windowsでのコンパイラの警告を修正しました。[#1964]</p>
-</li>
-<li><p class="first">ベクターカラムが'REPLACE INTO'クエリで適切に更新されない不具合を修正し
-ました。[#2064]</p>
-</li>
-<li><p class="first">[mariadb10.0.5] ソースコードのディレクトリ構造が変更されたとによるビルドエラーを修正
-しました。[#2066]</p>
-</li>
-<li><p class="first">&quot;_i&quot;といった短いカラム名が特別なカラムである&quot;_id&quot;として扱われてし
-まう不具合を修正しました。[Alexander Barkovさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id38">
-<h3>感謝<a class="headerlink" href="#id38" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">木村さん</p>
-</li>
-<li><p class="first">Alexander Barkovさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-09-2013-10-29">
-<span id="release-3-09"></span><h2>3.09リリース - 2013/10/29<a class="headerlink" href="#release-3-09-2013-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id39">
-<h3>改良<a class="headerlink" href="#id39" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Ubuntu 13.10 (Saucy Salamander)に対応しました。</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 5でMySQL 5.5向けのRPMパッケージをサポートしました。mysql55-mroongaというパッケージを提供します。 [groonga-dev,01869] [WINGさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id40">
-<h3>修正<a class="headerlink" href="#id40" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ラッパーモード] メモリリークを修正しました。これはラッパーモードのハンドラが排他制御の後始末を適切に行なっていないことによるものです。ストレージエンジンとしてMyISAMを使用していると影響を受けることが知られています。</p>
-</li>
-<li><p class="first">[ラッパーモード] MySQL 5.6でFORCE INDEXを使うとクラッシュする不具合を修正しました。 [#2015] [groonga-dev,01867] [安田さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id41">
-<h3>感謝<a class="headerlink" href="#id41" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">WINGさん</p>
-</li>
-<li><p class="first">安田一郎さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-08-2013-9-29">
-<span id="release-3-08"></span><h2>3.08リリース - 2013/9/29<a class="headerlink" href="#release-3-08-2013-9-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id42">
-<h3>改良<a class="headerlink" href="#id42" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] ラッパーモード特有の事項に関する追記をしました。[groonga-dev,01747] [磯部和広さんが報告]</p>
-</li>
-<li><p class="first">[mroonga_escape] mroonga_escapeをUDFの引数として使えるようにしました。[#1923] [Tomoatsu Shimadaさんが報告]</p>
-</li>
-<li><p class="first">[doc] &quot;ソースコードを表示&quot;のラベルに言語の注記を追加しました。[groonga-dev,01747] [磯部和広さんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] REPAIR TABLEをgroongaのテーブルが壊れていても実行できるようにしました。[groonga-dev,01540] [村上さんが提案]</p>
-</li>
-<li><p class="first">configureを使ったMariaDB 10.xとのビルドをできるようにしました。 [groonga-dev,01727] [WINGさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id43">
-<h3>修正<a class="headerlink" href="#id43" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">mroongaがアップグレード時に意図せず削除される不具合を修正しました。[#1918][&#64;ceekzさんが報告]</p>
-</li>
-<li><p class="first">Windows環境でinstall pluginするとmysqld 32bit実行バイナリがクラッシュする不具合を修正しました。</p>
-</li>
-<li><p class="first">[ストレージ][mariadb] mroonga_log_fileのメモリリークを修正しました。このメモリリークはログファイル名を変更したときに発生していました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id44">
-<h3>感謝<a class="headerlink" href="#id44" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">磯部和広さん</p>
-</li>
-<li><p class="first">Tomoatsu Shimadaさん</p>
-</li>
-<li><p class="first">&#64;ceekzさん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-<li><p class="first">WINGさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-07-2013-8-29">
-<span id="release-3-07"></span><h2>3.07リリース - 2013/8/29<a class="headerlink" href="#release-3-07-2013-8-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id45">
-<h3>改良<a class="headerlink" href="#id45" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">BOOLEAN MODEのクエリで特別な文字をエスケープする  <a class="reference internal" href="reference/udf/mroonga_escape.html"><em>mroonga_escape</em></a> を追加しました。 [groonga-dev,01576]  [田辺さんが提案]</p>
-</li>
-<li><p class="first">ORDER BY LIMIT の最適化でWHERE句にVARCHARの等価比較がある場合をサポートしました。</p>
-</li>
-<li><p class="first">MariaDB 5.5.32 timestampをサポートしました。</p>
-</li>
-<li><p class="first">MariaDB 10.0.4をサポートしました。[WINGさんが報告] [yoku tsさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id46">
-<h3>修正<a class="headerlink" href="#id46" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[mariadb] Windowsでプラグインをインストールするときにクラッシュする不具合を修正しました。</p>
-</li>
-<li><p class="first">[ストレージモード][mysql55] インデックスを含むカラムの変更に失敗する不具合を修正しました。[groonga-talk] [Changさんが報告] この不具合は例えば <tt class="docutils literal"><span class="pre">FULLTEXTINDEX</span> <span class="pre">(column1)</span></tt> が <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table1</span> <span class="pre">CHANGE</span> <span class="pre">column1</span> <span class="pre">column1</span> <span class="pre">new_column_definition</span></tt> などとして変更された場合に影響します。</p>
-</li>
-<li><p class="first">[doc][ラッパーモード] ORDER BY LIMITの最適化の説明が不正確だったのを修正しました。</p>
-</li>
-<li><p class="first">[ストレージモード] インデックス化されていないVARCHARに対しては ORDERBY LIMITを無効にしました。インデックスがないとCOLLATIONを正しく扱えないためです。</p>
-</li>
-<li><p class="first">MySQL 5.6.13で内部的に使っているフラグが未設定なことによりクラッシュする不具合を修正しました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id47">
-<h3>感謝<a class="headerlink" href="#id47" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">田辺公平さん</p>
-</li>
-<li><p class="first">Changさん</p>
-</li>
-<li><p class="first">WINGさん</p>
-</li>
-<li><p class="first">yoku tsさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-06-2013-7-29">
-<span id="release-3-06"></span><h2>3.06リリース - 2013/7/29<a class="headerlink" href="#release-3-06-2013-7-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id48">
-<h3>改良<a class="headerlink" href="#id48" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first"><a class="reference internal" href="reference/server_variables.html#mroonga-action-on-fulltext-query-error"><em>mroonga_action_on_fulltext_query_error</em></a> セッション変数を追加しました。これは不正なエスケープに対するエラーを報告する方法に影響します。 [groonga-dev,01529] [田辺公平さんが報告]</p>
-</li>
-<li><p class="first">行カウントの最適化がMySQL 5.5やMariaDB 10.xのラッパーモードでも有効になりました。 [#1841] [groonga-dev,01523] [村上さんが報告] この最適化はストレージエンジンがトランザクションをサポートしている場合には動作しません。</p>
-</li>
-<li><p class="first">Fedora 19に対応しました。</p>
-</li>
-<li><p class="first">Fedora 18対応をやめました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id49">
-<h3>感謝<a class="headerlink" href="#id49" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">田辺公平さん</p>
-</li>
-<li><p class="first">村上さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-05-2013-6-29">
-<span id="release-3-05"></span><h2>3.05リリース - 2013/6/29<a class="headerlink" href="#release-3-05-2013-6-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id50">
-<h3>改良<a class="headerlink" href="#id50" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">切り詰められた日付データに対する警告を表示するようにしました。 [#1768] [Y.Kentaroさんが提案]</p>
-</li>
-<li><p class="first">MySQL 5.6.12に対応しました。 [WINGさんが報告]</p>
-</li>
-<li><p class="first">トラブルシューティングのためのドキュメントを追加しました。</p>
-</li>
-<li><p class="first">fast mutexesオプションをビルド設定で有効にできるようにしました。 [#1760][WINGさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id51">
-<h3>修正<a class="headerlink" href="#id51" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">3カラム以上のセクションに対するWプラグマが動作しない不具合を修正しました。 [#1770] [shizuinさんが報告]</p>
-</li>
-<li><p class="first">&quot;-O2&quot; 指定ありだとビルドエラーになる問題を修正しました。 [Y.Kentaroさんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">normalizers/mysql</span></tt> を再登録しようとするとメモリリークする問題を修正しました。</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt> 有効時に更新するとクラッシュする問題を修正しました。 [#1759]</p>
-</li>
-<li><p class="first">[doc] ラッパーモードで最適化の状態に関する翻訳誤りを修正しました。 [YOSHIDA Mitsuoさんが報告]</p>
-</li>
-<li><p class="first">where句なしで <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">...</span> <span class="pre">LIMIT</span></tt> を指定するとクラッシュする不具合を修正しました。[&#64;memorycraftさんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">LOCK</span> <span class="pre">TABLES</span></tt> と <tt class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></tt> を同時に使うと検索データとしてヒットしない不具合を修正しました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id52">
-<h3>感謝<a class="headerlink" href="#id52" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Y.Kentaroさん</p>
-</li>
-<li><p class="first">WINGさん</p>
-</li>
-<li><p class="first">shizuinさん</p>
-</li>
-<li><p class="first">吉田光男さん</p>
-</li>
-<li><p class="first">&#64;memorycraftさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-04-2013-5-29">
-<span id="release-3-04"></span><h2>3.04リリース - 2013/5/29<a class="headerlink" href="#release-3-04-2013-5-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id53">
-<h3>改良<a class="headerlink" href="#id53" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MariaDB 10.0.2のサポートを改善しました。 [#1729]</p>
-</li>
-<li><p class="first">[doc] サポートしているSQLコマンドのリストを更新しました。 [Y.Kentaroさんが報告]</p>
-</li>
-<li><p class="first">Ubuntu 11.10 (Oneiric Ocelot)のサポートをやめました。</p>
-</li>
-<li><p class="first">MariaDBパッケージへのmroonga組み込みをサポートしました。 [#1691]</p>
-</li>
-<li><p class="first">[ラッパーモード] カラムコメントをパースするのをやめました。 [Y.Kentaroさんが報告]</p>
-</li>
-<li><p class="first">通常のカラムコメントのバリデーションをしないようにしました。 [Y.Kentaroさんが報告]</p>
-</li>
-<li><p class="first">libmysqlservices.aを含むディレクトリの検出方法を改善しました。 [Y.Kentaroさんが報告]</p>
-</li>
-<li><p class="first">テーブル/インデックスコメントをフリースタイルで書けるように改善しました。[Y.Kentaroさんが提案]</p>
-</li>
-<li><p class="first">&quot;W&quot;プラグマをサポートしました。この機能は <a class="reference external" href="http://qwik.jp/senna/query.html">Tritonn</a> に由来します。</p>
-</li>
-<li><p class="first">データベースを指定することなく <tt class="docutils literal"><span class="pre">mroonga_command()</span></tt> を使えるようにしました。[Y.Kentaroさんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">auto_increment</span></tt> の値をテーブルを作るときにも参照するように改善しました。 [#1741]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">auto_increment</span></tt> の値を直近のレコードが削除されてもそのまま保持するように改善しました。 [#1738]</p>
-</li>
-<li><p class="first">[doc] Windowsでのmroongaのインストール手順を追加しました。</p>
-</li>
-<li><p class="first">初期セットアップのためのインストール用SQLを追加しました。 [groonga-dev,01434] [かずひこさんが提案]</p>
-</li>
-<li><p class="first">Debian 8.0 (jessie)に対応しました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id54">
-<h3>修正<a class="headerlink" href="#id54" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">空の検索クエリがSEGVを引き起す不具合を修正しました。 [groonga-dev,01346][中井さんが報告]</p>
-</li>
-<li><p class="first">ディレクトリの存在に依存したパッケージのビルドエラーを修正しました。 [groonga-dev,01335] [WINGさんが報告] [yoku tsさんがパッチ提供]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">groonga-normalizer-mysql</span></tt> パッケージへのビルド時の依存関係の抜けを修正しました。[Y.Kentaroさんがパッチ提供]</p>
-</li>
-<li><p class="first">my.cnfの <tt class="docutils literal"><span class="pre">Mroonga_log_level</span></tt> の値が設定されない不具合を修正しました。[groonga-dev,01379] [磯部和広さんが報告]</p>
-</li>
-<li><p class="first">デフォルトのトークナイザーが正しく開放されずメモリリークする不具合を修正しました。</p>
-</li>
-<li><p class="first">[ラッパーモード] ストレージエンジン名なしでALTER TABLEによりコメントを変更するとテーブルが消失する不具合を修正しました。 [Y.Kentaroさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id55">
-<h3>感謝<a class="headerlink" href="#id55" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Y.Kentaroさん</p>
-</li>
-<li><p class="first">中井さん</p>
-</li>
-<li><p class="first">WINGさん</p>
-</li>
-<li><p class="first">yoku tsさん</p>
-</li>
-<li><p class="first">磯部和広さん</p>
-</li>
-<li><p class="first">かずひこさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-03-2013-4-29">
-<span id="release-3-03"></span><h2>3.03リリース - 2013/4/29<a class="headerlink" href="#release-3-03-2013-4-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id56">
-<h3>改良<a class="headerlink" href="#id56" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[doc] テーブルの制限に関するドキュメントを追加した。 [groonga-dev,01281] [磯部和広さんが報告]</p>
-</li>
-<li><p class="first">[doc] <tt class="docutils literal"><span class="pre">mroonga_command</span></tt> のドキュメントを追加した。</p>
-</li>
-<li><p class="first">コメントのテーブルのパラメータとして <tt class="docutils literal"><span class="pre">default_tokenizer</span></tt> をサポートした。</p>
-</li>
-<li><p class="first">既存のテーブルを &quot;FULLTEXT INDEX&quot;だけでなく&quot;INDEX&quot;の対象となる語彙表として使えるようにした。</p>
-</li>
-<li><p class="first">MySQL 5.6.11をサポートした。</p>
-</li>
-<li><p class="first">マルチカラムインデックスでの照合順序をサポートした。 [groonga-dev,01302] [田辺公平さんが報告]</p>
-</li>
-<li><p class="first">groongaの前方一致検索クエリの記法 &quot;XXX*&quot; 向けにパーサーを無効にした状態でのFULLTEXTインデックスをサポートした。</p>
-</li>
-<li><p class="first">[cmake] MySQL 5.5.xのビルド対応をやめた。</p>
-</li>
-<li><p class="first">FULLTEXT INDEXに対するノーマライザー指定をサポートした。コメントでノーマライザーを指定できます。指定方法は <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(column)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;NormalizerXXX&quot;'</span></tt> です。[groonga-dev:01303] [田辺公平さんが提案]</p>
-</li>
-<li><p class="first">Ubuntu 13.04 Raring Ringtailをサポートした。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id57">
-<h3>修正<a class="headerlink" href="#id57" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] 保存した値を検索できないという不具合を修正した。これは数値が意図しないキャストにより丸められていたためです。[#1696] [groonga-dev,01266] [smztksさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] 複数のMATCH AGAINSTを使うと正しくないカウント数を返す不具合を修正した。[#1702] [groonga-dev,01279] [古田さんが報告]</p>
-</li>
-<li><p class="first">[doc] <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> が無視される不具合を修正した。 [groonga-dev,01290] [磯部和広さんが報告]</p>
-</li>
-<li><p class="first">mroongaが内部で使用している一時オブジェクトを開放する際にクラッシュしてしまう不具合を修正した。</p>
-</li>
-<li><p class="first">[doc] ストレージエンジンの動作モードの誤字と不明瞭な説明文を修正した。 [鈴木一郎さんが報告]</p>
-</li>
-<li><p class="first">[mysql55] 一行でまとめてインデックスの再作成を行うとクラッシュする不具合を修正した。[groonga-dev,01319] [田辺公平さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id58">
-<h3>感謝<a class="headerlink" href="#id58" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">smztksさん</p>
-</li>
-<li><p class="first">古田さん</p>
-</li>
-<li><p class="first">磯部和広さん</p>
-</li>
-<li><p class="first">田辺公平さん</p>
-</li>
-<li><p class="first">鈴木一郎さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-02-2013-3-29">
-<span id="release-3-02"></span><h2>3.02リリース - 2013/3/29<a class="headerlink" href="#release-3-02-2013-3-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id59">
-<h3>改良<a class="headerlink" href="#id59" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">LinuxでMariaDB 10.0へバンドルできるようにした。 [#1644]</p>
-</li>
-<li><p class="first">[doc] <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> に指定できる値のドキュメントをリファレンスマニュアルにも追加した。[groonga-dev,01255] [磯部和広さんが報告]</p>
-</li>
-<li><p class="first">[実験的] <tt class="docutils literal"><span class="pre">mroonga_command</span></tt> というUDFを追加しました。 [#1643] このUDFを使うと <tt class="docutils literal"><span class="pre">groonga</span></tt> に直接クエリを送れるようになります。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id60">
-<h3>修正<a class="headerlink" href="#id60" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">複合インデックスを使用している場合にWHERE節の表現が動作しない不具合を修正しました。 [groonga-dev,01253] [#1670] [堀越さんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] <tt class="docutils literal"><span class="pre">key</span></tt> オブジェクトが開放されるタイミングが早すぎて不正となるのを修正した。この不具合は DISABLE KEYS/ENABLE KEYSによってインデックスの再作成を行ったときに発生することがあります。 [#1671] [keigo itoさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id61">
-<h3>感謝<a class="headerlink" href="#id61" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">磯部和広さん</p>
-</li>
-<li><p class="first">Horikoshi Yukiさん</p>
-</li>
-<li><p class="first">keigo itoさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-01-2013-2-28">
-<span id="release-3-01"></span><h2>3.01リリース - 2013/2/28<a class="headerlink" href="#release-3-01-2013-2-28" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id62">
-<h3>改良<a class="headerlink" href="#id62" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first"><tt class="docutils literal"><span class="pre">utf8_unicode_ci</span></tt> と <tt class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></tt> をサポート。 <tt class="docutils literal"><span class="pre">groonga-normalizer-mysql</span></tt> &gt;= 1.0.1が必須です。</p>
-</li>
-<li><p class="first">[実験的] ストレージモードでFOREIGN KEY制約をサポート。 [#1612]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id63">
-<h3>修正<a class="headerlink" href="#id63" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">特定の範囲のレコードで検索結果が0件になることがあるというgroongaに由来する不具合を修正した。 [groonga-dev,01192] [b senbokuさんが報告]</p>
-</li>
-<li><p class="first">Mac OS X向けにデフォルトではDTraceを無効にした。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id64">
-<h3>感謝<a class="headerlink" href="#id64" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">b senbokuさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-3-00-2013-2-9">
-<span id="release-3-00"></span><h2>3.00リリース - 2013/2/9<a class="headerlink" href="#release-3-00-2013-2-9" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id65">
-<h3>改良<a class="headerlink" href="#id65" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Fedora 18に対応。</p>
-</li>
-<li><p class="first">Fedora 17対応をやめた。</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">utf8_general_ci</span></tt> と <tt class="docutils literal"><span class="pre">utf8mb4_generic_ci</span></tt> 互換なノーマライザーをサポートした。</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 5にてMySQL 5.6.10に対応した。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id66">
-<h3>修正<a class="headerlink" href="#id66" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] ユニークキーとなるカラムに対し大文字小文字混在のキーワードではマッチしないgroonga由来の不具合を修正した。 [groonga-dev,01187] [田辺公平さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id67">
-<h3>感謝<a class="headerlink" href="#id67" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">田辺公平さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-10-2012-12-29">
-<span id="release-2-10"></span><h2>2.10リリース - 2012/12/29<a class="headerlink" href="#release-2-10-2012-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id68">
-<h3>改良<a class="headerlink" href="#id68" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">システムと異なる文字コードのテーブルでもENABLE KEYS/DISABLE KEYSを使えるようにした。 [&#64;kokoronaviさんが報告]</p>
-</li>
-<li><p class="first">キーが重複している場合、エラーメッセージにそのキーの値を表示するように改善した。</p>
-</li>
-<li><p class="first">MySQL 5.6.9-rcに対応。 [#1547] [#1548] [wingさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></tt> をインデックスを使っての検索できるようにした。この変更で <tt class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></tt> を使った検索速度を改善できます。</p>
-</li>
-<li><p class="first">Ubuntu 11.04 (Natty Narwhal)のサポートを終了した。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id69">
-<h3>修正<a class="headerlink" href="#id69" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[rpm][centos] CentOS6でMySQL 5.1.66-2を使うように修正した。[宮脇さんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></tt> を <tt class="docutils literal"><span class="pre">INNER</span> <span class="pre">JOIN</span></tt> と一緒に使うとエラーになる不具合を修正した。 [大城さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id70">
-<h3>感謝<a class="headerlink" href="#id70" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;kokoronaviさん</p>
-</li>
-<li><p class="first">宮脇さん</p>
-</li>
-<li><p class="first">wingさん</p>
-</li>
-<li><p class="first">大城さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-09-2012-11-29">
-<span id="release-2-09"></span><h2>2.09リリース - 2012/11/29<a class="headerlink" href="#release-2-09-2012-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p>今回のリリースには後方互換性のない変更が <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> 型の値と 主キーにchar(N)を使った場合にあります。</p>
-<p>このリリースには <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> 型の値に関して後方互換性のない変更があります。 <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> 型ではUTCタイムゾーンを保持するように変更しました。もし <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> 型のカラムを(UTCタイムゾーンでなく)使っているテーブルがあれば、データベースを再作成 (データベースのダンプおよびリストアを行ってください。</p>
-<p>char(N)を主キーとして使用しているテーブルがあるなら、インデックスを再作成してください。</p>
-<p class="last">データベースやインデックスを再作成する手順はこちら</p>
-</div>
-<p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
-</pre></div>
-</div>
-<p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
-</pre></div>
-</div>
-<p>インデックスを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DROP PRIMARY KEY;
-mysql&gt; ALTER TABLE table_name ADD PRIMARY KEY(column_name);
-</pre></div>
-</div>
-<div class="section" id="id71">
-<h3>改良<a class="headerlink" href="#id71" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[rpm][centos] CentOS 5にてMySQL 5.5.28に対応。</p>
-</li>
-<li><p class="first">[rpm][centos] CentOS 6にてMySQL 5.1.61に対応。</p>
-</li>
-<li><p class="first">[ラッパーモード] last_insert_id()関数をサポートした。[#1540] [&#64;soundkitchenさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id72">
-<h3>修正<a class="headerlink" href="#id72" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[mysql51] utf8mb4の存在チェックでクラッシュする不具合を修正。MySQL 5.1にはutf8mb4がないのが原因でした。 [groonga-dev,01069] [Reported by wakisuke]</p>
-</li>
-<li><p class="first">[ストレージモード] 検索でマッチしているのに該当データを削除できない問題を修正した。 [#1533] [&#64;HANZUBONさんが報告]</p>
-</li>
-<li><p class="first">主キーのインデックスがchar(N)のとき検索できないことがあるのを修正。この不具合はchar(N)に設定した値がNよりも短いか末尾に空白がある場合に発現します。この修正によりインデックスの再構築が必要になります。</p>
-</li>
-<li><p class="first">char(N)に設定した文字列でNULL文字を含んでいた場合、それ以降が無視されてしまう不具合を修正。</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> 型の値をUTCで保持するようにしました。これは後方互換性のない変更です。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id73">
-<h3>感謝<a class="headerlink" href="#id73" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;soundkitchenさん</p>
-</li>
-<li><p class="first">wakisukeさん</p>
-</li>
-<li><p class="first">&#64;HANZUBONさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-08-2012-10-29">
-<span id="release-2-08"></span><h2>2.08リリース - 2012/10/29<a class="headerlink" href="#release-2-08-2012-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 マルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は  <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt> と <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></tt> を使ってインデックスを作り直してください:</p>
-<div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
-mysql&gt; ALTER TABLE table_name ENABLE KEYS;
-</pre></div>
-</div>
-</div>
-<div class="section" id="id74">
-<h3>改良<a class="headerlink" href="#id74" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">INFORMATION_SCHEMA.TABLES.DATA_LENGTH</span></tt> をサポート。 [&#64;9mさんが提案]</p>
-</li>
-<li><p class="first">utf8mb4をサポート。 [groonga-dev,01049] [warp kawadaさんが報告]</p>
-</li>
-<li><p class="first">Ubuntu 12.10 Quantal Quetzalに対応。</p>
-</li>
-<li><p class="first">[rpm][fedora] MySQL 5.5.28に対応。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id75">
-<h3>修正<a class="headerlink" href="#id75" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] マルチカラムユニークインデックスをDATE型のカラムで使ったときのユニーク判定不具合を修正。[groonga-dev,01041] [#1495] [jd foncさんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">WHERE</span> <span class="pre">index</span> <span class="pre">&lt;</span> <span class="pre">XXX</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">DESC</span></tt> で降順ソートが正しく行えない不具合を修正。 [&#64;taro252さんが報告]</p>
-</li>
-<li><p class="first">[rpm] <tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">FUNCTION</span> <span class="pre">mroonga_snippet</span></tt> が抜けている問題を修正。[&#64;tokuhyさんが報告]</p>
-</li>
-<li><p class="first">マルチカラムインデックスに指定したINT型のカラムで範囲検索が正しく行えない問題を修正。</p>
-</li>
-<li><p class="first">[doc] ビルド手順でコマンドライン操作の記述誤りを修正。 [groonga-dev,01061] [磯部和広さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id76">
-<h3>感謝<a class="headerlink" href="#id76" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;9mさん</p>
-</li>
-<li><p class="first">warp kawadaさん</p>
-</li>
-<li><p class="first">jd foncさん</p>
-</li>
-<li><p class="first">&#64;taro252さん</p>
-</li>
-<li><p class="first">&#64;tokuhyさん</p>
-</li>
-<li><p class="first">磯部和広さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-07-2012-09-29">
-<span id="release-2-07"></span><h2>2.07リリース - 2012/09/29<a class="headerlink" href="#release-2-07-2012-09-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id77">
-<h3>改良<a class="headerlink" href="#id77" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[deb] MeCab向けにAppArmorの設定を有効にした。 [&#64;Qurageさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード][実験的] mroonga_snippet()関数を追加。 [#1442]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id78">
-<h3>修正<a class="headerlink" href="#id78" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[rpm] <tt class="docutils literal"><span class="pre">groonga_required_version</span></tt> を修正。 [groonga-dev,01033] [wingさんが報告]</p>
-</li>
-<li><p class="first">datetime型として保持できる値の範囲が狭く、意図しない値が設定される問題を修正。 [groonga-dev,01035] [#1476] [中谷宗嵩さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id79">
-<h3>感謝<a class="headerlink" href="#id79" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;Qurageさん</p>
-</li>
-<li><p class="first">wingさん</p>
-</li>
-<li><p class="first">中谷宗嵩さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-06-2012-08-29">
-<span id="release-2-06"></span><h2>2.06リリース - 2012/08/29<a class="headerlink" href="#release-2-06-2012-08-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">今回のリリースではデータベースの互換性があります。ただし、新たにgroonga 2.0.6で導入された機能を使っているので、groonga 2.0.6と一緒に使わないといけません。</p>
-</div>
-<div class="section" id="id80">
-<h3>改良<a class="headerlink" href="#id80" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">BOOLEAN MODEにて &quot;-WORD&quot; という構文をサポートしました。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id81">
-<h3>修正<a class="headerlink" href="#id81" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">全文検索条件の &quot;order by&quot; によって検索結果のレコードが少なくなる不具合を修正した。[groonga-dev,00977] [#1422] [中谷宗嵩さんが報告]</p>
-</li>
-<li><p class="first">不要なビルドフラグを削除した。 [#1453] [&#64;nabebebさんが報告]</p>
-</li>
-<li><p class="first">[rpm][centos] BuildRequiresに抜けていたmysql-develの記述を修正した。 [groonga-dev,01009] [wingさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id82">
-<h3>感謝<a class="headerlink" href="#id82" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;nabebebさん</p>
-</li>
-<li><p class="first">wingさん</p>
-</li>
-<li><p class="first">中谷宗嵩さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-05-2012-07-29">
-<span id="release-2-05"></span><h2>2.05リリース - 2012/07/29<a class="headerlink" href="#release-2-05-2012-07-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">このリリースにはSETカラムとENUMに関して後方互換性のない変更があります。もし <a class="reference internal" href="tutorial/storage.html"><em>ストレージモード</em></a> にてSETカラムもしくは要素数が256より少ないENUMを使用しているなら、データベースを再作成してください。</p>
-</div>
-<p>以下が更新手順です。</p>
-<p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
-</pre></div>
-</div>
-<p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
-</pre></div>
-</div>
-<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <tt class="docutils literal"><span class="pre">apt-get</span></tt> を使います。CentOSやFedoraでは <tt class="docutils literal"><span class="pre">yum</span></tt> を使います。</p>
-<p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
-</pre></div>
-</div>
-<p>yum (v2.02以前からのアップグレード):</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
-% sudo yum install -y mysql-mroonga
-</pre></div>
-</div>
-<p>yum (v2.03以降からのアップグレード):</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y mysql-mroonga
-</pre></div>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">v2.02以前のリリースからアップグレードする場合、 <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></tt> の前に <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れてはいけません。もし、 <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
-</div>
-<p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
-</pre></div>
-</div>
-<p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
-</pre></div>
-</div>
-<p>これで2.05を使うことができるようになりました。</p>
-<div class="section" id="id83">
-<h3>改良<a class="headerlink" href="#id83" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] SET カラムでインデックスをサポート。</p>
-</li>
-<li><p class="first">[rpm] MySQL 5.5.25aに対応。</p>
-</li>
-<li><p class="first">Fedora 17に対応。</p>
-</li>
-<li><p class="first">Fedora 16対応をやめた。</p>
-</li>
-<li><p class="first">[ストレージモード] TINYINT UNSIGNED/SMALLINT UNSIGNED/MEDIUMINT UNSIGNED/INT UNSIGNED/BIGINT UNSIGNED型をサポート。</p>
-</li>
-<li><p class="first">[ストレージモード] ENUMを使うのに必要なストレージサイズを減らした。</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-04-2012-06-29">
-<span id="release-2-04"></span><h2>2.04リリース - 2012/06/29<a class="headerlink" href="#release-2-04-2012-06-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id84">
-<h3>改良<a class="headerlink" href="#id84" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ラッパーモード] バルクインサートにてインデックスの有効/無効化をサポート。 [#1311]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id85">
-<h3>修正<a class="headerlink" href="#id85" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">トランザクション内でクエリキャッシュを無効化するように修正。 [#1384]</p>
-</li>
-<li><p class="first">パーティションを明示的に無効化した。 [#1391]</p>
-</li>
-<li><p class="first">[rpm][deb] インストール前に <tt class="docutils literal"><span class="pre">mysql.plugin</span></tt> テーブルからmroongaプラグインを確実に削除するようにした。 [groonga-dev,00948] [磯部和広さんが提案]</p>
-</li>
-<li><p class="first">存在しないパスを <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt> 変数へと設定するとクラッシュする不具合を修正した。 [#1404] [&#64;nabebebさんが報告]</p>
-</li>
-<li><p class="first">[実験的] mroonga関連のデータを配置するパスの変更をサポート。 [groonga-dev,00914] [#1392] [磯部和広さんが提案]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id86">
-<h3>感謝<a class="headerlink" href="#id86" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">磯部和広さん</p>
-</li>
-<li><p class="first">&#64;nabebebさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-03-2012-05-29">
-<span id="release-2-03"></span><h2>2.03リリース - 2012/05/29<a class="headerlink" href="#release-2-03-2012-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 <a class="reference internal" href="tutorial/storage.html"><em>ストレージモード</em></a> でマルチカラムインデックスをつかっている場合は  <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt> と <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></tt> を使ってインデックスを作り直してください:</p>
-<div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
-mysql&gt; ALTER TABLE table_name ENABLE KEYS;
-</pre></div>
-</div>
-</div>
-<div class="section" id="id87">
-<h3>改良<a class="headerlink" href="#id87" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] バルクインサートにてインデックスの有効/無効化をサポート。 [#1310]</p>
-</li>
-<li><p class="first">[rpm][centos] MySQL 5.5.24に対応。</p>
-</li>
-<li><p class="first">[rpm][fedora] MySQL 5.5.23に対応。</p>
-</li>
-<li><p class="first"><a class="reference internal" href="reference/server_variables.html#mroonga-match-escalation-threshold"><em>mroonga_match_escalation_threshold</em></a> システム変数を追加。</p>
-</li>
-<li><p class="first">groonga 2.0.3以降を必須にした。</p>
-</li>
-<li><p class="first">[yum] groongaのyumリポジトリを提供するRPMパッケージ名をgroonga-repositoryからgroonga-releaseへと変更し、RPMパッケージ命名規則をcentos-releaseやfedora-releaseに合わせた。</p>
-</li>
-<li><p class="first">[Mac OS X] Homebrewでインストールできるようになった。詳細はこちら: <a class="reference internal" href="install.html"><em>インストール</em></a></p>
-</li>
-</ul>
-</div>
-<div class="section" id="id88">
-<h3>修正<a class="headerlink" href="#id88" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">Mac OS Xでビルドに失敗する問題を修正。</p>
-</li>
-<li><p class="first">[ラッパーモード] トランザクション内の検索で見つからないというエラーが報告される不具合を修正[#1322][groonga-dev,00746] [石橋卓見さんが報告]</p>
-</li>
-<li><p class="first">[rpm] mroongaプラグインがアップグレードのときに登録解除される不具合を修正。[groonga-dev,00810] [石橋卓見さんが報告][岩井さんがパッチ提供]</p>
-</li>
-<li><p class="first">MySQL 5.5以前では行ベースのレプリケーションで間違ったデータが転送されてしまう不具合を修正。 [#1379][groonga-dev,00902] [土井健司さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id89">
-<h3>感謝<a class="headerlink" href="#id89" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">石橋卓見さん</p>
-</li>
-<li><p class="first">岩井さん</p>
-</li>
-<li><p class="first">土井健司さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-02-2012-04-29">
-<span id="release-2-02"></span><h2>2.02リリース - 2012/04/29<a class="headerlink" href="#release-2-02-2012-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p>今回のリリースよりパッケージへ署名する鍵を変更しました。groongaパッケージを更新する前にパッケージ署名用の新しい鍵をインポートして下さい。</p>
-<p>Debian/Ubuntu:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
-% sudo apt-get -y --allow-unauthenticated install groonga-keyring
-</pre></div>
-</div>
-<p>CentOS/Fedora:</p>
-<div class="last highlight-none"><div class="highlight"><pre>% sudo yum update
-% sudo yum install --nogpgcheck -y groonga-repository
-</pre></div>
-</div>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">このリリースは <tt class="docutils literal"><span class="pre">ENUM</span></tt> 型に関して後方互換性がありません。もし、256個以上の値を持つ <tt class="docutils literal"><span class="pre">ENUM</span></tt> 型を使っている場合はアップグレード前にデータベースをダンプし、アップグレード後にリストアする必要があります。</p>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">このリリースは <tt class="docutils literal"><span class="pre">SET</span></tt> 型に関して後方互換性がありません。もし、32個以上の値を持つ <tt class="docutils literal"><span class="pre">SET</span></tt> 型を使っている場合はアップグレード前にデータベースをダンプし、アップグレード後にリストアする必要があります。</p>
-</div>
-<div class="section" id="id90">
-<h3>改良<a class="headerlink" href="#id90" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">GCC 4.7とMySQL 5.5.22の組み合わせでビルドするための一時的な対応を追加した。この組み合わせではgccの <tt class="docutils literal"><span class="pre">-Wdeprecated</span></tt> オプションを指定するとビルドに失敗します。 [#1337] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[mariadb] MariaDB 5.5.23をサポート。 [#1339] [かずひこさんが報告] [Ryo Onoderaさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">REPLACE</span></tt> 時に、プライマリーキーを使わなかったという必要のない警告がでないようにした。</p>
-</li>
-<li><p class="first">[ストレージモード] インデックスを使った <tt class="docutils literal"><span class="pre">ENUM</span></tt> の検索をサポート。 [&#64;104yuki_nさんが提案]</p>
-</li>
-<li><p class="first">[非互換] <tt class="docutils literal"><span class="pre">ENUM</span></tt> 用のgroongaの型を符合付き2バイト整数型から符号なし2バイト整数型に変更した。 <tt class="docutils literal"><span class="pre">ENUM</span></tt> 型のカラムを作りなおす必要があります。</p>
-</li>
-<li><p class="first">[非互換] <tt class="docutils literal"><span class="pre">SET</span></tt> 用のgroongaの型を符合付き8バイト整数型から符号なし8バイト整数型に変更した。 <tt class="docutils literal"><span class="pre">SET</span></tt> 型のカラムを作りなおす必要があります。</p>
-</li>
-<li><p class="first">MySQL 5.5.23に対応。</p>
-</li>
-<li><p class="first">groonga 2.0.2以降を必須にした。</p>
-</li>
-<li><p class="first">[非互換][実験的] <tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span> <span class="pre">IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></tt> での検索方法をフレーズ検索から類似検索に変更した。</p>
-</li>
-<li><p class="first">[apt][yum] パッケージに署名する鍵を変更。</p>
-</li>
-<li><p class="first">Ubuntu 12.04 Precise Pangolinに対応。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id91">
-<h3>修正<a class="headerlink" href="#id91" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] キーの長さが間違っていた問題を修正。</p>
-</li>
-<li><p class="first">大きな転置索引を更新中に検索するとクラッシュする問題を修正。 [#1321] [groonga-dev,00743] [河野隆志さんが報告] [groonga-dev,00746] [石橋卓見さんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">TRUNCATE</span></tt> したテーブルのトークナイザーとエンコーディングが壊れる問題を修正。 [#1335] [&#64;boss_satoさんが報告]</p>
-</li>
-<li><p class="first">Spiderとmroongaを組み合わせたときに最初の <tt class="docutils literal"><span class="pre">INSERT</span></tt> が失敗する問題を修正。 [#1319] [groonga-dev,00736] [Takayuki Hondaさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id92">
-<h3>感謝<a class="headerlink" href="#id92" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">河野隆志さん</p>
-</li>
-<li><p class="first">&#64;boss_satoさん</p>
-</li>
-<li><p class="first">かずひこさん</p>
-</li>
-<li><p class="first">Ryo Onoderaさん</p>
-</li>
-<li><p class="first">&#64;104yuki_nさん</p>
-</li>
-<li><p class="first">Takayuki Hondaさん</p>
-</li>
-<li><p class="first">石橋卓見さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-01-2012-03-29">
-<span id="release-2-01"></span><h2>2.01リリース - 2012/03/29<a class="headerlink" href="#release-2-01-2012-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id93">
-<h3>改良<a class="headerlink" href="#id93" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MySQL 5.5.22に対応。</p>
-</li>
-<li><p class="first">MySQL 5.1.62に対応。</p>
-</li>
-<li><p class="first">groonga 2.0.1以降を必須にした。</p>
-</li>
-<li><p class="first">[rpm] アップグレード時のプラグインアンインストール処理を改良した。</p>
-</li>
-<li><p class="first">[rpm] アップグレード時のプラグインアンインストール処理を改良した。</p>
-</li>
-<li><p class="first">[ラッパーモード] MyISAMと一緒に使ったときに <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">ERROR</span></tt> を使えるようにした。 [#1300] [&#64;104yuki_nさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] ラップしているテーブルの <tt class="docutils literal"><span class="pre">table_flags()</span></tt> を使うようにした。 [#1304]</p>
-</li>
-<li><p class="first">MySQLがValgrindサポート付きでビルドされているとき用に <tt class="docutils literal"><span class="pre">--with-valgrind</span></tt> configureオプションを追加した。</p>
-</li>
-<li><p class="first">[mariadb] 小数形式秒指定を使った <tt class="docutils literal"><span class="pre">DATETIME</span></tt> 型をサポートした。</p>
-</li>
-<li><p class="first">位置情報サポートなしでのビルドをサポートした。 [#1313] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] i386環境で最適化オプションを指定したときでもマルチカラムインデックスが動くようにした。 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] ラッパーモードでInnoDBを使って、InnoDBのテストが通ることを確認した。</p>
-</li>
-<li><p class="first">[solaris] Solaris 11上でのビルドできるようにした。 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[mariadb55] MariaDB 5.5で <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> が動くようにした。 [#1314] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[mariadb55] MariaDB 5.5で <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></tt> 最適化が動くようにした。 [#1315] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[doc] MeCabについて追記した。</p>
-</li>
-<li><p class="first">[ストレージモード] 値が0のレコードをインデックスを使って検索できるようにした。 [&#64;104yuki_nさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] 最適化ビルドフラグを指定してもUbuntu Hardy上で正しく動くようにした。 [かずひこさんが報告]</p>
-</li>
-<li><p class="first"><a class="reference external" href="http://mroonga.github.com/ja/logo/">ロゴ</a> を追加した。</p>
-</li>
-<li><p class="first">HTMLのデザインを更新した。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id94">
-<h3>修正<a class="headerlink" href="#id94" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] メモリリークを修正。</p>
-</li>
-<li><p class="first">[ストレージモード] マルチカラムインデックスを使って検索したときに見つかったのに結果が返されない問題を修正した。 [#1300] [&#64;ytaka5さんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">COUNT</span> <span class="pre">(*)</span></tt> の効果がなかった問題を修正した。 [groonga-dev,00717] [Takayuki Hondaさんが報告]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">DATABASE</span></tt> 時に発生していたメモリリークを修正した。</p>
-</li>
-<li><p class="first">[ストレージモード] 32bit環境で <tt class="docutils literal"><span class="pre">last_insert_grn_id()</span></tt> が壊れた値を返すことがある問題を修正した。 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">COUNT</span> <span class="pre">(*)</span></tt> が0を返すことがある問題を修正した。 [groonga-dev,00736] [Takayuki Hondaさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id95">
-<h3>感謝<a class="headerlink" href="#id95" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;ytaka5さん</p>
-</li>
-<li><p class="first">&#64;104yuki_nさん</p>
-</li>
-<li><p class="first">Takayuki Hondaさん</p>
-</li>
-<li><p class="first">かずひこさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-2-00-2012-02-29">
-<span id="release-2-00"></span><h2>2.00リリース - 2012/02/29<a class="headerlink" href="#release-2-00-2012-02-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">このリリースは後方互換性がありません。アップグレードするにはデータベースをダンプ・リストアする必要があります。</p>
-</div>
-<p>このリリースでは、データベースの再作成が必要な変更点が2つあります。</p>
-<ol class="arabic simple">
-<li><p class="first">データベース名、テーブル名、カラム名に任意の文字を使えるようにした。</p>
-</li>
-<li><p class="first">MySQLの <tt class="docutils literal"><span class="pre">YEAR</span></tt> 型にgroongaが提供する時間型を使うようにした。</p>
-</li>
-</ol>
-<p>以下が更新手順です。</p>
-<p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
-</pre></div>
-</div>
-<p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
-</pre></div>
-</div>
-<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <tt class="docutils literal"><span class="pre">apt-get</span></tt> を使います。CentOSやFedoraでは <tt class="docutils literal"><span class="pre">yum</span></tt> を使います。</p>
-<p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
-</pre></div>
-</div>
-<p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
-% sudo yum install -y mysql-mroonga
-</pre></div>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last"><tt class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></tt> の前に <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れてはいけません。もし、 <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
-</div>
-<p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
-</pre></div>
-</div>
-<p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
-</pre></div>
-</div>
-<p>これで2.00を使うことができるようになりました。</p>
-<div class="section" id="id96">
-<h3>改良<a class="headerlink" href="#id96" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MySQL 5.5.21に対応。</p>
-</li>
-<li><p class="first">groonga 2.0.0以降を必須にした。</p>
-</li>
-<li><p class="first">MySQL 5.6とMariaDBで使える小数付きのTIMESTAMPに対応した。</p>
-</li>
-<li><p class="first">[ストレージモード] 主キーがない場合でも <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></tt> を最適化できるようにした。</p>
-</li>
-<li><p class="first">[ストレージモード] 全文検索と <tt class="docutils literal"><span class="pre">COLUMN</span> <span class="pre">=</span> <span class="pre">INT_VALUE</span></tt> を一緒に使った場合でも <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></tt> を最適化できるようにした。</p>
-</li>
-<li><p class="first">[ストレージモード] サブクエリ内での全文検索に対応した。 [&#64;camyuyさんが報告]</p>
-</li>
-<li><p class="first">[非互換] groongaからデータを読めるように、MySQLの <tt class="docutils literal"><span class="pre">YEAR</span></tt> をgroongaの <tt class="docutils literal"><span class="pre">Time</span></tt> に対応させるようにした。</p>
-</li>
-<li><p class="first">[ストレージモード] 更新時の必要ない書き込みロックを削除した。 [#1271] [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">最適化のオン・オフを切り替える <tt class="docutils literal"><span class="pre">mroonga_enable_optimization</span></tt> システム変数を追加した。ベンチマーク時に便利。</p>
-</li>
-<li><p class="first">[ラッパーモード] 一時テーブルに対応した。 [#1267]</p>
-</li>
-<li><p class="first">[非互換] データベース名に <tt class="docutils literal"><span class="pre">/</span></tt> を使えるようにした。 [#1281]</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></tt> のときに不必要なメッセージが表示されないようにした。</p>
-</li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">UNIQUE</span> <span class="pre">KEY</span></tt> を使った <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></tt> に対応した。 [#1283] [&#64;104yuki_nさんが報告]</p>
-</li>
-<li><p class="first">主キーに <tt class="docutils literal"><span class="pre">DATETIME</span></tt>, <tt class="docutils literal"><span class="pre">DATE</span></tt>, <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt>, <tt class="docutils literal"><span class="pre">TIME</span></tt>, <tt class="docutils literal"><span class="pre">DECIMAL</span></tt>, <tt class="docutils literal"><span class="pre">YEAR</span></tt> を使えるようになった。</p>
-</li>
-<li><p class="first">[非互換] データベース名、テーブル名、カラム名にすべての文字を使えるようになった。 [#1284]</p>
-</li>
-<li><p class="first">[ラッパーモード] 255バイト以上のインデックスに対応した。 [#1282]</p>
-</li>
-<li><p class="first">[ラッパーモード] 主キーの更新に対応した。 [#1195]</p>
-</li>
-<li><p class="first">[ラッパーモード] <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt> でエラーが発生したときの処理を追加した。 [#1195]</p>
-</li>
-<li><p class="first">[ラッパーモード] <tt class="docutils literal"><span class="pre">LineString</span></tt> のような未サポートの位置情報型を使った場合のエラーメッセージを改良した。 [#1195]</p>
-</li>
-<li><p class="first">[ラッパーモード] <tt class="docutils literal"><span class="pre">INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</span></tt> に対応した。 [#1195]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id97">
-<h3>修正<a class="headerlink" href="#id97" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[rpm] プラグインを再インストールするようにした。</p>
-</li>
-<li><p class="first">[doc] ストレージエンジン名が間違っていた問題を修正。 [Tomoatsu Shimadaさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id98">
-<h3>感謝<a class="headerlink" href="#id98" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;camyuyさん</p>
-</li>
-<li><p class="first">Takahiro Nagaiさん</p>
-</li>
-<li><p class="first">Tomoatsu Shimadaさん</p>
-</li>
-<li><p class="first">&#64;104yuki_nさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-1-20-2012-01-29">
-<span id="release-1-20"></span><h2>1.20リリース - 2012/01/29<a class="headerlink" href="#release-1-20-2012-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last">このリリースは後方互換性がありません。アップグレードするにはデータベースをダンプ・リストアする必要があります。</p>
-</div>
-<p>このリリースでは、データベースの再作成が必要な変更点が2つあります。</p>
-<ol class="arabic simple">
-<li><p class="first">ストレージエンジン名を&quot;groonga&quot;から&quot;mroonga&quot;へ改名。</p>
-</li>
-<li><p class="first">MySQLのDATE、DATETIME、TIMESTAMP型にgroongaが提供する時間の値を使うようにした。</p>
-</li>
-</ol>
-<p>&quot;CREATE TABLE&quot; SQL内の&quot;ENGINE=groonga&quot;を変更するためにダンプしたデータベースを変更する必要があります。以下が更新手順です。</p>
-<p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
-</pre></div>
-</div>
-<p>ダンプファイル中のストレージエンジンを変更します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> の <tt class="docutils literal"><span class="pre">ENGINE=groonga</span></tt> だけが <tt class="docutils literal"><span class="pre">ENGINE=mroonga</span></tt> に変更されていることを確認します。 <tt class="docutils literal"><span class="pre">&#64;&#64;</span> <span class="pre">...</span> <span class="pre">&#64;&#64;</span></tt> 行に <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> が含まれているかを確認します。この行が <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> を含んでいたら、その変更はほぼ間違いなく <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> 用の変更です:</p>
-<div class="highlight-none"><div class="highlight"><pre>% diff -up database-groonga.dump database-mroonga.dump
---- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
-+++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
-@@ -29,7 +29,7 @@ CREATE TABLE `diaries` (
-   PRIMARY KEY (`id`),
-   FULLTEXT KEY `title_index` (`title`),
-   FULLTEXT KEY `body_index` (`body`)
--) ENGINE=groonga DEFAULT CHARSET=utf8;
-+) ENGINE=mroonga DEFAULT CHARSET=utf8;
- /*!40101 SET character_set_client = @saved_cs_client */;
-
- --
-</pre></div>
-</div>
-<p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
-</pre></div>
-</div>
-<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <tt class="docutils literal"><span class="pre">apt-get</span></tt> を使います。CentOSやFedoraでは <tt class="docutils literal"><span class="pre">yum</span></tt> を使います。</p>
-<p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
-</pre></div>
-</div>
-<p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
-% sudo yum install -y mysql-mroonga
-</pre></div>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">ご用心</p>
-<p class="last"><tt class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></tt> の前に <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れてはいけません。もし、 <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
-</div>
-<p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
-</pre></div>
-</div>
-<p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
-</pre></div>
-</div>
-<p>これで1.20を使うことができるようになりました。</p>
-<div class="section" id="id99">
-<h3>改良<a class="headerlink" href="#id99" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MySQL 5.5.20に対応。</p>
-</li>
-<li><p class="first">MySQL 5.1.61に対応。</p>
-</li>
-<li><p class="first">groonga 1.3.0以降を必須にした。</p>
-</li>
-<li><p class="first">[非互換] ストレージエンジン名を&quot;groonga&quot;から&quot;mroonga&quot;に変更。</p>
-</li>
-<li><p class="first">UTF8_BINコレーションに対応。 [#1150]</p>
-</li>
-<li><p class="first">strict-aliasingの警告が出ないようにした。 [&#64;issmさんが報告]</p>
-</li>
-<li><p class="first">DECIMALに対応した。 [#1249] [&#64;Kiskeさんが報告]</p>
-</li>
-<li><p class="first">[storage mode] HA_KEYREAD_ONLY対応。インデックス内のカラム値のアクセスが高速になるはず。 [#1212]</p>
-</li>
-<li><p class="first">[ストレージモード] float値のマルチカラムインデックスに対応。</p>
-</li>
-<li><p class="first">[ストレージモード] double値のマルチカラムインデックスに対応。</p>
-</li>
-<li><p class="first">[ストレージモード] enum型とset型をより適切なgroongaのデータ型に対応付けるようにした。</p>
-</li>
-<li><p class="first">[ラッパーモード] REPAIR TABLE対応。</p>
-</li>
-<li><p class="first">[ストレージモード] viewでの <tt class="docutils literal"><span class="pre">count(*)</span></tt> に対応。 [#1255] [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">[非互換] DATE、DATETIME、TIMESTAMP型の値にgroongaが提供する時間の値を使うようにした。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id100">
-<h3>修正<a class="headerlink" href="#id100" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[debian] replacesとbreaksのmysql-server-groongaのバージョンを修正。 [&#64;ytaka5さんが報告]</p>
-</li>
-<li><p class="first">[doc] 実行結果が間違っていた問題を修正。 [Hidekazu Tanakaさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] メモリリークを修正。 [montywiさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id101">
-<h3>感謝<a class="headerlink" href="#id101" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;ytaka5さん</p>
-</li>
-<li><p class="first">Hidekazu Tanakaさん</p>
-</li>
-<li><p class="first">&#64;issmさん</p>
-</li>
-<li><p class="first">montywiさん</p>
-</li>
-<li><p class="first">&#64;Kiskeさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-1-11-2011-12-29">
-<span id="release-1-11"></span><h2>1.11リリース - 2011/12/29<a class="headerlink" href="#release-1-11-2011-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id102">
-<h3>改良<a class="headerlink" href="#id102" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">MySQL 5.5.19に対応。</p>
-</li>
-<li><p class="first">MySQL 5.6.4に対応。</p>
-</li>
-<li><p class="first">MySQL 5.6.3対応をやめた。</p>
-</li>
-<li><p class="first">Fedora 16に対応。</p>
-</li>
-<li><p class="first">Fedora 15対応をやめた。</p>
-</li>
-<li><p class="first">警告strict-aliasingをでないようにした。 [groonga-dev,00659] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">utf8, binary, ascii, latin1, cp932, sjis, eucjpms, ujis, koi8r charsetに対応。 [#1160] [nobodyさんが報告]</p>
-</li>
-<li><p class="first">[wrapper mode] 削除をロールバックした後に削除できなくなる問題を修正。 [#1224] [宍倉功一さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id103">
-<h3>修正<a class="headerlink" href="#id103" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[storage mode] 主キーがないテーブルで全文検索すると結果が空になる問題を修正。 [#1193] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">コンパイラの-Wno-というフラグの検出に失敗していた問題を修正。 [Arnaud Fontaineさんがパッチを作成]</p>
-</li>
-<li><p class="first">[wrapper mode] 全件カウント時にインデックスが使われない問題を修正。 [#1196][groonga-dev,0653] [金岡勲さんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id104">
-<h3>感謝<a class="headerlink" href="#id104" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">かずひこさん</p>
-</li>
-<li><p class="first">Arnaud Fontaineさん</p>
-</li>
-<li><p class="first">金岡勲さん</p>
-</li>
-<li><p class="first">nobodyさん</p>
-</li>
-<li><p class="first">宍倉功一さん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-1-10-2011-11-29">
-<span id="release-1-10"></span><h2>1.0.1リリース - 2011/11/29<a class="headerlink" href="#release-1-10-2011-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>このリリースからプロジェクト名と製品名を「groognaストレージエンジン」から「mroonga」に変更しました。</p>
-<p>MariaDB対応とバグ修正が主な変更点のリリース。</p>
-<div class="section" id="id105">
-<h3>改良<a class="headerlink" href="#id105" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">「groonga storage engine」から「mroonga」に改名。 #1170</p>
-</li>
-<li><p class="first">groonga_libgroonga_version変数およびgroonga_version変数の追加。 #1158</p>
-</li>
-<li><p class="first">information_schema.plugins.plugin_versionがmroongaのバージョンを返すようにした。 #1157</p>
-</li>
-<li><p class="first">groonga_log_file変数の追加。 #1178 [nobodyさんが提案]</p>
-</li>
-<li><p class="first">FLUSH STATUSがgroonga_*ステータス変数をリセットするようにした。 #1166 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">TRUNCATE TABLEに対応。 #1151 [Takahiro Nagaiさんが提案]</p>
-</li>
-<li><p class="first">ALTER TABLEに対応。 #1168</p>
-</li>
-<li><p class="first">MariaDB 5.2.9に対応。 #1152 [Kazuhikoさんが報告]</p>
-</li>
-<li><p class="first">MariaDB 5.3.2-betaに対応。 #1152 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[rpm] ドキュメントのパッケージを分離。</p>
-</li>
-<li><p class="first">文字列のシステム変数のメモリ確保方法を改良。</p>
-</li>
-<li><p class="first">PLUGIN_LICENSE_GPLを使うようにした。 [Kazuhikoさんが提案]</p>
-</li>
-<li><p class="first">MeCab関連の設定を削除。</p>
-</li>
-<li><p class="first">FOUND_ROWS()とSQL_CALC_FOUND_ROWSに対応。 #1163 [Horikoshi Yukiさんが報告]</p>
-</li>
-<li><p class="first">'-'を含むテーブル名に対応。 #1165 [nobodyさんが報告]</p>
-</li>
-<li><p class="first">MySQL 5.1上でテーブルを作りなおさないインデックス変更に対応。</p>
-</li>
-<li><p class="first">[deb] i386対応。</p>
-</li>
-<li><p class="first">[rpm] i386対応。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id106">
-<h3>修正<a class="headerlink" href="#id106" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード] TEXT型に対するREPLACE INTOが動作しないバグの修正。 #1153 [Kazuhikoさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] LOCK TABLE内のINSERTがInnoDBで動かないバグの修正。 #1154 [Kazuhikoさんが報告]</p>
-</li>
-<li><p class="first">ORDERとLIMITの両方を使うと結果が正しくないバグの修正。 #1161 [Horikoshi Yukiさんが報告]</p>
-</li>
-<li><p class="first">FORCE INDEXで存在しないキーを指定するクラッシュするバグを修正。 #1181 [Takahiro Nagaiさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id107">
-<h3>感謝<a class="headerlink" href="#id107" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">かずひこさん</p>
-</li>
-<li><p class="first">Horikoshi Yukiさん</p>
-</li>
-<li><p class="first">nobodyさん</p>
-</li>
-<li><p class="first">Takahiro Nagaiさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-1-0-1-2011-10-29">
-<span id="release-1-0-1"></span><h2>1.0.1リリース - 2011/10/29<a class="headerlink" href="#release-1-0-1-2011-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>位置情報検索の対応を強化とストレージモードでの動的なインデックス変更の対応強化が目玉のリリース。</p>
-<div class="section" id="id108">
-<h3>改良<a class="headerlink" href="#id108" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">[ストレージモード][ラッパーモード] <cite>flush tables</cite> によるデータベースの再オープンに対応。</p>
-</li>
-<li><p class="first">[ラッパーモード] 位置情報インデックスに対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。）</p>
-</li>
-<li><p class="first">[ベンチマーク] groongaのデータベースには実際に書き込むかどうかを指定する <cite>groonga_dry_write</cite> 変数の追加。ベンチマーク時などボトルネック処理の確認用。</p>
-</li>
-<li><p class="first">CentOS 6用のインストールドキュメントにMySQLのバージョン番号を追加。 [&#64;yoshi_kenさんが提案]</p>
-</li>
-<li><p class="first">[位置情報検索] 不必要な処理をなるべくしないようにして高速化。</p>
-</li>
-<li><p class="first">mysql_configがfast mutexesを有効にしていると報告しても、それを無視する <cite>--disable-fast-mutexes</cite> configureオプションを追加。</p>
-</li>
-<li><p class="first">[ストレージモード] <cite>create index</cite> に対応。</p>
-</li>
-<li><p class="first">[ストレージモード] <cite>drop index</cite> に対応。</p>
-</li>
-<li><p class="first">[ストレージモード] 全文検索用のマルチカラムインデックスに対応。</p>
-</li>
-<li><p class="first"><cite>D</cite> プラグマに対応。</p>
-</li>
-<li><p class="first">MySQL 5.5.17に対応。</p>
-</li>
-<li><p class="first">MySQL 5.6.3-m6に対応。</p>
-</li>
-<li><p class="first">groonga 1.2.7に対応。（1.2.6以下のサポートを削除。）</p>
-</li>
-<li><p class="first">Ubuntu 11.10 Oneiric Ocelotに対応。</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id109">
-<h3>修正<a class="headerlink" href="#id109" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">booleanモードでクエリの先頭に <cite>+</cite> を指定すると何もヒットしなくなる問題を修正。 [西山はじめさんが報告]</p>
-</li>
-<li><p class="first">[Fedora] パッケージの依存関係を修正。 [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">[Fedora] プラグインをロードするとシンボルが見つからずエラーになる問題を修正。 [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] マルチカラムインデックスに <cite>varchar</cite> を使うとインデックスが正常に作成されない問題を修正。 #1143 [Takahiro Nagaiさんが報告]</p>
-</li>
-</ul>
-</div>
-<div class="section" id="id110">
-<h3>感謝<a class="headerlink" href="#id110" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li><p class="first">&#64;yoshi_kenさん</p>
-</li>
-<li><p class="first">西山はじめさん</p>
-</li>
-<li><p class="first">Takahiro Nagaiさん</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="release-1-0-0">
-<span id="id111"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>初回リリースから約1年経って、初のメジャーリリース！</p>
-<div class="section" id="id112">
-<h3>改良<a class="headerlink" href="#id112" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li>[ラッパーモード] drop index対応。 #1040</li>
-<li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
-<li>[ストレージモード] マルチカラムインデックスに対応。 #455</li>
-<li>[ストレージモード][ラッパーモード] 全文検索用パーサー（トークナイザー）のカスタマイズに対応。 #592</li>
-<li>configureにデフォルトの全文検索用パーサーを指定する <cite>--with-default-parser</cite> オプションを追加。</li>
-<li>実行時にデフォルトの全文検索用パーサーを指定する <cite>groonga_default_parser</cite> 変数を追加。</li>
-<li>[ラッパーモード] ストレージモードで実装している <cite>order</cite> と <cite>limit</cite> が指定された場合に必要のないレコードを返さないようにする高速化に対応。</li>
-<li>[ストレージモード] 1つの <cite>select</cite> 中での複数の <cite>match against</cite> 指定に対応。</li>
-<li>[非互換][ストレージモード] <cite>_score</cite> カラムの削除。代わりにMySQL標準の書き方である <cite>match against</cite> を使ってください。</li>
-<li>[ラッパーモード] プライマリキーの更新に対応。</li>
-<li>MySQL 5.5.16に対応。</li>
-<li>CentOS 6に対応。</li>
-<li>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</li>
-</ul>
-</div>
-<div class="section" id="id113">
-<h3>修正<a class="headerlink" href="#id113" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</li>
-<li>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</li>
-<li>[Ubuntu] Lucid上でテーブルを削除するとクラッシュする問題を修正。 #1063 （Isao Sugimotoさんが報告）</li>
-<li>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</li>
-</ul>
-</div>
-<div class="section" id="id114">
-<h3>感謝<a class="headerlink" href="#id114" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<ul class="simple">
-<li>Isao Sugimotoさん</li>
-<li>&#64;zaubermaerchenさん</li>
-<li>Tomohiro MITSUMUNEさん</li>
 </ul>
 </div>
 </div>
 <div class="section" id="past-releases">
-<h2>Past releases<a class="headerlink" href="#past-releases" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>過去のリリース<a class="headerlink" href="#past-releases" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html">4.10リリース - 2015-01-29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#improvements">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#fixes">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#thanks">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-09-2014-12-29">4.09リリース - 2014-12-29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id1">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id2">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-08-2014-11-29">4.08リリース - 2014/11/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id3">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id4">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id5">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-07-2014-10-29">4.07リリース - 2014/10/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id6">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id7">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id8">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-06-2014-09-29">4.06リリース - 2014/09/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id9">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id10">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id11">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-05-2014-08-29">4.05リリース - 2014/08/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id12">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id13">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id14">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-04-2014-07-29">4.04リリース - 2014/07/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id15">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id16">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id17">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-03-2014-05-29">4.03リリース - 2014/05/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id18">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id19">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id20">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-02-2014-04-29">4.02リリース - 2014/04/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id21">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id22">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id23">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-01-2014-03-29">4.01リリース - 2014/03/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id24">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id25">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id26">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/4.x.html#release-4-00-2014-02-09">4.00リリース - 2014/02/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id27">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id28">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/4.x.html#id29">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html">3.12リリース - 2014/01/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#improvements">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#fixes">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#thanks">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-11-2013-12-29">3.11リリース - 2013/12/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id1">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id2">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id3">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-10-2013-11-29">3.10リリース - 2013/11/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id4">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id5">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id6">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-09-2013-10-29">3.09リリース - 2013/10/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id7">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id8">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id9">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-08-2013-9-29">3.08リリース - 2013/9/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id10">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id11">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id12">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-07-2013-8-29">3.07リリース - 2013/8/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id13">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id14">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id15">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-06-2013-7-29">3.06リリース - 2013/7/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id16">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id17">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-05-2013-6-29">3.05リリース - 2013/6/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id18">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id19">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id20">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-04-2013-5-29">3.04リリース - 2013/5/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id21">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id22">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id23">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-03-2013-4-29">3.03リリース - 2013/4/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id24">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id25">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id26">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-02-2013-3-29">3.02リリース - 2013/3/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id27">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id28">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id29">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-01-2013-2-28">3.01リリース - 2013/2/28</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id30">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id31">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id32">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/3.x.html#release-3-00-2013-2-9">3.00リリース - 2013/2/9</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id33">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id34">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/3.x.html#id35">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html">2.10リリース - 2012/12/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#improvements">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#fixes">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#thanks">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-09-2012-11-29">2.09リリース - 2012/11/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id1">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id2">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id3">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-08-2012-10-29">2.08リリース - 2012/10/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id4">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id5">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id6">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-07-2012-09-29">2.07リリース - 2012/09/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id7">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id8">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id9">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-06-2012-08-29">2.06リリース - 2012/08/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id10">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id11">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id12">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-05-2012-07-29">2.05リリース - 2012/07/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id13">改良</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-04-2012-06-29">2.04リリース - 2012/06/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id14">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id15">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id16">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-03-2012-05-29">2.03リリース - 2012/05/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id17">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id18">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id19">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-02-2012-04-29">2.02リリース - 2012/04/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id20">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id21">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id22">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-01-2012-03-29">2.01リリース - 2012/03/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id23">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id24">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id25">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/2.x.html#release-2-00-2012-02-29">2.00リリース - 2012/02/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id26">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id27">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/2.x.html#id28">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/1.x.html">1.20リリース - 2012/01/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#improvements">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#fixes">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#thanks">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/1.x.html#release-1-11-2011-12-29">1.11リリース - 2011/12/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id1">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id2">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id3">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/1.x.html#release-1-10-2011-11-29">1.0.1リリース - 2011/11/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id4">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id5">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id6">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/1.x.html#release-1-0-1-2011-10-29">1.0.1リリース - 2011/10/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id7">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id8">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id9">感謝</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/1.x.html#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id11">改良</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id12">修正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news/1.x.html#id13">感謝</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="news/0.x.html">バージョン0.xのお知らせ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="news/0.x.html#release-0-9">0.9 リリース - 2011/08/29</a></li>
 <li class="toctree-l2"><a class="reference internal" href="news/0.x.html#release-0-8">0.8 リリース - 2011/07/29</a></li>
@@ -2109,258 +367,30 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">お知らせ</a><ul>
-<li><a class="reference internal" href="#release-4-10-2015-01-29">4.10リリース - 2015-01-29</a><ul>
+<li><a class="reference internal" href="#release-5-00-2015-02-09">5.00リリース - 2015/02/09</a><ul>
 <li><a class="reference internal" href="#improvements">改良</a></li>
 <li><a class="reference internal" href="#fixes">修正</a></li>
 <li><a class="reference internal" href="#thanks">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-4-09-2014-12-29">4.09リリース - 2014-12-29</a><ul>
-<li><a class="reference internal" href="#id1">改良</a></li>
-<li><a class="reference internal" href="#id2">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-08-2014-11-29">4.08リリース - 2014/11/29</a><ul>
-<li><a class="reference internal" href="#id3">改良</a></li>
-<li><a class="reference internal" href="#id4">修正</a></li>
-<li><a class="reference internal" href="#id5">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-07-2014-10-29">4.07リリース - 2014/10/29</a><ul>
-<li><a class="reference internal" href="#id6">改良</a></li>
-<li><a class="reference internal" href="#id7">修正</a></li>
-<li><a class="reference internal" href="#id8">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-06-2014-09-29">4.06リリース - 2014/09/29</a><ul>
-<li><a class="reference internal" href="#id9">改良</a></li>
-<li><a class="reference internal" href="#id10">修正</a></li>
-<li><a class="reference internal" href="#id11">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-05-2014-08-29">4.05リリース - 2014/08/29</a><ul>
-<li><a class="reference internal" href="#id12">改良</a></li>
-<li><a class="reference internal" href="#id13">修正</a></li>
-<li><a class="reference internal" href="#id14">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-04-2014-07-29">4.04リリース - 2014/07/29</a><ul>
-<li><a class="reference internal" href="#id15">改良</a></li>
-<li><a class="reference internal" href="#id16">修正</a></li>
-<li><a class="reference internal" href="#id17">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-03-2014-05-29">4.03リリース - 2014/05/29</a><ul>
-<li><a class="reference internal" href="#id18">改良</a></li>
-<li><a class="reference internal" href="#id19">修正</a></li>
-<li><a class="reference internal" href="#id20">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-02-2014-04-29">4.02リリース - 2014/04/29</a><ul>
-<li><a class="reference internal" href="#id21">改良</a></li>
-<li><a class="reference internal" href="#id22">修正</a></li>
-<li><a class="reference internal" href="#id23">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-01-2014-03-29">4.01リリース - 2014/03/29</a><ul>
-<li><a class="reference internal" href="#id24">改良</a></li>
-<li><a class="reference internal" href="#id25">修正</a></li>
-<li><a class="reference internal" href="#id26">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-4-00-2014-02-09">4.00リリース - 2014/02/29</a><ul>
-<li><a class="reference internal" href="#id27">改良</a></li>
-<li><a class="reference internal" href="#id28">修正</a></li>
-<li><a class="reference internal" href="#id29">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-12-2014-01-29">3.12リリース - 2014/01/29</a><ul>
-<li><a class="reference internal" href="#id30">改良</a></li>
-<li><a class="reference internal" href="#id31">修正</a></li>
-<li><a class="reference internal" href="#id32">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-11-2013-12-29">3.11リリース - 2013/12/29</a><ul>
-<li><a class="reference internal" href="#id33">改良</a></li>
-<li><a class="reference internal" href="#id34">修正</a></li>
-<li><a class="reference internal" href="#id35">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-10-2013-11-29">3.10リリース - 2013/11/29</a><ul>
-<li><a class="reference internal" href="#id36">改良</a></li>
-<li><a class="reference internal" href="#id37">修正</a></li>
-<li><a class="reference internal" href="#id38">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-09-2013-10-29">3.09リリース - 2013/10/29</a><ul>
-<li><a class="reference internal" href="#id39">改良</a></li>
-<li><a class="reference internal" href="#id40">修正</a></li>
-<li><a class="reference internal" href="#id41">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-08-2013-9-29">3.08リリース - 2013/9/29</a><ul>
-<li><a class="reference internal" href="#id42">改良</a></li>
-<li><a class="reference internal" href="#id43">修正</a></li>
-<li><a class="reference internal" href="#id44">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-07-2013-8-29">3.07リリース - 2013/8/29</a><ul>
-<li><a class="reference internal" href="#id45">改良</a></li>
-<li><a class="reference internal" href="#id46">修正</a></li>
-<li><a class="reference internal" href="#id47">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-06-2013-7-29">3.06リリース - 2013/7/29</a><ul>
-<li><a class="reference internal" href="#id48">改良</a></li>
-<li><a class="reference internal" href="#id49">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-05-2013-6-29">3.05リリース - 2013/6/29</a><ul>
-<li><a class="reference internal" href="#id50">改良</a></li>
-<li><a class="reference internal" href="#id51">修正</a></li>
-<li><a class="reference internal" href="#id52">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-04-2013-5-29">3.04リリース - 2013/5/29</a><ul>
-<li><a class="reference internal" href="#id53">改良</a></li>
-<li><a class="reference internal" href="#id54">修正</a></li>
-<li><a class="reference internal" href="#id55">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-03-2013-4-29">3.03リリース - 2013/4/29</a><ul>
-<li><a class="reference internal" href="#id56">改良</a></li>
-<li><a class="reference internal" href="#id57">修正</a></li>
-<li><a class="reference internal" href="#id58">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-02-2013-3-29">3.02リリース - 2013/3/29</a><ul>
-<li><a class="reference internal" href="#id59">改良</a></li>
-<li><a class="reference internal" href="#id60">修正</a></li>
-<li><a class="reference internal" href="#id61">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-01-2013-2-28">3.01リリース - 2013/2/28</a><ul>
-<li><a class="reference internal" href="#id62">改良</a></li>
-<li><a class="reference internal" href="#id63">修正</a></li>
-<li><a class="reference internal" href="#id64">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-3-00-2013-2-9">3.00リリース - 2013/2/9</a><ul>
-<li><a class="reference internal" href="#id65">改良</a></li>
-<li><a class="reference internal" href="#id66">修正</a></li>
-<li><a class="reference internal" href="#id67">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-10-2012-12-29">2.10リリース - 2012/12/29</a><ul>
-<li><a class="reference internal" href="#id68">改良</a></li>
-<li><a class="reference internal" href="#id69">修正</a></li>
-<li><a class="reference internal" href="#id70">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-09-2012-11-29">2.09リリース - 2012/11/29</a><ul>
-<li><a class="reference internal" href="#id71">改良</a></li>
-<li><a class="reference internal" href="#id72">修正</a></li>
-<li><a class="reference internal" href="#id73">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-08-2012-10-29">2.08リリース - 2012/10/29</a><ul>
-<li><a class="reference internal" href="#id74">改良</a></li>
-<li><a class="reference internal" href="#id75">修正</a></li>
-<li><a class="reference internal" href="#id76">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-07-2012-09-29">2.07リリース - 2012/09/29</a><ul>
-<li><a class="reference internal" href="#id77">改良</a></li>
-<li><a class="reference internal" href="#id78">修正</a></li>
-<li><a class="reference internal" href="#id79">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-06-2012-08-29">2.06リリース - 2012/08/29</a><ul>
-<li><a class="reference internal" href="#id80">改良</a></li>
-<li><a class="reference internal" href="#id81">修正</a></li>
-<li><a class="reference internal" href="#id82">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-05-2012-07-29">2.05リリース - 2012/07/29</a><ul>
-<li><a class="reference internal" href="#id83">改良</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-04-2012-06-29">2.04リリース - 2012/06/29</a><ul>
-<li><a class="reference internal" href="#id84">改良</a></li>
-<li><a class="reference internal" href="#id85">修正</a></li>
-<li><a class="reference internal" href="#id86">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-03-2012-05-29">2.03リリース - 2012/05/29</a><ul>
-<li><a class="reference internal" href="#id87">改良</a></li>
-<li><a class="reference internal" href="#id88">修正</a></li>
-<li><a class="reference internal" href="#id89">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-02-2012-04-29">2.02リリース - 2012/04/29</a><ul>
-<li><a class="reference internal" href="#id90">改良</a></li>
-<li><a class="reference internal" href="#id91">修正</a></li>
-<li><a class="reference internal" href="#id92">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-01-2012-03-29">2.01リリース - 2012/03/29</a><ul>
-<li><a class="reference internal" href="#id93">改良</a></li>
-<li><a class="reference internal" href="#id94">修正</a></li>
-<li><a class="reference internal" href="#id95">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-2-00-2012-02-29">2.00リリース - 2012/02/29</a><ul>
-<li><a class="reference internal" href="#id96">改良</a></li>
-<li><a class="reference internal" href="#id97">修正</a></li>
-<li><a class="reference internal" href="#id98">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-1-20-2012-01-29">1.20リリース - 2012/01/29</a><ul>
-<li><a class="reference internal" href="#id99">改良</a></li>
-<li><a class="reference internal" href="#id100">修正</a></li>
-<li><a class="reference internal" href="#id101">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-1-11-2011-12-29">1.11リリース - 2011/12/29</a><ul>
-<li><a class="reference internal" href="#id102">改良</a></li>
-<li><a class="reference internal" href="#id103">修正</a></li>
-<li><a class="reference internal" href="#id104">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-1-10-2011-11-29">1.0.1リリース - 2011/11/29</a><ul>
-<li><a class="reference internal" href="#id105">改良</a></li>
-<li><a class="reference internal" href="#id106">修正</a></li>
-<li><a class="reference internal" href="#id107">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-1-0-1-2011-10-29">1.0.1リリース - 2011/10/29</a><ul>
-<li><a class="reference internal" href="#id108">改良</a></li>
-<li><a class="reference internal" href="#id109">修正</a></li>
-<li><a class="reference internal" href="#id110">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
-<li><a class="reference internal" href="#id112">改良</a></li>
-<li><a class="reference internal" href="#id113">修正</a></li>
-<li><a class="reference internal" href="#id114">感謝</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#past-releases">Past releases</a></li>
+<li><a class="reference internal" href="#past-releases">過去のリリース</a></li>
 </ul>
 </li>
 </ul>
 
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="sources/news.txt"
-           rel="nofollow">ソースコードを表示（英語）</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="sources/news.txt"
+            rel="nofollow">ソースコードを表示（英語）</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -2377,16 +407,16 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="index.html">Mroonga v4.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
