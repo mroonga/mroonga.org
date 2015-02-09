@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Release 1.20 - 2012/01/29 &mdash; Mroonga v5.00 documentation</title>
+    
+    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '5.00',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v5.00 documentation" href="../index.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+  <body role="document">
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/news/1.x.html"><img src="../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="release-1-20-2012-01-29">
+<span id="release-1-20"></span><h1>Release 1.20 - 2012/01/29<a class="headerlink" href="#release-1-20-2012-01-29" title="Permalink to this headline">¶</a></h1>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">This release breaks backward compatibility. We need to
+dump and restore our database for upgrading.</p>
+</div>
+<p>In this release, mroonga has two changes that requires
+database recreation:</p>
+<ol class="arabic simple">
+<li>Storage engine name is changed to &quot;mroonga&quot; from &quot;groonga&quot;.</li>
+<li>Groonga's native time data type is used for DATE, DATETIME
+and TIMESTAMP type in MySQL.</li>
+</ol>
+<p>We need to modify dumped database to change &quot;ENGINE=groonga&quot;
+in &quot;CREATE TABLE&quot; SQL. Here are upgrade sequence.</p>
+<p>We dump a database that uses mroonga:</p>
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
+</pre></div>
+</div>
+<p>We convert storage engine in dump file:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
+</pre></div>
+</div>
+<p>We confirm that <code class="docutils literal"><span class="pre">ENGINE=groonga</span></code> only in <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>
+is replaced with <code class="docutils literal"><span class="pre">ENGINE=mroonga</span></code>. We need to check <code class="docutils literal"><span class="pre">&#64;&#64;</span>
+<span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> line includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>. If the line
+includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>, the hunk will be a change for
+<code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre>% diff -up database-groonga.dump database-mroonga.dump
+--- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
++++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
+@@ -29,7 +29,7 @@ CREATE TABLE `diaries` (
+   PRIMARY KEY (`id`),
+   FULLTEXT KEY `title_index` (`title`),
+   FULLTEXT KEY `body_index` (`body`)
+-) ENGINE=groonga DEFAULT CHARSET=utf8;
++) ENGINE=mroonga DEFAULT CHARSET=utf8;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+</pre></div>
+</div>
+<p>We drop the existing database:</p>
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+</pre></div>
+</div>
+<p>We upgrade to &quot;mroonga&quot; storage engine. We will use
+<code class="docutils literal"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal"><span class="pre">yum</span></code> on
+CentOS or Fedora.</p>
+<p>apt-get:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
+</pre></div>
+</div>
+<p>yum:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
+% sudo yum install -y mysql-mroonga
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">We don't forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal"><span class="pre">yum</span>
+<span class="pre">install</span></code>. If we forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
+a MySQL's system table.</p>
+</div>
+<p>We recreate a database:</p>
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+</pre></div>
+</div>
+<p>We restore a database by modified dump file:</p>
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+</pre></div>
+</div>
+<p>Now, we can use mroonga 1.20.</p>
+<div class="section" id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Supported MySQL 5.5.20.</li>
+<li>Supported MySQL 5.1.61.</li>
+<li>Required groonga 1.3.0 or later.</li>
+<li>[incompatible] Changed storage engine name to &quot;mroonga&quot; from &quot;groonga&quot;.</li>
+<li>Supported UTF8_BIN collate. [#1150]</li>
+<li>Disabled strict-aliasing warnings. [Reported by &#64;issm]</li>
+<li>Supported decimal. [#1249] [Reported by &#64;Kiske]</li>
+<li>[storage mode] Supported HA_KEYREAD_ONLY. It will improve
+column value access in index. [#1212]</li>
+<li>[storage mode] Supported float value in multiple column index.</li>
+<li>[storage mode] Supported double value in multiple column index.</li>
+<li>[storage mode] Mapped enum and set types to more suitable
+groonga data types.</li>
+<li>[wrapper mode] Supported REPAIR TABLE.</li>
+<li>[storage mode] Supported <code class="docutils literal"><span class="pre">count(*)</span></code> on view. [#1255]
+[Reported by Takahiro Nagai]</li>
+<li>[incompatible] Groonga's native time value is used for
+DATE, DATETIME and TIMESTAMP type values.</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h2>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[debian] Fixed wrong mysql-server-groonga version in
+replaces and breaks. [Reported by &#64;ytaka5]</li>
+<li>[doc] Fixed wrong execution result. [Reported by Hidekazu Tanaka]</li>
+<li>[wrapper mode] Fixed a memory leak. [Reported by montywi]</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h2>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>&#64;ytaka5</li>
+<li>Hidekazu Tanaka</li>
+<li>&#64;issm</li>
+<li>montywi</li>
+<li>&#64;Kiske</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-11-2011-12-29">
+<span id="release-1-11"></span><h1>Release 1.11 - 2011/12/29<a class="headerlink" href="#release-1-11-2011-12-29" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Supported MySQL 5.5.19.</li>
+<li>Supported MySQL 5.6.4.</li>
+<li>Dropped MySQL 5.6.3 support.</li>
+<li>Supported Fedora 16.</li>
+<li>Dropped Fedora 15 support.</li>
+<li>Suppress strict-aliasing warnings. [groonga-dev,00659]
+[Reported by Kazuhiko Shiozaki]</li>
+<li>Supported utf8, binary, ascii, latin1, cp932, sjis,
+eucjpms, ujis and koi8r charset. [#1160] [Reported by nobody]</li>
+<li>[wrapper mode] Improved rollback handling on
+delete. [#1224] [Reported by Koichi Shishikura]</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[storage mode] Fixed a bug that full text search on a
+table without primary key returns empty results. [#1193]
+[Reported by Kazuhiko Shiozaki]</li>
+<li>Fixed -Wno- compiler flag detection. [Patch by Arnaud Fontaine]</li>
+<li>[wrapper mode] Fixed a problem that index isn't
+used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Kazuhiko Shiozaki</li>
+<li>Arnaud Fontaine</li>
+<li>Kaneoka</li>
+<li>nobody</li>
+<li>Koichi Shishikura</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-10-2011-11-29">
+<span id="release-1-10"></span><h1>Release 1.10 - 2011/11/29<a class="headerlink" href="#release-1-10-2011-11-29" title="Permalink to this headline">¶</a></h1>
+<p>Since this release, this project and product is called
+&quot;mroonga&quot; instead of &quot;groonga storage engine&quot;.</p>
+<p>This release introduces MariaDB support and fixes several bugs.</p>
+<div class="section" id="id4">
+<h2>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>rename to &quot;mroonga&quot; from &quot;groonga storage engine&quot;. #1170</li>
+<li>add groonga_libgroonga_version and groonga_version variables. #1158</li>
+<li>information_schema.plugins.plugin_version returns mroonga's version. #1157</li>
+<li>add groonga_log_file variable. #1178 [Suggested by nobody]</li>
+<li>FLUSH STATUS flushes groonga_* status variables. #1166 [Reported by Kazuhiko]</li>
+<li>support TRUNCATE TABLE #1151. [Suggested by Takahiro Nagai]</li>
+<li>support ALTER TABLE #1168.</li>
+<li>support MariaDB 5.2.9. #1152 [Reported by Kazuhiko]</li>
+<li>support MariaDB 5.3.2-beta. #1152 [Reported by Kazuhiko]</li>
+<li>[rpm] split document package.</li>
+<li>improve memory allocation for string system variables.</li>
+<li>use PLUGIN_LICENSE_GPL. [Suggested by Kazuhiko]</li>
+<li>remove needless MeCab related configurations.</li>
+<li>support FOUND_ROWS() and SQL_CALC_FOUND_ROWS. #1163 [Reported by Horikoshi Yuki]</li>
+<li>support table name that contains '-'. #1165 [Reported by nobody]</li>
+<li>support inplace index change on MySQL 5.1.</li>
+<li>[deb] support i386.</li>
+<li>[rpm] support i386.</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2>Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[storage mode] fix a bug that REPLACE INTO with TEXT column does not work. #1153 [Reported by Kazuhiko]</li>
+<li>[wrapper mode] fix a bug that INSERT inside LOCK TABLE does not work with InnoDB. #1154 [Reported by Kazuhiko]</li>
+<li>fix a bug that using ORDER and LIMIT returns a wrong result. #1161 [Reported by Horikoshi Yuki]</li>
+<li>fix a crash bug when FORCE INDEX with unknown key is used. #1181 [Reported by Takahiro Nagai]</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2>Thanks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Kazuhiko</li>
+<li>Horikoshi Yuki</li>
+<li>nobody</li>
+<li>Takahiro Nagai</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-0-1-2011-10-29">
+<span id="release-1-0-1"></span><h1>Release 1.0.1 - 2011/10/29<a class="headerlink" href="#release-1-0-1-2011-10-29" title="Permalink to this headline">¶</a></h1>
+<p>The important changes in this release are the enhancement of geolocation search and the improvement of dynamic index modification in storage mode.</p>
+<div class="section" id="id7">
+<h2>Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[storage mode][wrapper mode] support reopening a database by <cite>flush tables</cite>.</li>
+<li>[wrapper mode] support geolocation index. (Only Point type can be stored in a column. Search using index is only available for MBRContains).</li>
+<li>[benchmark] add <cite>groonga_dry_write</cite> variable to specify not to write to groonga database, that is useful to check bottle necks in benchmarks.</li>
+<li>mention MySQL version in the installation guide for CentOS 6. [proposed by &#64;yoshi_ken]</li>
+<li>[geolocation] improve performance by skip needless processes.</li>
+<li>add  <cite>--disable-fast-mutexes</cite> configure option to ignore fast mutexes even if mysql_config says it is enabled.</li>
+<li>[storage mode] support <cite>create index</cite>.</li>
+<li>[storage mode] support <cite>drop index</cite>.</li>
+<li>[storage mode] support multi columns index for full text search.</li>
+<li>support <cite>D</cite> pragma.</li>
+<li>support MySQL 5.5.17.</li>
+<li>support MySQL 5.6.3-m6.</li>
+<li>support groonga 1.2.7. (1.2.6 or below are no longer supported).</li>
+<li>support Ubuntu 11.10 Oneiric Ocelot.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2>Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>fix a bug that we have no results if we specify '+' at the beginning of the query in boolean mode. [reported by Hajime Nishiyama]</li>
+<li>[Fedora] fix package dependencies. [reported by Takahiro Nagai]</li>
+<li>[Fedora] fix a problem that we get undefined symbol error when the plugin is loaded. [reported by Takahiro Nagai]</li>
+<li>[storage mode] fix a bug that index will not be correctly created if <cite>varchar</cite> is used in a multi-column index. #1143 [reported by Takahiro Nagai]</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2>Thanks<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>&#64;yoshi_ken</li>
+<li>Hajime Nishiyama</li>
+<li>Takahiro Nagai</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-1-0-0">
+<span id="id10"></span><h1>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="Permalink to this headline">¶</a></h1>
+<p>初回リリースから約1年経って、初のメジャーリリース！</p>
+<div class="section" id="id11">
+<h2>改良<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[ラッパーモード] drop index対応。 #1040</li>
+<li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
+<li>[ストレージモード] マルチカラムインデックスに対応。 #455</li>
+<li>[ストレージモード][ラッパーモード] 全文検索用パーサー（トークナイザー）のカスタマイズに対応。 #592</li>
+<li>configureにデフォルトの全文検索用パーサーを指定する <cite>--with-default-parser</cite> オプションを追加。</li>
+<li>実行時にデフォルトの全文検索用パーサーを指定する <cite>groonga_default_parser</cite> 変数を追加。</li>
+<li>[ラッパーモード] ストレージモードで実装している <cite>order</cite> と <cite>limit</cite> が指定された場合に必要のないレコードを返さないようにする高速化に対応。</li>
+<li>[ストレージモード] 1つの <cite>select</cite> 中での複数の <cite>match against</cite> 指定に対応。</li>
+<li>[非互換][ストレージモード] <cite>_score</cite> カラムの削除。代わりにMySQL標準の書き方である <cite>match against</cite> を使ってください。</li>
+<li>[ラッパーモード] プライマリキーの更新に対応。</li>
+<li>MySQL 5.5.16に対応。</li>
+<li>CentOS 6に対応。</li>
+<li>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h2>修正<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</li>
+<li>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</li>
+<li>[Ubuntu] Lucid上でテーブルを削除するとクラッシュする問題を修正。 #1063 （Isao Sugimotoさんが報告）</li>
+<li>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</li>
+</ul>
+</div>
+<div class="section" id="id13">
+<h2>感謝<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Isao Sugimotoさん</li>
+<li>&#64;zaubermaerchenさん</li>
+<li>Tomohiro MITSUMUNEさん</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Release 1.20 - 2012/01/29</a><ul>
+<li><a class="reference internal" href="#improvements">Improvements</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-11-2011-12-29">Release 1.11 - 2011/12/29</a><ul>
+<li><a class="reference internal" href="#id1">Improvements</a></li>
+<li><a class="reference internal" href="#id2">Fixes</a></li>
+<li><a class="reference internal" href="#id3">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-10-2011-11-29">Release 1.10 - 2011/11/29</a><ul>
+<li><a class="reference internal" href="#id4">Improvements</a></li>
+<li><a class="reference internal" href="#id5">Fixes</a></li>
+<li><a class="reference internal" href="#id6">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-0-1-2011-10-29">Release 1.0.1 - 2011/10/29</a><ul>
+<li><a class="reference internal" href="#id7">Improvements</a></li>
+<li><a class="reference internal" href="#id8">Fixes</a></li>
+<li><a class="reference internal" href="#id9">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul>
+<li><a class="reference internal" href="#id11">改良</a></li>
+<li><a class="reference internal" href="#id12">修正</a></li>
+<li><a class="reference internal" href="#id13">感謝</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/news/1.x.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2009-2015, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
