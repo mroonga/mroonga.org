@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.4.2. mroonga_snippet &mdash; Mroonga v5.00 documentation</title>
+    <title>4.2. mroonga_snippet &mdash; Mroonga v5.01 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '5.00',
+        VERSION:     '5.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,10 +24,10 @@
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.00 documentation" href="../../index.html" />
-    <link rel="up" title="5.4. UDF (User Defined Functions)" href="../udf.html" />
-    <link rel="next" title="5.5. Limitations" href="../limitations.html" />
-    <link rel="prev" title="5.4.1. mroonga_escape" href="mroonga_escape.html" /> 
+    <link rel="top" title="Mroonga v5.01 documentation" href="../../index.html" />
+    <link rel="up" title="4. UDF (User Defined Functions)" href="../udf.html" />
+    <link rel="next" title="5. Limitations" href="../limitations.html" />
+    <link rel="prev" title="4.1. mroonga_escape" href="mroonga_escape.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -37,7 +37,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../../">
@@ -61,34 +63,34 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../limitations.html" title="5.5. Limitations"
+          <a href="../limitations.html" title="5. Limitations"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.4.1. mroonga_escape"
+          <a href="mroonga_escape.html" title="4.1. mroonga_escape"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Mroonga v5.00 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Mroonga v5.01 documentation</a> &raquo;</li>
           <li><a href="../../reference.html" >5. Reference</a> &raquo;</li>
-          <li><a href="../udf.html" accesskey="U">5.4. UDF (User Defined Functions)</a> &raquo;</li> 
+          <li><a href="../udf.html" accesskey="U">4. UDF (User Defined Functions)</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="mroonga-snippet">
-<h1>5.4.2. mroonga_snippet<a class="headerlink" href="#mroonga-snippet" title="Permalink to this headline">¶</a></h1>
+<h1>4.2. mroonga_snippet<a class="headerlink" href="#mroonga-snippet" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="summary">
-<h2>5.4.2.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> UDF provides functionality to get keyword
+<h2>4.2.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> UDF provides functionality to get keyword
 in context.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -98,7 +100,7 @@ future.</p>
 </div>
 </div>
 <div class="section" id="syntax">
-<h2>5.4.2.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <p>mroonga_snippet has required parameter and optional parameter:</p>
 <div class="highlight-none"><div class="highlight"><pre>mroonga_snippet document
                 max_length
@@ -115,21 +117,21 @@ future.</p>
 </div>
 </div>
 <div class="section" id="usage">
-<h2>5.4.2.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>There is a case that you want to extract keyword and surrounding text as a
 search results.</p>
 <p>Snippet means 'keyword and surrounding text'. It is called 'Keyword in context'.</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> function provides the way to get snippet from search results.</p>
-<p>You can use <code class="docutils literal"><span class="pre">mroonga_snippet</span></code> UDF in storage mode and wrapper mode.</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> function is included in mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> function provides the way to get snippet from search results.</p>
+<p>You can use <tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> UDF in storage mode and wrapper mode.</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> function is included in mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> function is useful for searching the text which contains keyword and associated one
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> function is useful for searching the text which contains keyword and associated one
 by using MATCH .. AGAINST syntax.</p>
 <p>Imagine searching the document which contains 'fulltext' as a keyword.
 Assume that some keyword such as 'MySQL' and 'search' are associated with 'fulltext'.</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> function meets above.</p>
+<p><tt class="docutils literal"><span class="pre">mroonga_snippet</span></tt> function meets above.</p>
 <p>Here is the schema definition for execution examples(storage mode):</p>
 <div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
@@ -179,77 +181,77 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 <p>The keyword 'fulltext' and associated keyword 'MySQL' and 'search' has been extracted.</p>
 </div>
 <div class="section" id="parameters">
-<h2>5.4.2.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="required-parameters">
-<h3>5.4.2.4.1. Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
+<h3>4.2.4.1. Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
 <p>There are many required parameters.</p>
 <div class="section" id="document">
-<h4>5.4.2.4.1.1. <code class="docutils literal"><span class="pre">document</span></code><a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.1. <tt class="docutils literal"><span class="pre">document</span></tt><a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>The column name or string value is required.</div></blockquote>
 </div>
 <div class="section" id="max-length">
-<h4>5.4.2.4.1.2. <code class="docutils literal"><span class="pre">max_length</span></code><a class="headerlink" href="#max-length" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.2. <tt class="docutils literal"><span class="pre">max_length</span></tt><a class="headerlink" href="#max-length" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>The max length of snippet (bytes) is required.</div></blockquote>
 </div>
 <div class="section" id="max-count">
-<h4>5.4.2.4.1.3. <code class="docutils literal"><span class="pre">max_count</span></code><a class="headerlink" href="#max-count" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.3. <tt class="docutils literal"><span class="pre">max_count</span></tt><a class="headerlink" href="#max-count" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>The max elements of snippets (N word) is required.</div></blockquote>
 </div>
 <div class="section" id="encoding">
-<h4>5.4.2.4.1.4. <code class="docutils literal"><span class="pre">encoding</span></code><a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.4. <tt class="docutils literal"><span class="pre">encoding</span></tt><a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>The encoding of document is required.
 You can specify the value of encoding such as 'ascii_general_ci',
 'cp932_japanese_ci', 'eucjpms_japanese_ci' and so on.</div></blockquote>
 </div>
 <div class="section" id="skip-leading-spaces">
-<h4>5.4.2.4.1.5. <code class="docutils literal"><span class="pre">skip_leading_spaces</span></code><a class="headerlink" href="#skip-leading-spaces" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.5. <tt class="docutils literal"><span class="pre">skip_leading_spaces</span></tt><a class="headerlink" href="#skip-leading-spaces" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>Specify whether skip leading spaces or not.
 Specify the value 1 for skipping leading spaces, 0 for not.</div></blockquote>
 </div>
 <div class="section" id="html-escape">
-<h4>5.4.2.4.1.6. <code class="docutils literal"><span class="pre">html_escape</span></code><a class="headerlink" href="#html-escape" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.6. <tt class="docutils literal"><span class="pre">html_escape</span></tt><a class="headerlink" href="#html-escape" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>HTML escape is enabled or not.
 Specify the value 1 for enabling HTML escape, 0 for not.</div></blockquote>
 </div>
 <div class="section" id="prefix">
-<h4>5.4.2.4.1.7. <code class="docutils literal"><span class="pre">prefix</span></code><a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.7. <tt class="docutils literal"><span class="pre">prefix</span></tt><a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>The start text of snippet.</div></blockquote>
 </div>
 <div class="section" id="suffix">
-<h4>5.4.2.4.1.8. <code class="docutils literal"><span class="pre">suffix</span></code><a class="headerlink" href="#suffix" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.1.8. <tt class="docutils literal"><span class="pre">suffix</span></tt><a class="headerlink" href="#suffix" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>The end text of snippet.</div></blockquote>
 </div>
 </div>
 <div class="section" id="optional-parameters">
-<h3>5.4.2.4.2. Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
-<p>There is one optional group parameter, <code class="docutils literal"><span class="pre">wordN</span></code> related prefix and suffix.</p>
+<h3>4.2.4.2. Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There is one optional group parameter, <tt class="docutils literal"><span class="pre">wordN</span></tt> related prefix and suffix.</p>
 <div class="section" id="wordn">
-<h4>5.4.2.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code><a class="headerlink" href="#wordn" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.2.1. <tt class="docutils literal"><span class="pre">wordN</span></tt><a class="headerlink" href="#wordn" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>Specify any word.</div></blockquote>
 </div>
 <div class="section" id="wordn-prefix">
-<h4>5.4.2.4.2.2. <code class="docutils literal"><span class="pre">wordN_prefix</span></code><a class="headerlink" href="#wordn-prefix" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.2.2. <tt class="docutils literal"><span class="pre">wordN_prefix</span></tt><a class="headerlink" href="#wordn-prefix" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>It is the start text of wordN.</div></blockquote>
 </div>
 <div class="section" id="wordn-suffix">
-<h4>5.4.2.4.2.3. <code class="docutils literal"><span class="pre">wordN_suffix</span></code><a class="headerlink" href="#wordn-suffix" title="Permalink to this headline">¶</a></h4>
+<h4>4.2.4.2.3. <tt class="docutils literal"><span class="pre">wordN_suffix</span></tt><a class="headerlink" href="#wordn-suffix" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>It is the end text of wordN.</div></blockquote>
 </div>
 </div>
 </div>
 <div class="section" id="return-value">
-<h2>5.4.2.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <p>It returns snippet string.</p>
 </div>
 </div>
@@ -258,53 +260,51 @@ Specify the value 1 for enabling HTML escape, 0 for not.</div></blockquote>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.4.2. mroonga_snippet</a><ul>
-<li><a class="reference internal" href="#summary">5.4.2.1. Summary</a></li>
-<li><a class="reference internal" href="#syntax">5.4.2.2. Syntax</a></li>
-<li><a class="reference internal" href="#usage">5.4.2.3. Usage</a></li>
-<li><a class="reference internal" href="#parameters">5.4.2.4. Parameters</a><ul>
-<li><a class="reference internal" href="#required-parameters">5.4.2.4.1. Required parameters</a><ul>
-<li><a class="reference internal" href="#document">5.4.2.4.1.1. <code class="docutils literal"><span class="pre">document</span></code></a></li>
-<li><a class="reference internal" href="#max-length">5.4.2.4.1.2. <code class="docutils literal"><span class="pre">max_length</span></code></a></li>
-<li><a class="reference internal" href="#max-count">5.4.2.4.1.3. <code class="docutils literal"><span class="pre">max_count</span></code></a></li>
-<li><a class="reference internal" href="#encoding">5.4.2.4.1.4. <code class="docutils literal"><span class="pre">encoding</span></code></a></li>
-<li><a class="reference internal" href="#skip-leading-spaces">5.4.2.4.1.5. <code class="docutils literal"><span class="pre">skip_leading_spaces</span></code></a></li>
-<li><a class="reference internal" href="#html-escape">5.4.2.4.1.6. <code class="docutils literal"><span class="pre">html_escape</span></code></a></li>
-<li><a class="reference internal" href="#prefix">5.4.2.4.1.7. <code class="docutils literal"><span class="pre">prefix</span></code></a></li>
-<li><a class="reference internal" href="#suffix">5.4.2.4.1.8. <code class="docutils literal"><span class="pre">suffix</span></code></a></li>
+<li><a class="reference internal" href="#">4.2. mroonga_snippet</a><ul>
+<li><a class="reference internal" href="#summary">4.2.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">4.2.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">4.2.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">4.2.4. Parameters</a><ul>
+<li><a class="reference internal" href="#required-parameters">4.2.4.1. Required parameters</a><ul>
+<li><a class="reference internal" href="#document">4.2.4.1.1. <tt class="docutils literal"><span class="pre">document</span></tt></a></li>
+<li><a class="reference internal" href="#max-length">4.2.4.1.2. <tt class="docutils literal"><span class="pre">max_length</span></tt></a></li>
+<li><a class="reference internal" href="#max-count">4.2.4.1.3. <tt class="docutils literal"><span class="pre">max_count</span></tt></a></li>
+<li><a class="reference internal" href="#encoding">4.2.4.1.4. <tt class="docutils literal"><span class="pre">encoding</span></tt></a></li>
+<li><a class="reference internal" href="#skip-leading-spaces">4.2.4.1.5. <tt class="docutils literal"><span class="pre">skip_leading_spaces</span></tt></a></li>
+<li><a class="reference internal" href="#html-escape">4.2.4.1.6. <tt class="docutils literal"><span class="pre">html_escape</span></tt></a></li>
+<li><a class="reference internal" href="#prefix">4.2.4.1.7. <tt class="docutils literal"><span class="pre">prefix</span></tt></a></li>
+<li><a class="reference internal" href="#suffix">4.2.4.1.8. <tt class="docutils literal"><span class="pre">suffix</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#optional-parameters">5.4.2.4.2. Optional parameters</a><ul>
-<li><a class="reference internal" href="#wordn">5.4.2.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code></a></li>
-<li><a class="reference internal" href="#wordn-prefix">5.4.2.4.2.2. <code class="docutils literal"><span class="pre">wordN_prefix</span></code></a></li>
-<li><a class="reference internal" href="#wordn-suffix">5.4.2.4.2.3. <code class="docutils literal"><span class="pre">wordN_suffix</span></code></a></li>
+<li><a class="reference internal" href="#optional-parameters">4.2.4.2. Optional parameters</a><ul>
+<li><a class="reference internal" href="#wordn">4.2.4.2.1. <tt class="docutils literal"><span class="pre">wordN</span></tt></a></li>
+<li><a class="reference internal" href="#wordn-prefix">4.2.4.2.2. <tt class="docutils literal"><span class="pre">wordN_prefix</span></tt></a></li>
+<li><a class="reference internal" href="#wordn-suffix">4.2.4.2.3. <tt class="docutils literal"><span class="pre">wordN_suffix</span></tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#return-value">5.4.2.5. Return value</a></li>
+<li><a class="reference internal" href="#return-value">4.2.5. Return value</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="mroonga_escape.html"
-                        title="previous chapter">5.4.1. mroonga_escape</a></p>
+                        title="previous chapter">4.1. mroonga_escape</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../limitations.html"
-                        title="next chapter">5.5. Limitations</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../../sources/reference/udf/mroonga_snippet.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+                        title="next chapter">5. Limitations</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../sources/reference/udf/mroonga_snippet.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -321,24 +321,24 @@ Specify the value 1 for enabling HTML escape, 0 for not.</div></blockquote>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../limitations.html" title="5.5. Limitations"
+          <a href="../limitations.html" title="5. Limitations"
              >next</a> |</li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.4.1. mroonga_escape"
+          <a href="mroonga_escape.html" title="4.1. mroonga_escape"
              >previous</a> |</li>
-        <li><a href="../../index.html">Mroonga v5.00 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Mroonga v5.01 documentation</a> &raquo;</li>
           <li><a href="../../reference.html" >5. Reference</a> &raquo;</li>
-          <li><a href="../udf.html" >5.4. UDF (User Defined Functions)</a> &raquo;</li> 
+          <li><a href="../udf.html" >4. UDF (User Defined Functions)</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>

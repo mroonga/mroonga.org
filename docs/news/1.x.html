@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Release 1.20 - 2012/01/29 &mdash; Mroonga v5.00 documentation</title>
+    <title>Release 1.20 - 2012/01/29 &mdash; Mroonga v5.01 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.00',
+        VERSION:     '5.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.00 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v5.01 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -34,7 +34,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -58,20 +60,20 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="release-1-20-2012-01-29">
 <span id="release-1-20"></span><h1>Release 1.20 - 2012/01/29<a class="headerlink" href="#release-1-20-2012-01-29" title="Permalink to this headline">¶</a></h1>
@@ -97,11 +99,11 @@ in &quot;CREATE TABLE&quot; SQL. Here are upgrade sequence.</p>
 <div class="highlight-none"><div class="highlight"><pre>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
 </pre></div>
 </div>
-<p>We confirm that <code class="docutils literal"><span class="pre">ENGINE=groonga</span></code> only in <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>
-is replaced with <code class="docutils literal"><span class="pre">ENGINE=mroonga</span></code>. We need to check <code class="docutils literal"><span class="pre">&#64;&#64;</span>
-<span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> line includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>. If the line
-includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>, the hunk will be a change for
-<code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>:</p>
+<p>We confirm that <tt class="docutils literal"><span class="pre">ENGINE=groonga</span></tt> only in <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt>
+is replaced with <tt class="docutils literal"><span class="pre">ENGINE=mroonga</span></tt>. We need to check <tt class="docutils literal"><span class="pre">&#64;&#64;</span>
+<span class="pre">...</span> <span class="pre">&#64;&#64;</span></tt> line includes <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt>. If the line
+includes <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt>, the hunk will be a change for
+<tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt>:</p>
 <div class="highlight-none"><div class="highlight"><pre>% diff -up database-groonga.dump database-mroonga.dump
 --- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
 +++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
@@ -121,7 +123,7 @@ includes <code class="docutils literal"><span class="pre">CREATE</span> <span cl
 </pre></div>
 </div>
 <p>We upgrade to &quot;mroonga&quot; storage engine. We will use
-<code class="docutils literal"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal"><span class="pre">yum</span></code> on
+<tt class="docutils literal"><span class="pre">apt-get</span></tt> on Debian GNU/Linux or Ubuntu and <tt class="docutils literal"><span class="pre">yum</span></tt> on
 CentOS or Fedora.</p>
 <p>apt-get:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
@@ -134,8 +136,8 @@ CentOS or Fedora.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">We don't forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal"><span class="pre">yum</span>
-<span class="pre">install</span></code>. If we forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
+<p class="last">We don't forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> before <tt class="docutils literal"><span class="pre">yum</span>
+<span class="pre">install</span></tt>. If we forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt>, we will break
 a MySQL's system table.</p>
 </div>
 <p>We recreate a database:</p>
@@ -164,7 +166,7 @@ column value access in index. [#1212]</li>
 <li>[storage mode] Mapped enum and set types to more suitable
 groonga data types.</li>
 <li>[wrapper mode] Supported REPAIR TABLE.</li>
-<li>[storage mode] Supported <code class="docutils literal"><span class="pre">count(*)</span></code> on view. [#1255]
+<li>[storage mode] Supported <tt class="docutils literal"><span class="pre">count(*)</span></tt> on view. [#1255]
 [Reported by Takahiro Nagai]</li>
 <li>[incompatible] Groonga's native time value is used for
 DATE, DATETIME and TIMESTAMP type values.</li>
@@ -361,7 +363,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -397,14 +399,12 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 </li>
 </ul>
 
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../sources/news/1.x.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/news/1.x.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -421,16 +421,16 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>

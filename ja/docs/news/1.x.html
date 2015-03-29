@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1.20リリース - 2012/01/29 &mdash; Mroonga v5.00 documentation</title>
+    <title>1.20リリース - 2012/01/29 &mdash; Mroonga v5.01 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.00',
+        VERSION:     '5.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.00 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v5.01 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -35,7 +35,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -59,20 +61,20 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="release-1-20-2012-01-29">
 <span id="release-1-20"></span><h1>1.20リリース - 2012/01/29<a class="headerlink" href="#release-1-20-2012-01-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
@@ -96,7 +98,7 @@
 <div class="highlight-none"><div class="highlight"><pre>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> の <code class="docutils literal"><span class="pre">ENGINE=groonga</span></code> だけが <code class="docutils literal"><span class="pre">ENGINE=mroonga</span></code> に変更されていることを確認します。 <code class="docutils literal"><span class="pre">&#64;&#64;</span> <span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> 行に <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> が含まれているかを確認します。この行が <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> を含んでいたら、その変更はほぼ間違いなく <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> 用の変更です:</p>
+<p><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> の <tt class="docutils literal"><span class="pre">ENGINE=groonga</span></tt> だけが <tt class="docutils literal"><span class="pre">ENGINE=mroonga</span></tt> に変更されていることを確認します。 <tt class="docutils literal"><span class="pre">&#64;&#64;</span> <span class="pre">...</span> <span class="pre">&#64;&#64;</span></tt> 行に <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> が含まれているかを確認します。この行が <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> を含んでいたら、その変更はほぼ間違いなく <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></tt> 用の変更です:</p>
 <div class="highlight-none"><div class="highlight"><pre>% diff -up database-groonga.dump database-mroonga.dump
 --- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
 +++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
@@ -115,7 +117,7 @@
 <div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
-<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal"><span class="pre">yum</span></code> を使います。</p>
+<p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <tt class="docutils literal"><span class="pre">apt-get</span></tt> を使います。CentOSやFedoraでは <tt class="docutils literal"><span class="pre">yum</span></tt> を使います。</p>
 <p>apt-get:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
@@ -127,7 +129,7 @@
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">ご用心</p>
-<p class="last"><code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
+<p class="last"><tt class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></tt> の前に <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れてはいけません。もし、 <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
 <div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
@@ -165,7 +167,7 @@
 </li>
 <li><p class="first">[ラッパーモード] REPAIR TABLE対応。</p>
 </li>
-<li><p class="first">[ストレージモード] viewでの <code class="docutils literal"><span class="pre">count(*)</span></code> に対応。 [#1255] [Takahiro Nagaiさんが報告]</p>
+<li><p class="first">[ストレージモード] viewでの <tt class="docutils literal"><span class="pre">count(*)</span></tt> に対応。 [#1255] [Takahiro Nagaiさんが報告]</p>
 </li>
 <li><p class="first">[非互換] DATE、DATETIME、TIMESTAMP型の値にgroongaが提供する時間の値を使うようにした。</p>
 </li>
@@ -425,7 +427,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
@@ -461,14 +463,12 @@
 </li>
 </ul>
 
-  <div role="note" aria-label="source link">
-    <h3>このページ</h3>
-    <ul class="this-page-menu">
-      <li><a href="../sources/news/1.x.txt"
-            rel="nofollow">ソースコードを表示（英語）</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/news/1.x.txt"
+           rel="nofollow">ソースコードを表示（英語）</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -485,16 +485,16 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="../index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>

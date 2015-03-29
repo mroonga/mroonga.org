@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News &mdash; Mroonga v5.00 documentation</title>
+    <title>News &mdash; Mroonga v5.01 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.00',
+        VERSION:     '5.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.00 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v5.01 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -34,7 +34,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
@@ -58,30 +60,68 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="news">
 <h1>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="release-5-01-2015-03-29">
+<span id="release-5-01"></span><h2>Release 5.01 - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>[storage] Supported <tt class="docutils literal"><span class="pre">PARTITION</span> <span class="pre">BY</span> <span class="pre">RANGE</span></tt>. Note that this feature is not supported on MariaDB 10.
+This limitation is derived from MariaDB 10 architecture about removing .par file.</li>
+<li>[mysql56] Disabled in-place <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt> for <tt class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></tt>. This change is derived from Groonga's limitation because Groonga doesn't support to change table key type. [Reported by Hiromitsu KATO]</li>
+<li>Dropped Visual Studio 2010 and Visual Studio 2012 support. Use Visual Studio 2013 or later to build Mroonga. [GitHub#45]</li>
+<li>[windows] Added Visual Studio 2015 build support.</li>
+<li>Supported to specify options by table comment when primary key is using hash by <tt class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">(...)</span> <span class="pre">USING</span> <span class="pre">HASH</span></tt>.
+[GitHub#46] [Patch by Naoya Murakami]</li>
+<li>Supported index column flags by index comment. You can specify <tt class="docutils literal"><span class="pre">NONE</span></tt>, <tt class="docutils literal"><span class="pre">WITH_POSITION</span></tt>, <tt class="docutils literal"><span class="pre">WITH_SECTION</span></tt> and <tt class="docutils literal"><span class="pre">WITH_WEIGHT</span></tt> as index column flags. Use <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'index_flags</span> <span class="pre">&quot;WITH_POSITION|WITH_SECTION&quot;'</span></tt> for example. [GitHub#47] [Patch by Naoya Murakami]</li>
+<li>Supported to build with MySQL 5.7.</li>
+<li>[rpm][centos] Supported Percona Server 5.6.x on CentOS 6/7. [Tested on CentOS 6 by Yoshino]</li>
+<li>Supported <tt class="docutils literal"><span class="pre">utf8_unicode_520_ci</span></tt> and <tt class="docutils literal"><span class="pre">utf8mb4_unicode_520_ci</span></tt>. To support these collations, Mroonga now requires <a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a> 1.0.9.</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Changed to store score in float. This backward incompatible change is derived from the Groonga DB API change in Groonga 5.0.1. There may be a case the value of score is different.</li>
+<li>Added missing error check when failed to create multiple column index in in-place <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt>.</li>
+<li>[mariadb] Fixed crash bug when <tt class="docutils literal"><span class="pre">SET</span></tt> variable is used. This bug depends on MariaDB version. (&lt;= 5.5.41 and &lt;= 10.0.16)</li>
+<li>[rpm][centos] Fixed release number for CentOS 7. [GitHub#44] [Reported by CharAz]</li>
+<li>[mariadb55] Fixed install failure after installing and uninstalling Mroonga.</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Hiromitsu KATO</li>
+<li>Naoya Murakami</li>
+<li>Yoshino</li>
+<li>CharAz</li>
+</ul>
+</div>
+</div>
 <div class="section" id="release-5-00-2015-02-09">
 <span id="release-5-00"></span><h2>Release 5.00 - 2015/02/09<a class="headerlink" href="#release-5-00-2015-02-09" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Bump version to 5.00!</li>
 </ul>
-<div class="section" id="improvements">
-<h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[appveyor] Supported Windows CI on <a class="reference external" href="http://www.appveyor.com/">AppVeyor</a>.
 We can get notification about build failure on Windows at once.
@@ -90,14 +130,14 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
 [groonga-dev,03083][Reported by Kohei Aochi]</li>
 </ul>
 </div>
-<div class="section" id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[cmake] Disabled big endian support explicitly.</li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kohei Aochi</li>
 </ul>
@@ -364,15 +404,21 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">News</a><ul>
-<li><a class="reference internal" href="#release-5-00-2015-02-09">Release 5.00 - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#release-5-01-2015-03-29">Release 5.01 - 2015/03/29</a><ul>
 <li><a class="reference internal" href="#improvements">Improvements</a></li>
 <li><a class="reference internal" href="#fixes">Fixes</a></li>
 <li><a class="reference internal" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-00-2015-02-09">Release 5.00 - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#id1">Improvements</a></li>
+<li><a class="reference internal" href="#id2">Fixes</a></li>
+<li><a class="reference internal" href="#id3">Thanks</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">Past releases</a></li>
@@ -380,14 +426,12 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
 </li>
 </ul>
 
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="sources/news.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/news.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -404,16 +448,16 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>

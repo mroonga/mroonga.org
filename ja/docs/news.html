@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>お知らせ &mdash; Mroonga v5.00 documentation</title>
+    <title>お知らせ &mdash; Mroonga v5.01 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.00',
+        VERSION:     '5.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.00 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v5.01 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -35,7 +35,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="./../">
@@ -59,31 +61,86 @@
 </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="news">
 <h1>お知らせ<a class="headerlink" href="#news" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="release-5-01-2015-03-29">
+<span id="release-5-01"></span><h2>5.01リリース - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="improvements">
+<h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">PARTITION</span> <span class="pre">BY</span> <span class="pre">RANGE</span></tt> をサポートしました。この機能は MariaDB 10.xではサポートしていません。これはMariaDB 10.xが.parファイルを削除する仕様に由来する制限です。</p>
+</li>
+<li><p class="first">[mysql56] <tt class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></tt> に対してコピーせずに <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt> できなくしました。この変更はGroongaの制限によるものです。Groongaではテーブルのキーの変更をサポートしていません。 [加藤さんが報告]</p>
+</li>
+<li><p class="first">Visual Studio 2010 と Visual Studio 2012 のサポートをやめました。Visual Studio 2013 以降をMroongaのビルドに使ってください。 [GitHub#45]</p>
+</li>
+<li><p class="first">[windows] Visual Studio 2015でビルドできるようにしました。</p>
+</li>
+<li><p class="first">プライマリーキーに <tt class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">(...)</span> <span class="pre">USING</span> <span class="pre">HASH</span></tt> を指定しているときに、そのテーブルのコメントにオプションを指定できるようにしました。[GitHub#46] [村上さんがパッチ提供]</p>
+</li>
+<li><p class="first">インデックスカラムのフラグをインデックスのコメントに指定できるようにしました。 <tt class="docutils literal"><span class="pre">NONE</span></tt> や <tt class="docutils literal"><span class="pre">WITH_POSITION</span></tt> 、 <tt class="docutils literal"><span class="pre">WITH_SECTION</span></tt>  や <tt class="docutils literal"><span class="pre">WITH_WEIGHT</span></tt> がインデックスカラムのフラグとして使えます。[GitHub#47] [村上さんがパッチ提供]</p>
+</li>
+<li><p class="first">MySQL 5.7でビルドできるようになりました。</p>
+</li>
+<li><p class="first">[rpm][centos] CentOS 6とCentOS 7でPercona Server 5.6.xをサポートしました。[吉野さんがCentOS 6でテスト]</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">utf8_unicode_520_ci</span></tt> と <tt class="docutils literal"><span class="pre">utf8mb4_unicode_520_ci</span></tt> をサポートしました。これらの照合順序をサポートするために、Mroongaは <a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a> 1.0.9 以降を必要とするようになりました。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">スコアを浮動小数点で保持するように変更しました。この変更は非互換な変更で、GroongaのDB APIがGroonga 5.0.1で変更されたことに伴います。スコアの値がこれまでと違ってしまうことがあるかも知れません。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt> で複数のカラムインデックスを作成するのに失敗したときのエラーチェックがなかったので追加しました。</p>
+</li>
+<li><p class="first">[mariadb] <tt class="docutils literal"><span class="pre">SET</span></tt> variableしたときにクラッシュする不具合を修正しました。この不具合はMariaDBのバージョンに依存します。 (&lt;= 5.5.41
+と &lt;= 10.0.16)</p>
+</li>
+<li><p class="first">[rpm][centos] CentOS 7でパッケージのリリースバージョンを修正しました。[GitHub#44] [CharAzさんが報告]</p>
+</li>
+<li><p class="first">[mariadb55] インストール、アンインストールしてから再度インストールしようとすると失敗するのを修正しました。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">加藤さん</p>
+</li>
+<li><p class="first">村上さん</p>
+</li>
+<li><p class="first">吉野さん</p>
+</li>
+<li><p class="first">CharAzさん</p>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="release-5-00-2015-02-09">
 <span id="release-5-00"></span><h2>5.00リリース - 2015/02/09<a class="headerlink" href="#release-5-00-2015-02-09" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li><p class="first">5.00になりました！</p>
 </li>
 </ul>
-<div class="section" id="improvements">
-<h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[appveyor] WindowsでのCIを <a class="reference external" href="http://www.appveyor.com/">AppVeyor</a> で行うようになりました。Windowsでビルドに失敗したのがすぐにわかるようになりました。<a class="reference external" href="mailto:groonga-mysql-commit&#37;&#52;&#48;lists&#46;sourceforge">groonga-mysql-commit<span>&#64;</span>lists<span>&#46;</span>sourceforge</a>.jpを購読するとビルドの状態を知ることができます。</p>
 </li>
@@ -91,15 +148,15 @@
 </li>
 </ul>
 </div>
-<div class="section" id="fixes">
-<h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id2">
+<h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[cmake] ビッグエンディアンのサポートを明示的に無効にしました。</p>
 </li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id3">
+<h3>感謝<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">青地さん</p>
 </li>
@@ -367,15 +424,21 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">お知らせ</a><ul>
-<li><a class="reference internal" href="#release-5-00-2015-02-09">5.00リリース - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#release-5-01-2015-03-29">5.01リリース - 2015/03/29</a><ul>
 <li><a class="reference internal" href="#improvements">改良</a></li>
 <li><a class="reference internal" href="#fixes">修正</a></li>
 <li><a class="reference internal" href="#thanks">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-00-2015-02-09">5.00リリース - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#id1">改良</a></li>
+<li><a class="reference internal" href="#id2">修正</a></li>
+<li><a class="reference internal" href="#id3">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">過去のリリース</a></li>
@@ -383,14 +446,12 @@
 </li>
 </ul>
 
-  <div role="note" aria-label="source link">
-    <h3>このページ</h3>
-    <ul class="this-page-menu">
-      <li><a href="sources/news.txt"
-            rel="nofollow">ソースコードを表示（英語）</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/news.txt"
+           rel="nofollow">ソースコードを表示（英語）</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>クイック検索</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -407,16 +468,16 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="index.html">Mroonga v5.00 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
