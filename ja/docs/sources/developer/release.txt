@@ -3,27 +3,98 @@
 Release procedure (XXX not yet translated)
 ==========================================
 
+前提条件
+--------
+
+リリース手順の前提条件は以下の通りです。
+
+* ビルド環境は Debian GNU/Linux (sid)
+* コマンドラインの実行例はzsh
+
+作業ディレクトリ例は以下を使用します。
+
+* MROONGA_DIR=$HOME/work/mroonga
+* MROONGA_CLONE_DIR=$HOME/work/mroonga/mroonga.clean
+* MROONGA_GITHUB_COM_PATH=$HOME/work/mroonga/mroonga.github.com
+* CUTTER_DIR=$HOME/work/cutter
+* CUTTER_SOURCE_PATH=$HOME/work/cutter/cutter
+
+
 変更点の記述
 ------------
 
-まず ``doc/ja/source/news.rst`` に変更点をまとめます。
+前回リリース時からの変更点を``doc/source/news.txt``にまとめます。
+ここでまとめた内容についてはリリースアナウンスにも使用します。
 
-次に、バージョンを確かめます。
+前回リリースからの変更履歴を参照するには以下のコマンドを実行します。::
 
-例えば ``git tag`` の結果が次のようになっていたとき ::
+   % git log -p --reverse $(git tag | tail -1)..
 
- $ git tag
- v0.1
- v0.2
- v0.3
- v0.3a
- v0.4
- v0.5
- v0.6
+ログを^commitで検索しながら、以下の基準を目安として変更点を追記していきます。
 
-次のようにすると、タグ ``v0.6`` 以降のコミットを閲覧できます。 ::
+含めるもの
 
- $ git log -p --reverse v0.6..
+* ユーザへ影響するような変更
+* 互換性がなくなるような変更
+
+含めないもの
+
+* 内部的な変更(変数名の変更やらリファクタリング)
+
+
+configureスクリプトの生成
+-------------------------
+
+Mroongaのソースコードをcloneした時点ではconfigureスクリプトが含まれておらず、そのままmakeコマンドにてビルドすることができません。
+
+Mroongaをcloneしたディレクトリでautogen.shを以下のように実行します。::
+
+    % sh autogen.sh
+
+このコマンドの実行により、configureスクリプトが生成されます。
+
+
+configureスクリプトの実行
+-------------------------
+
+Makefileを生成するためにconfigureスクリプトを実行します。
+
+リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。::
+
+    % ./configure \
+        --enable-document \
+        --prefix=/tmp/local \
+        --with-launchpad-uploader-pgp-key=(Launchpadに登録したkeyID) \
+        --with-mysql-source=(MySQLのソースコードがあるディレクトリー) \
+        --with-mysql-build=(MySQLのソースコードをビルドしたディレクトリー) \
+        --with-mysql-config=(mysql_configコマンドのパス)
+
+--with-mysql-sourceなどのオプションについては、イントールドキュメントの :doc:`/install/others` を参照してください。
+
+
+アップロード権限の確認
+----------------------
+
+あらかじめpackagesユーザでpackages.groonga.orgにsshログインできることを確認しておいてください。
+
+ログイン可能であるかの確認は以下のようにコマンドを実行して行います。::
+
+    % ssh packages@packages.groonga.org
+
+ログインできない場合、SSHの公開鍵を登録してもらってください。
+
+
+make update-latest-releaseの実行
+--------------------------------
+
+make update-latest-releaseコマンドでは、OLD_RELEASE_DATEに前回のリリースの日付を、NEW_RELEASE_DATEに次回リリースの日付を指定します。
+
+5.01のリリースを行った際は以下のコマンドを実行しました。::
+
+    % make update-latest-release OLD_RELEASE=5.00 OLD_RELEASE_DATE=2015-02-09 NEW_RELEASE_DATE=2015-03-29
+
+これにより、clone済みのMroongaのWebサイトのトップページのソース(index.html,ja/index.html)やRPMパッケージのspecファイルのバージョン表記などが更新されます。
+
 
 配布用ファイルのアップロード
 ----------------------------

@@ -85,27 +85,84 @@
   <div class="section" id="release-procedure-xxx-not-yet-translated">
 <h1>9.2. リリース手順<a class="headerlink" href="#release-procedure-xxx-not-yet-translated" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
-<h2>9.2.1. 変更点の記述<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>まず <tt class="docutils literal"><span class="pre">doc/ja/source/news.rst</span></tt> に変更点をまとめます。</p>
-<p>次に、バージョンを確かめます。</p>
-<p>例えば <tt class="docutils literal"><span class="pre">git</span> <span class="pre">tag</span></tt> の結果が次のようになっていたとき</p>
-<div class="highlight-none"><div class="highlight"><pre>$ git tag
-v0.1
-v0.2
-v0.3
-v0.3a
-v0.4
-v0.5
-v0.6
-</pre></div>
-</div>
-<p>次のようにすると、タグ <tt class="docutils literal"><span class="pre">v0.6</span></tt> 以降のコミットを閲覧できます。</p>
-<div class="highlight-none"><div class="highlight"><pre>$ git log -p --reverse v0.6..
-</pre></div>
-</div>
+<h2>9.2.1. 前提条件<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>リリース手順の前提条件は以下の通りです。</p>
+<ul class="simple">
+<li>ビルド環境は Debian GNU/Linux (sid)</li>
+<li>コマンドラインの実行例はzsh</li>
+</ul>
+<p>作業ディレクトリ例は以下を使用します。</p>
+<ul class="simple">
+<li>MROONGA_DIR=$HOME/work/mroonga</li>
+<li>MROONGA_CLONE_DIR=$HOME/work/mroonga/mroonga.clean</li>
+<li>MROONGA_GITHUB_COM_PATH=$HOME/work/mroonga/mroonga.github.com</li>
+<li>CUTTER_DIR=$HOME/work/cutter</li>
+<li>CUTTER_SOURCE_PATH=$HOME/work/cutter/cutter</li>
+</ul>
 </div>
 <div class="section" id="id2">
-<h2>9.2.2. 配布用ファイルのアップロード<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>9.2.2. 変更点の記述<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>前回リリース時からの変更点を``doc/source/news.txt``にまとめます。
+ここでまとめた内容についてはリリースアナウンスにも使用します。</p>
+<p>前回リリースからの変更履歴を参照するには以下のコマンドを実行します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>% git log -p --reverse $(git tag | tail -1)..
+</pre></div>
+</div>
+<p>ログを^commitで検索しながら、以下の基準を目安として変更点を追記していきます。</p>
+<p>含めるもの</p>
+<ul class="simple">
+<li>ユーザへ影響するような変更</li>
+<li>互換性がなくなるような変更</li>
+</ul>
+<p>含めないもの</p>
+<ul class="simple">
+<li>内部的な変更(変数名の変更やらリファクタリング)</li>
+</ul>
+</div>
+<div class="section" id="configure">
+<h2>9.2.3. configureスクリプトの生成<a class="headerlink" href="#configure" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mroongaのソースコードをcloneした時点ではconfigureスクリプトが含まれておらず、そのままmakeコマンドにてビルドすることができません。</p>
+<p>Mroongaをcloneしたディレクトリでautogen.shを以下のように実行します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sh autogen.sh
+</pre></div>
+</div>
+<p>このコマンドの実行により、configureスクリプトが生成されます。</p>
+</div>
+<div class="section" id="id3">
+<h2>9.2.4. configureスクリプトの実行<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Makefileを生成するためにconfigureスクリプトを実行します。</p>
+<p>リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:</p>
+<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+    --enable-document \
+    --prefix=/tmp/local \
+    --with-launchpad-uploader-pgp-key=(Launchpadに登録したkeyID) \
+    --with-mysql-source=(MySQLのソースコードがあるディレクトリー) \
+    --with-mysql-build=(MySQLのソースコードをビルドしたディレクトリー) \
+    --with-mysql-config=(mysql_configコマンドのパス)
+</pre></div>
+</div>
+<p>--with-mysql-sourceなどのオプションについては、イントールドキュメントの <a class="reference internal" href="../install/others.html"><em>その他</em></a> を参照してください。</p>
+</div>
+<div class="section" id="id4">
+<h2>9.2.5. アップロード権限の確認<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>あらかじめpackagesユーザでpackages.groonga.orgにsshログインできることを確認しておいてください。</p>
+<p>ログイン可能であるかの確認は以下のようにコマンドを実行して行います。:</p>
+<div class="highlight-none"><div class="highlight"><pre>% ssh packages@packages.groonga.org
+</pre></div>
+</div>
+<p>ログインできない場合、SSHの公開鍵を登録してもらってください。</p>
+</div>
+<div class="section" id="make-update-latest-release">
+<h2>9.2.6. make update-latest-releaseの実行<a class="headerlink" href="#make-update-latest-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>make update-latest-releaseコマンドでは、OLD_RELEASE_DATEに前回のリリースの日付を、NEW_RELEASE_DATEに次回リリースの日付を指定します。</p>
+<p>5.01のリリースを行った際は以下のコマンドを実行しました。:</p>
+<div class="highlight-none"><div class="highlight"><pre>% make update-latest-release OLD_RELEASE=5.00 OLD_RELEASE_DATE=2015-02-09 NEW_RELEASE_DATE=2015-03-29
+</pre></div>
+</div>
+<p>これにより、clone済みのMroongaのWebサイトのトップページのソース(index.html,ja/index.html)やRPMパッケージのspecファイルのバージョン表記などが更新されます。</p>
+</div>
+<div class="section" id="id5">
+<h2>9.2.7. 配布用ファイルのアップロード<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次に、配布用の <tt class="docutils literal"><span class="pre">tar.gz</span></tt> ファイルを作成します。</p>
 <div class="highlight-none"><div class="highlight"><pre>$ make dist
 </pre></div>
@@ -122,8 +179,8 @@ $ make upload
 </div>
 <p>これで、 <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a> から <tt class="docutils literal"><span class="pre">tar.gz</span></tt> のダウンロードが行えるようになります。</p>
 </div>
-<div class="section" id="id3">
-<h2>9.2.3. パッケージの作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>9.2.8. パッケージの作成<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Linux と Windows 用にパッケージを作成する必要があります。</p>
 <p>Linux 用のパッケージは以下の 2 種類に分けることが可能です。</p>
 <ol class="arabic simple">
@@ -135,7 +192,7 @@ $ make upload
 <p class="last">現在のところ、パッケージの作成は Debian GNU/Linux (Ubuntu も可) でしか行えません。</p>
 </div>
 <div class="section" id="debian">
-<h3>9.2.3.1. Debian 系<a class="headerlink" href="#debian" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.2.8.1. Debian 系<a class="headerlink" href="#debian" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>以下の作業は初回パッケージ作成時のみ必要です。初回パッケージ作成時にはパッケージ作成に必要なソフトウェアをインストールします。:</p>
@@ -163,7 +220,7 @@ $ make upload
 <p>このように Makefile.am を書き換えずにコマンドライン引数でビルドの挙動を変更する方法は、知っておいて損はないでしょう。</p>
 </div>
 <div class="section" id="red-hat">
-<h3>9.2.3.2. Red Hat 系<a class="headerlink" href="#red-hat" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.2.8.2. Red Hat 系<a class="headerlink" href="#red-hat" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>以下の作業は初回パッケージ作成時のみ必要です。初回パッケージ作成時にはパッケージ作成に必要なソフトウェアをインストールします。:</p>
@@ -185,7 +242,7 @@ $ make upload
 </div>
 </div>
 <div class="section" id="windows">
-<h3>9.2.3.3. Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>9.2.8.3. Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MariaDB 本体を <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">多少変更しないといけない</a>
 ため、Windows 版は MariaDB に mroonga/groonga/groonga-normalizer-mysql
 をバンドルしたパッケージとして作成します。</p>
@@ -258,16 +315,16 @@ $ mv mariadb-10.0.2-winx64.zip \
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>9.2.4. タグを打つ<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id9">
+<h2>9.2.9. タグを打つ<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">tag</span></tt> とするとタグが打たれます。</p>
 <div class="highlight-none"><div class="highlight"><pre>$ make tag
 $ git push --tags origin
 </pre></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>9.2.5. ドキュメントのアップロード<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id10">
+<h2>9.2.10. ドキュメントのアップロード<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ol class="arabic simple">
 <li>GitHub からドキュメントアップロード用のリポジトリ (mroonga.github.com) を clone</li>
 <li>clone済みmroongaディレクトリ内でmake update-documentを実行し、clone したドキュメントアップロード用のリポジトリへ反映する</li>
@@ -275,7 +332,7 @@ $ git push --tags origin
 </ol>
 </div>
 <div class="section" id="homebrew">
-<h2>9.2.6. Homebrewの更新<a class="headerlink" href="#homebrew" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>9.2.11. Homebrewの更新<a class="headerlink" href="#homebrew" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>OS Xでのパッケージ管理方法として <a class="reference external" href="http://brew.sh/">Homebrew</a> があります。</p>
 <p>Groongaの場合はHomebrewへpull requestを送りますが、Mroongaの場合は別途用意してあるhomebrewリポジトリを更新します。</p>
 <blockquote>
@@ -286,8 +343,8 @@ $ git push --tags origin
 <p>実行すると、FormulaのソースアーカイブのURLとsha256チェックサムを更新します。
 あとは、変更内容をコミットすればHomebrewの更新作業は完了です。</p>
 </div>
-<div class="section" id="id9">
-<h2>9.2.7. リリースメールの送信<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id12">
+<h2>9.2.12. リリースメールの送信<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>各種メーリングリストにリリースメールを流します。</p>
 <ul class="simple">
 <li><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> 日本語アナウンス</li>
@@ -374,14 +431,14 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 </div>
 </div>
 <div class="section" id="twitter">
-<h2>9.2.8. Twitterでリリースアナウンスをする<a class="headerlink" href="#twitter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>9.2.13. Twitterでリリースアナウンスをする<a class="headerlink" href="#twitter" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaブログのリリースエントリには「リンクをあなたのフォロワーに共有する」ためのツイートボタンがあるので、そのボタンを使ってリリースアナウンスします。(画面下部に配置されている)</p>
 <p>このボタンを経由する場合、ツイート内容に自動的にリリースタイトル(「Mroonga 2.08リリース」など)とMroongaブログのリリースエントリのURLが挿入されます。</p>
 <p>この作業はMroongaブログの英語版、日本語版それぞれで行います。
 あらかじめgroongaアカウントでログインしておくとアナウンスを円滑に行うことができます。</p>
 </div>
-<div class="section" id="id10">
-<h2>9.2.9. リリース後にやること<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id13">
+<h2>9.2.14. リリース後にやること<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>リリースバージョンを以下のようにして更新します。:</p>
 <div class="highlight-none"><div class="highlight"><pre>$ make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
 </pre></div>
@@ -398,20 +455,25 @@ Groongaと組み合わせると問題が解決しているかもしれません�
   <h3><a href="../index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">9.2. リリース手順</a><ul>
-<li><a class="reference internal" href="#id1">9.2.1. 変更点の記述</a></li>
-<li><a class="reference internal" href="#id2">9.2.2. 配布用ファイルのアップロード</a></li>
-<li><a class="reference internal" href="#id3">9.2.3. パッケージの作成</a><ul>
-<li><a class="reference internal" href="#debian">9.2.3.1. Debian 系</a></li>
-<li><a class="reference internal" href="#red-hat">9.2.3.2. Red Hat 系</a></li>
-<li><a class="reference internal" href="#windows">9.2.3.3. Windows</a></li>
+<li><a class="reference internal" href="#id1">9.2.1. 前提条件</a></li>
+<li><a class="reference internal" href="#id2">9.2.2. 変更点の記述</a></li>
+<li><a class="reference internal" href="#configure">9.2.3. configureスクリプトの生成</a></li>
+<li><a class="reference internal" href="#id3">9.2.4. configureスクリプトの実行</a></li>
+<li><a class="reference internal" href="#id4">9.2.5. アップロード権限の確認</a></li>
+<li><a class="reference internal" href="#make-update-latest-release">9.2.6. make update-latest-releaseの実行</a></li>
+<li><a class="reference internal" href="#id5">9.2.7. 配布用ファイルのアップロード</a></li>
+<li><a class="reference internal" href="#id6">9.2.8. パッケージの作成</a><ul>
+<li><a class="reference internal" href="#debian">9.2.8.1. Debian 系</a></li>
+<li><a class="reference internal" href="#red-hat">9.2.8.2. Red Hat 系</a></li>
+<li><a class="reference internal" href="#windows">9.2.8.3. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">9.2.4. タグを打つ</a></li>
-<li><a class="reference internal" href="#id7">9.2.5. ドキュメントのアップロード</a></li>
-<li><a class="reference internal" href="#homebrew">9.2.6. Homebrewの更新</a></li>
-<li><a class="reference internal" href="#id9">9.2.7. リリースメールの送信</a></li>
-<li><a class="reference internal" href="#twitter">9.2.8. Twitterでリリースアナウンスをする</a></li>
-<li><a class="reference internal" href="#id10">9.2.9. リリース後にやること</a></li>
+<li><a class="reference internal" href="#id9">9.2.9. タグを打つ</a></li>
+<li><a class="reference internal" href="#id10">9.2.10. ドキュメントのアップロード</a></li>
+<li><a class="reference internal" href="#homebrew">9.2.11. Homebrewの更新</a></li>
+<li><a class="reference internal" href="#id12">9.2.12. リリースメールの送信</a></li>
+<li><a class="reference internal" href="#twitter">9.2.13. Twitterでリリースアナウンスをする</a></li>
+<li><a class="reference internal" href="#id13">9.2.14. リリース後にやること</a></li>
 </ul>
 </li>
 </ul>
