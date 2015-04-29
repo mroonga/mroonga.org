@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News &mdash; Mroonga v5.01 documentation</title>
+    <title>News &mdash; Mroonga v5.02 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.01',
+        VERSION:     '5.02',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.01 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v5.02 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -66,7 +66,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.02 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -77,10 +77,51 @@
             
   <div class="section" id="news">
 <h1>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="release-5-01-2015-03-29">
-<span id="release-5-01"></span><h2>Release 5.01 - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="release-5-02-2015-04-29">
+<span id="release-5-02"></span><h2>Release 5.02 - 2015/04/29<a class="headerlink" href="#release-5-02-2015-04-29" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>[doc] Updated <a class="reference internal" href="developer/release.html"><em>Release procedure (XXX not yet translated)</em></a> procedure documentation</li>
+<li>[storage] Improved performance to estimate the number of records in range.
+In the previous versions, Mroonga counts real the number of records in range.
+There is a performance penalty if huge number of records exists.
+Note that it requires Groonga 5.0.2 or later.
+[groonga-dev,03150] [Reported by Masato Shimada]</li>
+<li>[experimental] Added <a class="reference internal" href="reference/server_variables.html#mroonga-max-n-records-for-estimate"><em>mroonga_max_n_records_for_estimate</em></a> variable to
+limit the max number of records to estimate. It reduces the estimation cost
+when there are many target records.</li>
+<li>[rpm][centos] Updated to build against the latest MySQL 5.6.</li>
+<li>[wrapper] Supported fast order by limit optimization for primary key sort.
+[Reported by Tsugunori Nashiro]</li>
+<li>Supported Debian 8.0 (Jessie)</li>
+<li>Supported Ubuntu 15.04 (Vivid Vervet)</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>[doc] Fixed old links to Windows package [Reported by METAL_GEAR_mkII]</li>
+<li>[storage][mysql56] Fixed a crash bug by duplicated <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></tt>
+columns.  It's occurred when &quot;fast order limit&quot; optimization is
+detected with duplicated <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></tt> columns in SQL. Note that this
+bug doesn't affect to MySQL 5.5. [GitHub#50] [Reported by GMO Media, Inc.]</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Masato Shimada</li>
+<li>Tsugunori Nashiro</li>
+<li>METAL_GEAR_mkII</li>
+<li>GMO Media, Inc.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-5-01-2015-03-29">
+<span id="release-5-01"></span><h2>Release 5.01 - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage] Supported <tt class="docutils literal"><span class="pre">PARTITION</span> <span class="pre">BY</span> <span class="pre">RANGE</span></tt>. Note that this feature is not supported on MariaDB 10.
 This limitation is derived from MariaDB 10 architecture about removing .par file.</li>
@@ -95,8 +136,8 @@ This limitation is derived from MariaDB 10 architecture about removing .par file
 <li>Supported <tt class="docutils literal"><span class="pre">utf8_unicode_520_ci</span></tt> and <tt class="docutils literal"><span class="pre">utf8mb4_unicode_520_ci</span></tt>. To support these collations, Mroonga now requires <a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a> 1.0.9.</li>
 </ul>
 </div>
-<div class="section" id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Changed to store score in float. This backward incompatible change is derived from the Groonga DB API change in Groonga 5.0.1. There may be a case the value of score is different.</li>
 <li>Added missing error check when failed to create multiple column index in in-place <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt>.</li>
@@ -105,8 +146,8 @@ This limitation is derived from MariaDB 10 architecture about removing .par file
 <li>[mariadb55] Fixed install failure after installing and uninstalling Mroonga.</li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Hiromitsu KATO</li>
 <li>Naoya Murakami</li>
@@ -120,8 +161,8 @@ This limitation is derived from MariaDB 10 architecture about removing .par file
 <ul class="simple">
 <li>Bump version to 5.00!</li>
 </ul>
-<div class="section" id="id1">
-<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[appveyor] Supported Windows CI on <a class="reference external" href="http://www.appveyor.com/">AppVeyor</a>.
 We can get notification about build failure on Windows at once.
@@ -130,14 +171,14 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
 [groonga-dev,03083][Reported by Kohei Aochi]</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[cmake] Disabled big endian support explicitly.</li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h3>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Thanks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kohei Aochi</li>
 </ul>
@@ -409,16 +450,22 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">News</a><ul>
-<li><a class="reference internal" href="#release-5-01-2015-03-29">Release 5.01 - 2015/03/29</a><ul>
+<li><a class="reference internal" href="#release-5-02-2015-04-29">Release 5.02 - 2015/04/29</a><ul>
 <li><a class="reference internal" href="#improvements">Improvements</a></li>
 <li><a class="reference internal" href="#fixes">Fixes</a></li>
 <li><a class="reference internal" href="#thanks">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-5-00-2015-02-09">Release 5.00 - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#release-5-01-2015-03-29">Release 5.01 - 2015/03/29</a><ul>
 <li><a class="reference internal" href="#id1">Improvements</a></li>
 <li><a class="reference internal" href="#id2">Fixes</a></li>
 <li><a class="reference internal" href="#id3">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-00-2015-02-09">Release 5.00 - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#id4">Improvements</a></li>
+<li><a class="reference internal" href="#id5">Fixes</a></li>
+<li><a class="reference internal" href="#id6">Thanks</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">Past releases</a></li>
@@ -454,7 +501,7 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.02 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

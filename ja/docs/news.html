@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>お知らせ &mdash; Mroonga v5.01 documentation</title>
+    <title>お知らせ &mdash; Mroonga v5.02 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.01',
+        VERSION:     '5.02',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="static/translations.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.01 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v5.02 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -67,7 +67,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.02 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -78,10 +78,54 @@
             
   <div class="section" id="news">
 <h1>お知らせ<a class="headerlink" href="#news" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="release-5-01-2015-03-29">
-<span id="release-5-01"></span><h2>5.01リリース - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="release-5-02-2015-04-29">
+<span id="release-5-02"></span><h2>5.02リリース - 2015/04/29<a class="headerlink" href="#release-5-02-2015-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">[doc] <a class="reference internal" href="developer/release.html"><em>リリース手順</em></a> を更新しました。</p>
+</li>
+<li><p class="first">[ストレージ] 範囲指定のレコード数を見積もる際のパフォーマンスを改善しました。以前のバージョンでは、Mroongaは実際のレコード数をカウントします。そのため、レコード数が増えるとパフォーマンスに影響していました。この恩恵を受けるにはGroonga 5.0.2以降が必要です。 [groonga-dev,03150] [嶋田さんが報告]</p>
+</li>
+<li><p class="first">[実験的] <a class="reference internal" href="reference/server_variables.html#mroonga-max-n-records-for-estimate"><em>mroonga_max_n_records_for_estimate</em></a> サーバー変数を追加しました。この変数はレコード数を見積る際の最大レコード数を制限するのに使います。対象となるレコードが多いときでも、見積もる際のコストを抑えることができます。</p>
+</li>
+<li><p class="first">[rpm][centos] 最新のMySQL 5.6でビルドするようにしました。</p>
+</li>
+<li><p class="first">[ラッパーモード] Mroongaの <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></tt> 最適化で主キーのソートに対応しました。 [Tsugunori Nashiroさんが報告]</p>
+</li>
+<li><p class="first">Debian 8.0 (Jessie)に対応しました。</p>
+</li>
+<li><p class="first">Ubuntu 15.04 Vivid Vervetに対応しました。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">[doc] Windows版パッケージへのリンクが古いのを修正しました。 [METAL_GEAR_mkIIさんが報告]</p>
+</li>
+<li><p class="first">[ストレージモード][mysql56] <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></tt> のカラム指定が重複しているときにクラッシュする問題を修正しました。 <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></tt> の最適化を適用するケースでSQLの <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></tt> カラム指定が重複しているときに発生します。この問題はMySQL 5.5には影響しません。 [GitHub#50] [GMOメディア株式会社さんが報告]</p>
+</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p class="first">嶋田さん</p>
+</li>
+<li><p class="first">Tsugunori Nashiroさん</p>
+</li>
+<li><p class="first">METAL_GEAR_mkIIさん</p>
+</li>
+<li><p class="first">GMOメディア株式会社さん</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-5-01-2015-03-29">
+<span id="release-5-01"></span><h2>5.01リリース - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">PARTITION</span> <span class="pre">BY</span> <span class="pre">RANGE</span></tt> をサポートしました。この機能は MariaDB 10.xではサポートしていません。これはMariaDB 10.xが.parファイルを削除する仕様に由来する制限です。</p>
 </li>
@@ -103,8 +147,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="fixes">
-<h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id2">
+<h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">スコアを浮動小数点で保持するように変更しました。この変更は非互換な変更で、GroongaのDB APIがGroonga 5.0.1で変更されたことに伴います。スコアの値がこれまでと違ってしまうことがあるかも知れません。</p>
 </li>
@@ -119,8 +163,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id3">
+<h3>感謝<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">加藤さん</p>
 </li>
@@ -139,8 +183,8 @@
 <li><p class="first">5.00になりました！</p>
 </li>
 </ul>
-<div class="section" id="id1">
-<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id4">
+<h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[appveyor] WindowsでのCIを <a class="reference external" href="http://www.appveyor.com/">AppVeyor</a> で行うようになりました。Windowsでビルドに失敗したのがすぐにわかるようになりました。<a class="reference external" href="mailto:groonga-mysql-commit&#37;&#52;&#48;lists&#46;sourceforge">groonga-mysql-commit<span>&#64;</span>lists<span>&#46;</span>sourceforge</a>.jpを購読するとビルドの状態を知ることができます。</p>
 </li>
@@ -148,15 +192,15 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id5">
+<h3>修正<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[cmake] ビッグエンディアンのサポートを明示的に無効にしました。</p>
 </li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h3>感謝<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id6">
+<h3>感謝<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">青地さん</p>
 </li>
@@ -429,16 +473,22 @@
   <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">お知らせ</a><ul>
-<li><a class="reference internal" href="#release-5-01-2015-03-29">5.01リリース - 2015/03/29</a><ul>
+<li><a class="reference internal" href="#release-5-02-2015-04-29">5.02リリース - 2015/04/29</a><ul>
 <li><a class="reference internal" href="#improvements">改良</a></li>
 <li><a class="reference internal" href="#fixes">修正</a></li>
 <li><a class="reference internal" href="#thanks">感謝</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-5-00-2015-02-09">5.00リリース - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#release-5-01-2015-03-29">5.01リリース - 2015/03/29</a><ul>
 <li><a class="reference internal" href="#id1">改良</a></li>
 <li><a class="reference internal" href="#id2">修正</a></li>
 <li><a class="reference internal" href="#id3">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-00-2015-02-09">5.00リリース - 2015/02/09</a><ul>
+<li><a class="reference internal" href="#id4">改良</a></li>
+<li><a class="reference internal" href="#id5">修正</a></li>
+<li><a class="reference internal" href="#id6">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">過去のリリース</a></li>
@@ -474,7 +524,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="index.html">Mroonga v5.01 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.02 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
