@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News &mdash; Mroonga v5.03 documentation</title>
+    <title>News &mdash; Mroonga v5.04 documentation</title>
     
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.03',
+        VERSION:     '5.04',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="shortcut icon" href="static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.03 documentation" href="index.html" /> 
+    <link rel="top" title="Mroonga v5.04 documentation" href="index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -66,7 +66,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="index.html">Mroonga v5.03 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.04 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -77,10 +77,177 @@
             
   <div class="section" id="news">
 <h1>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="release-5-03-2015-05-29">
-<span id="release-5-03"></span><h2>Release 5.03 - 2015/05/29<a class="headerlink" href="#release-5-03-2015-05-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="release-5-04-2015-06-29">
+<span id="release-5-04"></span><h2>Release 5.04 - 2015/06/29<a class="headerlink" href="#release-5-04-2015-06-29" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">[rpm][mysql56-community-mroonga][percona-server-56-mroonga]
+Start mysqld when mysqld is not running within rpm-installation.
+(This topic is at 5.03-2) [GitHub#58] [Patch by GMO Media, Inc.]</p>
+</li>
+<li><p class="first">[mariadb10.1] Followed recent API changes.</p>
+</li>
+<li><p class="first">[mariadb] Supported custom parameters in DDL.
+This feature can be used only with MariaDB.</p>
+<ul>
+<li><p class="first">Supported <tt class="docutils literal"><span class="pre">TOKENIZER</span></tt> parameter for <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></tt></p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE diaries (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  body text,
+  FULLTEXT INDEX body_index (body) TOKENIZER=&#39;TokenBigramSplitSymbolAlphaDigit&#39;
+) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Supported <tt class="docutils literal"><span class="pre">NORMALIZER</span></tt> parameter for <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></tt> and normal <tt class="docutils literal"><span class="pre">INDEX</span></tt></p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
+  id INT NOT NULL PRIMARY KEY,
+  content TEXT NOT NULL,
+  FULLTEXT INDEX (content) NORMALIZER=&#39;NormalizerAuto&#39;
+) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Supported <tt class="docutils literal"><span class="pre">TOKEN_FILTERS</span></tt> parameter for <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></tt></p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
+  content VARCHAR(64) NOT NULL,
+  FULLTEXT INDEX (content) TOKEN_FILTERS=&#39;TokenFilterStopWord,TokenFilterStopWord&#39;
+) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Supported <tt class="docutils literal"><span class="pre">FLAGS</span></tt> parameter for <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> and normal <tt class="docutils literal"><span class="pre">INDEX</span></tt></p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
+  content VARCHAR(64) NOT NULL,
+  FULLTEXT INDEX (content) FLAGS=&#39;WITH_POSITION|WITH_WEIGHT&#39;
+) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Supported <tt class="docutils literal"><span class="pre">GROONGA_TYPE</span></tt> parameter for field</p>
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE tags (
+  name VARCHAR(64) PRIMARY KEY
+) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+
+CREATE TABLE bugs (
+  id INT UNSIGNED PRIMARY KEY,
+  tag VARCHAR(64) GROONGA_TYPE=&#39;tags&#39;
+) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">[storage] Report error for invalid datetime related value on <tt class="docutils literal"><span class="pre">STRICT_TRANS_TABLES</span></tt>.
+[groonga-dev,03299] [Suggested by GMO Media, Inc.]</p>
+<ul>
+<li><p class="first">It's backward incompatible change. For example:</p>
+<ul>
+<li><p class="first">Prepare (common)</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE timestamps (
+    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
+    -&gt;   create_dt DATETIME
+    -&gt; ) ENGINE = Mroonga DEFAULT CHARSET = utf8;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql&gt; SET sql_mode=&#39;&#39;;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2001-00-00 00:00:00&quot;);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql&gt; SHOW WARNINGS;
++---------+------+------------------------------------------------+
+| Level   | Code | Message                                        |
++---------+------+------------------------------------------------+
+| Warning | 1265 | Data truncated for column &#39;create_dt&#39; at row 1 |
++---------+------+------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; SELECT * FROM timestamps;
++----+---------------------+
+| id | create_dt           |
++----+---------------------+
+|  1 | 2001-01-01 00:00:00 |
++----+---------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; SET sql_mode=&#39;STRICT_TRANS_TABLES&#39;;
+Query OK, 0 rows affected (0.01 sec)
+</pre></div>
+</div>
+</li>
+<li><p class="first">Before (5.03 or earlier)</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
+ERROR 1265 (01000): Data truncated for column &#39;create_dt&#39; at row 1
+
+mysql&gt; SELECT * FROM timestamps;
++----+---------------------+
+| id | create_dt           |
++----+---------------------+
+|  1 | 2001-01-01 00:00:00 |
+|  2 | 2002-01-01 00:00:00 |
++----+---------------------+
+2 rows in set (0.00 sec)
+</pre></div>
+</div>
+</li>
+<li><p class="first">After (5.04 or later)</p>
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
+ERROR 22003: Out of range value for column &#39;create_dt&#39; at row 1
+
+mysql&gt; SELECT * FROM timestamps;
++----+---------------------+
+| id | create_dt           |
++----+---------------------+
+|  1 | 2001-01-01 00:00:00 |
++----+---------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="first">Changed keyword to use custom tokenizer to <tt class="docutils literal"><span class="pre">tokenizer</span></tt> from <tt class="docutils literal"><span class="pre">parser</span></tt>.</p>
+<ul class="simple">
+<li>In index comment: <tt class="docutils literal"><span class="pre">parser</span></tt> -&gt; <tt class="docutils literal"><span class="pre">tokenizer</span></tt>.</li>
+<li>Server variable: <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> -&gt; <tt class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">parser</span></tt> and <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> are deprecated but they are
+available at least Mroonga 6.XX.</li>
+</ul>
+</li>
+<li><p class="first">Renamed parameter name for flags of index column.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">index_flags</span></tt> -&gt; <tt class="docutils literal"><span class="pre">flags</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">index_flags</span></tt> is deprecated but it will be usable on Mroonga 6.XX. It
+may be removed at Mroonga 7.00.</li>
+</ul>
+</li>
+<li><p class="first">[storage] Show error message when nonexistent Groonga type is specified to column.</p>
+</li>
+<li><p class="first">[storage] Renamed parameter name for column's Groonga type.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">type</span></tt> -&gt; <tt class="docutils literal"><span class="pre">groonga_type</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">type</span></tt> is deprecated but it will be usable on Mroonga 6.XX. It may be
+removed at Mroonga 7.00.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>GMO Media, Inc.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-5-03-2015-05-29">
+<span id="release-5-03"></span><h2>Release 5.03 - 2015/05/29<a class="headerlink" href="#release-5-03-2015-05-29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>mariadb10.1: Followed recent API changes.</li>
 <li>Supported <tt class="docutils literal"><span class="pre">FT_SORTED</span></tt> flag which is internally used in MySQL. It improves compatibility with
@@ -105,8 +272,8 @@ expected search results. [GitHub#54] [Patch by Naoya Murakami]</li>
 [groonga-dev,03243] [Reported by Hiroshi Kagami]</li>
 </ul>
 </div>
-<div class="section" id="thanks">
-<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Thanks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Hiroshi Kagami</li>
 <li>torinky</li>
@@ -116,8 +283,8 @@ expected search results. [GitHub#54] [Patch by Naoya Murakami]</li>
 </div>
 <div class="section" id="release-5-02-2015-04-29">
 <span id="release-5-02"></span><h2>Release 5.02 - 2015/04/29<a class="headerlink" href="#release-5-02-2015-04-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Improvements<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[doc] Updated <a class="reference internal" href="developer/release.html"><em>Release procedure (XXX not yet translated)</em></a> procedure documentation</li>
 <li>[storage] Improved performance to estimate the number of records in range.
@@ -135,8 +302,8 @@ when there are many target records.</li>
 <li>Supported Ubuntu 15.04 (Vivid Vervet)</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Fixes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[doc] Fixed old links to Windows package [Reported by METAL_GEAR_mkII]</li>
 <li>[storage][mysql56] Fixed a crash bug by duplicated <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></tt>
@@ -145,8 +312,8 @@ detected with duplicated <tt class="docutils literal"><span class="pre">ORDER</s
 bug doesn't affect to MySQL 5.5. [GitHub#50] [Reported by GMO Media, Inc.]</li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h3>Thanks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Thanks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Masato Shimada</li>
 <li>Tsugunori Nashiro</li>
@@ -157,8 +324,8 @@ bug doesn't affect to MySQL 5.5. [GitHub#50] [Reported by GMO Media, Inc.]</li>
 </div>
 <div class="section" id="release-5-01-2015-03-29">
 <span id="release-5-01"></span><h2>Release 5.01 - 2015/03/29<a class="headerlink" href="#release-5-01-2015-03-29" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Improvements<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[storage] Supported <tt class="docutils literal"><span class="pre">PARTITION</span> <span class="pre">BY</span> <span class="pre">RANGE</span></tt>. Note that this feature is not supported on MariaDB 10.
 This limitation is derived from MariaDB 10 architecture about removing .par file.</li>
@@ -173,8 +340,8 @@ This limitation is derived from MariaDB 10 architecture about removing .par file
 <li>Supported <tt class="docutils literal"><span class="pre">utf8_unicode_520_ci</span></tt> and <tt class="docutils literal"><span class="pre">utf8mb4_unicode_520_ci</span></tt>. To support these collations, Mroonga now requires <a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a> 1.0.9.</li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h3>Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>Fixes<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Changed to store score in float. This backward incompatible change is derived from the Groonga DB API change in Groonga 5.0.1. There may be a case the value of score is different.</li>
 <li>Added missing error check when failed to create multiple column index in in-place <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt>.</li>
@@ -183,8 +350,8 @@ This limitation is derived from MariaDB 10 architecture about removing .par file
 <li>[mariadb55] Fixed install failure after installing and uninstalling Mroonga.</li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h3>Thanks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>Thanks<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Hiromitsu KATO</li>
 <li>Naoya Murakami</li>
@@ -198,8 +365,8 @@ This limitation is derived from MariaDB 10 architecture about removing .par file
 <ul class="simple">
 <li>Bump version to 5.00!</li>
 </ul>
-<div class="section" id="id7">
-<h3>Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>Improvements<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[appveyor] Supported Windows CI on <a class="reference external" href="http://www.appveyor.com/">AppVeyor</a>.
 We can get notification about build failure on Windows at once.
@@ -208,14 +375,14 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
 [groonga-dev,03083][Reported by Kohei Aochi]</li>
 </ul>
 </div>
-<div class="section" id="id8">
-<h3>Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>Fixes<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>[cmake] Disabled big endian support explicitly.</li>
 </ul>
 </div>
-<div class="section" id="id9">
-<h3>Thanks<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>Thanks<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Kohei Aochi</li>
 </ul>
@@ -487,28 +654,33 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">News</a><ul>
-<li><a class="reference internal" href="#release-5-03-2015-05-29">Release 5.03 - 2015/05/29</a><ul>
+<li><a class="reference internal" href="#release-5-04-2015-06-29">Release 5.04 - 2015/06/29</a><ul>
 <li><a class="reference internal" href="#improvements">Improvements</a></li>
-<li><a class="reference internal" href="#fixes">Fixes</a></li>
 <li><a class="reference internal" href="#thanks">Thanks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-5-02-2015-04-29">Release 5.02 - 2015/04/29</a><ul>
+<li><a class="reference internal" href="#release-5-03-2015-05-29">Release 5.03 - 2015/05/29</a><ul>
 <li><a class="reference internal" href="#id1">Improvements</a></li>
-<li><a class="reference internal" href="#id2">Fixes</a></li>
-<li><a class="reference internal" href="#id3">Thanks</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#id2">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-02-2015-04-29">Release 5.02 - 2015/04/29</a><ul>
+<li><a class="reference internal" href="#id3">Improvements</a></li>
+<li><a class="reference internal" href="#id4">Fixes</a></li>
+<li><a class="reference internal" href="#id5">Thanks</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-5-01-2015-03-29">Release 5.01 - 2015/03/29</a><ul>
-<li><a class="reference internal" href="#id4">Improvements</a></li>
-<li><a class="reference internal" href="#id5">Fixes</a></li>
-<li><a class="reference internal" href="#id6">Thanks</a></li>
+<li><a class="reference internal" href="#id6">Improvements</a></li>
+<li><a class="reference internal" href="#id7">Fixes</a></li>
+<li><a class="reference internal" href="#id8">Thanks</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-5-00-2015-02-09">Release 5.00 - 2015/02/09</a><ul>
-<li><a class="reference internal" href="#id7">Improvements</a></li>
-<li><a class="reference internal" href="#id8">Fixes</a></li>
-<li><a class="reference internal" href="#id9">Thanks</a></li>
+<li><a class="reference internal" href="#id9">Improvements</a></li>
+<li><a class="reference internal" href="#id10">Fixes</a></li>
+<li><a class="reference internal" href="#id11">Thanks</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">Past releases</a></li>
@@ -544,7 +716,7 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="index.html">Mroonga v5.03 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Mroonga v5.04 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
