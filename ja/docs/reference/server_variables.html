@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. サーバ変数の一覧 &mdash; Mroonga v5.04 documentation</title>
+    <title>2. サーバ変数の一覧 &mdash; Mroonga v5.05 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.04',
+        VERSION:     '5.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.04 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v5.05 documentation" href="../index.html" />
     <link rel="up" title="5. リファレンス" href="../reference.html" />
     <link rel="next" title="3. ステータス変数の一覧" href="status_variables.html" />
     <link rel="prev" title="1. SQL commands" href="sql_commands.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="1. SQL commands"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v5.04 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li>
           <li><a href="../reference.html" accesskey="U">5. リファレンス</a> &raquo;</li> 
       </ul>
     </div>  
@@ -198,7 +198,10 @@
 <p>TODO:</p>
 </div>
 <div class="section" id="mroonga-default-parser">
-<h2>2.4. <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt><a class="headerlink" href="#mroonga-default-parser" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id5"></span><h2>2.4. <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt><a class="headerlink" href="#mroonga-default-parser" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="deprecated">
+<p><span class="versionmodified">バージョン 5.04 で撤廃: </span>Use <a class="reference internal" href="#mroonga-default-tokenizer"><em>mroonga_default_tokenizer</em></a> instead.</p>
+</div>
 <p>デフォルトの全文検索用パーサ。デフォルト値はconfigureの <tt class="docutils literal"><span class="pre">with-default-parser</span></tt> オプションで指定できます（無指定時は <tt class="docutils literal"><span class="pre">TokenBigram</span></tt> ）。</p>
 <p>全文検索パーサーとして <tt class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></tt> を使う例です。この例では <tt class="docutils literal"><span class="pre">body_index</span></tt> 全文検索インデックスは <tt class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></tt> を使います。</p>
 <div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -215,12 +218,34 @@
 </pre></div>
 </td></tr></table></div>
 </div>
+<div class="section" id="mroonga-default-tokenizer">
+<span id="id6"></span><h2>2.5. <tt class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></tt><a class="headerlink" href="#mroonga-default-tokenizer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 5.04 で追加.</span></p>
+</div>
+<p>The default tokenizer of the full text search.
+The default value can be specified by <tt class="docutils literal"><span class="pre">--with-default-tokenizer=TOKENIZER</span></tt> configure argument, whose default value is <tt class="docutils literal"><span class="pre">TokenBigram</span></tt>.</p>
+<p>Here is an example to use <tt class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></tt> as a fulltext index tokenizer. It is used by <tt class="docutils literal"><span class="pre">body_index</span></tt> fulltext index.</p>
+<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">body</span> <span class="nb">TEXT</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
 <div class="section" id="mroonga-default-wrapper-engine">
-<span id="id5"></span><h2>2.5. <tt class="docutils literal"><span class="pre">mroonga_default_wrapper_engine</span></tt><a class="headerlink" href="#mroonga-default-wrapper-engine" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id7"></span><h2>2.6. <tt class="docutils literal"><span class="pre">mroonga_default_wrapper_engine</span></tt><a class="headerlink" href="#mroonga-default-wrapper-engine" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TODO:</p>
 </div>
 <div class="section" id="mroonga-dry-write">
-<h2>2.6. <tt class="docutils literal"><span class="pre">mroonga_dry_write</span></tt><a class="headerlink" href="#mroonga-dry-write" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.7. <tt class="docutils literal"><span class="pre">mroonga_dry_write</span></tt><a class="headerlink" href="#mroonga-dry-write" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Groongaデータベースに実際にデータを書き込むかどうかを指定します。デフォルト値は <tt class="docutils literal"><span class="pre">OFF</span></tt> で、実際にGroongaデータベースにデータを書き込みます。通常はこの値を変更する必要はありません。この変数はベンチマーク時に便利です。この値を <tt class="docutils literal"><span class="pre">ON</span></tt> にすることでMySQLとMroongaだけの処理時間を計測することができます。この時間にGroongaの処理時間は含まれません。</p>
 <p>Groongaデータベースに値を書き込まないようにするSQLの例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
@@ -245,7 +270,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-enable-optimization">
-<h2>2.7. <tt class="docutils literal"><span class="pre">mroonga_enable_optimization</span></tt><a class="headerlink" href="#mroonga-enable-optimization" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.8. <tt class="docutils literal"><span class="pre">mroonga_enable_optimization</span></tt><a class="headerlink" href="#mroonga-enable-optimization" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>最適化を有効にするかどうかを指定します。デフォルト値は <tt class="docutils literal"><span class="pre">ON</span></tt> で最適化は有効になっています。通常はこの値を変更する必要はありません。この変数はベンチマーク時に便利です。</p>
 <p>最適化を無効にするSQLの例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
@@ -270,7 +295,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-libgroonga-support-lz4">
-<span id="id6"></span><h2>2.8. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_lz4</span></tt><a class="headerlink" href="#mroonga-libgroonga-support-lz4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id8"></span><h2>2.9. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_lz4</span></tt><a class="headerlink" href="#mroonga-libgroonga-support-lz4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GroongaライブラリーのLZ4サポート状況</p>
 <p>GroongaライブラリーがLZ4をサポートしているかを確認するためのSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_libgroonga_support_lz4&#39;;
@@ -283,7 +308,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-libgroonga-support-zlib">
-<span id="id7"></span><h2>2.9. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_zlib</span></tt><a class="headerlink" href="#mroonga-libgroonga-support-zlib" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id9"></span><h2>2.10. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_zlib</span></tt><a class="headerlink" href="#mroonga-libgroonga-support-zlib" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Groongaライブラリーのzlibサポート状況</p>
 <p>Groongaライブラリーがzlibをサポートしているかを確認するためのSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_libgroonga_support_zlib&#39;;
@@ -296,7 +321,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-libgroonga-version">
-<h2>2.10. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_version</span></tt><a class="headerlink" href="#mroonga-libgroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.11. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_version</span></tt><a class="headerlink" href="#mroonga-libgroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>groongaライブラリのバージョン</p>
 <p>groongaライブラリのバージョンを確認するためのSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_libgroonga_version&#39;;
@@ -310,11 +335,11 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-lock-timeout">
-<span id="id8"></span><h2>2.11. <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt><a class="headerlink" href="#mroonga-lock-timeout" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id10"></span><h2>2.12. <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt><a class="headerlink" href="#mroonga-lock-timeout" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TODO:</p>
 </div>
 <div class="section" id="mroonga-log-file">
-<h2>2.12. <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt><a class="headerlink" href="#mroonga-log-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.13. <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt><a class="headerlink" href="#mroonga-log-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのログファイル名。デフォルト値は <tt class="docutils literal"><span class="pre">groonga.log</span></tt> 。</p>
 <p>ログファイルを <tt class="docutils literal"><span class="pre">/tmp/mroonga.log</span></tt> に変更する例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
@@ -339,7 +364,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-log-level">
-<span id="id9"></span><h2>2.13. <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt><a class="headerlink" href="#mroonga-log-level" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id11"></span><h2>2.14. <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt><a class="headerlink" href="#mroonga-log-level" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのログの出力レベル。デフォルト値は <tt class="docutils literal"><span class="pre">NOTICE</span></tt> 。</p>
 <p>使用可能な <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt> のリストです。</p>
 <table border="1" class="docutils">
@@ -421,7 +446,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-match-escalation-threshold">
-<span id="id10"></span><h2>2.14. <tt class="docutils literal"><span class="pre">mroonga_match_escalation_threshold</span></tt><a class="headerlink" href="#mroonga-match-escalation-threshold" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id12"></span><h2>2.15. <tt class="docutils literal"><span class="pre">mroonga_match_escalation_threshold</span></tt><a class="headerlink" href="#mroonga-match-escalation-threshold" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="http://groonga.org/docs/spec/search.html">Groongaの検索の仕様</a> を確認してください。</p>
 <p>デフォルト値はGroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <tt class="docutils literal"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></tt> でデフォルト値を設定できます。</p>
 <p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
@@ -508,14 +533,14 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </td></tr></table></div>
 </div>
 <div class="section" id="mroonga-max-n-records-for-estimate">
-<span id="id11"></span><h2>2.15. <tt class="docutils literal"><span class="pre">mroonga_max_n_records_for_estimate</span></tt><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id13"></span><h2>2.16. <tt class="docutils literal"><span class="pre">mroonga_max_n_records_for_estimate</span></tt><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 5.02 で追加.</span></p>
 </div>
 <p>TODO:</p>
 </div>
 <div class="section" id="mroonga-vector-column-delimiter">
-<span id="id12"></span><h2>2.16. <tt class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></tt><a class="headerlink" href="#mroonga-vector-column-delimiter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="id14"></span><h2>2.17. <tt class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></tt><a class="headerlink" href="#mroonga-vector-column-delimiter" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ベクターカラムを出力する際の区切り文字。デフォルト値は空白です。</p>
 <p>区切り文字を空白からセミコロンに変更するSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
@@ -540,7 +565,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-version">
-<h2>2.17. <tt class="docutils literal"><span class="pre">mroonga_version</span></tt><a class="headerlink" href="#mroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>2.18. <tt class="docutils literal"><span class="pre">mroonga_version</span></tt><a class="headerlink" href="#mroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのバージョン</p>
 <p>実行中のmroongaのバージョンを確認するためのSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_version&#39;;
@@ -568,19 +593,20 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 <li><a class="reference internal" href="#mroonga-boolean-mode-syntax-flags">2.2. <tt class="docutils literal"><span class="pre">mroonga_boolean_mode_syntax_flags</span></tt></a></li>
 <li><a class="reference internal" href="#mroonga-database-path-prefix">2.3. <tt class="docutils literal"><span class="pre">mroonga_database_path_prefix</span></tt></a></li>
 <li><a class="reference internal" href="#mroonga-default-parser">2.4. <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-default-wrapper-engine">2.5. <tt class="docutils literal"><span class="pre">mroonga_default_wrapper_engine</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-dry-write">2.6. <tt class="docutils literal"><span class="pre">mroonga_dry_write</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-enable-optimization">2.7. <tt class="docutils literal"><span class="pre">mroonga_enable_optimization</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-support-lz4">2.8. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_lz4</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-support-zlib">2.9. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_zlib</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-version">2.10. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_version</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-lock-timeout">2.11. <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-log-file">2.12. <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-log-level">2.13. <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-match-escalation-threshold">2.14. <tt class="docutils literal"><span class="pre">mroonga_match_escalation_threshold</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-max-n-records-for-estimate">2.15. <tt class="docutils literal"><span class="pre">mroonga_max_n_records_for_estimate</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-vector-column-delimiter">2.16. <tt class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></tt></a></li>
-<li><a class="reference internal" href="#mroonga-version">2.17. <tt class="docutils literal"><span class="pre">mroonga_version</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-default-tokenizer">2.5. <tt class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-default-wrapper-engine">2.6. <tt class="docutils literal"><span class="pre">mroonga_default_wrapper_engine</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-dry-write">2.7. <tt class="docutils literal"><span class="pre">mroonga_dry_write</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-enable-optimization">2.8. <tt class="docutils literal"><span class="pre">mroonga_enable_optimization</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-libgroonga-support-lz4">2.9. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_lz4</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-libgroonga-support-zlib">2.10. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_support_zlib</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-libgroonga-version">2.11. <tt class="docutils literal"><span class="pre">mroonga_libgroonga_version</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-lock-timeout">2.12. <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-log-file">2.13. <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-log-level">2.14. <tt class="docutils literal"><span class="pre">mroonga_log_level</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-match-escalation-threshold">2.15. <tt class="docutils literal"><span class="pre">mroonga_match_escalation_threshold</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-max-n-records-for-estimate">2.16. <tt class="docutils literal"><span class="pre">mroonga_max_n_records_for_estimate</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-vector-column-delimiter">2.17. <tt class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></tt></a></li>
+<li><a class="reference internal" href="#mroonga-version">2.18. <tt class="docutils literal"><span class="pre">mroonga_version</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -625,7 +651,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
         <li class="right" >
           <a href="sql_commands.html" title="1. SQL commands"
              >前へ</a> |</li>
-        <li><a href="../index.html">Mroonga v5.04 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li>
           <li><a href="../reference.html" >5. リファレンス</a> &raquo;</li> 
       </ul>
     </div>
