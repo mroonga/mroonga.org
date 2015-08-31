@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.10リリース - 2015-01-29 &mdash; Mroonga v5.05 documentation</title>
+    <title>4.10リリース - 2015-01-29 &mdash; Mroonga v5.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.05',
+        VERSION:     '5.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.05 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v5.06 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -35,9 +35,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -61,20 +59,20 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="release-4-10-2015-01-29">
 <span id="release-4-10"></span><h1>4.10リリース - 2015-01-29<a class="headerlink" href="#release-4-10-2015-01-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
@@ -84,7 +82,7 @@
 ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></tt> をしたときに「レコードが重複している」というエラーがでるかもしれません。もし、このエラーがでた場合は、データを確認の上、重複を解消してください。</p>
+<p><code class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code> をしたときに「レコードが重複している」というエラーがでるかもしれません。もし、このエラーがでた場合は、データを確認の上、重複を解消してください。</p>
 <p>次のようなケースがあった場合、前述のようにデータが壊れます。</p>
 <blockquote>
 <div><ul class="simple">
@@ -101,24 +99,24 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <div class="section" id="improvements">
 <h2>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li><p class="first">[ストレージモード] FULLTEXT INDEXのCOMMENTに参照テーブルが指定してあるときに、オフラインインデックス構築ができるようになりました。 オフラインインデックス構築には <tt class="docutils literal"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt> を実行してから <tt class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></tt> を実行します。[村上さんが報告]</p>
+<li><p class="first">[ストレージモード] FULLTEXT INDEXのCOMMENTに参照テーブルが指定してあるときに、オフラインインデックス構築ができるようになりました。 オフラインインデックス構築には <code class="docutils literal"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> を実行してから <code class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code> を実行します。[村上さんが報告]</p>
 </li>
 <li><p class="first">[rpm][centos] CentOS 7でMySQL 5.6.22向けにビルドするようにしました。[groonga-dev,03047] [各務さんが報告]</p>
 </li>
 <li><p class="first">[rpm][centos] CentOS 7でMariaDB 5.5.40-2向けにビルドするようにしました。</p>
 </li>
-<li><p class="first">[ストレージモード][mysql56] <tt class="docutils literal"><span class="pre">ADD</span> <span class="pre">UNIQUE</span> <span class="pre">INDEX</span></tt> で重複したときのエラーを報告するようにしました。[kazeburoさんが報告]</p>
+<li><p class="first">[ストレージモード][mysql56] <code class="docutils literal"><span class="pre">ADD</span> <span class="pre">UNIQUE</span> <span class="pre">INDEX</span></code> で重複したときのエラーを報告するようにしました。[kazeburoさんが報告]</p>
 </li>
 </ul>
 </div>
 <div class="section" id="fixes">
 <h2>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li><p class="first">[ストレージモード] 参照テーブルがエラーで意図せず削除される不具合を修正しました。これはたとえば FULLTEXT INDEXのコメントに <tt class="docutils literal"><span class="pre">'table</span> <span class="pre">&quot;terms&quot;'</span></tt> が指定されていたら、「terms」テーブルのインデックスを作成しているときにエラーが発生すると、「terms」テーブルが削除されてしまうということです。</p>
+<li><p class="first">[ストレージモード] 参照テーブルがエラーで意図せず削除される不具合を修正しました。これはたとえば FULLTEXT INDEXのコメントに <code class="docutils literal"><span class="pre">'table</span> <span class="pre">&quot;terms&quot;'</span></code> が指定されていたら、「terms」テーブルのインデックスを作成しているときにエラーが発生すると、「terms」テーブルが削除されてしまうということです。</p>
 </li>
 <li><p class="first">[ストレージモード] ユニークインデックスに対し重複したエントリを挿入しようとすると、重複によるエラーでインデックスが削除されてしまう不具合を修正しました。この不具合でインデックスの一貫性が損なわれてしまうので、Mroongaをアップグレードしたあとにインデックスを再構築しなおしてください。[kazeburoさんが報告]</p>
 </li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></tt> が機能していなかった問題を修正しました。この不具合には挿入に失敗したあとの更新処理で既存の他のレコードを変更してしまう可能性があります。[kazeburoさんが報告]</p>
+<li><p class="first">[ストレージモード] <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></code> が機能していなかった問題を修正しました。この不具合には挿入に失敗したあとの更新処理で既存の他のレコードを変更してしまう可能性があります。[kazeburoさんが報告]</p>
 </li>
 </ul>
 </div>
@@ -141,9 +139,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <ul class="simple">
 <li><p class="first">[rpm] CentOS 6用のパッケージがMySQL 5.6.22に対応しました。 [&#64;oreradioさんが報告]</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">()</span> <span class="pre">AGAINST</span> <span class="pre">('...'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></tt> の構文をカスタマイズする <a class="reference internal" href="../reference/server_variables.html#mroonga-boolean-mode-syntax-flags"><em>mroonga_boolean_mode_syntax_flags</em></a> を追加しました。</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">()</span> <span class="pre">AGAINST</span> <span class="pre">('...'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></code> の構文をカスタマイズする <a class="reference internal" href="../reference/server_variables.html#mroonga-boolean-mode-syntax-flags"><span>mroonga_boolean_mode_syntax_flags</span></a> を追加しました。</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;none&quot;'</span></tt> というようにノーマライザーとして <tt class="docutils literal"><span class="pre">none</span></tt> を指定することでノーマライザーなしの <tt class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></tt> を作れるようにしました。</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;none&quot;'</span></code> というようにノーマライザーとして <code class="docutils literal"><span class="pre">none</span></code> を指定することでノーマライザーなしの <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> を作れるようにしました。</p>
 </li>
 <li><p class="first">自動で作られたレコードでもプライマリーキーの値を参照できるようになりました。</p>
 </li>
@@ -181,9 +179,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </li>
 <li><p class="first">[doc] CentOS 5のインストール手順で不要なSCL関連の記述を削除しました。</p>
 </li>
-<li><p class="first">[doc] CentOS 5と6では <tt class="docutils literal"><span class="pre">service</span></tt> コマンドをMySQLの起動に使うようにしました。</p>
+<li><p class="first">[doc] CentOS 5と6では <code class="docutils literal"><span class="pre">service</span></code> コマンドをMySQLの起動に使うようにしました。</p>
 </li>
-<li><p class="first">[doc] CentOS 7では <tt class="docutils literal"><span class="pre">systemctl</span></tt> コマンドをMySQLの起動に使うようにしました。</p>
+<li><p class="first">[doc] CentOS 7では <code class="docutils literal"><span class="pre">systemctl</span></code> コマンドをMySQLの起動に使うようにしました。</p>
 </li>
 </ul>
 </div>
@@ -206,7 +204,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <div class="section" id="id6">
 <h2>改良<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li><p class="first">[ストレージ] 非推奨である <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">DELAYED</span></tt> をエラーとして扱うようにしました。 [GitHub#20] [MDEV#6837] [Elena Stepanovaさんが報告]</p>
+<li><p class="first">[ストレージ] 非推奨である <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">DELAYED</span></code> をエラーとして扱うようにしました。 [GitHub#20] [MDEV#6837] [Elena Stepanovaさんが報告]</p>
 </li>
 <li><p class="first">[ストレージ][mariadb10] ユニークインデックスを追加するときに重複がある場合、適切なエラーメッセージを表示するようにしました。 [GitHub#19] [Elena Stepanovaさんが報告]</p>
 </li>
@@ -218,9 +216,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </li>
 <li><p class="first">[storage] テーブルのコメントにノーマライザーを指定できるようにしました。 [GitHub#27] [村上さんがパッチ提供]</p>
 </li>
-<li><p class="first">[ストレージ] カラムの圧縮フラグをサポートしました。 (<tt class="docutils literal"><span class="pre">COMPRESS_LZ4</span></tt>, <tt class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></tt>) [GitHub#32] [村上さんがパッチ提供]</p>
+<li><p class="first">[ストレージ] カラムの圧縮フラグをサポートしました。 (<code class="docutils literal"><span class="pre">COMPRESS_LZ4</span></code>, <code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code>) [GitHub#32] [村上さんがパッチ提供]</p>
 </li>
-<li><p class="first"><a class="reference internal" href="../reference/server_variables.html#mroonga-libgroonga-support-lz4"><em>mroonga_libgroonga_support_lz4</em></a> と <a class="reference internal" href="../reference/server_variables.html#mroonga-libgroonga-support-zlib"><em>mroonga_libgroonga_support_zlib</em></a>  システム変数を追加しました。 [GitHub#33,#34,#35] [村上さんがパッチ提供]</p>
+<li><p class="first"><a class="reference internal" href="../reference/server_variables.html#mroonga-libgroonga-support-lz4"><span>mroonga_libgroonga_support_lz4</span></a> と <a class="reference internal" href="../reference/server_variables.html#mroonga-libgroonga-support-zlib"><span>mroonga_libgroonga_support_zlib</span></a>  システム変数を追加しました。 [GitHub#33,#34,#35] [村上さんがパッチ提供]</p>
 </li>
 <li><p class="first">MySQL 5.1対応をやめました。</p>
 </li>
@@ -284,7 +282,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <ul class="simple">
 <li><p class="first">Ubuntu 13.10 (Saucy Salamander)のサポートをやめました。</p>
 </li>
-<li><p class="first">サーバー変数として <a class="reference internal" href="../reference/server_variables.html#mroonga-vector-column-delimiter"><em>mroonga_vector_column_delimiter</em></a> を追加しました。ベクターカラムのデリミタを変更するのに使います。[GitHub#16] [村上さんがパッチ提供]</p>
+<li><p class="first">サーバー変数として <a class="reference internal" href="../reference/server_variables.html#mroonga-vector-column-delimiter"><span>mroonga_vector_column_delimiter</span></a> を追加しました。ベクターカラムのデリミタを変更するのに使います。[GitHub#16] [村上さんがパッチ提供]</p>
 </li>
 <li><p class="first">[rpm][centos] CentOS 6/7にて公式リポジトリにあるMySQL 5.6をサポートしました。mysql56-community-mroongaパッケージを使ってください。[mikoさんがパッチ提供]</p>
 </li>
@@ -309,7 +307,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </li>
 <li><p class="first">ストレージエンジンの表記に&quot;Mroonga&quot;を使うようにしました。</p>
 </li>
-<li><p class="first">[ストレージモード] テーブルを参照するインデックスがコメントで指定(<tt class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">'table</span> <span class="pre">&quot;XXX&quot;'</span></tt>)されていると削除できない不具合を修正しました。[groonga-dev,02677] [村上さんが報告]</p>
+<li><p class="first">[ストレージモード] テーブルを参照するインデックスがコメントで指定(<code class="docutils literal"><span class="pre">COMMENT</span> <span class="pre">'table</span> <span class="pre">&quot;XXX&quot;'</span></code>)されていると削除できない不具合を修正しました。[groonga-dev,02677] [村上さんが報告]</p>
 </li>
 </ul>
 </div>
@@ -431,17 +429,17 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <div class="section" id="id22">
 <h2>修正<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></tt> のときにtruncateを使わないようにしました。 [groonga-dev,02222] [GMOメディア株式会社さんが報告]</p>
+<li><p class="first">[ストレージモード] <code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code> のときにtruncateを使わないようにしました。 [groonga-dev,02222] [GMOメディア株式会社さんが報告]</p>
 </li>
-<li><p class="first">[ラッパーモード] <tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></tt> のときにtruncateを使わないようにしました。</p>
+<li><p class="first">[ラッパーモード] <code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code> のときにtruncateを使わないようにしました。</p>
 </li>
 <li><p class="first">[ストレージモード] プライマリーキーがないテーブルをinplate alter tableするとクラッシュする問題を修正しました。 [groonga-dev,02227] [GMOメディア株式会社さんが報告]</p>
 </li>
-<li><p class="first">[ストレージモード] <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">function(vector_reference_column)</span></tt> が動かない問題を修正しました。 [groonga-dev,02234] [村上さんが報告]</p>
+<li><p class="first">[ストレージモード] <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">function(vector_reference_column)</span></code> が動かない問題を修正しました。 [groonga-dev,02234] [村上さんが報告]</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> あるいは <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt> に現在の値と同じ値を設定するとクラッシュする問題を修正しました。 [GitHub#6] [Satoshi MITANIさんがパッチ提供]</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> あるいは <code class="docutils literal"><span class="pre">mroonga_log_file</span></code> に現在の値と同じ値を設定するとクラッシュする問題を修正しました。 [GitHub#6] [Satoshi MITANIさんがパッチ提供]</p>
 </li>
-<li><p class="first">my.cnfやコマンドラインオプションで <tt class="docutils literal"><span class="pre">mroonga_lock_timeout</span></tt> を指定しても無視される問題を修正しました。 [GitHub#7] [GMOメディア株式会社さんがパッチ提供]</p>
+<li><p class="first">my.cnfやコマンドラインオプションで <code class="docutils literal"><span class="pre">mroonga_lock_timeout</span></code> を指定しても無視される問題を修正しました。 [GitHub#7] [GMOメディア株式会社さんがパッチ提供]</p>
 </li>
 <li><p class="first">プライマリーキーを指定してレコードを削除するとユニークインデックスが更新されない問題を修正しました。 [groonga-dev,02244] [津久井玲宏さんが報告]</p>
 </li>
@@ -540,7 +538,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
@@ -611,12 +609,14 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </li>
 </ul>
 
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/news/4.x.txt"
-           rel="nofollow">ソースコードを表示（英語）</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/news/4.x.txt"
+            rel="nofollow">ソースコードを表示（英語）</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -633,16 +633,16 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>

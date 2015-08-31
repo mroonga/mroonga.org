@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Release 2.10 - 2012/12/29 &mdash; Mroonga v5.05 documentation</title>
+    <title>Release 2.10 - 2012/12/29 &mdash; Mroonga v5.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.05',
+        VERSION:     '5.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.05 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v5.06 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -34,9 +34,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -60,20 +58,20 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="release-2-10-2012-12-29">
 <span id="release-2-10"></span><h1>Release 2.10 - 2012/12/29<a class="headerlink" href="#release-2-10-2012-12-29" title="Permalink to this headline">¶</a></h1>
@@ -84,8 +82,8 @@
 different from system charset. [Reported by &#64;kokoronavi]</li>
 <li>Improved to show the value of duplicated key on error message.</li>
 <li>Supported MySQL 5.6.9-rc. [#1547] [#1548] [Reported by wing]</li>
-<li>[storage] Supported to use <tt class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></tt> with index.
-This change improves search speed against <tt class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></tt>.</li>
+<li>[storage] Supported to use <code class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></code> with index.
+This change improves search speed against <code class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></code>.</li>
 <li>Dropped Ubuntu 11.04 (Natty Narwhal) support.</li>
 </ul>
 </div>
@@ -93,7 +91,7 @@ This change improves search speed against <tt class="docutils literal"><span cla
 <h2>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>[rpm][centos] Fixed to use MySQL 5.1.66-2 on CentOS 6. [Reported by &#64;wakisuke.ua]</li>
-<li>Fixed a bug that <tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></tt> with <tt class="docutils literal"><span class="pre">INNER</span> <span class="pre">JOIN</span></tt> syntax causes an error.
+<li>Fixed a bug that <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> with <code class="docutils literal"><span class="pre">INNER</span> <span class="pre">JOIN</span></code> syntax causes an error.
 [Reported by ooshiro]</li>
 </ul>
 </div>
@@ -111,10 +109,10 @@ This change improves search speed against <tt class="docutils literal"><span cla
 <span id="release-2-09"></span><h1>Release 2.09 - 2012/11/29<a class="headerlink" href="#release-2-09-2012-11-29" title="Permalink to this headline">¶</a></h1>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p>This release has backward incompatible changes against <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt>
+<p>This release has backward incompatible changes against <code class="docutils literal"><span class="pre">TIMESTAMP</span></code>
 value and primary indexed char(N).</p>
-<p><tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> value is changed to store as UTC timezone.
-If you have any table that uses <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> column with no UTC timezone,
+<p><code class="docutils literal"><span class="pre">TIMESTAMP</span></code> value is changed to store as UTC timezone.
+If you have any table that uses <code class="docutils literal"><span class="pre">TIMESTAMP</span></code> column with no UTC timezone,
 please recreate (dump and restore) database.</p>
 <p>If you have any table that uses char(N) as primary key,
 please recreate index.</p>
@@ -152,7 +150,7 @@ MySQL 5.1 doesn't have utf8mb4. [groonga-dev,01069] [Reported by wakisuke]</li>
 This bug affects if any value of char(N) has M-length (M &lt; N) string or
 it has one more spaces at the last and require index recreation.</li>
 <li>Fixed a bug that content after NULL character is ignored for char(N)</li>
-<li>Fixed to store <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt> value as UTC timezone.
+<li>Fixed to store <code class="docutils literal"><span class="pre">TIMESTAMP</span></code> value as UTC timezone.
 This is backward incompatible change.</li>
 </ul>
 </div>
@@ -172,8 +170,8 @@ This is backward incompatible change.</li>
 <p>This release has a backward incompatible change against multiple
 column index. If you have any tables that uses
 any multiple comlumn indexes against VARCHAR or CHAR,
-please recreate those indexes by <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt>
-and <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></tt>:</p>
+please recreate those indexes by <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code>
+and <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code>:</p>
 <div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
 mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
@@ -182,7 +180,7 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <div class="section" id="id4">
 <h2>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>[storage mode] Supported <tt class="docutils literal"><span class="pre">INFORMATION_SCHEMA.TABLES.DATA_LENGTH</span></tt>.
+<li>[storage mode] Supported <code class="docutils literal"><span class="pre">INFORMATION_SCHEMA.TABLES.DATA_LENGTH</span></code>.
 [Suggested by &#64;9m]</li>
 <li>Supported utf8mb4. [groonga-dev,01049] [Reported by warp kawada]</li>
 <li>Supported Ubuntu 12.10 (Quantal Quetzal)</li>
@@ -194,9 +192,9 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <ul class="simple">
 <li>[storage mode] Fixed unique judge problem of multiple column unique index
 with date column. [groonga-dev,01041] [#1495] [Reported by jd fonc]</li>
-<li>Fixed a bug that <tt class="docutils literal"><span class="pre">WHERE</span> <span class="pre">index</span> <span class="pre">&lt;</span> <span class="pre">XXX</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">DESC</span></tt> doesn't sort by descending.
+<li>Fixed a bug that <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">index</span> <span class="pre">&lt;</span> <span class="pre">XXX</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">DESC</span></code> doesn't sort by descending.
 [Reported by &#64;taro252]</li>
-<li>[rpm] Fixed missing <tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">FUNCTION</span> <span class="pre">mroonga_snippet</span></tt>.
+<li>[rpm] Fixed missing <code class="docutils literal"><span class="pre">DROP</span> <span class="pre">FUNCTION</span> <span class="pre">mroonga_snippet</span></code>.
 [Reported by &#64;tokuhy]</li>
 <li>Fixed range search by multi column index by int.</li>
 <li>[doc] Fixed wrong command line operation during build process.
@@ -227,7 +225,7 @@ with date column. [groonga-dev,01041] [#1495] [Reported by jd fonc]</li>
 <div class="section" id="id8">
 <h2>Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>[rpm] Fixed <tt class="docutils literal"><span class="pre">groonga_required_version</span></tt>. [groonga-dev,01033] [Reported by wing]</li>
+<li>[rpm] Fixed <code class="docutils literal"><span class="pre">groonga_required_version</span></code>. [groonga-dev,01033] [Reported by wing]</li>
 <li>Fixed datetime out of range problems. [groonga-dev,01035] [#1476]
 [Reported by Nakatani Munetaka]</li>
 </ul>
@@ -294,7 +292,7 @@ database.</p>
 </pre></div>
 </div>
 <p>You must upgrade to &quot;mroonga&quot; storage engine. Use
-<tt class="docutils literal"><span class="pre">apt-get</span></tt> on Debian GNU/Linux or Ubuntu and <tt class="docutils literal"><span class="pre">yum</span></tt> on
+<code class="docutils literal"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal"><span class="pre">yum</span></code> on
 CentOS or Fedora.</p>
 <p>apt-get:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
@@ -311,9 +309,9 @@ CentOS or Fedora.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">Don't forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> before <tt class="docutils literal"><span class="pre">yum</span>
-<span class="pre">install</span></tt> if you upgrade mroonga prior to v2.02 release.
-If you forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt>, we will break
+<p class="last">Don't forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal"><span class="pre">yum</span>
+<span class="pre">install</span></code> if you upgrade mroonga prior to v2.02 release.
+If you forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
 a MySQL's system table.</p>
 </div>
 <p>Recreate a database:</p>
@@ -351,9 +349,9 @@ MEDIUMINT UNSIGNED/INT UNSIGNED/BIGINT UNSIGNED type.</li>
 <ul class="simple">
 <li>Fixed to disable query cache with transaction. [#1384]</li>
 <li>Disabled partition explicitly. [#1391]</li>
-<li>[rpm][deb] Fixed to ensure deleting mroonga plugin from <tt class="docutils literal"><span class="pre">mysql.plugin</span></tt> table
+<li>[rpm][deb] Fixed to ensure deleting mroonga plugin from <code class="docutils literal"><span class="pre">mysql.plugin</span></code> table
 before install. [groonga-dev,00948] [Suggested by Kazuhiro Isobe]</li>
-<li>Fixed a crash bug by setting nonexistent path to <tt class="docutils literal"><span class="pre">mroonga_log_file</span></tt>
+<li>Fixed a crash bug by setting nonexistent path to <code class="docutils literal"><span class="pre">mroonga_log_file</span></code>
 variable. [#1404] [Reported by &#64;nabebeb]</li>
 <li>[experimental] Supported mroonga related data path change.
 [groonga-dev,00914] [#1392] [Suggested by Kazuhiro Isobe]</li>
@@ -374,8 +372,8 @@ variable. [#1404] [Reported by &#64;nabebeb]</li>
 <p>This release has a backward incompatible change against multiple
 column index. If you have any tables that uses
 <a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a> and any multiple comlumn indexes, please
-recreate those indexes by <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></tt> and <tt class="docutils literal"><span class="pre">ALTER</span>
-<span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></tt>:</p>
+recreate those indexes by <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> and <code class="docutils literal"><span class="pre">ALTER</span>
+<span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code>:</p>
 <div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
 mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
@@ -388,7 +386,7 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 [#1310]</li>
 <li>[rpm][centos] Supported MySQL 5.5.24.</li>
 <li>[rpm][fedora] Supported MySQL 5.5.23.</li>
-<li>Added <a class="reference internal" href="../reference/server_variables.html#mroonga-match-escalation-threshold"><em>mroonga_match_escalation_threshold</em></a> system variable.</li>
+<li>Added <a class="reference internal" href="../reference/server_variables.html#mroonga-match-escalation-threshold"><span>mroonga_match_escalation_threshold</span></a> system variable.</li>
 <li>Required groonga 2.0.3 or later.</li>
 <li>[yum] Changed RPM package name that provides yum repository from
 groonga-repository to groonga-release to follow RPM package name
@@ -440,15 +438,15 @@ package sign key before updating groogna packages.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">This release breaks a backward compatibility for <tt class="docutils literal"><span class="pre">ENUM</span></tt> type. If
-you have <tt class="docutils literal"><span class="pre">ENUM</span></tt> type and it has 256 or more values, you need to
+<p class="last">This release breaks a backward compatibility for <code class="docutils literal"><span class="pre">ENUM</span></code> type. If
+you have <code class="docutils literal"><span class="pre">ENUM</span></code> type and it has 256 or more values, you need to
 dump your table before upgrade and restore your table after
 upgrade.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">This release breaks a backward compatibility for <tt class="docutils literal"><span class="pre">SET</span></tt> type. If
-you have <tt class="docutils literal"><span class="pre">SET</span></tt> type and it has 32 or more values, you need to
+<p class="last">This release breaks a backward compatibility for <code class="docutils literal"><span class="pre">SET</span></code> type. If
+you have <code class="docutils literal"><span class="pre">SET</span></code> type and it has 32 or more values, you need to
 dump your table before upgrade and restore your table after
 upgrade.</p>
 </div>
@@ -456,24 +454,24 @@ upgrade.</p>
 <h2>Improvements<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Added workaround for build for GCC 4.7 and MySQL 5.5.22.
-The combination makes build error with <tt class="docutils literal"><span class="pre">-Wdeprecated</span></tt> gcc
+The combination makes build error with <code class="docutils literal"><span class="pre">-Wdeprecated</span></code> gcc
 option. [#1337] [Reported by Kazuhiko Shiozaki]</li>
 <li>[mariadb] Supported MariaDB 5.5.23.
 [#1339] [Reported by Kazuhiko Shiozaki] [Reported by Ryo Onodera]</li>
 <li>[storage mode] Stopped needless primary key truncated warning on
-<tt class="docutils literal"><span class="pre">REPLACE</span></tt>.</li>
-<li>[storage mode] Supported search <tt class="docutils literal"><span class="pre">ENUM</span></tt> values by index. [#1336]
+<code class="docutils literal"><span class="pre">REPLACE</span></code>.</li>
+<li>[storage mode] Supported search <code class="docutils literal"><span class="pre">ENUM</span></code> values by index. [#1336]
 [Suggested by &#64;104yuki_n]</li>
-<li>[incompatible] Changed groonga type for <tt class="docutils literal"><span class="pre">ENUM</span></tt> to unsigned 2bytes
-integer type from signed 2bytes integer type. <tt class="docutils literal"><span class="pre">ENUM</span></tt> column
+<li>[incompatible] Changed groonga type for <code class="docutils literal"><span class="pre">ENUM</span></code> to unsigned 2bytes
+integer type from signed 2bytes integer type. <code class="docutils literal"><span class="pre">ENUM</span></code> column
 recreation is needed.</li>
-<li>[incompatible] Changed groonga type for <tt class="docutils literal"><span class="pre">SET</span></tt> to unsigned 8bytes
-integer type from signed 8bytes integer type. <tt class="docutils literal"><span class="pre">SET</span></tt> column
+<li>[incompatible] Changed groonga type for <code class="docutils literal"><span class="pre">SET</span></code> to unsigned 8bytes
+integer type from signed 8bytes integer type. <code class="docutils literal"><span class="pre">SET</span></code> column
 recreation is needed.</li>
 <li>Supported MySQL 5.5.23.</li>
 <li>Required groonga 2.0.2 or later.</li>
 <li>[incompatible][experimental] Changed to use similar search instead
-of phrase search for <tt class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span> <span class="pre">IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></tt>.</li>
+of phrase search for <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span> <span class="pre">IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></code>.</li>
 <li>[apt][yum] Changed package sign key.</li>
 <li>Supported Ubuntu 12.04 Precise Pangolin.</li>
 </ul>
@@ -515,13 +513,13 @@ combination. [#1319] [groonga-dev,00736] [Reported by Takayuki Honda]</li>
 <li>Required groonga 2.0.1 or later.</li>
 <li>[rpm] Improved plugin uninstall on upgrade.</li>
 <li>[rpm] Improved plugin uninstall on upgrade.</li>
-<li>[wrapper mode] Supported <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">ERROR</span></tt>
+<li>[wrapper mode] Supported <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">ERROR</span></code>
 with MyISAM. [#1300] [Reported by &#64;104yuki_n]</li>
-<li>[wrapper mode] Used wrapped table's <tt class="docutils literal"><span class="pre">table_flags()</span></tt>
+<li>[wrapper mode] Used wrapped table's <code class="docutils literal"><span class="pre">table_flags()</span></code>
 correctly. [#1304]</li>
-<li>Added <tt class="docutils literal"><span class="pre">--with-valgrind</span></tt> configure option for MySQL that
+<li>Added <code class="docutils literal"><span class="pre">--with-valgrind</span></code> configure option for MySQL that
 enables Valgrind support.</li>
-<li>[mariadb] Supported <tt class="docutils literal"><span class="pre">DATETIME</span></tt> type with fraction
+<li>[mariadb] Supported <code class="docutils literal"><span class="pre">DATETIME</span></code> type with fraction
 seconds.</li>
 <li>Supported building without geometry support.
 [#1313] [Reported by Kazuhiko]</li>
@@ -531,9 +529,9 @@ optimization build flags on i386 environment.
 <li>[wrapper mode] Confirmed InnoDB tests are passed with
 wrapper mode.</li>
 <li>[solaris] Supported build on Solaris 11. [Reported by Kazuhiko]</li>
-<li>[mariadb55] Supported <tt class="docutils literal"><span class="pre">mroonga_default_parser</span></tt> with
+<li>[mariadb55] Supported <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> with
 MariaDB 5.5. [#1314] [Reported by Kazuhiko]</li>
-<li>[mariadb55] Supported <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></tt> optimization with
+<li>[mariadb55] Supported <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></code> optimization with
 MariaDB 5.5. [#1315] [Reported by Kazuhiko]</li>
 <li>[doc] Added about MeCab.</li>
 <li>[storage mode] Supported index search for 0 value.
@@ -551,13 +549,13 @@ build flags. [Reported by Kazuhiko]</li>
 <li>[storage mode] Fixed a bug that search by multi column
 index may not return some found records.
 [#1300] [Reported by &#64;ytaka5]</li>
-<li>[storage mode] Fixed a bug that <tt class="docutils literal"><span class="pre">COUNT</span> <span class="pre">(*)</span></tt> isn't effective.
+<li>[storage mode] Fixed a bug that <code class="docutils literal"><span class="pre">COUNT</span> <span class="pre">(*)</span></code> isn't effective.
 [groonga-dev,00717] [Reported by Takayuki Honda]</li>
-<li>Fixed a memory leak on <tt class="docutils literal"><span class="pre">DROP</span> <span class="pre">DATABASE</span></tt>.</li>
-<li>[storage mode] Fixed a bug that <tt class="docutils literal"><span class="pre">last_insert_grn_id()</span></tt>
+<li>Fixed a memory leak on <code class="docutils literal"><span class="pre">DROP</span> <span class="pre">DATABASE</span></code>.</li>
+<li>[storage mode] Fixed a bug that <code class="docutils literal"><span class="pre">last_insert_grn_id()</span></code>
 may return broken value on 32bit environment.
 [Reported by Kazuhiko]</li>
-<li>[storage mode] Fixed a bug that <tt class="docutils literal"><span class="pre">COUNT</span> <span class="pre">(*)</span></tt> may
+<li>[storage mode] Fixed a bug that <code class="docutils literal"><span class="pre">COUNT</span> <span class="pre">(*)</span></code> may
 return 0. [groonga-dev,00736] [Reported by Takayuki Honda]</li>
 </ul>
 </div>
@@ -583,7 +581,7 @@ database recreation:</p>
 <ol class="arabic simple">
 <li>Supported all characters for database, table and column
 names.</li>
-<li>Groonga's native time data type is used for <tt class="docutils literal"><span class="pre">YEAR</span></tt> type
+<li>Groonga's native time data type is used for <code class="docutils literal"><span class="pre">YEAR</span></code> type
 in MySQL.</li>
 </ol>
 <p>Here are upgrade sequence.</p>
@@ -596,7 +594,7 @@ in MySQL.</li>
 </pre></div>
 </div>
 <p>We upgrade to &quot;mroonga&quot; storage engine. We will use
-<tt class="docutils literal"><span class="pre">apt-get</span></tt> on Debian GNU/Linux or Ubuntu and <tt class="docutils literal"><span class="pre">yum</span></tt> on
+<code class="docutils literal"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal"><span class="pre">yum</span></code> on
 CentOS or Fedora.</p>
 <p>apt-get:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
@@ -609,8 +607,8 @@ CentOS or Fedora.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">We don't forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt> before <tt class="docutils literal"><span class="pre">yum</span>
-<span class="pre">install</span></tt>. If we forget to run <tt class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></tt>, we will break
+<p class="last">We don't forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal"><span class="pre">yum</span>
+<span class="pre">install</span></code>. If we forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
 a MySQL's system table.</p>
 </div>
 <p>We recreate a database:</p>
@@ -628,34 +626,34 @@ a MySQL's system table.</p>
 <li>Supported MySQL 5.5.21.</li>
 <li>Required groonga 2.0.0 or later.</li>
 <li>Supported TIMESTAMP with fractional seconds on MySQL 5.6 and MariaDB.</li>
-<li>[storage mode] Supported <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></tt> optimization on no primary key.</li>
-<li>[storage mode] Supported <tt class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></tt> optimization with
-fulltext search and <tt class="docutils literal"><span class="pre">COLUMN</span> <span class="pre">=</span> <span class="pre">INT_VALUE</span></tt>.</li>
+<li>[storage mode] Supported <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></code> optimization on no primary key.</li>
+<li>[storage mode] Supported <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">LIMIT</span></code> optimization with
+fulltext search and <code class="docutils literal"><span class="pre">COLUMN</span> <span class="pre">=</span> <span class="pre">INT_VALUE</span></code>.</li>
 <li>[storage mode] Supported fulltext search in sub query.
 [Reported by &#64;camyuy]</li>
-<li>[incompatible] Mapped <tt class="docutils literal"><span class="pre">YEAR</span></tt> in MySQL to <tt class="docutils literal"><span class="pre">Time</span></tt> in
+<li>[incompatible] Mapped <code class="docutils literal"><span class="pre">YEAR</span></code> in MySQL to <code class="docutils literal"><span class="pre">Time</span></code> in
 groonga to improve groonga integration.</li>
 <li>[storage mode] Removed a needless write lock on update.
 [#1271] [Reported by Takahiro Nagai]</li>
-<li>Added <tt class="docutils literal"><span class="pre">mroonga_enable_optimization</span></tt> system variable to
+<li>Added <code class="docutils literal"><span class="pre">mroonga_enable_optimization</span></code> system variable to
 on/off optimization. It's useful for benchmark.</li>
 <li>[wrapper mode] Supported temporary table. [#1267]</li>
-<li>[incompatible] Supported <tt class="docutils literal"><span class="pre">/</span></tt> in database name. [#1281]</li>
-<li>Suppressed needless messages on <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span>
-<span class="pre">KEY</span> <span class="pre">UPDATE</span></tt>.</li>
-<li>Supported <tt class="docutils literal"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></tt> with
-<tt class="docutils literal"><span class="pre">UNIQUE</span> <span class="pre">KEY</span></tt>. [#1283] [Reported by &#64;104yuki_n]</li>
-<li>Supported <tt class="docutils literal"><span class="pre">DATETIME</span></tt>, <tt class="docutils literal"><span class="pre">DATE</span></tt>, <tt class="docutils literal"><span class="pre">TIMESTAMP</span></tt>, <tt class="docutils literal"><span class="pre">TIME</span></tt>,
-<tt class="docutils literal"><span class="pre">DECIMAL</span></tt>, <tt class="docutils literal"><span class="pre">YEAR</span></tt> for primary key.</li>
+<li>[incompatible] Supported <code class="docutils literal"><span class="pre">/</span></code> in database name. [#1281]</li>
+<li>Suppressed needless messages on <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span>
+<span class="pre">KEY</span> <span class="pre">UPDATE</span></code>.</li>
+<li>Supported <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></code> with
+<code class="docutils literal"><span class="pre">UNIQUE</span> <span class="pre">KEY</span></code>. [#1283] [Reported by &#64;104yuki_n]</li>
+<li>Supported <code class="docutils literal"><span class="pre">DATETIME</span></code>, <code class="docutils literal"><span class="pre">DATE</span></code>, <code class="docutils literal"><span class="pre">TIMESTAMP</span></code>, <code class="docutils literal"><span class="pre">TIME</span></code>,
+<code class="docutils literal"><span class="pre">DECIMAL</span></code>, <code class="docutils literal"><span class="pre">YEAR</span></code> for primary key.</li>
 <li>[incompatible] Supported all characters for database, table and
 column names. [#1284]</li>
 <li>[wrapper mode] Supported 255 bytes over index. [#1282]</li>
 <li>[wrapper mode] Supported updating primary key. [#1195]</li>
-<li>[wrapper mode] Supported error handling on <tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></tt>. [#1195]</li>
+<li>[wrapper mode] Supported error handling on <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code>. [#1195]</li>
 <li>[wrapper mode] Improved error message on unsupported
-geometry type like <tt class="docutils literal"><span class="pre">LineString</span></tt>. [#1195]</li>
+geometry type like <code class="docutils literal"><span class="pre">LineString</span></code>. [#1195]</li>
 <li>[wrapper mode] Supported
-<tt class="docutils literal"><span class="pre">INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</span></tt>. [#1195]</li>
+<code class="docutils literal"><span class="pre">INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</span></code>. [#1195]</li>
 </ul>
 </div>
 <div class="section" id="id27">
@@ -680,7 +678,7 @@ geometry type like <tt class="docutils literal"><span class="pre">LineString</sp
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -750,12 +748,14 @@ geometry type like <tt class="docutils literal"><span class="pre">LineString</sp
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/news/2.x.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/news/2.x.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -772,16 +772,16 @@ geometry type like <tt class="docutils literal"><span class="pre">LineString</sp
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>

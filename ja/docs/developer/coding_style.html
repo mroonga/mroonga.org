@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>コーディングスタイル &mdash; Mroonga v5.05 documentation</title>
+    <title>コーディングスタイル &mdash; Mroonga v5.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.05',
+        VERSION:     '5.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.05 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v5.06 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -35,9 +35,7 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-    <body>
-    <div id="fb-root"></div>
-
+  <body role="document">
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -61,20 +59,20 @@
 </div>
   
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <p>TODO: Translate.</p>
 <div class="section" id="id1">
@@ -120,46 +118,46 @@
 <div class="highlight-none"><div class="highlight"><pre>ha-mroonga.cpp
 </pre></div>
 </div>
-<p>ソースコードの拡張子 <tt class="docutils literal"><span class="pre">.cpp</span></tt> にします。</p>
+<p>ソースコードの拡張子 <code class="docutils literal"><span class="pre">.cpp</span></code> にします。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">.cc</span></tt> を使っている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">.cc</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cc
 </pre></div>
 </div>
-<p>ヘッダーファイルの拡張子は <tt class="docutils literal"><span class="pre">.hpp</span></tt> にします。</p>
+<p>ヘッダーファイルの拡張子は <code class="docutils literal"><span class="pre">.hpp</span></code> にします。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>ha_mroonga.hpp
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">.h</span></tt> を使っている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">.h</span></code> を使っている）:</p>
 <blockquote>
 <div>ha_mroonga.h</div></blockquote>
 </div>
 <div class="section" id="id4">
 <h2>名前空間<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ヘッダーファイルでは <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></tt> を使わない。ソースコードでは <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></tt> であれば使ってもよい。他の名前空間は使ってはいけない。</p>
+<p>ヘッダーファイルでは <code class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></code> を使わない。ソースコードでは <code class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code> であれば使ってもよい。他の名前空間は使ってはいけない。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp:
   using namespace std;
 </pre></div>
 </div>
-<p>悪い例（ヘッダーファイル内で <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></tt> を使っている）:</p>
+<p>悪い例（ヘッダーファイル内で <code class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>ha_mroonga.hpp:
   using namespace std;
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">std</span></tt> 以外の名前空間に対して <tt class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></tt> を使っている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">std</span></code> 以外の名前空間に対して <code class="docutils literal"><span class="pre">using</span> <span class="pre">namespace</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>ha_mroonga.cpp:
   using namespace zmq;
 </pre></div>
 </div>
 </div>
 <div class="section" id="include">
-<h2><tt class="docutils literal"><span class="pre">include</span></tt> ガード<a class="headerlink" href="#include" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>2重 <tt class="docutils literal"><span class="pre">include</span></tt> を防ぐためのマクロは、ヘッダーファイルの名前をすべて大文字にし、単語の区切りをアンダースコアにしたものにし、最後にアンダースコアをつけて <tt class="docutils literal"><span class="pre">HEADER_FILE_NAME_HPP_</span></tt> という名前にする。</p>
+<h2><code class="docutils literal"><span class="pre">include</span></code> ガード<a class="headerlink" href="#include" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>2重 <code class="docutils literal"><span class="pre">include</span></code> を防ぐためのマクロは、ヘッダーファイルの名前をすべて大文字にし、単語の区切りをアンダースコアにしたものにし、最後にアンダースコアをつけて <code class="docutils literal"><span class="pre">HEADER_FILE_NAME_HPP_</span></code> という名前にする。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>mrn_db_path.hpp:
   #ifndef MRN_DB_PATH_HPP_
@@ -187,7 +185,7 @@
 </div>
 <div class="section" id="id5">
 <h2>代入<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">=</span></tt> の前後に1つスペースを入れる。</p>
+<p><code class="docutils literal"><span class="pre">=</span></code> の前後に1つスペースを入れる。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>int i = 0;
 </pre></div>
@@ -203,7 +201,7 @@
 </div>
 <div class="section" id="id6">
 <h2>文字列<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>文字列はポインタと長さで表現する。 <tt class="docutils literal"><span class="pre">\0</span></tt> での終端を仮定しない。</p>
+<p>文字列はポインタと長さで表現する。 <code class="docutils literal"><span class="pre">\0</span></code> での終端を仮定しない。</p>
 <p>よい例（本当はもっとすっきりした例がよいけど。。。）:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *raw_data = &quot;table_name column_name column_value&quot;
 char *column_name;
@@ -212,28 +210,28 @@ column_name = raw_data + strlen(&quot;table_name &quot;);
 column_name_size = strlen(&quot;column_name&quot;);
 </pre></div>
 </div>
-<p>悪い例（無理やり <tt class="docutils literal"><span class="pre">\0</span></tt> 終端にしている）:</p>
+<p>悪い例（無理やり <code class="docutils literal"><span class="pre">\0</span></code> 終端にしている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *raw_data = &quot;table_name column_name column_value&quot;
 char *column_name;
 column_name = strndup(raw_data + strlen(&quot;table_name &quot;), strlen(&quot;column_name&quot;));
 </pre></div>
 </div>
-<p>ただし、ファイル名など <tt class="docutils literal"><span class="pre">\0</span></tt> が前提であるものに関しては <tt class="docutils literal"><span class="pre">\0</span></tt> 終端を仮定してよい。</p>
+<p>ただし、ファイル名など <code class="docutils literal"><span class="pre">\0</span></code> が前提であるものに関しては <code class="docutils literal"><span class="pre">\0</span></code> 終端を仮定してよい。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *database_path = &quot;db/test.mrn&quot;;
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">\0</span></tt> 終端を仮定せず、長さも管理している）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">\0</span></code> 終端を仮定せず、長さも管理している）:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *database_path = &quot;db/test.mrn&quot;;
 size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">std::string</span></tt> は内部でメモリ確保などの処理が発生するので多用しない。</p>
+<p><code class="docutils literal"><span class="pre">std::string</span></code> は内部でメモリ確保などの処理が発生するので多用しない。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>char database_path[MAX_PATH];
 </pre></div>
 </div>
-<p>悪い例（最大サイズがわかっているのに <tt class="docutils literal"><span class="pre">std::string</span></tt> を使っている）:</p>
+<p>悪い例（最大サイズがわかっているのに <code class="docutils literal"><span class="pre">std::string</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>std::string database_path;
 </pre></div>
 </div>
@@ -241,33 +239,33 @@ size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 <div class="section" id="id7">
 <h2>バッファ<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TODO: ちゃんと考える。</p>
-<p>何度も繰り返し使う領域（バッファ）が必要な場合は <tt class="docutils literal"><span class="pre">GRN_BULK</span></tt> を使う。例えば、カラムの値を取得する領域などである。</p>
+<p>何度も繰り返し使う領域（バッファ）が必要な場合は <code class="docutils literal"><span class="pre">GRN_BULK</span></code> を使う。例えば、カラムの値を取得する領域などである。</p>
 </div>
 <div class="section" id="id8">
 <h2>命名規則<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id9">
 <h3>クラス名<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>クラスの名前は <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> とする。</p>
+<p>クラスの名前は <code class="docutils literal"><span class="pre">UpperCamelCase</span></code> とする。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
 }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">snail_case</span></tt> である）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">snail_case</span></code> である）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class my_class
 {
 }
 </pre></div>
 </div>
-<p>ただし、 <tt class="docutils literal"><span class="pre">ha_mroonga</span></tt> などMySQLとのインターフェイスとなるクラスでかつ他の類似のモジュールに命名規則がある場合はそれに従う。</p>
+<p>ただし、 <code class="docutils literal"><span class="pre">ha_mroonga</span></code> などMySQLとのインターフェイスとなるクラスでかつ他の類似のモジュールに命名規則がある場合はそれに従う。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>class ha_mroonga: public handler
 {
 }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> になっている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">UpperCamelCase</span></code> になっている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class HaMroonga: public handler
 {
 }
@@ -276,7 +274,7 @@ size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 </div>
 <div class="section" id="id10">
 <h3>メンバー変数名<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>メンバー変数名は <tt class="docutils literal"><span class="pre">snail_case</span></tt> とし、末尾にアンダースコア（ <tt class="docutils literal"><span class="pre">_</span></tt> ）を付ける。</p>
+<p>メンバー変数名は <code class="docutils literal"><span class="pre">snail_case</span></code> とし、末尾にアンダースコア（ <code class="docutils literal"><span class="pre">_</span></code> ）を付ける。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
@@ -284,7 +282,7 @@ size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">UpperCamelCase</span></tt> である）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">UpperCamelCase</span></code> である）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
   char *MyName_;
@@ -318,7 +316,7 @@ size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 }
 </pre></div>
 </div>
-<p>悪い例（先頭に <tt class="docutils literal"><span class="pre">get_</span></tt> を付けている）:</p>
+<p>悪い例（先頭に <code class="docutils literal"><span class="pre">get_</span></code> を付けている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
   char *my_name_;
@@ -329,7 +327,7 @@ size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 </div>
 <div class="section" id="id12">
 <h3>書き込み用アクセサ名<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>メンバー変数の値を設定するメソッドの名前は、メンバー変数名の末尾のアンダースコアを除き、先頭に <tt class="docutils literal"><span class="pre">set_</span></tt> を加えたものにする。</p>
+<p>メンバー変数の値を設定するメソッドの名前は、メンバー変数名の末尾のアンダースコアを除き、先頭に <code class="docutils literal"><span class="pre">set_</span></code> を加えたものにする。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
@@ -352,7 +350,7 @@ size_t database_path_size = strlen(&quot;db/test.mrn&quot;);
 }
 </pre></div>
 </div>
-<p>悪い例（先頭に <tt class="docutils literal"><span class="pre">set_</span></tt> ではなく <tt class="docutils literal"><span class="pre">update_</span></tt> を付けている）:</p>
+<p>悪い例（先頭に <code class="docutils literal"><span class="pre">set_</span></code> ではなく <code class="docutils literal"><span class="pre">update_</span></code> を付けている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
   unsigned int age_;
@@ -432,7 +430,7 @@ private:
 <h2>引数<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="void">
 <h3>voidを省略<a class="headerlink" href="#void" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>引数がない場合は <tt class="docutils literal"><span class="pre">void</span></tt> を省略する。</p>
+<p>引数がない場合は <code class="docutils literal"><span class="pre">void</span></code> を省略する。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
@@ -444,7 +442,7 @@ private:
 }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">void</span></tt> を省略していない）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">void</span></code> を省略していない）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class MyClass
 {
   unsigned int age_;
@@ -458,7 +456,7 @@ private:
 </div>
 <div class="section" id="const">
 <h3>入力用引数にはconstを付ける<a class="headerlink" href="#const" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>入力のみに用いる引数には <tt class="docutils literal"><span class="pre">const</span></tt> を付ける。これは、入力のみに用いる引数である事を明示するためと、間違って引数を変更してしまわないためである。</p>
+<p>入力のみに用いる引数には <code class="docutils literal"><span class="pre">const</span></code> を付ける。これは、入力のみに用いる引数である事を明示するためと、間違って引数を変更してしまわないためである。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>class Table
 {
@@ -471,7 +469,7 @@ private:
 }
 </pre></div>
 </div>
-<p>悪い例（入力のみに用いているのに <tt class="docutils literal"><span class="pre">const</span></tt> が付いていない）:</p>
+<p>悪い例（入力のみに用いているのに <code class="docutils literal"><span class="pre">const</span></code> が付いていない）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class Table
 {
   void insert(unsigned int id, char *column_name, char *value)
@@ -487,12 +485,12 @@ private:
 </div>
 <div class="section" id="id16">
 <h2>定数<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>フラグやサイズなどを示す定数には <tt class="docutils literal"><span class="pre">const</span></tt> オブジェクトを用いる。これはデバッガー上でプログラムを走らせているときに名前で値を参照できるようにするためである。</p>
+<p>フラグやサイズなどを示す定数には <code class="docutils literal"><span class="pre">const</span></code> オブジェクトを用いる。これはデバッガー上でプログラムを走らせているときに名前で値を参照できるようにするためである。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>const char *MRN_LOG_FILE_PATH = &quot;groonga.log&quot;;
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">#define</span></tt> を用いている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">#define</span></code> を用いている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>#define MRN_LOG_FILE_PATH &quot;groonga.log&quot;
 </pre></div>
 </div>
@@ -501,24 +499,24 @@ private:
 <h2>真偽値<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="bool">
 <h3>bool型を用いる<a class="headerlink" href="#bool" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>真偽値には <tt class="docutils literal"><span class="pre">bool</span></tt> 型を用いる。</p>
+<p>真偽値には <code class="docutils literal"><span class="pre">bool</span></code> 型を用いる。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>bool is_searching;
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">int</span></tt> 型を用いている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">int</span></code> 型を用いている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>int is_searching;
 </pre></div>
 </div>
 </div>
 <div class="section" id="true-false">
-<h3>真偽値のリテラルには <tt class="docutils literal"><span class="pre">true</span></tt> または <tt class="docutils literal"><span class="pre">false</span></tt> を用いる<a class="headerlink" href="#true-false" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>真偽値の値として <tt class="docutils literal"><span class="pre">true</span></tt> と <tt class="docutils literal"><span class="pre">false</span></tt> はより完結で説明的だからである。</p>
+<h3>真偽値のリテラルには <code class="docutils literal"><span class="pre">true</span></code> または <code class="docutils literal"><span class="pre">false</span></code> を用いる<a class="headerlink" href="#true-false" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>真偽値の値として <code class="docutils literal"><span class="pre">true</span></code> と <code class="docutils literal"><span class="pre">false</span></code> はより完結で説明的だからである。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>bool is_searching = true;
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">0</span></tt> 以外の値を真の値として用いている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">0</span></code> 以外の値を真の値として用いている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>bool is_searching = 1;
 </pre></div>
 </div>
@@ -528,7 +526,7 @@ private:
 <h2>条件式<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id19">
 <h3>真偽値は比較しない<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>真偽値の値は <tt class="docutils literal"><span class="pre">boolean_value</span> <span class="pre">==</span> <span class="pre">true</span></tt> などとせず、 <tt class="docutils literal"><span class="pre">boolean_value</span></tt> として条件式に使用する。すでに真偽値の値を真偽値のリテラルと比較することは重複したコードだからである。</p>
+<p>真偽値の値は <code class="docutils literal"><span class="pre">boolean_value</span> <span class="pre">==</span> <span class="pre">true</span></code> などとせず、 <code class="docutils literal"><span class="pre">boolean_value</span></code> として条件式に使用する。すでに真偽値の値を真偽値のリテラルと比較することは重複したコードだからである。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>boolean is_searching = true;
 if (!is_searching) { ... }
@@ -541,14 +539,14 @@ if (is_searching == false) { ... }
 </div>
 </div>
 <div class="section" id="null">
-<h3><tt class="docutils literal"><span class="pre">NULL</span></tt> と比較しない<a class="headerlink" href="#null" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><tt class="docutils literal"><span class="pre">NULL</span></tt> かどうかを条件式に使う場合は <tt class="docutils literal"><span class="pre">value</span> <span class="pre">==</span> <span class="pre">NULL</span></tt> ではなく <tt class="docutils literal"><span class="pre">!value</span></tt> というように書く。多くの言語で <tt class="docutils literal"><span class="pre">NULL</span></tt> に相当する値（たとえばLispの <tt class="docutils literal"><span class="pre">nil</span></tt> ）は偽を表すため、明示的に <tt class="docutils literal"><span class="pre">NULL</span></tt> と比較しなくても意図は伝わるからである。</p>
+<h3><code class="docutils literal"><span class="pre">NULL</span></code> と比較しない<a class="headerlink" href="#null" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">NULL</span></code> かどうかを条件式に使う場合は <code class="docutils literal"><span class="pre">value</span> <span class="pre">==</span> <span class="pre">NULL</span></code> ではなく <code class="docutils literal"><span class="pre">!value</span></code> というように書く。多くの言語で <code class="docutils literal"><span class="pre">NULL</span></code> に相当する値（たとえばLispの <code class="docutils literal"><span class="pre">nil</span></code> ）は偽を表すため、明示的に <code class="docutils literal"><span class="pre">NULL</span></code> と比較しなくても意図は伝わるからである。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *name = NULL;
 if (!name) { ... }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">NULL</span></tt> と比較している）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">NULL</span></code> と比較している）:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *name = NULL;
 if (name == NULL) { ... }
 </pre></div>
@@ -556,15 +554,15 @@ if (name == NULL) { ... }
 </div>
 <div class="section" id="id20">
 <h3>数値は比較する<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>CやC++では <tt class="docutils literal"><span class="pre">0</span></tt> は偽、 <tt class="docutils literal"><span class="pre">0</span></tt> 以外は真の値となるが、条件式に数値を使う場合は <tt class="docutils literal"><span class="pre">strcmp(...)</span> <span class="pre">==</span> <span class="pre">0</span></tt> などというように明示的に比較する。</p>
-<p>C++では真偽値に <tt class="docutils literal"><span class="pre">bool</span></tt> を使うためこのような状況は発生しないが、C言語由来のAPIでは <tt class="docutils literal"><span class="pre">int</span></tt> で真偽値を表現している場合が多い。しかし、 <tt class="docutils literal"><span class="pre">int</span></tt> だけでは真偽値として使っているか本当に数値として使っているかがわかりにくいため、 <tt class="docutils literal"><span class="pre">int</span></tt> のときはすべて数値として扱う。</p>
+<p>CやC++では <code class="docutils literal"><span class="pre">0</span></code> は偽、 <code class="docutils literal"><span class="pre">0</span></code> 以外は真の値となるが、条件式に数値を使う場合は <code class="docutils literal"><span class="pre">strcmp(...)</span> <span class="pre">==</span> <span class="pre">0</span></code> などというように明示的に比較する。</p>
+<p>C++では真偽値に <code class="docutils literal"><span class="pre">bool</span></code> を使うためこのような状況は発生しないが、C言語由来のAPIでは <code class="docutils literal"><span class="pre">int</span></code> で真偽値を表現している場合が多い。しかし、 <code class="docutils literal"><span class="pre">int</span></code> だけでは真偽値として使っているか本当に数値として使っているかがわかりにくいため、 <code class="docutils literal"><span class="pre">int</span></code> のときはすべて数値として扱う。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>if (memcmp(value1, value2, value_size) == 0) {
   printf(&quot;same value!\n&quot;);
 }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">0</span></tt> を偽の値として扱っている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">0</span></code> を偽の値として扱っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>if (!memcmp(value1, value2, value_size)) {
   printf(&quot;same value!\n&quot;);
 }
@@ -590,7 +588,7 @@ Table::Table(const char *name) :
 }
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">std::string(name)</span></tt> のところでコンストラクターが動き、 <tt class="docutils literal"><span class="pre">name_</span> <span class="pre">=</span> <span class="pre">...</span></tt> のところで代入演算子が動いて2回初期化している）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">std::string(name)</span></code> のところでコンストラクターが動き、 <code class="docutils literal"><span class="pre">name_</span> <span class="pre">=</span> <span class="pre">...</span></code> のところで代入演算子が動いて2回初期化している）:</p>
 <div class="highlight-none"><div class="highlight"><pre>class Table
 {
   Table(const char *name);
@@ -611,7 +609,7 @@ Table::Table(const char *name)
 <div class="highlight-none"><div class="highlight"><pre>std::string name(&quot;users&quot;);
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">std::string()</span></tt> のところでコンストラクターが動き、 <tt class="docutils literal"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">...</span></tt> のところで代入演算子が動いて2回初期化している）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">std::string()</span></code> のところでコンストラクターが動き、 <code class="docutils literal"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">...</span></code> のところで代入演算子が動いて2回初期化している）:</p>
 <div class="highlight-none"><div class="highlight"><pre>std::string name;
 name = std::string(&quot;users&quot;);
 </pre></div>
@@ -623,7 +621,7 @@ name = std::string(&quot;users&quot;);
 <div class="section" id="id25">
 <h3>前置形式を用いる<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>後置形式ではオブジェクトのコピーをしなければいけないため非効率である。そのため、できるだけ前置形式を用いる。</p>
-<p>よい例（ <tt class="docutils literal"><span class="pre">int</span></tt> だと効率は変わらないので本当はあんまりよい例ではない）:</p>
+<p>よい例（ <code class="docutils literal"><span class="pre">int</span></code> だと効率は変わらないので本当はあんまりよい例ではない）:</p>
 <div class="highlight-none"><div class="highlight"><pre>for (int i = 0; i &lt; 10; ++i) {
 }
 </pre></div>
@@ -639,8 +637,8 @@ name = std::string(&quot;users&quot;);
 <h2>キャスト<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="c">
 <h3>C++のスタイルを用いる<a class="headerlink" href="#c" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Cスタイルのキャストはなんでもキャストできてしまうため、意図しないキャストにも気付かない可能性がある。例えば、単に <tt class="docutils literal"><span class="pre">const</span></tt> を外したいだけなのに、間違って違う型に変換していても気付けない。C++のキャストでは <tt class="docutils literal"><span class="pre">const</span></tt> を外したいときは <tt class="docutils literal"><span class="pre">const_cast</span></tt> を使用し、型を変換するときは <tt class="docutils literal"><span class="pre">static_cast</span></tt> を指定する。こうすれば、 <tt class="docutils literal"><span class="pre">static_cast</span></tt> で間違って <tt class="docutils literal"><span class="pre">const</span></tt> を外してしまっている場合も気付ける。 <tt class="docutils literal"><span class="pre">reinterpret_cast</span></tt> はどうしても必要なときのみ注意して使う。</p>
-<p>よい例（ <tt class="docutils literal"><span class="pre">const_cast</span></tt> を使っている）:</p>
+<p>Cスタイルのキャストはなんでもキャストできてしまうため、意図しないキャストにも気付かない可能性がある。例えば、単に <code class="docutils literal"><span class="pre">const</span></code> を外したいだけなのに、間違って違う型に変換していても気付けない。C++のキャストでは <code class="docutils literal"><span class="pre">const</span></code> を外したいときは <code class="docutils literal"><span class="pre">const_cast</span></code> を使用し、型を変換するときは <code class="docutils literal"><span class="pre">static_cast</span></code> を指定する。こうすれば、 <code class="docutils literal"><span class="pre">static_cast</span></code> で間違って <code class="docutils literal"><span class="pre">const</span></code> を外してしまっている場合も気付ける。 <code class="docutils literal"><span class="pre">reinterpret_cast</span></code> はどうしても必要なときのみ注意して使う。</p>
+<p>よい例（ <code class="docutils literal"><span class="pre">const_cast</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>uchar *to_key;
 const ucahr *from_key;
 KEY *key_info;
@@ -648,13 +646,13 @@ uint key_length;
 key_copy(to_key, const_cast&lt;uchar *&gt;from_key, key_info, key_length);
 </pre></div>
 </div>
-<p>よい例（ <tt class="docutils literal"><span class="pre">static_cast</span></tt> を使っている）:</p>
+<p>よい例（ <code class="docutils literal"><span class="pre">static_cast</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>int n_hits = 1;
 int n_documents = 10;
 float hit_ratio = (float)(n_hits) / n_documents;
 </pre></div>
 </div>
-<p>よい例（ <tt class="docutils literal"><span class="pre">static_cast</span></tt> では無理なので <tt class="docutils literal"><span class="pre">reinterpret_cast</span></tt> を使っている）:</p>
+<p>よい例（ <code class="docutils literal"><span class="pre">static_cast</span></code> では無理なので <code class="docutils literal"><span class="pre">reinterpret_cast</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>THD *thread = current_thd;
 my_hash_delete(&amp;mrn_allocated_thds, reinterpret_cast&lt;uchar *&gt;(thread));
 </pre></div>
@@ -665,7 +663,7 @@ int n_documents = 10;
 float hit_ratio = (float)(n_hits) / n_documents;
 </pre></div>
 </div>
-<p>悪い例（ <tt class="docutils literal"><span class="pre">static_cast</span></tt> で十分なのに <tt class="docutils literal"><span class="pre">reinterpret_cast</span></tt> を使っている）:</p>
+<p>悪い例（ <code class="docutils literal"><span class="pre">static_cast</span></code> で十分なのに <code class="docutils literal"><span class="pre">reinterpret_cast</span></code> を使っている）:</p>
 <div class="highlight-none"><div class="highlight"><pre>void *value = get_value(key);
 char *name;
 name = reinterpret_cast&lt;char *&gt;(value);
@@ -676,14 +674,14 @@ name = reinterpret_cast&lt;char *&gt;(value);
 <div class="section" id="id27">
 <h2>変数宣言<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id28">
-<h3>ポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> とリファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> は変数名に寄せる<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Cと同様にポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> は型名ではなく変数名に寄せる。これは、以下のように複数の変数を一度に宣言したときに一貫性がなくなるためである。2つめ以降の変数は近くに型名がないため <tt class="docutils literal"><span class="pre">*</span></tt> を寄せる場所がない。</p>
+<h3>ポインタ型を示す <code class="docutils literal"><span class="pre">*</span></code> とリファレンス型を示す <code class="docutils literal"><span class="pre">&amp;</span></code> は変数名に寄せる<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Cと同様にポインタ型を示す <code class="docutils literal"><span class="pre">*</span></code> は型名ではなく変数名に寄せる。これは、以下のように複数の変数を一度に宣言したときに一貫性がなくなるためである。2つめ以降の変数は近くに型名がないため <code class="docutils literal"><span class="pre">*</span></code> を寄せる場所がない。</p>
 <p>例:</p>
 <div class="highlight-none"><div class="highlight"><pre>char* key, *value;
 </pre></div>
 </div>
-<p>同様に、リファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> も変数名に寄せる。</p>
-<p>なお、 <tt class="docutils literal"><span class="pre">*</span></tt> や <tt class="docutils literal"><span class="pre">&amp;</span></tt> と型名の間にはスペースを入れない。</p>
+<p>同様に、リファレンス型を示す <code class="docutils literal"><span class="pre">&amp;</span></code> も変数名に寄せる。</p>
+<p>なお、 <code class="docutils literal"><span class="pre">*</span></code> や <code class="docutils literal"><span class="pre">&amp;</span></code> と型名の間にはスペースを入れない。</p>
 <p>よい例:</p>
 <div class="highlight-none"><div class="highlight"><pre>char *key;
 </pre></div>
@@ -743,7 +741,7 @@ template instantiationのことであれば、これはふつうに使わ
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
@@ -751,7 +749,7 @@ template instantiationのことであれば、これはふつうに使わ
 <li><a class="reference internal" href="#id2">言語</a></li>
 <li><a class="reference internal" href="#id3">ファイル名</a></li>
 <li><a class="reference internal" href="#id4">名前空間</a></li>
-<li><a class="reference internal" href="#include"><tt class="docutils literal"><span class="pre">include</span></tt> ガード</a></li>
+<li><a class="reference internal" href="#include"><code class="docutils literal"><span class="pre">include</span></code> ガード</a></li>
 <li><a class="reference internal" href="#id5">代入</a></li>
 <li><a class="reference internal" href="#id6">文字列</a></li>
 <li><a class="reference internal" href="#id7">バッファ</a></li>
@@ -772,12 +770,12 @@ template instantiationのことであれば、これはふつうに使わ
 <li><a class="reference internal" href="#id16">定数</a></li>
 <li><a class="reference internal" href="#id17">真偽値</a><ul>
 <li><a class="reference internal" href="#bool">bool型を用いる</a></li>
-<li><a class="reference internal" href="#true-false">真偽値のリテラルには <tt class="docutils literal"><span class="pre">true</span></tt> または <tt class="docutils literal"><span class="pre">false</span></tt> を用いる</a></li>
+<li><a class="reference internal" href="#true-false">真偽値のリテラルには <code class="docutils literal"><span class="pre">true</span></code> または <code class="docutils literal"><span class="pre">false</span></code> を用いる</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#id18">条件式</a><ul>
 <li><a class="reference internal" href="#id19">真偽値は比較しない</a></li>
-<li><a class="reference internal" href="#null"><tt class="docutils literal"><span class="pre">NULL</span></tt> と比較しない</a></li>
+<li><a class="reference internal" href="#null"><code class="docutils literal"><span class="pre">NULL</span></code> と比較しない</a></li>
 <li><a class="reference internal" href="#id20">数値は比較する</a></li>
 </ul>
 </li>
@@ -795,7 +793,7 @@ template instantiationのことであれば、これはふつうに使わ
 </ul>
 </li>
 <li><a class="reference internal" href="#id27">変数宣言</a><ul>
-<li><a class="reference internal" href="#id28">ポインタ型を示す <tt class="docutils literal"><span class="pre">*</span></tt> とリファレンス型を示す <tt class="docutils literal"><span class="pre">&amp;</span></tt> は変数名に寄せる</a></li>
+<li><a class="reference internal" href="#id28">ポインタ型を示す <code class="docutils literal"><span class="pre">*</span></code> とリファレンス型を示す <code class="docutils literal"><span class="pre">&amp;</span></code> は変数名に寄せる</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#id29">その他</a></li>
@@ -804,12 +802,14 @@ template instantiationのことであれば、これはふつうに使わ
 </li>
 </ul>
 
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../sources/developer/coding_style.txt"
-           rel="nofollow">ソースコードを表示（英語）</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/developer/coding_style.txt"
+            rel="nofollow">ソースコードを表示（英語）</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -826,16 +826,16 @@ template instantiationのことであれば、これはふつうに使わ
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li><a href="../index.html">Mroonga v5.05 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2009-2015, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
