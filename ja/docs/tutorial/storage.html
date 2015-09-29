@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. ストレージモード &mdash; Mroonga v5.06 documentation</title>
+    <title>4.3. ストレージモード &mdash; Mroonga v5.08 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.06',
+        VERSION:     '5.08',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.06 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v5.08 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4.4. ラッパーモード" href="wrapper.html" />
     <link rel="prev" title="4.2. モード" href="mode.html" /> 
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.08 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
@@ -528,9 +528,7 @@ Rows matched: 1  Changed: 1  Warnings: 0
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
 <h2>4.3.9. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Mroonga provides functionality to get keyword in context.
-It is implemented as 'mroonga_snippet' UDF.</p>
-<p>詳細は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> を参照してください。</p>
+<p>Mroongaは周辺テキスト付きでキーワードを取得する機能を提供しています。この機能は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> UDFとして実装されています。</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
 <h2>4.3.10. Groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -652,7 +650,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li>DEBUG</li>
 <li>DUMP</li>
 </ul>
-<p>詳細は <a class="reference internal" href="../reference/server_variables.html#mroonga-log-level"><span>mroonga_log_level</span></a> を参照してください。</p>
+<p>詳細は <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span>mroonga_log_level</span></a> を参照してください。</p>
 <p>またFLUSH LOGSでログの再オープンを行うことができます。MySQLサーバを停止せずにログのローテートを行いたいような場合には、以下の手順で実行すると良いでしょう。</p>
 <ol class="arabic simple">
 <li><p class="first"><code class="docutils literal"><span class="pre">groonga.log</span></code> ファイルの名前を変更（OSコマンドのmvなどで）</p>
@@ -661,81 +659,9 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </li>
 </ol>
 </div>
-<div class="section" id="choosing-appropriate-columns">
-<h2>4.3.12. カラムの刈り込み<a class="headerlink" href="#choosing-appropriate-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Groongaでは各カラムごとにファイルを分けてデータを格納する「カラムストア方式」が採用されており、Mroongaではこの特性を活かすためにテーブルアクセス時に必要なカラムに対してのみアクセスを行う実装を行っています。</p>
-<p>この高速化の仕組みはMroonga内部で自動的に行われるため、特に設定などを行う必要はありません。</p>
-<p>例えば以下のようにカラムが20個定義されているテーブルが存在するものと仮定します。</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
-  c1 INT PRIMARY KEY AUTO_INCREMENT,
-  c2 INT,
-  c3 INT,
-  ...
-  c11 VARCHAR(20),
-  c12 VARCHAR(20),
-  ...
-  c20 DATETIME
-) ENGINE = Mroonga DEFAULT CHARSET utf8;
-</pre></div>
-</div>
-<p>この時、以下のようなSELECT文が発行される場合、MroongaではSELECT句およびWHERE句で参照しているカラムに対してのみデータの読み取りを行ってSQL文を処理します（内部的に不要なカラムに対してはアクセスしません）。</p>
-<blockquote>
-<div>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;</div></blockquote>
-<p>このケースではc1,c2,c11,c12に対してのみアクセスが行われ、SQL文が高速に処理されることになります。</p>
-</div>
-<div class="section" id="optimisation-for-counting-rows">
-<h2>4.3.13. 行カウント高速化<a class="headerlink" href="#optimisation-for-counting-rows" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>COUNT(*)などの行カウントを行う場合と通常のSELECTによるデータ参照を行う場合に対して、従来よりMySQLではストレージエンジンの呼び出しを行う部分(=ストレージエンジンインタフェース)における区別が存在していないため、行数をカウントするだけで良いような場合にもレコードアクセス（SELECTの結果には含まれないデータへのアクセス）が行われる問題があります。</p>
-<p>Mroongaの前身であるTritonn(MySQL+Senna)ではこの問題に対して&quot;2indパッチ&quot;という不要なレコードアクセスを省略する仕組みを独自に実装してこの性能問題を回避していました。</p>
-<p>これに引き続き、Mroongaでも行カウントを高速化するための仕組みを実装しています。</p>
-<p>例えば以下のSELECT文では不要なカラムデータの読み取りは省略され、必要最小限のコストで行カウントの結果を返すことができます。</p>
-<blockquote>
-<div>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;);</div></blockquote>
-<p>この最適化処理が行われたかどうかはステータス変数で確認することもできます。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
-| Mroonga_count_skip | 1     |
-+--------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>行カウント高速化の処理が行われる度に <code class="docutils literal"><span class="pre">Mroonga_count_skip</span></code> ステータス変数がインクリメントされます。</p>
-<p>備考：この高速化機能はインデックスを用いて実装されています。現在のところインデックスアクセスのみでレコードが特定できるパタンでのみ有効に機能します。</p>
-</div>
-<div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>4.3.14. 全文検索時の ORDER BY LIMIT 高速化<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>一般的にMySQLでは&quot;ORDER BY&quot;はインデックス経由のレコード参照が行えればほぼノーコストで処理可能であり、&quot;LIMIT&quot;は検索結果が大量にヒットする場合でも処理対象を限定することでコストを一定に抑える効果があります。</p>
-<p>しかし例えば全文検索のスコアの降順+LIMITのように&quot;ORDER BY&quot;の処理の際にインデックスが効かないクエリの場合、検索ヒット件数に比例したコストがかかってしまうため、特に大量の検索がヒットするようなキーワード検索においてクエリ処理に極端に時間がかかってしまうケースがあります。</p>
-<p>Tritonnではこの問題に対して特に対応はできていませんでしたが、最新レポジトリではsen_records_sort関数を活用してSennaからの読み出しをスコアの降順に対応させることでSQLクエリからORDER BY句を取り除く(※スコア降順を指定していたケースに対してのみ有効)回避方法を導入しました。</p>
-<p>Mroongaでも ORDER BY LIMIT を高速化するための仕組みを実装しています。</p>
-<p>例えば以下のSELECT文では ORDER BY LIMIT は、groonga内で処理され、必要最小限のレコードだけをMySQLに返却しています。</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
-</pre></div>
-</div>
-<p>この最適化処理が行われたかどうかはステータス変数で確認することもできます。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
-+--------------------------+-------+
-| Variable_name            | Value |
-+--------------------------+-------+
-| Mroonga_fast_order_limit | 1     |
-+--------------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>ORDER BY LIMIT 高速化の処理が行われる度に <code class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></code> ステータス変数がインクリメントされます。</p>
-<p>備考：この高速化機能は、「select ... match against order by _score desc limit X, Y」を狙い撃ちした高速化で、現在のところ以下の条件が成立した場合に機能します。</p>
-<ul class="simple">
-<li><p class="first">where句がmatch...againstのみ</p>
-</li>
-<li><p class="first">joinしていない</p>
-</li>
-<li><p class="first">limitの指定がある</p>
-</li>
-<li><p class="first">order byの指定がカラム(_id含む)またはwhere句に指定したmatch...againstである</p>
-</li>
-</ul>
+<div class="section" id="next-step">
+<h2>4.3.12. 次のステップ<a class="headerlink" href="#next-step" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>これでストレージモードでMroongaを使えるようになりました！Mroongaをもっと速くしたい場合は <a class="reference internal" href="../reference/optimizations.html"><em>最適化</em></a> も参照してください。</p>
 <p class="rubric">脚注</p>
 <table class="docutils footnote" frame="void" id="score" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -774,9 +700,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
 <li><a class="reference internal" href="#how-to-run-groonga-command">4.3.10. Groongaコマンドの実行方法</a></li>
 <li><a class="reference internal" href="#logging">4.3.11. ログ出力</a></li>
-<li><a class="reference internal" href="#choosing-appropriate-columns">4.3.12. カラムの刈り込み</a></li>
-<li><a class="reference internal" href="#optimisation-for-counting-rows">4.3.13. 行カウント高速化</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.3.14. 全文検索時の ORDER BY LIMIT 高速化</a></li>
+<li><a class="reference internal" href="#next-step">4.3.12. 次のステップ</a></li>
 </ul>
 </li>
 </ul>
@@ -823,7 +747,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.08 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>

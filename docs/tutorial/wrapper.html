@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.4. Wrapper mode &mdash; Mroonga v5.06 documentation</title>
+    <title>4.4. Wrapper mode &mdash; Mroonga v5.08 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.06',
+        VERSION:     '5.08',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.06 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v5.08 documentation" href="../index.html" />
     <link rel="up" title="4. Tutorial" href="../tutorial.html" />
     <link rel="next" title="5. Reference" href="../reference.html" />
     <link rel="prev" title="4.3. Storage mode" href="storage.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.08 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
@@ -329,8 +329,7 @@ mysql&gt; SELECT * FROM diaries
 <div class="section" id="how-to-get-snippet-keyword-in-context">
 <h2>4.4.6. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
-It is implemented as 'mroonga_snippet' UDF.</p>
-<p>See <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> about details.</p>
+It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet</em></a> UDF.</p>
 </div>
 <div class="section" id="logging">
 <h2>4.4.7. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
@@ -377,41 +376,17 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li>DEBUG</li>
 <li>DUMP</li>
 </ul>
-<p>See <a class="reference internal" href="../reference/server_variables.html#mroonga-log-level"><span>mroonga_log_level</span></a> about details.</p>
+<p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span>mroonga_log_level</span></a> about details.</p>
 <p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
 <ol class="arabic simple">
 <li>change the file name of <code class="docutils literal"><span class="pre">groonga.log</span></code> (by using OS's mv command etc.).</li>
 <li>invoke &quot;FLUSH LOGS&quot; in MySQL server (by mysql command or mysqladmin command).</li>
 </ol>
 </div>
-<div class="section" id="optimisation-for-order-by-limit-in-full-text-search">
-<h2>4.4.8. Optimisation for ORDER BY LIMIT in full text search<a class="headerlink" href="#optimisation-for-order-by-limit-in-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>Generally speaking, MySQL can process &quot;ORDER BY&quot; query with almost no cost if we can get records by index, and can process &quot;LIMIT&quot; with low cost by limiting the range of processing data even if the number of query result is very big.</p>
-<p>But for the query where &quot;ORDER BY&quot; cannot use index, like sort full text search result by the score and use LIMIT, the processing cost is proportional to the number of query results. So it might take very long time for the keyword query that matches with many records.</p>
-<p>Tritonn took no specific countermeasure for this issue, but it introduced a workaround in the latest repository so that it sorted Senna result in descending order of the score by using sen_records_sort function so that we could remove ORDER BY from the SQL query.</p>
-<p>Mroonga also has the optimisation for ORDER BY LIMIT.</p>
-<p>In the SELECT example below, ORDER BY LIMIT is processed in Mroonga only and the minimal records are passed to MySQL.</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT * FROM t1 WHERE MATCH(c2) AGAINST(&quot;hoge&quot;) ORDER BY c1 LIMIT 1;
-</pre></div>
-</div>
-<p>You can check if this optimisation works or not by the status variable.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;mroonga_fast_order_limit&#39;;
-+--------------------------+-------+
-| Variable_name            | Value |
-+--------------------------+-------+
-| mroonga_fast_order_limit | 1     |
-+--------------------------+-------+
-1 row in set (0.00 sec)
-</pre></div>
-</div>
-<p>Each time the optimisation for counting rows works, <code class="docutils literal"><span class="pre">mroonga_fast_order_limit</span></code> status variable value is increased.</p>
-<p>Note : This optimisation is targeting queries like &quot;select ... match against order by _score desc limit X, Y&quot; only, and it works if all of the following conditions are right.</p>
-<ul class="simple">
-<li>WHERE phrase has &quot;match...against&quot; only</li>
-<li>no JOIN</li>
-<li>with LIMIT</li>
-<li>ORDER BY phrase has _id column or &quot;match...against&quot; that is used in WHERE phrase only</li>
-</ul>
+<div class="section" id="next-step">
+<h2>4.4.8. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<p>Now, you can use Mroonga as wrapper mode! If you want Mroonga to be
+faster, see also <a class="reference internal" href="../reference/optimizations.html"><em>Optimizations</em></a>.</p>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="score" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -444,7 +419,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li><a class="reference internal" href="#how-to-specify-the-normalizer">4.4.5. How to specify the normalizer</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.4.6. How to get snippet (Keyword in context)</a></li>
 <li><a class="reference internal" href="#logging">4.4.7. Logging</a></li>
-<li><a class="reference internal" href="#optimisation-for-order-by-limit-in-full-text-search">4.4.8. Optimisation for ORDER BY LIMIT in full text search</a></li>
+<li><a class="reference internal" href="#next-step">4.4.8. Next step</a></li>
 </ul>
 </li>
 </ul>
@@ -491,7 +466,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.06 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.08 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>
