@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.5. CentOS &mdash; Mroonga v5.08 documentation</title>
+    <title>2.5. CentOS &mdash; Mroonga v5.09 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.08',
+        VERSION:     '5.09',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.08 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v5.09 documentation" href="../index.html" />
     <link rel="up" title="2. Install" href="../install.html" />
     <link rel="next" title="2.6. Fedora" href="fedora.html" />
     <link rel="prev" title="2.4. Ubuntu" href="ubuntu.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="ubuntu.html" title="2.4. Ubuntu"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.08 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.09 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. Install</a> &raquo;</li> 
       </ul>
     </div>  
@@ -132,13 +132,13 @@ since Mroonga 4.01 release.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="centos-6-with-the-oracle-mysql-package">
-<h2>2.5.3. CentOS 6 (with the Oracle MySQL package)<a class="headerlink" href="#centos-6-with-the-oracle-mysql-package" title="Permalink to this headline">¶</a></h2>
-<p>You can use Oracle's MySQL packages (version 5.6.x) on CentOS 6
-since Mroonga 4.04 release.</p>
+<div class="section" id="centos-6-with-the-oracle-mysql-5-6-package">
+<h2>2.5.3. CentOS 6 (with the Oracle MySQL 5.6 package)<a class="headerlink" href="#centos-6-with-the-oracle-mysql-5-6-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use Oracle's MySQL packages version 5.6 on CentOS 6 since
+Mroonga 4.04 release.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-% sudo yum install -y http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm
+% sudo yum install -y http://repo.mysql.com/mysql-community-release-el6-7.noarch.rpm
 % sudo yum makecache
 % sudo yum install -y mysql-community-server
 % sudo /sbin/service mysqld start
@@ -153,8 +153,35 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="centos-6-with-the-oracle-mysql-5-7-package">
+<h2>2.5.4. CentOS 6 (with the Oracle MySQL 5.7 package)<a class="headerlink" href="#centos-6-with-the-oracle-mysql-5-7-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use Oracle's MySQL packages version 5.7 on CentOS 6 since
+Mroonga 5.09 release.</p>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+% sudo yum install -y http://repo.mysql.com/mysql-community-release-el6-7.noarch.rpm
+% sudo yum install -y yum-utils
+% sudo yum-config-manager --disable mysql56-community
+% sudo yum-config-manager --enable mysql57-community
+% sudo yum makecache
+% sudo yum install -y mysql-community-server
+% sudo /sbin/service mysqld start
+% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)
+% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password &#39;New-Password1!&#39;
+% sudo yum install -y mysql57-community-mroonga
+(Type &#39;New-Password1!&#39; as password)
+(% sudo mysqladmin -u root --password=&quot;New-Password1!&quot; password &#39;your-password&#39;)
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
 <div class="section" id="centos-6-with-percona-server-package">
-<h2>2.5.4. CentOS 6 (with Percona Server package)<a class="headerlink" href="#centos-6-with-percona-server-package" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.5. CentOS 6 (with Percona Server package)<a class="headerlink" href="#centos-6-with-percona-server-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use Percona Server packages (version 5.6.x) on CentOS 6
 since Mroonga 5.02 release.</p>
 <p>Install:</p>
@@ -175,7 +202,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </div>
 <div class="section" id="centos-7-with-the-official-mariadb-package">
-<h2>2.5.5. CentOS 7 (with the official MariaDB package)<a class="headerlink" href="#centos-7-with-the-official-mariadb-package" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.6. CentOS 7 (with the official MariaDB package)<a class="headerlink" href="#centos-7-with-the-official-mariadb-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use CentOS's MariaDB packages (version 5.5.x) on CentOS 7.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
@@ -194,7 +221,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </div>
 <div class="section" id="centos-7-with-the-oracle-mysql-package">
-<h2>2.5.6. CentOS 7 (with the Oracle MySQL package)<a class="headerlink" href="#centos-7-with-the-oracle-mysql-package" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.7. CentOS 7 (with the Oracle MySQL package)<a class="headerlink" href="#centos-7-with-the-oracle-mysql-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use Oracle's MySQL packages (version 5.6.x) on CentOS 7.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
@@ -214,7 +241,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </div>
 <div class="section" id="centos-7-with-percona-server-package">
-<h2>2.5.7. CentOS 7 (with Percona Server package)<a class="headerlink" href="#centos-7-with-percona-server-package" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.8. CentOS 7 (with Percona Server package)<a class="headerlink" href="#centos-7-with-percona-server-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use Percona Server packages (version 5.6.x) on CentOS 7
 since Mroonga 5.02 release.</p>
 <p>Install:</p>
@@ -247,11 +274,12 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 <li><a class="reference internal" href="#">2.5. CentOS</a><ul>
 <li><a class="reference internal" href="#centos-5">2.5.1. CentOS 5</a></li>
 <li><a class="reference internal" href="#centos-6-with-the-official-mysql-package">2.5.2. CentOS 6 (with the official MySQL package)</a></li>
-<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-package">2.5.3. CentOS 6 (with the Oracle MySQL package)</a></li>
-<li><a class="reference internal" href="#centos-6-with-percona-server-package">2.5.4. CentOS 6 (with Percona Server package)</a></li>
-<li><a class="reference internal" href="#centos-7-with-the-official-mariadb-package">2.5.5. CentOS 7 (with the official MariaDB package)</a></li>
-<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-package">2.5.6. CentOS 7 (with the Oracle MySQL package)</a></li>
-<li><a class="reference internal" href="#centos-7-with-percona-server-package">2.5.7. CentOS 7 (with Percona Server package)</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-6-package">2.5.3. CentOS 6 (with the Oracle MySQL 5.6 package)</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-7-package">2.5.4. CentOS 6 (with the Oracle MySQL 5.7 package)</a></li>
+<li><a class="reference internal" href="#centos-6-with-percona-server-package">2.5.5. CentOS 6 (with Percona Server package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-official-mariadb-package">2.5.6. CentOS 7 (with the official MariaDB package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-package">2.5.7. CentOS 7 (with the Oracle MySQL package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-percona-server-package">2.5.8. CentOS 7 (with Percona Server package)</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +326,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
         <li class="right" >
           <a href="ubuntu.html" title="2.4. Ubuntu"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.08 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.09 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" >2. Install</a> &raquo;</li> 
       </ul>
     </div>
