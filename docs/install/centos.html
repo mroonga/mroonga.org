@@ -164,13 +164,10 @@ Mroonga 5.09 release.</p>
 % sudo yum-config-manager --disable mysql56-community
 % sudo yum-config-manager --enable mysql57-community
 % sudo yum makecache
-% sudo yum install -y mysql-community-server
-% sudo /sbin/service mysqld start
-% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)
-% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password &#39;New-Password1!&#39;
 % sudo yum install -y mysql57-community-mroonga
-(Type &#39;New-Password1!&#39; as password)
-(% sudo mysqladmin -u root --password=&quot;New-Password1!&quot; password &#39;your-password&#39;)
+(% sudo /sbin/service mysqld start)
+(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
+(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
 </pre></div>
 </div>
 <p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
@@ -220,9 +217,9 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="centos-7-with-the-oracle-mysql-package">
-<span id="centos-7-oracle-56"></span><h2>2.5.7. CentOS 7 (with the Oracle MySQL package)<a class="headerlink" href="#centos-7-with-the-oracle-mysql-package" title="Permalink to this headline">¶</a></h2>
-<p>You can use Oracle's MySQL packages (version 5.6.x) on CentOS 7.</p>
+<div class="section" id="centos-7-with-the-oracle-mysql-5-6-package">
+<span id="centos-7-oracle-56"></span><h2>2.5.7. CentOS 7 (with the Oracle MySQL 5.6 package)<a class="headerlink" href="#centos-7-with-the-oracle-mysql-5-6-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use Oracle's MySQL packages version 5.6 on CentOS 7.</p>
 <p>Install:</p>
 <div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 % sudo yum install -y http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
@@ -240,8 +237,32 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="centos-7-with-the-oracle-mysql-5-7-package">
+<span id="centos-7-oracle-57"></span><h2>2.5.8. CentOS 7 (with the Oracle MySQL 5.7 package)<a class="headerlink" href="#centos-7-with-the-oracle-mysql-5-7-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use Oracle's MySQL packages version 5.7 on CentOS 7 since
+Mroonga 5.09 release.</p>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+% sudo yum install -y http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
+% sudo yum install -y yum-utils
+% sudo yum-config-manager --disable mysql56-community
+% sudo yum-config-manager --enable mysql57-community
+% sudo yum makecache
+% sudo yum install -y mysql57-community-mroonga
+(% sudo systemctl start mysqld)
+(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
+(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y groonga-tokenizer-mecab
+</pre></div>
+</div>
+</div>
 <div class="section" id="centos-7-with-percona-server-package">
-<span id="centos-7-percona"></span><h2>2.5.8. CentOS 7 (with Percona Server package)<a class="headerlink" href="#centos-7-with-percona-server-package" title="Permalink to this headline">¶</a></h2>
+<span id="centos-7-percona"></span><h2>2.5.9. CentOS 7 (with Percona Server package)<a class="headerlink" href="#centos-7-with-percona-server-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use Percona Server packages (version 5.6.x) on CentOS 7
 since Mroonga 5.02 release.</p>
 <p>Install:</p>
@@ -278,8 +299,9 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 <li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-7-package">2.5.4. CentOS 6 (with the Oracle MySQL 5.7 package)</a></li>
 <li><a class="reference internal" href="#centos-6-with-percona-server-package">2.5.5. CentOS 6 (with Percona Server package)</a></li>
 <li><a class="reference internal" href="#centos-7-with-the-official-mariadb-package">2.5.6. CentOS 7 (with the official MariaDB package)</a></li>
-<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-package">2.5.7. CentOS 7 (with the Oracle MySQL package)</a></li>
-<li><a class="reference internal" href="#centos-7-with-percona-server-package">2.5.8. CentOS 7 (with Percona Server package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-5-6-package">2.5.7. CentOS 7 (with the Oracle MySQL 5.6 package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-5-7-package">2.5.8. CentOS 7 (with the Oracle MySQL 5.7 package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-percona-server-package">2.5.9. CentOS 7 (with Percona Server package)</a></li>
 </ul>
 </li>
 </ul>
