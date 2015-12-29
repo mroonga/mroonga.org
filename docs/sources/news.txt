@@ -5,6 +5,55 @@
 News
 ====
 
+.. _release-5-11:
+
+Release 5.11 - 2015-12-29
+-------------------------
+
+Improvements
+^^^^^^^^^^^^
+
+* [rpm][mysql56-community-mroonga] Updated target MySQL to 5.6.28.
+  [Reported by @stealthinu]
+
+* [rpm][mysql57-community-mroonga] Updated target MySQL to 5.7.10.
+  [Reported by @stealthinu]
+
+* Stopped to use ``-`` character in internal lexicon name. Because
+  ``-`` character can't be used symbol name in query syntax in
+  Groonga. It's inconvenient in
+  :doc:`/reference/udf/mroonga_command`. ``#`` character that can be
+  used symbol name is used instead of ``-`` character since this
+  release. [groonga-dev,03714] [Reported by keizi murakami]
+
+  This change doesn't break backward compatibility. The latest Mroonga
+  can use databases created by old Mroonga without any changes.
+
+* [rpm] Suppressed a confusing error message when root password check.
+  [GitHub#90] [Patch by Larry Kim]
+
+* [rpm][mariadb-mroonga] Rebuilt for CentOS 7.2.
+  [GitHub#91] [Reported by Larry Kim]
+
+* [UDF][:doc:`/reference/udf/mroonga_normalize`] Added a new UDF that
+  normalizes a string.
+  [GitHub#89][GitHub#92] [Patch by Naoya Murakami]
+
+Fixes
+^^^^^
+
+* [wrapper] Fixed a bug that ``CHECK TABLE FOR UPGRADE`` drops other tables.
+  [groonga-dev,03699] [Reported by Tomohiro KATO]
+
+Thanks
+^^^^^^
+
+* Tomohiro KATO
+* @stealthinu
+* keizi murakami
+* Larry Kim
+* Naoya Murakami
+
 .. _release-5-10:
 
 Release 5.10 - 2015-11-29

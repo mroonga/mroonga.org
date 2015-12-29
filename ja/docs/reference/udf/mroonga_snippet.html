@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.5.2. mroonga_snippet &mdash; Mroonga v5.10 documentation</title>
+    <title>5.5.2. mroonga_snippet() &mdash; Mroonga v5.11 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '5.10',
+        VERSION:     '5.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <script type="text/javascript" src="../../static/translations.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.10 documentation" href="../../index.html" />
+    <link rel="top" title="Mroonga v5.11 documentation" href="../../index.html" />
     <link rel="up" title="5.5. UDF (ユーザ定義関数)" href="../udf.html" />
-    <link rel="next" title="5.6. 制限事項" href="../limitations.html" />
-    <link rel="prev" title="5.5.1. mroonga_escape" href="mroonga_escape.html" /> 
+    <link rel="next" title="5.5.3. mroonga_normalize()" href="mroonga_normalize.html" />
+    <link rel="prev" title="5.5.1. mroonga_escape()" href="mroonga_escape.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -69,12 +69,12 @@
           <a href="../../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="../limitations.html" title="5.6. 制限事項"
+          <a href="mroonga_normalize.html" title="5.5.3. mroonga_normalize()"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.5.1. mroonga_escape"
+          <a href="mroonga_escape.html" title="5.5.1. mroonga_escape()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.10 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.11 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (ユーザ定義関数)</a> &raquo;</li> 
       </ul>
@@ -86,10 +86,10 @@
           <div class="body" role="main">
             
   <div class="section" id="mroonga-snippet">
-<h1>5.5.2. mroonga_snippet<a class="headerlink" href="#mroonga-snippet" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>5.5.2. <code class="docutils literal"><span class="pre">mroonga_snippet()</span></code><a class="headerlink" href="#mroonga-snippet" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="summary">
 <h2>5.5.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> UDFは文脈付き索引を取得する機能を提供します。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> UDFは文脈付き索引を取得する機能を提供します。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last">この機能は実験的です。引数や引数の値が予告なく変更される可能性があります。</p>
@@ -97,35 +97,35 @@
 </div>
 <div class="section" id="syntax">
 <h2>5.5.2.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>mroonga_snippetには必須引数と省略可能引数とがあります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mroonga_snippet document
-                max_length
-                max_count
-                encoding
-                skip_leading_spaces
-                html_escape
-                snippet_prefix
-                snippet_suffix
-                word1 word1_prefix word1_suffix
-                ...
-                [wordN wordN_prefix wordN_suffix]
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> には必須引数と省略可能引数とがあります。:</p>
+<div class="highlight-none"><div class="highlight"><pre>mroonga_snippet(document,
+                max_length,
+                max_count,
+                encoding,
+                skip_leading_spaces,
+                html_escape,
+                snippet_prefix,
+                snippet_suffix,
+                word1, word1_prefix, word1_suffix,
+                ...,
+                [wordN, wordN_prefix, wordN_suffix])
 </pre></div>
 </div>
 </div>
 <div class="section" id="usage">
 <h2>5.5.2.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>キーワードと周辺のテキストを検索結果として取得したいことがあります。</p>
-<p>スニペットは'キーワードと関連するテキスト'を意味します。文脈付き索引ともいいます。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数は検索結果からスニペットを取得する方法を提供します。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> UDFはストレージモードとラッパーモードいずれでも使
+<p>スニペットは「キーワードと関連するテキスト」という意味です。「文脈付き索引」ともいいます。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数は検索結果からスニペットを取得する方法を提供します。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> UDFはストレージモードとラッパーモードいずれでも使
 えます。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
 <div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
 <p>'fulltext'というキーワードと'MySQL'と'search'という関連語を含む文書の検索をしてみましょう。</p>
-<p><code class="docutils literal"><span class="pre">mroonga_snippet</span></code> 関数は上記のことができます。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数は上記のことができます。</p>
 <p>実行例のスキーマ定義(ストレージモード)はこちらです:</p>
 <div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
@@ -268,7 +268,7 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.5.2. mroonga_snippet</a><ul>
+<li><a class="reference internal" href="#">5.5.2. <code class="docutils literal"><span class="pre">mroonga_snippet()</span></code></a><ul>
 <li><a class="reference internal" href="#summary">5.5.2.1. 概要</a></li>
 <li><a class="reference internal" href="#syntax">5.5.2.2. 構文</a></li>
 <li><a class="reference internal" href="#usage">5.5.2.3. 使いかた</a></li>
@@ -299,10 +299,10 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="mroonga_escape.html"
-                        title="前の章へ">5.5.1. mroonga_escape</a></p>
+                        title="前の章へ">5.5.1. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code></a></p>
   <h4>次のトピックへ</h4>
-  <p class="topless"><a href="../limitations.html"
-                        title="次の章へ">5.6. 制限事項</a></p>
+  <p class="topless"><a href="mroonga_normalize.html"
+                        title="次の章へ">5.5.3. <code class="docutils literal"><span class="pre">mroonga_normalize()</span></code></a></p>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
@@ -334,12 +334,12 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
           <a href="../../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="../limitations.html" title="5.6. 制限事項"
+          <a href="mroonga_normalize.html" title="5.5.3. mroonga_normalize()"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.5.1. mroonga_escape"
+          <a href="mroonga_escape.html" title="5.5.1. mroonga_escape()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.10 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.11 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (ユーザ定義関数)</a> &raquo;</li> 
       </ul>
