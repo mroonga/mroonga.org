@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.5.3. mroonga_normalize() &mdash; Mroonga v5.11 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '5.11',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="top" title="Mroonga v5.11 documentation" href="../../index.html" />
+    <link rel="up" title="5.5. UDF (User Defined Functions)" href="../udf.html" />
+    <link rel="next" title="5.6. Limitations" href="../limitations.html" />
+    <link rel="prev" title="5.5.2. mroonga_snippet()" href="mroonga_snippet.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+  <body role="document">
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../ja/docs/reference/udf/mroonga_normalize.html"><img src="../../static/jp.png" alt="日本語">日本語版はこちら</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../limitations.html" title="5.6. Limitations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mroonga_snippet.html" title="5.5.2. mroonga_snippet()"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.11 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (User Defined Functions)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mroonga-normalize">
+<h1>5.5.3. <code class="docutils literal"><span class="pre">mroonga_normalize()</span></code><a class="headerlink" href="#mroonga-normalize" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>5.5.3.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">mroonga_normalize()</span></code> UDF normalizes text by Groonga's normalizer.</p>
+</div>
+<div class="section" id="syntax">
+<h2>5.5.3.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">mroonga_normalize()</span></code> has required parameter and optional parameter:</p>
+<div class="highlight-none"><div class="highlight"><pre>mroonga_normalize(string)
+mroonga_normalize(string, normalizer_name)
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>5.5.3.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here is the example query which use Groonga's <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer to be normalized:</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_normalize(&quot;ABCDあぃうぇ㍑&quot;);
+abcdあぃうぇリットル
+</pre></div>
+</div>
+<p>Here is the example query which use Groonga's <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark</span></code> normalizer to be normalized:</p>
+<div class="highlight-none"><div class="highlight"><pre>SELECT mroonga_normalize(&quot;aBｃＤあぃウェ㍑&quot;, &quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;);
+ABCDあぃうぇ㍑
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>5.5.3.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="required-parameters">
+<h3>5.5.3.4.1. Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There is one required parameter, <code class="docutils literal"><span class="pre">string</span></code>.</p>
+<div class="section" id="string">
+<h4>5.5.3.4.1.1. <code class="docutils literal"><span class="pre">string</span></code><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h4>
+<p>It specifies text which you want to normalize.</p>
+</div>
+</div>
+<div class="section" id="optional-parameters">
+<h3>5.5.3.4.2. Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There is one optional parameter, <code class="docutils literal"><span class="pre">normalizer_name</span></code>.</p>
+<div class="section" id="normalizer-name">
+<h4>5.5.3.4.2.1. <code class="docutils literal"><span class="pre">normalizer_name</span></code><a class="headerlink" href="#normalizer-name" title="Permalink to this headline">¶</a></h4>
+<p>It specifies Groonga's normalizer name to normalize.</p>
+<p>The default value is <code class="docutils literal"><span class="pre">NormalizerAuto</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>5.5.3.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p>It returns normalized string.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.5.3. <code class="docutils literal"><span class="pre">mroonga_normalize()</span></code></a><ul>
+<li><a class="reference internal" href="#summary">5.5.3.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">5.5.3.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">5.5.3.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">5.5.3.4. Parameters</a><ul>
+<li><a class="reference internal" href="#required-parameters">5.5.3.4.1. Required parameters</a><ul>
+<li><a class="reference internal" href="#string">5.5.3.4.1.1. <code class="docutils literal"><span class="pre">string</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optional-parameters">5.5.3.4.2. Optional parameters</a><ul>
+<li><a class="reference internal" href="#normalizer-name">5.5.3.4.2.1. <code class="docutils literal"><span class="pre">normalizer_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">5.5.3.5. Return value</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mroonga_snippet.html"
+                        title="previous chapter">5.5.2. <code class="docutils literal"><span class="pre">mroonga_snippet()</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../limitations.html"
+                        title="next chapter">5.6. Limitations</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../sources/reference/udf/mroonga_normalize.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../limitations.html" title="5.6. Limitations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mroonga_snippet.html" title="5.5.2. mroonga_snippet()"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.11 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (User Defined Functions)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2009-2015, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
