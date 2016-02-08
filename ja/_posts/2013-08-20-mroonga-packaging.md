@@ -1,14 +1,9 @@
 ---
 layout: post.ja
-title: 「隔週連載groonga
-第9回　mroongaを広く使ってもらうために大事なこと -
-mroongaのパッケージング動向の紹介」公開
-description: gihyo.jpさんで公開された記事「隔週連載groonga
-第9回　mroongaを広く使ってもらうために大事なこと -
-mroongaのパッケージング動向の紹介」の案内
+title: 「隔週連載groonga 第9回　mroongaを広く使ってもらうために大事なこと - mroongaのパッケージング動向の紹介」公開
+description: gihyo.jpさんで公開された記事「隔週連載groonga 第9回　mroongaを広く使ってもらうために大事なこと - mroongaのパッケージング動向の紹介」の案内
 ---
-## 「隔週連載groonga 第9回　mroongaを広く使ってもらうために大事なこと -
-mroongaのパッケージング動向の紹介」公開
+## 「隔週連載groonga 第9回　mroongaを広く使ってもらうために大事なこと - mroongaのパッケージング動向の紹介」公開
 
 [gihyo.jp](http://gihyo.jp/) さんで [隔週連載groonga
 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 & mroonga & PHP 5.4

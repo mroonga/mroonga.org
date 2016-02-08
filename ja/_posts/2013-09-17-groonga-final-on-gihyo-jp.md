@@ -1,8 +1,7 @@
 ---
 layout: post.ja
 title: 「隔週連載groonga 最終回　groongaの今と未来」公開
-description: gihyo.jpさんで公開された記事「隔週連載groonga
-最終回　groongaの今と未来」の紹介
+description: gihyo.jpさんで公開された記事「隔週連載groonga 最終回　groongaの今と未来」の紹介
 ---
 ## 「隔週連載groonga 最終回　groongaの今と未来」公開
 

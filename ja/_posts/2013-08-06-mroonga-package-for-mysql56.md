@@ -1,13 +1,9 @@
 ---
 layout: post.ja
-title: 「隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL
-5.6 & mroonga & PHP 5.4 環境の作り方」公開
-description: gihyo.jpさんで公開された記事「隔週連載groonga
-第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 & mroonga & PHP 5.4
-環境の作り方」の紹介
+title: 「隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 & mroonga & PHP 5.4 環境の作り方」公開
+description: gihyo.jpさんで公開された記事「隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 & mroonga & PHP 5.4 環境の作り方」の紹介
 ---
-## 「隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6
-& mroonga & PHP 5.4 環境の作り方」公開
+## 「隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 & mroonga & PHP 5.4 環境の作り方」公開
 
 [gihyo.jp](http://gihyo.jp/) さんで [Tritonn](http://qwik.jp/tritonn/)
 からmroongaへの移行事例を紹介した記事が公開されています。

@@ -1,14 +1,9 @@
 ---
 layout: post.ja
-title: 「隔週連載groonga
-第3回　すべてのMySQLユーザに高速な全文検索機能を！ -
-mroongaの紹介」公開
-description: gihyo.jpさんで公開された記事「隔週連載groonga
-第3回　すべてのMySQLユーザに高速な全文検索機能を！ -
-mroongaの紹介」の紹介
+title: 「隔週連載groonga 第3回　すべてのMySQLユーザに高速な全文検索機能を！ - mroongaの紹介」公開
+description: gihyo.jpさんで公開された記事「隔週連載groonga 第3回　すべてのMySQLユーザに高速な全文検索機能を！ - mroongaの紹介」の紹介
 ---
-## 「隔週連載groonga 第3回　すべてのMySQLユーザに高速な全文検索機能を！
-- mroongaの紹介」公開
+## 「隔週連載groonga 第3回　すべてのMySQLユーザに高速な全文検索機能を！ - mroongaの紹介」公開
 
 2013-05-07に [gihyo.jp](http://gihyo.jp/)
 さんでmroongaの記事が公開されました。 "隔週連載groonga

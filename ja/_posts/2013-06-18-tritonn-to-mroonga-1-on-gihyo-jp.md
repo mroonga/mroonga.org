@@ -1,13 +1,9 @@
 ---
 layout: post.ja
-title: 「隔週連載groonga 第6回　[実録]
-MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）」公開
-description: gihyo.jpさんで公開された記事「隔週連載groonga
-第6回　[実録]
-MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）」の紹介
+title: 「隔週連載groonga 第6回　[実録] MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）」公開
+description: gihyo.jpさんで公開された記事「隔週連載groonga 第6回　[実録] MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）」の紹介
 ---
-## 「隔週連載groonga 第6回　[実録]
-MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）」公開
+## 「隔週連載groonga 第6回　[実録] MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）」公開
 
 2013-06-18に [gihyo.jp](http://gihyo.jp/) さんで
 [Tritonn](http://qwik.jp/tritonn/)
