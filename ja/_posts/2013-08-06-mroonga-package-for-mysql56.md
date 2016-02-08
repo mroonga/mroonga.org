@@ -17,9 +17,7 @@ description: gihyo.jpさんで公開された記事「隔週連載groonga 第8�
 さんが実施した移行事例を元にしているので、とても実践的になっています。
 
 今回紹介するのは、その移行作業で必要になったRPMパッケージングのノウハウを別記事としてまとめた、
-[隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 &
-mroonga & PHP 5.4
-環境の作り方](http://gihyo.jp/dev/clip/01/groonga/0008) です。
+[隔週連載groonga 第8回　CentOS6でのRPMパッケージを用いた MySQL 5.6 & mroonga & PHP 5.4 環境の作り方](http://gihyo.jp/dev/clip/01/groonga/0008) です。
 
 例えば、mroonga公式ではCentOS 6向けには標準であるMySQL
 5.1系に依存したRPMパッケージしか提供していません。

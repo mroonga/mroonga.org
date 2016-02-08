@@ -7,8 +7,7 @@ description: gihyo.jpさんで公開された記事「隔週連載groonga 第7�
 
 2013-06-18に [gihyo.jp](http://gihyo.jp/) さんで
 [Tritonn](http://qwik.jp/tritonn/)
-からmroongaへの移行事例を紹介した記事が公開されました。 [隔週連載groonga
-第6回　[実録]
+からmroongaへの移行事例を紹介した記事が公開されました。 [隔週連載groonga 第6回　[実録]
 MySQL向け全文検索エンジン「Tritonn」から「mroonga」への移行ガイド（1）](http://gihyo.jp/dev/clip/01/groonga/0006)
 です。
 

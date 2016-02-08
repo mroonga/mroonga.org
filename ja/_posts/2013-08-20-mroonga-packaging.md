@@ -11,9 +11,7 @@ description: gihyo.jpさんで公開された記事「隔週連載groonga 第9�
  [Tritonn](http://qwik.jp/tritonn/)
 からmroongaへの移行した際に必要になったRPMパッケージングのノウハウが記事として公開されています。
 
-今回紹介するのは、CentOS6に限定しない、mroongaの導入対象となる環境ごとに最近の動向や今後の展望を書いた
-[「隔週連載groonga 第9回　mroongaを広く使ってもらうために大事なこと -
-mroongaのパッケージング動向の紹介」](http://gihyo.jp/dev/clip/01/groonga/0009)
+今回紹介するのは、CentOS6に限定しない、mroongaの導入対象となる環境ごとに最近の動向や今後の展望を書いた [「隔週連載groonga 第9回　mroongaを広く使ってもらうために大事なこと - mroongaのパッケージング動向の紹介」](http://gihyo.jp/dev/clip/01/groonga/0009)
 です。
 
 簡単にパッケージで導入できるようになっているmroongaですが、それぞれの環境ごとには様々な違いがあります。そこで、Fedora
