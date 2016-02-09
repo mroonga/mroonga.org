@@ -1,7 +1,7 @@
 ---
 layout: post.ja
-title: Mroonga Meetup 2014/06/29 `東京を開催しました！
-description: Mroonga Meetup 2014/06/29 `東京を開催しました！
+title: Mroonga Meetup 2014/06/29 @東京を開催しました！
+description: Mroonga Meetup 2014/06/29 @東京を開催しました！
 publish: false
 ---
 
