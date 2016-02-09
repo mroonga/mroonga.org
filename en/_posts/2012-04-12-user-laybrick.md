@@ -1,0 +1,19 @@
+---
+layout: post.en
+title: Use case - LayBrick beta
+---
+## Use case - LayBrick beta
+
+We introduce a use case of mroonga.
+
+[LayBrick beta](http://laybrick.com/) that is a Twiter, Facebook,
+Instragram client uses mroonga! LayBrick can find out necessary
+information from an intelligence network only for you by an abundant
+search option features it.
+
+See also [LayBrick beta section in users page](/ja/users/#laybrick) .
+Please check LayBrick out!
+
+If you are a mroonga user, please send a mail to groonga at groonga.org
+or send a pull request on
+[GitHub](https://github.com/mroonga/mroonga.org) !
