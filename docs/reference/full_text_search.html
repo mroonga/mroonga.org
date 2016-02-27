@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.7. Full text search &mdash; Mroonga v5.12 documentation</title>
+    <title>5.7. Full text search &mdash; Mroonga v6.00 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.12',
+        VERSION:     '6.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.12 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.00 documentation" href="../index.html" />
     <link rel="up" title="5. Reference" href="../reference.html" />
     <link rel="next" title="5.7.1. Boolean mode" href="full_text_search/boolean_mode.html" />
     <link rel="prev" title="5.6. Limitations" href="limitations.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="limitations.html" title="5.6. Limitations"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -88,20 +88,22 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="full_text_search/boolean_mode.html">5.7.1. Boolean mode</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#mroonga-supports-the-following-qualifiers">5.7.1.1. Mroonga supports the following qualifiers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#examples">5.7.1.2. Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#pragma">5.7.1.3. Pragma</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#d-pragma">5.7.1.3.1. D pragma</a></li>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#w-pragma">5.7.1.3.2. W pragma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#summary">5.7.1.1. Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#usage">5.7.1.2. Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier">5.7.1.3. Qualifier</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#keyword1-keyword2">5.7.1.3.1. <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#keyword1-or-keyword2">5.7.1.3.2. <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#keyword">5.7.1.3.3. <code class="docutils literal"><span class="pre">+KEYWORD</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#boolean-mode-qualifier-minus">5.7.1.3.4. <code class="docutils literal"><span class="pre">-KEYWORD</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#prefix">5.7.1.3.5. <code class="docutils literal"><span class="pre">PREFIX*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#phrase">5.7.1.3.6. <code class="docutils literal"><span class="pre">&quot;PHRASE&quot;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#subexpression">5.7.1.3.7. <code class="docutils literal"><span class="pre">(SUBEXPRESSION...)</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier">5.7.1.4. Qualifier</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#no-operator">5.7.1.4.1. (no operator)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier-plus">5.7.1.4.2. <code class="docutils literal"><span class="pre">+</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier-minus">5.7.1.4.3. <code class="docutils literal"><span class="pre">-</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier-star">5.7.1.4.4. <code class="docutils literal"><span class="pre">*</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier-double-quote">5.7.1.4.5. <code class="docutils literal"><span class="pre">&quot;</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#qualifier-parentheses">5.7.1.4.6. <code class="docutils literal"><span class="pre">()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html#pragma">5.7.1.4. Pragma</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#d-pragma">5.7.1.4.1. <code class="docutils literal"><span class="pre">D</span></code> pragma</a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#w-pragma">5.7.1.4.2. <code class="docutils literal"><span class="pre">W</span></code> pragma</a></li>
+<li class="toctree-l3"><a class="reference internal" href="full_text_search/boolean_mode.html#s-pragma">5.7.1.4.3. <code class="docutils literal"><span class="pre">S</span></code> pragma</a></li>
 </ul>
 </li>
 </ul>
@@ -169,7 +171,7 @@
         <li class="right" >
           <a href="limitations.html" title="5.6. Limitations"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &raquo;</li> 
       </ul>
     </div>

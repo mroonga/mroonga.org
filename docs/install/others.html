@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.7. Others &mdash; Mroonga v5.12 documentation</title>
+    <title>2.7. Others &mdash; Mroonga v6.00 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.12',
+        VERSION:     '6.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.12 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.00 documentation" href="../index.html" />
     <link rel="up" title="2. Install" href="../install.html" />
     <link rel="next" title="3. Upgrade" href="../upgrade.html" />
     <link rel="prev" title="2.6. Fedora" href="fedora.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="fedora.html" title="2.6. Fedora"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. Install</a> &raquo;</li> 
       </ul>
     </div>  
@@ -158,22 +158,22 @@ source and build directory. You need MySQL source and build directory!</p>
 </div>
 <p>Here we assume that you use mysql-5.6.21 and its source code is
 extracted in the following directory:</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/src/mysql-5.6.21
+<div class="highlight-none"><div class="highlight"><pre><span></span>/usr/local/src/mysql-5.6.21
 </pre></div>
 </div>
 <p>Then build in the following directory:</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/build/mysql-5.6.21
+<div class="highlight-none"><div class="highlight"><pre><span></span>/usr/local/build/mysql-5.6.21
 </pre></div>
 </div>
 <p>Here are command lines to build and install MySQL:</p>
-<div class="highlight-none"><div class="highlight"><pre>% cd /usr/local/build/mysql-5.6.21
+<div class="highlight-none"><div class="highlight"><pre><span></span>% cd /usr/local/build/mysql-5.6.21
 % cmake /usr/local/src/mysql-5.6.21
 % make
 % sudo make install
 </pre></div>
 </div>
 <p>And we assume that MySQL is installed in the following directory:</p>
-<div class="highlight-none"><div class="highlight"><pre>/usr/local/mysql
+<div class="highlight-none"><div class="highlight"><pre><span></span>/usr/local/mysql
 </pre></div>
 </div>
 </div>
@@ -182,9 +182,9 @@ extracted in the following directory:</p>
 <h2>2.7.2. Build from source<a class="headerlink" href="#build-from-source" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga uses GNU build system. So the following is the simplest build
 steps:</p>
-<div class="highlight-none"><div class="highlight"><pre>% wget http://packages.groonga.org/source/mroonga/mroonga-5.12.tar.gz
-% tar xvzf mroonga-5.12.tar.gz
-% cd mroonga-5.12
+<div class="highlight-none"><div class="highlight"><pre><span></span>% wget http://packages.groonga.org/source/mroonga/mroonga-6.00.tar.gz
+% tar xvzf mroonga-6.00.tar.gz
+% cd mroonga-6.00
 % ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21 \
     --with-mysql-build=/usr/local/build/mysql-5.6.21 \
@@ -205,7 +205,7 @@ steps:</p>
 <p>You can confirm Mroonga is installed successfully by <code class="docutils literal"><span class="pre">SHOW</span> <span class="pre">ENGINES</span></code>
 SQL. If you can find <code class="docutils literal"><span class="pre">Mroonga</span></code> row, Mroonga is installed
 successfully:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW ENGINES;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW ENGINES;
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
 | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
 +------------+---------+------------------------------------------------------------+--------------+------+------------+
@@ -228,7 +228,7 @@ parameters:</p>
 <h4>2.7.2.1.1. <code class="docutils literal"><span class="pre">--with-mysql-source=PATH</span></code><a class="headerlink" href="#with-mysql-source-path" title="Permalink to this headline">¶</a></h4>
 <p>Specifies the location of MySQL source code.</p>
 <p>This is required parameter:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21 \
     --with-mysql-config=/usr/local/mysql/bin/mysql_config
 </pre></div>
@@ -242,7 +242,7 @@ specify this parameter. If you build MySQL in other directory, you
 need to specify this parameter.</p>
 <p>Here is an example when you build MySQL in
 <code class="docutils literal"><span class="pre">/usr/local/build/mysql-5.6.21</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21 \
     --with-mysql-build=/usr/local/build/mysql-5.6.21 \
     --with-mysql-config=/usr/local/mysql/bin/mysql_config
@@ -256,7 +256,7 @@ need to specify this parameter.</p>
 need to specify this parameter. For example, if <code class="docutils literal"><span class="pre">mysql_config</span></code>
 command exists at <code class="docutils literal"><span class="pre">/usr/bin/mysql_config</span></code>, you don't need to specify
 this parameter:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21
 </pre></div>
 </div>
@@ -267,7 +267,7 @@ this parameter:</p>
 my.cnf.</p>
 <p>The default is <code class="docutils literal"><span class="pre">TokenBigram</span></code>.</p>
 <p>Here is an example to use <code class="docutils literal"><span class="pre">TokenMecab</span></code> as the default parser:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21 \
     --with-mysql-config=/usr/local/mysql/bin/mysql_config \
     --with-default-parser=TokenMecab
@@ -285,7 +285,7 @@ used for installing Mroonga is installed to
 <code class="docutils literal"><span class="pre">/usr/local/share/mroonga/install.sql</span></code>.</p>
 <p>Here is an example that installs Mroonga into <code class="docutils literal"><span class="pre">~/local</span></code> for an user
 use instead of system wide use:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --prefix=$HOME/local \
     --with-mysql-source=$HOME/local/src/mysql-5.6.21 \
     --with-mysql-config=$HOME/local/mysql/bin/mysql_config
@@ -300,7 +300,7 @@ doesn't install Groonga into the standard location.</p>
 <code class="docutils literal"><span class="pre">/usr/lib</span></code>, you need to specify its location by
 <code class="docutils literal"><span class="pre">PKG_CONFIG_PATH</span></code>. For example, if Groonga is installed with
 <code class="docutils literal"><span class="pre">--prefix=$HOME/local</span></code>, use the following command line:</p>
-<div class="highlight-none"><div class="highlight"><pre>./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>./configure \
   PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig \
   --with-mysql-source=/usr/local/src/mysql-5.6.21 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
@@ -311,12 +311,12 @@ doesn't install Groonga into the standard location.</p>
 <div class="section" id="make">
 <h3>2.7.2.2. <code class="docutils literal"><span class="pre">make</span></code><a class="headerlink" href="#make" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">configure</span></code> is succeeded, you can build Mroonga by <code class="docutils literal"><span class="pre">make</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre>% make
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make
 </pre></div>
 </div>
 <p>If you have multi cores CPU, you can make faster by using <code class="docutils literal"><span class="pre">-j</span></code>
 option. If you have 4 cores CPU, it's good for using <code class="docutils literal"><span class="pre">-j4</span></code> option:</p>
-<div class="highlight-none"><div class="highlight"><pre>% make -j4
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make -j4
 </pre></div>
 </div>
 <p>If you get some errors by <code class="docutils literal"><span class="pre">make</span></code>, please report them to us:
@@ -325,14 +325,14 @@ option. If you have 4 cores CPU, it's good for using <code class="docutils liter
 <div class="section" id="make-install">
 <h3>2.7.2.3. <code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code><a class="headerlink" href="#make-install" title="Permalink to this headline">¶</a></h3>
 <p>Now, you can install built Mroonga!:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo make install
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo make install
 </pre></div>
 </div>
 <p>If you have write permission for <code class="docutils literal"><span class="pre">${PREFIX}</span></code> and the plugin
 directory of MySQL, you don't need to use
 <code class="docutils literal"><span class="pre">sudo</span></code>. e.g. <code class="docutils literal"><span class="pre">--prefix=$HOME/local</span></code> case. In this case, use <code class="docutils literal"><span class="pre">make</span>
 <span class="pre">install</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre>% make install
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make install
 </pre></div>
 </div>
 </div>
@@ -343,7 +343,7 @@ directory of MySQL, you don't need to use
 <code class="docutils literal"><span class="pre">${PREFIX}/share/mroonga/install.sql</span></code>.</p>
 <p>Here is an example when you specify <code class="docutils literal"><span class="pre">--prefix=$HOME/local</span></code> to
 <code class="docutils literal"><span class="pre">configure</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u &lt; $HOME/local/share/mroonga/install.sql
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u &lt; $HOME/local/share/mroonga/install.sql
 </pre></div>
 </div>
 </div>
@@ -426,7 +426,7 @@ directory of MySQL, you don't need to use
         <li class="right" >
           <a href="fedora.html" title="2.6. Fedora"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" >2. Install</a> &raquo;</li> 
       </ul>
     </div>

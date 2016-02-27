@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.7.1. Boolean mode &mdash; Mroonga v5.12 documentation</title>
+    <title>5.7.1. Boolean mode &mdash; Mroonga v6.00 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '5.12',
+        VERSION:     '6.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.12 documentation" href="../../index.html" />
+    <link rel="top" title="Mroonga v6.00 documentation" href="../../index.html" />
     <link rel="up" title="5.7. Full text search" href="../full_text_search.html" />
     <link rel="next" title="5.7.2. Search and Scoring in Mroonga" href="scoring.html" />
     <link rel="prev" title="5.7. Full text search" href="../full_text_search.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="../full_text_search.html" title="5.7. Full text search"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. Full text search</a> &raquo;</li> 
       </ul>
@@ -86,295 +86,399 @@
             
   <div class="section" id="boolean-mode">
 <h1>5.7.1. Boolean mode<a class="headerlink" href="#boolean-mode" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>5.7.1.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga can perform boolean full text searches using the <code class="docutils literal"><span class="pre">IN</span> <span class="pre">BOOLEAN</span>
-<span class="pre">MODE</span></code> modifier.</p>
-<p>You can use <a class="reference external" href="https://dev.mysql.com/doc/refman/5.6/en/fulltext-boolean.html">qualifiers which MySQL support</a> and
-Mroonga original pragmas in boolean full text search query.</p>
-<p>These qualifiers and pragmas can change the relative rank of search results.</p>
-<p>In the case of a search string not using neither a qualifier nor a pragma, the search results that contain the search string will be rated higher.</p>
-<div class="section" id="mroonga-supports-the-following-qualifiers">
-<h2>5.7.1.1. Mroonga supports the following qualifiers<a class="headerlink" href="#mroonga-supports-the-following-qualifiers" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Qualifier</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">+</span></code></td>
-<td>A leading plus sign indicates that this word must be present in each row that is returned.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-</span></code></td>
-<td>A leading minus sign indicates that this word must not be present in any of the rows that are returned.</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">*</span></code></td>
-<td>The asterisk serves as the truncation (or wildcard) operator.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&quot;</span></code></td>
-<td>A phrase that is enclosed within double quote ( <code class="docutils literal"><span class="pre">&quot;</span></code> ) characters matches only rows that contain the phrase literally, as it was typed.</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">()</span></code></td>
-<td>Parentheses group words into subexpressions.</td>
-</tr>
-</tbody>
-</table>
+<span class="pre">MODE</span></code> modifier for <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT ... WHERE MATCH(column) AGAINST (&#39;...&#39; IN BOOLEAN MODE);
+</pre></div>
 </div>
-<div class="section" id="examples">
-<h2>5.7.1.2. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p>We show you how to rank in boolean mode using the following schema and data.</p>
-<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE books (
+<p>Normally, <code class="docutils literal"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> is suitable rather than the default <code class="docutils literal"><span class="pre">IN</span>
+<span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></code>. Because <code class="docutils literal"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> is similar to
+query in Web search engine. Most people familiar with query in Web
+search engine.</p>
+<p>You can use <a class="reference external" href="https://dev.mysql.com/doc/refman/5.7/en/fulltext-boolean.html">qualifiers which MySQL support</a> and
+Mroonga original pragmas in boolean full text search query.</p>
+<p>These qualifiers and pragmas can change the relative rank of search
+results.</p>
+<p>In the case of a search string not using neither a qualifier nor a
+pragma, the search results that contain the search string will be
+rated higher.</p>
+</div>
+<div class="section" id="usage">
+<h2>5.7.1.2. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here are schema and data to show examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>CREATE TABLE books (
   `id` INTEGER AUTO_INCREMENT,
   `title` text,
   PRIMARY KEY(`id`),
   FULLTEXT INDEX title_index (title)
-) ENGINE=mroonga default charset utf8;
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO books (title) VALUES (
-  &#39;MySQL&#39;
-);
-
-INSERT INTO books (title) VALUES (
-  &#39;MySQL Groonga&#39;
-);
-
-INSERT INTO books (title) VALUES (
-  &#39;MySQL Groonga Mroonga&#39;
-);
+INSERT INTO books (title) VALUES (&#39;Professional MySQL&#39;);
+INSERT INTO books (title) VALUES (&#39;MySQL for Professional&#39;);
+INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 </pre></div>
+</div>
+</div>
+<div class="section" id="qualifier">
+<span id="boolean-mode-qualifier"></span><h2>5.7.1.3. Qualifier<a class="headerlink" href="#qualifier" title="Permalink to this headline">¶</a></h2>
+<p>Here are supported qualifiers.</p>
+<div class="section" id="keyword1-keyword2">
+<span id="boolean-mode-qualifier-none"></span><h3>5.7.1.3.1. <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-keyword2" title="Permalink to this headline">¶</a></h3>
+<p>No operator between keywords such as <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code> indicates
+that one of keywords must be present in each row that is returned.</p>
+<p><code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">for</span></code> query means that <code class="docutils literal"><span class="pre">Mroonga</span></code> or <code class="docutils literal"><span class="pre">for</span></code> must be
+present:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;Mroonga for&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | Mroonga = MySQL + Groonga |
+-- | MySQL for Professional    |
+-- +---------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="keyword1-or-keyword2">
+<span id="boolean-mode-qualifier-or"></span><h3>5.7.1.3.2. <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-or-keyword2" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">OR</span></code> (must be uppercase) indicates that left hand side keyword or
+right hand side keyword must be present in each row that is returned.</p>
+<p><code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> query means that <code class="docutils literal"><span class="pre">Mroonga</span></code> or <code class="docutils literal"><span class="pre">for</span></code> must be
+present:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;Mroonga OR for&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | Mroonga = MySQL + Groonga |
+-- | MySQL for Professional    |
+-- +---------------------------+
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">OR</span></code> is the default operator. You can omit it. Both <code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">OR</span>
+<span class="pre">for</span></code> and <code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">for</span></code> return the same result.</p>
+</div>
+<div class="section" id="keyword">
+<span id="boolean-mode-qualifier-plus"></span><h3>5.7.1.3.3. <code class="docutils literal"><span class="pre">+KEYWORD</span></code><a class="headerlink" href="#keyword" title="Permalink to this headline">¶</a></h3>
+<p>A leading plus sign indicates that this word must be present in each
+row that is returned.</p>
+<p><code class="docutils literal"><span class="pre">+MySQL</span> <span class="pre">+Mroonga</span></code> query means that both <code class="docutils literal"><span class="pre">MySQL</span></code> and <code class="docutils literal"><span class="pre">Mroonga</span></code>
+must be present:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;+MySQL +Groonga&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | Mroonga = MySQL + Groonga |
+-- +---------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="boolean-mode-qualifier-minus">
+<span id="id1"></span><h3>5.7.1.3.4. <code class="docutils literal"><span class="pre">-KEYWORD</span></code><a class="headerlink" href="#boolean-mode-qualifier-minus" title="Permalink to this headline">¶</a></h3>
+<p>A leading minus sign indicates that this word must not be present in
+any of the rows that are returned.</p>
+<p><code class="docutils literal"><span class="pre">+MySQL</span> <span class="pre">-Mroonga</span></code> query means that <code class="docutils literal"><span class="pre">MySQL</span></code> must be present but
+<code class="docutils literal"><span class="pre">Mroonga</span></code> must not be present:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;+MySQL -Mroonga&#39; IN BOOLEAN MODE);
+-- +------------------------+
+-- | title                  |
+-- +------------------------+
+-- | Professional MySQL     |
+-- | MySQL for Professional |
+-- +------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="prefix">
+<span id="boolean-mode-qualifier-asterisk"></span><h3>5.7.1.3.5. <code class="docutils literal"><span class="pre">PREFIX*</span></code><a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+<p>A following asterisk indicates that all words starting with this word
+must be present in any of the rows that are returned.</p>
+<p><code class="docutils literal"><span class="pre">+M*</span></code> query means that words starting <code class="docutils literal"><span class="pre">M</span></code> (<code class="docutils literal"><span class="pre">MySQL</span></code> and
+<code class="docutils literal"><span class="pre">Mroonga</span></code> in this case) must be present:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;+M*&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | Mroonga = MySQL + Groonga |
+-- | Professional MySQL        |
+-- | MySQL for Professional    |
+-- +---------------------------+
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To be precise, &quot;word&quot; may not be &quot;word&quot; you think. &quot;word&quot; in this
+context is &quot;token&quot;. &quot;token&quot; may not be word. For example, tokens in
+&quot;It's&quot; are &quot;It&quot;, &quot;'&quot; and &quot;s&quot;.</p>
+<p>You can confirm token by <a class="reference internal" href="../udf/mroonga_command.html"><em>mroonga_command()</em></a> and
+<a class="reference external" href="http://groonga.org/docs/reference/commands/tokenize.html">tokenize</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT mroonga_command(&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;);
+-- +--------------------------------------------------------------------------+
+-- | mroonga_command(&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;) |
+-- +--------------------------------------------------------------------------+
+-- | [                                                                        |
+-- |   {                                                                      |
+-- |     &quot;value&quot;:&quot;IT&quot;,                                                        |
+-- |     &quot;position&quot;:0,                                                        |
+-- |     &quot;force_prefix&quot;:false                                                 |
+-- |   },                                                                     |
+-- |   {                                                                      |
+-- |     &quot;value&quot;:&quot;&#39;&quot;,                                                         |
+-- |     &quot;position&quot;:1,                                                        |
+-- |     &quot;force_prefix&quot;:false                                                 |
+-- |   },                                                                     |
+-- |   {                                                                      |
+-- |     &quot;value&quot;:&quot;S&quot;,                                                         |
+-- |     &quot;position&quot;:2,                                                        |
+-- |     &quot;force_prefix&quot;:false                                                 |
+-- |   }                                                                      |
+-- | ]                                                                        |
+-- +--------------------------------------------------------------------------+
+</pre></div>
+</div>
+<p class="last">JSON value in the above result is formatted by hand.</p>
+</div>
+</div>
+<div class="section" id="phrase">
+<span id="boolean-mode-qualifier-double-quote"></span><h3>5.7.1.3.6. <code class="docutils literal"><span class="pre">&quot;PHRASE&quot;</span></code><a class="headerlink" href="#phrase" title="Permalink to this headline">¶</a></h3>
+<p>Quoting phrase by double quote (<code class="docutils literal"><span class="pre">&quot;</span></code>) indicates that the phrase must
+be present in any of the rows that are returned.</p>
+<p><code class="docutils literal"><span class="pre">+&quot;Professional</span> <span class="pre">MySQL&quot;</span></code> query means that <code class="docutils literal"><span class="pre">Professional</span> <span class="pre">MySQL</span></code>
+phrase must be present. The query doesn't match to <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">for</span>
+<span class="pre">Profession</span></code>. <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> includes both <code class="docutils literal"><span class="pre">MySQL</span></code> and
+<code class="docutils literal"><span class="pre">Professional</span></code> words but doesn't include <code class="docutils literal"><span class="pre">Professional</span> <span class="pre">MySQL</span></code>
+phrase:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;+&quot;Professional MySQL&quot;&#39; IN BOOLEAN MODE);
+-- +--------------------+
+-- | title              |
+-- +--------------------+
+-- | Professional MySQL |
+-- +--------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="subexpression">
+<span id="boolean-mode-qualifier-parentheses"></span><h3>5.7.1.3.7. <code class="docutils literal"><span class="pre">(SUBEXPRESSION...)</span></code><a class="headerlink" href="#subexpression" title="Permalink to this headline">¶</a></h3>
+<p>Parentheses groups expressions.</p>
+<p><code class="docutils literal"><span class="pre">+(Groonga</span> <span class="pre">OR</span> <span class="pre">Mroonga)</span> <span class="pre">+MySQL</span></code> query means the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">Groonga</span></code> or <code class="docutils literal"><span class="pre">Mroonga</span></code> must be present.</li>
+<li><code class="docutils literal"><span class="pre">MySQL</span></code> must be present.</li>
+</ul>
+</div></blockquote>
+<p>Here is the result of the query:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+  FROM books
+ WHERE MATCH(title) AGAINST(&#39;+(Groonga OR Mroonga) +MySQL&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | Mroonga = MySQL + Groonga |
+-- +---------------------------+
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="pragma">
-<span id="id1"></span><h2>5.7.1.3. Pragma<a class="headerlink" href="#pragma" title="Permalink to this headline">¶</a></h2>
-<p>You can embed pragma at the head of query for specifying how to execute.</p>
-<p>The pragma must exist in the beginning of a query. (Don't put a blank into a head of the query)</p>
+<span id="boolean-mode-pragma"></span><h2>5.7.1.4. Pragma<a class="headerlink" href="#pragma" title="Permalink to this headline">¶</a></h2>
+<p>Pragma is metadata for query. You can change how to parse query by
+specifying pragma.</p>
+<p>You can embed pragma at the head of query for specifying how to
+execute.</p>
+<p>Pragma must exist in the beginning of a query. Don't put a blank into
+a head of the query. Pragma starts with <code class="docutils literal"><span class="pre">*</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT MATCH AGAINST(&#39;*PRAGMA ...&#39; IN BOOLEAN MODE);
+</pre></div>
+</div>
+<p>You can specify multiple pragmas:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT MATCH AGAINST(&#39;*PRAGMA1PRAGMA2 ...&#39; IN BOOLEAN MODE);
+</pre></div>
+</div>
+<p>Here are available pragmas.</p>
 <div class="section" id="d-pragma">
-<span id="pragma-d"></span><h3>5.7.1.3.1. D pragma<a class="headerlink" href="#d-pragma" title="Permalink to this headline">¶</a></h3>
-<p>D pragma is a form for specifying which operation should be execute when an individual operator is omitted.</p>
-<p>The syntax of D pragma is as follows. You can choose one of the three operators, either <code class="docutils literal"><span class="pre">OR</span></code>, <code class="docutils literal"><span class="pre">+</span></code>, or <code class="docutils literal"><span class="pre">-</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre>*D[operator]
+<span id="boolean-mode-pragma-d"></span><h3>5.7.1.4.1. <code class="docutils literal"><span class="pre">D</span></code> pragma<a class="headerlink" href="#d-pragma" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">D</span></code> pragma indicates the default operator. It's used when an
+individual operator is omitted.</p>
+<p>Here is the <code class="docutils literal"><span class="pre">D</span></code> pragma syntax. You can choose one of <code class="docutils literal"><span class="pre">OR</span></code>, <code class="docutils literal"><span class="pre">+</span></code>
+or <code class="docutils literal"><span class="pre">-</span></code> as <code class="docutils literal"><span class="pre">${OPERATOR}</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>*D${OPERATOR}
 </pre></div>
 </div>
 <div class="section" id="dor">
-<span id="pragma-d-or"></span><h4>5.7.1.3.1.1. <code class="docutils literal"><span class="pre">*DOR</span></code><a class="headerlink" href="#dor" title="Permalink to this headline">¶</a></h4>
-<p>We use <code class="docutils literal"><span class="pre">*DOR</span> <span class="pre">Groonga</span> <span class="pre">Mroonga</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;*DOR Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that contains <code class="docutils literal"><span class="pre">Groonga</span></code> or <code class="docutils literal"><span class="pre">Mroonga</span></code>. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     1 |
-| MySQL Groonga Mroonga |     2 |
-+-----------------------+-------+
-3 rows in set (0.00 sec)
+<span id="boolean-mode-pragma-d-or"></span><h4>5.7.1.4.1.1. <code class="docutils literal"><span class="pre">DOR</span></code><a class="headerlink" href="#dor" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">DOR</span></code> means that &quot;or&quot; is used as the default operator.</p>
+<p>This is the default.</p>
+<p>Here is an example to use <code class="docutils literal"><span class="pre">DOR</span></code>. <code class="docutils literal"><span class="pre">'*DOR</span> <span class="pre">for</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> returns records that includes <code class="docutils literal"><span class="pre">for</span></code> or <code class="docutils literal"><span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+ FROM books
+WHERE MATCH (title) AGAINST(&#39;*DOR for Mroonga&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | MySQL for Professional    |
+-- | Mroonga = MySQL + Groonga |
+-- +---------------------------+
 </pre></div>
 </div>
 </div>
 <div class="section" id="d">
-<span id="pragma-d-plus"></span><h4>5.7.1.3.1.2. <code class="docutils literal"><span class="pre">*D+</span></code><a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h4>
-<p>We use a query <code class="docutils literal"><span class="pre">*D+</span> <span class="pre">Groonga</span> <span class="pre">Mroonga</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;*D+ Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+<span id="boolean-mode-pragma-d-plus"></span><h4>5.7.1.4.1.2. <code class="docutils literal"><span class="pre">D+</span></code><a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">D+</span></code> means that &quot;and&quot; is used as the default operator. It's similar
+to query in Web search engine.</p>
+<p>Here is an example to use <code class="docutils literal"><span class="pre">D+</span></code>. <code class="docutils literal"><span class="pre">'*D+</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> returns records that includes <code class="docutils literal"><span class="pre">MySQL</span></code> and <code class="docutils literal"><span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+ FROM books
+WHERE MATCH (title) AGAINST(&#39;*D+ MySQL Mroonga&#39; IN BOOLEAN MODE);
+-- +---------------------------+
+-- | title                     |
+-- +---------------------------+
+-- | Mroonga = MySQL + Groonga |
+-- +---------------------------+
 </pre></div>
 </div>
-<p>The search result is a row that contains <code class="docutils literal"><span class="pre">Groonga</span></code> and <code class="docutils literal"><span class="pre">Mroonga</span></code>. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     0 |
-| MySQL Groonga Mroonga |     2 |
-+-----------------------+-------+
-3 rows in set (0.01 sec)
-</pre></div>
 </div>
-</div>
-<div class="section" id="pragma-d-minus">
-<span id="id2"></span><h4>5.7.1.3.1.3. <code class="docutils literal"><span class="pre">*D-</span></code><a class="headerlink" href="#pragma-d-minus" title="Permalink to this headline">¶</a></h4>
-<p>We use a query <code class="docutils literal"><span class="pre">*D-</span> <span class="pre">Groonga</span> <span class="pre">Mroonga</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;*D- Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that contains <code class="docutils literal"><span class="pre">Groonga</span></code>, and does not contain <code class="docutils literal"><span class="pre">Mroonga</span></code>. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     1 |
-| MySQL Groonga Mroonga |     0 |
-+-----------------------+-------+
-3 rows in set (0.00 sec)
+<div class="section" id="boolean-mode-pragma-d-minus">
+<span id="id2"></span><h4>5.7.1.4.1.3. <code class="docutils literal"><span class="pre">D-</span></code><a class="headerlink" href="#boolean-mode-pragma-d-minus" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">D-</span></code> means that &quot;not&quot; is used as the default operator.</p>
+<p>Here is an example to use <code class="docutils literal"><span class="pre">D-</span></code>. <code class="docutils literal"><span class="pre">'*D-</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> returns records that includes <code class="docutils literal"><span class="pre">MySQL</span></code> but doesn't include
+<code class="docutils literal"><span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title
+ FROM books
+WHERE MATCH (title) AGAINST(&#39;*D- MySQL Mroonga&#39; IN BOOLEAN MODE);
+-- +------------------------+
+-- | title                  |
+-- +------------------------+
+-- | Professional MySQL     |
+-- | MySQL for Professional |
+-- +---------------------------+
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="w-pragma">
-<span id="pragma-w"></span><h3>5.7.1.3.2. W pragma<a class="headerlink" href="#w-pragma" title="Permalink to this headline">¶</a></h3>
-<p>W pragma is a form for specifying target section and its weight when using multiple-column index.</p>
-<p>You can specify the multiple of the weight for every section. The default value of the weight is set to 1.</p>
-<p>The weight is omissible, and a negative value is allowed.</p>
-<p>The syntax of W pragma is as follows. A section number is begun not from 0 but from 1.</p>
-<div class="highlight-python"><div class="highlight"><pre>*W[number1[:weight1]][,number2[:weight2]]...
+<span id="boolean-mode-pragma-w"></span><h3>5.7.1.4.2. <code class="docutils literal"><span class="pre">W</span></code> pragma<a class="headerlink" href="#w-pragma" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">W</span></code> pragma indicates target section and its weight for multiple
+column index.</p>
+<p>You can specify different weight for each section. The default weight
+is <code class="docutils literal"><span class="pre">1</span></code>. <code class="docutils literal"><span class="pre">1</span></code> means that no weight.</p>
+<p>Here is the <code class="docutils literal"><span class="pre">W</span></code> pragma syntax. <code class="docutils literal"><span class="pre">${SECTION}</span></code> is a number that is
+begun not from 0 but from 1. <code class="docutils literal"><span class="pre">${WEIGHT}</span></code> is omitable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>*W[${SECTION1}[:${WEIGHT1}]][,${SECTION2}[:${WEIGHT2}]][,...]
 </pre></div>
 </div>
-<p>We show you how to rank in multiple-column index using the following schema and data.:</p>
-<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE books (
+<p>Here are schema and data to show examples. You need to create a
+multiple column index to use <code class="docutils literal"><span class="pre">W</span></code> pragma:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>CREATE TABLE memos (
   `id` INTEGER AUTO_INCREMENT,
   `title` text,
-  `comment` text,
+  `content` text,
   PRIMARY KEY(`id`),
-  FULLTEXT INDEX content_index (title, comment)
-) engine=mroonga default charset utf8;
+  FULLTEXT INDEX text_index (title, content)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO books (title, comment) VALUES (
-  &#39;MySQL&#39;, &#39;MySQL Introduction&#39;
+INSERT INTO memos (title, content) VALUES (
+  &#39;MySQL&#39;, &#39;MySQL is a RDBMS.&#39;
 );
-
-INSERT INTO books (title, comment) VALUES (
-  &#39;MySQL Groonga&#39;, &#39;Groonga Introduction&#39;
+INSERT INTO memos (title, content) VALUES (
+  &#39;Groonga&#39;, &#39;Groonga is a full text search engine.&#39;
 );
-
-INSERT INTO books (title, comment) VALUES (
-  &#39;MySQL Groonga Mroonga&#39;, &#39;Mroonga Introduction&#39;
+INSERT INTO memos (title, content) VALUES (
+  &#39;Mroonga&#39;, &#39;Mroonga is a storage engine for MySQL based on Groonga.&#39;
 );
 </pre></div>
 </div>
-<p>Consider the case that 10 weight is given to <code class="docutils literal"><span class="pre">title</span></code> column, and 1 weight is given to <code class="docutils literal"><span class="pre">comment</span></code> column, and use <code class="docutils literal"><span class="pre">Groonga</span></code> to search.</p>
-<p>Here is the query such a case:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, comment, MATCH (title,comment) AGAINST(&#39;*W1:10,2:1 +Groonga&#39; IN BOOLEAN MODE) AS score FROM books;
+<p>Here is an example to show weight. <code class="docutils literal"><span class="pre">title</span></code> column has <code class="docutils literal"><span class="pre">10</span></code> weight
+and <code class="docutils literal"><span class="pre">content</span></code> columns has <code class="docutils literal"><span class="pre">1</span></code> weight. It means that keyword in
+<code class="docutils literal"><span class="pre">title</span></code> column is 10 times important than keyword in <code class="docutils literal"><span class="pre">content</span></code>
+column:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT title,
+       content,
+       MATCH (title, content) AGAINST(&#39;*W1:10,2:1 +Groonga&#39; IN BOOLEAN MODE) AS score
+  FROM memos;
+-- +---------+--------------------------------------------------------+-------+
+-- | title   | content                                                | score |
+-- +---------+--------------------------------------------------------+-------+
+-- | MySQL   | MySQL is a RDBMS.                                      |     0 |
+-- | Groonga | Groonga is a full text search engine.                  |    11 |
+-- | Mroonga | Mroonga is a storage engine for MySQL based on Groonga |     1 |
+-- +---------+--------------------------------------------------------+-------+
 </pre></div>
 </div>
-<p>The search result is a row that contains &quot;Groonga&quot;. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+----------------------+-------+
-| title                 | comment              | score |
-+-----------------------+----------------------+-------+
-| MySQL                 | MySQL Introduction   |     0 |
-| MySQL Groonga         | Groonga Introduction |    11 |
-| MySQL Groonga Mroonga | Mroonga Introduction |    10 |
-+-----------------------+----------------------+-------+
-3 rows in set (0.01 sec)
+<p>The score of the first record is <code class="docutils literal"><span class="pre">0</span></code>. Because it doesn't have any
+<code class="docutils literal"><span class="pre">Groonga</span></code> in both <code class="docutils literal"><span class="pre">title</span></code> column and <code class="docutils literal"><span class="pre">content</span></code> column.</p>
+<p>The score of the second record is <code class="docutils literal"><span class="pre">11</span></code>. Because it has <code class="docutils literal"><span class="pre">Groonga</span></code> in
+both <code class="docutils literal"><span class="pre">title</span></code> column and <code class="docutils literal"><span class="pre">content</span></code> column. <code class="docutils literal"><span class="pre">Groonga</span></code> in <code class="docutils literal"><span class="pre">title</span></code>
+column has score <code class="docutils literal"><span class="pre">10</span></code>. <code class="docutils literal"><span class="pre">Groonga</span></code> in <code class="docutils literal"><span class="pre">content</span></code> column has score
+<code class="docutils literal"><span class="pre">1</span></code>. <code class="docutils literal"><span class="pre">11</span></code> is sum of them.</p>
+<p>The score of the third record is <code class="docutils literal"><span class="pre">1</span></code>. Because it has <code class="docutils literal"><span class="pre">Groonga</span></code> in
+only <code class="docutils literal"><span class="pre">content</span></code> column. <code class="docutils literal"><span class="pre">`Groonga</span></code> in <code class="docutils literal"><span class="pre">content</span></code> column has score
+<code class="docutils literal"><span class="pre">1</span></code>. So the score of the record is <code class="docutils literal"><span class="pre">1</span></code>.</p>
+</div>
+<div class="section" id="s-pragma">
+<span id="boolean-mode-pragma-s"></span><h3>5.7.1.4.3. <code class="docutils literal"><span class="pre">S</span></code> pragma<a class="headerlink" href="#s-pragma" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">S</span></code> pragma indicates syntax of the query.</p>
+<p>Here is a syntax of <code class="docutils literal"><span class="pre">S</span></code> pragma:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>*S${SYNTAX}
 </pre></div>
 </div>
-<p>The row score is set to 11 that the <code class="docutils literal"><span class="pre">title</span></code> and <code class="docutils literal"><span class="pre">comment</span></code> column contain <code class="docutils literal"><span class="pre">Groonga</span></code>, and the row score is set to 10 that only <code class="docutils literal"><span class="pre">title</span></code> column contains <code class="docutils literal"><span class="pre">Groonga</span></code>.</p>
-</div>
-</div>
-<div class="section" id="qualifier">
-<span id="id3"></span><h2>5.7.1.4. Qualifier<a class="headerlink" href="#qualifier" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="no-operator">
-<span id="qualifier-none"></span><h3>5.7.1.4.1. (no operator)<a class="headerlink" href="#no-operator" title="Permalink to this headline">¶</a></h3>
-<p>We use a query <code class="docutils literal"><span class="pre">Groonga</span> <span class="pre">Mroonga</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;Groonga Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
+<p>Here is a list of available <code class="docutils literal"><span class="pre">syntax</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">S</span></code>: <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/script_syntax.html">Script syntax</a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="ss">
+<span id="boolean-mode-pragma-ss"></span><h4>5.7.1.4.3.1. <code class="docutils literal"><span class="pre">*SS</span></code><a class="headerlink" href="#ss" title="Permalink to this headline">¶</a></h4>
+<p>You can use <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/script_syntax.html">script syntax</a> by
+<code class="docutils literal"><span class="pre">*SS</span></code> pragma. You can use full Groonga search features in script
+syntax.</p>
+<p>Here are schema and data to show example of script syntax usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>CREATE TABLE comments (
+  `content` text,
+  FULLTEXT INDEX content_index (content)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO comments VALUES (
+  &#39;A student started to use Mroonga storage engine. It is very fast!&#39;
+);
+INSERT INTO comments VALUES (
+  &#39;Another student also started to use Mroonga storage engine. It is very fast!&#39;
+);
 </pre></div>
 </div>
-<p>Rows that contain even one word will be ranked higher.</p>
-<p>A row score is set to 1 when the row contains a single word.</p>
-<p>A row score is set to 2 when the row contains both words.</p>
-<p>Here is the search result:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     1 |
-| MySQL Groonga Mroonga |     2 |
-+-----------------------+-------+
-3 rows in set (0.00 sec)
+<p>Here is an example to use <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/script_syntax.html#near-search-operator">near search</a> by script syntax:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT content,
+       MATCH (content) AGAINST(&#39;*SS content *N &quot;student fast&quot;&#39; IN BOOLEAN MODE) AS score
+  FROM comments;
+-- +------------------------------------------------------------------------------+-------+
+-- | content                                                                      | score |
+-- +------------------------------------------------------------------------------+-------+
+-- | A student started to use Mroonga storage engine. It is very fast!            |     1 |
+-- | Another student also started to use Mroonga storage engine. It is very fast! |     0 |
+-- +------------------------------------------------------------------------------+-------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="qualifier-plus">
-<span id="id4"></span><h3>5.7.1.4.2. <code class="docutils literal"><span class="pre">+</span></code><a class="headerlink" href="#qualifier-plus" title="Permalink to this headline">¶</a></h3>
-<p>We use a query <code class="docutils literal"><span class="pre">+Groonga</span> <span class="pre">+Mroonga</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;+Groonga +Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that contains both words. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     0 |
-| MySQL Groonga Mroonga |     2 |
-+-----------------------+-------+
-3 rows in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="qualifier-minus">
-<span id="id5"></span><h3>5.7.1.4.3. <code class="docutils literal"><span class="pre">-</span></code><a class="headerlink" href="#qualifier-minus" title="Permalink to this headline">¶</a></h3>
-<p>We use a query <code class="docutils literal"><span class="pre">-Groonga</span> <span class="pre">-Mroonga</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;-Groonga -Mroonga&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that does not contain both words. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     1 |
-| MySQL Groonga         |     0 |
-| MySQL Groonga Mroonga |     0 |
-+-----------------------+-------+
-3 rows in set (0.01 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="qualifier-star">
-<span id="id6"></span><h3>5.7.1.4.4. <code class="docutils literal"><span class="pre">*</span></code><a class="headerlink" href="#qualifier-star" title="Permalink to this headline">¶</a></h3>
-<p>We use a query <code class="docutils literal"><span class="pre">M*</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;M*&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that contains <code class="docutils literal"><span class="pre">MySQL</span></code> or <code class="docutils literal"><span class="pre">Mroonga</span></code>. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     1 |
-| MySQL Groonga         |     1 |
-| MySQL Groonga Mroonga |     2 |
-+-----------------------+-------+
-3 rows in set (0.01 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="qualifier-double-quote">
-<span id="id7"></span><h3>5.7.1.4.5. <code class="docutils literal"><span class="pre">&quot;</span></code><a class="headerlink" href="#qualifier-double-quote" title="Permalink to this headline">¶</a></h3>
-<p>We use a query <code class="docutils literal"><span class="pre">&quot;Groonga</span> <span class="pre">Mroonga&quot;</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;&quot;Groonga Mroonga&quot;&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that contains a phrase that matches <code class="docutils literal"><span class="pre">Groonga</span> <span class="pre">Mroonga</span></code>. The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     0 |
-| MySQL Groonga Mroonga |     1 |
-+-----------------------+-------+
-3 rows in set (0.00 sec)
-</pre></div>
-</div>
-</div>
-<div class="section" id="qualifier-parentheses">
-<span id="id8"></span><h3>5.7.1.4.6. <code class="docutils literal"><span class="pre">()</span></code><a class="headerlink" href="#qualifier-parentheses" title="Permalink to this headline">¶</a></h3>
-<p>We use a query <code class="docutils literal"><span class="pre">+MySQL</span> <span class="pre">+(Groonga</span> <span class="pre">Mroonga)</span></code> to search.:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title, MATCH (title) AGAINST(&#39;+MySQL +(Groonga Mroonga)&#39; IN BOOLEAN MODE) AS score FROM books;
-</pre></div>
-</div>
-<p>The search result is a row that contains <code class="docutils literal"><span class="pre">MySQL</span></code> and <code class="docutils literal"><span class="pre">Groonga</span></code>, or <code class="docutils literal"><span class="pre">MySQL</span></code> and <code class="docutils literal"><span class="pre">Mroonga</span></code>, or <code class="docutils literal"><span class="pre">MySQL</span></code> and <code class="docutils literal"><span class="pre">Groonga</span></code> and <code class="docutils literal"><span class="pre">Mroonga</span></code>.</p>
-<p>The row score is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>+-----------------------+-------+
-| title                 | score |
-+-----------------------+-------+
-| MySQL                 |     0 |
-| MySQL Groonga         |     2 |
-| MySQL Groonga Mroonga |     3 |
-+-----------------------+-------+
-3 rows in set (0.01 sec)
-</pre></div>
+<p>Near search matches only when there are 10 or less words between
+specified words (<code class="docutils literal"><span class="pre">student</span></code> and <code class="docutils literal"><span class="pre">fast</span></code> in this case). So <code class="docutils literal"><span class="pre">student</span>
+<span class="pre">started</span> <span class="pre">...(8</span> <span class="pre">words)...</span> <span class="pre">very</span> <span class="pre">fast</span></code> is matched but <code class="docutils literal"><span class="pre">student</span> <span class="pre">also</span>
+<span class="pre">started</span> <span class="pre">...(8</span> <span class="pre">words)...</span> <span class="pre">very</span> <span class="pre">fast</span></code> isn't matched.</p>
+<p>You can also use other advanced features.</p>
 </div>
 </div>
 </div>
@@ -389,25 +493,30 @@ INSERT INTO books (title, comment) VALUES (
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">5.7.1. Boolean mode</a><ul>
-<li><a class="reference internal" href="#mroonga-supports-the-following-qualifiers">5.7.1.1. Mroonga supports the following qualifiers</a></li>
-<li><a class="reference internal" href="#examples">5.7.1.2. Examples</a></li>
-<li><a class="reference internal" href="#pragma">5.7.1.3. Pragma</a><ul>
-<li><a class="reference internal" href="#d-pragma">5.7.1.3.1. D pragma</a><ul>
-<li><a class="reference internal" href="#dor">5.7.1.3.1.1. <code class="docutils literal"><span class="pre">*DOR</span></code></a></li>
-<li><a class="reference internal" href="#d">5.7.1.3.1.2. <code class="docutils literal"><span class="pre">*D+</span></code></a></li>
-<li><a class="reference internal" href="#pragma-d-minus">5.7.1.3.1.3. <code class="docutils literal"><span class="pre">*D-</span></code></a></li>
+<li><a class="reference internal" href="#summary">5.7.1.1. Summary</a></li>
+<li><a class="reference internal" href="#usage">5.7.1.2. Usage</a></li>
+<li><a class="reference internal" href="#qualifier">5.7.1.3. Qualifier</a><ul>
+<li><a class="reference internal" href="#keyword1-keyword2">5.7.1.3.1. <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code></a></li>
+<li><a class="reference internal" href="#keyword1-or-keyword2">5.7.1.3.2. <code class="docutils literal"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code></a></li>
+<li><a class="reference internal" href="#keyword">5.7.1.3.3. <code class="docutils literal"><span class="pre">+KEYWORD</span></code></a></li>
+<li><a class="reference internal" href="#boolean-mode-qualifier-minus">5.7.1.3.4. <code class="docutils literal"><span class="pre">-KEYWORD</span></code></a></li>
+<li><a class="reference internal" href="#prefix">5.7.1.3.5. <code class="docutils literal"><span class="pre">PREFIX*</span></code></a></li>
+<li><a class="reference internal" href="#phrase">5.7.1.3.6. <code class="docutils literal"><span class="pre">&quot;PHRASE&quot;</span></code></a></li>
+<li><a class="reference internal" href="#subexpression">5.7.1.3.7. <code class="docutils literal"><span class="pre">(SUBEXPRESSION...)</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#w-pragma">5.7.1.3.2. W pragma</a></li>
+<li><a class="reference internal" href="#pragma">5.7.1.4. Pragma</a><ul>
+<li><a class="reference internal" href="#d-pragma">5.7.1.4.1. <code class="docutils literal"><span class="pre">D</span></code> pragma</a><ul>
+<li><a class="reference internal" href="#dor">5.7.1.4.1.1. <code class="docutils literal"><span class="pre">DOR</span></code></a></li>
+<li><a class="reference internal" href="#d">5.7.1.4.1.2. <code class="docutils literal"><span class="pre">D+</span></code></a></li>
+<li><a class="reference internal" href="#boolean-mode-pragma-d-minus">5.7.1.4.1.3. <code class="docutils literal"><span class="pre">D-</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#qualifier">5.7.1.4. Qualifier</a><ul>
-<li><a class="reference internal" href="#no-operator">5.7.1.4.1. (no operator)</a></li>
-<li><a class="reference internal" href="#qualifier-plus">5.7.1.4.2. <code class="docutils literal"><span class="pre">+</span></code></a></li>
-<li><a class="reference internal" href="#qualifier-minus">5.7.1.4.3. <code class="docutils literal"><span class="pre">-</span></code></a></li>
-<li><a class="reference internal" href="#qualifier-star">5.7.1.4.4. <code class="docutils literal"><span class="pre">*</span></code></a></li>
-<li><a class="reference internal" href="#qualifier-double-quote">5.7.1.4.5. <code class="docutils literal"><span class="pre">&quot;</span></code></a></li>
-<li><a class="reference internal" href="#qualifier-parentheses">5.7.1.4.6. <code class="docutils literal"><span class="pre">()</span></code></a></li>
+<li><a class="reference internal" href="#w-pragma">5.7.1.4.2. <code class="docutils literal"><span class="pre">W</span></code> pragma</a></li>
+<li><a class="reference internal" href="#s-pragma">5.7.1.4.3. <code class="docutils literal"><span class="pre">S</span></code> pragma</a><ul>
+<li><a class="reference internal" href="#ss">5.7.1.4.3.1. <code class="docutils literal"><span class="pre">*SS</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -456,7 +565,7 @@ INSERT INTO books (title, comment) VALUES (
         <li class="right" >
           <a href="../full_text_search.html" title="5.7. Full text search"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. Full text search</a> &raquo;</li> 
       </ul>

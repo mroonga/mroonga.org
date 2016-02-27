@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1.20リリース - 2012/01/29 &mdash; Mroonga v5.12 documentation</title>
+    <title>1.20リリース - 2012/01/29 &mdash; Mroonga v6.00 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.12',
+        VERSION:     '6.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.12 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v6.00 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -65,7 +65,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -89,15 +89,15 @@
 </ol>
 <p>&quot;CREATE TABLE&quot; SQL内の&quot;ENGINE=groonga&quot;を変更するためにダンプしたデータベースを変更する必要があります。以下が更新手順です。</p>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
 </pre></div>
 </div>
 <p>ダンプファイル中のストレージエンジンを変更します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> の <code class="docutils literal"><span class="pre">ENGINE=groonga</span></code> だけが <code class="docutils literal"><span class="pre">ENGINE=mroonga</span></code> に変更されていることを確認します。 <code class="docutils literal"><span class="pre">&#64;&#64;</span> <span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> 行に <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> が含まれているかを確認します。この行が <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> を含んでいたら、その変更はほぼ間違いなく <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> 用の変更です:</p>
-<div class="highlight-none"><div class="highlight"><pre>% diff -up database-groonga.dump database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre><span></span>% diff -up database-groonga.dump database-mroonga.dump
 --- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
 +++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
 @@ -29,7 +29,7 @@ CREATE TABLE `diaries` (
@@ -112,16 +112,16 @@
 </pre></div>
 </div>
 <p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal"><span class="pre">yum</span></code> を使います。</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
@@ -130,11 +130,11 @@
 <p class="last"><code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>これで1.20を使うことができるようになりました。</p>
@@ -491,7 +491,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

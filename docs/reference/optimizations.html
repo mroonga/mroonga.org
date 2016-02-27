@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.1. Optimizations &mdash; Mroonga v5.12 documentation</title>
+    <title>5.1. Optimizations &mdash; Mroonga v6.00 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.12',
+        VERSION:     '6.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.12 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.00 documentation" href="../index.html" />
     <link rel="up" title="5. Reference" href="../reference.html" />
     <link rel="next" title="5.2. SQL commands" href="sql_commands.html" />
     <link rel="prev" title="5. Reference" href="../reference.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -101,7 +101,7 @@ other columns.</p>
 <p>Mroonga can work faster by reducing operations and I/O.</p>
 <p>It's this optimization.</p>
 <p>Here is a sample table definition to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE t1 (
   c1 INT PRIMARY KEY AUTO_INCREMENT,
   c2 INT,
   c3 INT,
@@ -114,7 +114,7 @@ other columns.</p>
 </pre></div>
 </div>
 <p>Here is a <code class="docutils literal"><span class="pre">SELECT</span></code> to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
 </pre></div>
 </div>
 <p>In this case, Mroonga fetches values from only <code class="docutils literal"><span class="pre">c1</span></code>, <code class="docutils literal"><span class="pre">c2</span></code>, <code class="docutils literal"><span class="pre">c11</span></code>
@@ -130,7 +130,7 @@ and <code class="docutils literal"><span class="pre">c12</span></code>. Mroonga 
 <p>Mroonga can work faster by reducing operations and I/O.</p>
 <p>It's this optimization.</p>
 <p>Here is a <code class="docutils literal"><span class="pre">SELECT</span></code> to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE);
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE);
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">SELECT</span></code> fetches only <code class="docutils literal"><span class="pre">COUNT(*)</span></code> and condition in <code class="docutils literal"><span class="pre">WHERE</span></code>
@@ -138,7 +138,7 @@ can be processed only by index. In this case, Mroonga uses this
 optimization.</p>
 <p>You can confirm whether this optimization is used or not by looking
 <a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span>Mroonga_count_skip</span></a> status variable:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
 +--------------------+-------+
 | Variable_name      | Value |
 +--------------------+-------+
@@ -169,7 +169,7 @@ only target records to MySQL. It's very faster for query that matches with
 many records.</p>
 <p>It's this optimization.</p>
 <p>Here is a <code class="docutils literal"><span class="pre">SELECT</span></code> to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT *
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT *
   FROM t1
  WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE)
  ORDER BY c1 LIMIT 1;
@@ -179,7 +179,7 @@ many records.</p>
 only one record to MySQL.</p>
 <p>You can confirm whether this optimization is used or not by looking
 <a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span>Mroonga_fast_order_limit</span></a> status variable:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
 +--------------------------+-------+
 | Variable_name            | Value |
 +--------------------------+-------+
@@ -266,7 +266,7 @@ column or <code class="docutils literal"><span class="pre">MATCH</span> <span cl
         <li class="right" >
           <a href="../reference.html" title="5. Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &raquo;</li> 
       </ul>
     </div>

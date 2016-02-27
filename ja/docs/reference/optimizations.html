@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.1. 最適化 &mdash; Mroonga v5.12 documentation</title>
+    <title>5.1. 最適化 &mdash; Mroonga v6.00 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.12',
+        VERSION:     '6.00',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v5.12 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.00 documentation" href="../index.html" />
     <link rel="up" title="5. リファレンス" href="../reference.html" />
     <link rel="next" title="5.2. SQL commands" href="sql_commands.html" />
     <link rel="prev" title="5. リファレンス" href="../reference.html" /> 
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. リファレンス"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. リファレンス</a> &raquo;</li> 
       </ul>
     </div>  
@@ -97,7 +97,7 @@
 <p>Mroongaは処理とI/Oを減らすことでより高速になります。</p>
 <p>これがこの最適化です。</p>
 <p>以下はこの最適化を説明するためのテーブル定義です。:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE t1 (
   c1 INT PRIMARY KEY AUTO_INCREMENT,
   c2 INT,
   c3 INT,
@@ -110,7 +110,7 @@
 </pre></div>
 </div>
 <p>以下はこの最適化を説明するための <code class="docutils literal"><span class="pre">SELECT</span></code> です。:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
 </pre></div>
 </div>
 <p>このケースではMroongaは <code class="docutils literal"><span class="pre">c1</span></code> 、 <code class="docutils literal"><span class="pre">c2</span></code> 、 <code class="docutils literal"><span class="pre">c11</span></code> 、 <code class="docutils literal"><span class="pre">c12</span></code> カラムの値だけを取得します。 <code class="docutils literal"><span class="pre">c3</span></code> 、 <code class="docutils literal"><span class="pre">c4</span></code> 、 ...、 <code class="docutils literal"><span class="pre">c10</span></code> 、 <code class="docutils literal"><span class="pre">c13</span></code> 、 ...、 <code class="docutils literal"><span class="pre">c19</span></code> 、<code class="docutils literal"><span class="pre">c20</span></code> カラムの値は取得しません。</p>
@@ -123,12 +123,12 @@
 <p>Mroongaは処理とI/Oを減らすことでより高速になります。</p>
 <p>これがこの最適化です。</p>
 <p>以下はこの最適化を説明するための <code class="docutils literal"><span class="pre">SELECT</span></code> です。:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE);
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE);
 </pre></div>
 </div>
 <p>この <code class="docutils literal"><span class="pre">SELECT</span></code> は <code class="docutils literal"><span class="pre">COUNT(*)</span></code> だけを取得し、 <code class="docutils literal"><span class="pre">WHERE</span></code> の条件はインデックスだけで処理できます。この場合、Mroongaはこの最適化を使います。</p>
 <p>この最適化が使われたかどうかは <a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span>Mroonga_count_skip</span></a> ステータス変数を参照するとわかります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
 +--------------------+-------+
 | Variable_name      | Value |
 +--------------------+-------+
@@ -149,7 +149,7 @@
 <p>MroongaはGroongaを使って <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> と <code class="docutils literal"><span class="pre">LIMIT</span></code> を処理し、MySQLには処理対象のレコードだけを返します。マッチレコード数が多いとき、MySQLで処理するよりもGroongaで処理する方が非常に高速です。</p>
 <p>これがこの最適化です。</p>
 <p>以下はこの最適化を説明するための <code class="docutils literal"><span class="pre">SELECT</span></code> です。:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT *
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT *
   FROM t1
  WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE)
  ORDER BY c1 LIMIT 1;
@@ -157,7 +157,7 @@
 </div>
 <p>この <code class="docutils literal"><span class="pre">SELECT</span></code> は全文検索とソートをGroongaで実行し、MySQLには1件のレコードのみ返します。</p>
 <p>この最適化が使われたかどうかは <a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span>Mroonga_fast_order_limit</span></a> ステータス変数を参照するとわかります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
 +--------------------------+-------+
 | Variable_name            | Value |
 +--------------------------+-------+
@@ -247,7 +247,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. リファレンス"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v5.12 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.00 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. リファレンス</a> &raquo;</li> 
       </ul>
     </div>
