@@ -90,6 +90,7 @@ Because there is only one token.</li>
 <li>Added missing LZ4 source. [GitHub#100][Reported by Hiroshi Hatake]</li>
 <li>[<a class="reference internal" href="install/ubuntu.html"><em>Ubuntu</em></a>] Dropped Ubuntu 15.04 (Vivid Vervet) support. It had been
 reached to End of Life on February 4, 2016.</li>
+<li>[<a class="reference internal" href="install/windows.html"><em>Windows</em></a>] Updated base MariaDB to 10.1.13.</li>
 </ul>
 </div>
 <div class="section" id="fixes">
@@ -386,7 +387,7 @@ Start mysqld when mysqld is not running within rpm-installation.
 This feature can be used only with MariaDB.</p>
 <ul>
 <li><p class="first">Supported <code class="docutils literal"><span class="pre">TOKENIZER</span></code> parameter for <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code></p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE diaries (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE diaries (
   id int PRIMARY KEY AUTO_INCREMENT,
   body text,
   FULLTEXT INDEX body_index (body) TOKENIZER=&#39;TokenBigramSplitSymbolAlphaDigit&#39;
@@ -395,7 +396,7 @@ This feature can be used only with MariaDB.</p>
 </div>
 </li>
 <li><p class="first">Supported <code class="docutils literal"><span class="pre">NORMALIZER</span></code> parameter for <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code> and normal <code class="docutils literal"><span class="pre">INDEX</span></code></p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
   id INT NOT NULL PRIMARY KEY,
   content TEXT NOT NULL,
   FULLTEXT INDEX (content) NORMALIZER=&#39;NormalizerAuto&#39;
@@ -404,7 +405,7 @@ This feature can be used only with MariaDB.</p>
 </div>
 </li>
 <li><p class="first">Supported <code class="docutils literal"><span class="pre">TOKEN_FILTERS</span></code> parameter for <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code></p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
   content VARCHAR(64) NOT NULL,
   FULLTEXT INDEX (content) TOKEN_FILTERS=&#39;TokenFilterStopWord,TokenFilterStopWord&#39;
 ) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
@@ -412,7 +413,7 @@ This feature can be used only with MariaDB.</p>
 </div>
 </li>
 <li><p class="first">Supported <code class="docutils literal"><span class="pre">FLAGS</span></code> parameter for <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> and normal <code class="docutils literal"><span class="pre">INDEX</span></code></p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
   content VARCHAR(64) NOT NULL,
   FULLTEXT INDEX (content) FLAGS=&#39;WITH_POSITION|WITH_WEIGHT&#39;
 ) ENGINE = Mroonga DEFAULT CHARSET = utf8;
@@ -420,7 +421,7 @@ This feature can be used only with MariaDB.</p>
 </div>
 </li>
 <li><p class="first">Supported <code class="docutils literal"><span class="pre">GROONGA_TYPE</span></code> parameter for field</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE tags (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE tags (
   name VARCHAR(64) PRIMARY KEY
 ) ENGINE = Mroonga DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
 
@@ -439,7 +440,7 @@ CREATE TABLE bugs (
 <li><p class="first">It's backward incompatible change. For example:</p>
 <ul>
 <li><p class="first">Prepare (common)</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE timestamps (
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE timestamps (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   create_dt DATETIME
     -&gt; ) ENGINE = Mroonga DEFAULT CHARSET = utf8;
@@ -473,7 +474,7 @@ Query OK, 0 rows affected (0.01 sec)
 </div>
 </li>
 <li><p class="first">Before (5.03 or earlier)</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
 ERROR 1265 (01000): Data truncated for column &#39;create_dt&#39; at row 1
 
 mysql&gt; SELECT * FROM timestamps;
@@ -488,7 +489,7 @@ mysql&gt; SELECT * FROM timestamps;
 </div>
 </li>
 <li><p class="first">After (5.04 or later)</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
 ERROR 22003: Out of range value for column &#39;create_dt&#39; at row 1
 
 mysql&gt; SELECT * FROM timestamps;

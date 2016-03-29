@@ -100,7 +100,7 @@ future.</p>
 <div class="section" id="syntax">
 <h2>5.5.4.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> has required parameter and optional parameter:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_snippet(document,
+<div class="highlight-none"><div class="highlight"><pre>mroonga_snippet(document,
                 max_length,
                 max_count,
                 encoding,
@@ -122,7 +122,7 @@ search results.</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function provides the way to get snippet from search results.</p>
 <p>You can use <code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> UDF in storage mode and wrapper mode.</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function is useful for searching the text which contains keyword and associated one
@@ -131,7 +131,7 @@ by using MATCH .. AGAINST syntax.</p>
 Assume that some keyword such as 'MySQL' and 'search' are associated with 'fulltext'.</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function meets above.</p>
 <p>Here is the schema definition for execution examples(storage mode):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -140,7 +140,7 @@ Assume that some keyword such as 'MySQL' and 'search' are associated with 'fullt
 </pre></div>
 </div>
 <p>Here is the schema definition for execution examples(wrapper mode):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -149,13 +149,13 @@ Assume that some keyword such as 'MySQL' and 'search' are associated with 'fullt
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
+<div class="highlight-none"><div class="highlight"><pre>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
 INSERT INTO snippet_test (id, text) VALUES (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
 INSERT INTO snippet_test (id, text) VALUES (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
 </pre></div>
 </div>
 <p>Here is the results of execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM snippet_test;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM snippet_test;
 +----+-------------------------------------------------------------------------------------------------+
 | id | text                                                                                            |
 +----+-------------------------------------------------------------------------------------------------+

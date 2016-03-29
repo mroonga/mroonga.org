@@ -124,15 +124,15 @@
 <p class="last">データベースやインデックスを再作成する手順はこちら</p>
 </div>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>インデックスを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; ALTER TABLE table_name DROP PRIMARY KEY;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DROP PRIMARY KEY;
 mysql&gt; ALTER TABLE table_name ADD PRIMARY KEY(column_name);
 </pre></div>
 </div>
@@ -179,7 +179,7 @@ mysql&gt; ALTER TABLE table_name ADD PRIMARY KEY(column_name);
 <div class="admonition caution">
 <p class="first admonition-title">ご用心</p>
 <p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 マルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は  <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> と <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code> を使ってインデックスを作り直してください:</p>
-<div class="last highlight-none"><div class="highlight"><pre><span></span>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
+<div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
 mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
 </div>
@@ -306,25 +306,25 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </div>
 <p>以下が更新手順です。</p>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal"><span class="pre">yum</span></code> を使います。</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum (v2.02以前からのアップグレード):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 <p>yum (v2.03以降からのアップグレード):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 <div class="admonition caution">
@@ -332,11 +332,11 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <p class="last">v2.02以前のリリースからアップグレードする場合、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>これで2.05を使うことができるようになりました。</p>
@@ -397,7 +397,7 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <div class="admonition caution">
 <p class="first admonition-title">ご用心</p>
 <p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 <a class="reference internal" href="../tutorial/storage.html"><em>ストレージモード</em></a> でマルチカラムインデックスをつかっている場合は  <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> と <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code> を使ってインデックスを作り直してください:</p>
-<div class="last highlight-none"><div class="highlight"><pre><span></span>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
+<div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
 mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
 </div>
@@ -452,12 +452,12 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <p class="first admonition-title">ご用心</p>
 <p>今回のリリースよりパッケージへ署名する鍵を変更しました。groongaパッケージを更新する前にパッケージ署名用の新しい鍵をインポートして下さい。</p>
 <p>Debian/Ubuntu:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get update
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
 % sudo apt-get -y --allow-unauthenticated install groonga-keyring
 </pre></div>
 </div>
 <p>CentOS/Fedora:</p>
-<div class="last highlight-none"><div class="highlight"><pre><span></span>% sudo yum update
+<div class="last highlight-none"><div class="highlight"><pre>% sudo yum update
 % sudo yum install --nogpgcheck -y groonga-repository
 </pre></div>
 </div>
@@ -623,20 +623,20 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </ol>
 <p>以下が更新手順です。</p>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal"><span class="pre">yum</span></code> を使います。</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
@@ -645,11 +645,11 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <p class="last"><code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>これで2.00を使うことができるようになりました。</p>

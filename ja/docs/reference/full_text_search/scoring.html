@@ -105,7 +105,7 @@
 </ol>
 </div></blockquote>
 <p>具体例を使って説明します。以下のテーブルとデータを用意します。:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>SET NAMES UTF8;
+<div class="highlight-python"><div class="highlight"><pre>SET NAMES UTF8;
 CREATE TABLE diaries (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   content TEXT,
@@ -119,7 +119,7 @@ INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll ra
 </pre></div>
 </div>
 <p>このとき、以下のように「fine today」で類似文書検索したとします。検索の結果は以下となります。:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
+<div class="highlight-python"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
     -&gt;        FROM diaries
     -&gt;        WHERE MATCH (content) AGAINST (&quot;fine today&quot;)
     -&gt;        ORDER BY MATCH (content) AGAINST (&quot;fine today&quot;) DESC;
@@ -162,11 +162,11 @@ INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll ra
 <p>&quot;1048576 / 9&quot;の分母の&quot;9&quot;はトークン「fine」を含む文書数になります。</p>
 <p>&quot;8&quot;と&quot;9&quot;はトークンを含む文書がいくつあるかの概算値です。本当は「today」を含む文書数は&quot;2&quot;,「fine」を含む文書数は&quot;3&quot;ですが、概算値なのでずれています。</p>
 <p>概算値は以下のように確認できます。</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;) AS groonga_response;
+<div class="highlight-python"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;) AS groonga_response;
 </pre></div>
 </div>
 <p>The retrieval result of the above query is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s">&quot;_key&quot;</span><span class="p">,</span><span class="s">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s">&quot;index&quot;</span><span class="p">,</span><span class="s">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </div>

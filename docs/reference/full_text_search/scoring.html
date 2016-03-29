@@ -100,7 +100,7 @@
 </div></blockquote>
 <p>We are showing by example.
 The first thing we create a table and insert data as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>SET NAMES UTF8;
+<div class="highlight-python"><div class="highlight"><pre>SET NAMES UTF8;
 CREATE TABLE diaries (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   content TEXT,
@@ -115,7 +115,7 @@ INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll ra
 </div>
 <p>We use a query &quot;fine today&quot; to search.
 The search result is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
+<div class="highlight-python"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
     -&gt;        FROM diaries
     -&gt;        WHERE MATCH (content) AGAINST (&quot;fine today&quot;)
     -&gt;        ORDER BY MATCH (content) AGAINST (&quot;fine today&quot;) DESC;
@@ -156,11 +156,11 @@ The search result is as follows:</p>
 <p>In the fraction 1048576 / 9,  the denominator &quot;9&quot; means the number of document which contains token &quot;fine&quot;.</p>
 <p>The denominator &quot;8&quot; and &quot;9&quot; are approximate number, strictly speaking, &quot;2&quot; is the correct answer for the number of document that contains &quot;today&quot;, &quot;3&quot; is the correct answer for the number of document that contains &quot;fine&quot;.</p>
 <p>You can check the approximate number of token by using the following query.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;) AS groonga_response;
+<div class="highlight-python"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;) AS groonga_response;
 </pre></div>
 </div>
 <p>The retrieval result of the above query is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s">&quot;_key&quot;</span><span class="p">,</span><span class="s">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s">&quot;index&quot;</span><span class="p">,</span><span class="s">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </div>

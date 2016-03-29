@@ -91,6 +91,8 @@
 </li>
 <li><p class="first">[<a class="reference internal" href="install/ubuntu.html"><em>Ubuntu</em></a>] Ubuntu 15.04（Vivid Vervet）のサポートをやめました。2016年2月4日でサポートが切れた（EOLになった）ためです。</p>
 </li>
+<li><p class="first">[<a class="reference internal" href="install/windows.html"><em>Windows</em></a>] ベースにしているMariaDBを10.1.13にアップデートしました。</p>
+</li>
 </ul>
 </div>
 <div class="section" id="fixes">
@@ -405,7 +407,7 @@
 <li><p class="first">[mariadb] DDL内でカスタムパラメーターをサポートしました。この機能はMariaDBでのみ使うことができます。</p>
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code> で <code class="docutils literal"><span class="pre">TOKENIZER</span></code> パラメーターをサポート:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE diaries (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE diaries (
   id int PRIMARY KEY AUTO_INCREMENT,
   body text,
   FULLTEXT INDEX body_index (body) TOKENIZER=&#39;TokenBigramSplitSymbolAlphaDigit&#39;
@@ -414,7 +416,7 @@
 </div>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code> と通常の <code class="docutils literal"><span class="pre">INDEX</span></code> で <code class="docutils literal"><span class="pre">NORMALIZER</span></code> パラメーターをサポート:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
   id INT NOT NULL PRIMARY KEY,
   content TEXT NOT NULL,
   FULLTEXT INDEX (content) NORMALIZER=&#39;NormalizerAuto&#39;
@@ -423,7 +425,7 @@
 </div>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code> で <code class="docutils literal"><span class="pre">TOKEN_FILTERS</span></code> パラメーターをサポート:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
   content VARCHAR(64) NOT NULL,
   FULLTEXT INDEX (content) TOKEN_FILTERS=&#39;TokenFilterStopWord,TokenFilterStopWord&#39;
 ) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
@@ -431,7 +433,7 @@
 </div>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code> と通常の <code class="docutils literal"><span class="pre">INDEX</span></code> で <code class="docutils literal"><span class="pre">FLAGS</span></code> パラメーターをサポート:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE memos (
   content VARCHAR(64) NOT NULL,
   FULLTEXT INDEX (content) FLAGS=&#39;WITH_POSITION|WITH_WEIGHT&#39;
 ) ENGINE = Mroonga DEFAULT CHARSET = utf8;
@@ -439,7 +441,7 @@
 </div>
 </li>
 <li><p class="first">フィールドで <code class="docutils literal"><span class="pre">GROONGA_TYPE</span></code> パラメーターをサポート:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE tags (
+<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE tags (
   name VARCHAR(64) PRIMARY KEY
 ) ENGINE = Mroonga DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
 
@@ -457,7 +459,7 @@ CREATE TABLE bugs (
 <li><p class="first">これは後方互換性のない変更です。例:</p>
 <ul>
 <li><p class="first">準備（共通）:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE timestamps (
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE timestamps (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   create_dt DATETIME
     -&gt; ) ENGINE = Mroonga DEFAULT CHARSET = utf8;
@@ -491,7 +493,7 @@ Query OK, 0 rows affected (0.01 sec)
 </div>
 </li>
 <li><p class="first">変更前（5.03以前）:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
 ERROR 1265 (01000): Data truncated for column &#39;create_dt&#39; at row 1
 
 mysql&gt; SELECT * FROM timestamps;
@@ -506,7 +508,7 @@ mysql&gt; SELECT * FROM timestamps;
 </div>
 </li>
 <li><p class="first">変更後（5.04以降）:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
 ERROR 22003: Out of range value for column &#39;create_dt&#39; at row 1
 
 mysql&gt; SELECT * FROM timestamps;
