@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
@@ -105,7 +105,7 @@
 <div class="section" id="how-to-use-full-text-search">
 <h2>4.4.2. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE TABLE diaries (
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
     -&gt;   content VARCHAR(255),
     -&gt;   FULLTEXT INDEX (content)
@@ -114,7 +114,7 @@ Query OK, 0 rows affected (0.52 sec)
 </pre></div>
 </div>
 <p>We put data by INSERT.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll be fine tomorrow.&quot;);
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll be fine tomorrow.&quot;);
 Query OK, 1 row affected (0.01 sec)
 
 mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll rain tomorrow&quot;);
@@ -122,7 +122,7 @@ Query OK, 1 row affected (0.00 sec)
 </pre></div>
 </div>
 <p>Try full text search.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;fine&quot;);
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;fine&quot;);
 +----+-----------------------------------------+
 | id | content                                 |
 +----+-----------------------------------------+
@@ -138,7 +138,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
 <p>Let's try.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
 mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
@@ -157,7 +157,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </div>
 <p>The result having the search word <code class="docutils literal"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
 <p>You can use <code class="docutils literal"><span class="pre">AS</span></code> to change the attribute name.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
 +----+--------------------------------------------------------------+-------+
 | id | content                                                      | score |
 +----+--------------------------------------------------------------+-------+
@@ -172,11 +172,11 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
 <h2>4.4.4. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference" href="#parser" id="id2">[2]</a> for full text search.</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
 <p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
 <div class="admonition note">
@@ -235,17 +235,17 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
 </dl>
 <p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-parser</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build Mroonga.</p>
-<div class="highlight-none"><div class="highlight"><pre>./configure --with-default-parser TokenMecab ...
+<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-parser TokenMecab ...
 </pre></div>
 </div>
 <p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
-<div class="highlight-none"><div class="highlight"><pre>[mysqld]
+<div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
 mroonga_default_parser=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET GLOBAL mroonga_default_parser = TokenMecab;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_default_parser = TokenMecab;
 Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
@@ -260,7 +260,7 @@ It is used when tokenizing text and storing table key.</p>
 <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> or <code class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></code>.</p>
 <p>It isn't used normalizer when the encoding is <code class="docutils literal"><span class="pre">utf8_bin</span></code>.</p>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer by specifying <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code>.:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET NAMES utf8;
 Query OK, 0 rows affected (0.00 sec)
 
 mysql&gt; CREATE TABLE diaries (
@@ -293,12 +293,12 @@ mysql&gt; SELECT * FROM diaries
 </pre></div>
 </div>
 <p>Mroonga has the following syntax to specify Groonga's normalizer:</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
 </pre></div>
 </div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga's document</a> document about Groonga's normalizer.</p>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SET NAMES utf8;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET NAMES utf8;
 Query OK, 0 rows affected (0.00 sec)
 
 mysql&gt; CREATE TABLE diaries (
@@ -329,21 +329,21 @@ mysql&gt; SELECT * FROM diaries
 <div class="section" id="how-to-get-snippet-keyword-in-context">
 <h2>4.4.6. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
-It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet()</em></a> UDF.</p>
+It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDF.</p>
 </div>
 <div class="section" id="logging">
 <h2>4.4.7. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <code class="docutils literal"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
-<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
+<div class="highlight-none"><div class="highlight"><pre><span></span>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
 </div>
 <p>The default log level is NOTICE, i.e. we have important information only and we don't have debug information etc.).</p>
 <p>You can get the log level by <code class="docutils literal"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 +-------------------+--------+
 | Variable_name     | Value  |
 +-------------------+--------+
@@ -376,7 +376,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <li>DEBUG</li>
 <li>DUMP</li>
 </ul>
-<p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span>mroonga_log_level</span></a> about details.</p>
+<p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span class="std std-ref">mroonga_log_level</span></a> about details.</p>
 <p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
 <ol class="arabic simple">
 <li>change the file name of <code class="docutils literal"><span class="pre">groonga.log</span></code> (by using OS's mv command etc.).</li>
@@ -386,7 +386,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <div class="section" id="next-step">
 <h2>4.4.8. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>Now, you can use Mroonga as wrapper mode! If you want Mroonga to be
-faster, see also <a class="reference internal" href="../reference/optimizations.html"><em>Optimizations</em></a>.</p>
+faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="score" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -445,9 +445,6 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>

@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
@@ -93,7 +93,7 @@
 <div class="section" id="long-answer">
 <h2>6.1.2. 長い回答<a class="headerlink" href="#long-answer" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ログファイルに以下のようなmmapエラーが存在する場合があります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
+<div class="highlight-none"><div class="highlight"><pre><span></span>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">&lt;13036498944&gt;</span></code> はこの場合mmapの合計サイズ(約12GB)です。</p>
@@ -108,11 +108,11 @@
 <p>最大マッピング数を超過しているかどうかを確認するために、 <code class="docutils literal"><span class="pre">vm.max_map_count</span></code> の値を調べることができます。</p>
 <p>もしこの問題が <code class="docutils literal"><span class="pre">vm.max_map_count</span></code> の値を調整することで解決するなら、これが原因です。</p>
 <p>Groongaはメモリを256KBごとに確保するので、扱えるデータベースのサイズを以下の式で見積ることができます:</p>
-<div class="highlight-none"><div class="highlight"><pre>(database size) = vm.max_map_count * (memory chunks)
+<div class="highlight-none"><div class="highlight"><pre><span></span>(database size) = vm.max_map_count * (memory chunks)
 </pre></div>
 </div>
 <p>16GBを超えるデータベースを扱うには、少くとも65536を <code class="docutils literal"><span class="pre">vm.max_map_count</span></code> の値として設定しないといけません。</p>
-<div class="highlight-none"><div class="highlight"><pre>database size (16GB) = vm.max_map_count (65536) * memory chunks (256KB)
+<div class="highlight-none"><div class="highlight"><pre><span></span>database size (16GB) = vm.max_map_count (65536) * memory chunks (256KB)
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">sudo</span> <span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">vm.max_map_count=65536</span></code> で一時的に <code class="docutils literal"><span class="pre">vm.max_map_count</span></code> を調整することができます。</p>
@@ -156,9 +156,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    モジュール、クラス、または関数名を入力してください
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>

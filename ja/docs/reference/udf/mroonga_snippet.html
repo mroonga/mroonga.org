@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
@@ -98,7 +98,7 @@
 <div class="section" id="syntax">
 <h2>5.5.4.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> には必須引数と省略可能引数とがあります。:</p>
-<div class="highlight-none"><div class="highlight"><pre>mroonga_snippet(document,
+<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_snippet(document,
                 max_length,
                 max_count,
                 encoding,
@@ -120,14 +120,14 @@
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> UDFはストレージモードとラッパーモードいずれでも使
 えます。</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
 <p>'fulltext'というキーワードと'MySQL'と'search'という関連語を含む文書の検索をしてみましょう。</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> 関数は上記のことができます。</p>
 <p>実行例のスキーマ定義(ストレージモード)はこちらです:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -136,7 +136,7 @@
 </pre></div>
 </div>
 <p>実行例(ラッパーモード)のスキーマ定義はこちらです。:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -145,13 +145,13 @@
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
+<div class="highlight-none"><div class="highlight"><pre><span></span>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
 INSERT INTO snippet_test (id, text) VALUES (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
 INSERT INTO snippet_test (id, text) VALUES (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
 </pre></div>
 </div>
 <p>Here is the results of execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM snippet_test;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM snippet_test;
 +----+-------------------------------------------------------------------------------------------------+
 | id | text                                                                                            |
 +----+-------------------------------------------------------------------------------------------------+
@@ -318,9 +318,6 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    モジュール、クラス、または関数名を入力してください
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>

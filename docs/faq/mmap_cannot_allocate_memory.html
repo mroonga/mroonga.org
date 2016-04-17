@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
@@ -92,7 +92,7 @@
 <div class="section" id="long-answer">
 <h2>6.1.2. Long answer<a class="headerlink" href="#long-answer" title="Permalink to this headline">¶</a></h2>
 <p>There is a case following mmap error in log file:</p>
-<div class="highlight-none"><div class="highlight"><pre>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
+<div class="highlight-none"><div class="highlight"><pre><span></span>2013-06-04 08:19:34.835218|A|4e86e700|mmap(4194304,551,432017408)=Cannot allocate memory &lt;13036498944&gt;
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal"><span class="pre">&lt;13036498944&gt;</span></code> means total size of mmap (almost 12GB) in this case.</p>
@@ -105,11 +105,11 @@
 <p>To check whether maximum number of mappings are exceeded, you can investigate the value of <code class="docutils literal"><span class="pre">vm.max_map_count</span></code>.</p>
 <p>If this issue is fixed by modifying the value of <code class="docutils literal"><span class="pre">vm.max_map_count</span></code>, it's exactly the reason.</p>
 <p>As Groonga allocates memory chunks each 256KB, you can estimate the size of database you can handle by following formula:</p>
-<div class="highlight-none"><div class="highlight"><pre>(database size) = vm.max_map_count * (memory chunks)
+<div class="highlight-none"><div class="highlight"><pre><span></span>(database size) = vm.max_map_count * (memory chunks)
 </pre></div>
 </div>
 <p>If you want to handle over 16GB Groonga database, you must specify at least 65536 as the value of <code class="docutils literal"><span class="pre">vm.max_map_count</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre>database size (16GB) = vm.max_map_count (65536) * memory chunks (256KB)
+<div class="highlight-none"><div class="highlight"><pre><span></span>database size (16GB) = vm.max_map_count (65536) * memory chunks (256KB)
 </pre></div>
 </div>
 <p>You can modify <code class="docutils literal"><span class="pre">vm.max_map_count</span></code> temporary by <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">vm.max_map_count=65536</span></code>.</p>
@@ -153,9 +153,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
