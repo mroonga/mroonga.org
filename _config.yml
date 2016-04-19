@@ -2,5 +2,61 @@ markdown: kramdown
 permalink: /:categories/blog/:year/:month/:day/:title.html
 paginate: 5
 url: http://mroonga.org
-highlighter: rouge
+
+kramdown:
+  input: GFM
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  coderay_line_numbers: nil
 gems: [jekyll-paginate]
+
+defaults:
+  - scope:
+      path: "ja/blog"
+    values:
+      layout: "ja"
+      language: ja
+      country: JP
+      title: Mroongaブログ
+      heading_link: /ja/blog/
+      relative_url: blog/
+  - scope:
+      path: "ja"
+      type: "posts"
+    values:
+      layout: "post.ja"
+      language: ja
+      country: JP
+      heading: Mroongaブログ
+      heading_link: /ja/blog/
+      relative_url: blog/
+  - scope:
+      path: "blog"
+    values:
+      layout: "en"
+      language: en
+      country: US
+      title: Mroonga blog
+      heading_link: /blog/
+      relative_url: blog/
+  - scope:
+      path: "en"
+      type: "posts"
+    values:
+      layout: "post.en"
+      language: en
+      country: US
+      heading: Mroonga blog
+      heading_link: /blog/
+      relative_url: blog/
+  - scope:
+      path: "ja"
+    values:
+      layout: "ja"
+      language: ja
+      country: JP
+  - scope:
+      path: ""
+    values:
+      layout: "en"
+      language: en
+      country: US

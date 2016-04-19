@@ -1,9 +1,5 @@
 ---
-site_title: Mroonga
-author: The Mroonga Project
 layout: skeleton
-language: en
-country: US
 ---
 <header id="header">
   <div class="title">
@@ -34,14 +30,14 @@ country: US
 
   <div class="other-language-links">
     <ul>
-      {% capture relative_path %}
-        {% if page.relative_path %}
-          /{{ page.relative_path }}
+      {% capture relative_url %}
+        {% if page.relative_url %}
+          /{{ page.relative_url }}
         {% else %}
           {{ page.url | remove:'index.html' }}
         {% endif %}
       {% endcapture %}
-      <li><a href="/ja{{ relative_path | remove:' ' | strip_newlines }}" alt="日本語" title="日本語"><img src="/images/jp.png">日本語版はこちら</a></li>
+      <li><a href="/ja{{ relative_url | remove:' ' | strip_newlines }}" alt="日本語" title="日本語"><img src="/images/jp.png">日本語版はこちら</a></li>
     </ul>
   </div>
 </header>
@@ -57,7 +53,15 @@ country: US
       {{ page.title }}
     {% endif %}
   {% endcapture %}
-  <h1 id="title">{{ title_heading | strip_newlines }}</h1>
+  <h1 id="title">
+    {% if page.heading_link %}
+      <a href="{{ page.heading_link }}">
+        {{ title_heading | strip_newlines }}
+      </a>
+    {% else %}
+      {{ title_heading | strip_newlines }}
+    {% endif %}
+  </h1>
   <div id="content">
     {{ content }}
   </div>
@@ -90,6 +94,6 @@ country: US
 {% endif %}
 
 <footer id="footer">
-  <address>&copy; 2010-{{ site.time | date: "%Y" }} The Mroonga Project.</address>
+  <address>&copy; 2010-{{ site.time | date: "%Y" }} Mroonga Project</address>
   <p class="license">Mroonga is released under <a href="http://www.opensource.org/licenses/lgpl-2.1.php">the GNU Lesser General Public License version 2.1</a>.</p>
 </footer>
