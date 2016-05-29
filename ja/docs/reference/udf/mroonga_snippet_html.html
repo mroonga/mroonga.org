@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.5.1. mroonga_command() &mdash; Mroonga v6.03 documentation</title>
+    <title>5.5.6. mroonga_snippet_html() &mdash; Mroonga v6.03 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="top" title="Mroonga v6.03 documentation" href="../../index.html" />
     <link rel="up" title="5.5. UDF (ユーザ定義関数)" href="../udf.html" />
-    <link rel="next" title="5.5.2. mroonga_escape()" href="mroonga_escape.html" />
-    <link rel="prev" title="5.5. UDF (ユーザ定義関数)" href="../udf.html" /> 
+    <link rel="next" title="5.6. 制限事項" href="../limitations.html" />
+    <link rel="prev" title="5.5.5. mroonga_snippet()" href="mroonga_snippet.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -56,7 +56,7 @@
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../../../docs/reference/udf/mroonga_command.html" title="English">English</a></li>
+      <li><a href="../../../../docs/reference/udf/mroonga_snippet_html.html" title="English">English</a></li>
     </ul>
   </div>
 </div>
@@ -69,10 +69,10 @@
           <a href="../../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
+          <a href="../limitations.html" title="5.6. 制限事項"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../udf.html" title="5.5. UDF (ユーザ定義関数)"
+          <a href="mroonga_snippet.html" title="5.5.5. mroonga_snippet()"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
@@ -85,51 +85,37 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="mroonga-command">
-<h1>5.5.1. <code class="docutils literal"><span class="pre">mroonga_command()</span></code><a class="headerlink" href="#mroonga-command" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="mroonga-snippet-html">
+<h1>5.5.6. <code class="docutils literal"><span class="pre">mroonga_snippet_html()</span></code><a class="headerlink" href="#mroonga-snippet-html" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="summary">
-<h2>5.5.1.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">mroonga_command()</span></code> UDF executes the given string as a Groonga command
-and returns result of the Groonga command. Groonga command will be
-faster than MySQL query.</p>
-<p><code class="docutils literal"><span class="pre">mroonga_command()</span></code> is an UDF for advanced users. Normally, you
-don't need to use this UDF.</p>
+<h2>5.5.6.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet_html()</span></code> UDF provides functionality to get
+highlighted keyword in context.</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">この機能は実験的です。引数や引数の値が予告なく変更される可能性があります。</p>
+</div>
 </div>
 <div class="section" id="syntax">
-<h2>5.5.1.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">mroonga_command()</span></code> の引数は1つで必須の引数です。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_command(command)
-</pre></div>
-</div>
-<p><code class="docutils literal"><span class="pre">command</span></code> は文字列型の値です。実行するGroongaコマンドを指定します。</p>
+<h2>5.5.6.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">mroonga_snippet_html()</span></code> には必須引数と省略可能引数とがあります。:</p>
 </div>
 <div class="section" id="usage">
-<h2>5.5.1.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>TODO</p>
+<h2>5.5.6.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 <div class="section" id="parameters">
-<h2>5.5.1.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.5.6.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="required-parameters">
-<h3>5.5.1.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>必須引数は1つで <code class="docutils literal"><span class="pre">command</span></code> です。</p>
-<div class="section" id="command">
-<h4>5.5.1.4.1.1. <code class="docutils literal"><span class="pre">command</span></code><a class="headerlink" href="#command" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>実行するGroongaコマンドを指定します。</p>
+<h3>5.5.6.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>多くの必須引数があります。</p>
 </div>
+<div class="section" id="optional-parameters">
+<h3>5.5.6.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
 </div>
 </div>
 <div class="section" id="return-value">
-<h2>5.5.1.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>指定されたGroongaコマンドを実行した結果を文字列として返します。</p>
-</div>
-<div class="section" id="see-also">
-<h2>5.5.1.6. 参照<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><p class="first">Groongaのドキュメントの中の[コマンド](<a class="reference external" href="http://groonga.org/ja/docs/reference/command.html">http://groonga.org/ja/docs/reference/command.html</a>)</p>
-</li>
-</ul>
-</div></blockquote>
+<h2>5.5.6.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>スニペット文字列を返します。</p>
 </div>
 </div>
 
@@ -141,33 +127,30 @@ don't need to use this UDF.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.5.1. <code class="docutils literal"><span class="pre">mroonga_command()</span></code></a><ul>
-<li><a class="reference internal" href="#summary">5.5.1.1. 概要</a></li>
-<li><a class="reference internal" href="#syntax">5.5.1.2. 構文</a></li>
-<li><a class="reference internal" href="#usage">5.5.1.3. 使いかた</a></li>
-<li><a class="reference internal" href="#parameters">5.5.1.4. 引数</a><ul>
-<li><a class="reference internal" href="#required-parameters">5.5.1.4.1. 必須引数</a><ul>
-<li><a class="reference internal" href="#command">5.5.1.4.1.1. <code class="docutils literal"><span class="pre">command</span></code></a></li>
+<li><a class="reference internal" href="#">5.5.6. <code class="docutils literal"><span class="pre">mroonga_snippet_html()</span></code></a><ul>
+<li><a class="reference internal" href="#summary">5.5.6.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">5.5.6.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">5.5.6.3. 使いかた</a></li>
+<li><a class="reference internal" href="#parameters">5.5.6.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">5.5.6.4.1. 必須引数</a></li>
+<li><a class="reference internal" href="#optional-parameters">5.5.6.4.2. 省略可能引数</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#return-value">5.5.1.5. 返り値</a></li>
-<li><a class="reference internal" href="#see-also">5.5.1.6. 参照</a></li>
+<li><a class="reference internal" href="#return-value">5.5.6.5. 返り値</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>前のトピックへ</h4>
-  <p class="topless"><a href="../udf.html"
-                        title="前の章へ">5.5. UDF (ユーザ定義関数)</a></p>
+  <p class="topless"><a href="mroonga_snippet.html"
+                        title="前の章へ">5.5.5. <code class="docutils literal"><span class="pre">mroonga_snippet()</span></code></a></p>
   <h4>次のトピックへ</h4>
-  <p class="topless"><a href="mroonga_escape.html"
-                        title="次の章へ">5.5.2. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code></a></p>
+  <p class="topless"><a href="../limitations.html"
+                        title="次の章へ">5.6. 制限事項</a></p>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
-      <li><a href="../../sources/reference/udf/mroonga_command.txt"
+      <li><a href="../../sources/reference/udf/mroonga_snippet_html.txt"
             rel="nofollow">ソースコードを表示（英語）</a></li>
     </ul>
    </div>
@@ -192,10 +175,10 @@ don't need to use this UDF.</p>
           <a href="../../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
+          <a href="../limitations.html" title="5.6. 制限事項"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../udf.html" title="5.5. UDF (ユーザ定義関数)"
+          <a href="mroonga_snippet.html" title="5.5.5. mroonga_snippet()"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
