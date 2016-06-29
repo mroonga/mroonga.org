@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.4. Wrapper mode &mdash; Mroonga v6.03 documentation</title>
+    <title>4.4. Wrapper mode &mdash; Mroonga v6.05 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.03',
+        VERSION:     '6.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v6.03 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.05 documentation" href="../index.html" />
     <link rel="up" title="4. Tutorial" href="../tutorial.html" />
     <link rel="next" title="5. Reference" href="../reference.html" />
     <link rel="prev" title="4.3. Storage mode" href="storage.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.05 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>  
@@ -176,14 +176,14 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </pre></div>
 </div>
 <p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following.</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last"><code class="docutils literal"><span class="pre">COMMENT</span></code> in <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> variable described below.</p>
 </div>
-<p>You can specify one of following values as the parser.</p>
+<p>You can specify one of following values as the tokenizer.</p>
 <dl class="docutils">
 <dt>off</dt>
 <dd>It does not tokenize at all. Use &quot;off&quot; if you want to treat <code class="docutils literal"><span class="pre">content</span></code> as is. For example, this value is used for prefix search.</dd>
@@ -234,18 +234,18 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <dt>TokenTrigram</dt>
 <dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
 </dl>
-<p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-parser</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build Mroonga.</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-parser TokenMecab ...
+<p>You can specify the default tokenizer by passing <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build Mroonga.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
-<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
-mroonga_default_parser=TokenMecab
+mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_default_parser = TokenMecab;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_default_tokenizer = TokenMecab;
 Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
@@ -463,7 +463,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.05 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &raquo;</li> 
       </ul>
     </div>

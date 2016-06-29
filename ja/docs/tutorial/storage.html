@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. ストレージモード &mdash; Mroonga v6.03 documentation</title>
+    <title>4.3. ストレージモード &mdash; Mroonga v6.05 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.03',
+        VERSION:     '6.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v6.03 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.05 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4.4. ラッパーモード" href="wrapper.html" />
     <link rel="prev" title="4.2. モード" href="mode.html" /> 
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.05 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
@@ -165,14 +165,14 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </pre></div>
 </div>
 <p>しかし、この構文を利用する場合は、あらかじめすべてのパーサをMySQLに登録しておく必要があります。一方、Groongaはトークナイザー（MySQLでいうパーサ）を動的に追加することができます。そのため、Mroongaでもこの構文を採用するとGroonga側に動的に追加されたトークナイザーに対応できなくなります。Groongaに動的に追加されるトークナイザーにはMeCabを用いたトークナイザーもあり、この制限に縛られることは利便性を損なうと判断し、以下のようなコメントを用いた独自の構文を採用することにしました。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;parser &quot;TokenMecab&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p class="last"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> に <code class="docutils literal"><span class="pre">COMMENT</span></code> を指定できるのはMySQL 5.5からになります。MySQL 5.1を利用している場合は後述の <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> 変数を利用してください。</p>
 </div>
-<p>パーサに指定できるのは以下の値です。</p>
+<p>You can specify one of following values as the tokenizer.</p>
 <dl class="docutils">
 <dt>off</dt>
 <dd><p class="first last">トークナイズしません。&quot;off&quot;は``content``をそのまま扱いたい場合に使います。例えば、この値は前方一致検索のために指定します。</p>
@@ -227,18 +227,18 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <dd><p class="first last">トリグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、4文字以上のトークンも存在する。これはノイズを減らすためである。</p>
 </dd>
 </dl>
-<p>デフォルトのパーサは <code class="docutils literal"><span class="pre">configure</span></code> の <code class="docutils literal"><span class="pre">--with-default-parser</span></code> オプションでビルド時に指定することができます。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-parser TokenMecab ...
+<p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build mroonga</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
-<p>また、my.cnfまたはSQL内で <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> 変数を指定することでも指定できます。my.cnfで指定するとMySQLを再起動しても値は変更されたままですが、反映させるために再起動しなければいけません。一方、SQLで指定した場合はすぐに設定が反映されますが、MySQLが再起動すると設定は失われます。</p>
+<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
-mroonga_default_parser=TokenMecab
+mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_default_parser = TokenMecab;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_default_tokenizer = TokenMecab;
 Query OK, 0 rows affected (0.00 sec)
 </pre></div>
 </div>
@@ -744,7 +744,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.05 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>

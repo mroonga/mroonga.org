@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.7. その他 &mdash; Mroonga v6.03 documentation</title>
+    <title>2.7. その他 &mdash; Mroonga v6.05 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.03',
+        VERSION:     '6.05',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v6.03 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.05 documentation" href="../index.html" />
     <link rel="up" title="2. インストール" href="../install.html" />
     <link rel="next" title="3. アップグレード" href="../upgrade.html" />
     <link rel="prev" title="2.6. Fedora" href="fedora.html" /> 
@@ -74,7 +74,7 @@
         <li class="right" >
           <a href="fedora.html" title="2.6. Fedora"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.05 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. インストール</a> &raquo;</li> 
       </ul>
     </div>  
@@ -175,9 +175,9 @@
 <div class="section" id="build-from-source">
 <h2>2.7.2. ソースからビルド<a class="headerlink" href="#build-from-source" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MroongaはGNUビルドシステムを使っています。以下は一番簡単なビルド手順です:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% wget http://packages.groonga.org/source/mroonga/mroonga-6.03.tar.gz
-% tar xvzf mroonga-6.03.tar.gz
-% cd mroonga-6.03
+<div class="highlight-none"><div class="highlight"><pre><span></span>% wget http://packages.groonga.org/source/mroonga/mroonga-6.05.tar.gz
+% tar xvzf mroonga-6.05.tar.gz
+% cd mroonga-6.05
 % ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21 \
     --with-mysql-build=/usr/local/build/mysql-5.6.21 \
@@ -248,15 +248,16 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="with-default-parser-parser">
-<h4>2.7.2.1.4. <code class="docutils literal"><span class="pre">--with-default-parser=PARSER</span></code><a class="headerlink" href="#with-default-parser-parser" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>全文検索用のデフォルトのパーサーを指定します。この値はmy.cnfでもカスタマイズできます。</p>
+<div class="section" id="with-default-tokenizer-tokenizer">
+<h4>2.7.2.1.4. <code class="docutils literal"><span class="pre">--with-default-tokenizer=TOKENIZER</span></code><a class="headerlink" href="#with-default-tokenizer-tokenizer" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>Specifies the default tokenizer for full text. You can custom it in
+my.cnf.</p>
 <p>デフォルト値は <code class="docutils literal"><span class="pre">TokenBigram</span></code> です。</p>
-<p>デフォルトのパーサーとして <code class="docutils literal"><span class="pre">TokenMecab</span></code> を使う例です:</p>
+<p>Here is an example to use <code class="docutils literal"><span class="pre">TokenMecab</span></code> as the default tokenizer:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --with-mysql-source=/usr/local/src/mysql-5.6.21 \
     --with-mysql-config=/usr/local/mysql/bin/mysql_config \
-    --with-default-parser=TokenMecab
+    --with-default-tokenizer=TokenMecab
 </pre></div>
 </div>
 </div>
@@ -338,7 +339,7 @@
 <li><a class="reference internal" href="#with-mysql-source-path">2.7.2.1.1. <code class="docutils literal"><span class="pre">--with-mysql-source=PATH</span></code></a></li>
 <li><a class="reference internal" href="#with-mysql-build-path">2.7.2.1.2. <code class="docutils literal"><span class="pre">--with-mysql-build=PATH</span></code></a></li>
 <li><a class="reference internal" href="#with-mysql-config-path">2.7.2.1.3. <code class="docutils literal"><span class="pre">--with-mysql-config=PATH</span></code></a></li>
-<li><a class="reference internal" href="#with-default-parser-parser">2.7.2.1.4. <code class="docutils literal"><span class="pre">--with-default-parser=PARSER</span></code></a></li>
+<li><a class="reference internal" href="#with-default-tokenizer-tokenizer">2.7.2.1.4. <code class="docutils literal"><span class="pre">--with-default-tokenizer=TOKENIZER</span></code></a></li>
 <li><a class="reference internal" href="#prefix-path">2.7.2.1.5. <code class="docutils literal"><span class="pre">--prefix=PATH</span></code></a></li>
 <li><a class="reference internal" href="#pkg-config-path-path">2.7.2.1.6. <code class="docutils literal"><span class="pre">PKG_CONFIG_PATH=PATH</span></code></a></li>
 </ul>
@@ -391,7 +392,7 @@
         <li class="right" >
           <a href="fedora.html" title="2.6. Fedora"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.03 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.05 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" >2. インストール</a> &raquo;</li> 
       </ul>
     </div>
