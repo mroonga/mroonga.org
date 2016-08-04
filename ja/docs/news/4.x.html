@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.10リリース - 2015-01-29 &mdash; Mroonga v6.06 documentation</title>
+    <title>News - 4.x &mdash; Mroonga v6.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.06',
+        VERSION:     '6.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v6.06 documentation" href="../index.html" /> 
+    <link rel="top" title="Mroonga v6.07 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -65,7 +65,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.06 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.07 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -74,8 +74,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="release-4-10-2015-01-29">
-<span id="release-4-10"></span><h1>4.10リリース - 2015-01-29<a class="headerlink" href="#release-4-10-2015-01-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="news-4-x">
+<h1>News - 4.x<a class="headerlink" href="#news-4-x" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="release-4-10-2015-01-29">
+<span id="release-4-10"></span><h2>4.10リリース - 2015-01-29<a class="headerlink" href="#release-4-10-2015-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>このリリースにはユニークインデックスのバグ修正が含まれています。もし、ストレージモードでユニークインデックスを使っている場合はデータが壊れている可能性があります。ストレージモードでユニークインデックスを使っている場合はこのバージョンへアップグレードし、アップグレード後にユニークインデックスを再構築することをオススメします。</p>
 <p>ユニークインデックスを含むすべてのインデックスを再構築するSQL文は次の通りです。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>ALTER TABLE ${YOUR_TABLE} DISABLE KEYS;
@@ -97,7 +99,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div></blockquote>
 <div class="section" id="improvements">
-<h2>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージモード] FULLTEXT INDEXのCOMMENTに参照テーブルが指定してあるときに、オフラインインデックス構築ができるようになりました。 オフラインインデックス構築には <code class="docutils literal"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> を実行してから <code class="docutils literal"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code> を実行します。[村上さんが報告]</p>
 </li>
@@ -110,7 +112,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="fixes">
-<h2>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージモード] 参照テーブルがエラーで意図せず削除される不具合を修正しました。これはたとえば FULLTEXT INDEXのコメントに <code class="docutils literal"><span class="pre">'table</span> <span class="pre">&quot;terms&quot;'</span></code> が指定されていたら、「terms」テーブルのインデックスを作成しているときにエラーが発生すると、「terms」テーブルが削除されてしまうということです。</p>
 </li>
@@ -121,7 +123,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="thanks">
-<h2>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">村上さん</p>
 </li>
@@ -133,9 +135,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-09-2014-12-29">
-<span id="release-4-09"></span><h1>4.09リリース - 2014-12-29<a class="headerlink" href="#release-4-09-2014-12-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-09"></span><h2>4.09リリース - 2014-12-29<a class="headerlink" href="#release-4-09-2014-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id1">
-<h2>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[rpm] CentOS 6用のパッケージがMySQL 5.6.22に対応しました。 [&#64;oreradioさんが報告]</p>
 </li>
@@ -148,7 +150,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id2">
-<h2>感謝<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">&#64;oreradioさん</p>
 </li>
@@ -156,9 +158,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-08-2014-11-29">
-<span id="release-4-08"></span><h1>4.08リリース - 2014/11/29<a class="headerlink" href="#release-4-08-2014-11-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-08"></span><h2>4.08リリース - 2014/11/29<a class="headerlink" href="#release-4-08-2014-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id3">
-<h2>改良<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[deb] Ubuntu 12.04をTravis-CI向けに再度サポートしました。</p>
 </li>
@@ -173,7 +175,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id4">
-<h2>修正<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[doc] 存在しないMySQLバージョンの記述を削除しました。[groonga-dev,02899] [GMOメディア株式会社さんが報告]</p>
 </li>
@@ -186,7 +188,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id5">
-<h2>感謝<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">GMOメディア株式会社さん</p>
 </li>
@@ -200,9 +202,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-07-2014-10-29">
-<span id="release-4-07"></span><h1>4.07リリース - 2014/10/29<a class="headerlink" href="#release-4-07-2014-10-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-07"></span><h2>4.07リリース - 2014/10/29<a class="headerlink" href="#release-4-07-2014-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id6">
-<h2>改良<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージ] 非推奨である <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">DELAYED</span></code> をエラーとして扱うようにしました。 [GitHub#20] [MDEV#6837] [Elena Stepanovaさんが報告]</p>
 </li>
@@ -225,7 +227,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id7">
-<h2>修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージ][mariadb10] 不適切なロックのせいでクラッシュする不具合を修正しました。 [GitHub#18] [Elena Stepanovaさんが報告]</p>
 </li>
@@ -236,7 +238,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id8">
-<h2>感謝<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">Elena Stepanovaさん</p>
 </li>
@@ -246,9 +248,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-06-2014-09-29">
-<span id="release-4-06"></span><h1>4.06リリース - 2014/09/29<a class="headerlink" href="#release-4-06-2014-09-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-06"></span><h2>4.06リリース - 2014/09/29<a class="headerlink" href="#release-4-06-2014-09-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id9">
-<h2>改良<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[doc] Groongaの開発パッケージについて説明を追加しました。</p>
 </li>
@@ -259,14 +261,14 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id10">
-<h2>修正<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージモード] マルチカラムインデックスを使った検索で空のレコードが返ってくる不具合を修正しました。この不具合は次の2つの条件を満たすと発生します。1つめは、カラムがマルチカラムインデックスによってインデックスが作成されており、ORDERとWHERE句に指定されていること。2つめが、マルチカラムインデックスに指定した最初のカラムがORDERで使われていないことです。[#2651] [foamcentime, 村上さんが報告]</p>
 </li>
 </ul>
 </div>
 <div class="section" id="id11">
-<h2>感謝<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">foamcentimeさん</p>
 </li>
@@ -276,9 +278,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-05-2014-08-29">
-<span id="release-4-05"></span><h1>4.05リリース - 2014/08/29<a class="headerlink" href="#release-4-05-2014-08-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-05"></span><h2>4.05リリース - 2014/08/29<a class="headerlink" href="#release-4-05-2014-08-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id12">
-<h2>改良<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">Ubuntu 13.10 (Saucy Salamander)のサポートをやめました。</p>
 </li>
@@ -295,7 +297,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id13">
-<h2>修正<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[doc] Mroonga 4.04のリリースエントリでMySQLのバージョンが間違っていたのを修正しました。[_so4さんが報告]</p>
 </li>
@@ -312,7 +314,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id14">
-<h2>感謝<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">_so4さん</p>
 </li>
@@ -332,9 +334,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-04-2014-07-29">
-<span id="release-4-04"></span><h1>4.04リリース - 2014/07/29<a class="headerlink" href="#release-4-04-2014-07-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-04"></span><h2>4.04リリース - 2014/07/29<a class="headerlink" href="#release-4-04-2014-07-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id15">
-<h2>改良<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">Groongaとgroonga-normalizer-mysql特有のテストファイルをMariaDBバンドル版には含めないようにしました。これはファイル名が長すぎる問題があるためです。 [groonga-dev,02391] [横山昌史さんが報告]</p>
 </li>
@@ -347,7 +349,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id16">
-<h2>修正<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[rpm][centos] CentOSでMySQL 5.5.37でビルドするようにしました。[吉田さんが報告]</p>
 </li>
@@ -362,7 +364,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id17">
-<h2>感謝<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">吉田光男さん</p>
 </li>
@@ -378,9 +380,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-03-2014-05-29">
-<span id="release-4-03"></span><h1>4.03リリース - 2014/05/29<a class="headerlink" href="#release-4-03-2014-05-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-03"></span><h2>4.03リリース - 2014/05/29<a class="headerlink" href="#release-4-03-2014-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id18">
-<h2>改良<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[doc] MariaDBのバージョンを更新しました。 [cosmo0920さんがパッチ提供]</p>
 </li>
@@ -391,14 +393,14 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id19">
-<h2>修正<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[doc] <a class="reference internal" href="../install.html"><span class="doc">インストール</span></a> の間違ったコマンドラインを修正しました。 [吉田光男さんが報告]</p>
 </li>
 </ul>
 </div>
 <div class="section" id="id20">
-<h2>感謝<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">cosmo0920さん</p>
 </li>
@@ -408,9 +410,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-02-2014-04-29">
-<span id="release-4-02"></span><h1>4.02リリース - 2014/04/29<a class="headerlink" href="#release-4-02-2014-04-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-02"></span><h2>4.02リリース - 2014/04/29<a class="headerlink" href="#release-4-02-2014-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id21">
-<h2>改良<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">MariaDB 10.0.10に対応しました。 [#2460] [かずひこさんが報告]</p>
 </li>
@@ -427,7 +429,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id22">
-<h2>修正<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージモード] <code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code> のときにtruncateを使わないようにしました。 [groonga-dev,02222] [GMOメディア株式会社さんが報告]</p>
 </li>
@@ -446,7 +448,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id23">
-<h2>感謝<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">かずひこさん</p>
 </li>
@@ -464,9 +466,9 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-01-2014-03-29">
-<span id="release-4-01"></span><h1>4.01リリース - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-01"></span><h2>4.01リリース - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id24">
-<h2>改良<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">MariaDB 10.0.9に対応しました。 [#2387] [かずひこさんが報告]</p>
 </li>
@@ -477,7 +479,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id25">
-<h2>修正<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">[ストレージモード] テーブル参照型のフルテキストインデックスをALTER TABLEしようとするとmysqldがクラッシュする問題を修正しました。 [#2327] [groonga-dev,02130] [村上さんが報告]</p>
 </li>
@@ -486,7 +488,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id26">
-<h2>感謝<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">yokuさん</p>
 </li>
@@ -498,13 +500,13 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </div>
 </div>
 <div class="section" id="release-4-00-2014-02-09">
-<span id="release-4-00"></span><h1>4.00リリース - 2014/02/29<a class="headerlink" href="#release-4-00-2014-02-09" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="release-4-00"></span><h2>4.00リリース - 2014/02/29<a class="headerlink" href="#release-4-00-2014-02-09" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li><p class="first">バージョン4.00になりました。クラッシュする不具合や更新時の不具合が修正されたのでアップグレードをおすすめします。</p>
 </li>
 </ul>
 <div class="section" id="id27">
-<h2>改良<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>改良<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">Ubuntu 13.04 Raring Ringtailのサポートをやめました。</p>
 </li>
@@ -513,7 +515,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id28">
-<h2>修正<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>修正<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">NULL値をNOT NULL制約のあるgeometryカラムに対してインサートしようとするとクラッシュする不具合を修正しました。 [#2281] [groonga-dev,02095] [yokuさんが報告]</p>
 </li>
@@ -522,7 +524,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </div>
 <div class="section" id="id29">
-<h2>感謝<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>感謝<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p class="first">yokuさん</p>
 </li>
@@ -531,6 +533,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p class="first">長野雅広さん</p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -542,7 +545,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">4.10リリース - 2015-01-29</a><ul>
+<li><a class="reference internal" href="#">News - 4.x</a><ul>
+<li><a class="reference internal" href="#release-4-10-2015-01-29">4.10リリース - 2015-01-29</a><ul>
 <li><a class="reference internal" href="#improvements">改良</a></li>
 <li><a class="reference internal" href="#fixes">修正</a></li>
 <li><a class="reference internal" href="#thanks">感謝</a></li>
@@ -608,6 +612,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
@@ -619,8 +625,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="検索" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -636,7 +642,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.06 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.07 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

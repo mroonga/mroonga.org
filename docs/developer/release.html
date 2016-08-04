@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9.2. Release procedure (XXX not yet translated) &mdash; Mroonga v6.06 documentation</title>
+    <title>9.2. Release procedure (XXX not yet translated) &mdash; Mroonga v6.07 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.06',
+        VERSION:     '6.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v6.06 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.07 documentation" href="../index.html" />
     <link rel="up" title="9. Developer&#39;s guide" href="../developer.html" />
     <link rel="prev" title="9.1. How to debug" href="debug.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -69,7 +69,7 @@
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.06 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.07 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">9. Developer's guide</a> &raquo;</li> 
       </ul>
     </div>  
@@ -178,7 +178,19 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p>これにより、clone済みのMroongaのWebサイトのトップページのソース(index.html,ja/index.html)やRPMパッケージのspecファイルのバージョン表記などが更新されます。</p>
 </div>
 <div class="section" id="id6">
-<h2>9.2.8. 配布用ファイルのアップロード<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2>9.2.8. リリースタグの設定<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>リリース用のタグを打つには以下のコマンドを実行します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make tag
+% git push --tags origin
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">タグを打った後にconfigureを実行することで、ドキュメント生成時のバージョン番号に反映されます。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>9.2.9. 配布用ファイルのアップロード<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>次に、配布用の <code class="docutils literal"><span class="pre">tar.gz</span></code> ファイルを作成します。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make dist
 </pre></div>
@@ -212,8 +224,8 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </div>
 <p>これで、 <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a> から <code class="docutils literal"><span class="pre">tar.gz</span></code> のダウンロードが行えるようになります。</p>
 </div>
-<div class="section" id="id7">
-<h2>9.2.9. パッケージの作成<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>9.2.10. パッケージの作成<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>Linux と Windows 用にパッケージを作成する必要があります。</p>
 <p>Linux 用のパッケージは以下の 2 種類に分けることが可能です。</p>
 <ol class="arabic simple">
@@ -225,17 +237,18 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p class="last">現在のところ、パッケージの作成は Debian GNU/Linux (Ubuntu も可) でしか行えません。</p>
 </div>
 <div class="section" id="debian">
-<h3>9.2.9.1. Debian 系<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<h3>9.2.10.1. Debian 系<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
 <p>まず apt ディレクトリに移動します。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% cd apt
 </pre></div>
 </div>
-<p>その後、次のようにすれば一連のリリース作業（build sign-packages update-repository sign-repository upload）が行われますが、途中で失敗することもあります。</p>
+<p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository sign-repository upload）が行われますが、途中で失敗することもあります。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make release
 </pre></div>
 </div>
 <p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% make build
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make download
+% make build
 % make sign-packages
 % make update-repository
 % make sign-repository
@@ -247,7 +260,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p>このように Makefile.am を書き換えずにコマンドライン引数でビルドの挙動を変更する方法は、知っておいて損はないでしょう。</p>
 </div>
 <div class="section" id="red-hat">
-<h3>9.2.9.2. Red Hat 系<a class="headerlink" href="#red-hat" title="Permalink to this headline">¶</a></h3>
+<h3>9.2.10.2. Red Hat 系<a class="headerlink" href="#red-hat" title="Permalink to this headline">¶</a></h3>
 <p>まず yum ディレクトリに移動する。</p>
 <p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository upload）が行われますが、途中で失敗することもあります。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make release
@@ -263,7 +276,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </div>
 </div>
 <div class="section" id="windows">
-<h3>9.2.9.3. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<h3>9.2.10.3. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
 <p>MariaDB 本体を <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">多少変更しないといけない</a>
 ため、Windows 版は MariaDB に mroonga/groonga/groonga-normalizer-mysql
 をバンドルしたパッケージとして作成します。</p>
@@ -334,14 +347,6 @@ Linux 側からダウンロードする場合は以下のようにします。:<
     packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-winx64.zip
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id10">
-<h2>9.2.10. タグを打つ<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">make</span> <span class="pre">tag</span></code> とするとタグが打たれます。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% make tag
-% git push --tags origin
-</pre></div>
 </div>
 </div>
 <div class="section" id="id11">
@@ -485,14 +490,14 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 <li><a class="reference internal" href="#id4">9.2.5. configureスクリプトの実行</a></li>
 <li><a class="reference internal" href="#id5">9.2.6. アップロード権限の確認</a></li>
 <li><a class="reference internal" href="#make-update-latest-release">9.2.7. make update-latest-releaseの実行</a></li>
-<li><a class="reference internal" href="#id6">9.2.8. 配布用ファイルのアップロード</a></li>
-<li><a class="reference internal" href="#id7">9.2.9. パッケージの作成</a><ul>
-<li><a class="reference internal" href="#debian">9.2.9.1. Debian 系</a></li>
-<li><a class="reference internal" href="#red-hat">9.2.9.2. Red Hat 系</a></li>
-<li><a class="reference internal" href="#windows">9.2.9.3. Windows</a></li>
+<li><a class="reference internal" href="#id6">9.2.8. リリースタグの設定</a></li>
+<li><a class="reference internal" href="#id7">9.2.9. 配布用ファイルのアップロード</a></li>
+<li><a class="reference internal" href="#id8">9.2.10. パッケージの作成</a><ul>
+<li><a class="reference internal" href="#debian">9.2.10.1. Debian 系</a></li>
+<li><a class="reference internal" href="#red-hat">9.2.10.2. Red Hat 系</a></li>
+<li><a class="reference internal" href="#windows">9.2.10.3. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id10">9.2.10. タグを打つ</a></li>
 <li><a class="reference internal" href="#id11">9.2.11. ドキュメントのアップロード</a></li>
 <li><a class="reference internal" href="#homebrew">9.2.12. Homebrewの更新</a></li>
 <li><a class="reference internal" href="#id13">9.2.13. リリースメールの送信</a></li>
@@ -515,8 +520,8 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -535,7 +540,7 @@ Groongaと組み合わせると問題が解決しているかもしれません�
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.06 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.07 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" >9. Developer's guide</a> &raquo;</li> 
       </ul>
     </div>
