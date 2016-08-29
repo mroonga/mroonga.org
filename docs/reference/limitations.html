@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.6. Limitations &mdash; Mroonga v6.07 documentation</title>
+    <title>5.6. Limitations &mdash; Mroonga v6.08 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.07',
+        VERSION:     '6.08',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="top" title="Mroonga v6.07 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v6.08 documentation" href="../index.html" />
     <link rel="up" title="5. Reference" href="../reference.html" />
     <link rel="next" title="5.7. Full text search" href="full_text_search.html" />
     <link rel="prev" title="5.5.6. mroonga_snippet_html()" href="udf/mroonga_snippet_html.html" /> 
@@ -73,7 +73,7 @@
         <li class="right" >
           <a href="udf/mroonga_snippet_html.html" title="5.5.6. mroonga_snippet_html()"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.07 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.08 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -93,7 +93,13 @@ This limitation is derived from Groonga.</p>
 <ul class="simple">
 <li>The maximum one key size: 4KiB</li>
 <li>The maximum total size of keys: 4GiB</li>
-<li>The maximum number of records: 268,435,455 (more than 268 million)</li>
+<li>The maximum number of records:<ul>
+<li>No primary key table: 1,073,741,815 (2 <sup>30</sup> - 9)</li>
+<li><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> or <code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">BTREE</span></code> table:
+1,073,741,823 (2 <sup>30</sup> - 1)</li>
+<li><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">HASH</span></code> table: 536,870,912 (2 <sup>29</sup>)</li>
+</ul>
+</li>
 </ul>
 <p>Keep in mind that these limitations may vary depending on conditions.</p>
 </div>
@@ -239,7 +245,7 @@ mysql&gt; select * from datetime_limitation;
         <li class="right" >
           <a href="udf/mroonga_snippet_html.html" title="5.5.6. mroonga_snippet_html()"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.07 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.08 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &raquo;</li> 
       </ul>
     </div>
