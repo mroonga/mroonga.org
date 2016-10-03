@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
     <link rel="top" title="Mroonga v6.09 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4.4. ラッパーモード" href="wrapper.html" />
@@ -89,31 +91,31 @@
 <p>ここでは Mroonga におけるストレージモードの利用方法を説明します。</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>4.3.1. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code> とMroongaを指定するところがポイントです。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE diaries (
-    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
-    -&gt;   content VARCHAR(255),
-    -&gt;   FULLTEXT INDEX (content)
-    -&gt; ) ENGINE = Mroonga DEFAULT CHARSET utf8;
-Query OK, 0 rows affected (0.10 sec)
+<p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code> とMroongaを指定するところがポイントです。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.10 sec)</span>
 </pre></div>
 </div>
-<p>INSERTでデータを投入してみましょう。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll be fine tomorrow.&quot;);
-Query OK, 1 row affected (0.01 sec)
+<p><code class="docutils literal"><span class="pre">INSERT</span></code> でデータを投入してみましょう。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
 
-mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;ll rain tomorrow&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
 <p>全文検索を実行してみます。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;fine&quot;);
-+----+-----------------------------------------+
-| id | content                                 |
-+----+-----------------------------------------+
-|  1 | It&#39;ll be fine tomorrow. |
-+----+-----------------------------------------+
-1 row in set (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +----+-----------------------------------------+</span>
+<span class="c1">-- | id | content                                 |</span>
+<span class="c1">-- +----+-----------------------------------------+</span>
+<span class="c1">-- |  1 | It&#39;ll be fine tomorrow. |</span>
+<span class="c1">-- +----+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>おぉぉー。検索できましたね。</p>
@@ -126,35 +128,45 @@ Query OK, 1 row affected (0.00 sec)
 </div>
 <p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
 <p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference" href="#score" id="id1">[1]</a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
-<p>それでは実際にやってみましょう。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<p>それでは実際にやってみましょう。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
-+----+--------------------------------------------------------------+------------------------------------+
-| id | content                                                      | MATCH (content) AGAINST (&quot;fine&quot;) |
-+----+--------------------------------------------------------------+------------------------------------+
-|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                  2 |
-|  1 | It&#39;ll be fine tomorrow.                      |                                  1 |
-|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.    |                                  1 |
-+----+--------------------------------------------------------------+------------------------------------+
-3 rows in set (0.00 sec)
+<span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
+       <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span>
+  <span class="k">FROM</span> <span class="n">diaries</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span>
+ <span class="k">ORDER</span> <span class="k">BY</span>
+       <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+<span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
+<span class="c1">-- | id | content                                          | MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) |</span>
+<span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
+<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                                 2 |</span>
+<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |                                                 1 |</span>
+<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |                                                 1 |</span>
+<span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
+<span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
-<p>検索対象の文字列 <code class="docutils literal"><span class="pre">晴れ</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
+<p>検索対象の文字列 <code class="docutils literal"><span class="pre">fine</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
 <p>属性名を変更したい場合は <code class="docutils literal"><span class="pre">AS</span></code> を使って下さい。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
-+----+--------------------------------------------------------------+-------+
-| id | content                                                      | score |
-+----+--------------------------------------------------------------+-------+
-|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |
-|  1 | It&#39;ll be fine tomorrow.                      |     1 |
-|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.    |     1 |
-+----+--------------------------------------------------------------+-------+
-3 rows in set (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
+       <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">score</span>
+  <span class="k">FROM</span> <span class="n">diaries</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span>
+ <span class="k">ORDER</span> <span class="k">BY</span>
+       <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+<span class="c1">-- +----+--------------------------------------------------+-------+</span>
+<span class="c1">-- | id | content                                          | score |</span>
+<span class="c1">-- +----+--------------------------------------------------+-------+</span>
+<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |</span>
+<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |     1 |</span>
+<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |     1 |</span>
+<span class="c1">-- +----+--------------------------------------------------+-------+</span>
+<span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
 </div>
@@ -170,76 +182,104 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> に <code class="docutils literal"><span class="pre">COMMENT</span></code> を指定できるのはMySQL 5.5からになります。MySQL 5.1を利用している場合は後述の <code class="docutils literal"><span class="pre">mroonga_default_parser</span></code> 変数を利用してください。</p>
+<p class="last"><code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> に <code class="docutils literal"><span class="pre">COMMENT</span></code> を指定できるのはMySQL 5.5からになります。MySQL 5.1を利用している場合は後述の <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> 変数を利用してください。</p>
 </div>
-<p>トークナイザーに指定できるのは以下の値です。</p>
-<dl class="docutils">
-<dt>off</dt>
-<dd><p class="first last">トークナイズしません。&quot;off&quot;は``content``をそのまま扱いたい場合に使います。例えば、この値は前方一致検索のために指定します。</p>
-</dd>
-<dt>TokenBigram</dt>
-<dd><p class="first">バイグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、3文字以上のトークンも存在する。これはノイズを減らすためである。</p>
+<p>トークナイザーに指定できるのは以下の値です。Mroongaで言う「トークナイザー」とMySQLで言う「パーサー」は同じものです。</p>
+<table border="1" class="docutils" id="id6">
+<caption><span class="caption-text">利用可能なトークナイザー一覧</span><a class="headerlink" href="#id6" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">トークナイザー</p>
+</th>
+<th class="head"><p class="first last">説明</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">off</span></code></td>
+<td><p class="first last">トークナイズしません。 <code class="docutils literal"><span class="pre">off</span></code> は <code class="docutils literal"><span class="pre">content</span></code> をそのまま扱いたい場合に使います。例えば、この値は前方一致検索のために指定します。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigram</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、3文字以上のトークンも存在する。これはノイズを減らすためである。</p>
 <p class="last">デフォルト値。</p>
-</dd>
-<dt>TokenMecab</dt>
-<dd><p class="first last">MeCabを用いてトークナイズする。groongaがMeCabサポート付きでビルドされている必要がある。</p>
-</dd>
-<dt>TokenBigramSplitSymbol</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramと異なり、記号が連続していても特別扱いして1つのトークンとして扱わず通常のバイグラムの処理を行う。</p>
-<p class="last">TokenBigramではなくTokenBigramSplitSymbolを利用すると「Is it really!?!?!?」の「!?!?!?」の部分に「!?」でマッチする。TokenBigramの場合は「!?!?!?」でないとマッチしない。</p>
-</dd>
-<dt>TokenBigramSplitSymbolAlpha</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolに加えて、連続したアルファベットも特別扱いせずに通常のバイグラムの処理を行う。</p>
-<p class="last">TokenBigramではなくTokenBigramSplitSymbolAlphaを利用すると「Is it really?」に「real」でマッチする。TokenBigramの場合は「really」でないとマッチしない。</p>
-</dd>
-<dt>TokenBigramSplitSymbolAlphaDigit</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolAlphaに加えて、連続した数字も特別扱いせずに通常のバイグラムの処理を行う。つまり、すべての字種を特別扱いせずにバイグラムの処理を行う。</p>
-<p class="last">TokenBigramではなくTokenBigramSplitSymbolAlphaDigitを利用すると「090-0123-4567」に「567」でマッチする。TokenBigramの場合は「4567」でないとマッチしない。</p>
-</dd>
-<dt>TokenBigramIgnoreBlank</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramと異なり、空白を無視して処理する。</p>
-<p class="last">TokenBigramではなくTokenBigramIgnoreBlankを利用すると「み な さ ん 注 目」に「みなさん」でマッチする。TokenBigramの場合は「み な さ ん」でないとマッチしない。</p>
-</dd>
-<dt>TokenBigramIgnoreBlankSplitSymbol</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolと異なり、空白を無視して処理する。</p>
-<p class="last">TokenBigramSplitSymbolではなくTokenBigramIgnoreBlankSplitSymbolを利用すると「! !? ??」に「???」でマッチする。TokenBigramSplitSymbolの場合は「? ??」でないとマッチしない。</p>
-</dd>
-<dt>TokenBigramIgnoreBlankSplitSymbolAlpha</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolAlphaと異なり、空白を無視して処理する。</p>
-<p class="last">TokenBigramSplitSymbolAlphaではなくTokenBigramIgnoreBlankSplitSymbolAlphaを利用すると「I am a pen.」に「ama」でマッチする。TokenBigramSplitSymbolAlphaの場合は「am a」でないとマッチしない。</p>
-</dd>
-<dt>TokenBigramIgnoreBlankSplitSymbolAlphaDigit</dt>
-<dd><p class="first">バイグラムでトークナイズする。TokenBigramSplitSymbolAlphaDigitと異なり、空白を無視して処理する。</p>
-<p class="last">okenBigramSplitSymbolAlphaDigitではなくTokenBigramIgnoreBlankSplitSymbolAlphaDigitを利用すると「090 0123 4567」に「9001」でマッチする。TokenBigramSplitSymbolAlphaDigitの場合は「90 01」でないとマッチしない。</p>
-</dd>
-<dt>TokenDelimit</dt>
-<dd><p class="first">空白区切りでトークナイズする。</p>
-<p class="last">「movie horror topic」をトークナイズすると「movie」、「horror」、「topic」になります。</p>
-</dd>
-<dt>TokenDelimitNull</dt>
-<dd><p class="first">null文字（\0）区切りでトークナイズする。</p>
-<p class="last">「movie\0horror\0topic」をトークナイズすると「movie」、「horror」、「topic」になります。</p>
-</dd>
-<dt>TokenUnigram</dt>
-<dd><p class="first last">ユニグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、2文字以上のトークンも存在する。これはノイズを減らすためである。</p>
-</dd>
-<dt>TokenTrigram</dt>
-<dd><p class="first last">トリグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、4文字以上のトークンも存在する。これはノイズを減らすためである。</p>
-</dd>
-</dl>
-<p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build mroonga</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenMecab</span></code></td>
+<td><p class="first last">MeCabを用いてトークナイズする。groongaがMeCabサポート付きでビルドされている必要がある。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigram</span></code> と異なり、記号が連続していても特別扱いして1つのトークンとして扱わず通常のバイグラムの処理を行う。</p>
+<p class="last">TokenBigramではなく <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code> を利用すると「 <code class="docutils literal"><span class="pre">Is</span> <span class="pre">it</span> <span class="pre">really!?!?!?</span></code> 」の「 <code class="docutils literal"><span class="pre">!?!?!?</span></code> 」の部分に「 <code class="docutils literal"><span class="pre">!?</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal"><span class="pre">!?!?!?</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code> に加えて、連続したアルファベットも特別扱いせずに通常のバイグラムの処理を行う。</p>
+<p class="last"><code class="docutils literal"><span class="pre">TokenBigram</span></code> ではなく <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> を利用すると「 <code class="docutils literal"><span class="pre">Is</span> <span class="pre">it</span> <span class="pre">really?</span></code> 」に「 <code class="docutils literal"><span class="pre">real</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal"><span class="pre">really</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> に加えて、連続した数字も特別扱いせずに通常のバイグラムの処理を行う。つまり、すべての字種を特別扱いせずにバイグラムの処理を行う。</p>
+<p class="last"><code class="docutils literal"><span class="pre">TokenBigram</span></code> ではなく <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を利用すると「 <code class="docutils literal"><span class="pre">090-0123-4567</span></code> 」に「 <code class="docutils literal"><span class="pre">567</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal"><span class="pre">4567</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlank</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigram</span></code> と異なり、空白を無視して処理する。</p>
+<p class="last"><code class="docutils literal"><span class="pre">TokenBigram</span></code> ではなく <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlank</span></code> を利用すると「 <code class="docutils literal"><span class="pre">み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span> <span class="pre">注</span> <span class="pre">目</span></code> 」に「 <code class="docutils literal"><span class="pre">みなさん</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal"><span class="pre">み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code> と異なり、空白を無視して処理する。</p>
+<p class="last"><code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code> ではなく <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code> を利用すると「 <code class="docutils literal"><span class="pre">!</span> <span class="pre">!?</span> <span class="pre">??</span></code> 」に「 <code class="docutils literal"><span class="pre">???</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code> の場合は「 <code class="docutils literal"><span class="pre">?</span> <span class="pre">??</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> と異なり、空白を無視して処理する。</p>
+<p class="last"><code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> ではなく <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code> を利用すると「 <code class="docutils literal"><span class="pre">I</span> <span class="pre">am</span> <span class="pre">a</span> <span class="pre">pen.</span></code> 」に「 <code class="docutils literal"><span class="pre">ama</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> の場合は「 <code class="docutils literal"><span class="pre">am</span> <span class="pre">a</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></td>
+<td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> と異なり、空白を無視して処理する。</p>
+<p class="last"><code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> ではなく <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code> を利用すると「 <code class="docutils literal"><span class="pre">090</span> <span class="pre">0123</span> <span class="pre">4567</span></code> 」に「 <code class="docutils literal"><span class="pre">9001</span></code> 」でマッチする。 <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> の場合は「 <code class="docutils literal"><span class="pre">90</span> <span class="pre">01</span></code> 」でないとマッチしない。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenDelimit</span></code></td>
+<td><p class="first">空白区切りでトークナイズする。</p>
+<p class="last">「 <code class="docutils literal"><span class="pre">movie</span> <span class="pre">horror</span> <span class="pre">topic</span></code> 」をトークナイズすると「 <code class="docutils literal"><span class="pre">movie</span></code> 」、「 <code class="docutils literal"><span class="pre">horror</span></code> 」、「 <code class="docutils literal"><span class="pre">topic</span></code> 」になります。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenDelimitNull</span></code></td>
+<td><p class="first">null文字（ <code class="docutils literal"><span class="pre">\\0</span></code> ）区切りでトークナイズする。</p>
+<p class="last">「 <code class="docutils literal"><span class="pre">movie\\0horror\\0topic</span></code> 」をトークナイズすると「 <code class="docutils literal"><span class="pre">movie</span></code> 」、「 <code class="docutils literal"><span class="pre">horror</span></code> 」、「 <code class="docutils literal"><span class="pre">topic</span></code> 」になります。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenUnigram</span></code></td>
+<td><p class="first last">ユニグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、2文字以上のトークンも存在する。これはノイズを減らすためである。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenTrigram</span></code></td>
+<td><p class="first last">トリグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、4文字以上のトークンも存在する。これはノイズを減らすためである。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>デフォルトのパーサは <code class="docutils literal"><span class="pre">configure</span></code> の <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> オプションでビルド時に指定することができます。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
-<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>また、 <code class="docutils literal"><span class="pre">my.cnf</span></code> またはSQL内で <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> 変数を指定することでも指定できます。 <code class="docutils literal"><span class="pre">my.cnf</span></code> で指定するとMySQLを再起動しても値は変更されたままですが、反映させるために再起動しなければいけません。一方、SQLで指定した場合はすぐに設定が反映されますが、MySQLが再起動すると設定は失われます。</p>
 <p>my.cnf:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
 mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_default_tokenizer = TokenMecab;
-Query OK, 0 rows affected (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 </pre></div>
 </div>
 </div>
@@ -249,37 +289,39 @@ Query OK, 0 rows affected (0.00 sec)
 <p><code class="docutils literal"><span class="pre">utf8_general_ci</span></code> または <code class="docutils literal"><span class="pre">utf8mb4_general_ci</span></code> の場合、<code class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></code> ノーマライザーが使用されます。</p>
 <p><code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> または <code class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></code> の場合、<code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> ノーマライザーが使用されます。</p>
 <p><code class="docutils literal"><span class="pre">utf8_bin</span></code> の場合、ノーマライザーは使用されません。</p>
-<p>以下は、 <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> の照合順序を指定して <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> ノーマライザーを使用する例です。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET NAMES utf8;
-Query OK, 0 rows affected (0.00 sec)
+<p>以下は、 <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> の照合順序を指定して <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> ノーマライザーを使用する例です。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
-mysql&gt; CREATE TABLE diaries (
-    -&gt;   day DATE PRIMARY KEY,
-    -&gt;   content VARCHAR(64) NOT NULL,
-    -&gt;   FULLTEXT INDEX (content)
-    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-Query OK, 0 rows affected (0.18 sec)
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="k">day</span> <span class="nb">DATE</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span> <span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
 
-mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span> <span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; SELECT * FROM diaries
-    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
-+------------+-----------------------------------------+
-| day        | content                                 |
-+------------+-----------------------------------------+
-| 2013-04-23 | ブラックコーヒーを飲んだ。 |
-+------------+-----------------------------------------+
-1 row in set (0.00 sec)
+<span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">diaries</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | day        | content                                 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | 2013-04-23 | ブラックコーヒーを飲んだ。 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 
-mysql&gt; SELECT * FROM diaries
-    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
-+------------+-----------------------------------------+
-| day        | content                                 |
-+------------+-----------------------------------------+
-| 2013-04-23 | ブラックコーヒーを飲んだ。 |
-+------------+-----------------------------------------+
-1 row in set (0.00 sec)
+<span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">diaries</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | day        | content                                 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | 2013-04-23 | ブラックコーヒーを飲んだ。 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>Mroongaは、Groongaのノーマライザーを指定する以下のような構文を持っています。:</p>
@@ -287,32 +329,34 @@ mysql&gt; SELECT * FROM diaries
 </pre></div>
 </div>
 <p>Groongaのノーマライザーの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/normalizers.html">Groongaのドキュメント</a> を参照してください。</p>
-<p>以下は、<code class="docutils literal"><span class="pre">NormalizerAuto</span></code> のノーマライザーを使用する例です。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET NAMES utf8;
-Query OK, 0 rows affected (0.00 sec)
+<p>以下は、<code class="docutils literal"><span class="pre">NormalizerAuto</span></code> のノーマライザーを使用する例です。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
-mysql&gt; CREATE TABLE diaries (
-    -&gt;   day DATE PRIMARY KEY,
-    -&gt;   content VARCHAR(64) NOT NULL,
-    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
-    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-Query OK, 0 rows affected (0.19 sec)
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="k">day</span> <span class="nb">DATE</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span> <span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.19 sec)</span>
 
-mysql&gt; INSERT INTO diaries VALUES (&quot;2013-04-23&quot;, &quot;ブラックコーヒーを飲んだ。&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span> <span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; SELECT * FROM diaries
-    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ふらつく&quot; IN BOOLEAN MODE);
-Empty set (0.00 sec)
+<span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">diaries</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- Empty set (0.00 sec)</span>
 
-mysql&gt; SELECT * FROM diaries
-    -&gt;        WHERE MATCH (content) AGAINST (&quot;+ﾌﾞﾗｯｸ&quot; IN BOOLEAN MODE);
-+------------+-----------------------------------------+
-| day        | content                                 |
-+------------+-----------------------------------------+
-| 2013-04-23 | ブラックコーヒーを飲んだ。 |
-+------------+-----------------------------------------+
-1 row in set (0.00 sec)
+<span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">diaries</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | day        | content                                 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | 2013-04-23 | ブラックコーヒーを飲んだ。 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 </div>
@@ -322,88 +366,89 @@ mysql&gt; SELECT * FROM diaries
 <div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
 </pre></div>
 </div>
-<p>以下は、<code class="docutils literal"><span class="pre">TokenFilterStem</span></code> のトークンフィルターを使用する例です。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT mroonga_command(&#39;register token_filters/stem&#39;);
-+------------------------------------------------+
-| mroonga_command(&#39;register token_filters/stem&#39;) |
-+------------------------------------------------+
-| true                                           |
-+------------------------------------------------+
-1 row in set (0.00 sec)
+<p>以下は、<code class="docutils literal"><span class="pre">TokenFilterStem</span></code> のトークンフィルターを使用する例です。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<span class="c1">-- +------------------------------------------------+</span>
+<span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
+<span class="c1">-- +------------------------------------------------+</span>
+<span class="c1">-- | true                                           |</span>
+<span class="c1">-- +------------------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 
-mysql&gt; CREATE TABLE memos (
-    -&gt; id INT NOT NULL PRIMARY KEY,
-    -&gt; content TEXT NOT NULL,
-    -&gt; FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;
-    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
-Query OK, 0 rows affected (0.18 sec)
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;</span>
+<span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (1, &quot;I develop Groonga&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="ss">&quot;I develop Groonga&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (2, &quot;I&#39;m developing Groonga&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="ss">&quot;I&#39;m developing Groonga&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (3, &quot;I developed Groonga&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="ss">&quot;I developed Groonga&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; SELECT * FROM memos
-    -&gt; WHERE MATCH (content) AGAINST (&quot;+develops&quot; IN BOOLEAN MODE);
-+----+------------------------+
-| id | content                |
-+----+------------------------+
-|  1 | I develop Groonga      |
-|  2 | I&#39;m developing Groonga |
-|  3 | I developed Groonga    |
-+----+------------------------+
-3 rows in set (0.01 sec)
+<span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">memos</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+develops&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +----+------------------------+</span>
+<span class="c1">-- | id | content                |</span>
+<span class="c1">-- +----+------------------------+</span>
+<span class="c1">-- |  1 | I develop Groonga      |</span>
+<span class="c1">-- |  2 | I&#39;m developing Groonga |</span>
+<span class="c1">-- |  3 | I developed Groonga    |</span>
+<span class="c1">-- +----+------------------------+</span>
+<span class="c1">-- 3 rows in set (0.01 sec)</span>
 </pre></div>
 </div>
 <p>Groongaのトークンフィルターの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/token_filters.html">Groongaのドキュメント</a> を参照してください。</p>
-<p>以下は、<code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> のトークンフィルターを使用する例です。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT mroonga_command(&quot;register token_filters/stop_word&quot;);
-+-----------------------------------------------------+
-| mroonga_command(&quot;register token_filters/stop_word&quot;) |
-+-----------------------------------------------------+
-| true                                                |
-+-----------------------------------------------------+
-1 row in set (0.00 sec)
+<p>以下は、<code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> のトークンフィルターを使用する例です。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<span class="c1">-- +-----------------------------------------------------+</span>
+<span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
+<span class="c1">-- +-----------------------------------------------------+</span>
+<span class="c1">-- | true                                                |</span>
+<span class="c1">-- +-----------------------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 
-mysql&gt; CREATE TABLE terms (
-    -&gt;   term VARCHAR(64) NOT NULL PRIMARY KEY,
-    -&gt;   is_stop_word BOOL NOT NULL
-    -&gt; ) Engine=Mroonga COMMENT=&#39;default_tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39; DEFAULT CHARSET=utf8;
-Query OK, 0 rows affected (0.12 sec)
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">terms</span> <span class="p">(</span>
+  <span class="n">term</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">is_stop_word</span> <span class="n">BOOL</span> <span class="k">NOT</span> <span class="k">NULL</span>
+<span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">COMMENT</span><span class="o">=</span><span class="s1">&#39;default_tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39;</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 
-mysql&gt; CREATE TABLE memos (
-    -&gt;   id INT NOT NULL PRIMARY KEY,
-    -&gt;   content TEXT NOT NULL,
-    -&gt;   FULLTEXT INDEX (content) COMMENT &#39;table &quot;terms&quot;&#39;
-    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
-Query OK, 0 rows affected (0.17 sec)
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;table &quot;terms&quot;&#39;</span>
+<span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.17 sec)</span>
 
-mysql&gt;
-mysql&gt; INSERT INTO terms VALUES (&quot;and&quot;, true);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">terms</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;and&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (1, &quot;Hello&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="ss">&quot;Hello&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (2, &quot;Hello and Good-bye&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="ss">&quot;Hello and Good-bye&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (3, &quot;Good-bye&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="ss">&quot;Good-bye&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; SELECT * FROM memos
-    -&gt;   WHERE MATCH (content) AGAINST (&quot;+\&quot;Hello and\&quot;&quot; IN BOOLEAN MODE);
-+----+--------------------+
-| id | content            |
-+----+--------------------+
-|  1 | Hello              |
-|  2 | Hello and Good-bye |
-+----+--------------------+
-2 rows in set (0.01 sec)
+<span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">memos</span>
+ <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;+&quot;Hello and&quot;&#39;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +----+--------------------+</span>
+<span class="c1">-- | id | content            |</span>
+<span class="c1">-- +----+--------------------+</span>
+<span class="c1">-- |  1 | Hello              |</span>
+<span class="c1">-- |  2 | Hello and Good-bye |</span>
+<span class="c1">-- +----+--------------------+</span>
+<span class="c1">-- 2 rows in set (0.01 sec)</span>
 </pre></div>
 </div>
 <p>これは、全文検索用の語彙表テーブルを指定する方法を使用しています。</p>
@@ -414,12 +459,12 @@ mysql&gt; SELECT * FROM memos
 <div class="highlight-none"><div class="highlight"><pre><span></span>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
 </pre></div>
 </div>
-<p>以下は、<code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code> フラグを使用する例です。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE entries (
-    -&gt;   id INT UNSIGNED PRIMARY KEY,
-    -&gt;   content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
-    -&gt; ) Engine=Mroonga DEFAULT CHARSET=utf8;
-Query OK, 0 rows affected (0.12 sec)
+<p>以下は、<code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code> フラグを使用する例です。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="n">UNSIGNED</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">TEXT</span> <span class="k">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+<span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 </pre></div>
 </div>
 <p>Groongaのカラムフラグの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/column_create.html#parameters">Groongaのドキュメント</a> を参照してください。</p>
@@ -427,35 +472,37 @@ Query OK, 0 rows affected (0.12 sec)
 <div class="section" id="how-to-use-geolocation-search">
 <h2>4.3.7. 位置情報検索の利用方法<a class="headerlink" href="#how-to-use-geolocation-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ストレージモードでは全文検索だけではなく位置情報検索も高速に実行できます。ただし、MyISAMとは異なりデータとして格納できるのはPOINT型のみです。LINEなどの他のデータ型は保存できません。また、インデックスを用いた高速な検索に対応しているのはMBRContainsだけです。MBRDisjointなどには対応していません。</p>
-<p>位置情報検索を利用する場合のテーブル定義はMyISAMと同様にPOINT型のカラムを定義し、そのカラムに対してSPATIAL INDEXを指定します。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE shops (
-    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
-    -&gt;   name VARCHAR(255),
-    -&gt;   location POINT NOT NULL,
-    -&gt;   SPATIAL INDEX (location)
-    -&gt; ) ENGINE = Mroonga;
-Query OK, 0 rows affected (0.06 sec)
+<p>位置情報検索を利用する場合のテーブル定義はMyISAMと同様にPOINT型のカラムを定義し、そのカラムに対してSPATIAL INDEXを指定します。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+  <span class="k">location</span> <span class="n">POINT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">SPATIAL</span> <span class="k">INDEX</span> <span class="p">(</span><span class="k">location</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.06 sec)</span>
 </pre></div>
 </div>
-<p>データの登録方法もMyISAMのときと同様にGeomFromText()関数を使って文字列からPOINT型の値を作成します。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO shops VALUES (null, &#39;Nezu\&#39;s Taiyaki&#39;, GeomFromText(&#39;POINT(139.762573 35.720253)&#39;));
-Query OK, 1 row affected (0.00 sec)
+<p>データの登録方法もMyISAMのときと同様にGeomFromText()関数を使って文字列からPOINT型の値を作成します。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO shops VALUES (null, &#39;Naniwaya&#39;, GeomFromText(&#39;POINT(139.796234 35.730061)&#39;));
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO shops VALUES (null, &#39;Yanagiya Taiyaki&#39;, GeomFromText(&#39;POINT(139.783981 35.685341)&#39;));
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Yanagiya Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.783981 35.685341)&#39;</span><span class="p">));</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
-<p>池袋駅（139.7101 35.7292）が左上の点、東京駅（139.7662 35.6815）が右下の点となるような長方形内にあるお店を探す場合は以下のようなSELECTになります。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT id, name, AsText(location) FROM shops WHERE MBRContains(GeomFromText(&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;), location);
-+----+-----------------------+------------------------------------------+
-| id | name                  | AsText(location)                         |
-+----+-----------------------+------------------------------------------+
-|  1 | Nezu&#39;s Taiyaki | POINT(139.762572777778 35.7202527777778) |
-+----+-----------------------+------------------------------------------+
-1 row in set (0.00 sec)
+<p>池袋駅（139.7101 35.7292）が左上の点、東京駅（139.7662 35.6815）が右下の点となるような長方形内にあるお店を探す場合は以下のようなSELECTになります。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
+  <span class="k">FROM</span> <span class="n">shops</span>
+ <span class="k">WHERE</span> <span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span> <span class="k">location</span><span class="p">);</span>
+<span class="c1">-- +----+-----------------------+------------------------------------------+</span>
+<span class="c1">-- | id | name                  | AsText(location)                         |</span>
+<span class="c1">-- +----+-----------------------+------------------------------------------+</span>
+<span class="c1">-- |  1 | Nezu&#39;s Taiyaki        | POINT(139.762572777778 35.7202527777778) |</span>
+<span class="c1">-- +----+-----------------------+------------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>位置情報で検索できていますね！</p>
@@ -465,64 +512,64 @@ Query OK, 1 row affected (0.00 sec)
 <p>Groongaではテーブルにレコードを追加した際にレコードを一意に識別するための番号が割当てられます。</p>
 <p>Mroongaではアプリケーションの開発を容易にするため、このレコードIDをSQLで取得できるようになっています。</p>
 <p>レコードIDを取得するためには、テーブル定義時に <code class="docutils literal"><span class="pre">_id</span></code> という名前のカラムを作成して下さい。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE memos (
-    -&gt;   _id INT,
-     &gt;   content VARCHAR(255),
-    -&gt;   UNIQUE KEY (_id) USING HASH
-    -&gt; ) ENGINE = Mroonga;
-Query OK, 0 rows affected (0.04 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="n">_id</span> <span class="nb">INT</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">_id</span><span class="p">)</span> <span class="k">USING</span> <span class="n">HASH</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.04 sec)</span>
 </pre></div>
 </div>
-<p>_idカラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
+<p><code class="docutils literal"><span class="pre">_id</span></code> カラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
 <p>また_idカラムにはインデックスを作成することが可能ですが、HASH形式である必要があります。</p>
 <p>INSERTでテーブルにレコードを追加してみましょう。_idカラムは仮想カラムとして実装されており、また_idの値であるレコードIDはGroongaにより割当てられるため、SQLによる更新時に値を指定することはできません。更新対象から外すか、値に <code class="docutils literal"><span class="pre">null</span></code> を使用する必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO memos VALUES (null, &quot;Saury for today&#39;s dinner.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;Update mroonga tomorrow.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;Buy some dumpling on the way home.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Buy some dumpling on the way home.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; INSERT INTO memos VALUES (null, &quot;Thank God It&#39;s meat day.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Thank God It&#39;s meat day.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
 <p>レコードIDを取得するには、_idカラムを含むようにしてSELECTを行います。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM memos;
-+------+------------------------------------------+
-| _id  | content                                  |
-+------+------------------------------------------+
-|    1 | Saury for today&#39;s dinner.                    |
-|    2 | Update mroonga tomorrow. |
-|    3 | Buy some dumpling on the way home.                 |
-|    4 | Thank God It&#39;s meat day.                 |
-+------+------------------------------------------+
-4 rows in set (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<span class="c1">-- +------+------------------------------------------+</span>
+<span class="c1">-- | _id  | content                                  |</span>
+<span class="c1">-- +------+------------------------------------------+</span>
+<span class="c1">-- |    1 | Saury for today&#39;s dinner.                |</span>
+<span class="c1">-- |    2 | Update mroonga tomorrow.                 |</span>
+<span class="c1">-- |    3 | Buy some dumpling on the way home.       |</span>
+<span class="c1">-- |    4 | Thank God It&#39;s meat day.                 |</span>
+<span class="c1">-- +------+------------------------------------------+</span>
+<span class="c1">-- 4 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>また直前のINSERTにより割当てられたレコードIDについては、last_insert_grn_id関数により取得することもできます。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO memos VALUES (null, &quot;Just one bottle of milk in the fridge.&quot;);
-Query OK, 1 row affected (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-mysql&gt; SELECT last_insert_grn_id();
-+----------------------+
-| last_insert_grn_id() |
-+----------------------+
-|                    5 |
-+----------------------+
-1 row in set (0.00 sec)
+<span class="k">SELECT</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
+<span class="c1">-- +----------------------+</span>
+<span class="c1">-- | last_insert_grn_id() |</span>
+<span class="c1">-- +----------------------+</span>
+<span class="c1">-- |                    5 |</span>
+<span class="c1">-- +----------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>last_insert_grn_id関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE FUNCTION last_insert_grn_id RETURNS INTEGER SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>ご覧のように_idカラムやlast_insert_grn_id関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; UPDATE memos SET content = &quot;So much milk in the fridge.&quot; WHERE _id = last_insert_grn_id();
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+<span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
 </pre></div>
 </div>
 </div>
@@ -543,64 +590,64 @@ Rows matched: 1  Changed: 1  Warnings: 0
 <p>絞り込み検索は検索結果に対して複数の <cite>GROUP BY</cite> 操作を実行する必要があります。SQLでファセット検索をやろうとすると、複数の <cite>SELECT</cite> リクエストが必要になります。これは効率的ではありません。</p>
 <p>Groongaは1回のgroongaコマンドでファセット検索をできます。これは効率的です。Groongaには <cite>select</cite> コマンドというファセット検索に対応した検索コマンドがあります。Groongaではファセット検索は <cite>ドリルダウン（drilldown）</cite> と呼ばれています。Groongaの <cite>select</cite> コマンドの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">Groongaのドキュメント</a> を参照してください。</p>
 <p>mroongaは <cite>mroonga_command()</cite> 関数を提供しています。この関数を使えばSQLの中で好きなgroongaコマンドを実行できます。しかし、使うのは <cite>select</cite> コマンドだけにしておくべきです。スキーマやデータを変更するコマンドを使うと一貫性が壊れてしまうかもしれません。</p>
-<p>実行例で使用するスキーマ定義はこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE diaries (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  content VARCHAR(255),
-  date DATE,
-  year YEAR,
-  `year_month` VARCHAR(9),
-  tag VARCHAR(32),
-  FULLTEXT INDEX (content)
-) ENGINE = Mroonga DEFAULT CHARSET utf8;
+<p>実行例で使用するスキーマ定義はこちら。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+  <span class="nb">date</span> <span class="nb">DATE</span><span class="p">,</span>
+  <span class="k">year</span> <span class="k">YEAR</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">year_month</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+  <span class="n">tag</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>実行例で使用するサンプルデータはこちら:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>INSERT INTO diaries (content, date, year, `year_month`, tag)
-       VALUES (&#39;Groonga is an open-source fulltext search engine and column store.&#39;,
-               &#39;2013-04-08&#39;,
-               &#39;2013&#39;,
-               &#39;2013-04&#39;,
-               &#39;groonga&#39;);
-INSERT INTO diaries (content, date, year, `year_month`, tag)
-       VALUES (&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;,
-               &#39;2013-04-09&#39;,
-               &#39;2013&#39;,
-               &#39;2013-04&#39;,
-               &#39;MySQL&#39;);
-INSERT INTO diaries (content, date, year, `year_month`, tag)
-       VALUES (&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;,
-               &#39;2013-03-29&#39;,
-               &#39;2013&#39;,
-               &#39;2013-03&#39;,
-               &#39;MySQL&#39;);
+<p>実行例で使用するサンプルデータはこちら。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+       <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;groonga&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+       <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013-04-09&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+       <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013-03-29&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;2013-03&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>各レコードは <cite>tag</cite> として <cite>groonga</cite> と <cite>MySQL</cite> が付いています。各レコードは <cite>year</cite> と <cite>year_month</cite> も持っています。ファセット検索のキーとして <cite>tag</cite> 、 <cite>year</cite> 、 <cite>year_month</cite> を使えます。</p>
 <p>Groongaはファセット検索のことをドリルダウンと呼んでいます。そのため、Groongaでのパラメータ名は <cite>--drilldown</cite> となっています。groongaは検索結果をJSONで返します。そのため、 <cite>mroonga_command()</cite> も検索結果をJSONで返します。これはSQLらしくありません。JSON形式の検索結果は自分でパースしないといけません。</p>
-<p>以下は利用可能なファセット検索キーをすべて使った例です。（結果のJSONは整形済み）:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT mroonga_command(&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;) AS faceted_result;
-+-----------------------------+
-| faceted_result              |
-+-----------------------------+
-| [[[3],                      |
-|   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |
-|  [[2],                      |
-|   [[&quot;_key&quot;,&quot;ShortText&quot;],    |
-|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
-|   [&quot;groonga&quot;,1],            |
-|   [&quot;MySQL&quot;,2]],             |
-|  [[1],                      |
-|   [[&quot;_key&quot;,&quot;Time&quot;],         |
-|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
-|   [1356998400.0,3]],        |
-|  [[2],                      |
-|   [[&quot;_key&quot;,&quot;ShortText&quot;],    |
-|    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |
-|   [&quot;2013-04&quot;,2],            |
-|   [&quot;2013-03&quot;,1]]]           |
-+-----------------------------+
-1 row in set (0.00 sec)
+<p>以下は利用可能なファセット検索キーをすべて使った例です。（結果のJSONは整形済み）</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
+<span class="c1">-- +-----------------------------+</span>
+<span class="c1">-- | faceted_result              |</span>
+<span class="c1">-- +-----------------------------+</span>
+<span class="c1">-- | [[[3],                      |</span>
+<span class="c1">-- |   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |</span>
+<span class="c1">-- |  [[2],                      |</span>
+<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
+<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [&quot;groonga&quot;,1],            |</span>
+<span class="c1">-- |   [&quot;MySQL&quot;,2]],             |</span>
+<span class="c1">-- |  [[1],                      |</span>
+<span class="c1">-- |   [[&quot;_key&quot;,&quot;Time&quot;],         |</span>
+<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [1356998400.0,3]],        |</span>
+<span class="c1">-- |  [[2],                      |</span>
+<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
+<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [&quot;2013-04&quot;,2],            |</span>
+<span class="c1">-- |   [&quot;2013-03&quot;,1]]]           |</span>
+<span class="c1">-- +-----------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>詳細は <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">Groongaのselectコマンドのドキュメント</a> を確認してください。</p>
@@ -617,24 +664,24 @@ INSERT INTO diaries (content, date, year, `year_month`, tag)
 </div>
 <p>ログのデフォルトの出力レベルはNOTICE（必要な情報のみ出力。デバッグ情報などは出力しない）となっております。</p>
 <p>ログの出力レベルは <code class="docutils literal"><span class="pre">mroonga_log_level</span></code> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
-+-------------------+--------+
-| Variable_name     | Value  |
-+-------------------+--------+
-| mroonga_log_level | NOTICE |
-+-------------------+--------+
-1 row in set (0.00 sec)
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="c1">-- +-------------------+--------+</span>
+<span class="c1">-- | Variable_name     | Value  |</span>
+<span class="c1">-- +-------------------+--------+</span>
+<span class="c1">-- | mroonga_log_level | NOTICE |</span>
+<span class="c1">-- +-------------------+--------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 
-mysql&gt; SET GLOBAL mroonga_log_level=DUMP;
-Query OK, 0 rows affected (0.00 sec)
+<span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_log_level</span><span class="o">=</span><span class="n">DUMP</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_log_level | DUMP  |
-+-------------------+-------+
-1 row in set (0.00 sec)
+<span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="c1">-- +-------------------+-------+</span>
+<span class="c1">-- | Variable_name     | Value |</span>
+<span class="c1">-- +-------------------+-------+</span>
+<span class="c1">-- | mroonga_log_level | DUMP  |</span>
+<span class="c1">-- +-------------------+-------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>設定可能なログレベルは以下の通りです。</p>

@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
     <link rel="top" title="Mroonga v6.09 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="5. リファレンス" href="../reference.html" />
@@ -158,7 +160,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 3 rows in set (0.00 sec)
 </pre></div>
 </div>
-<p>検索対象の文字列 <code class="docutils literal"><span class="pre">晴れ</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
+<p>検索対象の文字列 <code class="docutils literal"><span class="pre">fine</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
 <p>属性名を変更したい場合は <code class="docutils literal"><span class="pre">AS</span></code> を使って下さい。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
 +----+--------------------------------------------------------------+-------+
@@ -241,11 +243,11 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <dd><p class="first last">トリグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、4文字以上のトークンも存在する。これはノイズを減らすためである。</p>
 </dd>
 </dl>
-<p>You can specify the default tokenizer by passing <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build Mroonga.</p>
+<p>デフォルトのパーサは <code class="docutils literal"><span class="pre">configure</span></code> の <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> オプションでビルド時に指定することができます。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
-<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable in my.cnf or by SQL. If you specify it in my.cnf, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>また、my.cnfまたはSQL内で <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> 変数を指定することでも指定できます。my.cnfで指定するとMySQLを再起動しても値は変更されたままですが、反映させるために再起動しなければいけません。一方、SQLで指定した場合はすぐに設定が反映されますが、MySQLが再起動すると設定は失われます。</p>
 <p>my.cnf:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
 mroonga_default_tokenizer=TokenMecab

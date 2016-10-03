@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
     <link rel="top" title="Mroonga v6.09 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4.2. モード" href="mode.html" />
@@ -89,27 +91,31 @@
 <p>Mroongaを使う前にMroongaのインストールチェックをした方がよいです。もし、Mroongaのインストールに失敗していると、このチュートリアルででてくるSQLが失敗してしまいます。</p>
 <p>MySQLサーバの起動停止方法は通常のMySQLと同じです。</p>
 <p>MySQLサーバを起動した上でmysqlコマンドで接続します。パスワードを設定済みの場合は <code class="docutils literal"><span class="pre">-p</span></code> オプションでパスワードを指定して下さい。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>shell&gt; mysql -uroot test
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -uroot test
 </pre></div>
 </div>
-<p>SHOW ENGINESコマンドでmroongaがインストールされているかどうかを確認します。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW ENGINES;
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| mroonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
-| MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
-| InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
-| MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-6 rows in set (0.00 sec)
+<p><code class="docutils literal"><span class="pre">SHOW</span> <span class="pre">ENGINES</span></code> コマンドでMroongaがインストールされているかどうかを確認します。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">ENGINES</span><span class="p">;</span>
+<span class="c1">-- +------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="c1">-- | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |</span>
+<span class="c1">-- +------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="c1">-- | Mroonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |</span>
+<span class="c1">-- | MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |</span>
+<span class="c1">-- | CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |</span>
+<span class="c1">-- | MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |</span>
+<span class="c1">-- | InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |</span>
+<span class="c1">-- | MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |</span>
+<span class="c1">-- +------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="c1">-- 6 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
-<p>上記のように&quot;mroonga&quot;ストレージエンジンが見えていればインストールは無事完了しています。</p>
-<p>インストールされていなければ以下のようにINSTALL PLUGINコマンドを実行して下さい。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; INSTALL PLUGIN mroonga SONAME &#39;ha_mroonga.so&#39;;
+<p>上記のように <code class="docutils literal"><span class="pre">Mroonga</span></code> ストレージエンジンが見えていればインストールは無事完了しています。</p>
+<p>もし <code class="docutils literal"><span class="pre">Mroonga</span></code> が表示されていない場合は以下のコマンドを実行してください。もし、Mroongaをパッケージでインストールしていない場合は <code class="docutils literal"><span class="pre">install.sql</span></code> のパスが違うかもしれません。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -uroot test &lt; /usr/share/mroonga/install.sql
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">install.sql</span></code> が見つからない場合は、以下のように手動で <code class="docutils literal"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> コマンドを実行します。</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="n">INSTALL</span> <span class="n">PLUGIN</span> <span class="n">Mroonga</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
