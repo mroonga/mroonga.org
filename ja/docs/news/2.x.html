@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News - 2.x &#8212; Mroonga v6.10 documentation</title>
+    <title>News - 2.x &mdash; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -25,8 +25,6 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="検索" href="../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
@@ -67,7 +65,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -128,15 +126,15 @@
 <p class="last">データベースやインデックスを再作成する手順はこちら</p>
 </div>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>インデックスを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; ALTER TABLE table_name DROP PRIMARY KEY;
+<div class="highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DROP PRIMARY KEY;
 mysql&gt; ALTER TABLE table_name ADD PRIMARY KEY(column_name);
 </pre></div>
 </div>
@@ -183,7 +181,7 @@ mysql&gt; ALTER TABLE table_name ADD PRIMARY KEY(column_name);
 <div class="admonition caution">
 <p class="first admonition-title">ご用心</p>
 <p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 マルチカラムインデックスをVARCHARやCHAR型に対して使っている場合は  <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> と <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code> を使ってインデックスを作り直してください:</p>
-<div class="last highlight-none"><div class="highlight"><pre><span></span>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
+<div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
 mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
 </div>
@@ -306,29 +304,29 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <span id="release-2-05"></span><h2>2.05リリース - 2012/07/29<a class="headerlink" href="#release-2-05-2012-07-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="admonition caution">
 <p class="first admonition-title">ご用心</p>
-<p class="last">このリリースにはSETカラムとENUMに関して後方互換性のない変更があります。もし <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> にてSETカラムもしくは要素数が256より少ないENUMを使用しているなら、データベースを再作成してください。</p>
+<p class="last">このリリースにはSETカラムとENUMに関して後方互換性のない変更があります。もし <a class="reference internal" href="../tutorial/storage.html"><em>ストレージモード</em></a> にてSETカラムもしくは要素数が256より少ないENUMを使用しているなら、データベースを再作成してください。</p>
 </div>
 <p>以下が更新手順です。</p>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal"><span class="pre">yum</span></code> を使います。</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum (v2.02以前からのアップグレード):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 <p>yum (v2.03以降からのアップグレード):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 <div class="admonition caution">
@@ -336,11 +334,11 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <p class="last">v2.02以前のリリースからアップグレードする場合、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>これで2.05を使うことができるようになりました。</p>
@@ -400,8 +398,8 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <span id="release-2-03"></span><h2>2.03リリース - 2012/05/29<a class="headerlink" href="#release-2-03-2012-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="admonition caution">
 <p class="first admonition-title">ご用心</p>
-<p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でマルチカラムインデックスをつかっている場合は  <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> と <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code> を使ってインデックスを作り直してください:</p>
-<div class="last highlight-none"><div class="highlight"><pre><span></span>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
+<p>このリリースにはマルチカラムインデックスに関する後方互換性のない変更が1つあります。もし、 <a class="reference internal" href="../tutorial/storage.html"><em>ストレージモード</em></a> でマルチカラムインデックスをつかっている場合は  <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> と <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENBALE</span> <span class="pre">KEYS</span></code> を使ってインデックスを作り直してください:</p>
+<div class="last highlight-none"><div class="highlight"><pre>mysql&gt; ALTER TABLE table_name DISABLE KEYS;
 mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </pre></div>
 </div>
@@ -415,13 +413,13 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </li>
 <li><p class="first">[rpm][fedora] MySQL 5.5.23に対応。</p>
 </li>
-<li><p class="first"><a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-match-escalation-threshold"><span class="std std-ref">mroonga_match_escalation_threshold</span></a> システム変数を追加。</p>
+<li><p class="first"><a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-match-escalation-threshold"><span>mroonga_match_escalation_threshold</span></a> システム変数を追加。</p>
 </li>
 <li><p class="first">groonga 2.0.3以降を必須にした。</p>
 </li>
 <li><p class="first">[yum] groongaのyumリポジトリを提供するRPMパッケージ名をgroonga-repositoryからgroonga-releaseへと変更し、RPMパッケージ命名規則をcentos-releaseやfedora-releaseに合わせた。</p>
 </li>
-<li><p class="first">[Mac OS X] Homebrewでインストールできるようになった。詳細はこちら: <a class="reference internal" href="../install.html"><span class="doc">インストール</span></a></p>
+<li><p class="first">[Mac OS X] Homebrewでインストールできるようになった。詳細はこちら: <a class="reference internal" href="../install.html"><em>インストール</em></a></p>
 </li>
 </ul>
 </div>
@@ -456,12 +454,12 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <p class="first admonition-title">ご用心</p>
 <p>今回のリリースよりパッケージへ署名する鍵を変更しました。groongaパッケージを更新する前にパッケージ署名用の新しい鍵をインポートして下さい。</p>
 <p>Debian/Ubuntu:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get update
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get update
 % sudo apt-get -y --allow-unauthenticated install groonga-keyring
 </pre></div>
 </div>
 <p>CentOS/Fedora:</p>
-<div class="last highlight-none"><div class="highlight"><pre><span></span>% sudo yum update
+<div class="last highlight-none"><div class="highlight"><pre>% sudo yum update
 % sudo yum install --nogpgcheck -y groonga-repository
 </pre></div>
 </div>
@@ -627,20 +625,20 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 </ol>
 <p>以下が更新手順です。</p>
 <p>mroongaを使っているデータベースをダンプします:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>既存のデータベースを削除します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal"><span class="pre">yum</span></code> を使います。</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
@@ -649,11 +647,11 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <p class="last"><code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>これで2.00を使うことができるようになりました。</p>
@@ -814,11 +812,14 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="検索" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -831,11 +832,11 @@ mysql&gt; ALTER TABLE table_name ENABLE KEYS;
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2016, Mroonga Project.
+        &copy; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 

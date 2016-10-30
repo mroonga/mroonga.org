@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News - 1.x &#8212; Mroonga v6.10 documentation</title>
+    <title>News - 1.x &mdash; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -24,8 +24,6 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../index.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
@@ -66,7 +64,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -94,11 +92,11 @@ and TIMESTAMP type in MySQL.</li>
 <p>We need to modify dumped database to change &quot;ENGINE=groonga&quot;
 in &quot;CREATE TABLE&quot; SQL. Here are upgrade sequence.</p>
 <p>We dump a database that uses mroonga:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
 </pre></div>
 </div>
 <p>We convert storage engine in dump file:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
 </pre></div>
 </div>
 <p>We confirm that <code class="docutils literal"><span class="pre">ENGINE=groonga</span></code> only in <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>
@@ -106,7 +104,7 @@ is replaced with <code class="docutils literal"><span class="pre">ENGINE=mroonga
 <span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> line includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>. If the line
 includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>, the hunk will be a change for
 <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% diff -up database-groonga.dump database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% diff -up database-groonga.dump database-mroonga.dump
 --- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
 +++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
 @@ -29,7 +29,7 @@ CREATE TABLE `diaries` (
@@ -121,18 +119,18 @@ includes <code class="docutils literal"><span class="pre">CREATE</span> <span cl
 </pre></div>
 </div>
 <p>We drop the existing database:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>We upgrade to &quot;mroonga&quot; storage engine. We will use
 <code class="docutils literal"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal"><span class="pre">yum</span></code> on
 CentOS or Fedora.</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none"><div class="highlight"><pre>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
@@ -143,11 +141,11 @@ CentOS or Fedora.</p>
 a MySQL's system table.</p>
 </div>
 <p>We recreate a database:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>We restore a database by modified dump file:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none"><div class="highlight"><pre>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>Now, we can use mroonga 1.20.</p>
@@ -415,11 +413,14 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -432,11 +433,11 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2016, Mroonga Project.
+        &copy; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

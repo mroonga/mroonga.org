@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. ストレージモード &#8212; Mroonga v6.10 documentation</title>
+    <title>4.3. ストレージモード &mdash; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -25,8 +25,6 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="検索" href="../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../index.html" />
     <link rel="up" title="4. チュートリアル" href="../tutorial.html" />
     <link rel="next" title="4.4. ラッパーモード" href="wrapper.html" />
@@ -76,8 +74,8 @@
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -92,7 +90,7 @@
 <div class="section" id="how-to-use-full-text-search">
 <h2>4.3.1. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code> とMroongaを指定するところがポイントです。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
@@ -101,7 +99,7 @@
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">INSERT</span></code> でデータを投入してみましょう。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
@@ -109,7 +107,7 @@
 </pre></div>
 </div>
 <p>全文検索を実行してみます。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- | id | content                                 |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
@@ -129,7 +127,7 @@
 <p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
 <p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference" href="#score" id="id1">[1]</a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
 <p>それでは実際にやってみましょう。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
@@ -153,7 +151,7 @@
 </div>
 <p>検索対象の文字列 <code class="docutils literal"><span class="pre">fine</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
 <p>属性名を変更したい場合は <code class="docutils literal"><span class="pre">AS</span></code> を使って下さい。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
        <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">score</span>
   <span class="k">FROM</span> <span class="n">diaries</span>
  <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span>
@@ -173,11 +171,11 @@
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
 <h2>4.3.3. 全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MySQLは全文検索用のパーサ <a class="footnote-reference" href="#parser" id="id2">[2]</a> を指定する以下のような構文を持っています。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
 <p>しかし、この構文を利用する場合は、あらかじめすべてのパーサをMySQLに登録しておく必要があります。一方、Groongaはトークナイザー（MySQLでいうパーサ）を動的に追加することができます。そのため、Mroongaでもこの構文を採用するとGroonga側に動的に追加されたトークナイザーに対応できなくなります。Groongaに動的に追加されるトークナイザーにはMeCabを用いたトークナイザーもあり、この制限に縛られることは利便性を損なうと判断し、以下のようなコメントを用いた独自の構文を採用することにしました。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
 <div class="admonition note">
@@ -268,17 +266,17 @@
 </tbody>
 </table>
 <p>デフォルトのパーサは <code class="docutils literal"><span class="pre">configure</span></code> の <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> オプションでビルド時に指定することができます。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
+<div class="highlight-none"><div class="highlight"><pre>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
 <p>また、 <code class="docutils literal"><span class="pre">my.cnf</span></code> またはSQL内で <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> 変数を指定することでも指定できます。 <code class="docutils literal"><span class="pre">my.cnf</span></code> で指定するとMySQLを再起動しても値は変更されたままですが、反映させるために再起動しなければいけません。一方、SQLで指定した場合はすぐに設定が反映されますが、MySQLが再起動すると設定は失われます。</p>
 <p>my.cnf:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
+<div class="highlight-none"><div class="highlight"><pre>[mysqld]
 mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 </pre></div>
 </div>
@@ -290,7 +288,7 @@ mroonga_default_tokenizer=TokenMecab
 <p><code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> または <code class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></code> の場合、<code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> ノーマライザーが使用されます。</p>
 <p><code class="docutils literal"><span class="pre">utf8_bin</span></code> の場合、ノーマライザーは使用されません。</p>
 <p>以下は、 <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> の照合順序を指定して <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> ノーマライザーを使用する例です。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -325,12 +323,12 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>Mroongaは、Groongaのノーマライザーを指定する以下のような構文を持っています。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
 </pre></div>
 </div>
 <p>Groongaのノーマライザーの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/normalizers.html">Groongaのドキュメント</a> を参照してください。</p>
 <p>以下は、<code class="docutils literal"><span class="pre">NormalizerAuto</span></code> のノーマライザーを使用する例です。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -363,11 +361,11 @@ mroonga_default_tokenizer=TokenMecab
 <div class="section" id="how-to-specify-the-token-filters">
 <h2>4.3.5. トークンフィルターの指定方法<a class="headerlink" href="#how-to-specify-the-token-filters" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaは、Groongaのトークンフィルターを指定する以下のような構文を持っています。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
 </pre></div>
 </div>
 <p>以下は、<code class="docutils literal"><span class="pre">TokenFilterStem</span></code> のトークンフィルターを使用する例です。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
 <span class="c1">-- +------------------------------------------------+</span>
 <span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
 <span class="c1">-- +------------------------------------------------+</span>
@@ -406,7 +404,7 @@ mroonga_default_tokenizer=TokenMecab
 </div>
 <p>Groongaのトークンフィルターの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/token_filters.html">Groongaのドキュメント</a> を参照してください。</p>
 <p>以下は、<code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> のトークンフィルターを使用する例です。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
 <span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
@@ -456,11 +454,11 @@ mroonga_default_tokenizer=TokenMecab
 <div class="section" id="how-to-specify-groonga-s-column-flags">
 <h2>4.3.6. Groongaのカラムフラグの指定方法<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaは、Groongaのカラムフラグを指定する以下のような構文を持っています。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
 </pre></div>
 </div>
 <p>以下は、<code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code> フラグを使用する例です。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="n">UNSIGNED</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">TEXT</span> <span class="k">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
 <span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
@@ -473,7 +471,7 @@ mroonga_default_tokenizer=TokenMecab
 <h2>4.3.7. 位置情報検索の利用方法<a class="headerlink" href="#how-to-use-geolocation-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ストレージモードでは全文検索だけではなく位置情報検索も高速に実行できます。ただし、MyISAMとは異なりデータとして格納できるのはPOINT型のみです。LINEなどの他のデータ型は保存できません。また、インデックスを用いた高速な検索に対応しているのはMBRContainsだけです。MBRDisjointなどには対応していません。</p>
 <p>位置情報検索を利用する場合のテーブル定義はMyISAMと同様にPOINT型のカラムを定義し、そのカラムに対してSPATIAL INDEXを指定します。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="k">location</span> <span class="n">POINT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
@@ -483,7 +481,7 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>データの登録方法もMyISAMのときと同様にGeomFromText()関数を使って文字列からPOINT型の値を作成します。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
@@ -494,7 +492,7 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>池袋駅（139.7101 35.7292）が左上の点、東京駅（139.7662 35.6815）が右下の点となるような長方形内にあるお店を探す場合は以下のようなSELECTになります。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
   <span class="k">FROM</span> <span class="n">shops</span>
  <span class="k">WHERE</span> <span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span> <span class="k">location</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
@@ -512,7 +510,7 @@ mroonga_default_tokenizer=TokenMecab
 <p>Groongaではテーブルにレコードを追加した際にレコードを一意に識別するための番号が割当てられます。</p>
 <p>Mroongaではアプリケーションの開発を容易にするため、このレコードIDをSQLで取得できるようになっています。</p>
 <p>レコードIDを取得するためには、テーブル定義時に <code class="docutils literal"><span class="pre">_id</span></code> という名前のカラムを作成して下さい。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
   <span class="n">_id</span> <span class="nb">INT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">_id</span><span class="p">)</span> <span class="k">USING</span> <span class="n">HASH</span>
@@ -523,7 +521,7 @@ mroonga_default_tokenizer=TokenMecab
 <p><code class="docutils literal"><span class="pre">_id</span></code> カラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
 <p>また_idカラムにはインデックスを作成することが可能ですが、HASH形式である必要があります。</p>
 <p>INSERTでテーブルにレコードを追加してみましょう。_idカラムは仮想カラムとして実装されており、また_idの値であるレコードIDはGroongaにより割当てられるため、SQLによる更新時に値を指定することはできません。更新対象から外すか、値に <code class="docutils literal"><span class="pre">null</span></code> を使用する必要があります。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
@@ -537,7 +535,7 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>レコードIDを取得するには、_idカラムを含むようにしてSELECTを行います。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- | _id  | content                                  |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
@@ -550,7 +548,7 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>また直前のINSERTにより割当てられたレコードIDについては、last_insert_grn_id関数により取得することもできます。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
@@ -563,11 +561,11 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>last_insert_grn_id関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>ご覧のように_idカラムやlast_insert_grn_id関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 <span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
 </pre></div>
@@ -575,7 +573,7 @@ mroonga_default_tokenizer=TokenMecab
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
 <h2>4.3.9. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Mroongaは周辺テキスト付きでキーワードを取得する機能を提供しています。この機能は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDFとして実装されています。</p>
+<p>Mroongaは周辺テキスト付きでキーワードを取得する機能を提供しています。この機能は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet()</em></a> UDFとして実装されています。</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
 <h2>4.3.10. Groongaコマンドの実行方法<a class="headerlink" href="#how-to-run-groonga-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -591,7 +589,7 @@ mroonga_default_tokenizer=TokenMecab
 <p>Groongaは1回のgroongaコマンドでファセット検索をできます。これは効率的です。Groongaには <cite>select</cite> コマンドというファセット検索に対応した検索コマンドがあります。Groongaではファセット検索は <cite>ドリルダウン（drilldown）</cite> と呼ばれています。Groongaの <cite>select</cite> コマンドの詳細については <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">Groongaのドキュメント</a> を参照してください。</p>
 <p>mroongaは <cite>mroonga_command()</cite> 関数を提供しています。この関数を使えばSQLの中で好きなgroongaコマンドを実行できます。しかし、使うのは <cite>select</cite> コマンドだけにしておくべきです。スキーマやデータを変更するコマンドを使うと一貫性が壊れてしまうかもしれません。</p>
 <p>実行例で使用するスキーマ定義はこちら。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="nb">date</span> <span class="nb">DATE</span><span class="p">,</span>
@@ -603,7 +601,7 @@ mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>実行例で使用するサンプルデータはこちら。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
        <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
                <span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
                <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
@@ -626,7 +624,7 @@ mroonga_default_tokenizer=TokenMecab
 <p>各レコードは <cite>tag</cite> として <cite>groonga</cite> と <cite>MySQL</cite> が付いています。各レコードは <cite>year</cite> と <cite>year_month</cite> も持っています。ファセット検索のキーとして <cite>tag</cite> 、 <cite>year</cite> 、 <cite>year_month</cite> を使えます。</p>
 <p>Groongaはファセット検索のことをドリルダウンと呼んでいます。そのため、Groongaでのパラメータ名は <cite>--drilldown</cite> となっています。groongaは検索結果をJSONで返します。そのため、 <cite>mroonga_command()</cite> も検索結果をJSONで返します。これはSQLらしくありません。JSON形式の検索結果は自分でパースしないといけません。</p>
 <p>以下は利用可能なファセット検索キーをすべて使った例です。（結果のJSONは整形済み）</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | faceted_result              |</span>
 <span class="c1">-- +-----------------------------+</span>
@@ -657,14 +655,14 @@ mroonga_default_tokenizer=TokenMecab
 <p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <code class="docutils literal"><span class="pre">groonga.log</span></code> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
+<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
 </div>
 <p>ログのデフォルトの出力レベルはNOTICE（必要な情報のみ出力。デバッグ情報などは出力しない）となっております。</p>
 <p>ログの出力レベルは <code class="docutils literal"><span class="pre">mroonga_log_level</span></code> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
 <span class="c1">-- +-------------------+--------+</span>
 <span class="c1">-- | Variable_name     | Value  |</span>
 <span class="c1">-- +-------------------+--------+</span>
@@ -697,7 +695,7 @@ mroonga_default_tokenizer=TokenMecab
 <li>DEBUG</li>
 <li>DUMP</li>
 </ul>
-<p>詳細は <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span class="std std-ref">mroonga_log_level</span></a> を参照してください。</p>
+<p>詳細は <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span>mroonga_log_level</span></a> を参照してください。</p>
 <p>またFLUSH LOGSでログの再オープンを行うことができます。MySQLサーバを停止せずにログのローテートを行いたいような場合には、以下の手順で実行すると良いでしょう。</p>
 <ol class="arabic simple">
 <li><p class="first"><code class="docutils literal"><span class="pre">groonga.log</span></code> ファイルの名前を変更（OSコマンドのmvなどで）</p>
@@ -708,7 +706,7 @@ mroonga_default_tokenizer=TokenMecab
 </div>
 <div class="section" id="next-step">
 <h2>4.3.12. 次のステップ<a class="headerlink" href="#next-step" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>これでストレージモードでMroongaを使えるようになりました！Mroongaをもっと速くしたい場合は <a class="reference internal" href="../reference/optimizations.html"><span class="doc">最適化</span></a> も参照してください。</p>
+<p>これでストレージモードでMroongaを使えるようになりました！Mroongaをもっと速くしたい場合は <a class="reference internal" href="../reference/optimizations.html"><em>最適化</em></a> も参照してください。</p>
 <p class="rubric">脚注</p>
 <table class="docutils footnote" frame="void" id="score" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -768,11 +766,14 @@ mroonga_default_tokenizer=TokenMecab
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="検索" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -791,12 +792,12 @@ mroonga_default_tokenizer=TokenMecab
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2016, Mroonga Project.
+        &copy; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 
