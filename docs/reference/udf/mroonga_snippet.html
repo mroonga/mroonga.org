@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.5.5. mroonga_snippet() &mdash; Mroonga v6.10 documentation</title>
+    <title>5.5.5. mroonga_snippet() &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -24,6 +24,8 @@
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../../index.html" />
     <link rel="up" title="5.5. UDF (User Defined Functions)" href="../udf.html" />
     <link rel="next" title="5.5.6. mroonga_snippet_html()" href="mroonga_snippet_html.html" />
@@ -73,9 +75,9 @@
         <li class="right" >
           <a href="mroonga_normalize.html" title="5.5.4. mroonga_normalize()"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (User Defined Functions)</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (User Defined Functions)</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -100,7 +102,7 @@ future.</p>
 <div class="section" id="syntax">
 <h2>5.5.5.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> has required parameter and optional parameter:</p>
-<div class="highlight-none"><div class="highlight"><pre>mroonga_snippet(document,
+<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_snippet(document,
                 max_length,
                 max_count,
                 encoding,
@@ -122,7 +124,7 @@ search results.</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function provides the way to get snippet from search results.</p>
 <p>You can use <code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> UDF in storage mode and wrapper mode.</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function.</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function is useful for searching the text which contains keyword and associated one
@@ -131,7 +133,7 @@ by using MATCH .. AGAINST syntax.</p>
 Assume that some keyword such as 'MySQL' and 'search' are associated with 'fulltext'.</p>
 <p><code class="docutils literal"><span class="pre">mroonga_snippet()</span></code> function meets above.</p>
 <p>Here is the schema definition for execution examples(storage mode):</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -140,7 +142,7 @@ Assume that some keyword such as 'MySQL' and 'search' are associated with 'fullt
 </pre></div>
 </div>
 <p>Here is the schema definition for execution examples(wrapper mode):</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE `snippet_test` (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -149,13 +151,13 @@ Assume that some keyword such as 'MySQL' and 'search' are associated with 'fullt
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
+<div class="highlight-none"><div class="highlight"><pre><span></span>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
 INSERT INTO snippet_test (id, text) VALUES (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
 INSERT INTO snippet_test (id, text) VALUES (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
 </pre></div>
 </div>
 <p>Here is the results of execution examples:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SELECT * FROM snippet_test;
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM snippet_test;
 +----+-------------------------------------------------------------------------------------------------+
 | id | text                                                                                            |
 +----+-------------------------------------------------------------------------------------------------+
@@ -307,14 +309,11 @@ Specify the value 1 for enabling HTML escape, 0 for not.</div></blockquote>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -333,13 +332,13 @@ Specify the value 1 for enabling HTML escape, 0 for not.</div></blockquote>
         <li class="right" >
           <a href="mroonga_normalize.html" title="5.5.4. mroonga_normalize()"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (User Defined Functions)</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (User Defined Functions)</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

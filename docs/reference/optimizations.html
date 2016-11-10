@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.1. Optimizations &mdash; Mroonga v6.10 documentation</title>
+    <title>5.1. Optimizations &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -24,6 +24,8 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../index.html" />
     <link rel="up" title="5. Reference" href="../reference.html" />
     <link rel="next" title="5.2. SQL commands" href="sql_commands.html" />
@@ -73,8 +75,8 @@
         <li class="right" >
           <a href="../reference.html" title="5. Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -86,10 +88,10 @@
   <div class="section" id="optimizations">
 <h1>5.1. Optimizations<a class="headerlink" href="#optimizations" title="Permalink to this headline">¶</a></h1>
 <p>Mroonga implemented some optimizations to return response faster.</p>
-<p>Some optimizations can work only on <a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a>.</p>
+<p>Some optimizations can work only on <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>.</p>
 <div class="section" id="fetching-only-needed-columns">
 <span id="optimization-fetching-only-needed-columns"></span><h2>5.1.1. Fetching only needed columns<a class="headerlink" href="#fetching-only-needed-columns" title="Permalink to this headline">¶</a></h2>
-<p>This optimization can work only on <a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a>.</p>
+<p>This optimization can work only on <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>.</p>
 <p>Groonga uses column store architecture. It means that Groonga doesn't
 need to fetch values of all columns for fetching a column value in a
 row. Groonga can fetch values of only needed columns.</p>
@@ -101,7 +103,7 @@ other columns.</p>
 <p>Mroonga can work faster by reducing operations and I/O.</p>
 <p>It's this optimization.</p>
 <p>Here is a sample table definition to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>CREATE TABLE t1 (
+<div class="highlight-none"><div class="highlight"><pre><span></span>CREATE TABLE t1 (
   c1 INT PRIMARY KEY AUTO_INCREMENT,
   c2 INT,
   c3 INT,
@@ -114,7 +116,7 @@ other columns.</p>
 </pre></div>
 </div>
 <p>Here is a <code class="docutils literal"><span class="pre">SELECT</span></code> to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT c1, c2, c11 FROM t1 WHERE c2 = XX AND c12 = &quot;XXX&quot;;
 </pre></div>
 </div>
 <p>In this case, Mroonga fetches values from only <code class="docutils literal"><span class="pre">c1</span></code>, <code class="docutils literal"><span class="pre">c2</span></code>, <code class="docutils literal"><span class="pre">c11</span></code>
@@ -123,22 +125,22 @@ and <code class="docutils literal"><span class="pre">c12</span></code>. Mroonga 
 </div>
 <div class="section" id="row-count">
 <span id="optimization-raw-count"></span><h2>5.1.2. Row count<a class="headerlink" href="#row-count" title="Permalink to this headline">¶</a></h2>
-<p>This optimization can work only on <a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a>.</p>
+<p>This optimization can work only on <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>.</p>
 <p>MySQL requires all column values from storage engine for processing
 <code class="docutils literal"><span class="pre">COUNT(*)</span></code> even if <code class="docutils literal"><span class="pre">COUNT(*)</span></code> doesn't need them.</p>
 <p>Mroonga doesn't fetch any column values for the case.</p>
 <p>Mroonga can work faster by reducing operations and I/O.</p>
 <p>It's this optimization.</p>
 <p>Here is a <code class="docutils literal"><span class="pre">SELECT</span></code> to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE);
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT COUNT(*) FROM t1 WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE);
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">SELECT</span></code> fetches only <code class="docutils literal"><span class="pre">COUNT(*)</span></code> and condition in <code class="docutils literal"><span class="pre">WHERE</span></code>
 can be processed only by index. In this case, Mroonga uses this
 optimization.</p>
 <p>You can confirm whether this optimization is used or not by looking
-<a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span>Mroonga_count_skip</span></a> status variable:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
+<a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span class="std std-ref">Mroonga_count_skip</span></a> status variable:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
 +--------------------+-------+
 | Variable_name      | Value |
 +--------------------+-------+
@@ -147,15 +149,15 @@ optimization.</p>
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p><a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span>Mroonga_count_skip</span></a> status variable is
+<p><a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span class="std std-ref">Mroonga_count_skip</span></a> status variable is
 incremented when Mroonga uses this optimization.</p>
 <p>You can disable this optimization by setting
-<a class="reference internal" href="server_variables.html#server-variable-mroonga-enable-optimization"><span>mroonga_enable_optimization</span></a> to <code class="docutils literal"><span class="pre">false</span></code>.</p>
+<a class="reference internal" href="server_variables.html#server-variable-mroonga-enable-optimization"><span class="std std-ref">mroonga_enable_optimization</span></a> to <code class="docutils literal"><span class="pre">false</span></code>.</p>
 </div>
 <div class="section" id="order-by-limit">
 <span id="optimization-order-by-limit"></span><h2>5.1.3. <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="Permalink to this headline">¶</a></h2>
-<p>This optimization can work on both <a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a> and
-<a class="reference internal" href="../tutorial/wrapper.html"><em>Wrapper mode</em></a>.</p>
+<p>This optimization can work on both <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a> and
+<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>.</p>
 <p>MySQL can process <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> and <code class="docutils literal"><span class="pre">LIMIT</span></code> with low cost if you can
 get sorted records by index even if the number of matched records is
 very big.</p>
@@ -169,7 +171,7 @@ only target records to MySQL. It's very faster for query that matches with
 many records.</p>
 <p>It's this optimization.</p>
 <p>Here is a <code class="docutils literal"><span class="pre">SELECT</span></code> to describe this optimization:</p>
-<div class="highlight-none"><div class="highlight"><pre>SELECT *
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT *
   FROM t1
  WHERE MATCH(c2) AGAINST(&quot;+keyword&quot; IN BOOLEAN MODE)
  ORDER BY c1 LIMIT 1;
@@ -178,8 +180,8 @@ many records.</p>
 <p>The <code class="docutils literal"><span class="pre">SELECT</span></code> runs full text search and sorts by Groonga and returns
 only one record to MySQL.</p>
 <p>You can confirm whether this optimization is used or not by looking
-<a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span>Mroonga_fast_order_limit</span></a> status variable:</p>
-<div class="highlight-none"><div class="highlight"><pre>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
+<a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span class="std std-ref">Mroonga_fast_order_limit</span></a> status variable:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
 +--------------------------+-------+
 | Variable_name            | Value |
 +--------------------------+-------+
@@ -188,21 +190,21 @@ only one record to MySQL.</p>
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-<p><a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span>Mroonga_fast_order_limit</span></a> status variable is
+<p><a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span class="std std-ref">Mroonga_fast_order_limit</span></a> status variable is
 incremented when Mroonga uses this optimization.</p>
 <p>This optimization is used only when all the following conditions are
 true:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a>: <code class="docutils literal"><span class="pre">WHERE</span></code> clause has one <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>
+<li><a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>: <code class="docutils literal"><span class="pre">WHERE</span></code> clause has one <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>
 and zero or more arithmetic operations such as <code class="docutils literal"><span class="pre">column</span> <span class="pre">&lt;</span> <span class="pre">100</span></code>.</li>
-<li><a class="reference internal" href="../tutorial/wrapper.html"><em>Wrapper mode</em></a>: <code class="docutils literal"><span class="pre">WHERE</span></code> clause has only <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>.</li>
+<li><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>: <code class="docutils literal"><span class="pre">WHERE</span></code> clause has only <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>.</li>
 <li>No <code class="docutils literal"><span class="pre">JOIN</span></code></li>
 <li>No <code class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></code></li>
 <li>No <code class="docutils literal"><span class="pre">SQL_CALC_FOUND_ROWS</span></code></li>
 <li>With <code class="docutils literal"><span class="pre">LIMIT</span></code></li>
-<li><a class="reference internal" href="../tutorial/storage.html"><em>Storage mode</em></a>: <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clause has only columns or
+<li><a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>: <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clause has only columns or
 <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> that is used in <code class="docutils literal"><span class="pre">WHERE</span></code> clause.</li>
-<li><a class="reference internal" href="../tutorial/wrapper.html"><em>Wrapper mode</em></a>: <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clause has only primary
+<li><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>: <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clause has only primary
 column or <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> that is used in <code class="docutils literal"><span class="pre">WHERE</span></code> clause.</li>
 </ul>
 </div>
@@ -240,14 +242,11 @@ column or <code class="docutils literal"><span class="pre">MATCH</span> <span cl
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -266,12 +265,12 @@ column or <code class="docutils literal"><span class="pre">MATCH</span> <span cl
         <li class="right" >
           <a href="../reference.html" title="5. Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

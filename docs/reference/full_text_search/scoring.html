@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.7.2. Search and Scoring in Mroonga &mdash; Mroonga v6.10 documentation</title>
+    <title>5.7.2. Search and Scoring in Mroonga &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -24,6 +24,8 @@
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../../index.html" />
     <link rel="up" title="5.7. Full text search" href="../full_text_search.html" />
     <link rel="next" title="6. FAQ" href="../../faq.html" />
@@ -73,9 +75,9 @@
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. Boolean mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. Full text search</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. Full text search</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -100,32 +102,32 @@
 </div></blockquote>
 <p>We are showing by example.
 The first thing we create a table and insert data as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>SET NAMES UTF8;
-CREATE TABLE diaries (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  content TEXT,
-  FULLTEXT INDEX(content)
-) ENGINE mroonga DEFAULT CHARSET UTF8;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SET</span> <span class="n">NAMES</span> <span class="n">UTF8</span><span class="p">;</span>
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="n">TEXT</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="n">mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
 
-INSERT INTO diaries (content) VALUES(&quot;It&#39;ll be fine tomorrow as well.&quot;);
-INSERT INTO diaries (content) VALUES(&quot;It&#39;ll rain tomorrow.&quot;);
-INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
-INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>We use a query &quot;fine today&quot; to search.
 The search result is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
-    -&gt;        FROM diaries
-    -&gt;        WHERE MATCH (content) AGAINST (&quot;fine today&quot;)
-    -&gt;        ORDER BY MATCH (content) AGAINST (&quot;fine today&quot;) DESC;
-+----+--------------------------------------------------+--------+
-| id | content                                          | score  |
-+----+--------------------------------------------------+--------+
-|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. | 131073 |
-|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        | 131073 |
-+----+--------------------------------------------------+--------+
-2 rows in set (0.01 sec)
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+    <span class="o">-&gt;</span>        <span class="n">FROM</span> <span class="n">diaries</span>
+    <span class="o">-&gt;</span>        <span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span>
+    <span class="o">-&gt;</span>        <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">DESC</span><span class="p">;</span>
+<span class="o">+----+--------------------------------------------------+--------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">content</span>                                          <span class="o">|</span> <span class="n">score</span>  <span class="o">|</span>
+<span class="o">+----+--------------------------------------------------+--------+</span>
+<span class="o">|</span>  <span class="mi">3</span> <span class="o">|</span> <span class="n">It</span><span class="s1">&#39;s fine today. It&#39;</span><span class="n">ll</span> <span class="n">be</span> <span class="n">fine</span> <span class="n">tomorrow</span> <span class="k">as</span> <span class="n">well</span><span class="o">.</span> <span class="o">|</span> <span class="mi">131073</span> <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">4</span> <span class="o">|</span> <span class="n">It</span><span class="s1">&#39;s fine today. But it&#39;</span><span class="n">ll</span> <span class="n">rain</span> <span class="n">tomorrow</span><span class="o">.</span>        <span class="o">|</span> <span class="mi">131073</span> <span class="o">|</span>
+<span class="o">+----+--------------------------------------------------+--------+</span>
+<span class="mi">2</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now, let us explain how to make the result score &quot;131073&quot;.</p>
@@ -156,11 +158,11 @@ The search result is as follows:</p>
 <p>In the fraction 1048576 / 9,  the denominator &quot;9&quot; means the number of document which contains token &quot;fine&quot;.</p>
 <p>The denominator &quot;8&quot; and &quot;9&quot; are approximate number, strictly speaking, &quot;2&quot; is the correct answer for the number of document that contains &quot;today&quot;, &quot;3&quot; is the correct answer for the number of document that contains &quot;fine&quot;.</p>
 <p>You can check the approximate number of token by using the following query.</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;) AS groonga_response;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s2">&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">groonga_response</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The retrieval result of the above query is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s">&quot;_key&quot;</span><span class="p">,</span><span class="s">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s">&quot;index&quot;</span><span class="p">,</span><span class="s">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </div>
@@ -223,14 +225,11 @@ The search result is as follows:</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -249,13 +248,13 @@ The search result is as follows:</p>
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. Boolean mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. Full text search</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. Full text search</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

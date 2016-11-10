@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9.2. リリース手順 &mdash; Mroonga v6.10 documentation</title>
+    <title>9.2. リリース手順 &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../index.html" />
     <link rel="up" title="9. 開発者向け情報" href="../developer.html" />
     <link rel="prev" title="9.1. デバッグ方法" href="debug.html" /> 
@@ -70,8 +72,8 @@
         <li class="right" >
           <a href="debug.html" title="9.1. デバッグ方法"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">9. 開発者向け情報</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">9. 開発者向け情報</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -103,12 +105,12 @@
 <p>以下にMroongaのリリース作業を行うために事前にインストール
 しておくべきパッケージを示します。</p>
 <p>なお、ビルド環境としては Debian GNU/Linux (sid)を前提として説明しているため、その他の環境では適宜読み替えて下さい。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sudo apt-get install -V ruby mecab libmecab-dev gnupg2 dh-autoreconf python-sphinx bison
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -V ruby mecab libmecab-dev gnupg2 dh-autoreconf python-sphinx bison
 </pre></div>
 </div>
 <p>Debian系（.deb）やRed Hat系（.rpm）パッケージのビルドには <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> を使用します。apt-getでインストールできるのは古いバージョンなので、Webサイトから最新版をダウンロードしてインストールすることをおすすめします。</p>
 <p>Vagrantで使用する仮想化ソフトウェア（VirtualBox、VMwareなど）がない場合、合わせてインストールしてください。なお、VirtualBoxはsources.listにcontribセクションを追加すればapt-getでインストールできます。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% cat /etc/apt/sources.list
+<div class="highlight-none"><div class="highlight"><pre><span></span>% cat /etc/apt/sources.list
 deb http://ftp.jp.debian.org/debian/ sid main contrib
 deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 % sudo apt-get update
@@ -121,7 +123,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p>前回リリース時からの変更点を``doc/source/news.txt``にまとめます。
 ここでまとめた内容についてはリリースアナウンスにも使用します。</p>
 <p>前回リリースからの変更履歴を参照するには以下のコマンドを実行します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% git log -p --reverse $(git tag | tail -1)..
+<div class="highlight-none"><div class="highlight"><pre><span></span>% git log -p --reverse $(git tag | tail -1)..
 </pre></div>
 </div>
 <p>ログを^commitで検索しながら、以下の基準を目安として変更点を追記していきます。</p>
@@ -139,7 +141,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <h2>9.2.4. configureスクリプトの生成<a class="headerlink" href="#configure" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのソースコードをcloneした時点ではconfigureスクリプトが含まれておらず、そのままmakeコマンドにてビルドすることができません。</p>
 <p>Mroongaをcloneしたディレクトリでautogen.shを以下のように実行します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% sh autogen.sh
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sh autogen.sh
 </pre></div>
 </div>
 <p>このコマンドの実行により、configureスクリプトが生成されます。</p>
@@ -148,7 +150,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <h2>9.2.5. configureスクリプトの実行<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Makefileを生成するためにconfigureスクリプトを実行します。</p>
 <p>リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./configure \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
     --enable-document \
     --prefix=/tmp/local \
     --with-launchpad-uploader-pgp-key=(Launchpadに登録したkeyID) \
@@ -158,13 +160,13 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
     --with-mysql-config=(mysql_configコマンドのパス)
 </pre></div>
 </div>
-<p>--with-mysql-sourceなどのオプションについては、イントールドキュメントの <a class="reference internal" href="../install/others.html"><em>その他</em></a> を参照してください。</p>
+<p>--with-mysql-sourceなどのオプションについては、イントールドキュメントの <a class="reference internal" href="../install/others.html"><span class="doc">その他</span></a> を参照してください。</p>
 </div>
 <div class="section" id="id5">
 <h2>9.2.6. アップロード権限の確認<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>あらかじめpackagesユーザでpackages.groonga.orgにsshログインできることを確認しておいてください。</p>
 <p>ログイン可能であるかの確認は以下のようにコマンドを実行して行います。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% ssh packages@packages.groonga.org
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ssh packages@packages.groonga.org
 </pre></div>
 </div>
 <p>ログインできない場合、SSHの公開鍵を登録してもらってください。</p>
@@ -173,7 +175,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <h2>9.2.7. make update-latest-releaseの実行<a class="headerlink" href="#make-update-latest-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>make update-latest-releaseコマンドでは、OLD_RELEASE_DATEに前回のリリースの日付を、NEW_RELEASE_DATEに次回リリースの日付を指定します。</p>
 <p>5.01のリリースを行った際は以下のコマンドを実行しました。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% make update-latest-release OLD_RELEASE=5.00 OLD_RELEASE_DATE=2015-02-09 NEW_RELEASE_DATE=2015-03-29
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make update-latest-release OLD_RELEASE=5.00 OLD_RELEASE_DATE=2015-02-09 NEW_RELEASE_DATE=2015-03-29
 </pre></div>
 </div>
 <p>これにより、clone済みのMroongaのWebサイトのトップページのソース(index.html,ja/index.html)やRPMパッケージのspecファイルのバージョン表記などが更新されます。</p>
@@ -181,7 +183,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <div class="section" id="id6">
 <h2>9.2.8. リリースタグの設定<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>リリース用のタグを打つには以下のコマンドを実行します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% make tag
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make tag
 % git push --tags origin
 </pre></div>
 </div>
@@ -193,7 +195,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <div class="section" id="id7">
 <h2>9.2.9. 配布用ファイルのアップロード<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次に、配布用の <code class="docutils literal"><span class="pre">tar.gz</span></code> ファイルを作成します。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make dist
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make dist
 </pre></div>
 </div>
 <div class="admonition note">
@@ -201,26 +203,26 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p class="last">以前はGitHubのアーカイブ機能でtar.gzを配布していましたが、その機能が廃止( <a class="reference external" href="https://github.com/blog/1302-goodbye-uploads">https://github.com/blog/1302-goodbye-uploads</a> )されるため、2012年12月のリリースよりpackages.groonga.orgでの配布に切り替えました。</p>
 </div>
 <p>packages/sourceディレクトリへと移動します。</p>
-<div class="highlight-none"><div class="highlight"><pre>% cd packages/source
+<div class="highlight-none"><div class="highlight"><pre><span></span>% cd packages/source
 </pre></div>
 </div>
 <p>make downloadでアップストリームと同期します。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make download
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make download
 </pre></div>
 </div>
 <p>必要に応じて、アーカイブに含めるGroongaやgroonga-normalizer-mysql、MariaDBのバージョンを更新します。更新する場合、autogen.shを実行してMakefile.amの変更をMakefile.inに反映する必要があります。</p>
-<div class="highlight-none"><div class="highlight"><pre>% editor Makefile.am
+<div class="highlight-none"><div class="highlight"><pre><span></span>% editor Makefile.am
 % cd ../..
 % sh autogen.sh
 % cd packages/source
 </pre></div>
 </div>
 <p>アーカイブを作成します。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make archive
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make archive
 </pre></div>
 </div>
 <p>アーカイブをアップロードします。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make upload
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make upload
 </pre></div>
 </div>
 <p>これで、 <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a> から <code class="docutils literal"><span class="pre">tar.gz</span></code> のダウンロードが行えるようになります。</p>
@@ -240,15 +242,15 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <div class="section" id="debian">
 <h3>9.2.10.1. Debian 系<a class="headerlink" href="#debian" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>まず apt ディレクトリに移動します。</p>
-<div class="highlight-none"><div class="highlight"><pre>% cd apt
+<div class="highlight-none"><div class="highlight"><pre><span></span>% cd apt
 </pre></div>
 </div>
 <p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository sign-repository upload）が行われますが、途中で失敗することもあります。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make release
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make release
 </pre></div>
 </div>
 <p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make download
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make download
 % make build
 % make sign-packages
 % make update-repository
@@ -264,11 +266,11 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <h3>9.2.10.2. Red Hat 系<a class="headerlink" href="#red-hat" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>まず yum ディレクトリに移動する。</p>
 <p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository upload）が行われますが、途中で失敗することもあります。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make release
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make release
 </pre></div>
 </div>
 <p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
-<div class="highlight-none"><div class="highlight"><pre>% make download
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make download
 % make build
 % make sign-packages
 % make update-repository
@@ -282,7 +284,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 ため、Windows 版は MariaDB に mroonga/groonga/groonga-normalizer-mysql
 をバンドルしたパッケージとして作成します。</p>
 <p>まず、 Linux 上で Windows 用のソースを作成します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% cd packages/source
+<div class="highlight-none"><div class="highlight"><pre><span></span>% cd packages/source
 % make archive
 </pre></div>
 </div>
@@ -297,13 +299,13 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 zip 展開機能はとても遅いので 7-zip などを使いましょう。展開時間が数 10
 倍違います。 zip を展開すると <code class="docutils literal"><span class="pre">mariadb-10.0.2-with-mroonga-3.04</span></code> とい
 うようなフォルダがでてきます。これを <code class="docutils literal"><span class="pre">source</span></code> に名前を変更します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>&gt; move mariadb-10.0.2-with-mroonga-3.04 source
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; move mariadb-10.0.2-with-mroonga-3.04 source
 </pre></div>
 </div>
 <p>ソースを準備したらビルドします。ビルド方法は <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/windows">バッチファイル</a> に
 書かれています。抜粋すると以下の通りです。32bit用と64bit用の両方作成し
 ているので似たような手順が2回でていることに注意してください。:</p>
-<div class="highlight-none"><div class="highlight"><pre>&gt; mkdir build-32
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; mkdir build-32
 &gt; cd build-32
 &gt; cmake ..\source -G &quot;Visual Studio 12&quot; &gt; config.log
 &gt; cmake --build . --config RelWithDebInfo &gt; build.log
@@ -333,12 +335,12 @@ zip 展開機能はとても遅いので 7-zip などを使いましょう。展
 </ul>
 <p>これを Linux にコピーします。例えば、 Ruby で HTTP サーバーを立てて
 Linux 側からダウンロードする場合は以下のようにします。:</p>
-<div class="highlight-none"><div class="highlight"><pre>&gt; ruby -run -e httpd -- --do-not-reverse-lookup --port 10080 .
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; ruby -run -e httpd -- --do-not-reverse-lookup --port 10080 .
 </pre></div>
 </div>
 <p>Linux 側でファイル名を変更します。これだと mroonga のバージョンがわかり
 づらいからです。（TODO: 自動化したい。 zip 内のフォルダ名も変えたい。）:</p>
-<div class="highlight-none"><div class="highlight"><pre>% mv mariadb-10.0.2-win32.msi \
+<div class="highlight-none"><div class="highlight"><pre><span></span>% mv mariadb-10.0.2-win32.msi \
     packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-win32.msi
 % mv mariadb-10.0.2-win32.zip \
     packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-win32.zip
@@ -365,7 +367,7 @@ Linux 側からダウンロードする場合は以下のようにします。:<
 <blockquote>
 <div><a class="reference external" href="https://github.com/mroonga/homebrew">https://github.com/mroonga/homebrew</a></div></blockquote>
 <p>mroonga/homebrewをcloneして、Formula更新用のシェルスクリプトを実行します。update.shの引数にはリリース時のバージョンを指定します。例えば、3.06のリリースのときは以下を実行しました。</p>
-<div class="highlight-none"><div class="highlight"><pre>% ./update.sh 3.06
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./update.sh 3.06
 </pre></div>
 </div>
 <p>実行すると、FormulaのソースアーカイブのURLとsha256チェックサムを更新します。
@@ -381,7 +383,7 @@ Linux 側からダウンロードする場合は以下のようにします。:<
 <li><a class="reference external" href="mailto:groonga-talk&#37;&#52;&#48;lists&#46;sourceforge&#46;net">groonga-talk<span>&#64;</span>lists<span>&#46;</span>sourceforge<span>&#46;</span>net</a> 英語アナウンス</li>
 </ul>
 <p>メッセージ内容のテンプレートを以下に示します。</p>
-<div class="highlight-none"><div class="highlight"><pre>ドキュメント(インストールガイド含む)
+<div class="highlight-none"><div class="highlight"><pre><span></span>ドキュメント(インストールガイド含む)
   http://mroonga.org/
 
 ダウンロード
@@ -469,7 +471,7 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 <div class="section" id="id14">
 <h2>9.2.15. リリース後にやること<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>リリースバージョンを以下のようにして更新します。:</p>
-<div class="highlight-none"><div class="highlight"><pre>% make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
 </pre></div>
 </div>
 </div>
@@ -521,14 +523,11 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="検索" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    モジュール、クラス、または関数名を入力してください
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -544,12 +543,12 @@ Groongaと組み合わせると問題が解決しているかもしれません�
         <li class="right" >
           <a href="debug.html" title="9.1. デバッグ方法"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../developer.html" >9. 開発者向け情報</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../developer.html" >9. 開発者向け情報</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 

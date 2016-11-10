@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4.3. Storage mode &mdash; Mroonga v6.10 documentation</title>
+    <title>4.3. Storage mode &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -24,6 +24,8 @@
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../index.html" />
     <link rel="up" title="4. Tutorial" href="../tutorial.html" />
     <link rel="next" title="4.4. Wrapper mode" href="wrapper.html" />
@@ -73,8 +75,8 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -89,7 +91,7 @@
 <div class="section" id="how-to-use-full-text-search">
 <h2>4.3.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
@@ -98,7 +100,7 @@
 </pre></div>
 </div>
 <p>We put data by INSERT:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
@@ -106,7 +108,7 @@
 </pre></div>
 </div>
 <p>Try full text search:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- | id | content                                 |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
@@ -126,7 +128,7 @@
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
 <p>Let's try:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
@@ -150,7 +152,7 @@
 </div>
 <p>The result having the search word <code class="docutils literal"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
 <p>You can use <code class="docutils literal"><span class="pre">AS</span></code> to change the attribute name:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
        <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">score</span>
   <span class="k">FROM</span> <span class="n">diaries</span>
  <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span>
@@ -170,11 +172,11 @@
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
 <h2>4.3.3. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference" href="#parser" id="id2">[2]</a> for full text search:</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) WITH PARSER parser_name
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
 <p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following:</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
 <div class="admonition note">
@@ -299,17 +301,17 @@ letters or more. It is to reduce noises.</td>
 </tbody>
 </table>
 <p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build Mroonga:</p>
-<div class="highlight-none"><div class="highlight"><pre>./configure --with-default-tokenizer TokenMecab ...
+<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
 <p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable in <code class="docutils literal"><span class="pre">my.cnf</span></code> or by SQL. If you specify it in <code class="docutils literal"><span class="pre">my.cnf</span></code>, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
-<div class="highlight-none"><div class="highlight"><pre>[mysqld]
+<div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
 mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 </pre></div>
 </div>
@@ -324,7 +326,7 @@ It is used when tokenizing text and storing table key.</p>
 <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> or <code class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></code>.</p>
 <p>It isn't used normalizer when the encoding is <code class="docutils literal"><span class="pre">utf8_bin</span></code>.</p>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer by specifying <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code>:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -359,12 +361,12 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>Mroonga has the following syntax to specify Groonga's normalizer:</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
 </pre></div>
 </div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga's document</a> document about Groonga's normalizer.</p>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -397,11 +399,11 @@ It is used when tokenizing text and storing table key.</p>
 <div class="section" id="how-to-specify-the-token-filters">
 <h2>4.3.5. How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga has the following syntax to specify Groonga's token filters.:</p>
-<div class="highlight-none"><div class="highlight"><pre>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
 </pre></div>
 </div>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStem</span></code> token filter:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
 <span class="c1">-- +------------------------------------------------+</span>
 <span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
 <span class="c1">-- +------------------------------------------------+</span>
@@ -440,7 +442,7 @@ It is used when tokenizing text and storing table key.</p>
 </div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/token_filters.html">Groonga's document</a> document about Groonga's token filter.</p>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> token filter:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
 <span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
@@ -490,11 +492,11 @@ It is used when tokenizing text and storing table key.</p>
 <div class="section" id="how-to-specify-groonga-s-column-flags">
 <h2>4.3.6. How to specify Groonga's column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga has the following syntax to specify Groonga's column flags:</p>
-<div class="highlight-none"><div class="highlight"><pre>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+<div class="highlight-none"><div class="highlight"><pre><span></span>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
 </pre></div>
 </div>
 <p>Here is an example that uses <code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code> flag:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="n">UNSIGNED</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">TEXT</span> <span class="k">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
 <span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
@@ -507,7 +509,7 @@ It is used when tokenizing text and storing table key.</p>
 <h2>4.3.7. How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Permalink to this headline">¶</a></h2>
 <p>In storage mode, you can use fast geolocation search in addition to full text search. But unlike MyISAM, you can only store POINT type data. You cannot store other types data like LINE. And fast search using index only supports MBRContains. It does not support MBRDisjoint.</p>
 <p>For the table definition for geolocation search, you need to define a POINT type column like in MyISAM and define SPATIAL INDEX for it.:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="k">location</span> <span class="n">POINT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
@@ -517,7 +519,7 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>To store data, you create POINT type data by using geomFromText() function like in MyISAM:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
@@ -528,7 +530,7 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>If you want to find shops within the rectangle where Ikebukuro station (139.7101 35.7292) is the top-left point and Tokyo Station (139.7662 35.6815) is the bottom-right point, SELECT phrase is like the following:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
   <span class="k">FROM</span> <span class="n">shops</span>
  <span class="k">WHERE</span> <span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span> <span class="k">location</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
@@ -546,7 +548,7 @@ It is used when tokenizing text and storing table key.</p>
 <p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
 <p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
 <p>To get the record ID, you need to create a column named <code class="docutils literal"><span class="pre">_id</span></code> when you create a table:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
   <span class="n">_id</span> <span class="nb">INT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">_id</span><span class="p">)</span> <span class="k">USING</span> <span class="n">HASH</span>
@@ -558,7 +560,7 @@ It is used when tokenizing text and storing table key.</p>
 <p>You can create an index for _id column, but it should be HASH type.</p>
 <p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
 So you need to exclude it from setting columns, or you need to use <code class="docutils literal"><span class="pre">null</span></code> as its value:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
@@ -572,7 +574,7 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>To get the record ID, you invoke SELECT with _id column:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- | _id  | content                                  |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
@@ -585,7 +587,7 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>By using last_insert_grn_id function, you can also get the record ID that is assigned by the last INSERT:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
@@ -598,11 +600,11 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>last_insert_grn_id function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 <span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
 </pre></div>
@@ -611,7 +613,7 @@ So you need to exclude it from setting columns, or you need to use <code class="
 <div class="section" id="how-to-get-snippet-keyword-in-context">
 <h2>4.3.9. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
-It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><em>mroonga_snippet()</em></a> UDF.</p>
+It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDF.</p>
 </div>
 <div class="section" id="how-to-run-groonga-command">
 <h2>4.3.10. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
@@ -643,7 +645,7 @@ command in SQL by the function. But you should use only <cite>select</cite>
 command. Other commands that change schema or data may break
 consistency.</p>
 <p>Here is the schema definition for execution examples:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="nb">date</span> <span class="nb">DATE</span><span class="p">,</span>
@@ -655,7 +657,7 @@ consistency.</p>
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
        <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
                <span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
                <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
@@ -684,7 +686,7 @@ is <cite>--drilldown</cite>. Groonga returns search result as JSON. So
 friendly. You need to parse search result JSON by yourself.</p>
 <p>Here is the example of faceted search by all available faceted search
 keys (result JSON is pretty printed):</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | faceted_result              |</span>
 <span class="c1">-- +-----------------------------+</span>
@@ -716,14 +718,14 @@ details.</p>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <code class="docutils literal"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
-<div class="highlight-none"><div class="highlight"><pre>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
+<div class="highlight-none"><div class="highlight"><pre><span></span>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
 </div>
 <p>The default log level is NOTICE, i.e. we have important information only and we don't have debug information etc.).</p>
 <p>You can get the log level by <code class="docutils literal"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
 <span class="c1">-- +-------------------+--------+</span>
 <span class="c1">-- | Variable_name     | Value  |</span>
 <span class="c1">-- +-------------------+--------+</span>
@@ -756,7 +758,7 @@ details.</p>
 <li>DEBUG</li>
 <li>DUMP</li>
 </ul>
-<p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span>mroonga_log_level</span></a> about details.</p>
+<p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span class="std std-ref">mroonga_log_level</span></a> about details.</p>
 <p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
 <ol class="arabic simple">
 <li>change the file name of <code class="docutils literal"><span class="pre">groonga.log</span></code> (by using OS's mv command etc.).</li>
@@ -766,7 +768,7 @@ details.</p>
 <div class="section" id="next-step">
 <h2>4.3.12. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>Now, you can use Mroonga as storage mode! If you want Mroonga to be
-faster, see also <a class="reference internal" href="../reference/optimizations.html"><em>Optimizations</em></a>.</p>
+faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="score" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -824,14 +826,11 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -850,12 +849,12 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

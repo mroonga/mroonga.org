@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.7.2. Mroongaにおける検索スコア &mdash; Mroonga v6.10 documentation</title>
+    <title>5.7.2. Mroongaにおける検索スコア &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <script type="text/javascript" src="../../static/translations.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../../index.html" />
     <link rel="up" title="5.7. 全文検索" href="../full_text_search.html" />
     <link rel="next" title="6. FAQ" href="../../faq.html" />
@@ -74,9 +76,9 @@
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. ブーリアンモード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. 全文検索</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. 全文検索</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -105,31 +107,31 @@
 </ol>
 </div></blockquote>
 <p>具体例を使って説明します。以下のテーブルとデータを用意します。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SET NAMES UTF8;
-CREATE TABLE diaries (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  content TEXT,
-  FULLTEXT INDEX(content)
-) ENGINE mroonga DEFAULT CHARSET UTF8;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SET</span> <span class="n">NAMES</span> <span class="n">UTF8</span><span class="p">;</span>
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="n">TEXT</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="n">mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
 
-INSERT INTO diaries (content) VALUES(&quot;It&#39;ll be fine tomorrow as well.&quot;);
-INSERT INTO diaries (content) VALUES(&quot;It&#39;ll rain tomorrow.&quot;);
-INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;);
-INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>このとき、以下のように「fine today」で類似文書検索したとします。検索の結果は以下となります。:</p>
-<div class="highlight-python"><div class="highlight"><pre>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine today&quot;) AS score
-    -&gt;        FROM diaries
-    -&gt;        WHERE MATCH (content) AGAINST (&quot;fine today&quot;)
-    -&gt;        ORDER BY MATCH (content) AGAINST (&quot;fine today&quot;) DESC;
-+----+--------------------------------------------------+--------+
-| id | content                                          | score  |
-+----+--------------------------------------------------+--------+
-|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. | 131073 |
-|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        | 131073 |
-+----+--------------------------------------------------+--------+
-2 rows in set (0.01 sec)
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+    <span class="o">-&gt;</span>        <span class="n">FROM</span> <span class="n">diaries</span>
+    <span class="o">-&gt;</span>        <span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span>
+    <span class="o">-&gt;</span>        <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">DESC</span><span class="p">;</span>
+<span class="o">+----+--------------------------------------------------+--------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">content</span>                                          <span class="o">|</span> <span class="n">score</span>  <span class="o">|</span>
+<span class="o">+----+--------------------------------------------------+--------+</span>
+<span class="o">|</span>  <span class="mi">3</span> <span class="o">|</span> <span class="n">It</span><span class="s1">&#39;s fine today. It&#39;</span><span class="n">ll</span> <span class="n">be</span> <span class="n">fine</span> <span class="n">tomorrow</span> <span class="k">as</span> <span class="n">well</span><span class="o">.</span> <span class="o">|</span> <span class="mi">131073</span> <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">4</span> <span class="o">|</span> <span class="n">It</span><span class="s1">&#39;s fine today. But it&#39;</span><span class="n">ll</span> <span class="n">rain</span> <span class="n">tomorrow</span><span class="o">.</span>        <span class="o">|</span> <span class="mi">131073</span> <span class="o">|</span>
+<span class="o">+----+--------------------------------------------------+--------+</span>
+<span class="mi">2</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>このときのスコア&quot;131073&quot;の算出の具体的な挙動は以下となります。</p>
@@ -162,11 +164,11 @@ INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll ra
 <p>&quot;1048576 / 9&quot;の分母の&quot;9&quot;はトークン「fine」を含む文書数になります。</p>
 <p>&quot;8&quot;と&quot;9&quot;はトークンを含む文書がいくつあるかの概算値です。本当は「today」を含む文書数は&quot;2&quot;,「fine」を含む文書数は&quot;3&quot;ですが、概算値なのでずれています。</p>
 <p>概算値は以下のように確認できます。</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT mroonga_command(&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;) AS groonga_response;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s2">&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">groonga_response</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The retrieval result of the above query is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s">&quot;_key&quot;</span><span class="p">,</span><span class="s">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s">&quot;index&quot;</span><span class="p">,</span><span class="s">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </div>
@@ -230,14 +232,11 @@ INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll ra
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="検索" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    モジュール、クラス、または関数名を入力してください
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -256,13 +255,13 @@ INSERT INTO diaries (content) VALUES(&quot;It&#39;s fine today. But it&#39;ll ra
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. ブーリアンモード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. 全文検索</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. 全文検索</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 

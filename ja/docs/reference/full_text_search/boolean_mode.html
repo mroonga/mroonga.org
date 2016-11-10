@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.7.1. ブーリアンモード &mdash; Mroonga v6.10 documentation</title>
+    <title>5.7.1. ブーリアンモード &#8212; Mroonga v6.10 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../static/doctools.js"></script>
     <script type="text/javascript" src="../../static/translations.js"></script>
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
     <link rel="top" title="Mroonga v6.10 documentation" href="../../index.html" />
     <link rel="up" title="5.7. 全文検索" href="../full_text_search.html" />
     <link rel="next" title="5.7.2. Mroongaにおける検索スコア" href="scoring.html" />
@@ -74,9 +76,9 @@
         <li class="right" >
           <a href="../full_text_search.html" title="5.7. 全文検索"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. 全文検索</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. 全文検索</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -90,7 +92,7 @@
 <div class="section" id="summary">
 <h2>5.7.1.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaは <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> に <code class="docutils literal"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> 修飾子をつけることでブーリアン全文検索を実行できます。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT ... WHERE MATCH(column) AGAINST (&#39;...&#39; IN BOOLEAN MODE);
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">...</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>通常、デフォルトの <code class="docutils literal"><span class="pre">IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></code> よりも <code class="docutils literal"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> の方が適切です。なぜなら <code class="docutils literal"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> はWeb検索エンジンのクエリーと似ているからです。多くのユーザーはWeb検索エンジンのクエリーに慣れています。</p>
@@ -101,7 +103,7 @@
 <div class="section" id="usage">
 <h2>5.7.1.2. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下は例を示すためのスキーマとデータです。:</p>
-<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE books (
+<div class="highlight-default"><div class="highlight"><pre><span></span>CREATE TABLE books (
   `id` INTEGER AUTO_INCREMENT,
   `title` text,
   PRIMARY KEY(`id`),
@@ -121,15 +123,15 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="boolean-mode-qualifier-none"></span><h3>5.7.1.3.1. <code class="docutils literal"><span class="pre">キーワード1</span> <span class="pre">キーワード2</span></code><a class="headerlink" href="#keyword1-keyword2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">キーワード1</span> <span class="pre">キーワード2</span></code> のようにキーワードの間に演算子がない場合は、指定したキーワードのどれかひとつでも含まれていればヒット、という検索条件になります。</p>
 <p><code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">for</span></code> というクエリーは <code class="docutils literal"><span class="pre">Mroonga</span></code> または <code class="docutils literal"><span class="pre">for</span></code> が含まれているという意味です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;Mroonga for&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | Mroonga = MySQL + Groonga |
--- | MySQL for Professional    |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -137,15 +139,15 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="boolean-mode-qualifier-or"></span><h3>5.7.1.3.2. <code class="docutils literal"><span class="pre">キーワード1</span> <span class="pre">OR</span> <span class="pre">キーワード2</span></code><a class="headerlink" href="#keyword1-or-keyword2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">OR</span></code> （大文字にすること）は左辺のキーワードまたは右辺のキーワードのうち少なくともどちらか1つは含まれていること、という意味です。</p>
 <p><code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> というクエリーは <code class="docutils literal"><span class="pre">Mroonga</span></code> または <code class="docutils literal"><span class="pre">for</span></code> が含まれているという意味です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;Mroonga OR for&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | Mroonga = MySQL + Groonga |
--- | MySQL for Professional    |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga OR for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">OR</span></code> はデフォルトの演算子です。省略可能です。 <code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> と <code class="docutils literal"><span class="pre">Mroonga</span> <span class="pre">for</span></code> はどちらも同じ結果を返します。</p>
@@ -154,14 +156,14 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="boolean-mode-qualifier-plus"></span><h3>5.7.1.3.3. <code class="docutils literal"><span class="pre">+キーワード</span></code><a class="headerlink" href="#keyword" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>キーワードの前に「+」をつけると、そのキーワードは必ず含まれていること、という検索条件になります。</p>
 <p><code class="docutils literal"><span class="pre">+MySQL</span> <span class="pre">+Mroonga</span></code> というクエリーは <code class="docutils literal"><span class="pre">MySQL</span></code> も <code class="docutils literal"><span class="pre">Mroonga</span></code> もどちらも含まれていること、という意味になります。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;+MySQL +Groonga&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | Mroonga = MySQL + Groonga |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -169,15 +171,15 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="id1"></span><h3>5.7.1.3.4. <code class="docutils literal"><span class="pre">-キーワード</span></code><a class="headerlink" href="#boolean-mode-qualifier-minus" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>キーワードの前に「-」をつけると、そのキーワードは含まれないこと、という検索条件になります。</p>
 <p><code class="docutils literal"><span class="pre">+MySQL</span> <span class="pre">-Mroonga</span></code> というクエリーは <code class="docutils literal"><span class="pre">MySQL</span></code> は含まれるけど <code class="docutils literal"><span class="pre">Mroonga</span></code> は含まれないという意味になります。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;+MySQL -Mroonga&#39; IN BOOLEAN MODE);
--- +------------------------+
--- | title                  |
--- +------------------------+
--- | Professional MySQL     |
--- | MySQL for Professional |
--- +------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL -Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -185,44 +187,44 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="boolean-mode-qualifier-asterisk"></span><h3>5.7.1.3.5. <code class="docutils literal"><span class="pre">プレフィックス*</span></code><a class="headerlink" href="#prefix" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>プレフィックスの後に「*」をつけると、そのプレフィックスの単語を含むこと、という検索条件になります。</p>
 <p><code class="docutils literal"><span class="pre">+M*</span></code> というクエリーは <code class="docutils literal"><span class="pre">M</span></code> から始まる単語（この場合は <code class="docutils literal"><span class="pre">MySQL</span></code> と <code class="docutils literal"><span class="pre">Mroonga</span></code> ）が含まれていること、という意味になります。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;+M*&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | Mroonga = MySQL + Groonga |
--- | Professional MySQL        |
--- | MySQL for Professional    |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+M*&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>正確に言うと、「単語」はあなたが思っている「単語」ではないかもしれません。この文脈での「単語」は「トークン」ということです。「トークン」は単語ではないかもしれません。たとえば、「It's」の中のトークンは「It」と「'」と「s」です。</p>
-<p><a class="reference internal" href="../udf/mroonga_command.html"><em>mroonga_command()</em></a> と <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/tokenize.html">tokenize</a> を使うとトークンを確認できます。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT mroonga_command(&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;);
--- +--------------------------------------------------------------------------+
--- | mroonga_command(&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;) |
--- +--------------------------------------------------------------------------+
--- | [                                                                        |
--- |   {                                                                      |
--- |     &quot;value&quot;:&quot;IT&quot;,                                                        |
--- |     &quot;position&quot;:0,                                                        |
--- |     &quot;force_prefix&quot;:false                                                 |
--- |   },                                                                     |
--- |   {                                                                      |
--- |     &quot;value&quot;:&quot;&#39;&quot;,                                                         |
--- |     &quot;position&quot;:1,                                                        |
--- |     &quot;force_prefix&quot;:false                                                 |
--- |   },                                                                     |
--- |   {                                                                      |
--- |     &quot;value&quot;:&quot;S&quot;,                                                         |
--- |     &quot;position&quot;:2,                                                        |
--- |     &quot;force_prefix&quot;:false                                                 |
--- |   }                                                                      |
--- | ]                                                                        |
--- +--------------------------------------------------------------------------+
+<p><a class="reference internal" href="../udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> と <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/tokenize.html">tokenize</a> を使うとトークンを確認できます。:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="p">[</span>                                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;IT&quot;</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;S&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">}</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="p">]</span>                                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
 </pre></div>
 </div>
 <p class="last">上の結果のJSONの値は手で整形しています。</p>
@@ -232,14 +234,14 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="boolean-mode-qualifier-double-quote"></span><h3>5.7.1.3.6. <code class="docutils literal"><span class="pre">&quot;フレーズ&quot;</span></code><a class="headerlink" href="#phrase" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ダブルクォート（ <code class="docutils literal"><span class="pre">&quot;</span></code> ）でフレーズを囲むと、そのフレーズが必ず含まれていること、という検索条件になります。</p>
 <p><code class="docutils literal"><span class="pre">+&quot;Professional</span> <span class="pre">MySQL&quot;</span></code> というクエリーは <code class="docutils literal"><span class="pre">Professional</span> <span class="pre">MySQL</span></code> というフレーズが含まれていること、という意味になります。このクエリーは <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> にはマッチしません。 <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> は <code class="docutils literal"><span class="pre">MySQL</span></code> という単語も <code class="docutils literal"><span class="pre">Professional</span></code> という単語も含んでいますが、 <code class="docutils literal"><span class="pre">Professional</span> <span class="pre">MySQL</span></code> というフレーズは含んでいません。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;+&quot;Professional MySQL&quot;&#39; IN BOOLEAN MODE);
--- +--------------------+
--- | title              |
--- +--------------------+
--- | Professional MySQL |
--- +--------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+&quot;Professional MySQL&quot;&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>              <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -256,14 +258,14 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 </ul>
 </div></blockquote>
 <p>以下はこのクエリーの実行結果です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
-  FROM books
- WHERE MATCH(title) AGAINST(&#39;+(Groonga OR Mroonga) +MySQL&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | Mroonga = MySQL + Groonga |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+(Groonga OR Mroonga) +MySQL&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -273,11 +275,11 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p>プラグマはクエリーのメタデータです。プラグマを指定することでクエリーのパース方法を変更できます。</p>
 <p>実行方法をカスタマイズするためにクエリーの先頭にプラグマを埋め込むことができます。</p>
 <p>プラグマはクエリーの先頭になければいけません。クエリーの先頭に空白を入れてはいけません。プラグマは <code class="docutils literal"><span class="pre">*</span></code> から始まります。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT MATCH AGAINST(&#39;*PRAGMA ...&#39; IN BOOLEAN MODE);
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>複数のプラグマを指定することができます。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT MATCH AGAINST(&#39;*PRAGMA1PRAGMA2 ...&#39; IN BOOLEAN MODE);
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA1PRAGMA2 ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>以下は利用可能なプラグマの一覧です。</p>
@@ -285,7 +287,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <span id="boolean-mode-pragma-d"></span><h3>5.7.1.4.1. <code class="docutils literal"><span class="pre">D</span></code> プラグマ<a class="headerlink" href="#d-pragma" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">D</span></code> プラグマはデフォルトの演算子を指定します。個別の演算子を省略するとデフォルトの演算子を使います。</p>
 <p><code class="docutils literal"><span class="pre">D</span></code> プラグマの構文は次の通りです。 <code class="docutils literal"><span class="pre">${OPERATOR}</span></code> には <code class="docutils literal"><span class="pre">OR</span></code> または <code class="docutils literal"><span class="pre">+</span></code> または <code class="docutils literal"><span class="pre">-</span></code> を指定します。:</p>
-<div class="highlight-python"><div class="highlight"><pre>*D${OPERATOR}
+<div class="highlight-default"><div class="highlight"><pre><span></span>*D${OPERATOR}
 </pre></div>
 </div>
 <div class="section" id="dor">
@@ -293,15 +295,15 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal"><span class="pre">DOR</span></code> はデフォルトの演算子として「OR」を使うという意味です。</p>
 <p>これがデフォルトです。</p>
 <p><code class="docutils literal"><span class="pre">DOR</span></code> を使う例は次の通りです。 <code class="docutils literal"><span class="pre">'*DOR</span> <span class="pre">for</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal"><span class="pre">for</span></code> または <code class="docutils literal"><span class="pre">Mroonga</span></code> を含むという意味です。</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
- FROM books
-WHERE MATCH (title) AGAINST(&#39;*DOR for Mroonga&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | MySQL for Professional    |
--- | Mroonga = MySQL + Groonga |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*DOR for Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -309,14 +311,14 @@ WHERE MATCH (title) AGAINST(&#39;*DOR for Mroonga&#39; IN BOOLEAN MODE);
 <span id="boolean-mode-pragma-d-plus"></span><h4>5.7.1.4.1.2. <code class="docutils literal"><span class="pre">D+</span></code><a class="headerlink" href="#d" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">D+</span></code> はデフォルトの演算子として「AND」を使うという意味です。これはWeb検索エンジンのクエリーと同じ挙動です。</p>
 <p><code class="docutils literal"><span class="pre">D+</span></code> を使う例は次の通りです。 <code class="docutils literal"><span class="pre">'*D+</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal"><span class="pre">MySQL</span></code> と <code class="docutils literal"><span class="pre">Mroonga</span></code> の両方を含むという意味です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
- FROM books
-WHERE MATCH (title) AGAINST(&#39;*D+ MySQL Mroonga&#39; IN BOOLEAN MODE);
--- +---------------------------+
--- | title                     |
--- +---------------------------+
--- | Mroonga = MySQL + Groonga |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D+ MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -324,15 +326,15 @@ WHERE MATCH (title) AGAINST(&#39;*D+ MySQL Mroonga&#39; IN BOOLEAN MODE);
 <span id="id2"></span><h4>5.7.1.4.1.3. <code class="docutils literal"><span class="pre">D-</span></code><a class="headerlink" href="#boolean-mode-pragma-d-minus" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">D-</span></code> はデフォルトの演算子として「NOT」を使うという意味です。</p>
 <p><code class="docutils literal"><span class="pre">D-</span></code> を使う例は次の通りです。 <code class="docutils literal"><span class="pre">'*D-</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal"><span class="pre">MySQL</span></code> を含むが <code class="docutils literal"><span class="pre">Mroonga</span></code> を含まないという意味です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title
- FROM books
-WHERE MATCH (title) AGAINST(&#39;*D- MySQL Mroonga&#39; IN BOOLEAN MODE);
--- +------------------------+
--- | title                  |
--- +------------------------+
--- | Professional MySQL     |
--- | MySQL for Professional |
--- +---------------------------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D- MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -342,11 +344,11 @@ WHERE MATCH (title) AGAINST(&#39;*D- MySQL Mroonga&#39; IN BOOLEAN MODE);
 <p><code class="docutils literal"><span class="pre">W</span></code> プラグマはマルチカラムインデックス用のプラグマです。検索対象のセクションとその重みを指定します。</p>
 <p>各セクションごとに違う重みを指定できます。デフォルトの重みは <code class="docutils literal"><span class="pre">1</span></code> です。 <code class="docutils literal"><span class="pre">1</span></code> は重みがないという意味です。</p>
 <p><code class="docutils literal"><span class="pre">W</span></code> プラグマの構文は次の通りです。 <code class="docutils literal"><span class="pre">${SECTION}</span></code> は0ではなく1から始まる数値です。 <code class="docutils literal"><span class="pre">${WEIGHT}</span></code> は省略可能です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>*W[${SECTION1}[:${WEIGHT1}]][,${SECTION2}[:${WEIGHT2}]][,...]
+<div class="highlight-default"><div class="highlight"><pre><span></span>*W[${SECTION1}[:${WEIGHT1}]][,${SECTION2}[:${WEIGHT2}]][,...]
 </pre></div>
 </div>
 <p>次は例を示すためのスキーマとデータです。 <code class="docutils literal"><span class="pre">W</span></code> プラグマを使うためにはマルチカラムインデックスを作る必要があります。:</p>
-<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE memos (
+<div class="highlight-default"><div class="highlight"><pre><span></span>CREATE TABLE memos (
   `id` INTEGER AUTO_INCREMENT,
   `title` text,
   `content` text,
@@ -366,17 +368,17 @@ INSERT INTO memos (title, content) VALUES (
 </pre></div>
 </div>
 <p>次の例は重みの使い方を示す例です。 <code class="docutils literal"><span class="pre">title</span></code> カラムは重みが <code class="docutils literal"><span class="pre">10</span></code> で、 <code class="docutils literal"><span class="pre">content</span></code> カラムは重みが <code class="docutils literal"><span class="pre">1</span></code> です。これは <code class="docutils literal"><span class="pre">title</span></code> カラムの中にあるキーワードは <code class="docutils literal"><span class="pre">content</span></code> カラムの中にあるキーワードよりも10倍重要だということです。</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT title,
-       content,
-       MATCH (title, content) AGAINST(&#39;*W1:10,2:1 +Groonga&#39; IN BOOLEAN MODE) AS score
-  FROM memos;
--- +---------+--------------------------------------------------------+-------+
--- | title   | content                                                | score |
--- +---------+--------------------------------------------------------+-------+
--- | MySQL   | MySQL is a RDBMS.                                      |     0 |
--- | Groonga | Groonga is a full text search engine.                  |    11 |
--- | Mroonga | Mroonga is a storage engine for MySQL based on Groonga |     1 |
--- +---------+--------------------------------------------------------+-------+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span><span class="p">,</span>
+       <span class="n">content</span><span class="p">,</span>
+       <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*W1:10,2:1 +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+  <span class="n">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>   <span class="o">|</span> <span class="n">content</span>                                                <span class="o">|</span> <span class="n">score</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span>   <span class="o">|</span> <span class="n">MySQL</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">RDBMS</span><span class="o">.</span>                                      <span class="o">|</span>     <span class="mi">0</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Groonga</span> <span class="o">|</span> <span class="n">Groonga</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">full</span> <span class="n">text</span> <span class="n">search</span> <span class="n">engine</span><span class="o">.</span>                  <span class="o">|</span>    <span class="mi">11</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">storage</span> <span class="n">engine</span> <span class="k">for</span> <span class="n">MySQL</span> <span class="n">based</span> <span class="n">on</span> <span class="n">Groonga</span> <span class="o">|</span>     <span class="mi">1</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
 </pre></div>
 </div>
 <p>最初のレコードのスコアーは <code class="docutils literal"><span class="pre">0</span></code> です。なぜなら、 <code class="docutils literal"><span class="pre">title</span></code> カラムにも <code class="docutils literal"><span class="pre">content</span></code> カラムにも <code class="docutils literal"><span class="pre">Groonga</span></code> が含まれていないからです。</p>
@@ -387,7 +389,7 @@ INSERT INTO memos (title, content) VALUES (
 <span id="boolean-mode-pragma-s"></span><h3>5.7.1.4.3. <code class="docutils literal"><span class="pre">S</span></code> プラグマ<a class="headerlink" href="#s-pragma" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">S</span></code> プラグマはクエリーの構文を指定します。</p>
 <p><code class="docutils literal"><span class="pre">S</span></code> プラグマの構文は次の通りです。:</p>
-<div class="highlight-python"><div class="highlight"><pre>*S${SYNTAX}
+<div class="highlight-default"><div class="highlight"><pre><span></span>*S${SYNTAX}
 </pre></div>
 </div>
 <p>利用可能な <code class="docutils literal"><span class="pre">syntax</span></code> は次の通りです。</p>
@@ -401,7 +403,7 @@ INSERT INTO memos (title, content) VALUES (
 <span id="boolean-mode-pragma-ss"></span><h4>5.7.1.4.3.1. <code class="docutils literal"><span class="pre">*SS</span></code><a class="headerlink" href="#ss" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">*SS</span></code> プラグマを使うと <a class="reference external" href="http://groonga.org/ja/docs/reference/grn_expr/script_syntax.html">スクリプト構文</a> を使えます。スクリプト構文ではGroongaのすべての検索機能を使えます。</p>
 <p>以下はスクリプト構文の使い方を示す例のためのスキーマとデータです。:</p>
-<div class="highlight-python"><div class="highlight"><pre>CREATE TABLE comments (
+<div class="highlight-default"><div class="highlight"><pre><span></span>CREATE TABLE comments (
   `content` text,
   FULLTEXT INDEX content_index (content)
 ) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
@@ -415,7 +417,7 @@ INSERT INTO comments VALUES (
 </pre></div>
 </div>
 <p>以下はスクリプト構文で <a class="reference external" href="http://groonga.org/ja/docs/reference/grn_expr/script_syntax.html#near-search-operator">近傍検索</a> を使う例です。:</p>
-<div class="highlight-python"><div class="highlight"><pre>SELECT content,
+<div class="highlight-default"><div class="highlight"><pre><span></span>SELECT content,
        MATCH (content) AGAINST(&#39;*SS content *N &quot;student fast&quot;&#39; IN BOOLEAN MODE) AS score
   FROM comments;
 -- +------------------------------------------------------------------------------+-------+
@@ -488,14 +490,11 @@ INSERT INTO comments VALUES (
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="検索" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    モジュール、クラス、または関数名を入力してください
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -514,13 +513,13 @@ INSERT INTO comments VALUES (
         <li class="right" >
           <a href="../full_text_search.html" title="5.7. 全文検索"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. 全文検索</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v6.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. 全文検索</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2009-2016, Mroonga Project.
+        &#169; Copyright 2009-2016, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/ja_JP/all.js"></script>
 
