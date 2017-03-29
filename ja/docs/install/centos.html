@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.5. CentOS &#8212; Mroonga v7.00 documentation</title>
+    <title>2.5. CentOS &#8212; Mroonga v7.01 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.00',
+        VERSION:     '7.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="top" title="Mroonga v7.00 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v7.01 documentation" href="../index.html" />
     <link rel="up" title="2. インストール" href="../install.html" />
     <link rel="next" title="2.6. Fedora" href="fedora.html" />
     <link rel="prev" title="2.4. Ubuntu" href="ubuntu.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="ubuntu.html" title="2.4. Ubuntu"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.00 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.01 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. インストール</a> &#187;</li> 
       </ul>
     </div>  
@@ -90,30 +90,12 @@
 <h1>2.5. CentOS<a class="headerlink" href="#centos" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このセクションではCentOS上でMroonga関連のRPMパッケージをインストールする方法を説明します。これらのパッケージは <code class="docutils literal"><span class="pre">yum</span></code> でインストールできます。</p>
 <p>32-bit用と64-bit用のパッケージを配布していますが、サーバ用途には64-bitパッケージを利用することをオススメします。32-bit用パッケージはテスト用か開発用にだけ使って下さい。32-bit用パッケージを使った場合は、中程度のサイズのデータでもメモリ不足エラーになることがあります。</p>
-<div class="section" id="centos-5">
-<span id="id1"></span><h2>2.5.1. CentOS 5<a class="headerlink" href="#centos-5" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>CentOS 5では、Mroonga 3.09のリリースからディストリビューション由来のMySQLパッケージ（MySQL 5.5系）を利用します。</p>
-<p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% wget http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
-% sudo yum install -y --nogpgcheck groonga-release-1.2.0-1.noarch.rpm
-% sudo yum install -y mysql55-mysql-server
-% sudo /sbin/service mysql55-mysqld start
-% sudo yum install -y --enablerepo=epel mysql55-mroonga
-(% sudo mysqladmin -u root password &#39;new-password&#39;)
-</pre></div>
-</div>
-<p>トークナイザーとして <a class="reference external" href="http://mecab.sourceforge.net/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
-<p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y --enablerepo=epel groonga-tokenizer-mecab
-</pre></div>
-</div>
-</div>
 <div class="section" id="centos-6-with-the-official-mysql-package">
-<span id="centos-6-official"></span><h2>2.5.2. CentOS 6（公式のMySQLパッケージを利用）<a class="headerlink" href="#centos-6-with-the-official-mysql-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-6-official"></span><h2>2.5.1. CentOS 6（公式のMySQLパッケージを利用）<a class="headerlink" href="#centos-6-with-the-official-mysql-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6では、Mroonga 4.01からCentOSのSCLを使ったMySQLパッケージ（MySQL 5.5系）を利用できます。</p>
 <p>インストール:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y centos-release-scl
-% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y mysql55-mysql-server
 % sudo /sbin/service mysql55-mysqld start
 % sudo yum install -y --enablerepo=epel mysql55-mroonga
@@ -127,10 +109,10 @@
 </div>
 </div>
 <div class="section" id="centos-6-with-the-oracle-mysql-5-6-package">
-<span id="centos-6-oracle-56"></span><h2>2.5.3. CentOS 6（OracleのMySQL 5.6パッケージを利用）<a class="headerlink" href="#centos-6-with-the-oracle-mysql-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-6-oracle-56"></span><h2>2.5.2. CentOS 6（OracleのMySQL 5.6パッケージを利用）<a class="headerlink" href="#centos-6-with-the-oracle-mysql-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6では、Mroonga 4.04からOracleのMySQL 5.6パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y http://repo.mysql.com/mysql-community-release-el6-7.noarch.rpm
 % sudo yum install -y --enablerepo=epel mysql-community-mroonga
 (% sudo /sbin/service mysqld start)
@@ -144,10 +126,10 @@
 </div>
 </div>
 <div class="section" id="centos-6-with-the-oracle-mysql-5-7-package">
-<span id="centos-6-oracle-57"></span><h2>2.5.4. CentOS 6（OracleのMySQL 5.7パッケージを利用）<a class="headerlink" href="#centos-6-with-the-oracle-mysql-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-6-oracle-57"></span><h2>2.5.3. CentOS 6（OracleのMySQL 5.7パッケージを利用）<a class="headerlink" href="#centos-6-with-the-oracle-mysql-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6では、Mroonga 5.09からOracleのMySQL 5.7パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y http://repo.mysql.com/mysql-community-release-el6-7.noarch.rpm
 % sudo yum install -y yum-utils
 % sudo yum-config-manager --disable mysql56-community
@@ -165,10 +147,10 @@
 </div>
 </div>
 <div class="section" id="centos-6-with-percona-server-5-6-package">
-<span id="centos-6-percona-56"></span><h2>2.5.5. CentOS 6（Percona Server 5.6パッケージを利用）<a class="headerlink" href="#centos-6-with-percona-server-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-6-percona-56"></span><h2>2.5.4. CentOS 6（Percona Server 5.6パッケージを利用）<a class="headerlink" href="#centos-6-with-percona-server-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6では、Mroonga 5.02からPercona Server 5.6パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
 % sudo yum install -y Percona-Server-server-56
 % sudo /sbin/service mysql start
@@ -183,10 +165,10 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
 </div>
 </div>
 <div class="section" id="centos-6-with-percona-server-5-7-package">
-<span id="centos-6-percona-57"></span><h2>2.5.6. CentOS 6（Percona Server 5.7パッケージを利用）<a class="headerlink" href="#centos-6-with-percona-server-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-6-percona-57"></span><h2>2.5.5. CentOS 6（Percona Server 5.7パッケージを利用）<a class="headerlink" href="#centos-6-with-percona-server-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 6では、Mroonga 6.02からPercona Server 5.7パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
 % sudo yum install -y --enablerepo=epel percona-server-57-mroonga
 (% sudo /sbin/service mysql start)
@@ -201,10 +183,10 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
 </div>
 </div>
 <div class="section" id="centos-7-with-the-official-mariadb-package">
-<span id="centos-7-official"></span><h2>2.5.7. CentOS 7（公式のMariaDBパッケージを利用）<a class="headerlink" href="#centos-7-with-the-official-mariadb-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-7-official"></span><h2>2.5.6. CentOS 7（公式のMariaDBパッケージを利用）<a class="headerlink" href="#centos-7-with-the-official-mariadb-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 7では、ディストリビューション由来のMariaDBパッケージ（MariaDB 5.5系）を利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y mariadb-server
 % sudo systemctl start mariadb
 % sudo yum install -y --enablerepo=epel mariadb-mroonga
@@ -218,10 +200,10 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
 </div>
 </div>
 <div class="section" id="centos-7-with-the-oracle-mysql-5-6-package">
-<span id="centos-7-oracle-56"></span><h2>2.5.8. CentOS 7（OracleのMySQL 5.6パッケージを利用）<a class="headerlink" href="#centos-7-with-the-oracle-mysql-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-7-oracle-56"></span><h2>2.5.7. CentOS 7（OracleのMySQL 5.6パッケージを利用）<a class="headerlink" href="#centos-7-with-the-oracle-mysql-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 7では、OracleのMySQL 5.6パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
 % sudo yum install -y --enablerepo=epel mysql-community-mroonga
 (% sudo systemctl start mysqld)
@@ -235,10 +217,10 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
 </div>
 </div>
 <div class="section" id="centos-7-with-the-oracle-mysql-5-7-package">
-<span id="centos-7-oracle-57"></span><h2>2.5.9. CentOS 7（OracleのMySQL 5.7パッケージを利用）<a class="headerlink" href="#centos-7-with-the-oracle-mysql-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-7-oracle-57"></span><h2>2.5.8. CentOS 7（OracleのMySQL 5.7パッケージを利用）<a class="headerlink" href="#centos-7-with-the-oracle-mysql-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 7では、Mroonga 5.09からOracleのMySQL 5.7パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
 % sudo yum install -y yum-utils
 % sudo yum-config-manager --disable mysql56-community
@@ -256,10 +238,10 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
 </div>
 </div>
 <div class="section" id="centos-7-with-percona-server-5-6-package">
-<span id="centos-7-percona-56"></span><h2>2.5.10. CentOS 7（Percona Server 5.6パッケージを利用）<a class="headerlink" href="#centos-7-with-percona-server-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-7-percona-56"></span><h2>2.5.9. CentOS 7（Percona Server 5.6パッケージを利用）<a class="headerlink" href="#centos-7-with-percona-server-5-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 7では、Mroonga 5.02からPercona Server 5.6パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
 % sudo yum install -y --enablerepo=epel percona-server-56-mroonga
 (% sudo systemctl start mysqld)
@@ -273,10 +255,10 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
 </div>
 </div>
 <div class="section" id="centos-7-with-percona-server-5-7-package">
-<span id="centos-7-percona-57"></span><h2>2.5.11. CentOS 7（Percona Server 5.7パッケージを利用）<a class="headerlink" href="#centos-7-with-percona-server-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-7-percona-57"></span><h2>2.5.10. CentOS 7（Percona Server 5.7パッケージを利用）<a class="headerlink" href="#centos-7-with-percona-server-5-7-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 7では、Mroonga 6.02からPercona Server 5.7パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 % sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
 % sudo yum install -y --enablerepo=epel percona-server-57-mroonga
 (% sudo systemctl start mysqld)
@@ -301,17 +283,16 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
   <h3><a href="../index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2.5. CentOS</a><ul>
-<li><a class="reference internal" href="#centos-5">2.5.1. CentOS 5</a></li>
-<li><a class="reference internal" href="#centos-6-with-the-official-mysql-package">2.5.2. CentOS 6（公式のMySQLパッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-6-package">2.5.3. CentOS 6（OracleのMySQL 5.6パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-7-package">2.5.4. CentOS 6（OracleのMySQL 5.7パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-6-with-percona-server-5-6-package">2.5.5. CentOS 6（Percona Server 5.6パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-6-with-percona-server-5-7-package">2.5.6. CentOS 6（Percona Server 5.7パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-7-with-the-official-mariadb-package">2.5.7. CentOS 7（公式のMariaDBパッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-5-6-package">2.5.8. CentOS 7（OracleのMySQL 5.6パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-5-7-package">2.5.9. CentOS 7（OracleのMySQL 5.7パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-7-with-percona-server-5-6-package">2.5.10. CentOS 7（Percona Server 5.6パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-7-with-percona-server-5-7-package">2.5.11. CentOS 7（Percona Server 5.7パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-official-mysql-package">2.5.1. CentOS 6（公式のMySQLパッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-6-package">2.5.2. CentOS 6（OracleのMySQL 5.6パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-6-with-the-oracle-mysql-5-7-package">2.5.3. CentOS 6（OracleのMySQL 5.7パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-6-with-percona-server-5-6-package">2.5.4. CentOS 6（Percona Server 5.6パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-6-with-percona-server-5-7-package">2.5.5. CentOS 6（Percona Server 5.7パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-official-mariadb-package">2.5.6. CentOS 7（公式のMariaDBパッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-5-6-package">2.5.7. CentOS 7（OracleのMySQL 5.6パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-7-with-the-oracle-mysql-5-7-package">2.5.8. CentOS 7（OracleのMySQL 5.7パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-7-with-percona-server-5-6-package">2.5.9. CentOS 7（Percona Server 5.6パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-7-with-percona-server-5-7-package">2.5.10. CentOS 7（Percona Server 5.7パッケージを利用）</a></li>
 </ul>
 </li>
 </ul>
@@ -348,7 +329,7 @@ $ sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.
         <li class="right" >
           <a href="ubuntu.html" title="2.4. Ubuntu"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.00 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.01 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" >2. インストール</a> &#187;</li> 
       </ul>
     </div>
