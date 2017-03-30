@@ -1,4 +1,7 @@
-# Mroonga
+---
+layout: en
+title: Documentation
+---
 
 For the release history: [News](news.html)
 
