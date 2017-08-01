@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v7.05 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Mroonga v7.05 documentation" href="../../index.html" />
+    <link rel="up" title="5.5. UDF (User Defined Functions)" href="../udf.html" />
+    <link rel="next" title="5.5.4. mroonga_last_insert_grn_id()" href="mroonga_last_insert_grn_id.html" />
+    <link rel="prev" title="5.5.2. mroonga_escape()" href="mroonga_escape.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+
+  <body role="document">
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../ja/docs/reference/udf/mroonga_highlight_html.html" title="日本語">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mroonga_last_insert_grn_id.html" title="5.5.4. mroonga_last_insert_grn_id()"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (User Defined Functions)</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mroonga-highlight-html">
+<h1>5.5.3. <code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code><a class="headerlink" href="#mroonga-highlight-html" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.05.</span></p>
+</div>
+<div class="section" id="summary">
+<h2>5.5.3.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code> UDF provides functionality to highlight target column or string.</p>
+</div>
+<div class="section" id="syntax">
+<h2>5.5.3.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code> has required parameter and optional parameter:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_highlight_html(document, word1, ..., wordN)
+
+mroonga_highlight_html(document, query)
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>5.5.3.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here is the sample query to highlight target text by keyword 'mroonga':</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;Mroonga is the Groonga based storage engine.&#39;,
+                              &#39;mroonga&#39;) AS highlighted;
+</pre></div>
+</div>
+<p>Here is the results of execution examples:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>+---------------------------------------------------------------------------+
+| highlighted                                                               |
++---------------------------------------------------------------------------+
+| &lt;span class=&quot;keyword&quot;&gt;Mroonga&lt;/span&gt; is the Groonga based storage engine. |
++---------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>5.5.3.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="required-parameters">
+<h3>5.5.3.4.1. Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There is one required parameter.</p>
+<div class="section" id="document">
+<h4>5.5.3.4.1.1. <code class="docutils literal"><span class="pre">document</span></code><a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>The column name or string value is required.</div></blockquote>
+</div>
+</div>
+<div class="section" id="optional-parameters">
+<h3>5.5.3.4.2. Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There is some optional parameters.</p>
+<div class="section" id="wordn">
+<h4>5.5.3.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code><a class="headerlink" href="#wordn" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Specify any word.</div></blockquote>
+</div>
+<div class="section" id="query">
+<h4>5.5.3.4.2.2. <code class="docutils literal"><span class="pre">query</span></code><a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Specify any keywords and pragma.</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>5.5.3.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p>It returns highlighted html. If optional parameter is not given, just returns <code class="docutils literal"><span class="pre">document</span></code> itself.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.5.3. <code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code></a><ul>
+<li><a class="reference internal" href="#summary">5.5.3.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">5.5.3.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">5.5.3.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">5.5.3.4. Parameters</a><ul>
+<li><a class="reference internal" href="#required-parameters">5.5.3.4.1. Required parameters</a><ul>
+<li><a class="reference internal" href="#document">5.5.3.4.1.1. <code class="docutils literal"><span class="pre">document</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optional-parameters">5.5.3.4.2. Optional parameters</a><ul>
+<li><a class="reference internal" href="#wordn">5.5.3.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code></a></li>
+<li><a class="reference internal" href="#query">5.5.3.4.2.2. <code class="docutils literal"><span class="pre">query</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">5.5.3.5. Return value</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mroonga_escape.html"
+                        title="previous chapter">5.5.2. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mroonga_last_insert_grn_id.html"
+                        title="next chapter">5.5.4. <code class="docutils literal"><span class="pre">mroonga_last_insert_grn_id()</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mroonga_last_insert_grn_id.html" title="5.5.4. mroonga_last_insert_grn_id()"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (User Defined Functions)</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2017, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>
