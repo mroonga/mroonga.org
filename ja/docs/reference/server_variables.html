@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v7.05 documentation</title>
+    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v7.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.05',
+        VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="top" title="Mroonga v7.05 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v7.06 documentation" href="../index.html" />
     <link rel="up" title="5. リファレンス" href="../reference.html" />
     <link rel="next" title="5.4. ステータス変数の一覧" href="status_variables.html" />
     <link rel="prev" title="5.2. SQL commands" href="sql_commands.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="5.2. SQL commands"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. リファレンス</a> &#187;</li> 
       </ul>
     </div>  
@@ -551,8 +551,31 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </div>
 <p>TODO:</p>
 </div>
+<div class="section" id="mroonga-enable-operations-recording">
+<span id="server-variable-mroonga-enable-operations-recording"></span><h2>5.3.18. <code class="docutils literal"><span class="pre">mroonga_enable_operations_recording</span></code><a class="headerlink" href="#mroonga-enable-operations-recording" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Whether recording operations for recover is enabled or not.
+The default value is <code class="docutils literal"><span class="pre">ON</span></code> that means operations are recording
+to Groonga database.
+It needs to reopen the database with `` FLUSH TABLES`` in order
+to reflect the variable is changed.</p>
+<p>Here is an example SQL to disable operations recording:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_enable_operations_recording = false;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; FLUSH TABLES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_enable_operations_recording&#39;;
++-------------------------------------+-------+
+| Variable_name                       | Value |
++-------------------------------------+-------+
+| mroonga_enable_operations_recording | OFF   |
++-------------------------------------+-------+
+</pre></div>
+</div>
+</div>
 <div class="section" id="mroonga-vector-column-delimiter">
-<span id="server-variable-mroonga-vector-column-delimiter"></span><h2>5.3.18. <code class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-vector-column-delimiter"></span><h2>5.3.19. <code class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ベクターカラムを出力する際の区切り文字。デフォルト値は空白です。</p>
 <p>区切り文字を空白からセミコロンに変更するSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
@@ -577,7 +600,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 </div>
 </div>
 <div class="section" id="mroonga-version">
-<span id="server-variable-mroonga-version"></span><h2>5.3.19. <code class="docutils literal"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-version"></span><h2>5.3.20. <code class="docutils literal"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのバージョン</p>
 <p>実行中のmroongaのバージョンを確認するためのSQL例です:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_version&#39;;
@@ -618,8 +641,9 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 <li><a class="reference internal" href="#mroonga-log-level">5.3.15. <code class="docutils literal"><span class="pre">mroonga_log_level</span></code></a></li>
 <li><a class="reference internal" href="#mroonga-match-escalation-threshold">5.3.16. <code class="docutils literal"><span class="pre">mroonga_match_escalation_threshold</span></code></a></li>
 <li><a class="reference internal" href="#mroonga-max-n-records-for-estimate">5.3.17. <code class="docutils literal"><span class="pre">mroonga_max_n_records_for_estimate</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-vector-column-delimiter">5.3.18. <code class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-version">5.3.19. <code class="docutils literal"><span class="pre">mroonga_version</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-enable-operations-recording">5.3.18. <code class="docutils literal"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-vector-column-delimiter">5.3.19. <code class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-version">5.3.20. <code class="docutils literal"><span class="pre">mroonga_version</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -656,7 +680,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
         <li class="right" >
           <a href="sql_commands.html" title="5.2. SQL commands"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. リファレンス</a> &#187;</li> 
       </ul>
     </div>

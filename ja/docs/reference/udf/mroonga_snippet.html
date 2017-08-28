@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.5.6. mroonga_snippet() &#8212; Mroonga v7.05 documentation</title>
+    <title>5.5.6. mroonga_snippet() &#8212; Mroonga v7.06 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '7.05',
+        VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="top" title="Mroonga v7.05 documentation" href="../../index.html" />
+    <link rel="top" title="Mroonga v7.06 documentation" href="../../index.html" />
     <link rel="up" title="5.5. UDF (ユーザ定義関数)" href="../udf.html" />
     <link rel="next" title="5.5.7. mroonga_snippet_html()" href="mroonga_snippet_html.html" />
     <link rel="prev" title="5.5.5. mroonga_normalize()" href="mroonga_normalize.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="mroonga_normalize.html" title="5.5.5. mroonga_normalize()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (ユーザ定義関数)</a> &#187;</li> 
       </ul>
@@ -186,54 +186,38 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 <p>多くの必須引数があります。</p>
 <div class="section" id="document">
 <h4>5.5.6.4.1.1. <code class="docutils literal"><span class="pre">document</span></code><a class="headerlink" href="#document" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>カラム名もしくは文字列が必要です。</p>
-</div></blockquote>
+<p>カラム名もしくは文字列が必要です。</p>
 </div>
 <div class="section" id="max-length">
 <h4>5.5.6.4.1.2. <code class="docutils literal"><span class="pre">max_length</span></code><a class="headerlink" href="#max-length" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>スニペットの最大長(バイト単位)が必要です。</p>
-</div></blockquote>
+<p>スニペットの最大長(バイト単位)が必要です。</p>
 </div>
 <div class="section" id="max-count">
 <h4>5.5.6.4.1.3. <code class="docutils literal"><span class="pre">max_count</span></code><a class="headerlink" href="#max-count" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>スニペットの最大要素数Nが必要です。</p>
-</div></blockquote>
+<p>スニペットの最大要素数Nが必要です。</p>
 </div>
 <div class="section" id="encoding">
 <h4>5.5.6.4.1.4. <code class="docutils literal"><span class="pre">encoding</span></code><a class="headerlink" href="#encoding" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>文書のエンコーティング(照合順序)を指定します。エンコーディングとして
+<p>文書のエンコーティング(照合順序)を指定します。エンコーディングとして
 'ascii_general_ci'や'cp932_japanese_ci'、'eucjpms_japanese_ci'などが指
 定できます。</p>
-</div></blockquote>
 </div>
 <div class="section" id="skip-leading-spaces">
 <h4>5.5.6.4.1.5. <code class="docutils literal"><span class="pre">skip_leading_spaces</span></code><a class="headerlink" href="#skip-leading-spaces" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>先頭の空白を無視するかを指定します。1なら無視し、0なら無視しません。</p>
-</div></blockquote>
+<p>先頭の空白を無視するかを指定します。1なら無視し、0なら無視しません。</p>
 </div>
 <div class="section" id="html-escape">
 <h4>5.5.6.4.1.6. <code class="docutils literal"><span class="pre">html_escape</span></code><a class="headerlink" href="#html-escape" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>HTMLのエスケープを行うかを指定します。1ならエスケープし、0ならそのまま
+<p>HTMLのエスケープを行うかを指定します。1ならエスケープし、0ならそのまま
 出力します。</p>
-</div></blockquote>
 </div>
 <div class="section" id="prefix">
 <h4>5.5.6.4.1.7. <code class="docutils literal"><span class="pre">prefix</span></code><a class="headerlink" href="#prefix" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>スニペットの開始テキストを指定します。</p>
-</div></blockquote>
+<p>スニペットの開始テキストを指定します。</p>
 </div>
 <div class="section" id="suffix">
 <h4>5.5.6.4.1.8. <code class="docutils literal"><span class="pre">suffix</span></code><a class="headerlink" href="#suffix" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>スニペットの終了テキストを指定します。</p>
-</div></blockquote>
+<p>スニペットの終了テキストを指定します。</p>
 </div>
 </div>
 <div class="section" id="optional-parameters">
@@ -241,21 +225,15 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
 <p>省略可能な引数として <code class="docutils literal"><span class="pre">wordN</span></code> と開始テキスト、終了テキストがあります。</p>
 <div class="section" id="wordn">
 <h4>5.5.6.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code><a class="headerlink" href="#wordn" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>任意の単語指定します。</p>
-</div></blockquote>
+<p>任意の単語指定します。</p>
 </div>
 <div class="section" id="wordn-prefix">
 <h4>5.5.6.4.2.2. <code class="docutils literal"><span class="pre">wordN_prefix</span></code><a class="headerlink" href="#wordn-prefix" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>N番目の単語の開始テキストを指定します。</p>
-</div></blockquote>
+<p>N番目の単語の開始テキストを指定します。</p>
 </div>
 <div class="section" id="wordn-suffix">
 <h4>5.5.6.4.2.3. <code class="docutils literal"><span class="pre">wordN_suffix</span></code><a class="headerlink" href="#wordn-suffix" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>N番目の単語の終了テキストを指定します。</p>
-</div></blockquote>
+<p>N番目の単語の終了テキストを指定します。</p>
 </div>
 </div>
 </div>
@@ -334,7 +312,7 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
         <li class="right" >
           <a href="mroonga_normalize.html" title="5.5.5. mroonga_normalize()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (ユーザ定義関数)</a> &#187;</li> 
       </ul>

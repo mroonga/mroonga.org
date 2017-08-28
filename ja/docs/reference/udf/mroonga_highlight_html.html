@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v7.05 documentation</title>
+    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v7.06 documentation</title>
     
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '7.05',
+        VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="top" title="Mroonga v7.05 documentation" href="../../index.html" />
+    <link rel="top" title="Mroonga v7.06 documentation" href="../../index.html" />
     <link rel="up" title="5.5. UDF (ユーザ定義関数)" href="../udf.html" />
     <link rel="next" title="5.5.4. mroonga_last_insert_grn_id()" href="mroonga_last_insert_grn_id.html" />
     <link rel="prev" title="5.5.2. mroonga_escape()" href="mroonga_escape.html" /> 
@@ -76,7 +76,7 @@
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (ユーザ定義関数)</a> &#187;</li> 
       </ul>
@@ -94,31 +94,52 @@
 </div>
 <div class="section" id="summary">
 <h2>5.5.3.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code> UDFは対象となるカラムや文字列をハイライトする機能を提供します。</p>
+<p><code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code> highlights the specified keywords in
+target text. It surrounds each keyword with <code class="docutils literal"><span class="pre">&lt;span</span>
+<span class="pre">class=&quot;keyword&quot;&gt;...&lt;/span&gt;</span></code> and special characters in HTML such as
+<code class="docutils literal"><span class="pre">&lt;</span></code> and <code class="docutils literal"><span class="pre">&gt;</span></code> are escaped. You can use the result as is safely in
+HTML.</p>
 </div>
 <div class="section" id="syntax">
 <h2>5.5.3.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code> には必須引数と省略可能引数とがあります。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_highlight_html(document, word1, ..., wordN)
+<div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_highlight_html(text, query AS query)
 
-mroonga_highlight_html(document, query)
+mroonga_highlight_html(text, keyword1, ..., keywordN)
 </pre></div>
 </div>
+<p><code class="docutils literal"><span class="pre">AS</span> <span class="pre">query</span></code> is very important. You must specify it to extract keywords from query.</p>
 </div>
 <div class="section" id="usage">
 <h2>5.5.3.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>'mroonga'というキーワードで対象となるテキストのハイライトをするクエリーです。</p>
+<p>Here is a sample to highlight keywords &quot;mroonga&quot; and &quot;groonga&quot; in
+target text by query &quot;mroonga OR groonga&quot;. You must specify <code class="docutils literal"><span class="pre">AS</span>
+<span class="pre">query</span></code>:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;Mroonga is the Groonga based storage engine.&#39;,
-                              &#39;mroonga&#39;) AS highlighted;
+                              &#39;mroonga OR groonga&#39; AS query) AS highlighted;
 </pre></div>
 </div>
-<p>実行結果がこちらです。</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>+---------------------------------------------------------------------------+
-| highlighted                                                               |
-+---------------------------------------------------------------------------+
-| &lt;span class=&quot;keyword&quot;&gt;Mroonga&lt;/span&gt; is the Groonga based storage engine. |
-+---------------------------------------------------------------------------+
+<p>Here is the result of the execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>+--------------------------------------------------------------------------------------------------------+
+| highlighted                                                                                            |
++--------------------------------------------------------------------------------------------------------+
+| &lt;span class=&quot;keyword&quot;&gt;Mroonga&lt;/span&gt; is the &lt;span class=&quot;keyword&quot;&gt;Groonga&lt;/span&gt; based storage engine. |
++--------------------------------------------------------------------------------------------------------+
 1 row in set (0.00 sec)
+</pre></div>
+</div>
+<p>Here is a sample to highlight keywords &quot;mroonga&quot; and &quot;groonga&quot; in
+target text by keywords &quot;mroonga&quot; and &quot;groonga&quot;:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;Mroonga is the Groonga based storage engine.&#39;,
+                              &#39;mroonga&#39;, &#39;groonga&#39;) AS highlighted;
+</pre></div>
+</div>
+<p>Here is the result of the execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>+--------------------------------------------------------------------------------------------------------+
+| highlighted                                                                                            |
++--------------------------------------------------------------------------------------------------------+
+| &lt;span class=&quot;keyword&quot;&gt;Mroonga&lt;/span&gt; is the &lt;span class=&quot;keyword&quot;&gt;Groonga&lt;/span&gt; based storage engine. |
++--------------------------------------------------------------------------------------------------------+
 </pre></div>
 </div>
 </div>
@@ -127,33 +148,34 @@ mroonga_highlight_html(document, query)
 <div class="section" id="required-parameters">
 <h3>5.5.3.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>必須引数が1つあります。</p>
-<div class="section" id="document">
-<h4>5.5.3.4.1.1. <code class="docutils literal"><span class="pre">document</span></code><a class="headerlink" href="#document" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>カラム名もしくは文字列が必要です。</p>
-</div></blockquote>
+<div class="section" id="text">
+<h4>5.5.3.4.1.1. <code class="docutils literal"><span class="pre">text</span></code><a class="headerlink" href="#text" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>The column name of string or string value to be highlighted.</p>
 </div>
 </div>
 <div class="section" id="optional-parameters">
 <h3>5.5.3.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>いくつか省略可能な引数があります。</p>
-<div class="section" id="wordn">
-<h4>5.5.3.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code><a class="headerlink" href="#wordn" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>任意の単語指定します。</p>
-</div></blockquote>
-</div>
+<p>There are some optional parameters.</p>
 <div class="section" id="query">
-<h4>5.5.3.4.2.2. <code class="docutils literal"><span class="pre">query</span></code><a class="headerlink" href="#query" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<blockquote>
-<div><p>任意のキーワードやプラグマを指定します。</p>
-</div></blockquote>
+<h4>5.5.3.4.2.1. <code class="docutils literal"><span class="pre">query</span></code><a class="headerlink" href="#query" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>Specify query in <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/query_syntax.html">Groonga's query syntax</a>.</p>
+<p>You must specify <code class="docutils literal"><span class="pre">AS</span> <span class="pre">query</span></code> to extract keywords from query like the
+following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;...&#39;, &#39;mroonga OR groonga&#39; AS query);
+</pre></div>
+</div>
+</div>
+<div class="section" id="keyword">
+<h4>5.5.3.4.2.2. <code class="docutils literal"><span class="pre">keyword</span></code><a class="headerlink" href="#keyword" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>Specify 0 or more keywords to be highlighted.</p>
 </div>
 </div>
 </div>
 <div class="section" id="return-value">
 <h2>5.5.3.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ハイライトされたHTMLを返します。省略可能な引数が指定されない場合、単に <code class="docutils literal"><span class="pre">document</span></code> をそのまま返します。</p>
+<p>It returns highlighted HTML. If optional parameter is not given, it
+only escapes special characters in HTML such as <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code> in
+<code class="docutils literal"><span class="pre">text</span></code>.</p>
 </div>
 </div>
 
@@ -171,12 +193,12 @@ mroonga_highlight_html(document, query)
 <li><a class="reference internal" href="#usage">5.5.3.3. 使いかた</a></li>
 <li><a class="reference internal" href="#parameters">5.5.3.4. 引数</a><ul>
 <li><a class="reference internal" href="#required-parameters">5.5.3.4.1. 必須引数</a><ul>
-<li><a class="reference internal" href="#document">5.5.3.4.1.1. <code class="docutils literal"><span class="pre">document</span></code></a></li>
+<li><a class="reference internal" href="#text">5.5.3.4.1.1. <code class="docutils literal"><span class="pre">text</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#optional-parameters">5.5.3.4.2. 省略可能引数</a><ul>
-<li><a class="reference internal" href="#wordn">5.5.3.4.2.1. <code class="docutils literal"><span class="pre">wordN</span></code></a></li>
-<li><a class="reference internal" href="#query">5.5.3.4.2.2. <code class="docutils literal"><span class="pre">query</span></code></a></li>
+<li><a class="reference internal" href="#query">5.5.3.4.2.1. <code class="docutils literal"><span class="pre">query</span></code></a></li>
+<li><a class="reference internal" href="#keyword">5.5.3.4.2.2. <code class="docutils literal"><span class="pre">keyword</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -218,7 +240,7 @@ mroonga_highlight_html(document, query)
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (ユーザ定義関数)</a> &#187;</li> 
       </ul>

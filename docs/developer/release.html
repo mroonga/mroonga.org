@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9.2. Release procedure (XXX not yet translated) &#8212; Mroonga v7.05 documentation</title>
+    <title>9.2. Release procedure (XXX not yet translated) &#8212; Mroonga v7.06 documentation</title>
     
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.05',
+        VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Mroonga v7.05 documentation" href="../index.html" />
+    <link rel="top" title="Mroonga v7.06 documentation" href="../index.html" />
     <link rel="up" title="9. Developer&#39;s guide" href="../developer.html" />
     <link rel="prev" title="9.1. How to debug" href="debug.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -71,7 +71,7 @@
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">9. Developer's guide</a> &#187;</li> 
       </ul>
     </div>  
@@ -117,8 +117,88 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </pre></div>
 </div>
 </div>
+<div class="section" id="windows">
+<h2>9.2.3. Windows版パッケージのビルド環境準備<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>MroongaのWindows版パッケージを作成するための環境を構築する手順を以下に示します。
+ビルド環境は、Windows7を前提として説明しているため、その他の環境では適宜読み替えて下さい。</p>
 <div class="section" id="id3">
-<h2>9.2.3. 変更点の記述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h3>9.2.3.1. 必要ソフトウェアのインストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><dl class="first docutils">
+<dt>VisualStudio 2015 Community をインストールします。</dt>
+<dd><ul class="first simple">
+<li>VisualStudio 2015 は、現行のバージョンではなく、古いバージョンのため、通常のダウンロードページからはダウンロードすることができません。そのため、以下のページからダウンロードを行う必要があります。:</li>
+</ul>
+<blockquote class="last">
+<div><p><a class="reference external" href="https://www.visualstudio.com/ja/dev-essentials/">Visual Studio Dev Essensials</a></p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
+<p>ダウンロードするためには、上記サイトへの登録が必要となります。登録には、MicrosoftAccountが必要となります。</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Bison for Windows をインストールします。</dt>
+<dd><ul class="first simple">
+<li>以下のサイトからダウンロードします。また、インストール後にパスを通しておく必要があります。インストールパスには、空白スペースを含まないパスを指定してください。:</li>
+</ul>
+<blockquote class="last">
+<div><p><a class="reference external" href="http://gnuwin32.sourceforge.net/packages/bison.htm">Bison for Windows</a></p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CMake をインストールします。</dt>
+<dd><ul class="first simple">
+<li>CMakeのバージョンは3.1以上をインストールします。</li>
+<li>以下のサイトからダウンロードします。また、インストール時にパスを通しておく必要があります。:</li>
+</ul>
+<blockquote class="last">
+<div><p><a class="reference external" href="https://cmake.org/download/">CMake</a></p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Wix をインストールします。</dt>
+<dd><ul class="first simple">
+<li>以下のサイトからダウンロードします。:</li>
+</ul>
+<blockquote class="last">
+<div><p><a class="reference external" href="http://wix.codeplex.com/">Wix</a></p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Windows Management Framework 4.0(Windows6.1-KB2819745-x64-MultiPkg.msu) をインストールします。</dt>
+<dd><ul class="first simple">
+<li>Windows版パッケージを作成するスクリプトはPowerShell 3.0以上向けに書かれているため、Windows7に同梱されているPowerShellでは正常に動作しません。Windows7のPowerShellのバージョンを4.0にするためにインストールする必要があります。Windows 8.1以降では標準でインストールされているPowerShellのバージョンで要件を満たしています。:</li>
+</ul>
+<blockquote class="last">
+<div><p><a class="reference external" href="https://www.microsoft.com/ja-jp/download/details.aspx?id=40855">Windows Management Framework 4.0</a></p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Patch for Windows をインストールします。</dt>
+<dd><ul class="first simple">
+<li>以下のサイトからダウンロードします。:</li>
+</ul>
+<blockquote class="last">
+<div><p><a class="reference external" href="http://gnuwin32.sourceforge.net/packages/patch.htm">Patch for Windows</a></p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>9.2.4. 変更点の記述<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>前回リリース時からの変更点を``doc/source/news.txt``にまとめます。
 ここでまとめた内容についてはリリースアナウンスにも使用します。</p>
 <p>前回リリースからの変更履歴を参照するには以下のコマンドを実行します。:</p>
@@ -137,7 +217,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </ul>
 </div>
 <div class="section" id="configure">
-<h2>9.2.4. configureスクリプトの生成<a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h2>
+<h2>9.2.5. configureスクリプトの生成<a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h2>
 <p>Mroongaのソースコードをcloneした時点ではconfigureスクリプトが含まれておらず、そのままmakeコマンドにてビルドすることができません。</p>
 <p>Mroongaをcloneしたディレクトリでautogen.shを以下のように実行します。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% sh autogen.sh
@@ -145,8 +225,8 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </div>
 <p>このコマンドの実行により、configureスクリプトが生成されます。</p>
 </div>
-<div class="section" id="id4">
-<h2>9.2.5. configureスクリプトの実行<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>9.2.6. configureスクリプトの実行<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>Makefileを生成するためにconfigureスクリプトを実行します。</p>
 <p>リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure \
@@ -161,8 +241,8 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </div>
 <p>--with-mysql-sourceなどのオプションについては、イントールドキュメントの <a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a> を参照してください。</p>
 </div>
-<div class="section" id="id5">
-<h2>9.2.6. アップロード権限の確認<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>9.2.7. アップロード権限の確認<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>あらかじめpackagesユーザでpackages.groonga.orgにsshログインできることを確認しておいてください。</p>
 <p>ログイン可能であるかの確認は以下のようにコマンドを実行して行います。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% ssh packages@packages.groonga.org
@@ -171,7 +251,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p>ログインできない場合、SSHの公開鍵を登録してもらってください。</p>
 </div>
 <div class="section" id="make-update-latest-release">
-<h2>9.2.7. make update-latest-releaseの実行<a class="headerlink" href="#make-update-latest-release" title="Permalink to this headline">¶</a></h2>
+<h2>9.2.8. make update-latest-releaseの実行<a class="headerlink" href="#make-update-latest-release" title="Permalink to this headline">¶</a></h2>
 <p>make update-latest-releaseコマンドでは、OLD_RELEASE_DATEに前回のリリースの日付を、NEW_RELEASE_DATEに次回リリースの日付を指定します。</p>
 <p>5.01のリリースを行った際は以下のコマンドを実行しました。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make update-latest-release OLD_RELEASE=5.00 OLD_RELEASE_DATE=2015-02-09 NEW_RELEASE_DATE=2015-03-29
@@ -179,8 +259,8 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </div>
 <p>これにより、clone済みのMroongaのWebサイトのトップページのソース(index.html,ja/index.html)やRPMパッケージのspecファイルのバージョン表記などが更新されます。</p>
 </div>
-<div class="section" id="id6">
-<h2>9.2.8. リリースタグの設定<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>9.2.9. リリースタグの設定<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>リリース用のタグを打つには以下のコマンドを実行します。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make tag
 % git push --tags origin
@@ -191,8 +271,8 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p class="last">タグを打った後にconfigureを実行することで、ドキュメント生成時のバージョン番号に反映されます。</p>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>9.2.9. 配布用ファイルのアップロード<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>9.2.10. 配布用ファイルのアップロード<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>次に、配布用の <code class="docutils literal"><span class="pre">tar.gz</span></code> ファイルを作成します。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make dist
 </pre></div>
@@ -226,8 +306,8 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </div>
 <p>これで、 <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a> から <code class="docutils literal"><span class="pre">tar.gz</span></code> のダウンロードが行えるようになります。</p>
 </div>
-<div class="section" id="id8">
-<h2>9.2.10. パッケージの作成<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2>9.2.11. パッケージの作成<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>Linux と Windows 用にパッケージを作成する必要があります。</p>
 <p>Linux 用のパッケージは以下の 2 種類に分けることが可能です。</p>
 <ol class="arabic simple">
@@ -239,7 +319,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p class="last">現在のところ、パッケージの作成は Debian GNU/Linux (Ubuntu も可) でしか行えません。</p>
 </div>
 <div class="section" id="debian">
-<h3>9.2.10.1. Debian 系<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<h3>9.2.11.1. Debian 系<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
 <p>まず apt ディレクトリに移動します。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% cd apt
 </pre></div>
@@ -262,7 +342,7 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 <p>このように Makefile.am を書き換えずにコマンドライン引数でビルドの挙動を変更する方法は、知っておいて損はないでしょう。</p>
 </div>
 <div class="section" id="red-hat">
-<h3>9.2.10.2. Red Hat 系<a class="headerlink" href="#red-hat" title="Permalink to this headline">¶</a></h3>
+<h3>9.2.11.2. Red Hat 系<a class="headerlink" href="#red-hat" title="Permalink to this headline">¶</a></h3>
 <p>まず yum ディレクトリに移動する。</p>
 <p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository upload）が行われますが、途中で失敗することもあります。</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make release
@@ -277,82 +357,31 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </pre></div>
 </div>
 </div>
-<div class="section" id="windows">
-<h3>9.2.10.3. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>9.2.11.3. Windows<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>MariaDB 本体を <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/source/patches">多少変更しないといけない</a>
 ため、Windows 版は MariaDB に mroonga/groonga/groonga-normalizer-mysql
 をバンドルしたパッケージとして作成します。</p>
-<p>まず、 Linux 上で Windows 用のソースを作成します。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% cd packages/source
-% make archive
-</pre></div>
-</div>
-<p>これで、
-<code class="docutils literal"><span class="pre">packages/source/files/mariadb-10.0.2-with-mroonga-3.04.zip</span></code> というよ
-うなファイルができます。これを Windows にコピーします。</p>
-<p>ここからは Windows 上での作業です。</p>
-<p>まず、 <a class="reference external" href="http://wix.codeplex.com/">Windows Installer XML (WiX)</a> をイン
-ストールします。これは MSI 形式のインストーラーを作るために必要です。</p>
-<p>WiX をインストールしたらビルドします。</p>
-<p>まずは、 Linux からコピーしてきた zip を展開します。 Windows 標準の
-zip 展開機能はとても遅いので 7-zip などを使いましょう。展開時間が数 10
-倍違います。 zip を展開すると <code class="docutils literal"><span class="pre">mariadb-10.0.2-with-mroonga-3.04</span></code> とい
-うようなフォルダがでてきます。これを <code class="docutils literal"><span class="pre">source</span></code> に名前を変更します。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; move mariadb-10.0.2-with-mroonga-3.04 source
-</pre></div>
-</div>
-<p>ソースを準備したらビルドします。ビルド方法は <a class="reference external" href="https://github.com/mroonga/mroonga/tree/master/packages/windows">バッチファイル</a> に
-書かれています。抜粋すると以下の通りです。32bit用と64bit用の両方作成し
-ているので似たような手順が2回でていることに注意してください。:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; mkdir build-32
-&gt; cd build-32
-&gt; cmake ..\source -G &quot;Visual Studio 14&quot; &gt; config.log
-&gt; cmake --build . --config RelWithDebInfo &gt; build.log
-&gt; cmake --build . --config RelWithDebInfo --target msi &gt; msi.log
-&gt; move *.msi ..\
-&gt; cmake --build . --config RelWithDebInfo --target package &gt; zip.log
-&gt; move *.zip ..\
-&gt; cd ..
-&gt; mkdir build-64
-&gt; cd build-64
-&gt; cmake ..\source -G &quot;Visual Studio 14 Win64&quot; &gt; config.log
-&gt; cmake --build . --config RelWithDebInfo &gt; build.log
-&gt; cmake --build . --config RelWithDebInfo --target msi &gt; msi.log
-&gt; move *.msi ..\
-&gt; cmake --build . --config RelWithDebInfo --target package &gt; zip.log
-&gt; move *.zip ..\
-&gt; cd ..
-</pre></div>
-</div>
-<p>それぞれ30分くらいずつかかります。そのため、合計で1時間くらいかかります。</p>
-<p>完了するとカレントディレクトリに以下のようなファイルができます。</p>
+<p>Windows 上で作業を行います。</p>
+<p><a class="reference external" href="https://github.com/cosmo0920/PowerShell-for-Mroonga-building">こちら</a>
+からWindows版パッケージ作成用のPowerShellをダウンロードします。</p>
+<p>PowerShellを管理者権限で起動し、 <cite>powershellbuild-vc2015.ps1</cite> を実行します。
+<cite>powershellbuild-vc2015.ps1</cite> を実行すると、自動的にWindows版のパッケージまで作成します。
+32bit版、64bit版のパッケージ作成にそれぞれ30分くらいずつかかります。そのため、合計で1時間くらいかかります。
+完了するとworkディレクトリに以下のようなファイルができます。</p>
 <ul class="simple">
-<li>mariadb-10.0.2-win32.msi</li>
-<li>mariadb-10.0.2-win32.zip</li>
-<li>mariadb-10.0.2-winx64.msi</li>
-<li>mariadb-10.0.2-winx64.zip</li>
+<li>mariadb-10.0.2-with-mroonga-3.04-win32.zip</li>
+<li>mariadb-10.0.2-with-mroonga-3.04-winx64.zip</li>
 </ul>
 <p>これを Linux にコピーします。例えば、 Ruby で HTTP サーバーを立てて
 Linux 側からダウンロードする場合は以下のようにします。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>&gt; ruby -run -e httpd -- --do-not-reverse-lookup --port 10080 .
 </pre></div>
 </div>
-<p>Linux 側でファイル名を変更します。これだと mroonga のバージョンがわかり
-づらいからです。（TODO: 自動化したい。 zip 内のフォルダ名も変えたい。）:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mv mariadb-10.0.2-win32.msi \
-    packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-win32.msi
-% mv mariadb-10.0.2-win32.zip \
-    packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-win32.zip
-% mv mariadb-10.0.2-winx64.msi \
-    packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-winx64.msi
-% mv mariadb-10.0.2-winx64.zip \
-    packages/windows/files/mariadb-10.0.2-with-mroonga-3.04-winx64.zip
-</pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="id11">
-<h2>9.2.11. ドキュメントのアップロード<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h2>9.2.12. ドキュメントのアップロード<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>GitHub からドキュメントアップロード用のリポジトリ (mroonga.github.com) を clone</li>
 <li>clone済みmroongaディレクトリ内でmake update-documentを実行し、clone したドキュメントアップロード用のリポジトリへ反映する</li>
@@ -360,7 +389,7 @@ Linux 側からダウンロードする場合は以下のようにします。:<
 </ol>
 </div>
 <div class="section" id="homebrew">
-<h2>9.2.12. Homebrewの更新<a class="headerlink" href="#homebrew" title="Permalink to this headline">¶</a></h2>
+<h2>9.2.13. Homebrewの更新<a class="headerlink" href="#homebrew" title="Permalink to this headline">¶</a></h2>
 <p>OS Xでのパッケージ管理方法として <a class="reference external" href="http://brew.sh/">Homebrew</a> があります。</p>
 <p>Groongaの場合はHomebrewへpull requestを送りますが、Mroongaの場合は別途用意してあるhomebrewリポジトリを更新します。</p>
 <blockquote>
@@ -372,8 +401,8 @@ Linux 側からダウンロードする場合は以下のようにします。:<
 <p>実行すると、FormulaのソースアーカイブのURLとsha256チェックサムを更新します。
 あとは、変更内容をコミットすればHomebrewの更新作業は完了です。</p>
 </div>
-<div class="section" id="id13">
-<h2>9.2.13. リリースメールの送信<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h2>9.2.14. リリースメールの送信<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <p>各種メーリングリストにリリースメールを流します。</p>
 <ul class="simple">
 <li><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> 日本語アナウンス</li>
@@ -461,14 +490,14 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 </div>
 </div>
 <div class="section" id="twitter">
-<h2>9.2.14. Twitterでリリースアナウンスをする<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<h2>9.2.15. Twitterでリリースアナウンスをする<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
 <p>Mroongaブログのリリースエントリには「リンクをあなたのフォロワーに共有する」ためのツイートボタンがあるので、そのボタンを使ってリリースアナウンスします。(画面下部に配置されている)</p>
 <p>このボタンを経由する場合、ツイート内容に自動的にリリースタイトル(「Mroonga 2.08リリース」など)とMroongaブログのリリースエントリのURLが挿入されます。</p>
 <p>この作業はMroongaブログの英語版、日本語版それぞれで行います。
 あらかじめgroongaアカウントでログインしておくとアナウンスを円滑に行うことができます。</p>
 </div>
-<div class="section" id="id14">
-<h2>9.2.15. リリース後にやること<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id16">
+<h2>9.2.16. リリース後にやること<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
 <p>リリースバージョンを以下のようにして更新します。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>% make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
 </pre></div>
@@ -487,24 +516,28 @@ Groongaと組み合わせると問題が解決しているかもしれません�
 <li><a class="reference internal" href="#">9.2. Release procedure (XXX not yet translated)</a><ul>
 <li><a class="reference internal" href="#id1">9.2.1. 前提条件</a></li>
 <li><a class="reference internal" href="#id2">9.2.2. ビルド環境の準備</a></li>
-<li><a class="reference internal" href="#id3">9.2.3. 変更点の記述</a></li>
-<li><a class="reference internal" href="#configure">9.2.4. configureスクリプトの生成</a></li>
-<li><a class="reference internal" href="#id4">9.2.5. configureスクリプトの実行</a></li>
-<li><a class="reference internal" href="#id5">9.2.6. アップロード権限の確認</a></li>
-<li><a class="reference internal" href="#make-update-latest-release">9.2.7. make update-latest-releaseの実行</a></li>
-<li><a class="reference internal" href="#id6">9.2.8. リリースタグの設定</a></li>
-<li><a class="reference internal" href="#id7">9.2.9. 配布用ファイルのアップロード</a></li>
-<li><a class="reference internal" href="#id8">9.2.10. パッケージの作成</a><ul>
-<li><a class="reference internal" href="#debian">9.2.10.1. Debian 系</a></li>
-<li><a class="reference internal" href="#red-hat">9.2.10.2. Red Hat 系</a></li>
-<li><a class="reference internal" href="#windows">9.2.10.3. Windows</a></li>
+<li><a class="reference internal" href="#windows">9.2.3. Windows版パッケージのビルド環境準備</a><ul>
+<li><a class="reference internal" href="#id3">9.2.3.1. 必要ソフトウェアのインストール</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id11">9.2.11. ドキュメントのアップロード</a></li>
-<li><a class="reference internal" href="#homebrew">9.2.12. Homebrewの更新</a></li>
-<li><a class="reference internal" href="#id13">9.2.13. リリースメールの送信</a></li>
-<li><a class="reference internal" href="#twitter">9.2.14. Twitterでリリースアナウンスをする</a></li>
-<li><a class="reference internal" href="#id14">9.2.15. リリース後にやること</a></li>
+<li><a class="reference internal" href="#id4">9.2.4. 変更点の記述</a></li>
+<li><a class="reference internal" href="#configure">9.2.5. configureスクリプトの生成</a></li>
+<li><a class="reference internal" href="#id5">9.2.6. configureスクリプトの実行</a></li>
+<li><a class="reference internal" href="#id6">9.2.7. アップロード権限の確認</a></li>
+<li><a class="reference internal" href="#make-update-latest-release">9.2.8. make update-latest-releaseの実行</a></li>
+<li><a class="reference internal" href="#id7">9.2.9. リリースタグの設定</a></li>
+<li><a class="reference internal" href="#id8">9.2.10. 配布用ファイルのアップロード</a></li>
+<li><a class="reference internal" href="#id9">9.2.11. パッケージの作成</a><ul>
+<li><a class="reference internal" href="#debian">9.2.11.1. Debian 系</a></li>
+<li><a class="reference internal" href="#red-hat">9.2.11.2. Red Hat 系</a></li>
+<li><a class="reference internal" href="#id10">9.2.11.3. Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13">9.2.12. ドキュメントのアップロード</a></li>
+<li><a class="reference internal" href="#homebrew">9.2.13. Homebrewの更新</a></li>
+<li><a class="reference internal" href="#id15">9.2.14. リリースメールの送信</a></li>
+<li><a class="reference internal" href="#twitter">9.2.15. Twitterでリリースアナウンスをする</a></li>
+<li><a class="reference internal" href="#id16">9.2.16. リリース後にやること</a></li>
 </ul>
 </li>
 </ul>
@@ -535,7 +568,7 @@ Groongaと組み合わせると問題が解決しているかもしれません�
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.06 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" >9. Developer's guide</a> &#187;</li> 
       </ul>
     </div>
