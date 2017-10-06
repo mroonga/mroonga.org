@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>5.3. サーバ変数の一覧 &#8212; Mroonga v7.06 documentation</title>
-    
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
@@ -27,8 +24,6 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="top" title="Mroonga v7.06 documentation" href="../index.html" />
-    <link rel="up" title="5. リファレンス" href="../reference.html" />
     <link rel="next" title="5.4. ステータス変数の一覧" href="status_variables.html" />
     <link rel="prev" title="5.2. SQL commands" href="sql_commands.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -40,7 +35,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -100,28 +97,22 @@
 <col width="50%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">値</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">値</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>ERROR</td>
-<td><p class="first last">エラーを報告する。ログは無効です。</p>
-</td>
+<td>エラーを報告する。ログは無効です。</td>
 </tr>
 <tr class="row-odd"><td>ERROR_AND_LOG</td>
-<td><p class="first last">エラーを報告する。ログは有効です。(これがデフォルトです)</p>
-</td>
+<td>エラーを報告する。ログは有効です。(これがデフォルトです)</td>
 </tr>
 <tr class="row-even"><td>IGNORE</td>
-<td><p class="first last">エラーを無視する。ログは無効です。</p>
-</td>
+<td>エラーを無視する。ログは無効です。</td>
 </tr>
 <tr class="row-odd"><td>IGNORE_AND_LOG</td>
-<td><p class="first last">エラーを無視するが、ログは有効です。 (InnoDBと似た振舞です)</p>
-</td>
+<td>エラーを無視するが、ログは有効です。 (InnoDBと似た振舞です)</td>
 </tr>
 </tbody>
 </table>
@@ -147,16 +138,13 @@
 <col width="50%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">フラグ</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">フラグ</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">DEFAULT</span></code></td>
-<td><p class="first last"><code class="docutils literal"><span class="pre">SYNTAX_QUERY,ALLOW_LEADING_NOT</span></code> と同じです。</p>
-</td>
+<td><code class="docutils literal"><span class="pre">SYNTAX_QUERY,ALLOW_LEADING_NOT</span></code> と同じです。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">SYNTAX_QUERY</span></code></td>
 <td><p class="first"><a class="reference external" href="http://groonga.org/ja/docs/reference/grn_expr/query_syntax.html">Groongaのクエリー構文</a>. Groongaのクエリー構文はMySQLのBOOLEAN MODEの構文と互換性があります。</p>
@@ -177,12 +165,10 @@
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">ALLOW_UPDATE</span></code></td>
-<td><p class="first last">クエリー構文の中で、値の更新をする <code class="docutils literal"><span class="pre">COLUMN:=NEW_VALUE</span></code> という構文を使えるようにします。</p>
-</td>
+<td>クエリー構文の中で、値の更新をする <code class="docutils literal"><span class="pre">COLUMN:=NEW_VALUE</span></code> という構文を使えるようにします。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">ALLOW_LEADING_NOT</span></code></td>
-<td><p class="first last">クエリー構文で <code class="docutils literal"><span class="pre">-NOT_INCLUDED_KEYWORD</span> <span class="pre">...</span></code> 構文を使えるようにします。</p>
-</td>
+<td>クエリー構文で <code class="docutils literal"><span class="pre">-NOT_INCLUDED_KEYWORD</span> <span class="pre">...</span></code> 構文を使えるようにします。</td>
 </tr>
 </tbody>
 </table>
@@ -385,44 +371,34 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
 <col width="50%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">ログレベル</p>
-</th>
-<th class="head"><p class="first last">説明</p>
-</th>
+<tr class="row-odd"><th class="head">ログレベル</th>
+<th class="head">説明</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">NONE</span></code></td>
-<td><p class="first last">ログ出力なし。</p>
-</td>
+<td>ログ出力なし。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">EMERG</span></code></td>
-<td><p class="first last">データベースの破損などの緊急に対処が必要なログメッセージを出力する。</p>
-</td>
+<td>データベースの破損などの緊急に対処が必要なログメッセージを出力する。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">ALERT</span></code></td>
-<td><p class="first last">内部的なエラーを示すログを出力する。</p>
-</td>
+<td>内部的なエラーを示すログを出力する。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">CRIT</span></code></td>
-<td><p class="first last">デッドロックの発生など致命的なログメッセージを出力する。</p>
-</td>
+<td>デッドロックの発生など致命的なログメッセージを出力する。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">ERROR</span></code></td>
-<td><p class="first last">Mroongaが使用しているAPIのエラーログメッセージを出力する。</p>
-</td>
+<td>Mroongaが使用しているAPIのエラーログメッセージを出力する。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">WARNING</span></code></td>
-<td><p class="first last">引数の誤りなどの警告ログメッセージを出力する。</p>
-</td>
+<td>引数の誤りなどの警告ログメッセージを出力する。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">NOTICE</span></code></td>
-<td><p class="first last">設定や状態の変化を示すログメッセージを出力する。</p>
-</td>
+<td>設定や状態の変化を示すログメッセージを出力する。</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">INFO</span></code></td>
-<td><p class="first last">ファイル操作などの情報をログメッセージとして出力する。</p>
-</td>
+<td>ファイル操作などの情報をログメッセージとして出力する。</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">DEBUG</span></code></td>
 <td><p class="first">デバッグメッセージを出力する。</p>
@@ -430,8 +406,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">DUMP</span></code></td>
-<td><p class="first last">テストツール向けのダンプログメッセージを出力します。</p>
-</td>
+<td>テストツール向けのダンプログメッセージを出力します。</td>
 </tr>
 </tbody>
 </table>

@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>News - 1.x &#8212; Mroonga v7.06 documentation</title>
-    
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
@@ -26,8 +23,7 @@
     <script type="text/javascript" src="../static/translations.js"></script>
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="検索" href="../search.html" />
-    <link rel="top" title="Mroonga v7.06 documentation" href="../index.html" /> 
+    <link rel="search" title="検索" href="../search.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -37,7 +33,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -86,10 +84,8 @@
 </div>
 <p>このリリースでは、データベースの再作成が必要な変更点が2つあります。</p>
 <ol class="arabic simple">
-<li><p class="first">ストレージエンジン名を&quot;groonga&quot;から&quot;mroonga&quot;へ改名。</p>
-</li>
-<li><p class="first">MySQLのDATE、DATETIME、TIMESTAMP型にgroongaが提供する時間の値を使うようにした。</p>
-</li>
+<li>ストレージエンジン名を&quot;groonga&quot;から&quot;mroonga&quot;へ改名。</li>
+<li>MySQLのDATE、DATETIME、TIMESTAMP型にgroongaが提供する時間の値を使うようにした。</li>
 </ol>
 <p>&quot;CREATE TABLE&quot; SQL内の&quot;ENGINE=groonga&quot;を変更するためにダンプしたデータベースを変更する必要があります。以下が更新手順です。</p>
 <p>mroongaを使っているデータベースをダンプします:</p>
@@ -145,60 +141,38 @@
 <div class="section" id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">MySQL 5.5.20に対応。</p>
-</li>
-<li><p class="first">MySQL 5.1.61に対応。</p>
-</li>
-<li><p class="first">groonga 1.3.0以降を必須にした。</p>
-</li>
-<li><p class="first">[非互換] ストレージエンジン名を&quot;groonga&quot;から&quot;mroonga&quot;に変更。</p>
-</li>
-<li><p class="first">UTF8_BINコレーションに対応。 [#1150]</p>
-</li>
-<li><p class="first">strict-aliasingの警告が出ないようにした。 [&#64;issmさんが報告]</p>
-</li>
-<li><p class="first">DECIMALに対応した。 [#1249] [&#64;Kiskeさんが報告]</p>
-</li>
-<li><p class="first">[storage mode] HA_KEYREAD_ONLY対応。インデックス内のカラム値のアクセスが高速になるはず。 [#1212]</p>
-</li>
-<li><p class="first">[ストレージモード] float値のマルチカラムインデックスに対応。</p>
-</li>
-<li><p class="first">[ストレージモード] double値のマルチカラムインデックスに対応。</p>
-</li>
-<li><p class="first">[ストレージモード] enum型とset型をより適切なgroongaのデータ型に対応付けるようにした。</p>
-</li>
-<li><p class="first">[ラッパーモード] REPAIR TABLE対応。</p>
-</li>
-<li><p class="first">[ストレージモード] viewでの <code class="docutils literal"><span class="pre">count(*)</span></code> に対応。 [#1255] [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">[非互換] DATE、DATETIME、TIMESTAMP型の値にgroongaが提供する時間の値を使うようにした。</p>
-</li>
+<li>MySQL 5.5.20に対応。</li>
+<li>MySQL 5.1.61に対応。</li>
+<li>groonga 1.3.0以降を必須にした。</li>
+<li>[非互換] ストレージエンジン名を&quot;groonga&quot;から&quot;mroonga&quot;に変更。</li>
+<li>UTF8_BINコレーションに対応。 [#1150]</li>
+<li>strict-aliasingの警告が出ないようにした。 [&#64;issmさんが報告]</li>
+<li>DECIMALに対応した。 [#1249] [&#64;Kiskeさんが報告]</li>
+<li>[storage mode] HA_KEYREAD_ONLY対応。インデックス内のカラム値のアクセスが高速になるはず。 [#1212]</li>
+<li>[ストレージモード] float値のマルチカラムインデックスに対応。</li>
+<li>[ストレージモード] double値のマルチカラムインデックスに対応。</li>
+<li>[ストレージモード] enum型とset型をより適切なgroongaのデータ型に対応付けるようにした。</li>
+<li>[ラッパーモード] REPAIR TABLE対応。</li>
+<li>[ストレージモード] viewでの <code class="docutils literal"><span class="pre">count(*)</span></code> に対応。 [#1255] [Takahiro Nagaiさんが報告]</li>
+<li>[非互換] DATE、DATETIME、TIMESTAMP型の値にgroongaが提供する時間の値を使うようにした。</li>
 </ul>
 </div>
 <div class="section" id="fixes">
 <h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">[debian] replacesとbreaksのmysql-server-groongaのバージョンを修正。 [&#64;ytaka5さんが報告]</p>
-</li>
-<li><p class="first">[doc] 実行結果が間違っていた問題を修正。 [Hidekazu Tanakaさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] メモリリークを修正。 [montywiさんが報告]</p>
-</li>
+<li>[debian] replacesとbreaksのmysql-server-groongaのバージョンを修正。 [&#64;ytaka5さんが報告]</li>
+<li>[doc] 実行結果が間違っていた問題を修正。 [Hidekazu Tanakaさんが報告]</li>
+<li>[ラッパーモード] メモリリークを修正。 [montywiさんが報告]</li>
 </ul>
 </div>
 <div class="section" id="thanks">
 <h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">&#64;ytaka5さん</p>
-</li>
-<li><p class="first">Hidekazu Tanakaさん</p>
-</li>
-<li><p class="first">&#64;issmさん</p>
-</li>
-<li><p class="first">montywiさん</p>
-</li>
-<li><p class="first">&#64;Kiskeさん</p>
-</li>
+<li>&#64;ytaka5さん</li>
+<li>Hidekazu Tanakaさん</li>
+<li>&#64;issmさん</li>
+<li>montywiさん</li>
+<li>&#64;Kiskeさん</li>
 </ul>
 </div>
 </div>
@@ -207,48 +181,32 @@
 <div class="section" id="id1">
 <h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">MySQL 5.5.19に対応。</p>
-</li>
-<li><p class="first">MySQL 5.6.4に対応。</p>
-</li>
-<li><p class="first">MySQL 5.6.3対応をやめた。</p>
-</li>
-<li><p class="first">Fedora 16に対応。</p>
-</li>
-<li><p class="first">Fedora 15対応をやめた。</p>
-</li>
-<li><p class="first">警告strict-aliasingをでないようにした。 [groonga-dev,00659] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">utf8, binary, ascii, latin1, cp932, sjis, eucjpms, ujis, koi8r charsetに対応。 [#1160] [nobodyさんが報告]</p>
-</li>
-<li><p class="first">[wrapper mode] 削除をロールバックした後に削除できなくなる問題を修正。 [#1224] [宍倉功一さんが報告]</p>
-</li>
+<li>MySQL 5.5.19に対応。</li>
+<li>MySQL 5.6.4に対応。</li>
+<li>MySQL 5.6.3対応をやめた。</li>
+<li>Fedora 16に対応。</li>
+<li>Fedora 15対応をやめた。</li>
+<li>警告strict-aliasingをでないようにした。 [groonga-dev,00659] [かずひこさんが報告]</li>
+<li>utf8, binary, ascii, latin1, cp932, sjis, eucjpms, ujis, koi8r charsetに対応。 [#1160] [nobodyさんが報告]</li>
+<li>[wrapper mode] 削除をロールバックした後に削除できなくなる問題を修正。 [#1224] [宍倉功一さんが報告]</li>
 </ul>
 </div>
 <div class="section" id="id2">
 <h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">[storage mode] 主キーがないテーブルで全文検索すると結果が空になる問題を修正。 [#1193] [かずひこさんが報告]</p>
-</li>
-<li><p class="first">コンパイラの-Wno-というフラグの検出に失敗していた問題を修正。 [Arnaud Fontaineさんがパッチを作成]</p>
-</li>
-<li><p class="first">[wrapper mode] 全件カウント時にインデックスが使われない問題を修正。 [#1196][groonga-dev,0653] [金岡勲さんが報告]</p>
-</li>
+<li>[storage mode] 主キーがないテーブルで全文検索すると結果が空になる問題を修正。 [#1193] [かずひこさんが報告]</li>
+<li>コンパイラの-Wno-というフラグの検出に失敗していた問題を修正。 [Arnaud Fontaineさんがパッチを作成]</li>
+<li>[wrapper mode] 全件カウント時にインデックスが使われない問題を修正。 [#1196][groonga-dev,0653] [金岡勲さんが報告]</li>
 </ul>
 </div>
 <div class="section" id="id3">
 <h3>感謝<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">かずひこさん</p>
-</li>
-<li><p class="first">Arnaud Fontaineさん</p>
-</li>
-<li><p class="first">金岡勲さん</p>
-</li>
-<li><p class="first">nobodyさん</p>
-</li>
-<li><p class="first">宍倉功一さん</p>
-</li>
+<li>かずひこさん</li>
+<li>Arnaud Fontaineさん</li>
+<li>金岡勲さん</li>
+<li>nobodyさん</li>
+<li>宍倉功一さん</li>
 </ul>
 </div>
 </div>
@@ -259,68 +217,42 @@
 <div class="section" id="id4">
 <h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">「groonga storage engine」から「mroonga」に改名。 #1170</p>
-</li>
-<li><p class="first">groonga_libgroonga_version変数およびgroonga_version変数の追加。 #1158</p>
-</li>
-<li><p class="first">information_schema.plugins.plugin_versionがmroongaのバージョンを返すようにした。 #1157</p>
-</li>
-<li><p class="first">groonga_log_file変数の追加。 #1178 [nobodyさんが提案]</p>
-</li>
-<li><p class="first">FLUSH STATUSがgroonga_*ステータス変数をリセットするようにした。 #1166 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">TRUNCATE TABLEに対応。 #1151 [Takahiro Nagaiさんが提案]</p>
-</li>
-<li><p class="first">ALTER TABLEに対応。 #1168</p>
-</li>
-<li><p class="first">MariaDB 5.2.9に対応。 #1152 [Kazuhikoさんが報告]</p>
-</li>
-<li><p class="first">MariaDB 5.3.2-betaに対応。 #1152 [かずひこさんが報告]</p>
-</li>
-<li><p class="first">[rpm] ドキュメントのパッケージを分離。</p>
-</li>
-<li><p class="first">文字列のシステム変数のメモリ確保方法を改良。</p>
-</li>
-<li><p class="first">PLUGIN_LICENSE_GPLを使うようにした。 [Kazuhikoさんが提案]</p>
-</li>
-<li><p class="first">MeCab関連の設定を削除。</p>
-</li>
-<li><p class="first">FOUND_ROWS()とSQL_CALC_FOUND_ROWSに対応。 #1163 [Horikoshi Yukiさんが報告]</p>
-</li>
-<li><p class="first">'-'を含むテーブル名に対応。 #1165 [nobodyさんが報告]</p>
-</li>
-<li><p class="first">MySQL 5.1上でテーブルを作りなおさないインデックス変更に対応。</p>
-</li>
-<li><p class="first">[deb] i386対応。</p>
-</li>
-<li><p class="first">[rpm] i386対応。</p>
-</li>
+<li>「groonga storage engine」から「mroonga」に改名。 #1170</li>
+<li>groonga_libgroonga_version変数およびgroonga_version変数の追加。 #1158</li>
+<li>information_schema.plugins.plugin_versionがmroongaのバージョンを返すようにした。 #1157</li>
+<li>groonga_log_file変数の追加。 #1178 [nobodyさんが提案]</li>
+<li>FLUSH STATUSがgroonga_*ステータス変数をリセットするようにした。 #1166 [かずひこさんが報告]</li>
+<li>TRUNCATE TABLEに対応。 #1151 [Takahiro Nagaiさんが提案]</li>
+<li>ALTER TABLEに対応。 #1168</li>
+<li>MariaDB 5.2.9に対応。 #1152 [Kazuhikoさんが報告]</li>
+<li>MariaDB 5.3.2-betaに対応。 #1152 [かずひこさんが報告]</li>
+<li>[rpm] ドキュメントのパッケージを分離。</li>
+<li>文字列のシステム変数のメモリ確保方法を改良。</li>
+<li>PLUGIN_LICENSE_GPLを使うようにした。 [Kazuhikoさんが提案]</li>
+<li>MeCab関連の設定を削除。</li>
+<li>FOUND_ROWS()とSQL_CALC_FOUND_ROWSに対応。 #1163 [Horikoshi Yukiさんが報告]</li>
+<li>'-'を含むテーブル名に対応。 #1165 [nobodyさんが報告]</li>
+<li>MySQL 5.1上でテーブルを作りなおさないインデックス変更に対応。</li>
+<li>[deb] i386対応。</li>
+<li>[rpm] i386対応。</li>
 </ul>
 </div>
 <div class="section" id="id5">
 <h3>修正<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">[ストレージモード] TEXT型に対するREPLACE INTOが動作しないバグの修正。 #1153 [Kazuhikoさんが報告]</p>
-</li>
-<li><p class="first">[ラッパーモード] LOCK TABLE内のINSERTがInnoDBで動かないバグの修正。 #1154 [Kazuhikoさんが報告]</p>
-</li>
-<li><p class="first">ORDERとLIMITの両方を使うと結果が正しくないバグの修正。 #1161 [Horikoshi Yukiさんが報告]</p>
-</li>
-<li><p class="first">FORCE INDEXで存在しないキーを指定するクラッシュするバグを修正。 #1181 [Takahiro Nagaiさんが報告]</p>
-</li>
+<li>[ストレージモード] TEXT型に対するREPLACE INTOが動作しないバグの修正。 #1153 [Kazuhikoさんが報告]</li>
+<li>[ラッパーモード] LOCK TABLE内のINSERTがInnoDBで動かないバグの修正。 #1154 [Kazuhikoさんが報告]</li>
+<li>ORDERとLIMITの両方を使うと結果が正しくないバグの修正。 #1161 [Horikoshi Yukiさんが報告]</li>
+<li>FORCE INDEXで存在しないキーを指定するクラッシュするバグを修正。 #1181 [Takahiro Nagaiさんが報告]</li>
 </ul>
 </div>
 <div class="section" id="id6">
 <h3>感謝<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">かずひこさん</p>
-</li>
-<li><p class="first">Horikoshi Yukiさん</p>
-</li>
-<li><p class="first">nobodyさん</p>
-</li>
-<li><p class="first">Takahiro Nagaiさん</p>
-</li>
+<li>かずひこさん</li>
+<li>Horikoshi Yukiさん</li>
+<li>nobodyさん</li>
+<li>Takahiro Nagaiさん</li>
 </ul>
 </div>
 </div>
@@ -330,58 +262,37 @@
 <div class="section" id="id7">
 <h3>改良<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">[ストレージモード][ラッパーモード] <cite>flush tables</cite> によるデータベースの再オープンに対応。</p>
-</li>
-<li><p class="first">[ラッパーモード] 位置情報インデックスに対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。）</p>
-</li>
-<li><p class="first">[ベンチマーク] groongaのデータベースには実際に書き込むかどうかを指定する <cite>groonga_dry_write</cite> 変数の追加。ベンチマーク時などボトルネック処理の確認用。</p>
-</li>
-<li><p class="first">CentOS 6用のインストールドキュメントにMySQLのバージョン番号を追加。 [&#64;yoshi_kenさんが提案]</p>
-</li>
-<li><p class="first">[位置情報検索] 不必要な処理をなるべくしないようにして高速化。</p>
-</li>
-<li><p class="first">mysql_configがfast mutexesを有効にしていると報告しても、それを無視する <cite>--disable-fast-mutexes</cite> configureオプションを追加。</p>
-</li>
-<li><p class="first">[ストレージモード] <cite>create index</cite> に対応。</p>
-</li>
-<li><p class="first">[ストレージモード] <cite>drop index</cite> に対応。</p>
-</li>
-<li><p class="first">[ストレージモード] 全文検索用のマルチカラムインデックスに対応。</p>
-</li>
-<li><p class="first"><cite>D</cite> プラグマに対応。</p>
-</li>
-<li><p class="first">MySQL 5.5.17に対応。</p>
-</li>
-<li><p class="first">MySQL 5.6.3-m6に対応。</p>
-</li>
-<li><p class="first">groonga 1.2.7に対応。（1.2.6以下のサポートを削除。）</p>
-</li>
-<li><p class="first">Ubuntu 11.10 Oneiric Ocelotに対応。</p>
-</li>
+<li>[ストレージモード][ラッパーモード] <cite>flush tables</cite> によるデータベースの再オープンに対応。</li>
+<li>[ラッパーモード] 位置情報インデックスに対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。）</li>
+<li>[ベンチマーク] groongaのデータベースには実際に書き込むかどうかを指定する <cite>groonga_dry_write</cite> 変数の追加。ベンチマーク時などボトルネック処理の確認用。</li>
+<li>CentOS 6用のインストールドキュメントにMySQLのバージョン番号を追加。 [&#64;yoshi_kenさんが提案]</li>
+<li>[位置情報検索] 不必要な処理をなるべくしないようにして高速化。</li>
+<li>mysql_configがfast mutexesを有効にしていると報告しても、それを無視する <cite>--disable-fast-mutexes</cite> configureオプションを追加。</li>
+<li>[ストレージモード] <cite>create index</cite> に対応。</li>
+<li>[ストレージモード] <cite>drop index</cite> に対応。</li>
+<li>[ストレージモード] 全文検索用のマルチカラムインデックスに対応。</li>
+<li><cite>D</cite> プラグマに対応。</li>
+<li>MySQL 5.5.17に対応。</li>
+<li>MySQL 5.6.3-m6に対応。</li>
+<li>groonga 1.2.7に対応。（1.2.6以下のサポートを削除。）</li>
+<li>Ubuntu 11.10 Oneiric Ocelotに対応。</li>
 </ul>
 </div>
 <div class="section" id="id8">
 <h3>修正<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">booleanモードでクエリの先頭に <cite>+</cite> を指定すると何もヒットしなくなる問題を修正。 [西山はじめさんが報告]</p>
-</li>
-<li><p class="first">[Fedora] パッケージの依存関係を修正。 [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">[Fedora] プラグインをロードするとシンボルが見つからずエラーになる問題を修正。 [Takahiro Nagaiさんが報告]</p>
-</li>
-<li><p class="first">[ストレージモード] マルチカラムインデックスに <cite>varchar</cite> を使うとインデックスが正常に作成されない問題を修正。 #1143 [Takahiro Nagaiさんが報告]</p>
-</li>
+<li>booleanモードでクエリの先頭に <cite>+</cite> を指定すると何もヒットしなくなる問題を修正。 [西山はじめさんが報告]</li>
+<li>[Fedora] パッケージの依存関係を修正。 [Takahiro Nagaiさんが報告]</li>
+<li>[Fedora] プラグインをロードするとシンボルが見つからずエラーになる問題を修正。 [Takahiro Nagaiさんが報告]</li>
+<li>[ストレージモード] マルチカラムインデックスに <cite>varchar</cite> を使うとインデックスが正常に作成されない問題を修正。 #1143 [Takahiro Nagaiさんが報告]</li>
 </ul>
 </div>
 <div class="section" id="id9">
 <h3>感謝<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">&#64;yoshi_kenさん</p>
-</li>
-<li><p class="first">西山はじめさん</p>
-</li>
-<li><p class="first">Takahiro Nagaiさん</p>
-</li>
+<li>&#64;yoshi_kenさん</li>
+<li>西山はじめさん</li>
+<li>Takahiro Nagaiさん</li>
 </ul>
 </div>
 </div>

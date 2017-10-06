@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>5.6. 制限事項 &#8212; Mroonga v7.06 documentation</title>
-    
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
@@ -27,8 +24,6 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="top" title="Mroonga v7.06 documentation" href="../index.html" />
-    <link rel="up" title="5. リファレンス" href="../reference.html" />
     <link rel="next" title="5.7. 全文検索" href="full_text_search.html" />
     <link rel="prev" title="5.5.7. mroonga_snippet_html()" href="udf/mroonga_snippet_html.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -40,7 +35,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../">
@@ -93,18 +90,12 @@
 <h2>5.6.1. テーブルの制限事項<a class="headerlink" href="#limitations-of-table" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>テーブルには以下の制限があります。この制限はGroongaに由来します。</p>
 <ul class="simple">
-<li><p class="first">1つのキーの最大サイズ：4KiB</p>
-</li>
-<li><p class="first">キーのサイズを合計した上限値：4GiB</p>
-</li>
-<li><p class="first">最大レコード数：</p>
-<ul>
-<li><p class="first">プライマリーキーがないテーブル：1,073,741,815 (2 <sup>30</sup> - 9)</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> または <code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">BTREE</span></code> を指定したテーブル：1,073,741,823 (2 <sup>30</sup> - 1)</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">HASH</span></code> を指定したテーブル：536,870,912 (2 <sup>29</sup>)</p>
-</li>
+<li>1つのキーの最大サイズ：4KiB</li>
+<li>キーのサイズを合計した上限値：4GiB</li>
+<li>最大レコード数：<ul>
+<li>プライマリーキーがないテーブル：1,073,741,815 (2 <sup>30</sup> - 9)</li>
+<li><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> または <code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">BTREE</span></code> を指定したテーブル：1,073,741,823 (2 <sup>30</sup> - 1)</li>
+<li><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">HASH</span></code> を指定したテーブル：536,870,912 (2 <sup>29</sup>)</li>
 </ul>
 </li>
 </ul>
@@ -114,10 +105,8 @@
 <h2>5.6.2. インデックスの制限事項<a class="headerlink" href="#limitations-of-indexing" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>1つのインデックスにおける論理上の上限値は以下のとおりです。テーブルごとに適用されるgroonga由来の制限です。</p>
 <ul class="simple">
-<li><p class="first">最大語彙数: 268,435,455 (約2億6千万)</p>
-</li>
-<li><p class="first">最大インデックスサイズ: 256GiB</p>
-</li>
+<li>最大語彙数: 268,435,455 (約2億6千万)</li>
+<li>最大インデックスサイズ: 256GiB</li>
 </ul>
 <p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
 <p>テーブルがこの制限に該当するかは <code class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></code> や <code class="docutils literal"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></code> などで確認してください。</p>
@@ -194,8 +183,7 @@ mysql&gt; select * from datetime_limitation;
 <h2>5.6.4. カラムサイズの制限事項<a class="headerlink" href="#limitations-of-column-size" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>1つのカラムにつき、次の制限があります。</p>
 <ul class="simple">
-<li><p class="first">カラムに格納した値の合計サイズの上限値: 256GiB</p>
-</li>
+<li>カラムに格納した値の合計サイズの上限値: 256GiB</li>
 </ul>
 </div>
 </div>

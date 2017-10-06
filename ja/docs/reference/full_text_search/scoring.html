@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>5.7.2. Mroongaにおける検索スコア &#8212; Mroonga v7.06 documentation</title>
-    
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '7.06',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../static/jquery.js"></script>
@@ -27,8 +24,6 @@
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="top" title="Mroonga v7.06 documentation" href="../../index.html" />
-    <link rel="up" title="5.7. 全文検索" href="../full_text_search.html" />
     <link rel="next" title="6. FAQ" href="../../faq.html" />
     <link rel="prev" title="5.7.1. ブーリアンモード" href="boolean_mode.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -40,7 +35,9 @@
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
 
-  <body role="document">
+    <body>
+    <div id="fb-root"></div>
+
 <div class="header">
   <h1 class="title">
     <a id="top-link" href="../../../">
@@ -94,16 +91,11 @@
 <p>IN NATURAL LANGUAGE MODEでの検索スコアはクエリと文書の類似度になります。スコアは以下の手順に従って算出されます。:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p class="first">クエリをトークンに分割する</p>
-</li>
-<li><p class="first">マッチしないトークンを除去する</p>
-</li>
-<li><p class="first">トークン毎の重みを計算する</p>
-</li>
-<li><p class="first">重みが大きい上位N個のトークンを取り出す</p>
-</li>
-<li><p class="first">上位N個のトークンについて、トークンが出現する文書に重みを足し、すべての重みを足したものがクエリと文書の類似度となる</p>
-</li>
+<li>クエリをトークンに分割する</li>
+<li>マッチしないトークンを除去する</li>
+<li>トークン毎の重みを計算する</li>
+<li>重みが大きい上位N個のトークンを取り出す</li>
+<li>上位N個のトークンについて、トークンが出現する文書に重みを足し、すべての重みを足したものがクエリと文書の類似度となる</li>
 </ol>
 </div></blockquote>
 <p>具体例を使って説明します。以下のテーブルとデータを用意します。:</p>
@@ -147,10 +139,8 @@
 <h3>5.7.2.1.2. マッチしないトークンを除去する<a class="headerlink" href="#removing-not-matched-tokens" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>今回はすべてのトークンがどれかの文書に含まれているのでここでは取り除かれません。</p>
 <ul class="simple">
-<li><p class="first">fine: 文書id = 1,3,4</p>
-</li>
-<li><p class="first">today: 文書id = 3,4</p>
-</li>
+<li>fine: 文書id = 1,3,4</li>
+<li>today: 文書id = 3,4</li>
 </ul>
 </div>
 <div class="section" id="calculating-weight-per-token">
@@ -186,8 +176,7 @@
 <div class="section" id="summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">
 <h3>5.7.2.1.5. 上位N個のトークンについて、トークンが出現する文書に重みを足す<a class="headerlink" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><p class="first">today: 文書id = 3,4</p>
-</li>
+<li>today: 文書id = 3,4</li>
 </ul>
 <p>Finally document id 3,4 are hit, the similarity score between query and document(id=3) is 131072 + 1 = 131073 (&quot;1&quot; is the number of occurrence of token &quot;today&quot; in document).</p>
 <p>The similarity score between query and document(id=4) is the same as the score between query and document(id=3).</p>
