@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.1. 最適化 &#8212; Mroonga v7.06 documentation</title>
+    <title>1. 最適化 &#8212; Mroonga v7.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.06',
+        VERSION:     '7.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false,
@@ -24,8 +24,8 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="5.2. SQL commands" href="sql_commands.html" />
-    <link rel="prev" title="5. リファレンス" href="../reference.html" /> 
+    <link rel="next" title="2. SQL commands" href="sql_commands.html" />
+    <link rel="prev" title="リファレンス" href="../reference.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -68,13 +68,13 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="sql_commands.html" title="5.2. SQL commands"
+          <a href="sql_commands.html" title="2. SQL commands"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../reference.html" title="5. リファレンス"
+          <a href="../reference.html" title="リファレンス"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.06 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. リファレンス</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">リファレンス</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -84,11 +84,11 @@
           <div class="body" role="main">
             
   <div class="section" id="optimizations">
-<h1>5.1. 最適化<a class="headerlink" href="#optimizations" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1. 最適化<a class="headerlink" href="#optimizations" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Mroongaはより速くレスポンスを返すためにいくつか最適化しています。</p>
 <p>いくつかの最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でだけ有効です。</p>
 <div class="section" id="fetching-only-needed-columns">
-<span id="optimization-fetching-only-needed-columns"></span><h2>5.1.1. 必要なカラムだけ取得<a class="headerlink" href="#fetching-only-needed-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="optimization-fetching-only-needed-columns"></span><h2>1.1. 必要なカラムだけ取得<a class="headerlink" href="#fetching-only-needed-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>この最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でだけ有効です。</p>
 <p>Groongaはカラム（列）ストアアーキテクチャーを採用しています。これは、1行の1つのカラムの値を取得するために、すべてのカラムの値を取得しなくてもよいということです。Groongaは必要なカラムの値だけを取得できます。</p>
 <p>InnoDBとMyISAMはロー（行）ストアアーキテクチャーを採用しています。InnoDBとMyISAMは、1行の1つのカラムの値が必要な場合でもすべてのカラムの値を取得する必要があります。</p>
@@ -115,7 +115,7 @@
 <p>このケースではMroongaは <code class="docutils literal"><span class="pre">c1</span></code> 、 <code class="docutils literal"><span class="pre">c2</span></code> 、 <code class="docutils literal"><span class="pre">c11</span></code> 、 <code class="docutils literal"><span class="pre">c12</span></code> カラムの値だけを取得します。 <code class="docutils literal"><span class="pre">c3</span></code> 、 <code class="docutils literal"><span class="pre">c4</span></code> 、 ...、 <code class="docutils literal"><span class="pre">c10</span></code> 、 <code class="docutils literal"><span class="pre">c13</span></code> 、 ...、 <code class="docutils literal"><span class="pre">c19</span></code> 、<code class="docutils literal"><span class="pre">c20</span></code> カラムの値は取得しません。</p>
 </div>
 <div class="section" id="row-count">
-<span id="optimization-raw-count"></span><h2>5.1.2. 行カウント<a class="headerlink" href="#row-count" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="optimization-raw-count"></span><h2>1.2. 行カウント<a class="headerlink" href="#row-count" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>この最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でだけ有効です。</p>
 <p>MySQLは <code class="docutils literal"><span class="pre">COUNT(*)</span></code> を処理する時、カラムの値が必要ないにも関わらず、ストレージエンジンモジュールにすべてのカラムの値を要求します。</p>
 <p>この場合、Mroongaはカラムの値を取得しません。</p>
@@ -140,7 +140,7 @@
 <p><a class="reference internal" href="server_variables.html#server-variable-mroonga-enable-optimization"><span class="std std-ref">mroonga_enable_optimization</span></a> に <code class="docutils literal"><span class="pre">false</span></code> を指定するとこの最適化を無効にできます。</p>
 </div>
 <div class="section" id="order-by-limit">
-<span id="optimization-order-by-limit"></span><h2>5.1.3. <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="optimization-order-by-limit"></span><h2>1.3. <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>この最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> と <a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> 両方で有効です</p>
 <p>MySQLは、ヒットレコード数が多くても、インデックスを使ってソート済みの結果を取得できるなら <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> と <code class="docutils literal"><span class="pre">LIMIT</span></code> を少ないコストで処理できます。</p>
 <p>MySQLは <code class="docutils literal"><span class="pre">MATCH()</span> <span class="pre">AGAINST(IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE)</span></code> でこの処理を使えますが、 <code class="docutils literal"><span class="pre">MATCH()</span> <span class="pre">AGAINST(IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></code> では使えません。</p>
@@ -188,20 +188,20 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.1. 最適化</a><ul>
-<li><a class="reference internal" href="#fetching-only-needed-columns">5.1.1. 必要なカラムだけ取得</a></li>
-<li><a class="reference internal" href="#row-count">5.1.2. 行カウント</a></li>
-<li><a class="reference internal" href="#order-by-limit">5.1.3. <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code></a></li>
+<li><a class="reference internal" href="#">1. 最適化</a><ul>
+<li><a class="reference internal" href="#fetching-only-needed-columns">1.1. 必要なカラムだけ取得</a></li>
+<li><a class="reference internal" href="#row-count">1.2. 行カウント</a></li>
+<li><a class="reference internal" href="#order-by-limit">1.3. <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code></a></li>
 </ul>
 </li>
 </ul>
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="../reference.html"
-                        title="前の章へ">5. リファレンス</a></p>
+                        title="前の章へ">リファレンス</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="sql_commands.html"
-                        title="次の章へ">5.2. SQL commands</a></p>
+                        title="次の章へ">2. SQL commands</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
@@ -223,13 +223,13 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="sql_commands.html" title="5.2. SQL commands"
+          <a href="sql_commands.html" title="2. SQL commands"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../reference.html" title="5. リファレンス"
+          <a href="../reference.html" title="リファレンス"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.06 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" >5. リファレンス</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >リファレンス</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.5.2. mroonga_escape() &#8212; Mroonga v7.06 documentation</title>
+    <title>5.2. mroonga_escape() &#8212; Mroonga v7.07 documentation</title>
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '7.06',
+        VERSION:     '7.07',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false,
@@ -24,8 +24,8 @@
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="5.5.3. mroonga_highlight_html()" href="mroonga_highlight_html.html" />
-    <link rel="prev" title="5.5.1. mroonga_command()" href="mroonga_command.html" /> 
+    <link rel="next" title="5.3. mroonga_highlight_html()" href="mroonga_highlight_html.html" />
+    <link rel="prev" title="5.1. mroonga_command()" href="mroonga_command.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -68,14 +68,14 @@
           <a href="../../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="mroonga_highlight_html.html" title="5.5.3. mroonga_highlight_html()"
+          <a href="mroonga_highlight_html.html" title="5.3. mroonga_highlight_html()"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="mroonga_command.html" title="5.5.1. mroonga_command()"
+          <a href="mroonga_command.html" title="5.1. mroonga_command()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.06 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (ユーザ定義関数)</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >リファレンス</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5. UDF (ユーザ定義関数)</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -85,16 +85,16 @@
           <div class="body" role="main">
             
   <div class="section" id="mroonga-escape">
-<h1>5.5.2. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code><a class="headerlink" href="#mroonga-escape" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>5.2. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code><a class="headerlink" href="#mroonga-escape" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified">バージョン 3.08 で追加.</span></p>
 </div>
 <div class="section" id="summary">
-<h2>5.5.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">mroonga_escape</span></code> UDF は与えられた文字列をエスケープする機能を提供します。そしてまたエスケープすべき文字を引数として受け取ります。</p>
 </div>
 <div class="section" id="syntax">
-<h2>5.5.2.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.2.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">mroonga_escape()</span></code> には必須引数と省略可能引数とがあります。:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>mroonga_escape(string)
 mroonga_escape(string, special_characters)
@@ -102,7 +102,7 @@ mroonga_escape(string, special_characters)
 </div>
 </div>
 <div class="section" id="usage">
-<h2>5.5.2.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.2.3. 使いかた<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Here is the example query which use special characters to be escaped:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>SELECT * FROM `symbols` WHERE MATCH(`content`) AGAINST(mroonga_escape(&quot;+hello_world()&quot;, &quot;()&quot;) IN BOOLEAN MODE);
 </pre></div>
@@ -114,27 +114,27 @@ mroonga_escape(string, special_characters)
 </div>
 </div>
 <div class="section" id="parameters">
-<h2>5.5.2.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.2.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="required-parameters">
-<h3>5.5.2.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>5.2.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>必須引数は <code class="docutils literal"><span class="pre">string</span></code> です。</p>
 <div class="section" id="string">
-<h4>5.5.2.4.1.1. <code class="docutils literal"><span class="pre">string</span></code><a class="headerlink" href="#string" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>5.2.4.1.1. <code class="docutils literal"><span class="pre">string</span></code><a class="headerlink" href="#string" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>エスケープしたいテキストを指定します。</p>
 </div>
 </div>
 <div class="section" id="optional-parameters">
-<h3>5.5.2.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>5.2.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">special_characters</span></code> は省略可能な引数です。</p>
 <div class="section" id="special-characters">
-<h4>5.5.2.4.2.1. <code class="docutils literal"><span class="pre">special_characters</span></code><a class="headerlink" href="#special-characters" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>5.2.4.2.1. <code class="docutils literal"><span class="pre">special_characters</span></code><a class="headerlink" href="#special-characters" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>エスケープする文字を指定します。</p>
 <p>デフォルト値は <code class="docutils literal"><span class="pre">+-&lt;&gt;~*()&quot;\\:</span></code> です。</p>
 </div>
 </div>
 </div>
 <div class="section" id="return-value">
-<h2>5.5.2.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.2.5. 返り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>エスケープされた文字列を返します。</p>
 </div>
 </div>
@@ -147,32 +147,32 @@ mroonga_escape(string, special_characters)
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.5.2. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code></a><ul>
-<li><a class="reference internal" href="#summary">5.5.2.1. 概要</a></li>
-<li><a class="reference internal" href="#syntax">5.5.2.2. 構文</a></li>
-<li><a class="reference internal" href="#usage">5.5.2.3. 使いかた</a></li>
-<li><a class="reference internal" href="#parameters">5.5.2.4. 引数</a><ul>
-<li><a class="reference internal" href="#required-parameters">5.5.2.4.1. 必須引数</a><ul>
-<li><a class="reference internal" href="#string">5.5.2.4.1.1. <code class="docutils literal"><span class="pre">string</span></code></a></li>
+<li><a class="reference internal" href="#">5.2. <code class="docutils literal"><span class="pre">mroonga_escape()</span></code></a><ul>
+<li><a class="reference internal" href="#summary">5.2.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">5.2.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">5.2.3. 使いかた</a></li>
+<li><a class="reference internal" href="#parameters">5.2.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">5.2.4.1. 必須引数</a><ul>
+<li><a class="reference internal" href="#string">5.2.4.1.1. <code class="docutils literal"><span class="pre">string</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#optional-parameters">5.5.2.4.2. 省略可能引数</a><ul>
-<li><a class="reference internal" href="#special-characters">5.5.2.4.2.1. <code class="docutils literal"><span class="pre">special_characters</span></code></a></li>
+<li><a class="reference internal" href="#optional-parameters">5.2.4.2. 省略可能引数</a><ul>
+<li><a class="reference internal" href="#special-characters">5.2.4.2.1. <code class="docutils literal"><span class="pre">special_characters</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#return-value">5.5.2.5. 返り値</a></li>
+<li><a class="reference internal" href="#return-value">5.2.5. 返り値</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="mroonga_command.html"
-                        title="前の章へ">5.5.1. <code class="docutils literal"><span class="pre">mroonga_command()</span></code></a></p>
+                        title="前の章へ">5.1. <code class="docutils literal"><span class="pre">mroonga_command()</span></code></a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="mroonga_highlight_html.html"
-                        title="次の章へ">5.5.3. <code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code></a></p>
+                        title="次の章へ">5.3. <code class="docutils literal"><span class="pre">mroonga_highlight_html()</span></code></a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../../search.html" method="get">
@@ -194,14 +194,14 @@ mroonga_escape(string, special_characters)
           <a href="../../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="mroonga_highlight_html.html" title="5.5.3. mroonga_highlight_html()"
+          <a href="mroonga_highlight_html.html" title="5.3. mroonga_highlight_html()"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="mroonga_command.html" title="5.5.1. mroonga_command()"
+          <a href="mroonga_command.html" title="5.1. mroonga_command()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.06 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (ユーザ定義関数)</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v7.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >リファレンス</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" >5. UDF (ユーザ定義関数)</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
