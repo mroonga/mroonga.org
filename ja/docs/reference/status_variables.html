@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.4. ステータス変数の一覧 &#8212; Mroonga v7.09 documentation</title>
+    <title>4. ステータス変数の一覧 &#8212; Mroonga v7.10 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.09',
+        VERSION:     '7.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false,
@@ -24,8 +24,8 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="5.5. UDF (ユーザ定義関数)" href="udf.html" />
-    <link rel="prev" title="5.3. サーバ変数の一覧" href="server_variables.html" /> 
+    <link rel="next" title="5. UDF (ユーザ定義関数)" href="udf.html" />
+    <link rel="prev" title="3. サーバ変数の一覧" href="server_variables.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -68,13 +68,13 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="udf.html" title="5.5. UDF (ユーザ定義関数)"
+          <a href="udf.html" title="5. UDF (ユーザ定義関数)"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="server_variables.html" title="5.3. サーバ変数の一覧"
+          <a href="server_variables.html" title="3. サーバ変数の一覧"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.09 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. リファレンス</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">リファレンス</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -84,10 +84,10 @@
           <div class="body" role="main">
             
   <div class="section" id="status-variables">
-<h1>5.4. ステータス変数の一覧<a class="headerlink" href="#status-variables" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>4. ステータス変数の一覧<a class="headerlink" href="#status-variables" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>独自に追加されたステータス変数を説明します。</p>
 <div class="section" id="mroonga-count-skip">
-<span id="status-variable-mroonga-count-skip"></span><h2>5.4.1. <code class="docutils literal"><span class="pre">Mroonga_count_skip</span></code><a class="headerlink" href="#mroonga-count-skip" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="status-variable-mroonga-count-skip"></span><h2>4.1. <code class="docutils literal"><span class="pre">Mroonga_count_skip</span></code><a class="headerlink" href="#mroonga-count-skip" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>行カウント高速化機能が動作する度にカウントアップされます。スキーマ/SQLチューニングを行って行カウント高速化機能を利用できるようにした際の動作確認に利用できます。</p>
 <p>確認例です:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_count_skip&#39;;
@@ -101,7 +101,7 @@
 </div>
 </div>
 <div class="section" id="mroonga-fast-order-limit">
-<span id="status-variable-mroonga-fast-order-limit"></span><h2>5.4.2. <code class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></code><a class="headerlink" href="#mroonga-fast-order-limit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="status-variable-mroonga-fast-order-limit"></span><h2>4.2. <code class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></code><a class="headerlink" href="#mroonga-fast-order-limit" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ORDER BY LIMIT 高速化機能が動作する度にカウントアップされます。スキーマ/SQLチューニングを行って ORDER BY LIMIT 高速化機能を利用できるようにした際の動作確認に利用できます。</p>
 <p>確認例です:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_fast_order_limit&#39;;
@@ -110,6 +110,34 @@
 +--------------------------+-------+
 | Mroonga_fast_order_limit | 0     |
 +--------------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="mroonga-condition-push-down">
+<span id="status-variable-mroonga-condition-push-down"></span><h2>4.3. <code class="docutils literal"><span class="pre">Mroonga_condition_push_down</span></code><a class="headerlink" href="#mroonga-condition-push-down" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>コンディションプッシュダウンを使う度にカウントアップします。コンディションプッシュダウンが使われたかどうかを確認するために利用できます。</p>
+<p>確認例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_condition_push_down&#39;;
++-----------------------------+-------+
+| Variable_name               | Value |
++-----------------------------+-------+
+| Mroonga_condition_push_down | 1     |
++-----------------------------+-------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
+<div class="section" id="mroonga-n-pooling-contexts">
+<span id="status-variable-mroonga-n-pooling-contexts"></span><h2>4.4. <code class="docutils literal"><span class="pre">Mroonga_n_pooling_contexts</span></code><a class="headerlink" href="#mroonga-n-pooling-contexts" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> 用にプールしているコンテキストの数を示します。このコンテキストは複数の <a class="reference internal" href="udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> 呼び出しで再利用します。そのため、継続的に増え続けるということはありません。</p>
+<p>確認例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW STATUS LIKE &#39;Mroonga_n_pooling_contexts&#39;;
++----------------------------+-------+
+| Variable_name              | Value |
++----------------------------+-------+
+| Mroonga_n_pooling_contexts | 0     |
++----------------------------+-------+
 1 row in set (0.00 sec)
 </pre></div>
 </div>
@@ -124,19 +152,21 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">目次</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.4. ステータス変数の一覧</a><ul>
-<li><a class="reference internal" href="#mroonga-count-skip">5.4.1. <code class="docutils literal"><span class="pre">Mroonga_count_skip</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-fast-order-limit">5.4.2. <code class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></code></a></li>
+<li><a class="reference internal" href="#">4. ステータス変数の一覧</a><ul>
+<li><a class="reference internal" href="#mroonga-count-skip">4.1. <code class="docutils literal"><span class="pre">Mroonga_count_skip</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-fast-order-limit">4.2. <code class="docutils literal"><span class="pre">Mroonga_fast_order_limit</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-condition-push-down">4.3. <code class="docutils literal"><span class="pre">Mroonga_condition_push_down</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-n-pooling-contexts">4.4. <code class="docutils literal"><span class="pre">Mroonga_n_pooling_contexts</span></code></a></li>
 </ul>
 </li>
 </ul>
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="server_variables.html"
-                        title="前の章へ">5.3. サーバ変数の一覧</a></p>
+                        title="前の章へ">3. サーバ変数の一覧</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="udf.html"
-                        title="次の章へ">5.5. UDF (ユーザ定義関数)</a></p>
+                        title="次の章へ">5. UDF (ユーザ定義関数)</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../search.html" method="get">
@@ -158,13 +188,13 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="udf.html" title="5.5. UDF (ユーザ定義関数)"
+          <a href="udf.html" title="5. UDF (ユーザ定義関数)"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="server_variables.html" title="5.3. サーバ変数の一覧"
+          <a href="server_variables.html" title="3. サーバ変数の一覧"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.09 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" >5. リファレンス</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >リファレンス</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

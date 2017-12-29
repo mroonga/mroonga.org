@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>3. Server variables &#8212; Mroonga v7.09 documentation</title>
+    <title>3. Server variables &#8212; Mroonga v7.10 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.09',
+        VERSION:     '7.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false,
@@ -72,7 +72,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="2. SQL commands"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Reference</a> &#187;</li> 
       </ul>
     </div>  
@@ -622,6 +622,52 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 </pre></div>
 </div>
 </div>
+<div class="section" id="mroonga-condition-push-down-type">
+<span id="server-variable-mroonga-condition-push-down-type"></span><h2>3.21. <code class="docutils literal"><span class="pre">mroonga_condition_push_down_type</span></code><a class="headerlink" href="#mroonga-condition-push-down-type" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.10.</span></p>
+</div>
+<p>It controls how to enable condition push down support.</p>
+<p>The default value is <code class="docutils literal"><span class="pre">ONE_FULL_TEXT_SEARCH</span></code>. It means that condition
+push down is enabled only when <code class="docutils literal"><span class="pre">WHERE</span></code> clause has one <code class="docutils literal"><span class="pre">MATCH</span>
+<span class="pre">AGAINST</span></code> condition.</p>
+<p>Here are available values:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>NONE</td>
+<td>Never use condition push down.</td>
+</tr>
+<tr class="row-odd"><td>ALL</td>
+<td>Always use condition push down. It's experimental for now.</td>
+</tr>
+<tr class="row-even"><td>ONE_FULL_TEXT_SEARCH</td>
+<td><p class="first">Use condition push down only when one <code class="docutils literal"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>
+condition exists in <code class="docutils literal"><span class="pre">WHERE</span></code>.</p>
+<p class="last">It's the default.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example SQL to confirm the current value:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_condition_push_down_type&#39;;
++----------------------------------+----------------------+
+| Variable_name                    | Value                |
++----------------------------------+----------------------+
+| mroonga_condition_push_down_type | ONE_FULL_TEXT_SEARCH |
++----------------------------------+----------------------+
+1 row in set (0.00 sec)
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -653,6 +699,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 <li><a class="reference internal" href="#mroonga-enable-operations-recording">3.18. <code class="docutils literal"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
 <li><a class="reference internal" href="#mroonga-vector-column-delimiter">3.19. <code class="docutils literal"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
 <li><a class="reference internal" href="#mroonga-version">3.20. <code class="docutils literal"><span class="pre">mroonga_version</span></code></a></li>
+<li><a class="reference internal" href="#mroonga-condition-push-down-type">3.21. <code class="docutils literal"><span class="pre">mroonga_condition_push_down_type</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -689,7 +736,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
         <li class="right" >
           <a href="sql_commands.html" title="2. SQL commands"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v7.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li> 
       </ul>
     </div>
