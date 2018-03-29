@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.3. Storage mode &#8212; Mroonga v8.00 documentation</title>
+    <title>4.3. Storage mode &#8212; Mroonga v8.01 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '8.00',
+        VERSION:     '8.01',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false,
@@ -72,7 +72,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.00 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
       </ul>
     </div>  
@@ -612,8 +612,57 @@ So you need to exclude it from setting columns, or you need to use <code class="
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDF.</p>
 </div>
+<div class="section" id="how-to-use-similar-search">
+<h2>4.3.10. How to use similar search<a class="headerlink" href="#how-to-use-similar-search" title="Permalink to this headline">¶</a></h2>
+<p>Similar search is supported by specifying document itself instead of specifying keywords in query.</p>
+<p>It is useful if you want to find documents which is related to specific document.</p>
+<p>Here is the schema definition for execution examples:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">similarities</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here is the sample data for execution examples:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">similarities</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+       <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Groonga similar search&#39;</span><span class="p">,</span> <span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">similarities</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+       <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Mroonga similar search&#39;</span><span class="p">,</span> <span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">similarities</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+       <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Rroonga library&#39;</span><span class="p">,</span> <span class="s1">&#39;A library to use Groonga features from Ruby.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here is the example of similar search by content itself.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">similarities</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span> <span class="k">IN</span> <span class="k">NATURAL</span> <span class="k">LANGUAGE</span> <span class="k">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that you need to specify an content of document in <cite>AGAINST('...' IN NATURAL LANGUAGE MODE)</cite>.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">similarities</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span> <span class="k">IN</span> <span class="k">NATURAL</span> <span class="k">LANGUAGE</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------------------+</span>
+<span class="c1">-- | title                  |</span>
+<span class="c1">-- +------------------------+</span>
+<span class="c1">-- | Groonga similar search |</span>
+<span class="c1">-- | Mroonga similar search |</span>
+<span class="c1">-- +------------------------+</span>
+<span class="c1">-- 2 rows in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>To improve degree of similarity, you may need to use language specific tokenizer or use labeled data such as tag to get rid of some undesirable search results.</p>
+<p>For example, if you want to execute similar search against Japanese text, it is recommended to use language specific tokenizer - <cite>TokenMecab</cite>.
+Here is the schema definition to use <cite>TokenMecab</cite> tokenizer:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">similarities</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+  <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="how-to-run-groonga-command">
-<h2>4.3.10. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.11. How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this headline">¶</a></h2>
 <p>In storage mode, Mroonga stores all your data into Groonga
 database. You can access Groonga database by SQL with Mroonga. SQL is
 very powerful but it is not good for some operations such as faceted
@@ -711,7 +760,7 @@ keys (result JSON is pretty printed):</p>
 details.</p>
 </div>
 <div class="section" id="logging">
-<h2>4.3.11. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.12. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL's data directory with the filename  <code class="docutils literal"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
@@ -763,7 +812,7 @@ details.</p>
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>4.3.12. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.13. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>Now, you can use Mroonga as storage mode! If you want Mroonga to be
 faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
 <p class="rubric">Footnotes</p>
@@ -800,9 +849,10 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 <li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.7. How to use geolocation search</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">4.3.8. How to get the record ID</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.10. How to run Groonga command</a></li>
-<li><a class="reference internal" href="#logging">4.3.11. Logging</a></li>
-<li><a class="reference internal" href="#next-step">4.3.12. Next step</a></li>
+<li><a class="reference internal" href="#how-to-use-similar-search">4.3.10. How to use similar search</a></li>
+<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.11. How to run Groonga command</a></li>
+<li><a class="reference internal" href="#logging">4.3.12. Logging</a></li>
+<li><a class="reference internal" href="#next-step">4.3.13. Next step</a></li>
 </ul>
 </li>
 </ul>
@@ -839,7 +889,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.00 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
       </ul>
     </div>
