@@ -3,20 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.7.2. Search and Scoring in Mroonga &#8212; Mroonga v8.01 documentation</title>
+    <title>5.7.2. Search and Scoring in Mroonga &#8212; Mroonga v8.02 documentation</title>
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '8.01',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../static/documentation_options.js"></script>
     <script type="text/javascript" src="../../static/jquery.js"></script>
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
@@ -33,8 +25,7 @@
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
-
-    <body>
+  <body>
     <div id="fb-root"></div>
 
 <div class="header">
@@ -72,7 +63,7 @@
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. Boolean mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. Full text search</a> &#187;</li> 
       </ul>
@@ -87,7 +78,7 @@
 <h1>5.7.2. Search and Scoring in Mroonga<a class="headerlink" href="#search-and-scoring-in-mroonga" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mroonga-scoring-in-natural-language-mode">
 <h2>5.7.2.1. Mroonga Scoring in natural language mode<a class="headerlink" href="#mroonga-scoring-in-natural-language-mode" title="Permalink to this headline">¶</a></h2>
-<p>The search score of Mroonga in natural language mode is a similarity score between query and document. Mroonga's scoring algorithm is as follows:</p>
+<p>The search score of Mroonga in natural language mode is a similarity score between query and document. Mroonga’s scoring algorithm is as follows:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>Splitting a query into tokens.</li>
@@ -99,7 +90,7 @@
 </div></blockquote>
 <p>We are showing by example.
 The first thing we create a table and insert data as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SET</span> <span class="n">NAMES</span> <span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SET</span> <span class="n">NAMES</span> <span class="n">UTF8</span><span class="p">;</span>
 <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
   <span class="n">content</span> <span class="n">TEXT</span><span class="p">,</span>
@@ -112,9 +103,9 @@ The first thing we create a table and insert data as follows:</p>
 <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span><span class="p">(</span><span class="s2">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>We use a query &quot;fine today&quot; to search.
+<p>We use a query “fine today” to search.
 The search result is as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
     <span class="o">-&gt;</span>        <span class="n">FROM</span> <span class="n">diaries</span>
     <span class="o">-&gt;</span>        <span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span>
     <span class="o">-&gt;</span>        <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">DESC</span><span class="p">;</span>
@@ -127,10 +118,10 @@ The search result is as follows:</p>
 <span class="mi">2</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now, let us explain how to make the result score &quot;131073&quot;.</p>
+<p>Now, let us explain how to make the result score “131073”.</p>
 <div class="section" id="splitting-a-query-into-tokens">
 <h3>5.7.2.1.1. Splitting a query into tokens<a class="headerlink" href="#splitting-a-query-into-tokens" title="Permalink to this headline">¶</a></h3>
-<p>The default tokenizer splits up the query &quot;fine today&quot; into two tokens as follows:</p>
+<p>The default tokenizer splits up the query “fine today” into two tokens as follows:</p>
 <ul class="simple">
 <li>fine</li>
 <li>today</li>
@@ -151,35 +142,35 @@ The search result is as follows:</p>
 <li>today: 131072(= 1048576 / 8)</li>
 </ul>
 <p>1048576(= 2 ** 20) denotes the number of tokens in all documents. We should get the number from the table, but as a matter of fact, the fixed value is used for simplicity.</p>
-<p>In the fraction 1048576 / 8,  the denominator &quot;8&quot; indicates that the number of document which contains token &quot;today&quot;.</p>
-<p>In the fraction 1048576 / 9,  the denominator &quot;9&quot; means the number of document which contains token &quot;fine&quot;.</p>
-<p>The denominator &quot;8&quot; and &quot;9&quot; are approximate number, strictly speaking, &quot;2&quot; is the correct answer for the number of document that contains &quot;today&quot;, &quot;3&quot; is the correct answer for the number of document that contains &quot;fine&quot;.</p>
+<p>In the fraction 1048576 / 8,  the denominator “8” indicates that the number of document which contains token “today”.</p>
+<p>In the fraction 1048576 / 9,  the denominator “9” means the number of document which contains token “fine”.</p>
+<p>The denominator “8” and “9” are approximate number, strictly speaking, “2” is the correct answer for the number of document that contains “today”, “3” is the correct answer for the number of document that contains “fine”.</p>
 <p>You can check the approximate number of token by using the following query.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s2">&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">groonga_response</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s2">&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">groonga_response</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The retrieval result of the above query is as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getting-the-top-n-weight-tokens">
 <h3>5.7.2.1.4. Getting the top N weight tokens<a class="headerlink" href="#getting-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
-<p>The formula for the N is &quot;the number of occurrence of token in document / 8 + 1&quot;</p>
+<p>The formula for the N is “the number of occurrence of token in document / 8 + 1”</p>
 <p>In this case, N = 2 / 8 + 1 ≒ 1</p>
 <p>The sorted tokens are as follows:</p>
 <ul class="simple">
 <li>today: 131072(= 1048576 / 8)</li>
 <li>fine: 116508(= 1048576 / 9)</li>
 </ul>
-<p>N = 1, then we get &quot;today: 131072(= 1048576 / 8)&quot;.</p>
+<p>N = 1, then we get “today: 131072(= 1048576 / 8)”.</p>
 </div>
 <div class="section" id="summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">
 <h3>5.7.2.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens<a class="headerlink" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>today: include in document id=3,4</li>
 </ul>
-<p>Finally document id 3,4 are hit, the similarity score between query and document(id=3) is 131072 + 1 = 131073 (&quot;1&quot; is the number of occurrence of token &quot;today&quot; in document).</p>
+<p>Finally document id 3,4 are hit, the similarity score between query and document(id=3) is 131072 + 1 = 131073 (“1” is the number of occurrence of token “today” in document).</p>
 <p>The similarity score between query and document(id=4) is the same as the score between query and document(id=3).</p>
 </div>
 </div>
@@ -214,12 +205,14 @@ The search result is as follows:</p>
                         title="next chapter">6. FAQ</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -238,7 +231,7 @@ The search result is as follows:</p>
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. Boolean mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. Full text search</a> &#187;</li> 
       </ul>

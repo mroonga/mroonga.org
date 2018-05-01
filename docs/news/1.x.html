@@ -3,20 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>News - 1.x &#8212; Mroonga v8.01 documentation</title>
+    <title>News - 1.x &#8212; Mroonga v8.02 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '8.01',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../static/documentation_options.js"></script>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
@@ -31,8 +23,7 @@
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
-
-    <body>
+  <body>
     <div id="fb-root"></div>
 
 <div class="header">
@@ -64,7 +55,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.02 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -85,26 +76,26 @@ dump and restore our database for upgrading.</p>
 <p>In this release, mroonga has two changes that requires
 database recreation:</p>
 <ol class="arabic simple">
-<li>Storage engine name is changed to &quot;mroonga&quot; from &quot;groonga&quot;.</li>
-<li>Groonga's native time data type is used for DATE, DATETIME
+<li>Storage engine name is changed to “mroonga” from “groonga”.</li>
+<li>Groonga’s native time data type is used for DATE, DATETIME
 and TIMESTAMP type in MySQL.</li>
 </ol>
-<p>We need to modify dumped database to change &quot;ENGINE=groonga&quot;
-in &quot;CREATE TABLE&quot; SQL. Here are upgrade sequence.</p>
+<p>We need to modify dumped database to change “ENGINE=groonga”
+in “CREATE TABLE” SQL. Here are upgrade sequence.</p>
 <p>We dump a database that uses mroonga:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mysqldump MY_MROONGA_DATABASE &gt; database-groonga.dump
 </pre></div>
 </div>
 <p>We convert storage engine in dump file:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sed -e &#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39; database-groonga.dump &gt; database-mroonga.dump
 </pre></div>
 </div>
-<p>We confirm that <code class="docutils literal"><span class="pre">ENGINE=groonga</span></code> only in <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>
-is replaced with <code class="docutils literal"><span class="pre">ENGINE=mroonga</span></code>. We need to check <code class="docutils literal"><span class="pre">&#64;&#64;</span>
-<span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> line includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>. If the line
-includes <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>, the hunk will be a change for
-<code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% diff -up database-groonga.dump database-mroonga.dump
+<p>We confirm that <code class="docutils literal notranslate"><span class="pre">ENGINE=groonga</span></code> only in <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>
+is replaced with <code class="docutils literal notranslate"><span class="pre">ENGINE=mroonga</span></code>. We need to check <code class="docutils literal notranslate"><span class="pre">&#64;&#64;</span>
+<span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> line includes <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>. If the line
+includes <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>, the hunk will be a change for
+<code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% diff -up database-groonga.dump database-mroonga.dump
 --- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
 +++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
 @@ -29,7 +29,7 @@ CREATE TABLE `diaries` (
@@ -119,33 +110,33 @@ includes <code class="docutils literal"><span class="pre">CREATE</span> <span cl
 </pre></div>
 </div>
 <p>We drop the existing database:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;DROP DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
-<p>We upgrade to &quot;mroonga&quot; storage engine. We will use
-<code class="docutils literal"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal"><span class="pre">yum</span></code> on
+<p>We upgrade to “mroonga” storage engine. We will use
+<code class="docutils literal notranslate"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal notranslate"><span class="pre">yum</span></code> on
 CentOS or Fedora.</p>
 <p>apt-get:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo apt-get install -y mysql-server-mroonga
 </pre></div>
 </div>
 <p>yum:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo yum remove -y mysql-mroonga
 % sudo yum install -y mysql-mroonga
 </pre></div>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">We don't forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal"><span class="pre">yum</span>
-<span class="pre">install</span></code>. If we forget to run <code class="docutils literal"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
-a MySQL's system table.</p>
+<p class="last">We don’t forget to run <code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal notranslate"><span class="pre">yum</span>
+<span class="pre">install</span></code>. If we forget to run <code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
+a MySQL’s system table.</p>
 </div>
 <p>We recreate a database:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mysql -u root -e &#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;
 </pre></div>
 </div>
 <p>We restore a database by modified dump file:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mysql -u root MY_MROONGA_DATABASE &lt; database-mroonga.dump
 </pre></div>
 </div>
 <p>Now, we can use mroonga 1.20.</p>
@@ -155,7 +146,7 @@ a MySQL's system table.</p>
 <li>Supported MySQL 5.5.20.</li>
 <li>Supported MySQL 5.1.61.</li>
 <li>Required groonga 1.3.0 or later.</li>
-<li>[incompatible] Changed storage engine name to &quot;mroonga&quot; from &quot;groonga&quot;.</li>
+<li>[incompatible] Changed storage engine name to “mroonga” from “groonga”.</li>
 <li>Supported UTF8_BIN collate. [#1150]</li>
 <li>Disabled strict-aliasing warnings. [Reported by &#64;issm]</li>
 <li>Supported decimal. [#1249] [Reported by &#64;Kiske]</li>
@@ -166,9 +157,9 @@ column value access in index. [#1212]</li>
 <li>[storage mode] Mapped enum and set types to more suitable
 groonga data types.</li>
 <li>[wrapper mode] Supported REPAIR TABLE.</li>
-<li>[storage mode] Supported <code class="docutils literal"><span class="pre">count(*)</span></code> on view. [#1255]
+<li>[storage mode] Supported <code class="docutils literal notranslate"><span class="pre">count(*)</span></code> on view. [#1255]
 [Reported by Takahiro Nagai]</li>
-<li>[incompatible] Groonga's native time value is used for
+<li>[incompatible] Groonga’s native time value is used for
 DATE, DATETIME and TIMESTAMP type values.</li>
 </ul>
 </div>
@@ -217,7 +208,7 @@ delete. [#1224] [Reported by Koichi Shishikura]</li>
 table without primary key returns empty results. [#1193]
 [Reported by Kazuhiko Shiozaki]</li>
 <li>Fixed -Wno- compiler flag detection. [Patch by Arnaud Fontaine]</li>
-<li>[wrapper mode] Fixed a problem that index isn't
+<li>[wrapper mode] Fixed a problem that index isn’t
 used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 </ul>
 </div>
@@ -235,14 +226,14 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <div class="section" id="release-1-10-2011-11-29">
 <span id="release-1-10"></span><h2>Release 1.10 - 2011/11/29<a class="headerlink" href="#release-1-10-2011-11-29" title="Permalink to this headline">¶</a></h2>
 <p>Since this release, this project and product is called
-&quot;mroonga&quot; instead of &quot;groonga storage engine&quot;.</p>
+“mroonga” instead of “groonga storage engine”.</p>
 <p>This release introduces MariaDB support and fixes several bugs.</p>
 <div class="section" id="id4">
 <h3>Improvements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>rename to &quot;mroonga&quot; from &quot;groonga storage engine&quot;. #1170</li>
+<li>rename to “mroonga” from “groonga storage engine”. #1170</li>
 <li>add groonga_libgroonga_version and groonga_version variables. #1158</li>
-<li>information_schema.plugins.plugin_version returns mroonga's version. #1157</li>
+<li>information_schema.plugins.plugin_version returns mroonga’s version. #1157</li>
 <li>add groonga_log_file variable. #1178 [Suggested by nobody]</li>
 <li>FLUSH STATUS flushes groonga_* status variables. #1166 [Reported by Kazuhiko]</li>
 <li>support TRUNCATE TABLE #1151. [Suggested by Takahiro Nagai]</li>
@@ -254,7 +245,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>use PLUGIN_LICENSE_GPL. [Suggested by Kazuhiko]</li>
 <li>remove needless MeCab related configurations.</li>
 <li>support FOUND_ROWS() and SQL_CALC_FOUND_ROWS. #1163 [Reported by Horikoshi Yuki]</li>
-<li>support table name that contains '-'. #1165 [Reported by nobody]</li>
+<li>support table name that contains ‘-‘. #1165 [Reported by nobody]</li>
 <li>support inplace index change on MySQL 5.1.</li>
 <li>[deb] support i386.</li>
 <li>[rpm] support i386.</li>
@@ -290,7 +281,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>[benchmark] add <cite>groonga_dry_write</cite> variable to specify not to write to groonga database, that is useful to check bottle necks in benchmarks.</li>
 <li>mention MySQL version in the installation guide for CentOS 6. [proposed by &#64;yoshi_ken]</li>
 <li>[geolocation] improve performance by skip needless processes.</li>
-<li>add  <cite>--disable-fast-mutexes</cite> configure option to ignore fast mutexes even if mysql_config says it is enabled.</li>
+<li>add  <cite>–disable-fast-mutexes</cite> configure option to ignore fast mutexes even if mysql_config says it is enabled.</li>
 <li>[storage mode] support <cite>create index</cite>.</li>
 <li>[storage mode] support <cite>drop index</cite>.</li>
 <li>[storage mode] support multi columns index for full text search.</li>
@@ -304,7 +295,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <div class="section" id="id8">
 <h3>Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>fix a bug that we have no results if we specify '+' at the beginning of the query in boolean mode. [reported by Hajime Nishiyama]</li>
+<li>fix a bug that we have no results if we specify ‘+’ at the beginning of the query in boolean mode. [reported by Hajime Nishiyama]</li>
 <li>[Fedora] fix package dependencies. [reported by Takahiro Nagai]</li>
 <li>[Fedora] fix a problem that we get undefined symbol error when the plugin is loaded. [reported by Takahiro Nagai]</li>
 <li>[storage mode] fix a bug that index will not be correctly created if <cite>varchar</cite> is used in a multi-column index. #1143 [reported by Takahiro Nagai]</li>
@@ -329,7 +320,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 <li>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</li>
 <li>[ストレージモード] マルチカラムインデックスに対応。 #455</li>
 <li>[ストレージモード][ラッパーモード] 全文検索用パーサー（トークナイザー）のカスタマイズに対応。 #592</li>
-<li>configureにデフォルトの全文検索用パーサーを指定する <cite>--with-default-parser</cite> オプションを追加。</li>
+<li>configureにデフォルトの全文検索用パーサーを指定する <cite>–with-default-parser</cite> オプションを追加。</li>
 <li>実行時にデフォルトの全文検索用パーサーを指定する <cite>groonga_default_parser</cite> 変数を追加。</li>
 <li>[ラッパーモード] ストレージモードで実装している <cite>order</cite> と <cite>limit</cite> が指定された場合に必要のないレコードを返さないようにする高速化に対応。</li>
 <li>[ストレージモード] 1つの <cite>select</cite> 中での複数の <cite>match against</cite> 指定に対応。</li>
@@ -405,12 +396,14 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
 
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -423,7 +416,7 @@ used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</li>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.02 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -3,20 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.7.2. Mroongaにおける検索スコア &#8212; Mroonga v8.01 documentation</title>
+    <title>5.7.2. Mroongaにおける検索スコア &#8212; Mroonga v8.02 documentation</title>
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '8.01',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../static/documentation_options.js"></script>
     <script type="text/javascript" src="../../static/jquery.js"></script>
     <script type="text/javascript" src="../../static/underscore.js"></script>
     <script type="text/javascript" src="../../static/doctools.js"></script>
@@ -34,8 +26,7 @@
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
-
-    <body>
+  <body>
     <div id="fb-root"></div>
 
 <div class="header">
@@ -73,7 +64,7 @@
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. ブーリアンモード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. 全文検索</a> &#187;</li> 
       </ul>
@@ -99,7 +90,7 @@
 </ol>
 </div></blockquote>
 <p>具体例を使って説明します。以下のテーブルとデータを用意します。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SET</span> <span class="n">NAMES</span> <span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SET</span> <span class="n">NAMES</span> <span class="n">UTF8</span><span class="p">;</span>
 <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
   <span class="n">content</span> <span class="n">TEXT</span><span class="p">,</span>
@@ -113,7 +104,7 @@
 </pre></div>
 </div>
 <p>このとき、以下のように「fine today」で類似文書検索したとします。検索の結果は以下となります。:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
     <span class="o">-&gt;</span>        <span class="n">FROM</span> <span class="n">diaries</span>
     <span class="o">-&gt;</span>        <span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span>
     <span class="o">-&gt;</span>        <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s2">&quot;fine today&quot;</span><span class="p">)</span> <span class="n">DESC</span><span class="p">;</span>
@@ -154,11 +145,11 @@
 <p>&quot;1048576 / 9&quot;の分母の&quot;9&quot;はトークン「fine」を含む文書数になります。</p>
 <p>&quot;8&quot;と&quot;9&quot;はトークンを含む文書がいくつあるかの概算値です。本当は「today」を含む文書数は&quot;2&quot;,「fine」を含む文書数は&quot;3&quot;ですが、概算値なのでずれています。</p>
 <p>概算値は以下のように確認できます。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s2">&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">groonga_response</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s2">&quot;select diaries-content --query &#39;_key:fine OR _key:today&#39; --output_columns _key, index --limit -1&quot;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">groonga_response</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The retrieval result of the above query is as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[[</span><span class="mi">2</span><span class="p">],[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span><span class="s2">&quot;diaries&quot;</span><span class="p">]],[</span><span class="s2">&quot;FINE&quot;</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="s2">&quot;TODAY&quot;</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </div>
@@ -213,12 +204,14 @@
                         title="次の章へ">6. FAQ</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="検索" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -237,7 +230,7 @@
         <li class="right" >
           <a href="boolean_mode.html" title="5.7.1. ブーリアンモード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" >5. リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. 全文検索</a> &#187;</li> 
       </ul>

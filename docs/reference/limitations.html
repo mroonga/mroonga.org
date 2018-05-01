@@ -3,20 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.6. Limitations &#8212; Mroonga v8.01 documentation</title>
+    <title>5.6. Limitations &#8212; Mroonga v8.02 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '8.01',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../static/documentation_options.js"></script>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
@@ -33,8 +25,7 @@
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
-
-    <body>
+  <body>
     <div id="fb-root"></div>
 
 <div class="header">
@@ -72,7 +63,7 @@
         <li class="right" >
           <a href="udf/mroonga_snippet_html.html" title="5.5.7. mroonga_snippet_html()"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &#187;</li> 
       </ul>
     </div>  
@@ -94,9 +85,9 @@ This limitation is derived from Groonga.</p>
 <li>The maximum total size of keys: 4GiB</li>
 <li>The maximum number of records:<ul>
 <li>No primary key table: 1,073,741,815 (2 <sup>30</sup> - 9)</li>
-<li><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> or <code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">BTREE</span></code> table:
+<li><code class="docutils literal notranslate"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> or <code class="docutils literal notranslate"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">BTREE</span></code> table:
 1,073,741,823 (2 <sup>30</sup> - 1)</li>
-<li><code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">HASH</span></code> table: 536,870,912 (2 <sup>29</sup>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">USING</span> <span class="pre">HASH</span></code> table: 536,870,912 (2 <sup>29</sup>)</li>
 </ul>
 </li>
 </ul>
@@ -111,25 +102,25 @@ This limitation is derived from groonga and applied to each table.</p>
 <li>The maximum index size: 256GiB</li>
 </ul>
 <p>Keep in mind that these limitations may vary depending on conditions.</p>
-<p>Confirm by <code class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></code> or <code class="docutils literal"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></code> whether your table data matches to this limitations.</p>
+<p>Confirm by <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></code> or <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></code> whether your table data matches to this limitations.</p>
 </div>
 <div class="section" id="limitations-about-the-value-of-columns">
 <h2>5.6.3. Limitations about the value of columns<a class="headerlink" href="#limitations-about-the-value-of-columns" title="Permalink to this headline">¶</a></h2>
 <p>There is a limitation about the value of column in storage mode.</p>
 <p>Mroonga storage engine executes automatic conversion against the value NULL.</p>
-<p>For example, if the value NULL is used in <code class="docutils literal"><span class="pre">DATE</span></code> or <code class="docutils literal"><span class="pre">DATETIME</span></code>
+<p>For example, if the value NULL is used in <code class="docutils literal notranslate"><span class="pre">DATE</span></code> or <code class="docutils literal notranslate"><span class="pre">DATETIME</span></code>
 columns, Mroonga storage engine automatically converts 0 into 1 as the
 value of month or date.</p>
 <p>Thus, the value 0 is treated as the 1st month (January) of the year or
 the 1st date of the month.</p>
 <p>And more, the value NULL is treated as the value of UNIX time 0 (1970-01-01 00:00:00).</p>
-<p>This kind of automatic conversion is not restricted to only <code class="docutils literal"><span class="pre">DATE</span></code>
-or <code class="docutils literal"><span class="pre">DATETIME</span></code> types.</p>
+<p>This kind of automatic conversion is not restricted to only <code class="docutils literal notranslate"><span class="pre">DATE</span></code>
+or <code class="docutils literal notranslate"><span class="pre">DATETIME</span></code> types.</p>
 <p>The value NULL is converted into the default value of columns. In most
 cases, it will be converted into empty string for column which belongs
 to type of string, 0 for column which belongs to type of numeric.</p>
 <p>Here is an example to show behavior described above.</p>
-<div class="highlight-sql"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-sql notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -167,7 +158,7 @@ to type of string, 0 for column which belongs to type of numeric.</p>
 </pre></div>
 </td></tr></table></div>
 <p>Here is the results of execution example:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>mysql&gt; select * from date_limitation;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; select * from date_limitation;
 +----+------------+------------+
 | id | input      | date       |
 +----+------------+------------+
@@ -215,18 +206,20 @@ mysql&gt; select * from datetime_limitation;
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="udf/mroonga_snippet_html.html"
-                        title="previous chapter">5.5.7. <code class="docutils literal"><span class="pre">mroonga_snippet_html()</span></code></a></p>
+                        title="previous chapter">5.5.7. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="full_text_search.html"
                         title="next chapter">5.7. Full text search</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -245,7 +238,7 @@ mysql&gt; select * from datetime_limitation;
         <li class="right" >
           <a href="udf/mroonga_snippet_html.html" title="5.5.7. mroonga_snippet_html()"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &#187;</li> 
       </ul>
     </div>

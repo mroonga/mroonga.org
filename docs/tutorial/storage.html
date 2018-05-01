@@ -3,20 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.3. Storage mode &#8212; Mroonga v8.01 documentation</title>
+    <title>4.3. Storage mode &#8212; Mroonga v8.02 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '8.01',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  false,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../static/documentation_options.js"></script>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
@@ -33,8 +25,7 @@
 
     <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
   </head>
-
-    <body>
+  <body>
     <div id="fb-root"></div>
 
 <div class="header">
@@ -72,7 +63,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
       </ul>
     </div>  
@@ -87,8 +78,8 @@
 <p>Here we explain how to use storage mode of Mroonga</p>
 <div class="section" id="how-to-use-full-text-search">
 <h2>4.3.1. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
-<p>After confirming the installation, let's create a table. The important point is to specify Mroonga by <code class="docutils literal"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<p>After confirming the installation, let’s create a table. The important point is to specify Mroonga by <code class="docutils literal notranslate"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
@@ -97,7 +88,7 @@
 </pre></div>
 </div>
 <p>We put data by INSERT:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
@@ -105,7 +96,7 @@
 </pre></div>
 </div>
 <p>Try full text search:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- | id | content                                 |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
@@ -120,12 +111,12 @@
 <h2>4.3.2. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In version 1.0.0 or before, Mroonga used a special column named <code class="docutils literal"><span class="pre">_score</span></code> to get search score. From version 1.0.0, it follows MySQL's standard way to get search score.</p>
+<p class="last">In version 1.0.0 or before, Mroonga used a special column named <code class="docutils literal notranslate"><span class="pre">_score</span></code> to get search score. From version 1.0.0, it follows MySQL’s standard way to get search score.</p>
 </div>
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
-<p>We can get search score by MySQL's standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH...AGAINST in one of columns in SELECT or ORDER BY.</p>
-<p>Let's try:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<p>We can get search score by MySQL’s standard way <a class="footnote-reference" href="#score" id="id1">[1]</a>, i.e. we use MATCH…AGAINST in one of columns in SELECT or ORDER BY.</p>
+<p>Let’s try:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
@@ -147,9 +138,9 @@
 <span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
-<p>The result having the search word <code class="docutils literal"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
-<p>You can use <code class="docutils literal"><span class="pre">AS</span></code> to change the attribute name:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
+<p>The result having the search word <code class="docutils literal notranslate"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">AS</span></code> to change the attribute name:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span><span class="p">,</span>
        <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">score</span>
   <span class="k">FROM</span> <span class="n">diaries</span>
  <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;+fine&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">)</span>
@@ -169,18 +160,18 @@
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
 <h2>4.3.3. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference" href="#parser" id="id2">[2]</a> for full text search:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
 </div>
 <p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal"><span class="pre">COMMENT</span></code> in <code class="docutils literal"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable described below.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">COMMENT</span></code> in <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code> variable described below.</p>
 </div>
-<p>You can specify one of the following values as the tokenizer. &quot;tokenizer&quot; in Mroonga equals to &quot;parser&quot; in MySQL.</p>
+<p>You can specify one of the following values as the tokenizer. “tokenizer” in Mroonga equals to “parser” in MySQL.</p>
 <table border="1" class="docutils" id="id6">
 <caption><span class="caption-text">Available tokenizers</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -193,122 +184,122 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">off</span></code></td>
-<td>It does not tokenize at all. Use <code class="docutils literal"><span class="pre">off</span></code> if you want to treat
-<code class="docutils literal"><span class="pre">content</span></code> as is. For example, this value is used for prefix
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">off</span></code></td>
+<td>It does not tokenize at all. Use <code class="docutils literal notranslate"><span class="pre">off</span></code> if you want to treat
+<code class="docutils literal notranslate"><span class="pre">content</span></code> as is. For example, this value is used for prefix
 search.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigram</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code></td>
 <td><p class="first">It tokenises in bigram. But continuous alphabets, numbers or
 symbols are treated as a token. So there can exist tokes with 3
 letters or more. It is to reduce noises.</p>
 <p class="last">This is the default value.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenMecab</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code></td>
 <td>It tokenises using MeCab. Groonga should be built with MeCab
 support.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code></td>
-<td><p class="first">It tokenises in bigram. Unlike <code class="docutils literal"><span class="pre">TokenBigram</span></code>, continuous
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code></td>
+<td><p class="first">It tokenises in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, continuous
 symbols are not treated as a token, but tokenised in bigram.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code> instead of
-<code class="docutils literal"><span class="pre">TokenBigram</span></code>, <code class="docutils literal"><span class="pre">&quot;!?&quot;</span></code> can match <code class="docutils literal"><span class="pre">&quot;!?!?!?&quot;</span></code> in <code class="docutils literal"><span class="pre">&quot;Is</span> <span class="pre">it</span>
-<span class="pre">really!?!?!?&quot;</span></code>. But when you use <code class="docutils literal"><span class="pre">TokenBigram</span></code>, only
-<code class="docutils literal"><span class="pre">&quot;!?!?!?&quot;</span></code> can match as well.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;!?&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;!?!?!?&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">&quot;Is</span> <span class="pre">it</span>
+<span class="pre">really!?!?!?&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only
+<code class="docutils literal notranslate"><span class="pre">&quot;!?!?!?&quot;</span></code> can match as well.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></td>
-<td><p class="first">It tokenise in bigram. In addition to <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code>,
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></td>
+<td><p class="first">It tokenise in bigram. In addition to <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>,
 continuous alphabets are not treated as a token either, but
 tokenised in bigram.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> instead of
-<code class="docutils literal"><span class="pre">TokenBigram</span></code>, <code class="docutils literal"><span class="pre">&quot;real&quot;</span></code> can match <code class="docutils literal"><span class="pre">&quot;Is</span> <span class="pre">it</span> <span class="pre">really?&quot;</span></code>. But
-when you use <code class="docutils literal"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal"><span class="pre">&quot;really&quot;</span></code> can match as well.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;real&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;Is</span> <span class="pre">it</span> <span class="pre">really?&quot;</span></code>. But
+when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;really&quot;</span></code> can match as well.</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></td>
 <td><p class="first">It tokenise in bigram. In addition to
-<code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, continuous numbers are not treated
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, continuous numbers are not treated
 as a token either, but tokenised in bigram. So any kind of
 characters are treated equally in bigram.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> instead of
-<code class="docutils literal"><span class="pre">TokenBigram</span></code>, <code class="docutils literal"><span class="pre">&quot;567&quot;</span></code> can match <code class="docutils literal"><span class="pre">&quot;090-0123-4567&quot;</span></code>. But
-when you use <code class="docutils literal"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal"><span class="pre">&quot;4567&quot;</span></code> can match as well.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;567&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;090-0123-4567&quot;</span></code>. But
+when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;4567&quot;</span></code> can match as well.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlank</span></code></td>
-<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal"><span class="pre">TokenBigram</span></code>, it ignores white
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, it ignores white
 spaces.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlank</span></code> instead of <code class="docutils literal"><span class="pre">TokenBigram</span></code>,
-<code class="docutils literal"><span class="pre">&quot;みなさん&quot;</span></code> can match <code class="docutils literal"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span> <span class="pre">注</span> <span class="pre">目&quot;</span></code>. But when you use
-<code class="docutils literal"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん&quot;</span></code> can match as well.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code> instead of <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;みなさん&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span> <span class="pre">注</span> <span class="pre">目&quot;</span></code>. But when you use
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん&quot;</span></code> can match as well.</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></td>
-<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code>, it
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, it
 ignores white spaces.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code> instead of
-<code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code>, <code class="docutils literal"><span class="pre">&quot;???&quot;</span></code> can match <code class="docutils literal"><span class="pre">&quot;!</span> <span class="pre">?</span>
-<span class="pre">???&quot;</span></code>. But when you use <code class="docutils literal"><span class="pre">TokenBigramSplitSymbol</span></code>, only <code class="docutils literal"><span class="pre">&quot;?</span>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;???&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;!</span> <span class="pre">?</span>
+<span class="pre">???&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;?</span>
 <span class="pre">??&quot;</span></code> can match as well.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></td>
-<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
 it ignores white spaces.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code> instead
-of <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, <code class="docutils literal"><span class="pre">&quot;ama&quot;</span></code> can match <code class="docutils literal"><span class="pre">&quot;I</span> <span class="pre">am</span>
-<span class="pre">a</span> <span class="pre">pen.&quot;</span></code>. But when you use <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
-only <code class="docutils literal"><span class="pre">&quot;am</span> <span class="pre">a&quot;</span></code> can match as well.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ama&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;I</span> <span class="pre">am</span>
+<span class="pre">a</span> <span class="pre">pen.&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
+only <code class="docutils literal notranslate"><span class="pre">&quot;am</span> <span class="pre">a&quot;</span></code> can match as well.</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></td>
 <td><p class="first">It tokenise in bigram. Unlike
-<code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, it ignores white spaces.</p>
-<p class="last">When you use <code class="docutils literal"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code>
-instead of <code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, <code class="docutils literal"><span class="pre">&quot;9001&quot;</span></code> can
-match <code class="docutils literal"><span class="pre">&quot;090</span> <span class="pre">0123</span> <span class="pre">4567&quot;</span></code>. But when you use
-<code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, only <code class="docutils literal"><span class="pre">&quot;90</span> <span class="pre">01&quot;</span></code> can
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, it ignores white spaces.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;9001&quot;</span></code> can
+match <code class="docutils literal notranslate"><span class="pre">&quot;090</span> <span class="pre">0123</span> <span class="pre">4567&quot;</span></code>. But when you use
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;90</span> <span class="pre">01&quot;</span></code> can
 match as well.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenDelimit</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimit</span></code></td>
 <td><p class="first">It tokenise by splitting with a white space.</p>
-<p class="last"><code class="docutils literal"><span class="pre">&quot;movie</span> <span class="pre">horror</span> <span class="pre">topic&quot;</span></code> will be tokenised as <code class="docutils literal"><span class="pre">&quot;movie&quot;</span></code>,
-<code class="docutils literal"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;topic&quot;</span></code>.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&quot;movie</span> <span class="pre">horror</span> <span class="pre">topic&quot;</span></code> will be tokenised as <code class="docutils literal notranslate"><span class="pre">&quot;movie&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;topic&quot;</span></code>.</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenDelimitNull</span></code></td>
-<td><p class="first">It tokenise by splitting with a null character (<code class="docutils literal"><span class="pre">\\0</span></code>).</p>
-<p class="last"><code class="docutils literal"><span class="pre">&quot;movie\\0horror\\0topic&quot;</span></code> will be tokenised as <code class="docutils literal"><span class="pre">&quot;movie&quot;</span></code>,
-<code class="docutils literal"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;topic&quot;</span></code>.</p>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimitNull</span></code></td>
+<td><p class="first">It tokenise by splitting with a null character (<code class="docutils literal notranslate"><span class="pre">\\0</span></code>).</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&quot;movie\\0horror\\0topic&quot;</span></code> will be tokenised as <code class="docutils literal notranslate"><span class="pre">&quot;movie&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;topic&quot;</span></code>.</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">TokenUnigram</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenUnigram</span></code></td>
 <td>It tokenises in unigram. But continuous alphabets, numbers or
 symbols are treated as a token. So there can exist tokes with 2
 letters or more. It is to reduce noises.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TokenTrigram</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenTrigram</span></code></td>
 <td>It tokenises in trigram. But continuous alphabets, numbers or
 symbols are treated as a token. So there can exist tokes with 4
 letters or more. It is to reduce noises.</td>
 </tr>
 </tbody>
 </table>
-<p>You can specify the default parser by passing <code class="docutils literal"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal"><span class="pre">configure</span></code> when you build Mroonga:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
+<p>You can specify the default parser by passing <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when you build Mroonga:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
 </div>
-<p>Or you can set <code class="docutils literal"><span class="pre">mroonga_default_tokenizer</span></code> variable in <code class="docutils literal"><span class="pre">my.cnf</span></code> or by SQL. If you specify it in <code class="docutils literal"><span class="pre">my.cnf</span></code>, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>Or you can set <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code> variable in <code class="docutils literal notranslate"><span class="pre">my.cnf</span></code> or by SQL. If you specify it in <code class="docutils literal notranslate"><span class="pre">my.cnf</span></code>, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>[mysqld]
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[mysqld]
 mroonga_default_tokenizer=TokenMecab
 </pre></div>
 </div>
 <p>SQL:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span> <span class="o">=</span> <span class="n">TokenMecab</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 </pre></div>
 </div>
@@ -317,13 +308,13 @@ mroonga_default_tokenizer=TokenMecab
 <h2>4.3.4. How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga uses normalizer corresponding to the encoding of document.
 It is used when tokenizing text and storing table key.</p>
-<p>It is used <code class="docutils literal"><span class="pre">NormalizerMySQLGeneralCI</span></code> normalizer when the encoding is
-<code class="docutils literal"><span class="pre">utf8_general_ci</span></code> or <code class="docutils literal"><span class="pre">utf8mb4_general_ci</span></code>.</p>
-<p>It is used <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer when the encoding is
-<code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code> or <code class="docutils literal"><span class="pre">utf8mb4_unicode_ci</span></code>.</p>
-<p>It isn't used normalizer when the encoding is <code class="docutils literal"><span class="pre">utf8_bin</span></code>.</p>
-<p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer by specifying <code class="docutils literal"><span class="pre">utf8_unicode_ci</span></code>:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<p>It is used <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLGeneralCI</span></code> normalizer when the encoding is
+<code class="docutils literal notranslate"><span class="pre">utf8_general_ci</span></code> or <code class="docutils literal notranslate"><span class="pre">utf8mb4_general_ci</span></code>.</p>
+<p>It is used <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer when the encoding is
+<code class="docutils literal notranslate"><span class="pre">utf8_unicode_ci</span></code> or <code class="docutils literal notranslate"><span class="pre">utf8mb4_unicode_ci</span></code>.</p>
+<p>It isn’t used normalizer when the encoding is <code class="docutils literal notranslate"><span class="pre">utf8_bin</span></code>.</p>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer by specifying <code class="docutils literal notranslate"><span class="pre">utf8_unicode_ci</span></code>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -357,13 +348,13 @@ It is used when tokenizing text and storing table key.</p>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
-<p>Mroonga has the following syntax to specify Groonga's normalizer:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+<p>Mroonga has the following syntax to specify Groonga’s normalizer:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
 </pre></div>
 </div>
-<p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga's document</a> document about Groonga's normalizer.</p>
-<p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga’s document</a> document about Groonga’s normalizer.</p>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">NAMES</span> <span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -395,12 +386,12 @@ It is used when tokenizing text and storing table key.</p>
 </div>
 <div class="section" id="how-to-specify-the-token-filters">
 <h2>4.3.5. How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Permalink to this headline">¶</a></h2>
-<p>Mroonga has the following syntax to specify Groonga's token filters.:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
+<p>Mroonga has the following syntax to specify Groonga’s token filters.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
 </pre></div>
 </div>
-<p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStem</span></code> token filter:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStem</span></code> token filter:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
 <span class="c1">-- +------------------------------------------------+</span>
 <span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
 <span class="c1">-- +------------------------------------------------+</span>
@@ -437,9 +428,9 @@ It is used when tokenizing text and storing table key.</p>
 <span class="c1">-- 3 rows in set (0.01 sec)</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="http://groonga.org/docs/reference/token_filters.html">Groonga's document</a> document about Groonga's token filter.</p>
-<p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> token filter:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/token_filters.html">Groonga’s document</a> document about Groonga’s token filter.</p>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStopWord</span></code> token filter:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
 <span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
@@ -484,29 +475,29 @@ It is used when tokenizing text and storing table key.</p>
 <span class="c1">-- 2 rows in set (0.01 sec)</span>
 </pre></div>
 </div>
-<p>It's used that specifying the lexicon table for fulltext search.</p>
+<p>It’s used that specifying the lexicon table for fulltext search.</p>
 </div>
 <div class="section" id="how-to-specify-groonga-s-column-flags">
-<h2>4.3.6. How to specify Groonga's column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Permalink to this headline">¶</a></h2>
-<p>Mroonga has the following syntax to specify Groonga's column flags:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+<h2>4.3.6. How to specify Groonga’s column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Permalink to this headline">¶</a></h2>
+<p>Mroonga has the following syntax to specify Groonga’s column flags:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
 </pre></div>
 </div>
-<p>Here is an example that uses <code class="docutils literal"><span class="pre">COMPRESS_ZLIB</span></code> flag:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">COMPRESS_ZLIB</span></code> flag:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="n">UNSIGNED</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">TEXT</span> <span class="k">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
 <span class="p">)</span> <span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/column_create.html#parameters">Groonga's document</a> document about Groonga's column flags.</p>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/column_create.html#parameters">Groonga’s document</a> document about Groonga’s column flags.</p>
 </div>
 <div class="section" id="how-to-use-geolocation-search">
 <h2>4.3.7. How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Permalink to this headline">¶</a></h2>
 <p>In storage mode, you can use fast geolocation search in addition to full text search. But unlike MyISAM, you can only store POINT type data. You cannot store other types data like LINE. And fast search using index only supports MBRContains. It does not support MBRDisjoint.</p>
 <p>For the table definition for geolocation search, you need to define a POINT type column like in MyISAM and define SPATIAL INDEX for it.:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">shops</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="k">location</span> <span class="n">POINT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
@@ -516,7 +507,7 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>To store data, you create POINT type data by using geomFromText() function like in MyISAM:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">shops</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span> <span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
@@ -527,7 +518,7 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>If you want to find shops within the rectangle where Ikebukuro station (139.7101 35.7292) is the top-left point and Tokyo Station (139.7662 35.6815) is the bottom-right point, SELECT phrase is like the following:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
   <span class="k">FROM</span> <span class="n">shops</span>
  <span class="k">WHERE</span> <span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span> <span class="k">location</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
@@ -544,8 +535,8 @@ It is used when tokenizing text and storing table key.</p>
 <h2>4.3.8. How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this headline">¶</a></h2>
 <p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
 <p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
-<p>To get the record ID, you need to create a column named <code class="docutils literal"><span class="pre">_id</span></code> when you create a table:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+<p>To get the record ID, you need to create a column named <code class="docutils literal notranslate"><span class="pre">_id</span></code> when you create a table:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
   <span class="n">_id</span> <span class="nb">INT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">_id</span><span class="p">)</span> <span class="k">USING</span> <span class="n">HASH</span>
@@ -553,11 +544,11 @@ It is used when tokenizing text and storing table key.</p>
 <span class="c1">-- Query OK, 0 rows affected (0.04 sec)</span>
 </pre></div>
 </div>
-<p>Tye typo of <code class="docutils literal"><span class="pre">_id</span></code> column should be integer one (TINYINT, SMALLINT, MEDIUMINT, INT or BIGINT).</p>
+<p>Tye typo of <code class="docutils literal notranslate"><span class="pre">_id</span></code> column should be integer one (TINYINT, SMALLINT, MEDIUMINT, INT or BIGINT).</p>
 <p>You can create an index for _id column, but it should be HASH type.</p>
-<p>Let's add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
-So you need to exclude it from setting columns, or you need to use <code class="docutils literal"><span class="pre">null</span></code> as its value:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<p>Let’s add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
+So you need to exclude it from setting columns, or you need to use <code class="docutils literal notranslate"><span class="pre">null</span></code> as its value:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
@@ -571,7 +562,7 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>To get the record ID, you invoke SELECT with _id column:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memos</span><span class="p">;</span>
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- | _id  | content                                  |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
@@ -584,7 +575,7 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>By using last_insert_grn_id function, you can also get the record ID that is assigned by the last INSERT:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">memos</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
@@ -597,11 +588,11 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>last_insert_grn_id function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">last_insert_grn_id</span> <span class="k">RETURNS</span> <span class="nb">INTEGER</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">memos</span> <span class="k">SET</span> <span class="n">content</span> <span class="o">=</span> <span class="ss">&quot;So much milk in the fridge.&quot;</span> <span class="k">WHERE</span> <span class="n">_id</span> <span class="o">=</span> <span class="n">last_insert_grn_id</span><span class="p">();</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 <span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
 </pre></div>
@@ -617,7 +608,7 @@ It is implemented as <a class="reference internal" href="../reference/udf/mroong
 <p>Similar search is supported by specifying document itself instead of specifying keywords in query.</p>
 <p>It is useful if you want to find documents which is related to specific document.</p>
 <p>Here is the schema definition for execution examples:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">similarities</span> <span class="p">(</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">similarities</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">title</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
@@ -626,7 +617,7 @@ It is implemented as <a class="reference internal" href="../reference/udf/mroong
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">similarities</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">similarities</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
        <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Groonga similar search&#39;</span><span class="p">,</span> <span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">similarities</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
        <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Mroonga similar search&#39;</span><span class="p">,</span> <span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">);</span>
@@ -635,11 +626,11 @@ It is implemented as <a class="reference internal" href="../reference/udf/mroong
 </pre></div>
 </div>
 <p>Here is the example of similar search by content itself.</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">similarities</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span> <span class="k">IN</span> <span class="k">NATURAL</span> <span class="k">LANGUAGE</span> <span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">similarities</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span> <span class="k">IN</span> <span class="k">NATURAL</span> <span class="k">LANGUAGE</span> <span class="k">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that you need to specify an content of document in <cite>AGAINST('...' IN NATURAL LANGUAGE MODE)</cite>.</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">similarities</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span> <span class="k">IN</span> <span class="k">NATURAL</span> <span class="k">LANGUAGE</span> <span class="k">MODE</span><span class="p">);</span>
+<p>Note that you need to specify an content of document in <cite>AGAINST(‘…’ IN NATURAL LANGUAGE MODE)</cite>.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">similarities</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span> <span class="k">IN</span> <span class="k">NATURAL</span> <span class="k">LANGUAGE</span> <span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------------------+</span>
 <span class="c1">-- | title                  |</span>
 <span class="c1">-- +------------------------+</span>
@@ -652,7 +643,7 @@ It is implemented as <a class="reference internal" href="../reference/udf/mroong
 <p>To improve degree of similarity, you may need to use language specific tokenizer or use labeled data such as tag to get rid of some undesirable search results.</p>
 <p>For example, if you want to execute similar search against Japanese text, it is recommended to use language specific tokenizer - <cite>TokenMecab</cite>.
 Here is the schema definition to use <cite>TokenMecab</cite> tokenizer:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">similarities</span> <span class="p">(</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">similarities</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">title</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
@@ -673,9 +664,9 @@ the current search by available search parameters before users refine
 their search. And faceted search shows refined searches. Users just
 select a refined search. Users benefit from faceted search:</p>
 <ul class="simple">
-<li>Users don't need to think about how to refine their search.
+<li>Users don’t need to think about how to refine their search.
 Users just select a showed refined search.</li>
-<li>Users don't get boared &quot;not match&quot; page. Faceted search showes only
+<li>Users don’t get boared “not match” page. Faceted search showes only
 refined searches that has one or more matched items.</li>
 </ul>
 <p>Faceted search needs multiple <cite>GROUP BY</cite> operations against searched
@@ -684,14 +675,14 @@ are needed. It is not effective.</p>
 <p>Groonga can do faceted search by only one groonga command. It is
 effective. Groonga has the <cite>select</cite> command that can search records
 with faceted search. Faceted search is called as <cite>drilldown</cite> in
-Groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga's document</a> about
-Groonga's <cite>select</cite> command.</p>
+Groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s document</a> about
+Groonga’s <cite>select</cite> command.</p>
 <p>Mroonga provides <cite>mroonga_command()</cite> function. You can run groonga
 command in SQL by the function. But you should use only <cite>select</cite>
 command. Other commands that change schema or data may break
 consistency.</p>
 <p>Here is the schema definition for execution examples:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="n">content</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
   <span class="nb">date</span> <span class="nb">DATE</span><span class="p">,</span>
@@ -703,7 +694,7 @@ consistency.</p>
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
        <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
                <span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
                <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
@@ -727,12 +718,12 @@ consistency.</p>
 <cite>year</cite> and <cite>year_month</cite>. You can use <cite>tag</cite>, <cite>year</cite> and <cite>year_month</cite> as
 faceted search keys.</p>
 <p>Groonga calls faceted search as drilldown. So parameter key in Groonga
-is <cite>--drilldown</cite>. Groonga returns search result as JSON. So
+is <cite>–drilldown</cite>. Groonga returns search result as JSON. So
 <cite>mroonga_command()</cite> also returns search result as JSON. It is not SQL
 friendly. You need to parse search result JSON by yourself.</p>
 <p>Here is the example of faceted search by all available faceted search
 keys (result JSON is pretty printed):</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | faceted_result              |</span>
 <span class="c1">-- +-----------------------------+</span>
@@ -756,22 +747,22 @@ keys (result JSON is pretty printed):</p>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga's select command document</a> for more
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s select command document</a> for more
 details.</p>
 </div>
 <div class="section" id="logging">
 <h2>4.3.12. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
-<p>Log files are located in MySQL's data directory with the filename  <code class="docutils literal"><span class="pre">groonga.log</span></code>.</p>
+<p>Log files are located in MySQL’s data directory with the filename  <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
 2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
 2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
 </pre></div>
 </div>
-<p>The default log level is NOTICE, i.e. we have important information only and we don't have debug information etc.).</p>
-<p>You can get the log level by <code class="docutils literal"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<p>The default log level is NOTICE, i.e. we have important information only and we don’t have debug information etc.).</p>
+<p>You can get the log level by <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
 <span class="c1">-- +-------------------+--------+</span>
 <span class="c1">-- | Variable_name     | Value  |</span>
 <span class="c1">-- +-------------------+--------+</span>
@@ -807,8 +798,8 @@ details.</p>
 <p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span class="std std-ref">mroonga_log_level</span></a> about details.</p>
 <p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
 <ol class="arabic simple">
-<li>change the file name of <code class="docutils literal"><span class="pre">groonga.log</span></code> (by using OS's mv command etc.).</li>
-<li>invoke &quot;FLUSH LOGS&quot; in MySQL server (by mysql command or mysqladmin command).</li>
+<li>change the file name of <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> (by using OS’s mv command etc.).</li>
+<li>invoke “FLUSH LOGS” in MySQL server (by mysql command or mysqladmin command).</li>
 </ol>
 </div>
 <div class="section" id="next-step">
@@ -825,7 +816,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 <table class="docutils footnote" frame="void" id="parser" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In Groonga, we call it a 'tokenizer'.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In Groonga, we call it a ‘tokenizer’.</td></tr>
 </tbody>
 </table>
 </div>
@@ -845,7 +836,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 <li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">4.3.3. How to specify the parser for full text search</a></li>
 <li><a class="reference internal" href="#how-to-specify-the-normalizer">4.3.4. How to specify the normalizer</a></li>
 <li><a class="reference internal" href="#how-to-specify-the-token-filters">4.3.5. How to specify the token filters</a></li>
-<li><a class="reference internal" href="#how-to-specify-groonga-s-column-flags">4.3.6. How to specify Groonga's column flags</a></li>
+<li><a class="reference internal" href="#how-to-specify-groonga-s-column-flags">4.3.6. How to specify Groonga’s column flags</a></li>
 <li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.7. How to use geolocation search</a></li>
 <li><a class="reference internal" href="#how-to-get-the-record-id">4.3.8. How to get the record ID</a></li>
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
@@ -865,12 +856,14 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
                         title="next chapter">4.4. Wrapper mode</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -889,7 +882,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
       </ul>
     </div>
