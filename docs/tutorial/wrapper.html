@@ -5,13 +5,16 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.4. Wrapper mode &#8212; Mroonga v8.06 documentation</title>
+    <title>4.4. Wrapper mode &#8212; Mroonga v8.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../static/documentation_options.js"></script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -63,7 +66,7 @@
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.06 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
       </ul>
     </div>  
@@ -174,56 +177,128 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHER
 <p class="last"><code class="docutils literal notranslate"><span class="pre">COMMENT</span></code> in <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code> variable described below.</p>
 </div>
 <p>You can specify one of following values as the tokenizer.</p>
-<dl class="docutils">
-<dt>off</dt>
-<dd>It does not tokenize at all. Use “off” if you want to treat <code class="docutils literal notranslate"><span class="pre">content</span></code> as is. For example, this value is used for prefix search.</dd>
-<dt>TokenBigram</dt>
-<dd><p class="first">It tokenises in bigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 3 letters or more. It is to reduce noises.</p>
+<table border="1" class="docutils" id="id3">
+<caption><span class="caption-text">Available tokenizers</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Tokenizer</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">off</span></code></td>
+<td>(<code class="docutils literal notranslate"><span class="pre">Deprecated</span></code>) It does not tokenize at all. Use <code class="docutils literal notranslate"><span class="pre">off</span></code> if you want to treat
+<code class="docutils literal notranslate"><span class="pre">content</span></code> as is. For example, this value is used for prefix
+search.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">none</span></code></td>
+<td><div class="first last versionadded">
+<p><span class="versionmodified">New in version 8.07: </span>It does not tokenize at all. Use <code class="docutils literal notranslate"><span class="pre">none</span></code> if you want to treat <code class="docutils literal notranslate"><span class="pre">content</span></code> as is. For example, this value is used for prefix search.</p>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code></td>
+<td><p class="first">It tokenises in bigram. But continuous alphabets, numbers or
+symbols are treated as a token. So there can exist tokes with 3
+letters or more. It is to reduce noises.</p>
 <p class="last">This is the default value.</p>
-</dd>
-<dt>TokenMecab</dt>
-<dd>It tokenises using MeCab. Groonga should be built with MeCab support.</dd>
-<dt>TokenBigramSplitSymbol</dt>
-<dd><p class="first">It tokenises in bigram. Unlike TokenBigram, continuous symbols are not treated as a token, but tokenised in bigram.</p>
-<p class="last">When you use TokenBigramSplitSymbol instead of TokenBigram, “!?” can match “!?!?!?” in “Is it really!?!?!?”. But when you use TokenBigram, only “!?!?!?” can match as well.</p>
-</dd>
-<dt>TokenBigramSplitSymbolAlpha</dt>
-<dd><p class="first">It tokenise in bigram. In addition to TokenBigramSplitSymbol, continuous alphabets are not treated as a token either, but tokenised in bigram.</p>
-<p class="last">When you use TokenBigramSplitSymbolAlpha instead of TokenBigram, “real” can match “Is it really?”. But when you use TokenBigram, only “really” can match as well.</p>
-</dd>
-<dt>TokenBigramSplitSymbolAlphaDigit</dt>
-<dd><p class="first">It tokenise in bigram. In addition to TokenBigramSplitSymbolAlpha, continuous numbers are not treated as a token either, but tokenised in bigram. So any kind of characters are treated equally in bigram.</p>
-<p class="last">When you use TokenBigramSplitSymbolAlphaDigit instead of TokenBigram, “567” can match “090-0123-4567”. But when you use TokenBigram, only “4567” can match as well.</p>
-</dd>
-<dt>TokenBigramIgnoreBlank</dt>
-<dd><p class="first">It tokenise in bigram. Unlike TokenBigram, it ignores white spaces.</p>
-<p class="last">When you use TokenBigramIgnoreBlank instead of TokenBigram, “みなさん” can match “み な さ ん 注 目”. But when you use TokenBigram, only “み な さ ん” can match as well.</p>
-</dd>
-<dt>TokenBigramIgnoreBlankSplitSymbol</dt>
-<dd><p class="first">It tokenise in bigram. Unlike TokenBigramSplitSymbol, it ignores white spaces.</p>
-<p class="last">When you use TokenBigramIgnoreBlankSplitSymbol instead of TokenBigramSplitSymbol, “???” can match “! ? ???”. But when you use TokenBigramSplitSymbol, only “? ??” can match as well.</p>
-</dd>
-<dt>TokenBigramIgnoreBlankSplitSymbolAlpha</dt>
-<dd><p class="first">It tokenise in bigram. Unlike TokenBigramSplitSymbolAlpha, it ignores white spaces.</p>
-<p class="last">When you use TokenBigramIgnoreBlankSplitSymbolAlpha instead of TokenBigramSplitSymbolAlpha, “ama” can match “I am a pen.”. But when you use TokenBigramSplitSymbolAlpha, only “am a” can match as well.</p>
-</dd>
-<dt>TokenBigramIgnoreBlankSplitSymbolAlphaDigit</dt>
-<dd><p class="first">It tokenise in bigram. Unlike TokenBigramSplitSymbolAlphaDigit, it ignores white spaces.</p>
-<p class="last">When you use TokenBigramIgnoreBlankSplitSymbolAlphaDigit instead of TokenBigramSplitSymbolAlphaDigit, “9001” can match “090 0123 4567”. But when you use TokenBigramSplitSymbolAlphaDigit, only “90 01” can match as well.</p>
-</dd>
-<dt>TokenDelimit</dt>
-<dd><p class="first">It tokenise by splitting with a white space.</p>
-<p class="last">“movie horror topic” will be tokenised as “movie”, “horror”, “topic”.</p>
-</dd>
-<dt>TokenDelimitNull</dt>
-<dd><p class="first">It tokenise by splitting with a null character (\0).</p>
-<p class="last">“movie\0horror\0topic” will be tokenised as “movie”, “horror”, “topic”.</p>
-</dd>
-<dt>TokenUnigram</dt>
-<dd>It tokenises in unigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 2 letters or more. It is to reduce noises.</dd>
-<dt>TokenTrigram</dt>
-<dd>It tokenises in trigram. But continuous alphabets, numbers or symbols are treated as a token. So there can exist tokes with 4 letters or more. It is to reduce noises.</dd>
-</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code></td>
+<td>It tokenises using MeCab. Groonga should be built with MeCab
+support.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code></td>
+<td><p class="first">It tokenises in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, continuous
+symbols are not treated as a token, but tokenised in bigram.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;!?&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;!?!?!?&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">&quot;Is</span> <span class="pre">it</span>
+<span class="pre">really!?!?!?&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only
+<code class="docutils literal notranslate"><span class="pre">&quot;!?!?!?&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></td>
+<td><p class="first">It tokenise in bigram. In addition to <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>,
+continuous alphabets are not treated as a token either, but
+tokenised in bigram.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;real&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;Is</span> <span class="pre">it</span> <span class="pre">really?&quot;</span></code>. But
+when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;really&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></td>
+<td><p class="first">It tokenise in bigram. In addition to
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, continuous numbers are not treated
+as a token either, but tokenised in bigram. So any kind of
+characters are treated equally in bigram.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;567&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;090-0123-4567&quot;</span></code>. But
+when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;4567&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, it ignores white
+spaces.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code> instead of <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;みなさん&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span> <span class="pre">注</span> <span class="pre">目&quot;</span></code>. But when you use
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, it
+ignores white spaces.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;???&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;!</span> <span class="pre">?</span>
+<span class="pre">???&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;?</span>
+<span class="pre">??&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
+it ignores white spaces.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ama&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;I</span> <span class="pre">am</span>
+<span class="pre">a</span> <span class="pre">pen.&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
+only <code class="docutils literal notranslate"><span class="pre">&quot;am</span> <span class="pre">a&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></td>
+<td><p class="first">It tokenise in bigram. Unlike
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, it ignores white spaces.</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;9001&quot;</span></code> can
+match <code class="docutils literal notranslate"><span class="pre">&quot;090</span> <span class="pre">0123</span> <span class="pre">4567&quot;</span></code>. But when you use
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;90</span> <span class="pre">01&quot;</span></code> can
+match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimit</span></code></td>
+<td><p class="first">It tokenise by splitting with a white space.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&quot;movie</span> <span class="pre">horror</span> <span class="pre">topic&quot;</span></code> will be tokenised as <code class="docutils literal notranslate"><span class="pre">&quot;movie&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;topic&quot;</span></code>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimitNull</span></code></td>
+<td><p class="first">It tokenise by splitting with a null character (<code class="docutils literal notranslate"><span class="pre">\\0</span></code>).</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&quot;movie\\0horror\\0topic&quot;</span></code> will be tokenised as <code class="docutils literal notranslate"><span class="pre">&quot;movie&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;topic&quot;</span></code>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenUnigram</span></code></td>
+<td>It tokenises in unigram. But continuous alphabets, numbers or
+symbols are treated as a token. So there can exist tokes with 2
+letters or more. It is to reduce noises.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenTrigram</span></code></td>
+<td>It tokenises in trigram. But continuous alphabets, numbers or
+symbols are treated as a token. So there can exist tokes with 4
+letters or more. It is to reduce noises.</td>
+</tr>
+</tbody>
+</table>
 <p>You can specify the default tokenizer by passing <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when you build Mroonga.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
 </pre></div>
@@ -399,7 +474,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">4.4. Wrapper mode</a><ul>
 <li><a class="reference internal" href="#how-to-use-wrapper-mode">4.4.1. How to use wrapper mode</a></li>
@@ -448,7 +523,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.06 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
       </ul>
     </div>

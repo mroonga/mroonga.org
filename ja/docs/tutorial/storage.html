@@ -5,14 +5,17 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.3. ストレージモード &#8212; Mroonga v8.06 documentation</title>
+    <title>4.3. ストレージモード &#8212; Mroonga v8.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../static/documentation_options.js"></script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
@@ -64,7 +67,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.06 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
       </ul>
     </div>  
@@ -186,65 +189,71 @@
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">off</span></code></td>
-<td>トークナイズしません。 <code class="docutils literal notranslate"><span class="pre">off</span></code> は <code class="docutils literal notranslate"><span class="pre">content</span></code> をそのまま扱いたい場合に使います。例えば、この値は前方一致検索のために指定します。</td>
+<td>(<code class="docutils literal notranslate"><span class="pre">非推奨</span></code>) トークナイズしません。 <code class="docutils literal notranslate"><span class="pre">off</span></code> は <code class="docutils literal notranslate"><span class="pre">content</span></code> をそのまま扱いたい場合に使います。例えば、この値は前方一致検索のために指定します。</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">none</span></code></td>
+<td><div class="first last versionadded">
+<p><span class="versionmodified">バージョン 8.07 で追加: </span>トークナイズしません。&quot;off&quot;は``content``をそのまま扱いたい場合に使います。例えば、この値は前方一致検索のために指定します。</p>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、3文字以上のトークンも存在する。これはノイズを減らすためである。</p>
 <p class="last">デフォルト値。</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code></td>
 <td>MeCabを用いてトークナイズする。groongaがMeCabサポート付きでビルドされている必要がある。</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> と異なり、記号が連続していても特別扱いして1つのトークンとして扱わず通常のバイグラムの処理を行う。</p>
 <p class="last">TokenBigramではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">Is</span> <span class="pre">it</span> <span class="pre">really!?!?!?</span></code> 」の「 <code class="docutils literal notranslate"><span class="pre">!?!?!?</span></code> 」の部分に「 <code class="docutils literal notranslate"><span class="pre">!?</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">!?!?!?</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> に加えて、連続したアルファベットも特別扱いせずに通常のバイグラムの処理を行う。</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">Is</span> <span class="pre">it</span> <span class="pre">really?</span></code> 」に「 <code class="docutils literal notranslate"><span class="pre">real</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">really</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> に加えて、連続した数字も特別扱いせずに通常のバイグラムの処理を行う。つまり、すべての字種を特別扱いせずにバイグラムの処理を行う。</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">090-0123-4567</span></code> 」に「 <code class="docutils literal notranslate"><span class="pre">567</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">4567</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> と異なり、空白を無視して処理する。</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span> <span class="pre">注</span> <span class="pre">目</span></code> 」に「 <code class="docutils literal notranslate"><span class="pre">みなさん</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> と異なり、空白を無視して処理する。</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">!</span> <span class="pre">!?</span> <span class="pre">??</span></code> 」に「 <code class="docutils literal notranslate"><span class="pre">???</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">?</span> <span class="pre">??</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> と異なり、空白を無視して処理する。</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">am</span> <span class="pre">a</span> <span class="pre">pen.</span></code> 」に「 <code class="docutils literal notranslate"><span class="pre">ama</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">am</span> <span class="pre">a</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></td>
 <td><p class="first">バイグラムでトークナイズする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> と異なり、空白を無視して処理する。</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code> を利用すると「 <code class="docutils literal notranslate"><span class="pre">090</span> <span class="pre">0123</span> <span class="pre">4567</span></code> 」に「 <code class="docutils literal notranslate"><span class="pre">9001</span></code> 」でマッチする。 <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> の場合は「 <code class="docutils literal notranslate"><span class="pre">90</span> <span class="pre">01</span></code> 」でないとマッチしない。</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimit</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimit</span></code></td>
 <td><p class="first">空白区切りでトークナイズする。</p>
 <p class="last">「 <code class="docutils literal notranslate"><span class="pre">movie</span> <span class="pre">horror</span> <span class="pre">topic</span></code> 」をトークナイズすると「 <code class="docutils literal notranslate"><span class="pre">movie</span></code> 」、「 <code class="docutils literal notranslate"><span class="pre">horror</span></code> 」、「 <code class="docutils literal notranslate"><span class="pre">topic</span></code> 」になります。</p>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimitNull</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenDelimitNull</span></code></td>
 <td><p class="first">null文字（ <code class="docutils literal notranslate"><span class="pre">\\0</span></code> ）区切りでトークナイズする。</p>
 <p class="last">「 <code class="docutils literal notranslate"><span class="pre">movie\\0horror\\0topic</span></code> 」をトークナイズすると「 <code class="docutils literal notranslate"><span class="pre">movie</span></code> 」、「 <code class="docutils literal notranslate"><span class="pre">horror</span></code> 」、「 <code class="docutils literal notranslate"><span class="pre">topic</span></code> 」になります。</p>
 </td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenUnigram</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenUnigram</span></code></td>
 <td>ユニグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、2文字以上のトークンも存在する。これはノイズを減らすためである。</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TokenTrigram</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TokenTrigram</span></code></td>
 <td>トリグラムでトークナイズする。ただし、連続したアルファベット・連続した数字・連続した記号はそれぞれ1つのトークンとして扱う。そのため、4文字以上のトークンも存在する。これはノイズを減らすためである。</td>
 </tr>
 </tbody>
@@ -757,7 +766,7 @@ mroonga_default_tokenizer=TokenMecab
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">目次</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">4.3. ストレージモード</a><ul>
 <li><a class="reference internal" href="#how-to-use-full-text-search">4.3.1. 全文検索の利用方法</a></li>
@@ -811,7 +820,7 @@ mroonga_default_tokenizer=TokenMecab
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.06 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
       </ul>
     </div>
