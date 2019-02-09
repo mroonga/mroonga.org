@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>1. Optimizations &#8212; Mroonga v8.09 documentation</title>
+    <title>5.1. Optimizations &#8212; Mroonga v9.00 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../static/documentation_options.js"></script>
@@ -15,8 +15,8 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. SQL commands" href="sql_commands.html" />
-    <link rel="prev" title="Reference" href="../reference.html" /> 
+    <link rel="next" title="5.2. SQL commands" href="sql_commands.html" />
+    <link rel="prev" title="5. Reference" href="../reference.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -58,13 +58,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="sql_commands.html" title="2. SQL commands"
+          <a href="sql_commands.html" title="5.2. SQL commands"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../reference.html" title="Reference"
+          <a href="../reference.html" title="5. Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.09 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.00 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -74,11 +74,11 @@
           <div class="body" role="main">
             
   <div class="section" id="optimizations">
-<h1>1. Optimizations<a class="headerlink" href="#optimizations" title="Permalink to this headline">¶</a></h1>
+<h1>5.1. Optimizations<a class="headerlink" href="#optimizations" title="Permalink to this headline">¶</a></h1>
 <p>Mroonga implemented some optimizations to return response faster.</p>
 <p>Some optimizations can work only on <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>.</p>
 <div class="section" id="fetching-only-needed-columns">
-<span id="optimization-fetching-only-needed-columns"></span><h2>1.1. Fetching only needed columns<a class="headerlink" href="#fetching-only-needed-columns" title="Permalink to this headline">¶</a></h2>
+<span id="optimization-fetching-only-needed-columns"></span><h2>5.1.1. Fetching only needed columns<a class="headerlink" href="#fetching-only-needed-columns" title="Permalink to this headline">¶</a></h2>
 <p>This optimization can work only on <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>.</p>
 <p>Groonga uses column store architecture. It means that Groonga doesn’t
 need to fetch values of all columns for fetching a column value in a
@@ -112,7 +112,7 @@ and <code class="docutils literal notranslate"><span class="pre">c12</span></cod
 <code class="docutils literal notranslate"><span class="pre">c10</span></code>, <code class="docutils literal notranslate"><span class="pre">c13</span></code>, …, <code class="docutils literal notranslate"><span class="pre">c19</span></code> and <code class="docutils literal notranslate"><span class="pre">c20</span></code>.</p>
 </div>
 <div class="section" id="row-count">
-<span id="optimization-raw-count"></span><h2>1.2. Row count<a class="headerlink" href="#row-count" title="Permalink to this headline">¶</a></h2>
+<span id="optimization-raw-count"></span><h2>5.1.2. Row count<a class="headerlink" href="#row-count" title="Permalink to this headline">¶</a></h2>
 <p>This optimization can work only on <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>.</p>
 <p>MySQL requires all column values from storage engine for processing
 <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> even if <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> doesn’t need them.</p>
@@ -143,7 +143,7 @@ incremented when Mroonga uses this optimization.</p>
 <a class="reference internal" href="server_variables.html#server-variable-mroonga-enable-optimization"><span class="std std-ref">mroonga_enable_optimization</span></a> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </div>
 <div class="section" id="order-by-limit">
-<span id="optimization-order-by-limit"></span><h2>1.3. <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="Permalink to this headline">¶</a></h2>
+<span id="optimization-order-by-limit"></span><h2>5.1.3. <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="Permalink to this headline">¶</a></h2>
 <p>This optimization can work on both <a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a> and
 <a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>.</p>
 <p>MySQL can process <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> and <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> with low cost if you can
@@ -206,20 +206,20 @@ column or <code class="docutils literal notranslate"><span class="pre">MATCH</sp
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">1. Optimizations</a><ul>
-<li><a class="reference internal" href="#fetching-only-needed-columns">1.1. Fetching only needed columns</a></li>
-<li><a class="reference internal" href="#row-count">1.2. Row count</a></li>
-<li><a class="reference internal" href="#order-by-limit">1.3. <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code></a></li>
+<li><a class="reference internal" href="#">5.1. Optimizations</a><ul>
+<li><a class="reference internal" href="#fetching-only-needed-columns">5.1.1. Fetching only needed columns</a></li>
+<li><a class="reference internal" href="#row-count">5.1.2. Row count</a></li>
+<li><a class="reference internal" href="#order-by-limit">5.1.3. <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code></a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="../reference.html"
-                        title="previous chapter">Reference</a></p>
+                        title="previous chapter">5. Reference</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="sql_commands.html"
-                        title="next chapter">2. SQL commands</a></p>
+                        title="next chapter">5.2. SQL commands</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -243,17 +243,17 @@ column or <code class="docutils literal notranslate"><span class="pre">MATCH</sp
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="sql_commands.html" title="2. SQL commands"
+          <a href="sql_commands.html" title="5.2. SQL commands"
              >next</a> |</li>
         <li class="right" >
-          <a href="../reference.html" title="Reference"
+          <a href="../reference.html" title="5. Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.09 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.00 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2018, Mroonga Project.
+        &#169; Copyright 2009-2019, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 

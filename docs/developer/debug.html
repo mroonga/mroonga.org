@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>8.1. How to debug &#8212; Mroonga v8.09 documentation</title>
+    <title>9.1. How to debug &#8212; Mroonga v9.00 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../static/documentation_options.js"></script>
@@ -15,8 +15,8 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="8.2. Release procedure (XXX not yet translated)" href="release.html" />
-    <link rel="prev" title="8. Developer’s guide" href="../developer.html" /> 
+    <link rel="next" title="9.2. Release procedure (XXX not yet translated)" href="release.html" />
+    <link rel="prev" title="9. Developer’s guide" href="../developer.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -58,13 +58,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="release.html" title="8.2. Release procedure (XXX not yet translated)"
+          <a href="release.html" title="9.2. Release procedure (XXX not yet translated)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../developer.html" title="8. Developer’s guide"
+          <a href="../developer.html" title="9. Developer’s guide"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.09 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">8. Developer’s guide</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.00 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">9. Developer’s guide</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -74,9 +74,9 @@
           <div class="body" role="main">
             
   <div class="section" id="how-to-debug">
-<h1>8.1. How to debug<a class="headerlink" href="#how-to-debug" title="Permalink to this headline">¶</a></h1>
+<h1>9.1. How to debug<a class="headerlink" href="#how-to-debug" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="building-for-debugging">
-<h2>8.1.1. Building for debugging<a class="headerlink" href="#building-for-debugging" title="Permalink to this headline">¶</a></h2>
+<h2>9.1.1. Building for debugging<a class="headerlink" href="#building-for-debugging" title="Permalink to this headline">¶</a></h2>
 <p>When you build software for debugging, you can get more information like symbol resolutions in gdb.
 So we build both MySQL and Mroonga for debugging in development.</p>
 <div class="admonition note">
@@ -84,7 +84,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 <p class="last">If you build one of them for debugging, the size of structures etc. might be different, and you might not be able to load Mroonga, or assertions don’t work in running.</p>
 </div>
 <div class="section" id="how-to-build-mysql-for-debugging">
-<h3>8.1.1.1. How to build MySQL for debugging<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="Permalink to this headline">¶</a></h3>
+<h3>9.1.1.1. How to build MySQL for debugging<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="Permalink to this headline">¶</a></h3>
 <p>As you can see in <a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a>, you can build MySQL for debugging by passing <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=yes</span></code> option in CMAKE options.</p>
 <p>The procedure from download to build is the following.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mkdir -p ~/work/
@@ -98,7 +98,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 </div>
 </div>
 <div class="section" id="how-tom-build-mroonga-for-debugging">
-<h3>8.1.1.2. How tom build Mroonga for debugging<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Permalink to this headline">¶</a></h3>
+<h3>9.1.1.2. How tom build Mroonga for debugging<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Permalink to this headline">¶</a></h3>
 <p>You can build Mroonga for debugging by passing <code class="docutils literal notranslate"><span class="pre">--with-debug</span></code> in configure options.</p>
 <p>The procedure from cloning repository to build is the following.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd ~/work/
@@ -117,11 +117,11 @@ If you get <code class="docutils literal notranslate"><span class="pre">[pass]</
 </div>
 </div>
 <div class="section" id="more-about-run-sql-test-sh">
-<h2>8.1.2. More about run-sql-test.sh<a class="headerlink" href="#more-about-run-sql-test-sh" title="Permalink to this headline">¶</a></h2>
+<h2>9.1.2. More about run-sql-test.sh<a class="headerlink" href="#more-about-run-sql-test-sh" title="Permalink to this headline">¶</a></h2>
 <p>run-sql-test.sh is our friend for debugging.
 Here we show some examples of its usage.</p>
 <div class="section" id="run-the-specified-test-only">
-<h3>8.1.2.1. Run the specified test only<a class="headerlink" href="#run-the-specified-test-only" title="Permalink to this headline">¶</a></h3>
+<h3>9.1.2.1. Run the specified test only<a class="headerlink" href="#run-the-specified-test-only" title="Permalink to this headline">¶</a></h3>
 <p>When you invoke run-sql-test.sh without any option, all tests under <code class="docutils literal notranslate"><span class="pre">test/sql/t/</span></code> will be invoked.</p>
 <p>So if you want to run certain tests only, you can specify the test name in –do-test option.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --do-test=foobar
@@ -129,13 +129,13 @@ Here we show some examples of its usage.</p>
 </div>
 </div>
 <div class="section" id="see-the-trace">
-<h3>8.1.2.2. See the trace<a class="headerlink" href="#see-the-trace" title="Permalink to this headline">¶</a></h3>
+<h3>9.1.2.2. See the trace<a class="headerlink" href="#see-the-trace" title="Permalink to this headline">¶</a></h3>
 <p>When you run tests by adding <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option like the following, function calls information is recorded.
 This information is stored in <code class="docutils literal notranslate"><span class="pre">${MySQL's</span> <span class="pre">working</span> <span class="pre">directory}/${MySQL</span> <span class="pre">version}/mysql-test/var/log/mysqld.1.trace</span></code>.</p>
 <p>When you add a new function, it would be a good idea to put it in the beginning of MRN_DBUG_ENTER_FUNCTION function and record its calls.</p>
 </div>
 <div class="section" id="invoking-gdb">
-<h3>8.1.2.3. Invoking GDB<a class="headerlink" href="#invoking-gdb" title="Permalink to this headline">¶</a></h3>
+<h3>9.1.2.3. Invoking GDB<a class="headerlink" href="#invoking-gdb" title="Permalink to this headline">¶</a></h3>
 <p>By adding <code class="docutils literal notranslate"><span class="pre">--gdb</span></code> option, you can debug with GDB when you run tests.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --gdb
 </pre></div>
@@ -152,16 +152,16 @@ This information is stored in <code class="docutils literal notranslate"><span c
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">8.1. How to debug</a><ul>
-<li><a class="reference internal" href="#building-for-debugging">8.1.1. Building for debugging</a><ul>
-<li><a class="reference internal" href="#how-to-build-mysql-for-debugging">8.1.1.1. How to build MySQL for debugging</a></li>
-<li><a class="reference internal" href="#how-tom-build-mroonga-for-debugging">8.1.1.2. How tom build Mroonga for debugging</a></li>
+<li><a class="reference internal" href="#">9.1. How to debug</a><ul>
+<li><a class="reference internal" href="#building-for-debugging">9.1.1. Building for debugging</a><ul>
+<li><a class="reference internal" href="#how-to-build-mysql-for-debugging">9.1.1.1. How to build MySQL for debugging</a></li>
+<li><a class="reference internal" href="#how-tom-build-mroonga-for-debugging">9.1.1.2. How tom build Mroonga for debugging</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#more-about-run-sql-test-sh">8.1.2. More about run-sql-test.sh</a><ul>
-<li><a class="reference internal" href="#run-the-specified-test-only">8.1.2.1. Run the specified test only</a></li>
-<li><a class="reference internal" href="#see-the-trace">8.1.2.2. See the trace</a></li>
-<li><a class="reference internal" href="#invoking-gdb">8.1.2.3. Invoking GDB</a></li>
+<li><a class="reference internal" href="#more-about-run-sql-test-sh">9.1.2. More about run-sql-test.sh</a><ul>
+<li><a class="reference internal" href="#run-the-specified-test-only">9.1.2.1. Run the specified test only</a></li>
+<li><a class="reference internal" href="#see-the-trace">9.1.2.2. See the trace</a></li>
+<li><a class="reference internal" href="#invoking-gdb">9.1.2.3. Invoking GDB</a></li>
 </ul>
 </li>
 </ul>
@@ -170,10 +170,10 @@ This information is stored in <code class="docutils literal notranslate"><span c
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="../developer.html"
-                        title="previous chapter">8. Developer’s guide</a></p>
+                        title="previous chapter">9. Developer’s guide</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="release.html"
-                        title="next chapter">8.2. Release procedure (XXX not yet translated)</a></p>
+                        title="next chapter">9.2. Release procedure (XXX not yet translated)</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -197,17 +197,17 @@ This information is stored in <code class="docutils literal notranslate"><span c
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="release.html" title="8.2. Release procedure (XXX not yet translated)"
+          <a href="release.html" title="9.2. Release procedure (XXX not yet translated)"
              >next</a> |</li>
         <li class="right" >
-          <a href="../developer.html" title="8. Developer’s guide"
+          <a href="../developer.html" title="9. Developer’s guide"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v8.09 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../developer.html" >8. Developer’s guide</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.00 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../developer.html" >9. Developer’s guide</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2018, Mroonga Project.
+        &#169; Copyright 2009-2019, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 
