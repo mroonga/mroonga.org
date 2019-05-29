@@ -1,11 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5.1. 最適化 &#8212; Mroonga v9.01 documentation</title>
+    <meta charset="utf-8" />
+    <title>5.1. 最適化 &#8212; Mroonga v9.03 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -13,6 +11,7 @@
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/language_data.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     
     <link rel="shortcut icon" href="../static/favicon.ico"/>
@@ -66,7 +65,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. リファレンス"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.03 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. リファレンス</a> &#187;</li> 
       </ul>
     </div>  
@@ -161,14 +160,14 @@
 <p><a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span class="std std-ref">Mroonga_fast_order_limit</span></a> ステータス変数はMroongaがこの最適化を使うとインクリメントされます。</p>
 <p>この最適化は以下のすべての条件が真のときだけ使われます。</p>
 <ul class="simple">
-<li><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節にある条件が1つの <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> と0個以上の算術演算だけのとき。算術演算とは <code class="docutils literal notranslate"><span class="pre">column</span> <span class="pre">&lt;</span> <span class="pre">100</span></code> のような演算です。</li>
-<li><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節にある条件が <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> だけのとき。</li>
-<li><code class="docutils literal notranslate"><span class="pre">JOIN</span></code> がない。</li>
-<li><code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> がない。</li>
-<li><code class="docutils literal notranslate"><span class="pre">SQL_CALC_FOUND_ROWS</span></code> がない。</li>
-<li><code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> がある。</li>
-<li><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> 節にはカラムまたは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節で使っているものと同じ <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> しかない。</li>
-<li><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> 節にはプライマリキーまたは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節で使っているものと同じ <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> しかない。</li>
+<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節にある条件が1つの <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> と0個以上の算術演算だけのとき。算術演算とは <code class="docutils literal notranslate"><span class="pre">column</span> <span class="pre">&lt;</span> <span class="pre">100</span></code> のような演算です。</p></li>
+<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節にある条件が <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> だけのとき。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JOIN</span></code> がない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> がない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SQL_CALC_FOUND_ROWS</span></code> がない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> がある。</p></li>
+<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> 節にはカラムまたは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節で使っているものと同じ <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> しかない。</p></li>
+<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> 節にはプライマリキーまたは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節で使っているものと同じ <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> しかない。</p></li>
 </ul>
 </div>
 </div>
@@ -179,7 +178,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
+  <h3><a href="../index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">5.1. 最適化</a><ul>
 <li><a class="reference internal" href="#fetching-only-needed-columns">5.1.1. 必要なカラムだけ取得</a></li>
@@ -201,8 +200,6 @@
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="検索" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -223,7 +220,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. リファレンス"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.03 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" >5. リファレンス</a> &#187;</li> 
       </ul>
     </div>

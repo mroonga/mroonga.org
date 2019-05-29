@@ -1,11 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>コーディングスタイル &#8212; Mroonga v9.01 documentation</title>
+    <meta charset="utf-8" />
+    <title>コーディングスタイル &#8212; Mroonga v9.03 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -13,6 +11,7 @@
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/language_data.js"></script>
     <script type="text/javascript" src="../static/translations.js"></script>
     
     <link rel="shortcut icon" href="../static/favicon.ico"/>
@@ -58,7 +57,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.01 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.03 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -74,8 +73,8 @@
 <p>読みやすいソースコードにする理由は以下の通りです。</p>
 <blockquote>
 <div><ul class="simple">
-<li>機能を拡張するときのコストを下げる。</li>
-<li>問題を修正するときのコストを下げる。</li>
+<li><p>機能を拡張するときのコストを下げる。</p></li>
+<li><p>問題を修正するときのコストを下げる。</p></li>
 </ul>
 </div></blockquote>
 <p>どちらの場合も周辺のソースコードを読んで、それをベースにコードを追加・変更します。このとき、ソースコードが読みやすい状態だと周辺のソースコードの把握をスムーズに行うことができ、スムーズにその後の作業に移れます。</p>
@@ -127,7 +126,8 @@
 </div>
 <p>悪い例（ <code class="docutils literal notranslate"><span class="pre">.h</span></code> を使っている）:</p>
 <blockquote>
-<div>ha_mroonga.h</div></blockquote>
+<div><p>ha_mroonga.h</p>
+</div></blockquote>
 </div>
 <div class="section" id="id4">
 <h2>名前空間<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -693,25 +693,26 @@ name = reinterpret_cast&lt;char *&gt;(value);
 <h2>その他<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>ここに書いていないものについては特にスタイルを定めないが、
+<li><p>ここに書いていないものについては特にスタイルを定めないが、
 プロジェクト内で常に一貫性のあるスタイルを使用すること。
 同じような事をするときは同じような書き方にすること。
-複数の書き方で同じようなことを実現している場合は1つの方法に合わせること。</li>
+複数の書き方で同じようなことを実現している場合は1つの方法に合わせること。</p></li>
 </ul>
 </div></blockquote>
 <p>以下、具体例が必要。</p>
 <blockquote>
 <div><ul class="simple">
-<li>ビルド時にできることを実行時に延ばさない(静的チェックを活用)</li>
-<li>なるべく局所的に変数を定義し、同時に初期化する</li>
-<li>長い関数や深いブロックのネストを避ける<ul>
-<li>2つに分けた方がよさそう。あと目安があるといいかも。
-100行以上は長いよねーとか3段以上はデンジャーとか。</li>
+<li><p>ビルド時にできることを実行時に延ばさない(静的チェックを活用)</p></li>
+<li><p>なるべく局所的に変数を定義し、同時に初期化する</p></li>
+<li><p>長い関数や深いブロックのネストを避ける</p>
+<ul>
+<li><p>2つに分けた方がよさそう。あと目安があるといいかも。
+100行以上は長いよねーとか3段以上はデンジャーとか。</p></li>
 </ul>
 </li>
-<li>必要以上にオブジェクトを複製しない</li>
-<li>暗黙の型変換はなるべく避ける</li>
-<li>assertを積極的に使う</li>
+<li><p>必要以上にオブジェクトを複製しない</p></li>
+<li><p>暗黙の型変換はなるべく避ける</p></li>
+<li><p>assertを積極的に使う</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -719,12 +720,12 @@ name = reinterpret_cast&lt;char *&gt;(value);
 <h2>メモ<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>動的テンプレートを使わない。（要追加情報。implicit
+<li><p>動的テンプレートを使わない。（要追加情報。implicit
 template instantiationのことであれば、これはふつうに使わ
-れているものなので特に禁止しないんでいいんじゃない説？）</li>
-<li>typeidを使わない。</li>
-<li>例外はMySQLで問題がないようであればOK。Mroongaから外の世
-界（MySQLの世界）にはださないようにする。</li>
+れているものなので特に禁止しないんでいいんじゃない説？）</p></li>
+<li><p>typeidを使わない。</p></li>
+<li><p>例外はMySQLで問題がないようであればOK。Mroongaから外の世
+界（MySQLの世界）にはださないようにする。</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -736,7 +737,7 @@ template instantiationのことであれば、これはふつうに使わ
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
+  <h3><a href="../index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">コーディングスタイル</a><ul>
 <li><a class="reference internal" href="#id2">言語</a></li>
@@ -801,8 +802,6 @@ template instantiationのことであれば、これはふつうに使わ
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="検索" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -817,7 +816,7 @@ template instantiationのことであれば、これはふつうに使わ
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.01 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.03 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
