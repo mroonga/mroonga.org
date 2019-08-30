@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>4.4. ラッパーモード &#8212; Mroonga v9.05 documentation</title>
+    <title>4.4. ラッパーモード &#8212; Mroonga v9.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
       </ul>
     </div>  
@@ -114,7 +114,7 @@ Query OK, 1 row affected (0.00 sec)
 </pre></div>
 </div>
 <p>全文検索を実行してみます。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;fine&quot;);
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM diaries WHERE MATCH(content) AGAINST(&quot;+fine&quot; IN BOOLEAN MODE);
 +----+-----------------------------------------+
 | id | content                                 |
 +----+-----------------------------------------+
@@ -136,27 +136,27 @@ Query OK, 1 row affected (0.00 sec)
 mysql&gt; INSERT INTO diaries (content) VALUES (&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;);
 Query OK, 1 row affected (0.00 sec)
 
-mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
-+----+--------------------------------------------------------------+------------------------------------+
-| id | content                                                      | MATCH (content) AGAINST (&quot;fine&quot;) |
-+----+--------------------------------------------------------------+------------------------------------+
-|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                  2 |
-|  1 | It&#39;ll be fine tomorrow.                      |                                  1 |
-|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.    |                                  1 |
-+----+--------------------------------------------------------------+------------------------------------+
+mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) FROM diaries WHERE MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) ORDER BY MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) DESC;
++----+--------------------------------------------------+---------------------------------------------------+
+| id | content                                          | MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) |
++----+--------------------------------------------------+---------------------------------------------------+
+|  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                                 2 |
+|  1 | It&#39;ll be fine tomorrow.                          |                                                 1 |
+|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |                                                 1 |
++----+--------------------------------------------------+---------------------------------------------------+
 3 rows in set (0.00 sec)
 </pre></div>
 </div>
 <p>検索対象の文字列 <code class="docutils literal notranslate"><span class="pre">fine</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
 <p>属性名を変更したい場合は <code class="docutils literal notranslate"><span class="pre">AS</span></code> を使って下さい。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;fine&quot;) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;fine&quot;) ORDER BY MATCH (content) AGAINST (&quot;fine&quot;) DESC;
-+----+--------------------------------------------------------------+-------+
-| id | content                                                      | score |
-+----+--------------------------------------------------------------+-------+
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) AS score FROM diaries WHERE MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) ORDER BY MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) DESC;
++----+--------------------------------------------------+-------+
+| id | content                                          | score |
++----+--------------------------------------------------+-------+
 |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |
-|  1 | It&#39;ll be fine tomorrow.                      |     1 |
-|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.    |     1 |
-+----+--------------------------------------------------------------+-------+
+|  1 | It&#39;ll be fine tomorrow.                          |     1 |
+|  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |     1 |
++----+--------------------------------------------------+-------+
 3 rows in set (0.00 sec)
 </pre></div>
 </div>
@@ -471,7 +471,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
       </ul>
     </div>

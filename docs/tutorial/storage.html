@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>4.3. Storage mode &#8212; Mroonga v9.05 documentation</title>
+    <title>4.3. Storage mode &#8212; Mroonga v9.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -64,7 +64,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
       </ul>
     </div>  
@@ -757,8 +757,41 @@ keys (result JSON is pretty printed):</p>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s select command document</a> for more
 details.</p>
 </div>
+<div class="section" id="how-to-search-by-regular-expression">
+<h2>4.3.12. How to search by regular expression<a class="headerlink" href="#how-to-search-by-regular-expression" title="Permalink to this headline">¶</a></h2>
+<p>In storage mode, you can use a Groonga’s functionality from Mroonga as described above.
+Thus, you can search records by using a regular expression via Groonga’s functionality.</p>
+<p>There are some conditions to use regular expression in Mroonga.</p>
+<ul class="simple">
+<li><p>Create an index with <code class="docutils literal notranslate"><span class="pre">TokenRegexp</span></code> tokenizer which is used in <code class="docutils literal notranslate"><span class="pre">COMMENT</span></code></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">*SS</span></code> pragma and <code class="docutils literal notranslate"><span class="pre">&#64;~</span></code> in <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">MATCH</span> <span class="pre">...</span> <span class="pre">AGAINST</span></code> clause</p></li>
+</ul>
+<p>Here is the example of search by regular expression.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">paths</span> <span class="p">(</span>
+  <span class="n">content</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">content_index</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenRegexp&quot;, normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/usr/bin/groonga&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/var/log/auth.log&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/var/log/messages&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/tmp/local/var/log/auth.log&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">paths</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;*SS content @~ &quot;\\\\A/var/log/auth&quot;&#39;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- | content           |</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- | /var/log/auth.log |</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- 1 row in set (0.024 sec)</span>
+</pre></div>
+</div>
+<p>By using <a class="reference internal" href="../reference/full_text_search/boolean_mode.html#boolean-mode-pragma-ss"><span class="std std-ref">*SS</span></a> pragma, you can search the records which matches <code class="docutils literal notranslate"><span class="pre">/var/log/auth.log</span></code> with <code class="docutils literal notranslate"><span class="pre">content</span> <span class="pre">&#64;~</span> <span class="pre">&quot;\\\\A/var/log/auth&quot;</span></code>.
+<code class="docutils literal notranslate"><span class="pre">&#64;~</span></code> is a Groonga’s operator which executes a regular expression search, and <code class="docutils literal notranslate"><span class="pre">&quot;\\\\A/var/log/auth&quot;</span></code> executes prefix search, so it matches to only <code class="docutils literal notranslate"><span class="pre">/var/log/auth.log</span></code>. <code class="docutils literal notranslate"><span class="pre">/tmp/local/var/log/auth.log</span></code> doesn’t match because it doesn’t begin with “/var/log/auth”.</p>
+<p>See <a class="reference external" href="http://groonga.org/docs/reference/regular_expression.html#syntax">Groonga’s regular expression document</a> for more syntax details.</p>
+</div>
 <div class="section" id="logging">
-<h2>4.3.12. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.13. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL’s data directory with the filename  <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
@@ -810,7 +843,7 @@ details.</p>
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>4.3.13. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.14. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>Now, you can use Mroonga as storage mode! If you want Mroonga to be
 faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
 <p class="rubric">Footnotes</p>
@@ -845,8 +878,9 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
 <li><a class="reference internal" href="#how-to-use-similar-search">4.3.10. How to use similar search</a></li>
 <li><a class="reference internal" href="#how-to-run-groonga-command">4.3.11. How to run Groonga command</a></li>
-<li><a class="reference internal" href="#logging">4.3.12. Logging</a></li>
-<li><a class="reference internal" href="#next-step">4.3.13. Next step</a></li>
+<li><a class="reference internal" href="#how-to-search-by-regular-expression">4.3.12. How to search by regular expression</a></li>
+<li><a class="reference internal" href="#logging">4.3.13. Logging</a></li>
+<li><a class="reference internal" href="#next-step">4.3.14. Next step</a></li>
 </ul>
 </li>
 </ul>
@@ -883,7 +917,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
       </ul>
     </div>

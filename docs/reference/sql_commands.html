@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>5.2. SQL commands &#8212; Mroonga v9.05 documentation</title>
+    <title>2. SQL commands &#8212; Mroonga v9.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -16,8 +16,8 @@
     <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="5.3. Server variables" href="server_variables.html" />
-    <link rel="prev" title="5.1. Optimizations" href="optimizations.html" /> 
+    <link rel="next" title="3. Server variables" href="server_variables.html" />
+    <link rel="prev" title="1. Optimizations" href="optimizations.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -59,13 +59,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="server_variables.html" title="5.3. Server variables"
+          <a href="server_variables.html" title="3. Server variables"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="optimizations.html" title="5.1. Optimizations"
+          <a href="optimizations.html" title="1. Optimizations"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">5. Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">Reference</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -75,10 +75,10 @@
           <div class="body" role="main">
             
   <div class="section" id="sql-commands">
-<h1>5.2. SQL commands<a class="headerlink" href="#sql-commands" title="Permalink to this headline">¶</a></h1>
+<h1>2. SQL commands<a class="headerlink" href="#sql-commands" title="Permalink to this headline">¶</a></h1>
 <p>This section describes avaiable SQL commands and unavailable SQL commands.</p>
 <div class="section" id="list-of-available-sql-commands">
-<h2>5.2.1. List of available SQL commands<a class="headerlink" href="#list-of-available-sql-commands" title="Permalink to this headline">¶</a></h2>
+<h2>2.1. List of available SQL commands<a class="headerlink" href="#list-of-available-sql-commands" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">COLUMN</span> <span class="pre">column_name</span> <span class="pre">TEXT</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">ADD</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span></code></p></li>
@@ -90,9 +90,9 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">ON</span> <span class="pre">table_name(column_name,</span> <span class="pre">...)</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span> <span class="pre">table_name</span> <span class="pre">(...)</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">\`table-name-with-hyphen\`</span> <span class="pre">(...)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'parser</span> <span class="pre">&quot;TokenMecab&quot;')</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'tokenizer</span> <span class="pre">&quot;TokenMecab&quot;')</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'parser</span> <span class="pre">&quot;TokenDelimit&quot;,</span> <span class="pre">normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name)</span> <span class="pre">COMMENT</span> <span class="pre">'tokenizer</span> <span class="pre">&quot;TokenDelimit&quot;,</span> <span class="pre">normalizer</span> <span class="pre">&quot;NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark&quot;')</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name))</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">index_name</span> <span class="pre">(column_name,</span> <span class="pre">...))</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">table_name</span> <span class="pre">(...</span> <span class="pre">INDEX</span> <span class="pre">(column_name))</span></code></p></li>
@@ -215,7 +215,7 @@
 </ul>
 </div>
 <div class="section" id="list-of-unavailable-sql-commands">
-<h2>5.2.2. List of unavailable SQL commands<a class="headerlink" href="#list-of-unavailable-sql-commands" title="Permalink to this headline">¶</a></h2>
+<h2>2.2. List of unavailable SQL commands<a class="headerlink" href="#list-of-unavailable-sql-commands" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">(...)</span> <span class="pre">CHARSET</span> <span class="pre">not_listed_charset_above</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">(geometry_column_name)</span> <span class="pre">VALUES</span> <span class="pre">(GeomFromText('LineString(...)'))</span></code></p></li>
@@ -225,7 +225,7 @@
 <p>Basically, The character set which Groonga supports (EUC-JP/UTF-8/SJIS/LATIN1/KOI8R) is also supported in Mroonga.</p>
 </div>
 <div class="section" id="i-found-an-unlisted-sql-command">
-<h2>5.2.3. I found an unlisted SQL command<a class="headerlink" href="#i-found-an-unlisted-sql-command" title="Permalink to this headline">¶</a></h2>
+<h2>2.3. I found an unlisted SQL command<a class="headerlink" href="#i-found-an-unlisted-sql-command" title="Permalink to this headline">¶</a></h2>
 <p>If you find unlisted SQL command and confirm whether the SQL command works well or not, we want to list it. Please mail it to <a class="reference external" href="http://groonga.org/docs/community.html">us</a> or send a patch against <a class="reference external" href="https://github.com/mroonga/mroonga/blob/master/doc/source/reference.rst">the source file</a> by pull request system on GitHub.</p>
 </div>
 </div>
@@ -238,20 +238,20 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.2. SQL commands</a><ul>
-<li><a class="reference internal" href="#list-of-available-sql-commands">5.2.1. List of available SQL commands</a></li>
-<li><a class="reference internal" href="#list-of-unavailable-sql-commands">5.2.2. List of unavailable SQL commands</a></li>
-<li><a class="reference internal" href="#i-found-an-unlisted-sql-command">5.2.3. I found an unlisted SQL command</a></li>
+<li><a class="reference internal" href="#">2. SQL commands</a><ul>
+<li><a class="reference internal" href="#list-of-available-sql-commands">2.1. List of available SQL commands</a></li>
+<li><a class="reference internal" href="#list-of-unavailable-sql-commands">2.2. List of unavailable SQL commands</a></li>
+<li><a class="reference internal" href="#i-found-an-unlisted-sql-command">2.3. I found an unlisted SQL command</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="optimizations.html"
-                        title="previous chapter">5.1. Optimizations</a></p>
+                        title="previous chapter">1. Optimizations</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="server_variables.html"
-                        title="next chapter">5.3. Server variables</a></p>
+                        title="next chapter">3. Server variables</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -273,13 +273,13 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="server_variables.html" title="5.3. Server variables"
+          <a href="server_variables.html" title="3. Server variables"
              >next</a> |</li>
         <li class="right" >
-          <a href="optimizations.html" title="5.1. Optimizations"
+          <a href="optimizations.html" title="1. Optimizations"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" >5. Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

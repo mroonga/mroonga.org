@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>5.7.2. Search and Scoring in Mroonga &#8212; Mroonga v9.05 documentation</title>
+    <title>7.2. Search and Scoring in Mroonga &#8212; Mroonga v9.07 documentation</title>
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
     
@@ -16,8 +16,8 @@
     <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="6. FAQ" href="../../faq.html" />
-    <link rel="prev" title="5.7.1. Boolean mode" href="boolean_mode.html" /> 
+    <link rel="next" title="5. FAQ" href="../../faq.html" />
+    <link rel="prev" title="7.1. Boolean mode" href="boolean_mode.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -59,14 +59,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../faq.html" title="6. FAQ"
+          <a href="../../faq.html" title="5. FAQ"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="boolean_mode.html" title="5.7.1. Boolean mode"
+          <a href="boolean_mode.html" title="7.1. Boolean mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">5.7. Full text search</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U">7. Full text search</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -76,9 +76,9 @@
           <div class="body" role="main">
             
   <div class="section" id="search-and-scoring-in-mroonga">
-<h1>5.7.2. Search and Scoring in Mroonga<a class="headerlink" href="#search-and-scoring-in-mroonga" title="Permalink to this headline">¶</a></h1>
+<h1>7.2. Search and Scoring in Mroonga<a class="headerlink" href="#search-and-scoring-in-mroonga" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mroonga-scoring-in-natural-language-mode">
-<h2>5.7.2.1. Mroonga Scoring in natural language mode<a class="headerlink" href="#mroonga-scoring-in-natural-language-mode" title="Permalink to this headline">¶</a></h2>
+<h2>7.2.1. Mroonga Scoring in natural language mode<a class="headerlink" href="#mroonga-scoring-in-natural-language-mode" title="Permalink to this headline">¶</a></h2>
 <p>The search score of Mroonga in natural language mode is a similarity score between query and document. Mroonga’s scoring algorithm is as follows:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -121,7 +121,7 @@ The search result is as follows:</p>
 </div>
 <p>Now, let us explain how to make the result score “131073”.</p>
 <div class="section" id="splitting-a-query-into-tokens">
-<h3>5.7.2.1.1. Splitting a query into tokens<a class="headerlink" href="#splitting-a-query-into-tokens" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.1.1. Splitting a query into tokens<a class="headerlink" href="#splitting-a-query-into-tokens" title="Permalink to this headline">¶</a></h3>
 <p>The default tokenizer splits up the query “fine today” into two tokens as follows:</p>
 <ul class="simple">
 <li><p>fine</p></li>
@@ -129,7 +129,7 @@ The search result is as follows:</p>
 </ul>
 </div>
 <div class="section" id="removing-not-matched-tokens">
-<h3>5.7.2.1.2. Removing not matched tokens<a class="headerlink" href="#removing-not-matched-tokens" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.1.2. Removing not matched tokens<a class="headerlink" href="#removing-not-matched-tokens" title="Permalink to this headline">¶</a></h3>
 <p>We have nothing to do in this case because the tokens exist in documents.</p>
 <ul class="simple">
 <li><p>fine: include in document id=1,3,4</p></li>
@@ -137,7 +137,7 @@ The search result is as follows:</p>
 </ul>
 </div>
 <div class="section" id="calculating-weight-per-token">
-<h3>5.7.2.1.3. Calculating weight per token<a class="headerlink" href="#calculating-weight-per-token" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.1.3. Calculating weight per token<a class="headerlink" href="#calculating-weight-per-token" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>fine: 116508(= 1048576 / 9)</p></li>
 <li><p>today: 131072(= 1048576 / 8)</p></li>
@@ -156,7 +156,7 @@ The search result is as follows:</p>
 </div>
 </div>
 <div class="section" id="getting-the-top-n-weight-tokens">
-<h3>5.7.2.1.4. Getting the top N weight tokens<a class="headerlink" href="#getting-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.1.4. Getting the top N weight tokens<a class="headerlink" href="#getting-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
 <p>The formula for the N is “the number of occurrence of token in document / 8 + 1”</p>
 <p>In this case, N = 2 / 8 + 1 ≒ 1</p>
 <p>The sorted tokens are as follows:</p>
@@ -167,7 +167,7 @@ The search result is as follows:</p>
 <p>N = 1, then we get “today: 131072(= 1048576 / 8)”.</p>
 </div>
 <div class="section" id="summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">
-<h3>5.7.2.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens<a class="headerlink" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens<a class="headerlink" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>today: include in document id=3,4</p></li>
 </ul>
@@ -185,13 +185,13 @@ The search result is as follows:</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.7.2. Search and Scoring in Mroonga</a><ul>
-<li><a class="reference internal" href="#mroonga-scoring-in-natural-language-mode">5.7.2.1. Mroonga Scoring in natural language mode</a><ul>
-<li><a class="reference internal" href="#splitting-a-query-into-tokens">5.7.2.1.1. Splitting a query into tokens</a></li>
-<li><a class="reference internal" href="#removing-not-matched-tokens">5.7.2.1.2. Removing not matched tokens</a></li>
-<li><a class="reference internal" href="#calculating-weight-per-token">5.7.2.1.3. Calculating weight per token</a></li>
-<li><a class="reference internal" href="#getting-the-top-n-weight-tokens">5.7.2.1.4. Getting the top N weight tokens</a></li>
-<li><a class="reference internal" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">5.7.2.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens</a></li>
+<li><a class="reference internal" href="#">7.2. Search and Scoring in Mroonga</a><ul>
+<li><a class="reference internal" href="#mroonga-scoring-in-natural-language-mode">7.2.1. Mroonga Scoring in natural language mode</a><ul>
+<li><a class="reference internal" href="#splitting-a-query-into-tokens">7.2.1.1. Splitting a query into tokens</a></li>
+<li><a class="reference internal" href="#removing-not-matched-tokens">7.2.1.2. Removing not matched tokens</a></li>
+<li><a class="reference internal" href="#calculating-weight-per-token">7.2.1.3. Calculating weight per token</a></li>
+<li><a class="reference internal" href="#getting-the-top-n-weight-tokens">7.2.1.4. Getting the top N weight tokens</a></li>
+<li><a class="reference internal" href="#summing-up-the-weight-per-token-which-exists-in-a-document-and-is-one-of-the-top-n-weight-tokens">7.2.1.5. Summing up the weight per token which exists in a document, and is one of the top N weight tokens</a></li>
 </ul>
 </li>
 </ul>
@@ -200,10 +200,10 @@ The search result is as follows:</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="boolean_mode.html"
-                        title="previous chapter">5.7.1. Boolean mode</a></p>
+                        title="previous chapter">7.1. Boolean mode</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../../faq.html"
-                        title="next chapter">6. FAQ</a></p>
+                        title="next chapter">5. FAQ</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -225,14 +225,14 @@ The search result is as follows:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../faq.html" title="6. FAQ"
+          <a href="../../faq.html" title="5. FAQ"
              >next</a> |</li>
         <li class="right" >
-          <a href="boolean_mode.html" title="5.7.1. Boolean mode"
+          <a href="boolean_mode.html" title="7.1. Boolean mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >5.7. Full text search</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.07 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../full_text_search.html" >7. Full text search</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

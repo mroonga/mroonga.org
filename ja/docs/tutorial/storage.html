@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>4.3. ストレージモード &#8212; Mroonga v9.05 documentation</title>
+    <title>4.3. ストレージモード &#8212; Mroonga v9.07 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
       </ul>
     </div>  
@@ -687,8 +687,39 @@ mroonga_default_tokenizer=TokenMecab
 </div>
 <p>詳細は <a class="reference external" href="http://groonga.org/ja/docs/reference/commands/select.html">Groongaのselectコマンドのドキュメント</a> を確認してください。</p>
 </div>
+<div class="section" id="how-to-search-by-regular-expression">
+<h2>4.3.12. 正規表現検索の利用方法<a class="headerlink" href="#how-to-search-by-regular-expression" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ストレージモードでは、すでに述べたようにMroongaからGroongaの機能が使えます。つまりGroongaの機能を使って正規表現で検索できます。</p>
+<p>Mroongaで正規表現を使うにはいくつか条件があります。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">COMMENT</span></code> にて <code class="docutils literal notranslate"><span class="pre">TokenRegexp</span></code> トークナイザーを指定してインデックスを作成する</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">MATCH</span> <span class="pre">...</span> <span class="pre">AGAINST</span></code> にて <code class="docutils literal notranslate"><span class="pre">*SS</span></code> プラグマを使う</p></li>
+</ul>
+<p>以下は正規表現による検索の出力例です。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">paths</span> <span class="p">(</span>
+  <span class="n">content</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">content_index</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenRegexp&quot;, normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/usr/bin/groonga&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/var/log/auth.log&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/var/log/messages&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paths</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;/tmp/local/var/log/auth.log&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">paths</span> <span class="k">WHERE</span> <span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;*SS content @~ &quot;\\\\A/var/log/auth&quot;&#39;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- | content           |</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- | /var/log/auth.log |</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- 1 row in set (0.024 sec)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/full_text_search/boolean_mode.html#boolean-mode-pragma-ss"><span class="std std-ref">*SS</span></a> プラグマを使うことにより、 <code class="docutils literal notranslate"><span class="pre">content</span> <span class="pre">&#64;~</span> <span class="pre">&quot;\\\\A/var/log/auth&quot;</span></code> で <code class="docutils literal notranslate"><span class="pre">/var/log/auth</span></code> ではじまるレコードを検索できます。 <code class="docutils literal notranslate"><span class="pre">&#64;~</span></code> はGroongaで正規表現検索するためのオペレーターで、 <code class="docutils literal notranslate"><span class="pre">&quot;\\\\A/var/log/auth&quot;</span></code> は前方一致検索を行うので、 <code class="docutils literal notranslate"><span class="pre">/var/log/auth.log</span></code> だけがマッチします。 <code class="docutils literal notranslate"><span class="pre">/tmp/local/var/log/auth.log</span></code> がマッチしないのは、<code class="docutils literal notranslate"><span class="pre">/var/log/auth</span></code> ではじまっていないからです。</p>
+<p>構文の詳細は <a class="reference external" href="http://groonga.org/ja/docs/reference/regular_expression.html#syntax">Groongaの正規表現のドキュメント</a> を確認してください。</p>
+</div>
 <div class="section" id="logging">
-<h2>4.3.12. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.13. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
@@ -740,7 +771,7 @@ mroonga_default_tokenizer=TokenMecab
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>4.3.13. 次のステップ<a class="headerlink" href="#next-step" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>4.3.14. 次のステップ<a class="headerlink" href="#next-step" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>これでストレージモードでMroongaを使えるようになりました！Mroongaをもっと速くしたい場合は <a class="reference internal" href="../reference/optimizations.html"><span class="doc">最適化</span></a> も参照してください。</p>
 <p class="rubric">脚注</p>
 <dl class="footnote brackets">
@@ -774,8 +805,9 @@ mroonga_default_tokenizer=TokenMecab
 <li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
 <li><a class="reference internal" href="#how-to-use-similar-search">4.3.10. 類似文書検索の利用方法</a></li>
 <li><a class="reference internal" href="#how-to-run-groonga-command">4.3.11. Groongaコマンドの実行方法</a></li>
-<li><a class="reference internal" href="#logging">4.3.12. ログ出力</a></li>
-<li><a class="reference internal" href="#next-step">4.3.13. 次のステップ</a></li>
+<li><a class="reference internal" href="#how-to-search-by-regular-expression">4.3.12. 正規表現検索の利用方法</a></li>
+<li><a class="reference internal" href="#logging">4.3.13. ログ出力</a></li>
+<li><a class="reference internal" href="#next-step">4.3.14. 次のステップ</a></li>
 </ul>
 </li>
 </ul>
@@ -812,7 +844,7 @@ mroonga_default_tokenizer=TokenMecab
         <li class="right" >
           <a href="mode.html" title="4.2. モード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.07 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
       </ul>
     </div>
