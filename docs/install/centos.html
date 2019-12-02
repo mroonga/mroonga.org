@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>2.5. CentOS &#8212; Mroonga v9.09 documentation</title>
+    <title>2.5. CentOS &#8212; Mroonga v9.10 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -64,7 +64,7 @@
         <li class="right" >
           <a href="ubuntu.html" title="2.4. Ubuntu"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. Install</a> &#187;</li> 
       </ul>
     </div>  
@@ -539,6 +539,73 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="centos-8-with-the-oracle-mysql-8-0-package">
+<span id="centos-8-oracle-80"></span><h2>2.5.19. CentOS 8 (with the Oracle MySQL 8.0 package)<a class="headerlink" href="#centos-8-with-the-oracle-mysql-8-0-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use Oracle’s MySQL packages version 8.0 on CentOS 8 since
+Mroonga 9.10 release.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are already known issues about MySQL 8.0.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a> Wrapper mode is not supported yet</p></li>
+<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a> <cite>JSON</cite> data type is not supported yet</p></li>
+</ul>
+</div>
+<p>Install:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://packages.groonga.org/centos/groonga-release-latest.noarch.rpm
+% sudo dnf install -y http://repo.mysql.com/mysql80-community-release-el8.rpm
+% sudo dnf install -y groonga-libs
+% sudo dnf install --disablerepo=AppStream -y --enablerepo=epel mysql80-community-mroonga
+(% sudo systemctl start mysqld)
+(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
+(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+</pre></div>
+</div>
+</div>
+<div class="section" id="centos-8-with-mariadb-10-3-package">
+<span id="centos-8-mariadb-10-3"></span><h2>2.5.20. CentOS 8 (with MariaDB 10.3 package)<a class="headerlink" href="#centos-8-with-mariadb-10-3-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use MariaDB’s MariaDB packages version 10.3 on CentOS 8 since
+Mroonga 9.10 release.</p>
+<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.3/centos8-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://packages.groonga.org/centos/groonga-release-latest.noarch.rpm
+% sudo dnf install -y boost-program-options
+% sudo dnf install --disablerepo=AppStream -y MariaDB-server
+% sudo systemctl start mariadb
+% sudo dnf install -y --enablerepo=epel mariadb-10.3-mroonga
+(% sudo mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="centos-8-with-mariadb-10-4-package">
+<span id="centos-8-mariadb-10-4"></span><h2>2.5.21. CentOS 8 (with MariaDB 10.4 package)<a class="headerlink" href="#centos-8-with-mariadb-10-4-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use MariaDB’s MariaDB packages version 10.4 on CentOS 8 since
+Mroonga 9.10 release.</p>
+<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.4/centos8-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://packages.groonga.org/centos/groonga-release-latest.noarch.rpm
+% sudo dnf install -y boost-program-options
+% sudo dnf install --disablerepo=AppStream -y MariaDB-server
+% sudo systemctl start mariadb
+% sudo dnf install -y --enablerepo=epel mariadb-10.4-mroonga
+(% sudo mysqladmin -u root password &#39;new-password&#39;)
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -568,6 +635,9 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-2-package">2.5.16. CentOS 7 (with MariaDB 10.2 package)</a></li>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-3-package">2.5.17. CentOS 7 (with MariaDB 10.3 package)</a></li>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-4-package">2.5.18. CentOS 7 (with MariaDB 10.4 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-the-oracle-mysql-8-0-package">2.5.19. CentOS 8 (with the Oracle MySQL 8.0 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-3-package">2.5.20. CentOS 8 (with MariaDB 10.3 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-4-package">2.5.21. CentOS 8 (with MariaDB 10.4 package)</a></li>
 </ul>
 </li>
 </ul>
@@ -604,7 +674,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
         <li class="right" >
           <a href="ubuntu.html" title="2.4. Ubuntu"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" >2. Install</a> &#187;</li> 
       </ul>
     </div>

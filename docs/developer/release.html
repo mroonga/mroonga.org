@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>9.2. Release procedure (XXX not yet translated) &#8212; Mroonga v9.09 documentation</title>
+    <title>9.2. Release procedure &#8212; Mroonga v9.10 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -64,7 +64,7 @@
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U">9. Developer’s guide</a> &#187;</li> 
       </ul>
     </div>  
@@ -74,16 +74,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="release-procedure-xxx-not-yet-translated">
-<h1>9.2. Release procedure (XXX not yet translated)<a class="headerlink" href="#release-procedure-xxx-not-yet-translated" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>9.2.1. 前提条件<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>リリース手順の前提条件は以下の通りです。</p>
+  <div class="section" id="release-procedure">
+<h1>9.2. Release procedure<a class="headerlink" href="#release-procedure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>9.2.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Here is the requirements about release procedure.</p>
 <ul class="simple">
-<li><p>ビルド環境は Debian GNU/Linux (sid)</p></li>
-<li><p>コマンドラインの実行例はzsh</p></li>
+<li><p>Debian GNU/Linux (sid)</p></li>
+<li><p>Use zsh as user shell</p></li>
 </ul>
-<p>作業ディレクトリ例は以下を使用します。</p>
+<p>Use the following working directories.</p>
 <ul class="simple">
 <li><p>MROONGA_DIR=$HOME/work/mroonga</p></li>
 <li><p>MROONGA_CLONE_DIR=$HOME/work/mroonga/mroonga.clean</p></li>
@@ -93,16 +93,13 @@
 <li><p>GROONGA_SOURCE_PATH=$HOME/work/groonga/groonga.clean</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>9.2.2. ビルド環境の準備<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>以下にMroongaのリリース作業を行うために事前にインストール
-しておくべきパッケージを示します。</p>
-<p>なお、ビルド環境としては Debian GNU/Linux (sid)を前提として説明しているため、その他の環境では適宜読み替えて下さい。:</p>
+<div class="section" id="setup-build-environment">
+<h2>9.2.2. Setup build environment<a class="headerlink" href="#setup-build-environment" title="Permalink to this headline">¶</a></h2>
+<p>Install the following packages:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo apt-get install -V ruby mecab libmecab-dev gnupg2 dh-autoreconf python-sphinx bison
 </pre></div>
 </div>
-<p>Debian系（.deb）やRed Hat系（.rpm）パッケージのビルドには <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> を使用します。apt-getでインストールできるのは古いバージョンなので、Webサイトから最新版をダウンロードしてインストールすることをおすすめします。</p>
-<p>Vagrantで使用する仮想化ソフトウェア（VirtualBox、VMwareなど）がない場合、合わせてインストールしてください。なお、VirtualBoxはsources.listにcontribセクションを追加すればapt-getでインストールできます。:</p>
+<p>We use <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> for building deb or rpm packages and expect that Virtualbox package is already installed. If not, please install it in the following steps:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cat /etc/apt/sources.list
 deb http://ftp.jp.debian.org/debian/ sid main contrib
 deb-src http://ftp.jp.debian.org/debian/ sid main contrib
@@ -111,38 +108,45 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>9.2.3. 変更点の記述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>前回リリース時からの変更点を``doc/source/news.txt``にまとめます。
-ここでまとめた内容についてはリリースアナウンスにも使用します。</p>
-<p>前回リリースからの変更履歴を参照するには以下のコマンドを実行します。:</p>
+<div class="section" id="bump-version">
+<h2>9.2.3. Bump version<a class="headerlink" href="#bump-version" title="Permalink to this headline">¶</a></h2>
+<p>Bump version to the latest release:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make update-version NEW_VERSION_MAJOR=9 NEW_VERSION_MINOR=1 NEW_VERSION_MICRO=0
+</pre></div>
+</div>
+</div>
+<div class="section" id="describe-the-changes">
+<h2>9.2.4. Describe the changes<a class="headerlink" href="#describe-the-changes" title="Permalink to this headline">¶</a></h2>
+<p>Summarize recent changes since the previous release into <code class="docutils literal notranslate"><span class="pre">doc/source/news.txt</span></code>.
+This summary is also used in release note.</p>
+<p>Execute the following command to collect change logs since the previous version:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% git log -p --reverse $(git tag | tail -1)..
 </pre></div>
 </div>
-<p>ログを^commitで検索しながら、以下の基準を目安として変更点を追記していきます。</p>
-<p>含めるもの</p>
+<p>Search the logs by <code class="docutils literal notranslate"><span class="pre">^commit</span></code>, and pick up collect remarkable changes.</p>
+<p>Should be included</p>
 <ul class="simple">
-<li><p>ユーザへ影響するような変更</p></li>
-<li><p>互換性がなくなるような変更</p></li>
+<li><p>The changes which affect to users</p></li>
+<li><p>The changes which broke compatibility</p></li>
 </ul>
-<p>含めないもの</p>
+<p>Shoud not be included</p>
 <ul class="simple">
-<li><p>内部的な変更(変数名の変更やらリファクタリング)</p></li>
+<li><p>The changes which doesn’t affect to users (Internal source code changes or refactoring)</p></li>
 </ul>
 </div>
-<div class="section" id="configure">
-<h2>9.2.4. configureスクリプトの生成<a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h2>
-<p>Mroongaのソースコードをcloneした時点ではconfigureスクリプトが含まれておらず、そのままmakeコマンドにてビルドすることができません。</p>
-<p>Mroongaをcloneしたディレクトリでautogen.shを以下のように実行します。:</p>
+<div class="section" id="generate-configure-script">
+<h2>9.2.5. Generate configure script<a class="headerlink" href="#generate-configure-script" title="Permalink to this headline">¶</a></h2>
+<p>Because of master branch doesn’t include configure script, then it is required to generate configure script for building.</p>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">autogen.sh</span></code> with the following command:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sh autogen.sh
 </pre></div>
 </div>
-<p>このコマンドの実行により、configureスクリプトが生成されます。</p>
+<p>It generates <code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
 </div>
-<div class="section" id="id4">
-<h2>9.2.5. configureスクリプトの実行<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>Makefileを生成するためにconfigureスクリプトを実行します。</p>
-<p>リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:</p>
+<div class="section" id="execute-configure-script">
+<h2>9.2.6. Execute configure script<a class="headerlink" href="#execute-configure-script" title="Permalink to this headline">¶</a></h2>
+<p>For generating <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, execute the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
+<p>Execute with the following options for the release:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
     --enable-document \
     --prefix=/tmp/local \
@@ -150,267 +154,140 @@ deb-src http://ftp.jp.debian.org/debian/ sid main contrib
     --with-mroonga-github-com-path=$MROONGA_GITHUB_COM_PATH \
     --with-cutter-source-path=$CUTTER_SOURCE_PATH \
     --with-groonga-source-path=$GROONGA_SOURCE_PATH \
-    --with-mysql-source=(MySQLのソースコードがあるディレクトリー) \
-    --with-mysql-build=(MySQLのソースコードをビルドしたディレクトリー) \
-    --with-mysql-config=(mysql_configコマンドのパス)
+    --with-mysql-source=(The directory of MySQL source code) \
+    --with-mysql-build=(The build directory of MySQL) \
+    --with-mysql-config=(The path to mysql_config command)
 </pre></div>
 </div>
-<p>–with-mysql-sourceなどのオプションについては、イントールドキュメントの <a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a> を参照してください。</p>
+<p>See <a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a>  for the details of <code class="docutils literal notranslate"><span class="pre">--with-mysql-source</span></code> option.</p>
 </div>
-<div class="section" id="id5">
-<h2>9.2.6. アップロード権限の確認<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>あらかじめpackagesユーザでpackages.groonga.orgにsshログインできることを確認しておいてください。</p>
-<p>ログイン可能であるかの確認は以下のようにコマンドを実行して行います。:</p>
+<div class="section" id="check-whether-you-can-upload-packages">
+<h2>9.2.7. Check whether you can upload packages<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Permalink to this headline">¶</a></h2>
+<p>Check whether you can login to packages.groonga.org as packages user.</p>
+<p>You can check with the following command whether you can login:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ssh packages@packages.groonga.org
 </pre></div>
 </div>
-<p>ログインできない場合、SSHの公開鍵を登録してもらってください。</p>
+<p>If you can’t login to packages.groonga.org, you must be registered ssh public key.</p>
 </div>
-<div class="section" id="make-update-latest-release">
-<h2>9.2.7. make update-latest-releaseの実行<a class="headerlink" href="#make-update-latest-release" title="Permalink to this headline">¶</a></h2>
-<p>make update-latest-releaseコマンドでは、OLD_RELEASE_DATEに前回のリリースの日付を、NEW_RELEASE_DATEに次回リリースの日付を指定します。</p>
-<p>5.01のリリースを行った際は以下のコマンドを実行しました。:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make update-latest-release OLD_RELEASE=5.00 OLD_RELEASE_DATE=2015-02-09 NEW_RELEASE_DATE=2015-03-29
+<div class="section" id="execute-make-update-latest-release">
+<h2>9.2.8. Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Permalink to this headline">¶</a></h2>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-latest-release</span></code> command with OLD_RELEASE_DATE, NEW_RELEASE_DATE.</p>
+<p>When 9.09 release, we executed the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make update-latest-release OLD_RELEASE=9.09 OLD_RELEASE_DATE=2019-09-27 NEW_RELEASE_DATE=2019-10-30
 </pre></div>
 </div>
-<p>これにより、clone済みのMroongaのWebサイトのトップページのソース(index.html,ja/index.html)やRPMパッケージのspecファイルのバージョン表記などが更新されます。</p>
+<p>This command updates some html files (which is used for web sites of Mroonga - index.html,ja/index.html) and the version of spec file or debian/changelog entry.</p>
 </div>
-<div class="section" id="id6">
-<h2>9.2.8. リリースタグの設定<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<p>リリース用のタグを打つには以下のコマンドを実行します。:</p>
+<div class="section" id="tagging-for-release">
+<h2>9.2.9. Tagging for release<a class="headerlink" href="#tagging-for-release" title="Permalink to this headline">¶</a></h2>
+<p>Execute the following command for tagging:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make tag
 % git push --tags origin
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>タグを打った後にconfigureを実行することで、ドキュメント生成時のバージョン番号に反映されます。</p>
+<p>After tagging for the release, execute <code class="docutils literal notranslate"><span class="pre">configure</span></code> script. This tag information is reflected when generating the documents.</p>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>9.2.9. 配布用ファイルのアップロード<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>次に、配布用の <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> ファイルを作成します。</p>
+<div class="section" id="upload-archive-files">
+<h2>9.2.10. Upload archive files<a class="headerlink" href="#upload-archive-files" title="Permalink to this headline">¶</a></h2>
+<p>Then, create archive file (<code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>) for distribution:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make dist
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>以前はGitHubのアーカイブ機能でtar.gzを配布していましたが、その機能が廃止( <a class="reference external" href="https://github.com/blog/1302-goodbye-uploads">https://github.com/blog/1302-goodbye-uploads</a> )されるため、2012年12月のリリースよりpackages.groonga.orgでの配布に切り替えました。</p>
-</div>
-<p>packages/sourceディレクトリへと移動します。</p>
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages/source</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd packages/source
 </pre></div>
 </div>
-<p>make downloadでアップストリームと同期します。</p>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">download</span></code> for syncing with the upstream:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make download
 </pre></div>
 </div>
-<p>必要に応じて、アーカイブに含めるGroongaやgroonga-normalizer-mysql、MariaDBのバージョンを更新します。更新する場合、autogen.shを実行してMakefile.amの変更をMakefile.inに反映する必要があります。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% editor Makefile.am
-% cd ../..
-% sh autogen.sh
-% cd packages/source
-</pre></div>
-</div>
-<p>アーカイブを作成します。</p>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">archive</span></code> for generating source archive:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make archive
 </pre></div>
 </div>
-<p>アーカイブをアップロードします。</p>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">upload</span></code> for uploading archive file:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make upload
 </pre></div>
 </div>
-<p>これで、 <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a> から <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> のダウンロードが行えるようになります。</p>
+<p>As a result, <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> archive file is available from <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a>.</p>
 </div>
-<div class="section" id="id8">
-<h2>9.2.10. パッケージの作成<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<p>Linux と Windows 用にパッケージを作成する必要があります。</p>
-<p>Linux 用のパッケージは以下の 2 種類に分けることが可能です。</p>
-<ol class="arabic simple">
-<li><p>Debian 系</p></li>
-<li><p>Red Hat 系</p></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>現在のところ、パッケージの作成は Debian GNU/Linux (Ubuntu も可) でしか行えません。</p>
-</div>
+<div class="section" id="create-packages-for-the-release">
+<h2>9.2.11. Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Permalink to this headline">¶</a></h2>
+<p>Create Linux and Windows packages.</p>
 <div class="section" id="debian">
-<h3>9.2.10.1. Debian 系<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
-<p>まず apt ディレクトリに移動します。</p>
+<h3>9.2.11.1. Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">apt</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd apt
 </pre></div>
 </div>
-<p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository sign-repository upload）が行われますが、途中で失敗することもあります。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make release
-</pre></div>
-</div>
-<p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
+<p>Execute the following command:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make download
 % make build
 % make upload
 </pre></div>
 </div>
-<p>make build に PARALLEL=yes とするとビルドが並列に走り、作業がより高速に行えます。</p>
-<p>また make build CODES=lucid などとすると、ビルド対象を指定することができます。</p>
-<p>このように Makefile.am を書き換えずにコマンドライン引数でビルドの挙動を変更する方法は、知っておいて損はないでしょう。
-uploadした後、パッケージの署名とリポジトリのメタデータの更新を実施します。詳細はGroongaのリリース手順を確認してください。</p>
+<p>After uploading the packages, update sign/metadata. See Groonga’s release procedure about details.</p>
 </div>
-<div class="section" id="debian-ubuntu">
-<h3>9.2.10.2. Debian 系(Ubuntu)<a class="headerlink" href="#debian-ubuntu" title="Permalink to this headline">¶</a></h3>
-<p>Ubuntu向けのパッケージの提供は launchpad.net 上のPPA利用しています。</p>
-<p>ubuntu ディレクトリに移動してアップロードを実施します。:</p>
+<div class="section" id="debian-derivatives-ubuntu">
+<h3>9.2.11.2. Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>For Ubuntu, packages are provided by PPA on launchpad.net.</p>
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> and execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">upload</span></code> command:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd packages/ubuntu
 % make upload
 </pre></div>
 </div>
-<p>アップロードが正常終了すると、launchpad.net上でビルドが実行され、ビルド結果がメールで通知されます。ビルドに成功すると、リリース対象のパッケ
-ージがlaunchpad.netのGroongaチームのPPAへと反映されます。公開されているパッケージは以下のURLで確認できます。</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://launchpad.net/~groonga/+archive/ubuntu/ppa">https://launchpad.net/~groonga/+archive/ubuntu/ppa</a></p></li>
-</ul>
-</div>
-<div class="section" id="red-hat">
-<h3>9.2.10.3. Red Hat 系<a class="headerlink" href="#red-hat" title="Permalink to this headline">¶</a></h3>
-<p>まず yum ディレクトリに移動する。</p>
-<p>その後、次のようにすれば一連のリリース作業（download build sign-packages update-repository upload）が行われますが、途中で失敗することもあります。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make release
+<p>When upload packages was succeeded, package build process is executed on launchpad.net. Then build result is notified via E-mail.
+You can install packages via Groonga PPA on launchpad.net:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* https://launchpad.net/~groonga/+archive/ubuntu/ppa
 </pre></div>
 </div>
-<p>そのため head コマンドなどで Makefile.am の内容を確認し、順番に作業を行っていくほうが良いこともあります。</p>
+</div>
+<div class="section" id="red-hat-derivatives">
+<h3>9.2.11.3. Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Permalink to this headline">¶</a></h3>
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">yum</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd apt
+</pre></div>
+</div>
+<p>Execute the following command:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make download
 % make build
 % make upload
 </pre></div>
 </div>
-<p>uploadした後、パッケージの署名とリポジトリのメタデータの更新を実施します。詳細はGroongaのリリース手順を確認してください。</p>
+<p>After uploading the packages, update sign/metadata. See Groonga’s release procedure about details.</p>
 </div>
 <div class="section" id="windows">
-<h3>9.2.10.4. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
-<p>Windows版は <a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyorのCI</a> の成果物を利用します。</p>
+<h3>9.2.11.4. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>For windows packages, we use <a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyor CI</a> artifacts files.</p>
 </div>
 </div>
-<div class="section" id="id9">
-<h2>9.2.11. ドキュメントのアップロード<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="upload-documents">
+<h2>9.2.12. Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><p>GitHub からドキュメントアップロード用のリポジトリ (mroonga.github.com) を clone</p></li>
-<li><p>clone済みmroongaディレクトリ内でmake update-documentを実行し、clone したドキュメントアップロード用のリポジトリへ反映する</p></li>
-<li><p>mroonga.github.com へコミットを行い GitHub へ push</p></li>
+<li><p>Clone mroonga.github.com repository</p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code></p></li>
+<li><p>Commit changes in mroonga.github.com repository &amp;&amp; push them</p></li>
 </ol>
 </div>
-<div class="section" id="homebrew">
-<h2>9.2.12. Homebrewの更新<a class="headerlink" href="#homebrew" title="Permalink to this headline">¶</a></h2>
-<p>OS Xでのパッケージ管理方法として <a class="reference external" href="http://brew.sh/">Homebrew</a> があります。</p>
-<p>Groongaの場合はHomebrewへpull requestを送りますが、Mroongaの場合は別途用意してあるhomebrewリポジトリを更新します。</p>
-<blockquote>
-<div><p><a class="reference external" href="https://github.com/mroonga/homebrew">https://github.com/mroonga/homebrew</a></p>
-</div></blockquote>
-<p>mroonga/homebrewをcloneして、Formula更新用のシェルスクリプトを実行します。update.shの引数にはリリース時のバージョンを指定します。例えば、3.06のリリースのときは以下を実行しました。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./update.sh 3.06
-</pre></div>
-</div>
-<p>実行すると、FormulaのソースアーカイブのURLとsha256チェックサムを更新します。
-あとは、変更内容をコミットすればHomebrewの更新作業は完了です。</p>
-</div>
-<div class="section" id="id11">
-<h2>9.2.13. リリースメールの送信<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
-<p>各種メーリングリストにリリースメールを流します。</p>
+<div class="section" id="announce-release-for-mailing-list">
+<h2>9.2.13. Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this headline">¶</a></h2>
+<p>Send release announce for each mailing list</p>
 <ul class="simple">
-<li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> 日本語アナウンス</p></li>
-<li><p><a class="reference external" href="mailto:groonga-dev&#37;&#52;&#48;lists&#46;osdn&#46;me">groonga-dev<span>&#64;</span>lists<span>&#46;</span>osdn<span>&#46;</span>me</a> 日本語アナウンス</p></li>
-<li><p><a class="reference external" href="mailto:groonga-talk&#37;&#52;&#48;lists&#46;sourceforge&#46;net">groonga-talk<span>&#64;</span>lists<span>&#46;</span>sourceforge<span>&#46;</span>net</a> 英語アナウンス</p></li>
+<li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
+<li><p><a class="reference external" href="mailto:groonga-dev&#37;&#52;&#48;lists&#46;osdn&#46;me">groonga-dev<span>&#64;</span>lists<span>&#46;</span>osdn<span>&#46;</span>me</a> for Japanese</p></li>
+<li><p><a class="reference external" href="mailto:groonga-talk&#37;&#52;&#48;lists&#46;sourceforge&#46;net">groonga-talk<span>&#64;</span>lists<span>&#46;</span>sourceforge<span>&#46;</span>net</a> for English</p></li>
 </ul>
-<p>メッセージ内容のテンプレートを以下に示します。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ドキュメント(インストールガイド含む)
-  http://mroonga.org/
-
-ダウンロード
-  http://packages.groonga.org/source/mroonga
-
-Mroongaとは、全文検索エンジンであるGroongaをベースとした
-MySQLのストレージエンジンです。Tritonnの後継プロジェクトとな
-ります。
-
-
-最近のトピックス
-================
-
-# &lt;&lt;&lt;ユーモアを交えて最近のトピックスを&gt;&gt;&gt;
-
-先月開催されたMySQL Conference 2011でMroongaについて発表して
-きました。（私じゃなくて開発チームのみなさんが。）英語ですが、
-以下の発表資料があるので興味がある方はご覧ください。
-
-  http://groonga.org/ja/publication/
-
-
-いろいろ試してくれている方もいらっしゃるようでありがとうござ
-います。いちいさんなど使った感想を公開してくれていてとても参
-考になります。ありがとうございます。
-  http://d.hatena.ne.jp/ichii386/20110427/1303852054
-
-（↓の変更点にあるとおり、今回のリリースからauto_increment機
-能が追加されています。）
-
-
-ただ、「REPLACE INTO処理が完了せずにコネクションを消費する」
-のようなバグレポートがあるように、うまく動かないケースもある
-ようなので、試していただける方は注意してください。
-  http://redmine.groonga.org/issues/910
-
-今日リリースしたGroonga 1.2.2でマルチスレッド・マルチプロセ
-ス時にデータ破損してしまう問題を修正しているので、最新の
-Groongaと組み合わせると問題が解決しているかもしれません。
-
-使ってみて、なにか問題があったら報告してもらえると助かります。
-
-# &lt;&lt;&lt;&lt;以下 news.rst に書かれている内容を貼り付ける&gt;&gt;&gt;
-
-変更点
-======
-
-0.5からの変更点は以下の通りです。
-  http://mroonga.github.com/news.html#release-0-6
-
-改良
-----
-
-    auto_increment機能の追加。#670
-    不必要な”duplicated _id on insert”というエラーメッセージを抑制。 #910（←は未修正）
-    CentOSで利用しているMySQLのバージョンを5.5.10から5.5.12へアップデート。
-    Ubuntu 11.04 Natty Narwhalサポートの追加。
-    Ubuntu 10.10 Maverick Meerkatサポートの削除。
-    Fedora 15サポートの追加。
-    Fedora 14サポートの削除。
-
-修正
-----
-
-    ORDER BY LIMITの高速化が機能しないケースがある問題の修正。#845
-    デバッグビルド時のメモリリークを修正。
-    提供しているCentOS用パッケージをOracle提供MySQLパッケージと一緒に使うとクラッシュする問題を修正。
-
-感謝
-----
-
-    Mitsuhiro Shibuyaさん
-    Hiroki Minetaさん
-    @kodakaさん
-</pre></div>
 </div>
-</div>
-<div class="section" id="twitter">
-<h2>9.2.14. Twitterでリリースアナウンスをする<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
-<p>Mroongaブログのリリースエントリには「リンクをあなたのフォロワーに共有する」ためのツイートボタンがあるので、そのボタンを使ってリリースアナウンスします。(画面下部に配置されている)</p>
-<p>このボタンを経由する場合、ツイート内容に自動的にリリースタイトル(「Mroonga 2.08リリース」など)とMroongaブログのリリースエントリのURLが挿入されます。</p>
-<p>この作業はMroongaブログの英語版、日本語版それぞれで行います。
-あらかじめgroongaアカウントでログインしておくとアナウンスを円滑に行うことができます。</p>
-</div>
-<div class="section" id="id12">
-<h2>9.2.15. リリース後にやること<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<p>リリースバージョンを以下のようにして更新します。:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make update-version NEW_VERSION_MAJOR=2 NEW_VERSION_MINOR=0 NEW_VERSION_MICRO=7
-</pre></div>
-</div>
+<div class="section" id="announce-release-for-twitter">
+<h2>9.2.14. Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this headline">¶</a></h2>
+<p>Click Tweet link in Mrooga blog entry. You can share tweet about latest release.
+If you use tweet link, title of release announce and URL is embedded into your tweet.</p>
+<p>Execute sharing tweet in Japanese and English version of blog entry.
+Note that this tweet should be done when logged in by <code class="docutils literal notranslate"><span class="pre">groonga</span></code> account.</p>
 </div>
 </div>
 
@@ -422,28 +299,27 @@ Groongaと組み合わせると問題が解決しているかもしれません�
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">9.2. Release procedure (XXX not yet translated)</a><ul>
-<li><a class="reference internal" href="#id1">9.2.1. 前提条件</a></li>
-<li><a class="reference internal" href="#id2">9.2.2. ビルド環境の準備</a></li>
-<li><a class="reference internal" href="#id3">9.2.3. 変更点の記述</a></li>
-<li><a class="reference internal" href="#configure">9.2.4. configureスクリプトの生成</a></li>
-<li><a class="reference internal" href="#id4">9.2.5. configureスクリプトの実行</a></li>
-<li><a class="reference internal" href="#id5">9.2.6. アップロード権限の確認</a></li>
-<li><a class="reference internal" href="#make-update-latest-release">9.2.7. make update-latest-releaseの実行</a></li>
-<li><a class="reference internal" href="#id6">9.2.8. リリースタグの設定</a></li>
-<li><a class="reference internal" href="#id7">9.2.9. 配布用ファイルのアップロード</a></li>
-<li><a class="reference internal" href="#id8">9.2.10. パッケージの作成</a><ul>
-<li><a class="reference internal" href="#debian">9.2.10.1. Debian 系</a></li>
-<li><a class="reference internal" href="#debian-ubuntu">9.2.10.2. Debian 系(Ubuntu)</a></li>
-<li><a class="reference internal" href="#red-hat">9.2.10.3. Red Hat 系</a></li>
-<li><a class="reference internal" href="#windows">9.2.10.4. Windows</a></li>
+<li><a class="reference internal" href="#">9.2. Release procedure</a><ul>
+<li><a class="reference internal" href="#requirements">9.2.1. Requirements</a></li>
+<li><a class="reference internal" href="#setup-build-environment">9.2.2. Setup build environment</a></li>
+<li><a class="reference internal" href="#bump-version">9.2.3. Bump version</a></li>
+<li><a class="reference internal" href="#describe-the-changes">9.2.4. Describe the changes</a></li>
+<li><a class="reference internal" href="#generate-configure-script">9.2.5. Generate configure script</a></li>
+<li><a class="reference internal" href="#execute-configure-script">9.2.6. Execute configure script</a></li>
+<li><a class="reference internal" href="#check-whether-you-can-upload-packages">9.2.7. Check whether you can upload packages</a></li>
+<li><a class="reference internal" href="#execute-make-update-latest-release">9.2.8. Execute make update-latest-release</a></li>
+<li><a class="reference internal" href="#tagging-for-release">9.2.9. Tagging for release</a></li>
+<li><a class="reference internal" href="#upload-archive-files">9.2.10. Upload archive files</a></li>
+<li><a class="reference internal" href="#create-packages-for-the-release">9.2.11. Create packages for the release</a><ul>
+<li><a class="reference internal" href="#debian">9.2.11.1. Debian</a></li>
+<li><a class="reference internal" href="#debian-derivatives-ubuntu">9.2.11.2. Debian derivatives(Ubuntu)</a></li>
+<li><a class="reference internal" href="#red-hat-derivatives">9.2.11.3. Red Hat derivatives</a></li>
+<li><a class="reference internal" href="#windows">9.2.11.4. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id9">9.2.11. ドキュメントのアップロード</a></li>
-<li><a class="reference internal" href="#homebrew">9.2.12. Homebrewの更新</a></li>
-<li><a class="reference internal" href="#id11">9.2.13. リリースメールの送信</a></li>
-<li><a class="reference internal" href="#twitter">9.2.14. Twitterでリリースアナウンスをする</a></li>
-<li><a class="reference internal" href="#id12">9.2.15. リリース後にやること</a></li>
+<li><a class="reference internal" href="#upload-documents">9.2.12. Upload documents</a></li>
+<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.13. Announce release for mailing list</a></li>
+<li><a class="reference internal" href="#announce-release-for-twitter">9.2.14. Announce release for twitter</a></li>
 </ul>
 </li>
 </ul>
@@ -480,7 +356,7 @@ Groongaと組み合わせると問題が解決しているかもしれません�
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" >9. Developer’s guide</a> &#187;</li> 
       </ul>
     </div>
