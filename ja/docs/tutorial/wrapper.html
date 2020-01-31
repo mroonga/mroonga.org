@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>4.4. ラッパーモード &#8212; Mroonga v9.11 documentation</title>
+    <title>4.4. ラッパーモード &#8212; Mroonga v9.12 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -65,8 +65,8 @@
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.11 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>チュートリアル</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -76,10 +76,10 @@
           <div class="body" role="main">
             
   <div class="section" id="wrapper-mode">
-<h1>4.4. ラッパーモード<a class="headerlink" href="#wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1><span class="section-number">4.4. </span>ラッパーモード<a class="headerlink" href="#wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>ここでは Mroonga におけるラッパーモードの利用方法を説明します。</p>
 <div class="section" id="how-to-use-wrapper-mode">
-<h2>4.4.1. ラッパーモードの利用方法<a class="headerlink" href="#how-to-use-wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.1. </span>ラッパーモードの利用方法<a class="headerlink" href="#how-to-use-wrapper-mode" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで Mroonga が動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <code class="docutils literal notranslate"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;InnoDB&quot;'</span></code> のように指定するようになっています。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
@@ -95,7 +95,7 @@
 </div>
 </div>
 <div class="section" id="how-to-use-full-text-search">
-<h2>4.4.2. 全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.2. </span>全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <code class="docutils literal notranslate"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code> とMroongaを指定するところがポイントです。:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -126,7 +126,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>おぉぉー。検索できましたね。</p>
 </div>
 <div class="section" id="how-to-get-search-score">
-<h2>4.4.3. 検索スコアの取得方法<a class="headerlink" href="#how-to-get-search-score" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.3. </span>検索スコアの取得方法<a class="headerlink" href="#how-to-get-search-score" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
 <p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference brackets" href="#score" id="id1">1</a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
 <p>それでは実際にやってみましょう。:</p>
@@ -162,7 +162,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) 
 </div>
 </div>
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
-<h2>4.4.4. 全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.4. </span>全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MySQLは全文検索用のパーサ <a class="footnote-reference brackets" href="#parser" id="id2">2</a> を指定する以下のような構文を持っています。:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
@@ -275,7 +275,7 @@ Query OK, 0 rows affected (0.00 sec)
 </div>
 </div>
 <div class="section" id="how-to-specify-the-normalizer">
-<h2>4.4.5. ノーマライザーの指定方法<a class="headerlink" href="#how-to-specify-the-normalizer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.5. </span>ノーマライザーの指定方法<a class="headerlink" href="#how-to-specify-the-normalizer" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaは、文書のエンコーディング(照合順序)に応じたノーマライザーを使用します。これはテキストをトークナイズするときとテーブルのキーを保存するときに使われます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">utf8_general_ci</span></code> または <code class="docutils literal notranslate"><span class="pre">utf8mb4_general_ci</span></code> の場合、<code class="docutils literal notranslate"><span class="pre">NormalizerMySQLGeneralCI</span></code> ノーマライザーが使用されます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">utf8_unicode_ci</span></code> または <code class="docutils literal notranslate"><span class="pre">utf8mb4_unicode_ci</span></code> の場合、<code class="docutils literal notranslate"><span class="pre">NormalizerMySQLUnicodeCI</span></code> ノーマライザーが使用されます。</p>
@@ -348,11 +348,11 @@ mysql&gt; SELECT * FROM diaries
 </div>
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>4.4.6. スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.6. </span>スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaは周辺テキスト付きでキーワードを取得する機能を提供しています。この機能は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDFとして実装されています。</p>
 </div>
 <div class="section" id="logging">
-<h2>4.4.7. ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.7. </span>ログ出力<a class="headerlink" href="#logging" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> というファイル名で出力されます。</p>
 <p>以下はログの出力例です。</p>
@@ -404,7 +404,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>4.4.8. 次のステップ<a class="headerlink" href="#next-step" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">4.4.8. </span>次のステップ<a class="headerlink" href="#next-step" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>これでラッパーモードでMroongaを使えるようになりました！Mroongaをもっと速くしたい場合は <a class="reference internal" href="../reference/optimizations.html"><span class="doc">最適化</span></a> も参照してください。</p>
 <p class="rubric">脚注</p>
 <dl class="footnote brackets">
@@ -441,10 +441,10 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="storage.html"
-                        title="前の章へ">4.3. ストレージモード</a></p>
+                        title="前の章へ"><span class="section-number">4.3. </span>ストレージモード</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="../reference.html"
-                        title="次の章へ">5. リファレンス</a></p>
+                        title="次の章へ"><span class="section-number">5. </span>リファレンス</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">クイック検索</h3>
     <div class="searchformwrapper">
@@ -471,8 +471,8 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.11 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>チュートリアル</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

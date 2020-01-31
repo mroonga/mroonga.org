@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>5.5.2. mroonga_escape() &#8212; Mroonga v9.11 documentation</title>
+    <title>5.5.2. mroonga_escape() &#8212; Mroonga v9.12 documentation</title>
     <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
     
@@ -64,9 +64,9 @@
         <li class="right" >
           <a href="mroonga_command.html" title="5.5.1. mroonga_command()"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.11 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U">5.5. UDF (User Defined Functions)</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U"><span class="section-number">5.5. </span>UDF (User Defined Functions)</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -76,17 +76,17 @@
           <div class="body" role="main">
             
   <div class="section" id="mroonga-escape">
-<h1>5.5.2. <code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code><a class="headerlink" href="#mroonga-escape" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">5.5.2. </span><code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code><a class="headerlink" href="#mroonga-escape" title="Permalink to this headline">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 3.08.</span></p>
 </div>
 <div class="section" id="summary">
-<h2>5.5.2.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5.2.1. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_escape</span></code> UDF provides functionality to escape given string.
 It also accepts parameter what character should be escaped.</p>
 </div>
 <div class="section" id="syntax">
-<h2>5.5.2.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5.2.2. </span>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code> has required parameter and optional parameter:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mroonga_escape(string)
 mroonga_escape(string, special_characters)
@@ -94,7 +94,7 @@ mroonga_escape(string, special_characters)
 </div>
 </div>
 <div class="section" id="usage">
-<h2>5.5.2.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5.2.3. </span>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>Here is the example query which use special characters to be escaped:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SELECT * FROM `symbols` WHERE MATCH(`content`) AGAINST(mroonga_escape(&quot;+hello_world()&quot;, &quot;()&quot;) IN BOOLEAN MODE);
 </pre></div>
@@ -106,27 +106,27 @@ mroonga_escape(string, special_characters)
 </div>
 </div>
 <div class="section" id="parameters">
-<h2>5.5.2.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5.2.4. </span>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="required-parameters">
-<h3>5.5.2.4.1. Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.5.2.4.1. </span>Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
 <p>There is one required parameter, <code class="docutils literal notranslate"><span class="pre">string</span></code>.</p>
 <div class="section" id="string">
-<h4>5.5.2.4.1.1. <code class="docutils literal notranslate"><span class="pre">string</span></code><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">5.5.2.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">string</span></code><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h4>
 <p>It specifies text which you want to escape.</p>
 </div>
 </div>
 <div class="section" id="optional-parameters">
-<h3>5.5.2.4.2. Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.5.2.4.2. </span>Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
 <p>There is one optional parameter, <code class="docutils literal notranslate"><span class="pre">special_characters</span></code>.</p>
 <div class="section" id="special-characters">
-<h4>5.5.2.4.2.1. <code class="docutils literal notranslate"><span class="pre">special_characters</span></code><a class="headerlink" href="#special-characters" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">5.5.2.4.2.1. </span><code class="docutils literal notranslate"><span class="pre">special_characters</span></code><a class="headerlink" href="#special-characters" title="Permalink to this headline">¶</a></h4>
 <p>It specifies characters to escape.</p>
 <p>The default value is <code class="docutils literal notranslate"><span class="pre">+-&lt;&gt;~*()&quot;\\:</span></code>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="return-value">
-<h2>5.5.2.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5.2.5. </span>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <p>It returns escaped string.</p>
 </div>
 </div>
@@ -161,10 +161,10 @@ mroonga_escape(string, special_characters)
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="mroonga_command.html"
-                        title="previous chapter">5.5.1. <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></p>
+                        title="previous chapter"><span class="section-number">5.5.1. </span><code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="mroonga_highlight_html.html"
-                        title="next chapter">5.5.3. <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></p>
+                        title="next chapter"><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -191,9 +191,9 @@ mroonga_escape(string, special_characters)
         <li class="right" >
           <a href="mroonga_command.html" title="5.5.1. mroonga_command()"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.11 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../reference.html" >5. Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../udf.html" >5.5. UDF (User Defined Functions)</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v9.12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../udf.html" ><span class="section-number">5.5. </span>UDF (User Defined Functions)</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

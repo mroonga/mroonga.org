@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>4.4. Wrapper mode &#8212; Mroonga v9.11 documentation</title>
+    <title>4.4. Wrapper mode &#8212; Mroonga v9.12 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -64,8 +64,8 @@
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.11 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>Tutorial</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -75,10 +75,10 @@
           <div class="body" role="main">
             
   <div class="section" id="wrapper-mode">
-<h1>4.4. Wrapper mode<a class="headerlink" href="#wrapper-mode" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">4.4. </span>Wrapper mode<a class="headerlink" href="#wrapper-mode" title="Permalink to this headline">¶</a></h1>
 <p>Here we explain how to use wrapper mode of Mroonga</p>
 <div class="section" id="how-to-use-wrapper-mode">
-<h2>4.4.1. How to use wrapper mode<a class="headerlink" href="#how-to-use-wrapper-mode" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.1. </span>How to use wrapper mode<a class="headerlink" href="#how-to-use-wrapper-mode" title="Permalink to this headline">¶</a></h2>
 <p>In wrapper mode, Mroonga works in wrapping an existing storage engine. To specify the wrapped storage engine, we use SQL comment like <code class="docutils literal notranslate"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;InnoDB&quot;'</span></code> for now.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -94,7 +94,7 @@
 </div>
 </div>
 <div class="section" id="how-to-use-full-text-search">
-<h2>4.4.2. How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.2. </span>How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>After confirming the installation, let’s create a table. The important point is to specify Mroonga by <code class="docutils literal notranslate"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE diaries (
     -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -125,7 +125,7 @@ Query OK, 1 row affected (0.00 sec)
 <p>Yes, full text search works.</p>
 </div>
 <div class="section" id="how-to-get-search-score">
-<h2>4.4.3. How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.3. </span>How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this headline">¶</a></h2>
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL’s standard way <a class="footnote-reference brackets" href="#score" id="id1">1</a>, i.e. we use MATCH…AGAINST in one of columns in SELECT or ORDER BY.</p>
 <p>Let’s try.</p>
@@ -161,7 +161,7 @@ mysql&gt; SELECT *, MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) 
 </div>
 </div>
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
-<h2>4.4.4. How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.4. </span>How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference brackets" href="#parser" id="id2">2</a> for full text search.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
 </pre></div>
@@ -314,7 +314,7 @@ Query OK, 0 rows affected (0.00 sec)
 </div>
 </div>
 <div class="section" id="how-to-specify-the-normalizer">
-<h2>4.4.5. How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.5. </span>How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga uses normalizer corresponding to the encoding of document.
 It is used when tokenizing text and storing table key.</p>
 <p>It is used <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLGeneralCI</span></code> normalizer when the encoding is
@@ -390,12 +390,12 @@ mysql&gt; SELECT * FROM diaries
 </div>
 </div>
 <div class="section" id="how-to-get-snippet-keyword-in-context">
-<h2>4.4.6. How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.6. </span>How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDF.</p>
 </div>
 <div class="section" id="logging">
-<h2>4.4.7. Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.7. </span>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL’s data directory with the filename  <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
@@ -447,7 +447,7 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 </ol>
 </div>
 <div class="section" id="next-step">
-<h2>4.4.8. Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4.8. </span>Next step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
 <p>Now, you can use Mroonga as wrapper mode! If you want Mroonga to be
 faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
 <p class="rubric">Footnotes</p>
@@ -485,10 +485,10 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="storage.html"
-                        title="previous chapter">4.3. Storage mode</a></p>
+                        title="previous chapter"><span class="section-number">4.3. </span>Storage mode</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../reference.html"
-                        title="next chapter">5. Reference</a></p>
+                        title="next chapter"><span class="section-number">5. </span>Reference</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -515,8 +515,8 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="storage.html" title="4.3. Storage mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.11 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v9.12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>Tutorial</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
