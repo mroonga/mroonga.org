@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>9.2. Release procedure &#8212; Mroonga v10.01 documentation</title>
+    <title>9.2. Release procedure &#8212; Mroonga v10.02 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -64,7 +64,7 @@
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>Developer’s guide</a> &#187;</li> 
       </ul>
     </div>  
@@ -91,6 +91,7 @@
 <li><p>CUTTER_DIR=$HOME/work/cutter</p></li>
 <li><p>CUTTER_SOURCE_PATH=$HOME/work/cutter/cutter</p></li>
 <li><p>GROONGA_SOURCE_PATH=$HOME/work/groonga/groonga.clean</p></li>
+<li><p>PACKAGES_GROONGA_ORG_REPOSITORY=$HOME/work/groonga/packages.groonga.org</p></li>
 </ul>
 </div>
 <div class="section" id="setup-build-environment">
@@ -99,14 +100,8 @@
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo apt-get install -V ruby mecab libmecab-dev gnupg2 dh-autoreconf python-sphinx bison
 </pre></div>
 </div>
-<p>We use <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> for building deb or rpm packages and expect that Virtualbox package is already installed. If not, please install it in the following steps:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cat /etc/apt/sources.list
-deb http://ftp.jp.debian.org/debian/ sid main contrib
-deb-src http://ftp.jp.debian.org/debian/ sid main contrib
-% sudo apt-get update
-% sudo apt-get install virtualbox
-</pre></div>
-</div>
+<p>We use <a class="reference external" href="https://www.docker.com/">Docker</a> for building deb or rpm packages.
+If it is not installed, please install it according to the official documentation of Docker.</p>
 </div>
 <div class="section" id="bump-version">
 <h2><span class="section-number">9.2.3. </span>Bump version<a class="headerlink" href="#bump-version" title="Permalink to this headline">¶</a></h2>
@@ -150,7 +145,7 @@ This summary is also used in release note.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
     --enable-document \
     --prefix=/tmp/local \
-    --with-launchpad-uploader-pgp-key=(Launchpadに登録したkeyID) \
+    --with-launchpad-uploader-pgp-key=(The key ID that is registered Launchpad) \
     --with-mroonga-github-com-path=$MROONGA_GITHUB_COM_PATH \
     --with-cutter-source-path=$CUTTER_SOURCE_PATH \
     --with-groonga-source-path=$GROONGA_SOURCE_PATH \
@@ -160,6 +155,11 @@ This summary is also used in release note.</p>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a>  for the details of <code class="docutils literal notranslate"><span class="pre">--with-mysql-source</span></code> option.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We can not upload and override the same name packages to PPA repository.
+Therefore, we upload packages to a stable repository after confirming the successful build of they in the nightly repository.</p>
+</div>
 </div>
 <div class="section" id="check-whether-you-can-upload-packages">
 <h2><span class="section-number">9.2.7. </span>Check whether you can upload packages<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Permalink to this headline">¶</a></h2>
@@ -170,8 +170,18 @@ This summary is also used in release note.</p>
 </div>
 <p>If you can’t login to packages.groonga.org, you must be registered ssh public key.</p>
 </div>
+<div class="section" id="confirm-the-results-of-each-test">
+<h2><span class="section-number">9.2.8. </span>Confirm the results of each test<a class="headerlink" href="#confirm-the-results-of-each-test" title="Permalink to this headline">¶</a></h2>
+<p>We confirm the results of all the below tests before setting the tag to Mroonga.
+Because if we will find problems in Mroonga after setting the tag to it, we must release it again.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mroonga/mroonga/actions">GitHub Actions</a></p></li>
+<li><p><a class="reference external" href="https://travis-ci.org/github/mroonga/mroonga">Travis CI</a></p></li>
+<li><p><a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyor</a></p></li>
+</ul>
+</div>
 <div class="section" id="execute-make-update-latest-release">
-<h2><span class="section-number">9.2.8. </span>Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.9. </span>Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Permalink to this headline">¶</a></h2>
 <p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-latest-release</span></code> command with OLD_RELEASE_DATE, NEW_RELEASE_DATE.</p>
 <p>When 9.09 release, we executed the following command:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make update-latest-release OLD_RELEASE=9.09 OLD_RELEASE_DATE=2019-09-27 NEW_RELEASE_DATE=2019-10-30
@@ -180,7 +190,7 @@ This summary is also used in release note.</p>
 <p>This command updates some html files (which is used for web sites of Mroonga - index.html,ja/index.html) and the version of spec file or debian/changelog entry.</p>
 </div>
 <div class="section" id="tagging-for-release">
-<h2><span class="section-number">9.2.9. </span>Tagging for release<a class="headerlink" href="#tagging-for-release" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.10. </span>Tagging for release<a class="headerlink" href="#tagging-for-release" title="Permalink to this headline">¶</a></h2>
 <p>Execute the following command for tagging:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make tag
 % git push --tags origin
@@ -192,7 +202,7 @@ This summary is also used in release note.</p>
 </div>
 </div>
 <div class="section" id="upload-archive-files">
-<h2><span class="section-number">9.2.10. </span>Upload archive files<a class="headerlink" href="#upload-archive-files" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.11. </span>Upload archive files<a class="headerlink" href="#upload-archive-files" title="Permalink to this headline">¶</a></h2>
 <p>Then, create archive file (<code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>) for distribution:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make dist
 </pre></div>
@@ -213,31 +223,34 @@ This summary is also used in release note.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make upload
 </pre></div>
 </div>
-<p>As a result, <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> archive file is available from <a class="reference external" href="http://packages.groonga.org/source/mroonga/">http://packages.groonga.org/source/mroonga/</a>.</p>
+<p>As a result, <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> archive file is available from <a class="reference external" href="https://packages.groonga.org/source/mroonga/">https://packages.groonga.org/source/mroonga/</a>.</p>
 </div>
 <div class="section" id="create-packages-for-the-release">
-<h2><span class="section-number">9.2.11. </span>Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.12. </span>Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Permalink to this headline">¶</a></h2>
 <p>Create Linux and Windows packages.</p>
 <div class="section" id="debian">
-<h3><span class="section-number">9.2.11.1. </span>Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
-<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">apt</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd apt
+<h3><span class="section-number">9.2.12.1. </span>Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd packages
 </pre></div>
 </div>
 <p>Execute the following command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make download
-% make build
-% make upload
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% rake apt:release
 </pre></div>
 </div>
-<p>After uploading the packages, update sign/metadata. See Groonga’s release procedure about details.</p>
+<p>Now we finish build and upload packages to <a class="reference external" href="https://packages.groonga.org/">https://packages.groonga.org/</a>.
+However, these packages are unsigned. We sign packages by executing the below commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd $PACKAGES_GROONGA_ORG_REPOSITORY
+% rake apt
+</pre></div>
+</div>
 </div>
 <div class="section" id="debian-derivatives-ubuntu">
-<h3><span class="section-number">9.2.11.2. </span>Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.2.12.2. </span>Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Permalink to this headline">¶</a></h3>
 <p>For Ubuntu, packages are provided by PPA on launchpad.net.</p>
-<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> and execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">upload</span></code> command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd packages/ubuntu
-% make upload
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code> and execute <code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">ubuntu:upload</span></code> command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd packages
+% rake ubuntu:upload
 </pre></div>
 </div>
 <p>When upload packages was succeeded, package build process is executed on launchpad.net. Then build result is notified via E-mail.
@@ -247,34 +260,63 @@ You can install packages via Groonga PPA on launchpad.net:</p>
 </div>
 </div>
 <div class="section" id="red-hat-derivatives">
-<h3><span class="section-number">9.2.11.3. </span>Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Permalink to this headline">¶</a></h3>
-<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">yum</span></code></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd apt
+<h3><span class="section-number">9.2.12.3. </span>Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Permalink to this headline">¶</a></h3>
+<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd packages
 </pre></div>
 </div>
 <p>Execute the following command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make download
-% make build
-% make upload
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% rake yum:release
 </pre></div>
 </div>
-<p>After uploading the packages, update sign/metadata. See Groonga’s release procedure about details.</p>
+<p>Now we finish build and upload packages to <a class="reference external" href="https://packages.groonga.org/">https://packages.groonga.org/</a>.
+However, these packages are unsigned. We sign packages by executing the below commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd $PACKAGES_GROONGA_ORG_REPOSITORY
+% rake yum
+</pre></div>
+</div>
 </div>
 <div class="section" id="windows">
-<h3><span class="section-number">9.2.11.4. </span>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
-<p>For windows packages, we use <a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyor CI</a> artifacts files.</p>
+<h3><span class="section-number">9.2.12.4. </span>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>For windows packages, we use <a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyor CI</a> artifacts files.
+We upload them to <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> .</p>
 </div>
 </div>
 <div class="section" id="upload-documents">
-<h2><span class="section-number">9.2.12. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.13. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Clone mroonga.github.com repository</p></li>
-<li><p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code></p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> in <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code></p></li>
 <li><p>Commit changes in mroonga.github.com repository &amp;&amp; push them</p></li>
 </ol>
 </div>
+<div class="section" id="update-blog-mroonga-blog">
+<h2><span class="section-number">9.2.14. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Permalink to this headline">¶</a></h2>
+<p>We update the below files.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/ja/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/en/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
+</ul>
+<p>We can confirm contents of blog on Web browser by using Jekyll.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% jekyll serve --watch
+</pre></div>
+</div>
+<p>We access <a class="reference external" href="http://localhost:4000">http://localhost:4000</a> on our web browser for confirming contents.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If we want private to blog contents, we set <code class="docutils literal notranslate"><span class="pre">false</span></code> on <code class="docutils literal notranslate"><span class="pre">published:</span></code> in <code class="docutils literal notranslate"><span class="pre">.md</span></code> file.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---
+layout: post.en
+title: Mroonga 10.01 has been released!
+description: Mroonga 10.01 has been released!
+published: false
+---
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="announce-release-for-mailing-list">
-<h2><span class="section-number">9.2.13. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.15. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this headline">¶</a></h2>
 <p>Send release announce for each mailing list</p>
 <ul class="simple">
 <li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
@@ -283,11 +325,16 @@ You can install packages via Groonga PPA on launchpad.net:</p>
 </ul>
 </div>
 <div class="section" id="announce-release-for-twitter">
-<h2><span class="section-number">9.2.14. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2.16. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this headline">¶</a></h2>
 <p>Click Tweet link in Mrooga blog entry. You can share tweet about latest release.
 If you use tweet link, title of release announce and URL is embedded into your tweet.</p>
 <p>Execute sharing tweet in Japanese and English version of blog entry.
 Note that this tweet should be done when logged in by <code class="docutils literal notranslate"><span class="pre">groonga</span></code> account.</p>
+</div>
+<div class="section" id="announce-release-for-facebook">
+<h2><span class="section-number">9.2.17. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Permalink to this headline">¶</a></h2>
+<p>We announce release from Mroonga group in Facebook.</p>
+<p><a class="reference external" href="https://www.facebook.com/mroonga/">https://www.facebook.com/mroonga/</a></p>
 </div>
 </div>
 
@@ -307,19 +354,22 @@ Note that this tweet should be done when logged in by <code class="docutils lite
 <li><a class="reference internal" href="#generate-configure-script">9.2.5. Generate configure script</a></li>
 <li><a class="reference internal" href="#execute-configure-script">9.2.6. Execute configure script</a></li>
 <li><a class="reference internal" href="#check-whether-you-can-upload-packages">9.2.7. Check whether you can upload packages</a></li>
-<li><a class="reference internal" href="#execute-make-update-latest-release">9.2.8. Execute make update-latest-release</a></li>
-<li><a class="reference internal" href="#tagging-for-release">9.2.9. Tagging for release</a></li>
-<li><a class="reference internal" href="#upload-archive-files">9.2.10. Upload archive files</a></li>
-<li><a class="reference internal" href="#create-packages-for-the-release">9.2.11. Create packages for the release</a><ul>
-<li><a class="reference internal" href="#debian">9.2.11.1. Debian</a></li>
-<li><a class="reference internal" href="#debian-derivatives-ubuntu">9.2.11.2. Debian derivatives(Ubuntu)</a></li>
-<li><a class="reference internal" href="#red-hat-derivatives">9.2.11.3. Red Hat derivatives</a></li>
-<li><a class="reference internal" href="#windows">9.2.11.4. Windows</a></li>
+<li><a class="reference internal" href="#confirm-the-results-of-each-test">9.2.8. Confirm the results of each test</a></li>
+<li><a class="reference internal" href="#execute-make-update-latest-release">9.2.9. Execute make update-latest-release</a></li>
+<li><a class="reference internal" href="#tagging-for-release">9.2.10. Tagging for release</a></li>
+<li><a class="reference internal" href="#upload-archive-files">9.2.11. Upload archive files</a></li>
+<li><a class="reference internal" href="#create-packages-for-the-release">9.2.12. Create packages for the release</a><ul>
+<li><a class="reference internal" href="#debian">9.2.12.1. Debian</a></li>
+<li><a class="reference internal" href="#debian-derivatives-ubuntu">9.2.12.2. Debian derivatives(Ubuntu)</a></li>
+<li><a class="reference internal" href="#red-hat-derivatives">9.2.12.3. Red Hat derivatives</a></li>
+<li><a class="reference internal" href="#windows">9.2.12.4. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#upload-documents">9.2.12. Upload documents</a></li>
-<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.13. Announce release for mailing list</a></li>
-<li><a class="reference internal" href="#announce-release-for-twitter">9.2.14. Announce release for twitter</a></li>
+<li><a class="reference internal" href="#upload-documents">9.2.13. Upload documents</a></li>
+<li><a class="reference internal" href="#update-blog-mroonga-blog">9.2.14. Update blog(Mroonga blog)</a></li>
+<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.15. Announce release for mailing list</a></li>
+<li><a class="reference internal" href="#announce-release-for-twitter">9.2.16. Announce release for twitter</a></li>
+<li><a class="reference internal" href="#announce-release-for-facebook">9.2.17. Announce release for Facebook</a></li>
 </ul>
 </li>
 </ul>
@@ -356,7 +406,7 @@ Note that this tweet should be done when logged in by <code class="docutils lite
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>Developer’s guide</a> &#187;</li> 
       </ul>
     </div>
