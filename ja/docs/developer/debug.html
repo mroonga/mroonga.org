@@ -3,7 +3,8 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>9.1. デバッグ方法 &#8212; Mroonga v10.05 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9.1. デバッグ方法 &#8212; Mroonga v10.06 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -65,8 +66,9 @@
         <li class="right" >
           <a href="../developer.html" title="9. 開発者向け情報"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>開発者向け情報</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.06 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>開発者向け情報</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.1. </span>デバッグ方法</a></li> 
       </ul>
     </div>  
 
@@ -122,14 +124,18 @@
 <div class="section" id="run-the-specified-test-only">
 <h3><span class="section-number">9.1.2.1. </span>指定したテストを実行する<a class="headerlink" href="#run-the-specified-test-only" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>何もオプションを渡さずに run-sql-test.sh を実行すると <code class="docutils literal notranslate"><span class="pre">mysql-test/mroonga</span></code> 以下にある全てのテスト (<code class="docutils literal notranslate"><span class="pre">*.test</span></code>) が実行されてしまいます。</p>
-<p>特定のテストだけを実行したい、という場合は次のようにしてテスト名を --do-test オプションに渡します。</p>
+<p>特定のテストだけを実行したい、という場合は次のようにしてテスト名を <code class="docutils literal notranslate"><span class="pre">--do-test</span></code> オプションに渡します。</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --do-test=foobar
 </pre></div>
 </div>
 </div>
 <div class="section" id="see-the-trace">
 <h3><span class="section-number">9.1.2.2. </span>トレースを見る<a class="headerlink" href="#see-the-trace" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>次のようにして <code class="docutils literal notranslate"><span class="pre">--debug</span></code> オプションをつけてテストを実行すると、関数の呼び出しなどが記録されます。この呼び出しは <code class="docutils literal notranslate"><span class="pre">${MySQLの作業ディレクトリ}/${MySQLのバージョン}/mysql-test/var/log/mysqld.1.trace</span></code> に格納されます。</p>
+<p>次のようにして <code class="docutils literal notranslate"><span class="pre">--debug</span></code> オプションをつけてテストを実行すると、関数の呼び出しなどが記録されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --debug --do-test=foobar
+</pre></div>
+</div>
+<p>この呼び出しは <code class="docutils literal notranslate"><span class="pre">${MySQLの作業ディレクトリ}/${MySQLのバージョン}/mysql-test/var/log/mysqld.1.trace</span></code> に格納されます。</p>
 <p>新しく関数を作成した場合は MRN_DBUG_ENTER_FUNCTION 関数の先頭に配置し、関数の呼び出しを記録するようにすると良いでしょう。</p>
 </div>
 <div class="section" id="invoking-gdb">
@@ -143,6 +149,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -198,8 +205,9 @@
         <li class="right" >
           <a href="../developer.html" title="9. 開発者向け情報"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>開発者向け情報</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.06 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>開発者向け情報</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.1. </span>デバッグ方法</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
