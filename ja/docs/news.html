@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>お知らせ &#8212; Mroonga v10.07 documentation</title>
+    <title>お知らせ &#8212; Mroonga v10.09 documentation</title>
     <link rel="stylesheet" href="static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     
@@ -58,7 +58,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v10.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v10.09 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">お知らせ</a></li> 
       </ul>
     </div>  
@@ -70,10 +70,90 @@
             
   <div class="section" id="news">
 <h1>お知らせ<a class="headerlink" href="#news" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="release-10-07-2020-10-02">
-<span id="release-10-07"></span><h2>10.07リリース - 2020-10-02<a class="headerlink" href="#release-10-07-2020-10-02" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="release-10-09-2020-12-04">
+<span id="release-10-09"></span><h2>10.09リリース - 2020-12-04<a class="headerlink" href="#release-10-09-2020-12-04" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.2.36、10.3.27、10.4.17、10.5.8をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.6.45、5.7.27、8.0.21をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.50、5.7.32、MySQL 8.0.22をサポートしました。</p>
+<ul class="simple">
+<li><p>MySQL8 のパッケージには以下の制限があります。</p>
+<ul>
+<li><p>[<a class="reference internal" href="tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a>] ラッパーモードは未対応です。</p></li>
+<li><p>[<a class="reference internal" href="tutorial/storage.html"><span class="doc">ストレージモード</span></a>] JSONデータ型は未対応です。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Ubuntu 18.04 LTS以外のMariaDB 10.1のサポートをやめました。</p>
+<ul class="simple">
+<li><p>MariaDB 10.1はEOLになったためです。</p></li>
+<li><p>ただ、Ubuntu 18.04 LTS では、MariaDB10.1をサポートします。</p>
+<ul>
+<li><p>MariaDB 10.1は、Ubuntu 18.04 LTSではまだサポートされているためです。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CentOS 6のサポートをやめました。</p>
+<ul class="simple">
+<li><p>CentOS 6はEOLになったためです。</p></li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="reference/udf/mroonga_snippet_html.html"><span class="doc">mroonga_snippet_html()</span></a>] ノーマライザーのカスタマイズをサポートしました。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> と <code class="docutils literal notranslate"><span class="pre">index_name</span></code> を使用することで、デフォルトのノーマライザー(NormalizerAuto)の代わりにカスタムのノーマライザーを使えます。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> には、以下のように、対象のテーブルの名前を指定します。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index_name</span></code> には、以下のように、対象のテーブル上で指定されたインデックスの名前を指定します。</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
+
+CREATE TABLE memos (
+content text,
+fulltext index content_index (content)
+COMMENT &#39;normalizer &quot;NormalizerNFKC121(\&#39;unify_kana\&#39;, true)&quot;&#39;
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SELECT mroonga_snippet_html(&#39;This is Mroonga（ムルンガ）.&#39;,
+&#39;memos&#39; as table_name,
+&#39;content_index&#39; as index_name,
+&#39;むるんが&#39;) as snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;This is Mroonga（&lt;span class=&quot;keyword&quot;&gt;ムルンガ&lt;/span&gt;）.&lt;/div&gt;
+</pre></div>
+</div>
+<ul>
+<li><p>この変更によって、クエリーによる検索とキーワードによる検索を混在して使うことができます。</p></li>
+<li><p>例えば以下のように、<code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> と <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">snippet</span></code> の両方で指定したキーワードをハイライトできます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
+SELECT mroonga_snippet_html(&#39;Mroonga has two running modes.
+
+One is “storage mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data update, lock-free full text search and geolocation search. But it does not support transactions.
+
+Another one is “wrapper mode”, that adds full text search function on other storage engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB. But you cannot have benefits from Groonga’s read-lock free characteristic. And you might have the performance bottle neck in the storage engine in updating data.&#39;,
+&#39;lock storage&#39; AS query,
+&#39;update&#39; AS snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data &lt;span class=&quot;keyword&quot;&gt;update&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt;-fr&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;text search function on other &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine, ex. transaction in In&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;noDB. But you cannot have benefits from Groonga’s read-&lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt; free characteristic. And you might have the performance bottle neck in the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine in updating data.&lt;/div&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-10-07-2020-10-02">
+<span id="release-10-07"></span><h2>10.07リリース - 2020-10-02<a class="headerlink" href="#release-10-07-2020-10-02" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.5.5をサポートしました。</p></li>
 <li><p>カラム圧縮のテストで256byte以上の文字列を使うテストを追加しました。[GitHub#350][KartikSonejiさんがパッチ提供]</p></li>
@@ -88,8 +168,8 @@
 </div>
 <div class="section" id="release-10-06-2020-09-02">
 <span id="release-10-06"></span><h2>10.06リリース - 2020-09-02<a class="headerlink" href="#release-10-06-2020-09-02" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id1">
-<h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id2">
+<h3>改良<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>「MariaDB 10.5.5をサポートしました。」 というニュースを削除しました。</p>
@@ -120,8 +200,8 @@
 </div>
 <div class="section" id="release-10-05-2020-07-29">
 <span id="release-10-05"></span><h2>10.05リリース - 2020-07-29<a class="headerlink" href="#release-10-05-2020-07-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id2">
-<h3>改良<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id3">
+<h3>改良<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.49と5.7.31とMySQL 8.0.21をサポートしました。</p>
 <ul>
@@ -139,8 +219,8 @@
 </div>
 <div class="section" id="release-10-03-2020-05-29">
 <span id="release-10-03"></span><h2>10.03リリース - 2020-05-29<a class="headerlink" href="#release-10-03-2020-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id3">
-<h3>改良<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id4">
+<h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 20.04 (Focal Fossa)をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 19.04 (Disco Dingo) のサポートをやめました。</p></li>
@@ -162,8 +242,8 @@
 </div>
 <div class="section" id="release-10-02-2020-04-29">
 <span id="release-10-02"></span><h2>10.02リリース - 2020-04-29<a class="headerlink" href="#release-10-02-2020-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id4">
-<h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id5">
+<h3>改良<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">WITH_WEIGHT</span></code> フラグをサポートしました。</p>
 <ul>
@@ -191,14 +271,14 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-10-01-2020-03-30">
 <span id="release-10-01"></span><h2>10.01リリース - 2020-03-30<a class="headerlink" href="#release-10-01-2020-03-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id5">
-<h3>改良<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id6">
+<h3>改良<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.29をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h3>修正<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id7">
+<h3>修正<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>以下の条件を満たしたクエリーを送信した際に、Mroongaがクラッシュする問題を修正しました。 [GitHub#303] [pinpikokunさんが報告]</p>
 <ul>
@@ -212,8 +292,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h3>感謝<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id8">
+<h3>感謝<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>pinpikokunさん</p></li>
 </ul>
@@ -221,8 +301,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-12-2020-01-29">
 <span id="release-9-12"></span><h2>9.12リリース - 2020-01-29<a class="headerlink" href="#release-9-12-2020-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id8">
-<h3>改良<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id9">
+<h3>改良<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.47, 5.7.29, 8.0.19をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.44、10.2.31、10.3.22、10.4.12をサポートしました。</p></li>
@@ -233,8 +313,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-11-2020-01-08">
 <span id="release-9-11"></span><h2>9.11リリース - 2020-01-08<a class="headerlink" href="#release-9-11-2020-01-08" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id9">
-<h3>改良<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id10">
+<h3>改良<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 14.04 LTS (Trusty Tahr) のサポートをやめました。</p></li>
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 18.10 (Cosmic Cuttlefish) のサポートをやめました。</p></li>
@@ -248,8 +328,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </li>
 </ul>
 </div>
-<div class="section" id="id10">
-<h3>修正<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id11">
+<h3>修正<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] 不足していた Ubuntu 16.04 (Xenial Xerus) のサポートを追加しました。</p></li>
 </ul>
@@ -257,22 +337,22 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-10-2019-11-29">
 <span id="release-9-10"></span><h2>9.10リリース - 2019-11-29<a class="headerlink" href="#release-9-10-2019-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id11">
-<h3>改良<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id12">
+<h3>改良<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.43、10.2.29、10.3.20、10.4.10をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] CentOS8のMariaDB 10.3.20と10.4.10、MySQL 8.0.18をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 19.10 (Eoan Ermine)をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h3>修正<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id13">
+<h3>修正<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>WSL上のUbuntu 18.04でパッケージインストール時に dpkg --configure が失敗する問題を修正しました。 [GitHub#282][ochaochaocha3さんがパッチ提供]</p></li>
 </ul>
 </div>
-<div class="section" id="id13">
-<h3>感謝<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id14">
+<h3>感謝<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>ochaochaocha3さん</p></li>
 </ul>
@@ -284,14 +364,14 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <p class="admonition-title">注釈</p>
 <p>今回のバージョンからパフォーマンスが低下しているかもしれません。もし、以前よりパフォーマンスが低下していたら、是非、再現手順を報告してほしいです。</p>
 </div>
-<div class="section" id="id14">
-<h3>改良<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id15">
+<h3>改良<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.46と5.7.28とMySQL 8.0.18(制限あり)をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id15">
-<h3>修正<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id16">
+<h3>修正<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>MySQL 8.0.18向けのパッケージのビルドエラーを修正しました。</p></li>
 </ul>
@@ -299,21 +379,21 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-08-2019-09-27">
 <span id="release-9-08"></span><h2>9.08リリース - 2019-09-27<a class="headerlink" href="#release-9-08-2019-09-27" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id16">
-<h3>改良<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id17">
+<h3>改良<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 5.5.64、10.2.27、10.3.18、10.4.8をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] CentOS 6の32-bitパッケージのサポートをやめました。</p></li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h3>修正<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id18">
+<h3>修正<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Debian 10(buster) に mariadb-server-10.3-mroonga をインストールできない問題を修正しました。</p></li>
 </ul>
 </div>
-<div class="section" id="id18">
-<h3>感謝<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id19">
+<h3>感謝<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>kajiysさん</p></li>
 <li><p>bizlevelさん</p></li>
@@ -322,8 +402,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-07-2019-08-29">
 <span id="release-9-07"></span><h2>9.07リリース - 2019-08-29<a class="headerlink" href="#release-9-07-2019-08-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id19">
-<h3>改良<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id20">
+<h3>改良<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Debian 10(buster)のインストールドキュメントを追加しました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.41、10.2.26、10.3.17、10.4.7をサポートしました。</p></li>
@@ -335,8 +415,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] CentOS 6でMariaDB 10.x のサポートをやめました。</p></li>
 </ul>
 </div>
-<div class="section" id="id20">
-<h3>感謝<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id21">
+<h3>感謝<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>ryfjwrさん</p></li>
 </ul>
@@ -344,15 +424,15 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-05-2019-07-30">
 <span id="release-9-05"></span><h2>9.05リリース - 2019-07-30<a class="headerlink" href="#release-9-05-2019-07-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id21">
-<h3>改良<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id22">
+<h3>改良<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 8.0における制限事項を追記しました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.45と5.7.27とMySQL 8.0.17(制限あり)をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id22">
-<h3>修正<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id23">
+<h3>修正<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] <code class="docutils literal notranslate"><span class="pre">mysql80-comunity-release</span></code> のパッケージ名が間違っていたのを修正しました。[groonga-dev,04759][各務さんが報告]</p></li>
 <li><p>[<a class="reference internal" href="tutorial/storage.html"><span class="doc">ストレージモード</span></a>] ユニークインデックスを更新する際の不具合を修正しました。以下の条件を満たすとキーの重複エラーが発生します。</p>
@@ -365,8 +445,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[mysql8.0] <code class="docutils literal notranslate"><span class="pre">TIMESTAMP</span></code> 型をサポートしました。[groonga-dev,04763][各務さんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id23">
-<h3>感謝<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id24">
+<h3>感謝<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>各務さん</p></li>
 </ul>
@@ -374,16 +454,16 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-04-2019-06-29">
 <span id="release-9-04"></span><h2>9.04リリース - 2019-06-29<a class="headerlink" href="#release-9-04-2019-06-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id24">
-<h3>改良<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id25">
+<h3>改良<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.26をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.2.25/10.3.16をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>][実験的] MySQL 8.0.16をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id25">
-<h3>修正<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id26">
+<h3>修正<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>無限ループすることがある不具合を修正しました。この不具合は <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'index_flags</span> <span class="pre">&quot;INVALID|WITH_SECTION&quot;'</span></code> のようにフラグの指定が間違っていると発生します。</p></li>
 <li><p>[windows] MariaDB 10.2/10.3のpdbのインストール先のパスの誤りを修正しました。</p></li>
@@ -394,8 +474,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-03-2019-05-29">
 <span id="release-9-03"></span><h2>9.03リリース - 2019-05-29<a class="headerlink" href="#release-9-03-2019-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id26">
-<h3>改良<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id27">
+<h3>改良<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="tutorial/storage.html"><span class="doc">ストレージモード</span></a>] サンプルの <code class="docutils literal notranslate"><span class="pre">COMMENT</span></code> では <code class="docutils literal notranslate"><span class="pre">tokenizer</span> <span class="pre">&quot;XXX&quot;`</span> <span class="pre">を使うようにしました。``default_tokenizer</span> <span class="pre">&quot;XXX&quot;</span></code> は9.01から非推奨なためです。</p></li>
 <li><p>[<a class="reference internal" href="install/windows.html"><span class="doc">Windows</span></a>] MariaDB 10.1と10.2のzipパッケージを再びサポートしました。</p></li>
@@ -412,8 +492,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-9-01-2019-03-29">
 <span id="release-9-01"></span><h2>9.01リリース - 2019-03-29<a class="headerlink" href="#release-9-01-2019-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id27">
-<h3>改良<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id28">
+<h3>改良<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージ] トークナイザーのオプション指定をサポートしました。</p>
 <ul>
@@ -459,8 +539,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <ul class="simple">
 <li><p>参考: <a class="reference external" href="http://groonga.org/ja/docs/news.html#release-9-0-0-2019-02-09">http://groonga.org/ja/docs/news.html#release-9-0-0-2019-02-09</a></p></li>
 </ul>
-<div class="section" id="id28">
-<h3>改良<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id29">
+<h3>改良<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.24-27をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.6.43 rel84.3をサポートしました。</p></li>
@@ -475,8 +555,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-8-09-2018-11-29">
 <span id="release-8-09"></span><h2>8.09リリース - 2018-11-29<a class="headerlink" href="#release-8-09-2018-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id29">
-<h3>改良<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id30">
+<h3>改良<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 18.10 (Cosmic Cuttlefish)をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/windows.html"><span class="doc">Windows</span></a>] MariaDB 10.3.10をサポートしました。</p></li>
@@ -495,15 +575,15 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-8-07-2018-09-29">
 <span id="release-8-07"></span><h2>8.07リリース - 2018-09-29<a class="headerlink" href="#release-8-07-2018-09-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id30">
-<h3>改良<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id31">
+<h3>改良<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>トークナイザーの <code class="docutils literal notranslate"><span class="pre">off</span></code> オプションは非推奨になりました。かわりに <code class="docutils literal notranslate"><span class="pre">none</span></code> オプションを使ってください。</p></li>
 <li><p>2016年9月27にリリースされたMariaDB 10.2.2以前のMariaDB 10.2系サポートをやめました。</p></li>
 </ul>
 </div>
-<div class="section" id="id31">
-<h3>修正<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id32">
+<h3>修正<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.36をサポートしました。</p></li>
 </ul>
@@ -512,8 +592,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <div class="section" id="release-8-06-2018-08-29">
 <span id="release-8-06"></span><h2>8.06リリース - 2018-08-29<a class="headerlink" href="#release-8-06-2018-08-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回のリリースでは、Mroongaをすでにインストールしていて、かつGroonga 8.0.4以降をインストールしていない場合、MySQLが自動的に再起動されます。Mroonga 8.06が必要としているGroonga 8.0.4以降が、MySQLが再起動されるまで有効にならないためです。</p>
-<div class="section" id="id32">
-<h3>改良<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id33">
+<h3>改良<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Groonga 8.0.4以降が必要になります。</p></li>
 <li><p>groonga-normalizer-mysql 1.1.3以降が必要になります。</p></li>
@@ -544,14 +624,14 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </li>
 </ul>
 </div>
-<div class="section" id="id33">
-<h3>修正<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id34">
+<h3>修正<a class="headerlink" href="#id34" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] マルチレンジリードで誤った結果が返される場合がある問題を修正。[GitHub#211][colt27さんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id34">
-<h3>感謝<a class="headerlink" href="#id34" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id35">
+<h3>感謝<a class="headerlink" href="#id35" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>colt27さん</p></li>
 </ul>
@@ -559,8 +639,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-8-03-2018-05-29">
 <span id="release-8-03"></span><h2>8.03リリース - 2018-05-29<a class="headerlink" href="#release-8-03-2018-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id35">
-<h3>改良<a class="headerlink" href="#id35" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id36">
+<h3>改良<a class="headerlink" href="#id36" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/docker.html"><span class="doc">Docker</span></a>] Docker Hubへのクイックスタートガイドのリンクを追加しました。</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.3.7をサポートしました。</p></li>
@@ -568,14 +648,14 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.33 をサポートしました（8.02にバックポート済み）。</p></li>
 </ul>
 </div>
-<div class="section" id="id36">
-<h3>修正<a class="headerlink" href="#id36" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id37">
+<h3>修正<a class="headerlink" href="#id37" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubntu 14.04 LTS（Trusty）でインストールに失敗していた問題を修正しました（8.02にバックポート済み）。[GitHub#202,#205][Masato Hiraiさんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id37">
-<h3>感謝<a class="headerlink" href="#id37" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id38">
+<h3>感謝<a class="headerlink" href="#id38" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Masato Hiraiさん</p></li>
 </ul>
@@ -583,8 +663,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-8-02-2018-04-29">
 <span id="release-8-02"></span><h2>8.02リリース - 2018-04-29<a class="headerlink" href="#release-8-02-2018-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id38">
-<h3>改良<a class="headerlink" href="#id38" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id39">
+<h3>改良<a class="headerlink" href="#id39" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 18.04 LTS (Bionic Beaver)をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Jessieでi386をサポートしました。</p></li>
@@ -597,16 +677,16 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.21-21をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id39">
-<h3>修正<a class="headerlink" href="#id39" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id40">
+<h3>修正<a class="headerlink" href="#id40" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p><cite>ORDER BY</cite> の中に <cite>ORDER BY 1 + 1, id, content</cite> のような複雑な条件があるとクラッシュするバグを修正しました。</p></li>
 <li><p>コンディションプッシュダウンが有効になっているときに <cite>AND (x = 1 OR x = 2)</cite> などがSQLに含まれていると <cite>MATCH AGAINST</cite> 条件が無視されるバグを修正しました。 [Gitter/ja:5ae014842b9dfdbc3ac7ce1f][colt27さんが報告]</p></li>
 <li><p>カラムキャッシュのメモリリークを修正しました。</p></li>
 </ul>
 </div>
-<div class="section" id="id40">
-<h3>感謝<a class="headerlink" href="#id40" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id41">
+<h3>感謝<a class="headerlink" href="#id41" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>木下崇さん</p></li>
 <li><p>三谷さん</p></li>
@@ -617,8 +697,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <div class="section" id="release-8-01-2018-03-29">
 <span id="release-8-01"></span><h2>8.01リリース - 2018-03-29<a class="headerlink" href="#release-8-01-2018-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回のリリースで、Mroongaをすでにインストールしている場合にはMySQLが自動的に再起動されます。これはMroongaが必要としている新しいバージョンのGroonga 8.0.1が、MySQLが再起動されるまで有効にならないためです。</p>
-<div class="section" id="id41">
-<h3>改良<a class="headerlink" href="#id41" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id42">
+<h3>改良<a class="headerlink" href="#id42" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[rpm][centos] Percona Server 5.6.39をサポートしました。 [&#64;iiiiyyyyさんが報告]</p></li>
 <li><p>[rpm][centos] Percona Server 5.7.21をサポートしました。</p></li>
@@ -626,8 +706,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[rpm][centos] MariaDB 10.2.14に対応しました。</p></li>
 </ul>
 </div>
-<div class="section" id="id42">
-<h3>修正<a class="headerlink" href="#id42" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id43">
+<h3>修正<a class="headerlink" href="#id43" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>誤ったキャッシュが使われる不具合を修正しました。複数のデータベースを作成していて、そのどれかに <cite>mroonga_command()</cite> 経由でアクセスしたときに意図せず誤ったキャッシュが返る問題が発生します。問題を修正するにはGroonga 8.0.1以降が必要です。</p></li>
 <li><p>&quot;NOT IN&quot;クエリーが空の結果を返す不具合を修正しました。この不具合は &quot;NOT IN&quot;を複数の引数と一緒に使ったときに発生します。例えば &quot;NOT IN (xxx, xxx)&quot; などです。</p></li>
@@ -636,8 +716,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>ORDER LIMITの最適化が意図せずORDER BY function()にも適用されてしまう不具合を修正しました。</p></li>
 </ul>
 </div>
-<div class="section" id="id43">
-<h3>感謝<a class="headerlink" href="#id43" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id44">
+<h3>感謝<a class="headerlink" href="#id44" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>&#64;iiiiyyyyさん</p></li>
 <li><p>Shota Suzukiさん</p></li>
@@ -647,15 +727,15 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <div class="section" id="release-8-00-2018-02-09">
 <span id="release-8-00"></span><h2>8.00リリース - 2018-02-09<a class="headerlink" href="#release-8-00-2018-02-09" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>メジャーバージョンアップです! メジャーバージョンアップですが、互換性は壊れていないので、データベースを再構築することなくアップグレードできます。</p>
-<div class="section" id="id44">
-<h3>改良<a class="headerlink" href="#id44" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id45">
+<h3>改良<a class="headerlink" href="#id45" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>ハッシュインデックスを作成する際に、使用するリソースを減らすために小さいハッシュを使うようにしました。</p></li>
 <li><p>[percona57] ギャップロック検出をサポートしました。 [GitHub#188][Iwoさんの報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id45">
-<h3>感謝<a class="headerlink" href="#id45" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id46">
+<h3>感謝<a class="headerlink" href="#id46" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Iwoさん</p></li>
 </ul>
@@ -663,16 +743,16 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-11-2018-01-29">
 <span id="release-7-11"></span><h2>7.11リリース - 2018-01-29<a class="headerlink" href="#release-7-11-2018-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id46">
-<h3>改良<a class="headerlink" href="#id46" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id47">
+<h3>改良<a class="headerlink" href="#id47" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[テスト] サブクエリーとORDER BY ... LIMIT最適化のテストケースを追加しました。[GitHub#184] [濵﨑一樹さんが報告]</p></li>
 <li><p>[rpm][centos] MariaDB 10.3に対応しました。</p></li>
 <li><p>[deb][ubuntu] Ubuntu 17.10向けにMariaDB 10.1のパッケージをサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id47">
-<h3>修正<a class="headerlink" href="#id47" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id48">
+<h3>修正<a class="headerlink" href="#id48" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="reference/status_variables.html#status-variable-mroonga-n-pooling-contexts"><span class="std std-ref">Mroonga_n_pooling_contexts</span></a>] <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">STATUS</span></code> により値が意図せずリセットされてしまう不具合を修正しました。</p></li>
 <li><p>[maradb10.3] 定数の変更によりビルドエラーになっていた問題を修正しました。(<code class="docutils literal notranslate"><span class="pre">HA_MUST_USE_TABLE_CONDITION_PUSHDOWN</span></code> が <code class="docutils literal notranslate"><span class="pre">HA_CAN_TABLE_CONDITION_PUSHDOWN</span></code> へと変更)</p></li>
@@ -682,8 +762,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 17.04（Zesty Zapus）のサポートをやめました。2018年1月13日でサポートが切れた（EOLになった）ためです。</p></li>
 </ul>
 </div>
-<div class="section" id="id48">
-<h3>感謝<a class="headerlink" href="#id48" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id49">
+<h3>感謝<a class="headerlink" href="#id49" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>濵﨑一樹さん</p></li>
 <li><p>天野龍司さん</p></li>
@@ -693,8 +773,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-10-2017-12-29">
 <span id="release-7-10"></span><h2>7.10リリース - 2017-12-29<a class="headerlink" href="#release-7-10-2017-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id49">
-<h3>改良<a class="headerlink" href="#id49" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id50">
+<h3>改良<a class="headerlink" href="#id50" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Groonga 7.1.0が必要になります。Mroonga 7.10にアップグレード後にMySQLを再起動する必要があります。</p></li>
 <li><p>[MariaDB 10.3] MariaDB 10.3に対応しました。</p></li>
@@ -715,8 +795,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[ <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> ] <a class="reference internal" href="reference/udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> 用にプールしているコンテキストもクリアーするようになりました。</p></li>
 </ul>
 </div>
-<div class="section" id="id50">
-<h3>感謝<a class="headerlink" href="#id50" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id51">
+<h3>感謝<a class="headerlink" href="#id51" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Ian Gilfillanさん</p></li>
 </ul>
@@ -724,8 +804,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-09-2017-11-29">
 <span id="release-7-09"></span><h2>7.09リリース - 2017-11-29<a class="headerlink" href="#release-7-09-2017-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id51">
-<h3>改良<a class="headerlink" href="#id51" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id52">
+<h3>改良<a class="headerlink" href="#id52" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[rpm][centos] MariaDB 10.2.10に対応。</p></li>
 <li><p>[rpm][centos] MariaDB 10.1.29に対応。</p></li>
@@ -733,8 +813,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[cmake] Mroongaを無効にしてビルドする場合にはMroonga関連の設定をスキップするようにしました。 [Vladislav Vaintroubさんがパッチ提供]</p></li>
 </ul>
 </div>
-<div class="section" id="id52">
-<h3>感謝<a class="headerlink" href="#id52" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id53">
+<h3>感謝<a class="headerlink" href="#id53" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Sergei Golubchikさん</p></li>
 <li><p>Vladislav Vaintroubさん</p></li>
@@ -743,16 +823,16 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-08-2017-10-29">
 <span id="release-7-08"></span><h2>7.08リリース - 2017-10-29<a class="headerlink" href="#release-7-08-2017-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id53">
-<h3>改良<a class="headerlink" href="#id53" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id54">
+<h3>改良<a class="headerlink" href="#id54" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>テーブル作成時に <code class="docutils literal notranslate"><span class="pre">flags</span></code> オプションを指定できるようになりました。 オプションには <code class="docutils literal notranslate"><span class="pre">TABLE_HASH_KEY</span></code> 、 <code class="docutils literal notranslate"><span class="pre">TABLE_PAT_KEY</span></code> 、 <code class="docutils literal notranslate"><span class="pre">TABLE_DAT_KEY</span></code> と <code class="docutils literal notranslate"><span class="pre">KEY_LARGE</span></code> が指定できます。 [groonga-dev, 04494] [宮下さんが報告]</p></li>
 <li><p>[rpm][centos] MySQL 5.6.38-2と5.7.20-15.24に対応。</p></li>
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 17.10 (Artful Aardvark)をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id54">
-<h3>感謝<a class="headerlink" href="#id54" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id55">
+<h3>感謝<a class="headerlink" href="#id55" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>宮下さん</p></li>
 </ul>
@@ -760,8 +840,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-07-2017-10-12">
 <span id="release-7-07"></span><h2>7.07リリース - 2017-10-12<a class="headerlink" href="#release-7-07-2017-10-12" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id55">
-<h3>改良<a class="headerlink" href="#id55" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id56">
+<h3>改良<a class="headerlink" href="#id56" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[mroonga_query_expand] <code class="docutils literal notranslate"><span class="pre">mroonga_query_expand</span></code> UDFを追加しました。同義語テーブルを用意しておけば、クエリに含まれる語の同義語を <code class="docutils literal notranslate"><span class="pre">mroonga_query_expand</span></code> で展開できます。この関数を使うためには Groonga 7.0.6以降が必要です。</p></li>
 <li><p>[rpm][centos] 最新のPercona Server 5.7.19-17.1をサポートしました。 [tigersun2000さんが報告]</p></li>
@@ -769,8 +849,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[rpm][centos] MariaDB公式が提供するMariaDB 10.1/10.2をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id56">
-<h3>修正<a class="headerlink" href="#id56" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id57">
+<h3>修正<a class="headerlink" href="#id57" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul>
 <li><p>&quot;DROP DATABASE&quot; したときに誤ったデータベースが使われてしまう可能性のある不具合を修正しました。この不具合により内部で使っている &quot;mroonga_operations&quot; テーブルが意図せず削除されてしまうため、クラッシュする可能性があります。この不具合は次の2つの条件を満たすと発生します:</p>
 <ol class="arabic simple">
@@ -783,8 +863,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[deb][mariadb10] lsb-releaseパッケージへの依存関係を追加しました。preinst や postrm などメンテナスクリプトに必要でした。 [GitHub#169] [すぎうらさんがパッチ提供]</p></li>
 </ul>
 </div>
-<div class="section" id="id57">
-<h3>感謝<a class="headerlink" href="#id57" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id58">
+<h3>感謝<a class="headerlink" href="#id58" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>&#64;tigersun2000さん</p></li>
 <li><p>&#64;akiko_pusuさん</p></li>
@@ -795,8 +875,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-06-2017-08-29">
 <span id="release-7-06"></span><h2>7.06リリース - 2017-08-29<a class="headerlink" href="#release-7-06-2017-08-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id58">
-<h3>改良<a class="headerlink" href="#id58" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id59">
+<h3>改良<a class="headerlink" href="#id59" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="reference/udf/mroonga_highlight_html.html"><span class="doc">mroonga_highlight_html()</span></a>] <cite>mroonga_highlight_html</cite> の使用方法を追記しました。</p></li>
 <li><p>Generated Columnをサポートしました。JSON型のカラムから値を取り出した結果をカラムとして実体化して全文検索できるので便利です。 [GitHub#159,#160,#163] [村上さんがパッチ提供]</p></li>
@@ -807,8 +887,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[rpm][centos] CentOS 7にてMySQL 5.6.37 と MySQL 5.7.19に対応しました。 [groonga-dev,04441] [各務さんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id59">
-<h3>感謝<a class="headerlink" href="#id59" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id60">
+<h3>感謝<a class="headerlink" href="#id60" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>村上さん</p></li>
 <li><p>&#64;tigersun2000_twitterさん</p></li>
@@ -818,8 +898,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-05-2017-07-29">
 <span id="release-7-05"></span><h2>7.05リリース - 2017-07-29<a class="headerlink" href="#release-7-05-2017-07-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id60">
-<h3>改良<a class="headerlink" href="#id60" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id61">
+<h3>改良<a class="headerlink" href="#id61" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Groongaのクエリーログをサポートしました。 <code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code> 変数を指定してください。 [GitHub#148]</p></li>
 <li><p>MariaDB 10.2.7をサポートしました。 [groonga-dev,04397] [かとうさんが報告]</p></li>
@@ -831,14 +911,14 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[<a class="reference internal" href="reference/udf/mroonga_highlight_html.html"><span class="doc">mroonga_highlight_html()</span></a>] 対象となるカラムや文字列をハイライトする関数をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id61">
-<h3>修正<a class="headerlink" href="#id61" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id62">
+<h3>修正<a class="headerlink" href="#id62" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>内部的に有効なインデックスが見つからない場合にクラッシュする不具合を修正しました。 [Gitter:groonga/ja:596714a5c101bc4e3a7db4e5] [K Torimotoさんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id62">
-<h3>感謝<a class="headerlink" href="#id62" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id63">
+<h3>感謝<a class="headerlink" href="#id63" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>K Torimotoさん</p></li>
 <li><p>かとうさん</p></li>
@@ -848,15 +928,15 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-04-2017-06-29">
 <span id="release-7-04"></span><h2>7.04リリース - 2017-06-29<a class="headerlink" href="#release-7-04-2017-06-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id63">
-<h3>改良<a class="headerlink" href="#id63" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id64">
+<h3>改良<a class="headerlink" href="#id64" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>ヒットしたレコード用に一時テーブルを作成しようとして失敗したときにエラーメッセージをだすようにしました。この種のエラーはインデックスが壊れているときに発生します。</p></li>
 <li><p>[<a class="reference internal" href="install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Debian 9 (stretch)をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id64">
-<h3>修正<a class="headerlink" href="#id64" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id65">
+<h3>修正<a class="headerlink" href="#id65" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>内部で呼び出している関数 <code class="docutils literal notranslate"><span class="pre">grn_table_setoperation</span></code> を呼ぶ前の <code class="docutils literal notranslate"><span class="pre">NULL</span></code> チェックが抜けているせいでクラッシュする不具合を修正しました。このようなクラッシュはインデックスが壊れているときに発生します。</p></li>
 </ul>
@@ -864,16 +944,16 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-03-2017-05-29">
 <span id="release-7-03"></span><h2>7.03リリース - 2017-05-29<a class="headerlink" href="#release-7-03-2017-05-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id65">
-<h3>改良<a class="headerlink" href="#id65" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id66">
+<h3>改良<a class="headerlink" href="#id66" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="reference/limitations.html"><span class="doc">制限事項</span></a>] カラムのNULL値に関する制限情報を更新しました。 [Gitter/ja] [&#64;bignum_twitterさんが報告]</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">INDEX_MEDIUM</span></code> と <code class="docutils literal notranslate"><span class="pre">INDEX_SMALL</span></code> フラグをサポートしました。 [GitHub#141] [村上さんがパッチ提供]</p></li>
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] 最新のPercona Server 5.6/5.7をサポートしました。 [&#64;pinpikokunさんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id66">
-<h3>感謝<a class="headerlink" href="#id66" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id67">
+<h3>感謝<a class="headerlink" href="#id67" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>&#64;bignum_twitterさん</p></li>
 <li><p>&#64;pinpikokunさん</p></li>
@@ -883,22 +963,22 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-02-2017-04-29">
 <span id="release-7-02"></span><h2>7.02リリース - 2017-04-29<a class="headerlink" href="#release-7-02-2017-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id67">
-<h3>改良<a class="headerlink" href="#id67" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id68">
+<h3>改良<a class="headerlink" href="#id68" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] EOLのため、Ubuntu 12.04 (Precise Pangolin)のサポートをやめました。</p></li>
 <li><p>[<a class="reference internal" href="install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 17.04 (Zesty Zapus)をサポートしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id68">
-<h3>修正<a class="headerlink" href="#id68" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id69">
+<h3>修正<a class="headerlink" href="#id69" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.36とMySQL 5.7.18でビルドエラーになる問題を修正しました。</p></li>
 <li><p>[cmake] Mroongaがバンドルされているがシステムの <code class="docutils literal notranslate"><span class="pre">libgroonga</span></code> を使う場合に <code class="docutils literal notranslate"><span class="pre">libgroonga</span></code> がリンクされていない問題を修正しました。 [GitHub#137] [村上さんがパッチ提供]</p></li>
 </ul>
 </div>
-<div class="section" id="id69">
-<h3>感謝<a class="headerlink" href="#id69" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id70">
+<h3>感謝<a class="headerlink" href="#id70" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>村上さん</p></li>
 </ul>
@@ -906,8 +986,8 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-01-2017-03-29">
 <span id="release-7-01"></span><h2>7.01リリース - 2017-03-29<a class="headerlink" href="#release-7-01-2017-03-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id70">
-<h3>改良<a class="headerlink" href="#id70" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id71">
+<h3>改良<a class="headerlink" href="#id71" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] EOLのため、CentOS 5のサポートをやめました。</p></li>
 <li><p>[<a class="reference internal" href="tutorial/storage.html"><span class="doc">ストレージモード</span></a>] <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ADD/DROP</span> <span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> をサポートしました。</p></li>
@@ -917,15 +997,15 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 <li><p>[<a class="reference internal" href="install.html"><span class="doc">インストール</span></a>] リソースのダウンロードに <code class="docutils literal notranslate"><span class="pre">https://packages.groonga.org</span></code> を推奨するようにしました。</p></li>
 </ul>
 </div>
-<div class="section" id="id71">
-<h3>修正<a class="headerlink" href="#id71" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id72">
+<h3>修正<a class="headerlink" href="#id72" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="tutorial/storage.html"><span class="doc">ストレージモード</span></a>] log-bin と <code class="docutils literal notranslate"><span class="pre">COLLATE</span></code> が指定されている場合、 <code class="docutils literal notranslate"><span class="pre">UPDATE</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> で更新エラーになる問題を修正しました。 [GitHub#132] [kitoraさんが報告]</p></li>
 <li><p>設定していないのに <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> が意図せずダンプされる不具合を修正しました。 [groonga-dev,04276] [村田さんが報告]</p></li>
 </ul>
 </div>
-<div class="section" id="id72">
-<h3>感謝<a class="headerlink" href="#id72" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id73">
+<h3>感謝<a class="headerlink" href="#id73" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>kitoraさん</p></li>
 <li><p>村田さん</p></li>
@@ -935,16 +1015,16 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
 </div>
 <div class="section" id="release-7-00-2017-02-09">
 <span id="release-7-00"></span><h2>7.00リリース - 2017-02-09<a class="headerlink" href="#release-7-00-2017-02-09" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id73">
-<h3>改良<a class="headerlink" href="#id73" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id74">
+<h3>改良<a class="headerlink" href="#id74" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[<a class="reference internal" href="install/centos.html"><span class="doc">CentOS</span></a>] EPELをパッケージインストール時に有効にするようにしました。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> 制約を <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> と 親側の行を <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> するときにもサポートしました。以前のバージョンでは、 <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> 時のみサポートしていました。</p></li>
 <li><p>[<a class="reference internal" href="tutorial/storage.html"><span class="doc">ストレージモード</span></a>] 主キーをもつテーブルでbinlogを使っていても、レコードの更新をサポートしました。以前は更新時に構文エラーになっていました。 [GitHub#130] [Reported by kitora]</p></li>
 </ul>
 </div>
-<div class="section" id="id74">
-<h3>感謝<a class="headerlink" href="#id74" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id75">
+<h3>感謝<a class="headerlink" href="#id75" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>kitoraさん</p></li>
 </ul>
@@ -1063,189 +1143,193 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
   <h3><a href="index.html">目次</a></h3>
   <ul>
 <li><a class="reference internal" href="#">お知らせ</a><ul>
-<li><a class="reference internal" href="#release-10-07-2020-10-02">10.07リリース - 2020-10-02</a><ul>
+<li><a class="reference internal" href="#release-10-09-2020-12-04">10.09リリース - 2020-12-04</a><ul>
 <li><a class="reference internal" href="#improvements">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-07-2020-10-02">10.07リリース - 2020-10-02</a><ul>
+<li><a class="reference internal" href="#id1">改良</a></li>
 <li><a class="reference internal" href="#thanks">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-10-06-2020-09-02">10.06リリース - 2020-09-02</a><ul>
-<li><a class="reference internal" href="#id1">改良</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-10-05-2020-07-29">10.05リリース - 2020-07-29</a><ul>
 <li><a class="reference internal" href="#id2">改良</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-10-03-2020-05-29">10.03リリース - 2020-05-29</a><ul>
+<li><a class="reference internal" href="#release-10-05-2020-07-29">10.05リリース - 2020-07-29</a><ul>
 <li><a class="reference internal" href="#id3">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-03-2020-05-29">10.03リリース - 2020-05-29</a><ul>
+<li><a class="reference internal" href="#id4">改良</a></li>
 <li><a class="reference internal" href="#fixes">修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-10-02-2020-04-29">10.02リリース - 2020-04-29</a><ul>
-<li><a class="reference internal" href="#id4">改良</a></li>
+<li><a class="reference internal" href="#id5">改良</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-10-01-2020-03-30">10.01リリース - 2020-03-30</a><ul>
-<li><a class="reference internal" href="#id5">改良</a></li>
-<li><a class="reference internal" href="#id6">修正</a></li>
-<li><a class="reference internal" href="#id7">感謝</a></li>
+<li><a class="reference internal" href="#id6">改良</a></li>
+<li><a class="reference internal" href="#id7">修正</a></li>
+<li><a class="reference internal" href="#id8">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-12-2020-01-29">9.12リリース - 2020-01-29</a><ul>
-<li><a class="reference internal" href="#id8">改良</a></li>
+<li><a class="reference internal" href="#id9">改良</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-11-2020-01-08">9.11リリース - 2020-01-08</a><ul>
-<li><a class="reference internal" href="#id9">改良</a></li>
-<li><a class="reference internal" href="#id10">修正</a></li>
+<li><a class="reference internal" href="#id10">改良</a></li>
+<li><a class="reference internal" href="#id11">修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-10-2019-11-29">9.10リリース - 2019-11-29</a><ul>
-<li><a class="reference internal" href="#id11">改良</a></li>
-<li><a class="reference internal" href="#id12">修正</a></li>
-<li><a class="reference internal" href="#id13">感謝</a></li>
+<li><a class="reference internal" href="#id12">改良</a></li>
+<li><a class="reference internal" href="#id13">修正</a></li>
+<li><a class="reference internal" href="#id14">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-09-2019-10-30">9.09リリース - 2019-10-30</a><ul>
-<li><a class="reference internal" href="#id14">改良</a></li>
-<li><a class="reference internal" href="#id15">修正</a></li>
+<li><a class="reference internal" href="#id15">改良</a></li>
+<li><a class="reference internal" href="#id16">修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-08-2019-09-27">9.08リリース - 2019-09-27</a><ul>
-<li><a class="reference internal" href="#id16">改良</a></li>
-<li><a class="reference internal" href="#id17">修正</a></li>
-<li><a class="reference internal" href="#id18">感謝</a></li>
+<li><a class="reference internal" href="#id17">改良</a></li>
+<li><a class="reference internal" href="#id18">修正</a></li>
+<li><a class="reference internal" href="#id19">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-07-2019-08-29">9.07リリース - 2019-08-29</a><ul>
-<li><a class="reference internal" href="#id19">改良</a></li>
-<li><a class="reference internal" href="#id20">感謝</a></li>
+<li><a class="reference internal" href="#id20">改良</a></li>
+<li><a class="reference internal" href="#id21">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-05-2019-07-30">9.05リリース - 2019-07-30</a><ul>
-<li><a class="reference internal" href="#id21">改良</a></li>
-<li><a class="reference internal" href="#id22">修正</a></li>
-<li><a class="reference internal" href="#id23">感謝</a></li>
+<li><a class="reference internal" href="#id22">改良</a></li>
+<li><a class="reference internal" href="#id23">修正</a></li>
+<li><a class="reference internal" href="#id24">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-04-2019-06-29">9.04リリース - 2019-06-29</a><ul>
-<li><a class="reference internal" href="#id24">改良</a></li>
-<li><a class="reference internal" href="#id25">修正</a></li>
+<li><a class="reference internal" href="#id25">改良</a></li>
+<li><a class="reference internal" href="#id26">修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-9-03-2019-05-29">9.03リリース - 2019-05-29</a><ul>
-<li><a class="reference internal" href="#id26">改良</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-9-01-2019-03-29">9.01リリース - 2019-03-29</a><ul>
 <li><a class="reference internal" href="#id27">改良</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-9-00-2019-02-09">9.00リリース - 2019-02-09</a><ul>
+<li><a class="reference internal" href="#release-9-01-2019-03-29">9.01リリース - 2019-03-29</a><ul>
 <li><a class="reference internal" href="#id28">改良</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-8-09-2018-11-29">8.09リリース - 2018-11-29</a><ul>
+<li><a class="reference internal" href="#release-9-00-2019-02-09">9.00リリース - 2019-02-09</a><ul>
 <li><a class="reference internal" href="#id29">改良</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-8-07-2018-09-29">8.07リリース - 2018-09-29</a><ul>
+<li><a class="reference internal" href="#release-8-09-2018-11-29">8.09リリース - 2018-11-29</a><ul>
 <li><a class="reference internal" href="#id30">改良</a></li>
-<li><a class="reference internal" href="#id31">修正</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-8-07-2018-09-29">8.07リリース - 2018-09-29</a><ul>
+<li><a class="reference internal" href="#id31">改良</a></li>
+<li><a class="reference internal" href="#id32">修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-8-06-2018-08-29">8.06リリース - 2018-08-29</a><ul>
-<li><a class="reference internal" href="#id32">改良</a></li>
-<li><a class="reference internal" href="#id33">修正</a></li>
-<li><a class="reference internal" href="#id34">感謝</a></li>
+<li><a class="reference internal" href="#id33">改良</a></li>
+<li><a class="reference internal" href="#id34">修正</a></li>
+<li><a class="reference internal" href="#id35">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-8-03-2018-05-29">8.03リリース - 2018-05-29</a><ul>
-<li><a class="reference internal" href="#id35">改良</a></li>
-<li><a class="reference internal" href="#id36">修正</a></li>
-<li><a class="reference internal" href="#id37">感謝</a></li>
+<li><a class="reference internal" href="#id36">改良</a></li>
+<li><a class="reference internal" href="#id37">修正</a></li>
+<li><a class="reference internal" href="#id38">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-8-02-2018-04-29">8.02リリース - 2018-04-29</a><ul>
-<li><a class="reference internal" href="#id38">改良</a></li>
-<li><a class="reference internal" href="#id39">修正</a></li>
-<li><a class="reference internal" href="#id40">感謝</a></li>
+<li><a class="reference internal" href="#id39">改良</a></li>
+<li><a class="reference internal" href="#id40">修正</a></li>
+<li><a class="reference internal" href="#id41">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-8-01-2018-03-29">8.01リリース - 2018-03-29</a><ul>
-<li><a class="reference internal" href="#id41">改良</a></li>
-<li><a class="reference internal" href="#id42">修正</a></li>
-<li><a class="reference internal" href="#id43">感謝</a></li>
+<li><a class="reference internal" href="#id42">改良</a></li>
+<li><a class="reference internal" href="#id43">修正</a></li>
+<li><a class="reference internal" href="#id44">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-8-00-2018-02-09">8.00リリース - 2018-02-09</a><ul>
-<li><a class="reference internal" href="#id44">改良</a></li>
-<li><a class="reference internal" href="#id45">感謝</a></li>
+<li><a class="reference internal" href="#id45">改良</a></li>
+<li><a class="reference internal" href="#id46">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-11-2018-01-29">7.11リリース - 2018-01-29</a><ul>
-<li><a class="reference internal" href="#id46">改良</a></li>
-<li><a class="reference internal" href="#id47">修正</a></li>
-<li><a class="reference internal" href="#id48">感謝</a></li>
+<li><a class="reference internal" href="#id47">改良</a></li>
+<li><a class="reference internal" href="#id48">修正</a></li>
+<li><a class="reference internal" href="#id49">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-10-2017-12-29">7.10リリース - 2017-12-29</a><ul>
-<li><a class="reference internal" href="#id49">改良</a></li>
-<li><a class="reference internal" href="#id50">感謝</a></li>
+<li><a class="reference internal" href="#id50">改良</a></li>
+<li><a class="reference internal" href="#id51">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-09-2017-11-29">7.09リリース - 2017-11-29</a><ul>
-<li><a class="reference internal" href="#id51">改良</a></li>
-<li><a class="reference internal" href="#id52">感謝</a></li>
+<li><a class="reference internal" href="#id52">改良</a></li>
+<li><a class="reference internal" href="#id53">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-08-2017-10-29">7.08リリース - 2017-10-29</a><ul>
-<li><a class="reference internal" href="#id53">改良</a></li>
-<li><a class="reference internal" href="#id54">感謝</a></li>
+<li><a class="reference internal" href="#id54">改良</a></li>
+<li><a class="reference internal" href="#id55">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-07-2017-10-12">7.07リリース - 2017-10-12</a><ul>
-<li><a class="reference internal" href="#id55">改良</a></li>
-<li><a class="reference internal" href="#id56">修正</a></li>
-<li><a class="reference internal" href="#id57">感謝</a></li>
+<li><a class="reference internal" href="#id56">改良</a></li>
+<li><a class="reference internal" href="#id57">修正</a></li>
+<li><a class="reference internal" href="#id58">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-06-2017-08-29">7.06リリース - 2017-08-29</a><ul>
-<li><a class="reference internal" href="#id58">改良</a></li>
-<li><a class="reference internal" href="#id59">感謝</a></li>
+<li><a class="reference internal" href="#id59">改良</a></li>
+<li><a class="reference internal" href="#id60">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-05-2017-07-29">7.05リリース - 2017-07-29</a><ul>
-<li><a class="reference internal" href="#id60">改良</a></li>
-<li><a class="reference internal" href="#id61">修正</a></li>
-<li><a class="reference internal" href="#id62">感謝</a></li>
+<li><a class="reference internal" href="#id61">改良</a></li>
+<li><a class="reference internal" href="#id62">修正</a></li>
+<li><a class="reference internal" href="#id63">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-04-2017-06-29">7.04リリース - 2017-06-29</a><ul>
-<li><a class="reference internal" href="#id63">改良</a></li>
-<li><a class="reference internal" href="#id64">修正</a></li>
+<li><a class="reference internal" href="#id64">改良</a></li>
+<li><a class="reference internal" href="#id65">修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-03-2017-05-29">7.03リリース - 2017-05-29</a><ul>
-<li><a class="reference internal" href="#id65">改良</a></li>
-<li><a class="reference internal" href="#id66">感謝</a></li>
+<li><a class="reference internal" href="#id66">改良</a></li>
+<li><a class="reference internal" href="#id67">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-02-2017-04-29">7.02リリース - 2017-04-29</a><ul>
-<li><a class="reference internal" href="#id67">改良</a></li>
-<li><a class="reference internal" href="#id68">修正</a></li>
-<li><a class="reference internal" href="#id69">感謝</a></li>
+<li><a class="reference internal" href="#id68">改良</a></li>
+<li><a class="reference internal" href="#id69">修正</a></li>
+<li><a class="reference internal" href="#id70">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-01-2017-03-29">7.01リリース - 2017-03-29</a><ul>
-<li><a class="reference internal" href="#id70">改良</a></li>
-<li><a class="reference internal" href="#id71">修正</a></li>
-<li><a class="reference internal" href="#id72">感謝</a></li>
+<li><a class="reference internal" href="#id71">改良</a></li>
+<li><a class="reference internal" href="#id72">修正</a></li>
+<li><a class="reference internal" href="#id73">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-00-2017-02-09">7.00リリース - 2017-02-09</a><ul>
-<li><a class="reference internal" href="#id73">改良</a></li>
-<li><a class="reference internal" href="#id74">感謝</a></li>
+<li><a class="reference internal" href="#id74">改良</a></li>
+<li><a class="reference internal" href="#id75">感謝</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#past-releases">過去のリリース</a></li>
@@ -1273,7 +1357,7 @@ INSERT INTO bugs VALUES (&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v10.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v10.09 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">お知らせ</a></li> 
       </ul>
     </div>
