@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4.3. Storage mode &#8212; Mroonga v10.10 documentation</title>
+    <title>4.3. Storage mode &#8212; Mroonga v10.11 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.10 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>Tutorial</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span>Storage mode</a></li> 
       </ul>
@@ -755,6 +755,16 @@ keys (result JSON is pretty printed):</p>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
+<p>上記の検索結果の読み方を説明します。
+ファセット検索を実行すると、指定したカラムの値毎に、その値を持つレコードが何件あるかを出力します。
+上記の例であれば、 <cite>tag</cite> カラムと <cite>year</cite> カラム、 <cite>year_month</cite> カラム毎にどの値が何件あるかを出力しています。</p>
+<p><cite>_key</cite> には、ファセット検索のキーにしたカラムの値が入ります。 <cite>_nsubrecs</cite> には、 <cite>_key</cite> の値をもつレコードの
+件数が入ります。</p>
+<p>つまり、 <cite>tag</cite> カラムをキーにしたファセット検索の結果は、 <cite>[“groonga”,1],[“MySQL”,2]</cite> となっているので、
+<cite>tag</cite> カラムに <cite>groonga</cite> という値を持つレコードが1件、 <cite>MySQL</cite> という値を持つレコードが2件あるということです。</p>
+<p>同様に、 <cite>year</cite> カラムをキーにしたファセット検索の結果は <cite>[1356998400.0,3]</cite> なので、 <cite>year</cite> カラムに <cite>1356998400.0</cite>
+という値を持つレコードは3件あり、 <cite>year_month</cite> カラムは、 <cite>[“2013-04”,2], [“2013-03”,1]</cite> という結果なので、
+<cite>year_month</cite> カラムに <cite>2013-04</cite> という値を持つレコードが2件、 <cite>2013-03</cite> という値を持つレコードが1件あることがわかります。</p>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more
 details.</p>
 </div>
@@ -919,13 +929,13 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.10 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>Tutorial</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span>Storage mode</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2020, Mroonga Project.
+        &#169; Copyright 2009-2021, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 
