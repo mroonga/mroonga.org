@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4.3. Storage mode &#8212; Mroonga v10.11 documentation</title>
+    <title>4.3. Storage mode &#8212; Mroonga v11.00 documentation</title>
     <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.00 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>Tutorial</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span>Storage mode</a></li> 
       </ul>
@@ -163,11 +163,11 @@
 <div class="section" id="how-to-specify-the-parser-for-full-text-search">
 <h2><span class="section-number">4.3.3. </span>How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this headline">¶</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference brackets" href="#parser" id="id2">2</a> for full text search:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) WITH PARSER parser_name
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">WITH</span> <span class="n">PARSER</span> <span class="n">parser_name</span>
 </pre></div>
 </div>
 <p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;tokenizer &quot;TokenMecab&quot;&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -298,13 +298,13 @@ letters or more. It is to reduce noises.</p></td>
 </tbody>
 </table>
 <p>You can specify the default parser by passing <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when you build Mroonga:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./configure --with-default-tokenizer TokenMecab ...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">tokenizer</span> <span class="n">TokenMecab</span> <span class="o">...</span>
 </pre></div>
 </div>
 <p>Or you can set <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code> variable in <code class="docutils literal notranslate"><span class="pre">my.cnf</span></code> or by SQL. If you specify it in <code class="docutils literal notranslate"><span class="pre">my.cnf</span></code>, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
 <p>my.cnf:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[mysqld]
-mroonga_default_tokenizer=TokenMecab
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenMecab</span>
 </pre></div>
 </div>
 <p>SQL:</p>
@@ -358,7 +358,7 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>Mroonga has the following syntax to specify Groonga’s normalizer:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;normalizer &quot;NormalizerAuto&quot;&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/normalizers.html">Groonga’s documentation about normalizer</a> for more details.</p>
@@ -396,7 +396,7 @@ It is used when tokenizing text and storing table key.</p>
 <div class="section" id="how-to-specify-the-token-filters">
 <h2><span class="section-number">4.3.5. </span>How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga has the following syntax to specify Groonga’s token filters.:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FULLTEXT INDEX (content) COMMENT &#39;token_filters &quot;TokenFilterStem&quot;&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;token_filters &quot;TokenFilterStem&quot;&#39;</span>
 </pre></div>
 </div>
 <p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStem</span></code> token filter:</p>
@@ -489,7 +489,7 @@ It is used when tokenizing text and storing table key.</p>
 <div class="section" id="how-to-specify-groonga-s-column-flags">
 <h2><span class="section-number">4.3.6. </span>How to specify Groonga’s column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Permalink to this headline">¶</a></h2>
 <p>Mroonga has the following syntax to specify Groonga’s column flags:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>content TEXT COMMENT &#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
 </pre></div>
 </div>
 <p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">COMPRESS_ZLIB</span></code> flag:</p>
@@ -678,15 +678,16 @@ Users just select a showed refined search.</p></li>
 <li><p>Users don’t get boared “not match” page. Faceted search showes only
 refined searches that has one or more matched items.</p></li>
 </ul>
-<p>Faceted search needs multiple <cite>GROUP BY</cite> operations against searched
-result set. To do faceted search by SQL, multiple <cite>SELECT</cite> requests
+<p>Faceted search needs multiple <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> operations against searched
+result set. To do faceted search by SQL, multiple <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> requests
 are needed. It is not effective.</p>
 <p>Groonga can do faceted search by only one groonga command. It is
-effective. Groonga has the <cite>select</cite> command that can search records
-with faceted search. Faceted search is called as <cite>drilldown</cite> in
-Groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more details.</p>
-<p>Mroonga provides <cite>mroonga_command()</cite> function. You can run groonga
-command in SQL by the function. But you should use only <cite>select</cite>
+effective. Groonga has the <code class="docutils literal notranslate"><span class="pre">select</span></code> command that can search records
+with faceted search. Faceted search is called as “drilldown” in
+Groonga. See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more
+details.</p>
+<p>Mroonga provides <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> function. You can run Groonga
+command in SQL by the function. But you should use only <code class="docutils literal notranslate"><span class="pre">select</span></code>
 command. Other commands that change schema or data may break
 consistency.</p>
 <p>Here is the schema definition for execution examples:</p>
@@ -722,13 +723,13 @@ consistency.</p>
                <span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Each record has <cite>groonga</cite> or <cite>MySQL</cite> as <cite>tag</cite>. Each record also has
-<cite>year</cite> and <cite>year_month</cite>. You can use <cite>tag</cite>, <cite>year</cite> and <cite>year_month</cite> as
-faceted search keys.</p>
+<p>Each record has <code class="docutils literal notranslate"><span class="pre">groonga</span></code> or <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code>. Each record also
+has <code class="docutils literal notranslate"><span class="pre">year</span></code> and <code class="docutils literal notranslate"><span class="pre">year_month</span></code>. You can use <code class="docutils literal notranslate"><span class="pre">tag</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and
+<code class="docutils literal notranslate"><span class="pre">year_month</span></code> as faceted search keys.</p>
 <p>Groonga calls faceted search as drilldown. So parameter key in Groonga
-is <cite>–drilldown</cite>. Groonga returns search result as JSON. So
-<cite>mroonga_command()</cite> also returns search result as JSON. It is not SQL
-friendly. You need to parse search result JSON by yourself.</p>
+is <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code>. Groonga returns search result as JSON. So
+<code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> also returns search result as JSON. It is not
+SQL friendly. You need to parse search result JSON by yourself.</p>
 <p>Here is the example of faceted search by all available faceted search
 keys (result JSON is pretty printed):</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">faceted_result</span><span class="p">;</span>
@@ -755,16 +756,80 @@ keys (result JSON is pretty printed):</p>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
 </div>
-<p>上記の検索結果の読み方を説明します。
-ファセット検索を実行すると、指定したカラムの値毎に、その値を持つレコードが何件あるかを出力します。
-上記の例であれば、 <cite>tag</cite> カラムと <cite>year</cite> カラム、 <cite>year_month</cite> カラム毎にどの値が何件あるかを出力しています。</p>
-<p><cite>_key</cite> には、ファセット検索のキーにしたカラムの値が入ります。 <cite>_nsubrecs</cite> には、 <cite>_key</cite> の値をもつレコードの
-件数が入ります。</p>
-<p>つまり、 <cite>tag</cite> カラムをキーにしたファセット検索の結果は、 <cite>[“groonga”,1],[“MySQL”,2]</cite> となっているので、
-<cite>tag</cite> カラムに <cite>groonga</cite> という値を持つレコードが1件、 <cite>MySQL</cite> という値を持つレコードが2件あるということです。</p>
-<p>同様に、 <cite>year</cite> カラムをキーにしたファセット検索の結果は <cite>[1356998400.0,3]</cite> なので、 <cite>year</cite> カラムに <cite>1356998400.0</cite>
-という値を持つレコードは3件あり、 <cite>year_month</cite> カラムは、 <cite>[“2013-04”,2], [“2013-03”,1]</cite> という結果なので、
-<cite>year_month</cite> カラムに <cite>2013-04</cite> という値を持つレコードが2件、 <cite>2013-03</cite> という値を持つレコードが1件あることがわかります。</p>
+<p>The first element <code class="docutils literal notranslate"><span class="pre">[[3],</span> <span class="pre">[[&quot;_id&quot;,&quot;UInt32&quot;]]]</span></code> is normal search
+result. It’s not faceted search result.</p>
+<p>The second, third and forth elements are faceted search results:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+ <span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+ <span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+ <span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">1</span><span class="p">],</span>
+ <span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;Time&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+ <span class="p">[</span><span class="mf">1356998400.0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+ <span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+ <span class="p">[</span><span class="s2">&quot;2013-04&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+ <span class="p">[</span><span class="s2">&quot;2013-03&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The order of faceted search results is corresponding to the value of
+<code class="docutils literal notranslate"><span class="pre">--drilldown</span></code>. In this example, we specified <code class="docutils literal notranslate"><span class="pre">tag</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and
+<code class="docutils literal notranslate"><span class="pre">year_month</span></code> as <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code> value. So the first faceted search
+result is for <code class="docutils literal notranslate"><span class="pre">tag</span></code>, the second one is for <code class="docutils literal notranslate"><span class="pre">year</span></code> and the third
+one is for <code class="docutils literal notranslate"><span class="pre">year_month</span></code>.</p>
+<p>Each faceted search result uses the following format. This is the same
+as normal search result:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[${THE_NUMBER_OF_RECORDS}],
+ [[${OUTPUT_COLUMN_NAME_0}, ${OUTPUT_COLUMN_TYPE_0}],
+  [${OUTPUT_COLUMN_NAME_1}, ${OUTPUT_COLUMN_TYPE_1}],
+  ...,
+  [${OUTPUT_COLUMN_NAME_N}, ${OUTPUT_COLUMN_TYPE_N}]]
+ [${OUTPUT_COLUMN_VALUE_0_FOR_RECORD_0},
+  ${OUTPUT_COLUMN_VALUE_1_FOR_RECORD_0},
+  ...,
+  ${OUTPUT_COLUMN_VALUE_N_FOR_RECORD_0}],
+ [${OUTPUT_COLUMN_VALUE_0_FOR_RECORD_1},
+  ${OUTPUT_COLUMN_VALUE_1_FOR_RECORD_1},
+  ...,
+  ${OUTPUT_COLUMN_VALUE_N_FOR_RECORD_1}],
+ ...
+ [${OUTPUT_COLUMN_VALUE_0_FOR_RECORD_M},
+  ${OUTPUT_COLUMN_VALUE_1_FOR_RECORD_M},
+  ...,
+  ${OUTPUT_COLUMN_VALUE_N_FOR_RECORD_M}]]
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">_key</span></code> column value in faceted search result shows faceted
+search key.</p>
+<p>For example, the first faceted search result (the faceted search
+result for <code class="docutils literal notranslate"><span class="pre">tag</span></code>) shows that matched records (all records in this
+case) have <code class="docutils literal notranslate"><span class="pre">groonga</span></code> and <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+ <span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+ <span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+ <span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">_nsubrecs</span></code> column value in faceted search result shows the
+number of records that have the corresponding faceted search key.</p>
+<p>For example, the first faceted search result (the faceted search
+result for <code class="docutils literal notranslate"><span class="pre">tag</span></code>) shows that there are 1 record that has <code class="docutils literal notranslate"><span class="pre">groonga</span></code>
+as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value and 2 records that have <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+ <span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+ <span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+ <span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more
 details.</p>
 </div>
@@ -806,9 +871,9 @@ Thus, you can search records by using a regular expression via Groonga’s funct
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL’s data directory with the filename  <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2010-10-07 17:32:39.209379|n|b1858f80|mroonga 1.10 started.
-2010-10-07 17:32:44.934048|d|46953940|hash get not found (key=test)
-2010-10-07 17:32:44.936113|d|46953940|hash put (key=test)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2010</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mf">39.209379</span><span class="o">|</span><span class="n">n</span><span class="o">|</span><span class="n">b1858f80</span><span class="o">|</span><span class="n">mroonga</span> <span class="mf">1.10</span> <span class="n">started</span><span class="o">.</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mf">44.934048</span><span class="o">|</span><span class="n">d</span><span class="o">|</span><span class="mi">46953940</span><span class="o">|</span><span class="nb">hash</span> <span class="n">get</span> <span class="ow">not</span> <span class="n">found</span> <span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">test</span><span class="p">)</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mf">44.936113</span><span class="o">|</span><span class="n">d</span><span class="o">|</span><span class="mi">46953940</span><span class="o">|</span><span class="nb">hash</span> <span class="n">put</span> <span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">test</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The default log level is NOTICE, i.e. we have important information only and we don’t have debug information etc.).</p>
@@ -929,7 +994,7 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
         <li class="right" >
           <a href="mode.html" title="4.2. Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v10.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.00 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>Tutorial</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span>Storage mode</a></li> 
       </ul>
