@@ -4,16 +4,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>9.1. How to debug &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <title>9.1. How to debug &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
     <script src="../static/doctools.js"></script>
     
-    <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="9.2. Release procedure" href="release.html" />
@@ -64,7 +63,7 @@
         <li class="right" >
           <a href="../developer.html" title="9. Developer’s guide"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.1. </span>How to debug</a></li> 
       </ul>
@@ -89,13 +88,13 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 <h3><span class="section-number">9.1.1.1. </span>How to build MySQL for debugging<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="Permalink to this headline">¶</a></h3>
 <p>As you can see in <a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a>, you can build MySQL for debugging by passing <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=yes</span></code> option in CMAKE options.</p>
 <p>The procedure from download to build is the following.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mkdir -p ~/work/
-% cd ~/work/
-% wget http://ftp.jaist.ac.jp/pub/mysql/Downloads/MySQL-5.5/mysql-5.5.13.tar.gz
-% tar xvzf mysql-5.5.13.tar.gz
-% cd mysql-5.5.13
-% cmake . -DCMAKE_INSTALL_PREFIX=/tmp/local -DWITH_DEBUG=yes
-% make
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
+<span class="o">%</span> <span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">jaist</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">jp</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.5</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mf">13.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mf">13.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">13</span>
+<span class="o">%</span> <span class="n">cmake</span> <span class="o">.</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">local</span> <span class="o">-</span><span class="n">DWITH_DEBUG</span><span class="o">=</span><span class="n">yes</span>
+<span class="o">%</span> <span class="n">make</span>
 </pre></div>
 </div>
 </div>
@@ -103,7 +102,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 <h3><span class="section-number">9.1.1.2. </span>How tom build Mroonga for debugging<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Permalink to this headline">¶</a></h3>
 <p>You can build Mroonga for debugging by passing <code class="docutils literal notranslate"><span class="pre">--with-debug</span></code> in configure options.</p>
 <p>The procedure from cloning repository to build is the following.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd ~/work/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% cd ~/work/
 % git clone git@github.com:mroonga/mroonga.git
 % cd mroonga
 % ./autogen.sh
@@ -113,7 +112,7 @@ So we build both MySQL and Mroonga for debugging in development.</p>
 </div>
 <p>When you successfully build both, please invoke tests like the following.
 If you get <code class="docutils literal notranslate"><span class="pre">[pass]</span></code> for all tests, you succeeded to build for debugging.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% test/run-sql-test.sh
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 </div>
@@ -126,14 +125,14 @@ Here we show some examples of its usage.</p>
 <h3><span class="section-number">9.1.2.1. </span>Run the specified test only<a class="headerlink" href="#run-the-specified-test-only" title="Permalink to this headline">¶</a></h3>
 <p>When you invoke run-sql-test.sh without any option, all tests under <code class="docutils literal notranslate"><span class="pre">mysql-test/mroonga</span></code> will be invoked.</p>
 <p>So if you want to run certain tests only, you can specify the test name in <code class="docutils literal notranslate"><span class="pre">--do-test</span></code> option.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --do-test=foobar
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">do</span><span class="o">-</span><span class="n">test</span><span class="o">=</span><span class="n">foobar</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="see-the-trace">
 <h3><span class="section-number">9.1.2.2. </span>See the trace<a class="headerlink" href="#see-the-trace" title="Permalink to this headline">¶</a></h3>
 <p>When you run tests by adding <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option like the following, function calls information is recorded.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --debug --do-test=foobar
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">do</span><span class="o">-</span><span class="n">test</span><span class="o">=</span><span class="n">foobar</span>
 </pre></div>
 </div>
 <p>This information is stored in <code class="docutils literal notranslate"><span class="pre">${MySQL's</span> <span class="pre">working</span> <span class="pre">directory}/${MySQL</span> <span class="pre">version}/mysql-test/var/log/mysqld.1.trace</span></code>.</p>
@@ -142,7 +141,7 @@ Here we show some examples of its usage.</p>
 <div class="section" id="invoking-gdb">
 <h3><span class="section-number">9.1.2.3. </span>Invoking GDB<a class="headerlink" href="#invoking-gdb" title="Permalink to this headline">¶</a></h3>
 <p>By adding <code class="docutils literal notranslate"><span class="pre">--gdb</span></code> option, you can debug with GDB when you run tests.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./test/run-sql-test.sh --gdb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">gdb</span>
 </pre></div>
 </div>
 </div>
@@ -206,7 +205,7 @@ Here we show some examples of its usage.</p>
         <li class="right" >
           <a href="../developer.html" title="9. Developer’s guide"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.1. </span>How to debug</a></li> 
       </ul>

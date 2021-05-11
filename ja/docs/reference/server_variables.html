@@ -4,17 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/translations.js"></script>
     
-    <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="5.4. ステータス変数の一覧" href="status_variables.html" />
@@ -65,7 +64,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="5.2. SQL commands"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U"><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.3. </span>サーバ変数の一覧</a></li> 
       </ul>
@@ -110,13 +109,13 @@
 </tbody>
 </table>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code> を確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_action_on_fulltext_query_error&#39;;
-+----------------------------------------+---------------+
-| Variable_name                          | Value         |
-+----------------------------------------+---------------+
-| mroonga_action_on_fulltext_query_error | ERROR_AND_LOG |
-+----------------------------------------+---------------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_action_on_fulltext_query_error&#39;</span><span class="p">;</span>
+<span class="o">+----------------------------------------+---------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                          <span class="o">|</span> <span class="n">Value</span>         <span class="o">|</span>
+<span class="o">+----------------------------------------+---------------+</span>
+<span class="o">|</span> <span class="n">mroonga_action_on_fulltext_query_error</span> <span class="o">|</span> <span class="n">ERROR_AND_LOG</span> <span class="o">|</span>
+<span class="o">+----------------------------------------+---------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -168,7 +167,7 @@
 <p>デフォルトのフラグは <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> です。これはMySQLのBOOLEAN MODEと互換性のある構文です。</p>
 <p><code class="docutils literal notranslate"><span class="pre">SYNTAX_QUERY,ALLOW_LEADING_NOT</span></code> というようにカンマで区切って複数のフラグを指定できます。</p>
 <p>Groongaのスクリプト構文を使うようにするSQLの例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SET mroonga_boolean_mode_syntax_flags = &quot;SYNTAX_SCRIPT&quot;;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">mroonga_boolean_mode_syntax_flags</span> <span class="o">=</span> <span class="s2">&quot;SYNTAX_SCRIPT&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -183,19 +182,14 @@
 </div>
 <p>デフォルトの全文検索用パーサ。デフォルト値はconfigureの <code class="docutils literal notranslate"><span class="pre">with-default-parser</span></code> オプションで指定できます（無指定時は <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> ）。</p>
 <p>全文検索パーサーとして <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使う例です。この例では <code class="docutils literal notranslate"><span class="pre">body_index</span></code> 全文検索インデックスは <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使います。</p>
-<div class="highlight-sql notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_parser</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="n">body</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span>
-<span class="p">)</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_parser</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
+<span class="linenos">2</span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<span class="linenos">3</span>  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="linenos">4</span>  <span class="n">body</span> <span class="nb">TEXT</span><span class="p">,</span>
+<span class="linenos">5</span>  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="linenos">6</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="mroonga-default-tokenizer">
 <span id="server-variable-mroonga-default-tokenizer"></span><h2><span class="section-number">5.3.5. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code><a class="headerlink" href="#mroonga-default-tokenizer" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -204,19 +198,14 @@
 </div>
 <p>全文検索用のデフォルトのトークナイザー。デフォルト値はconfigureの <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer=TOKENIZER</span></code> オプションで指定できます。このオプションを指定しないときは <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> になります。</p>
 <p>全文検索用インデックスのトークナイザーとして <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使う例です。この例では <code class="docutils literal notranslate"><span class="pre">body_index</span></code> 全文検索インデックスは <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使います。</p>
-<div class="highlight-sql notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="n">body</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span>
-<span class="p">)</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
+<span class="linenos">2</span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<span class="linenos">3</span>  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="linenos">4</span>  <span class="n">body</span> <span class="nb">TEXT</span><span class="p">,</span>
+<span class="linenos">5</span>  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="linenos">6</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span> <span class="n">UTF8</span><span class="p">;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="mroonga-default-wrapper-engine">
 <span id="server-variable-mroonga-default-wrapper-engine"></span><h2><span class="section-number">5.3.6. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_wrapper_engine</span></code><a class="headerlink" href="#mroonga-default-wrapper-engine" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -226,24 +215,24 @@
 <span id="server-variable-mroonga-dry-write"></span><h2><span class="section-number">5.3.7. </span><code class="docutils literal notranslate"><span class="pre">mroonga_dry_write</span></code><a class="headerlink" href="#mroonga-dry-write" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Groongaデータベースに実際にデータを書き込むかどうかを指定します。デフォルト値は <code class="docutils literal notranslate"><span class="pre">OFF</span></code> で、実際にGroongaデータベースにデータを書き込みます。通常はこの値を変更する必要はありません。この変数はベンチマーク時に便利です。この値を <code class="docutils literal notranslate"><span class="pre">ON</span></code> にすることでMySQLとMroongaだけの処理時間を計測することができます。この時間にGroongaの処理時間は含まれません。</p>
 <p>Groongaデータベースに値を書き込まないようにするSQLの例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_dry_write | OFF   |
-+-------------------+-------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_dry_write&#39;</span><span class="p">;</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>     <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_dry_write</span> <span class="o">|</span> <span class="n">OFF</span>   <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET mroonga_dry_write = true;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">mroonga_dry_write</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_dry_write | ON    |
-+-------------------+-------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_dry_write&#39;</span><span class="p">;</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>     <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_dry_write</span> <span class="o">|</span> <span class="n">ON</span>    <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -251,24 +240,24 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_dry_write&#39;;
 <span id="server-variable-mroonga-enable-optimization"></span><h2><span class="section-number">5.3.8. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_optimization</span></code><a class="headerlink" href="#mroonga-enable-optimization" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>最適化を有効にするかどうかを指定します。デフォルト値は <code class="docutils literal notranslate"><span class="pre">ON</span></code> で最適化は有効になっています。通常はこの値を変更する必要はありません。この変数はベンチマーク時に便利です。</p>
 <p>最適化を無効にするSQLの例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
-+-----------------------------+-------+
-| Variable_name               | Value |
-+-----------------------------+-------+
-| mroonga_enable_optimization | ON    |
-+-----------------------------+-------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_enable_optimization&#39;</span><span class="p">;</span>
+<span class="o">+-----------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>               <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-----------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_enable_optimization</span> <span class="o">|</span> <span class="n">ON</span>    <span class="o">|</span>
+<span class="o">+-----------------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET mroonga_enable_optimization = false;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">mroonga_enable_optimization</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
-+-----------------------------+-------+
-| Variable_name               | Value |
-+-----------------------------+-------+
-| mroonga_enable_optimization | OFF   |
-+-----------------------------+-------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_enable_optimization&#39;</span><span class="p">;</span>
+<span class="o">+-----------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>               <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-----------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_enable_optimization</span> <span class="o">|</span> <span class="n">OFF</span>   <span class="o">|</span>
+<span class="o">+-----------------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -276,12 +265,12 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <span id="server-variable-mroonga-libgroonga-support-lz4"></span><h2><span class="section-number">5.3.9. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_lz4</span></code><a class="headerlink" href="#mroonga-libgroonga-support-lz4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GroongaライブラリーのLZ4サポート状況</p>
 <p>GroongaライブラリーがLZ4をサポートしているかを確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_libgroonga_support_lz4&#39;;
-+--------------------------------+-------+
-| Variable_name                  | Value |
-+--------------------------------+-------+
-| mroonga_libgroonga_support_lz4 | ON    |
-+--------------------------------+-------+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_support_lz4&#39;</span><span class="p">;</span>
+<span class="o">+--------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                  <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+--------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_libgroonga_support_lz4</span> <span class="o">|</span> <span class="n">ON</span>    <span class="o">|</span>
+<span class="o">+--------------------------------+-------+</span>
 </pre></div>
 </div>
 </div>
@@ -289,12 +278,12 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <span id="server-variable-mroonga-libgroonga-support-zlib"></span><h2><span class="section-number">5.3.10. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zlib</span></code><a class="headerlink" href="#mroonga-libgroonga-support-zlib" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Groongaライブラリーのzlibサポート状況</p>
 <p>Groongaライブラリーがzlibをサポートしているかを確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_libgroonga_support_zlib&#39;;
-+---------------------------------+-------+
-| Variable_name                   | Value |
-+---------------------------------+-------+
-| mroonga_libgroonga_support_zlib | ON    |
-+---------------------------------+-------+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_support_zlib&#39;</span><span class="p">;</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                   <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_libgroonga_support_zlib</span> <span class="o">|</span> <span class="n">ON</span>    <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
 </pre></div>
 </div>
 </div>
@@ -302,12 +291,12 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <span id="server-variable-mroonga-libgroonga-support-zstd"></span><h2><span class="section-number">5.3.11. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zstd</span></code><a class="headerlink" href="#mroonga-libgroonga-support-zstd" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GroongaライブラリーのZstandardサポート状況</p>
 <p>GroongaライブラリーがZstandardをサポートしているかを確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_libgroonga_support_zstd&#39;;
-+---------------------------------+-------+
-| Variable_name                   | Value |
-+---------------------------------+-------+
-| mroonga_libgroonga_support_zstd | ON    |
-+---------------------------------+-------+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_support_zstd&#39;</span><span class="p">;</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                   <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_libgroonga_support_zstd</span> <span class="o">|</span> <span class="n">ON</span>    <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
 </pre></div>
 </div>
 </div>
@@ -315,13 +304,13 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <span id="serer-variable-mroonga-libgroonga-version"></span><h2><span class="section-number">5.3.12. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_version</span></code><a class="headerlink" href="#mroonga-libgroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>groongaライブラリのバージョン</p>
 <p>groongaライブラリのバージョンを確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_libgroonga_version&#39;;
-+----------------------------+------------------+
-| Variable_name              | Value            |
-+----------------------------+------------------+
-| mroonga_libgroonga_version | 1.2.8-9-gbf05b82 |
-+----------------------------+------------------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_version&#39;</span><span class="p">;</span>
+<span class="o">+----------------------------+------------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>              <span class="o">|</span> <span class="n">Value</span>            <span class="o">|</span>
+<span class="o">+----------------------------+------------------+</span>
+<span class="o">|</span> <span class="n">mroonga_libgroonga_version</span> <span class="o">|</span> <span class="mf">1.2</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">gbf05b82</span> <span class="o">|</span>
+<span class="o">+----------------------------+------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -333,24 +322,24 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_enable_optimization&#39;;
 <span id="serer-variable-mroonga-log-file"></span><h2><span class="section-number">5.3.14. </span><code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code><a class="headerlink" href="#mroonga-log-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのログファイル名。デフォルト値は <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> 。</p>
 <p>ログファイルを <code class="docutils literal notranslate"><span class="pre">/tmp/mroonga.log</span></code> に変更する例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
-+------------------+-------------+
-| Variable_name    | Value       |
-+------------------+-------------+
-| mroonga_log_file | groonga.log |
-+------------------+-------------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_log_file&#39;</span><span class="p">;</span>
+<span class="o">+------------------+-------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>    <span class="o">|</span> <span class="n">Value</span>       <span class="o">|</span>
+<span class="o">+------------------+-------------+</span>
+<span class="o">|</span> <span class="n">mroonga_log_file</span> <span class="o">|</span> <span class="n">groonga</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span>
+<span class="o">+------------------+-------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET GLOBAL mroonga_log_file = &quot;/tmp/mroonga.log&quot;;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_log_file</span> <span class="o">=</span> <span class="s2">&quot;/tmp/mroonga.log&quot;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
-+------------------+------------------+
-| Variable_name    | Value            |
-+------------------+------------------+
-| mroonga_log_file | /tmp/mroonga.log |
-+------------------+------------------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_log_file&#39;</span><span class="p">;</span>
+<span class="o">+------------------+------------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>    <span class="o">|</span> <span class="n">Value</span>            <span class="o">|</span>
+<span class="o">+------------------+------------------+</span>
+<span class="o">|</span> <span class="n">mroonga_log_file</span> <span class="o">|</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mroonga</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span>
+<span class="o">+------------------+------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -404,24 +393,24 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_file&#39;;
 </tbody>
 </table>
 <p>ログレベルを <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> に変更する例です。 <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> レベルにするとデバッグ用のたくさんのメッセージがログに出力されます:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
-+-------------------+--------+
-| Variable_name     | Value  |
-+-------------------+--------+
-| mroonga_log_level | NOTICE |
-+-------------------+--------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="o">+-------------------+--------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>     <span class="o">|</span> <span class="n">Value</span>  <span class="o">|</span>
+<span class="o">+-------------------+--------+</span>
+<span class="o">|</span> <span class="n">mroonga_log_level</span> <span class="o">|</span> <span class="n">NOTICE</span> <span class="o">|</span>
+<span class="o">+-------------------+--------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET GLOBAL mroonga_log_level = &quot;debug&quot;;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_log_level</span> <span class="o">=</span> <span class="s2">&quot;debug&quot;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
-+-------------------+-------+
-| Variable_name     | Value |
-+-------------------+-------+
-| mroonga_log_level | DEBUG |
-+-------------------+-------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>     <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_log_level</span> <span class="o">|</span> <span class="n">DEBUG</span> <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -430,24 +419,24 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_log_level&#39;;
 <p>Mroongaのクエリーログファイル名。デフォルト値は空です。</p>
 <p>この値が空の場合、クエリーログはファイルに保存されません。この値が空ではない場合は、クエリーログは指定されたファイルに保存されます。</p>
 <p>クエリーログファイルを <code class="docutils literal notranslate"><span class="pre">/tmp/mroonga_query.log</span></code> に変更する例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_query_log_file&#39;;
-+------------------------+-------+
-| Variable_name          | Value |
-+------------------------+-------+
-| mroonga_query_log_file |       |
-+------------------------+-------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_query_log_file&#39;</span><span class="p">;</span>
+<span class="o">+------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>          <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_query_log_file</span> <span class="o">|</span>       <span class="o">|</span>
+<span class="o">+------------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET GLOBAL mroonga_query_log_file = &quot;/tmp/mroonga.log&quot;;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_query_log_file</span> <span class="o">=</span> <span class="s2">&quot;/tmp/mroonga.log&quot;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_query_log_file&#39;;
-+------------------------+------------------+
-| Variable_name          | Value            |
-+------------------------+------------------+
-| mroonga_query_log_file | /tmp/mroonga.log |
-+------------------------+------------------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_query_log_file&#39;</span><span class="p">;</span>
+<span class="o">+------------------------+------------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>          <span class="o">|</span> <span class="n">Value</span>            <span class="o">|</span>
+<span class="o">+------------------------+------------------+</span>
+<span class="o">|</span> <span class="n">mroonga_query_log_file</span> <span class="o">|</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mroonga</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span>
+<span class="o">+------------------------+------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -456,87 +445,50 @@ mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_query_log_file&#39;;
 <p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="http://groonga.org/docs/spec/search.html">Groongaの検索の仕様</a> を確認してください。</p>
 <p>デフォルト値はGroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></code> でデフォルト値を設定できます。</p>
 <p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
-<div class="highlight-sql notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span> <span class="k">GLOBAL</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>この変数の値による挙動の変化を示す別の例です。</p>
-<div class="highlight-sql notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="n">title</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="nb">TEXT</span><span class="p">,</span>
-  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">tags_index</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenDelimit&quot;&#39;</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
-
-<span class="c1">-- Test data</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello groonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;groonga install&quot;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello mroonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;mroonga install&quot;</span><span class="p">);</span>
-
-<span class="c1">-- Matches all records that have &quot;install&quot; tag.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;install&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-<span class="c1">-- 1 Hello groonga!  groonga install</span>
-<span class="c1">-- 2 Hello mroonga!  mroonga install</span>
-
-<span class="c1">-- Matches no records by &quot;gr&quot; tag search because no &quot;gr&quot; tag is used.</span>
-<span class="c1">-- But matches a record that has &quot;groonga&quot; tag because search</span>
-<span class="c1">-- method is escalated and prefix search with &quot;gr&quot; is used.</span>
-<span class="c1">-- The default threshold is 0. It means that no records are matched then</span>
-<span class="c1">-- search method is escalated.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-<span class="c1">-- 1 Hello groonga!  groonga install</span>
-
-<span class="c1">-- Disables escalation.</span>
-<span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<span class="c1">-- No records are matched.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-
-<span class="c1">-- Enables escalation again.</span>
-<span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="c1">-- Matches a record by prefix search with &quot;gr&quot;.</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
-<span class="c1">-- id        title   tags</span>
-<span class="c1">-- 1 Hello groonga!  groonga install</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+<span class="linenos"> 2</span>  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="linenos"> 3</span>  <span class="n">title</span> <span class="nb">TEXT</span><span class="p">,</span>
+<span class="linenos"> 4</span>  <span class="n">tags</span> <span class="nb">TEXT</span><span class="p">,</span>
+<span class="linenos"> 5</span>  <span class="n">FULLTEXT</span> <span class="k">INDEX</span> <span class="n">tags_index</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="k">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenDelimit&quot;&#39;</span>
+<span class="linenos"> 6</span><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1">-- Test data</span>
+<span class="linenos"> 9</span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello groonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;groonga install&quot;</span><span class="p">);</span>
+<span class="linenos">10</span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="ss">&quot;Hello mroonga!&quot;</span><span class="p">,</span> <span class="ss">&quot;mroonga install&quot;</span><span class="p">);</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="c1">-- Matches all records that have &quot;install&quot; tag.</span>
+<span class="linenos">13</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;install&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">14</span><span class="c1">-- id        title   tags</span>
+<span class="linenos">15</span><span class="c1">-- 1 Hello groonga!  groonga install</span>
+<span class="linenos">16</span><span class="c1">-- 2 Hello mroonga!  mroonga install</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="c1">-- Matches no records by &quot;gr&quot; tag search because no &quot;gr&quot; tag is used.</span>
+<span class="linenos">19</span><span class="c1">-- But matches a record that has &quot;groonga&quot; tag because search</span>
+<span class="linenos">20</span><span class="c1">-- method is escalated and prefix search with &quot;gr&quot; is used.</span>
+<span class="linenos">21</span><span class="c1">-- The default threshold is 0. It means that no records are matched then</span>
+<span class="linenos">22</span><span class="c1">-- search method is escalated.</span>
+<span class="linenos">23</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">24</span><span class="c1">-- id        title   tags</span>
+<span class="linenos">25</span><span class="c1">-- 1 Hello groonga!  groonga install</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="c1">-- Disables escalation.</span>
+<span class="linenos">28</span><span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">29</span><span class="c1">-- No records are matched.</span>
+<span class="linenos">30</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">31</span><span class="c1">-- id        title   tags</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="c1">-- Enables escalation again.</span>
+<span class="linenos">34</span><span class="k">SET</span> <span class="n">mroonga_match_escalation_threshold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">35</span><span class="c1">-- Matches a record by prefix search with &quot;gr&quot;.</span>
+<span class="linenos">36</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">diaries</span> <span class="k">WHERE</span> <span class="k">MATCH</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="ss">&quot;gr&quot;</span> <span class="k">IN</span> <span class="nb">BOOLEAN</span> <span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">37</span><span class="c1">-- id        title   tags</span>
+<span class="linenos">38</span><span class="c1">-- 1 Hello groonga!  groonga install</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="mroonga-max-n-records-for-estimate">
 <span id="server-variable-mroonga-max-n-records-for-estimate"></span><h2><span class="section-number">5.3.18. </span><code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -553,18 +505,18 @@ to Groonga database.
 It needs to reopen the database with <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> in order
 to reflect the variable is changed.</p>
 <p>操作記録を無効にするSQLの例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SET GLOBAL mroonga_enable_operations_recording = false;
-Query OK, 0 rows affected (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_enable_operations_recording</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; FLUSH TABLES;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">FLUSH</span> <span class="n">TABLES</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_enable_operations_recording&#39;;
-+-------------------------------------+-------+
-| Variable_name                       | Value |
-+-------------------------------------+-------+
-| mroonga_enable_operations_recording | OFF   |
-+-------------------------------------+-------+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_enable_operations_recording&#39;</span><span class="p">;</span>
+<span class="o">+-------------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                       <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-------------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_enable_operations_recording</span> <span class="o">|</span> <span class="n">OFF</span>   <span class="o">|</span>
+<span class="o">+-------------------------------------+-------+</span>
 </pre></div>
 </div>
 </div>
@@ -572,24 +524,24 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_enable_operations_recording&#3
 <span id="server-variable-mroonga-vector-column-delimiter"></span><h2><span class="section-number">5.3.20. </span><code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ベクターカラムを出力する際の区切り文字。デフォルト値は空白です。</p>
 <p>区切り文字を空白からセミコロンに変更するSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
-+---------------------------------+-------+
-| Variable_name                   | Value |
-+---------------------------------+-------+
-| mroonga_vector_column_delimiter |       |
-+---------------------------------+-------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_vector_column_delimiter&#39;</span><span class="p">;</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                   <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_vector_column_delimiter</span> <span class="o">|</span>       <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
 
-mysql&gt; SET GLOBAL mroonga_vector_column_delimiter = &#39;;&#39;;
-Query OK, 0 rows affected (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_vector_column_delimiter</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
-+---------------------------------+-------+
-| Variable_name                   | Value |
-+---------------------------------+-------+
-| mroonga_vector_column_delimiter | ;     |
-+---------------------------------+-------+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_vector_column_delimiter&#39;</span><span class="p">;</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                   <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_vector_column_delimiter</span> <span class="o">|</span> <span class="p">;</span>     <span class="o">|</span>
+<span class="o">+---------------------------------+-------+</span>
 </pre></div>
 </div>
 </div>
@@ -597,13 +549,13 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 <span id="server-variable-mroonga-version"></span><h2><span class="section-number">5.3.21. </span><code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Mroongaのバージョン</p>
 <p>実行中のmroongaのバージョンを確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_version&#39;;
-+-----------------+-------+
-| Variable_name   | Value |
-+-----------------+-------+
-| mroonga_version | 1.10  |
-+-----------------+-------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_version&#39;</span><span class="p">;</span>
+<span class="o">+-----------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-----------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_version</span> <span class="o">|</span> <span class="mf">1.10</span>  <span class="o">|</span>
+<span class="o">+-----------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -640,13 +592,13 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
 </tbody>
 </table>
 <p>現在の値を確認するためのSQL例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW VARIABLES LIKE &#39;mroonga_condition_push_down_type&#39;;
-+----------------------------------+----------------------+
-| Variable_name                    | Value                |
-+----------------------------------+----------------------+
-| mroonga_condition_push_down_type | ONE_FULL_TEXT_SEARCH |
-+----------------------------------+----------------------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_condition_push_down_type&#39;</span><span class="p">;</span>
+<span class="o">+----------------------------------+----------------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>                    <span class="o">|</span> <span class="n">Value</span>                <span class="o">|</span>
+<span class="o">+----------------------------------+----------------------+</span>
+<span class="o">|</span> <span class="n">mroonga_condition_push_down_type</span> <span class="o">|</span> <span class="n">ONE_FULL_TEXT_SEARCH</span> <span class="o">|</span>
+<span class="o">+----------------------------------+----------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -720,7 +672,7 @@ mysql&gt; SHOW GLOBAL VARIABLES LIKE &#39;mroonga_vector_column_delimiter&#39;;
         <li class="right" >
           <a href="sql_commands.html" title="5.2. SQL commands"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.3. </span>サーバ変数の一覧</a></li> 
       </ul>

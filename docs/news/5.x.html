@@ -4,16 +4,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News - 5.x &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <title>News - 5.x &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
     <script src="../static/doctools.js"></script>
     
-    <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
@@ -56,7 +55,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">News - 5.x</a></li> 
       </ul>
     </div>  
@@ -305,48 +304,48 @@ Start mysqld when mysqld is not running within rpm-installation.
 This feature can be used only with MariaDB.</p>
 <ul>
 <li><p>Supported <code class="docutils literal notranslate"><span class="pre">TOKENIZER</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE diaries (
-  id int PRIMARY KEY AUTO_INCREMENT,
-  body text,
-  FULLTEXT INDEX body_index (body) TOKENIZER=&#39;TokenBigramSplitSymbolAlphaDigit&#39;
-) ENGINE = Mroonga DEFAULT CHARSET = utf8;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="nb">int</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">body</span> <span class="n">text</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="n">body_index</span> <span class="p">(</span><span class="n">body</span><span class="p">)</span> <span class="n">TOKENIZER</span><span class="o">=</span><span class="s1">&#39;TokenBigramSplitSymbolAlphaDigit&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 <li><p>Supported <code class="docutils literal notranslate"><span class="pre">NORMALIZER</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code> and normal <code class="docutils literal notranslate"><span class="pre">INDEX</span></code></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE memos (
-  id INT NOT NULL PRIMARY KEY,
-  content TEXT NOT NULL,
-  FULLTEXT INDEX (content) NORMALIZER=&#39;NormalizerAuto&#39;
-) ENGINE = Mroonga DEFAULT CHARSET = utf8;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="n">INT</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">content</span> <span class="n">TEXT</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">NORMALIZER</span><span class="o">=</span><span class="s1">&#39;NormalizerAuto&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 <li><p>Supported <code class="docutils literal notranslate"><span class="pre">TOKEN_FILTERS</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">IDNEX</span></code></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE memos (
-  content VARCHAR(64) NOT NULL,
-  FULLTEXT INDEX (content) TOKEN_FILTERS=&#39;TokenFilterStopWord,TokenFilterStopWord&#39;
-) ENGINE = Mroonga COMMENT = &#39;engine &quot;InnoDB&quot;&#39; DEFAULT CHARSET = utf8;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="n">content</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">TOKEN_FILTERS</span><span class="o">=</span><span class="s1">&#39;TokenFilterStopWord,TokenFilterStopWord&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">COMMENT</span> <span class="o">=</span> <span class="s1">&#39;engine &quot;InnoDB&quot;&#39;</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 <li><p>Supported <code class="docutils literal notranslate"><span class="pre">FLAGS</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> and normal <code class="docutils literal notranslate"><span class="pre">INDEX</span></code></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE memos (
-  content VARCHAR(64) NOT NULL,
-  FULLTEXT INDEX (content) FLAGS=&#39;WITH_POSITION|WITH_WEIGHT&#39;
-) ENGINE = Mroonga DEFAULT CHARSET = utf8;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="n">content</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">FLAGS</span><span class="o">=</span><span class="s1">&#39;WITH_POSITION|WITH_WEIGHT&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 <li><p>Supported <code class="docutils literal notranslate"><span class="pre">GROONGA_TYPE</span></code> parameter for field</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE tags (
-  name VARCHAR(64) PRIMARY KEY
-) ENGINE = Mroonga DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">tags</span> <span class="p">(</span>
+  <span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span> <span class="n">COLLATE</span> <span class="o">=</span> <span class="n">utf8_bin</span><span class="p">;</span>
 
-CREATE TABLE bugs (
-  id INT UNSIGNED PRIMARY KEY,
-  tag VARCHAR(64) GROONGA_TYPE=&#39;tags&#39;
-) ENGINE = Mroonga DEFAULT CHARSET = utf8;
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">bugs</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">tag</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">GROONGA_TYPE</span><span class="o">=</span><span class="s1">&#39;tags&#39;</span>
+<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -358,65 +357,65 @@ CREATE TABLE bugs (
 <li><p>It’s backward incompatible change. For example:</p>
 <ul>
 <li><p>Prepare (common)</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; CREATE TABLE timestamps (
-    -&gt;   id INT PRIMARY KEY AUTO_INCREMENT,
-    -&gt;   create_dt DATETIME
-    -&gt; ) ENGINE = Mroonga DEFAULT CHARSET = utf8;
-Query OK, 0 rows affected (0.09 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">timestamps</span> <span class="p">(</span>
+    <span class="o">-&gt;</span>   <span class="nb">id</span> <span class="n">INT</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+    <span class="o">-&gt;</span>   <span class="n">create_dt</span> <span class="n">DATETIME</span>
+    <span class="o">-&gt;</span> <span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">Mroonga</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span> <span class="o">=</span> <span class="n">utf8</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.09</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET sql_mode=&#39;&#39;;
-Query OK, 0 rows affected (0.01 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">sql_mode</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2001-00-00 00:00:00&quot;);
-Query OK, 1 row affected, 1 warning (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">timestamps</span> <span class="p">(</span><span class="n">create_dt</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s2">&quot;2001-00-00 00:00:00&quot;</span><span class="p">);</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span><span class="p">,</span> <span class="mi">1</span> <span class="n">warning</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SHOW WARNINGS;
-+---------+------+------------------------------------------------+
-| Level   | Code | Message                                        |
-+---------+------+------------------------------------------------+
-| Warning | 1265 | Data truncated for column &#39;create_dt&#39; at row 1 |
-+---------+------+------------------------------------------------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">WARNINGS</span><span class="p">;</span>
+<span class="o">+---------+------+------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">Level</span>   <span class="o">|</span> <span class="n">Code</span> <span class="o">|</span> <span class="n">Message</span>                                        <span class="o">|</span>
+<span class="o">+---------+------+------------------------------------------------+</span>
+<span class="o">|</span> <span class="ne">Warning</span> <span class="o">|</span> <span class="mi">1265</span> <span class="o">|</span> <span class="n">Data</span> <span class="n">truncated</span> <span class="k">for</span> <span class="n">column</span> <span class="s1">&#39;create_dt&#39;</span> <span class="n">at</span> <span class="n">row</span> <span class="mi">1</span> <span class="o">|</span>
+<span class="o">+---------+------+------------------------------------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SELECT * FROM timestamps;
-+----+---------------------+
-| id | create_dt           |
-+----+---------------------+
-|  1 | 2001-01-01 00:00:00 |
-+----+---------------------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">timestamps</span><span class="p">;</span>
+<span class="o">+----+---------------------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">create_dt</span>           <span class="o">|</span>
+<span class="o">+----+---------------------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="mi">2001</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">|</span>
+<span class="o">+----+---------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SET sql_mode=&#39;STRICT_TRANS_TABLES&#39;;
-Query OK, 0 rows affected (0.01 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">sql_mode</span><span class="o">=</span><span class="s1">&#39;STRICT_TRANS_TABLES&#39;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 <li><p>Before (5.03 or earlier)</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
-ERROR 1265 (01000): Data truncated for column &#39;create_dt&#39; at row 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">timestamps</span> <span class="p">(</span><span class="n">create_dt</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s2">&quot;2002-00-00 00:00:00&quot;</span><span class="p">);</span>
+<span class="n">ERROR</span> <span class="mi">1265</span> <span class="p">(</span><span class="mi">01000</span><span class="p">):</span> <span class="n">Data</span> <span class="n">truncated</span> <span class="k">for</span> <span class="n">column</span> <span class="s1">&#39;create_dt&#39;</span> <span class="n">at</span> <span class="n">row</span> <span class="mi">1</span>
 
-mysql&gt; SELECT * FROM timestamps;
-+----+---------------------+
-| id | create_dt           |
-+----+---------------------+
-|  1 | 2001-01-01 00:00:00 |
-|  2 | 2002-01-01 00:00:00 |
-+----+---------------------+
-2 rows in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">timestamps</span><span class="p">;</span>
+<span class="o">+----+---------------------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">create_dt</span>           <span class="o">|</span>
+<span class="o">+----+---------------------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="mi">2001</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">2</span> <span class="o">|</span> <span class="mi">2002</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">|</span>
+<span class="o">+----+---------------------+</span>
+<span class="mi">2</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 <li><p>After (5.04 or later)</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; INSERT INTO timestamps (create_dt) VALUES (&quot;2002-00-00 00:00:00&quot;);
-ERROR 22003: Out of range value for column &#39;create_dt&#39; at row 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">timestamps</span> <span class="p">(</span><span class="n">create_dt</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s2">&quot;2002-00-00 00:00:00&quot;</span><span class="p">);</span>
+<span class="n">ERROR</span> <span class="mi">22003</span><span class="p">:</span> <span class="n">Out</span> <span class="n">of</span> <span class="nb">range</span> <span class="n">value</span> <span class="k">for</span> <span class="n">column</span> <span class="s1">&#39;create_dt&#39;</span> <span class="n">at</span> <span class="n">row</span> <span class="mi">1</span>
 
-mysql&gt; SELECT * FROM timestamps;
-+----+---------------------+
-| id | create_dt           |
-+----+---------------------+
-|  1 | 2001-01-01 00:00:00 |
-+----+---------------------+
-1 row in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">timestamps</span><span class="p">;</span>
+<span class="o">+----+---------------------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">create_dt</span>           <span class="o">|</span>
+<span class="o">+----+---------------------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="mi">2001</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">|</span>
+<span class="o">+----+---------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -707,7 +706,7 @@ Subscribe to <a class="reference external" href="mailto:groonga-mysql-commit&#37
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">News - 5.x</a></li> 
       </ul>
     </div>

@@ -4,17 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2.8. その他 &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <title>2.8. その他 &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/translations.js"></script>
     
-    <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="3. アップグレード" href="../upgrade.html" />
@@ -65,7 +64,7 @@
         <li class="right" >
           <a href="docker.html" title="2.7. Docker"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U"><span class="section-number">2. </span>インストール</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.8. </span>その他</a></li> 
       </ul>
@@ -135,22 +134,22 @@
 <p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">Download MySQL Community Server</a></p>
 </div>
 <p>mysql-5.6.21を使用し、以下にソースディレクトリが展開されているものと仮定します:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/local/src/mysql-5.6.21
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span>
 </pre></div>
 </div>
 <p>次のディレクトリーでビルドします:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/local/build/mysql-5.6.21
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span>
 </pre></div>
 </div>
 <p>次のコマンドラインはMySQLをビルド・インストールするコマンドラインです:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% cd /usr/local/build/mysql-5.6.21
-% cmake /usr/local/src/mysql-5.6.21
-% make
-% sudo make install
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span>
+<span class="o">%</span> <span class="n">cmake</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span>
+<span class="o">%</span> <span class="n">make</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>MySQLのバイナリが以下にインストールされているものと仮定します:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/local/mysql
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span>
 </pre></div>
 </div>
 </div>
@@ -158,16 +157,16 @@
 <div class="section" id="build-from-source">
 <h2><span class="section-number">2.8.2. </span>ソースからビルド<a class="headerlink" href="#build-from-source" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>MroongaはGNUビルドシステムを使っています。以下は一番簡単なビルド手順です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% wget https://packages.groonga.org/source/mroonga/mroonga-6.12.tar.gz
-% tar xvzf mroonga-6.12.tar.gz
-% cd mroonga-6.12
-% ./configure \
-    --with-mysql-source=/usr/local/src/mysql-5.6.21 \
-    --with-mysql-build=/usr/local/build/mysql-5.6.21 \
-    --with-mysql-config=/usr/local/mysql/bin/mysql_config
-% make
-% sudo make install
-% /usr/local/mysql/bin/mysql -u root &lt; /usr/local/share/mroonga/install.sql
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">mroonga</span><span class="o">-</span><span class="mf">6.12</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mroonga</span><span class="o">-</span><span class="mf">6.12</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="n">mroonga</span><span class="o">-</span><span class="mf">6.12</span>
+<span class="o">%</span> <span class="o">./</span><span class="n">configure</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">source</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">build</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysql_config</span>
+<span class="o">%</span> <span class="n">make</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
+<span class="o">%</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sql</span>
 </pre></div>
 </div>
 <p>次のことを <code class="docutils literal notranslate"><span class="pre">configure</span></code> で指定しなければいけません。</p>
@@ -179,18 +178,18 @@
 </ul>
 </div></blockquote>
 <p><code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">ENGINES</span></code> SQLを実行することでMroongaが正常にインストールされているかを確認できます。 <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> という行があればMroongaは正常にインストールされています:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SHOW ENGINES;
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Mroonga    | YES     | Fulltext search, column base                               | NO           | NO   | NO         |
-| MRG_MYISAM | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| CSV        | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| MyISAM     | DEFAULT | Default engine as of MySQL 3.23 with great performance     | NO           | NO   | NO         |
-| InnoDB     | YES     | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
-| MEMORY     | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-+------------+---------+------------------------------------------------------------+--------------+------+------------+
-6 rows in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">ENGINES</span><span class="p">;</span>
+<span class="o">+------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="o">|</span> <span class="n">Engine</span>     <span class="o">|</span> <span class="n">Support</span> <span class="o">|</span> <span class="n">Comment</span>                                                    <span class="o">|</span> <span class="n">Transactions</span> <span class="o">|</span> <span class="n">XA</span>   <span class="o">|</span> <span class="n">Savepoints</span> <span class="o">|</span>
+<span class="o">+------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="o">|</span> <span class="n">Mroonga</span>    <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Fulltext</span> <span class="n">search</span><span class="p">,</span> <span class="n">column</span> <span class="n">base</span>                               <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MRG_MYISAM</span> <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Collection</span> <span class="n">of</span> <span class="n">identical</span> <span class="n">MyISAM</span> <span class="n">tables</span>                      <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">CSV</span>        <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">CSV</span> <span class="n">storage</span> <span class="n">engine</span>                                         <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MyISAM</span>     <span class="o">|</span> <span class="n">DEFAULT</span> <span class="o">|</span> <span class="n">Default</span> <span class="n">engine</span> <span class="k">as</span> <span class="n">of</span> <span class="n">MySQL</span> <span class="mf">3.23</span> <span class="k">with</span> <span class="n">great</span> <span class="n">performance</span>     <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">InnoDB</span>     <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Supports</span> <span class="n">transactions</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="n">level</span> <span class="n">locking</span><span class="p">,</span> <span class="ow">and</span> <span class="n">foreign</span> <span class="n">keys</span> <span class="o">|</span> <span class="n">YES</span>          <span class="o">|</span> <span class="n">YES</span>  <span class="o">|</span> <span class="n">YES</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="n">MEMORY</span>     <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Hash</span> <span class="n">based</span><span class="p">,</span> <span class="n">stored</span> <span class="ow">in</span> <span class="n">memory</span><span class="p">,</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">temporary</span> <span class="n">tables</span>  <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">+------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="mi">6</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>以下、それぞれの手順の詳細を説明します。</p>
@@ -201,9 +200,9 @@
 <h4><span class="section-number">2.8.2.1.1. </span><code class="docutils literal notranslate"><span class="pre">--with-mysql-source=PATH</span></code><a class="headerlink" href="#with-mysql-source-path" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>MYSQLのソースコードがあるディレクトリーを指定します。</p>
 <p>これは必須の引数です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
-    --with-mysql-source=/usr/local/src/mysql-5.6.21 \
-    --with-mysql-config=/usr/local/mysql/bin/mysql_config
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="o">./</span><span class="n">configure</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">source</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysql_config</span>
 </pre></div>
 </div>
 </div>
@@ -212,10 +211,10 @@
 <p>MySQLのソースコードをビルドしたディレクトリーを指定します。</p>
 <p>MySQLのソースコードがあるディレクトリーでビルドした場合はこの引数を指定する必要はありません。他のディレクトリーでビルドしたときはこの引数を指定する必要があります。</p>
 <p>以下は <code class="docutils literal notranslate"><span class="pre">/usr/local/build/mysql-5.6.21</span></code> でMySQLをビルドした時の例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
-    --with-mysql-source=/usr/local/src/mysql-5.6.21 \
-    --with-mysql-build=/usr/local/build/mysql-5.6.21 \
-    --with-mysql-config=/usr/local/mysql/bin/mysql_config
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="o">./</span><span class="n">configure</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">source</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">build</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysql_config</span>
 </pre></div>
 </div>
 </div>
@@ -223,8 +222,8 @@
 <h4><span class="section-number">2.8.2.1.3. </span><code class="docutils literal notranslate"><span class="pre">--with-mysql-config=PATH</span></code><a class="headerlink" href="#with-mysql-config-path" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> コマンドのパスを指定します。</p>
 <p><code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> コマンドが <code class="docutils literal notranslate"><span class="pre">PATH</span></code> から探索可能であればこの引数を指定する必要はありません。例えば、 <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> が <code class="docutils literal notranslate"><span class="pre">/usr/bin/mysql_config</span></code> にある場合はこの引数を指定する必要はありません:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
-    --with-mysql-source=/usr/local/src/mysql-5.6.21
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="o">./</span><span class="n">configure</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">source</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span>
 </pre></div>
 </div>
 </div>
@@ -233,10 +232,10 @@
 <p>全文検索用のデフォルトのトークナイザーを指定します。この値はmy.cnfでもカスタマイズできます。</p>
 <p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> です。</p>
 <p>デフォルトのトークナイザーとして <code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code> を使う例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
-    --with-mysql-source=/usr/local/src/mysql-5.6.21 \
-    --with-mysql-config=/usr/local/mysql/bin/mysql_config \
-    --with-default-tokenizer=TokenMecab
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="o">./</span><span class="n">configure</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">source</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">21</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">config</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysql_config</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">=</span><span class="n">TokenMecab</span>
 </pre></div>
 </div>
 </div>
@@ -245,7 +244,7 @@
 <p>インストール先となるディレクトリを指定します。Mroonga関連のファイルは  <code class="docutils literal notranslate"><span class="pre">ha_mroonga.so</span></code> を除いて <code class="docutils literal notranslate"><span class="pre">${PATH}/</span></code> ディレクトリ以下にインストールされます。 <code class="docutils literal notranslate"><span class="pre">ha_mroonga.so</span></code> はMySQLのプラグインファイルです。これはMySQLのプラグインディレクトリーにインストールされます。</p>
 <p>デフォルトは <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> です。この場合、Mroongaをインストールするために使う <code class="docutils literal notranslate"><span class="pre">install.sql</span></code> は <code class="docutils literal notranslate"><span class="pre">/usr/local/share/mroonga/install.sql</span></code> にインストールされます。</p>
 <p>以下はシステム全体にMroongaをインストールするのではなく、ユーザーが個人で使う目的で <code class="docutils literal notranslate"><span class="pre">~/local</span></code> にインストールする例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% ./configure \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% ./configure \
     --prefix=$HOME/local \
     --with-mysql-source=$HOME/local/src/mysql-5.6.21 \
     --with-mysql-config=$HOME/local/mysql/bin/mysql_config
@@ -256,7 +255,7 @@
 <h4><span class="section-number">2.8.2.1.6. </span><code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH=PATH</span></code><a class="headerlink" href="#pkg-config-path-path" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>これは <code class="docutils literal notranslate"><span class="pre">configure</span></code> の引数ではありませんが、Groongaを標準的な場所にインストールしていないユーザーのために説明します。</p>
 <p>Groongaを <code class="docutils literal notranslate"><span class="pre">/usr/lib</span></code> など標準のパス以外にインストールした場合は <code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH</span></code> を指定する必要があります。例えば、 <code class="docutils literal notranslate"><span class="pre">ｰｰprefix=$HOME/local</span></code> でGroongaをインストールした場合は以下のようにします:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./configure \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>./configure \
   PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig \
   --with-mysql-source=/usr/local/src/mysql-5.6.21 \
   --with-mysql-config=/usr/local/mysql/bin/mysql_config
@@ -267,11 +266,11 @@
 <div class="section" id="make">
 <h3><span class="section-number">2.8.2.2. </span><code class="docutils literal notranslate"><span class="pre">make</span></code><a class="headerlink" href="#make" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">configure</span></code> が成功したら <code class="docutils literal notranslate"><span class="pre">make</span></code> でMroongaをビルドします:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span>
 </pre></div>
 </div>
 <p>マルチコアCPUを使っている場合は <code class="docutils literal notranslate"><span class="pre">-j</span></code> オプションを使うとより速くmakeを実行できます。もし、4コアのCPUを使っている場合は、 <code class="docutils literal notranslate"><span class="pre">-j4</span></code> オプションを使うともっと速くビルドできます:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make -j4
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="o">-</span><span class="n">j4</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">make</span></code> で何かエラーが発生した場合は、そのエラーをレポートしてください: <a class="reference internal" href="../contribution/report.html"><span class="doc">見つけたバグを報告するには</span></a></p>
@@ -279,11 +278,11 @@
 <div class="section" id="make-install">
 <h3><span class="section-number">2.8.2.3. </span><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code><a class="headerlink" href="#make-install" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>これでビルドしたMroongaをインストールできます！:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% sudo make install
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">${PREFIX}</span></code> とMySQLのプラグインディレクトリーへの書き込み権限がある場合は <code class="docutils literal notranslate"><span class="pre">sudo</span></code> を使う必要はありません。例えば、 <code class="docutils literal notranslate"><span class="pre">--prefix=$HOME/local</span></code> と指定した場合です。この場合は <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> を使ってください:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% make install
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
 </div>
@@ -291,14 +290,14 @@
 <h3><span class="section-number">2.8.2.4. </span><code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">&lt;</span> <span class="pre">install.sql</span></code><a class="headerlink" href="#mysql-u-root-install-sql" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>MroongaをMySQLに登録するために <code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> や <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">FUNCTION</span></code> といったSQLを実行する必要があります。これらのSQLは <code class="docutils literal notranslate"><span class="pre">${PREFIX}/share/mroonga/install.sql</span></code> に書かれています。</p>
 <p>以下は <code class="docutils literal notranslate"><span class="pre">configure</span></code> に <code class="docutils literal notranslate"><span class="pre">--prefix=$HOME/local</span></code> と指定した場合の例です:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mysql -u root &lt; $HOME/local/share/mroonga/install.sql
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% mysql -u root &lt; $HOME/local/share/mroonga/install.sql
 </pre></div>
 </div>
 </div>
 <div class="section" id="uninstall-mroonga">
 <h3><span class="section-number">2.8.2.5. </span><code class="docutils literal notranslate"><span class="pre">uninstall</span> <span class="pre">Mroonga</span></code><a class="headerlink" href="#uninstall-mroonga" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Mroongaを削除したい場合は、以下のコマンドを入力して下さい。:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% mysql &lt; ${PREFIX}/share/mroonga/uninstall.sql
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% mysql &lt; ${PREFIX}/share/mroonga/uninstall.sql
 % cd ${MROONGA_BUILD_DIR}
 % sudo make uninstall
 </pre></div>
@@ -375,7 +374,7 @@
         <li class="right" >
           <a href="docker.html" title="2.7. Docker"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" ><span class="section-number">2. </span>インストール</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.8. </span>その他</a></li> 
       </ul>

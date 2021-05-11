@@ -4,17 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2.1. Windows &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../static/mroonga.css" type="text/css" />
+    <title>2.1. Windows &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/translations.js"></script>
     
-    <link rel="shortcut icon" href="../static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="2.2. macOS" href="macos.html" />
@@ -65,7 +64,7 @@
         <li class="right" >
           <a href="../install.html" title="2. インストール"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U"><span class="section-number">2. </span>インストール</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.1. </span>Windows</a></li> 
       </ul>
@@ -101,31 +100,31 @@
 <p>zipファイルをダウンロードして展開してください。環境に合わせてzipファイルを選ぶ必要があります</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><a class="reference external" href="https://github.com/mroonga/mroonga/releases/tag/v11.01">MariaDB with Mroonga-11.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mroonga/mroonga/releases/tag/v11.02">MariaDB with Mroonga-11.02</a></p></li>
 </ul>
 </div></blockquote>
 <p>ZIPパッケージはあらかじめ設定済みなので、 <code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> や <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">FUNCTION</span></code> の実行は不要です。</p>
 <p>次のように単にmysqldを起動します:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; mysqld.exe --defaults-file=.\MY-PREFERRED-INI.ini --console
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">mysqld</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=.</span>\<span class="n">MY</span><span class="o">-</span><span class="n">PREFERRED</span><span class="o">-</span><span class="n">INI</span><span class="o">.</span><span class="n">ini</span> <span class="o">--</span><span class="n">console</span>
 </pre></div>
 </div>
 <p>それぞれのzipパッケージにはiniファイルが含まれています。(my-small.iniやmy-medium.ini、my-large.iniなど) 適切なiniファイルを選択してください。</p>
 <p>MariaDBに次のコマンドで接続します:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; mysql.exe
-MariaDB [(none)]&gt; SHOW ENGINES;
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-| Engine             | Support | Comment                                                    | Transactions | XA   | Savepoints |
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-| CSV                | YES     | CSV storage engine                                         | NO           | NO   | NO         |
-| PERFORMANCE_SCHEMA | YES     | Performance Schema                                         | NO           | NO   | NO         |
-| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables  | NO           | NO   | NO         |
-| MyISAM             | YES     | MyISAM storage engine                                      | NO           | NO   | NO         |
-| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                      | NO           | NO   | NO         |
-| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys | YES          | YES  | YES        |
-| Mroonga            | YES     | CJK-ready fulltext search, column store                    | NO           | NO   | NO         |
-| Aria               | YES     | Crash-safe tables with MyISAM heritage                     | NO           | NO   | NO         |
-+--------------------+---------+------------------------------------------------------------+--------------+------+------------+
-8 rows in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">mysql</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">ENGINES</span><span class="p">;</span>
+<span class="o">+--------------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="o">|</span> <span class="n">Engine</span>             <span class="o">|</span> <span class="n">Support</span> <span class="o">|</span> <span class="n">Comment</span>                                                    <span class="o">|</span> <span class="n">Transactions</span> <span class="o">|</span> <span class="n">XA</span>   <span class="o">|</span> <span class="n">Savepoints</span> <span class="o">|</span>
+<span class="o">+--------------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="o">|</span> <span class="n">CSV</span>                <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">CSV</span> <span class="n">storage</span> <span class="n">engine</span>                                         <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">PERFORMANCE_SCHEMA</span> <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Performance</span> <span class="n">Schema</span>                                         <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MEMORY</span>             <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Hash</span> <span class="n">based</span><span class="p">,</span> <span class="n">stored</span> <span class="ow">in</span> <span class="n">memory</span><span class="p">,</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">temporary</span> <span class="n">tables</span>  <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MyISAM</span>             <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">MyISAM</span> <span class="n">storage</span> <span class="n">engine</span>                                      <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MRG_MyISAM</span>         <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Collection</span> <span class="n">of</span> <span class="n">identical</span> <span class="n">MyISAM</span> <span class="n">tables</span>                      <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">InnoDB</span>             <span class="o">|</span> <span class="n">DEFAULT</span> <span class="o">|</span> <span class="n">Supports</span> <span class="n">transactions</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="n">level</span> <span class="n">locking</span><span class="p">,</span> <span class="ow">and</span> <span class="n">foreign</span> <span class="n">keys</span> <span class="o">|</span> <span class="n">YES</span>          <span class="o">|</span> <span class="n">YES</span>  <span class="o">|</span> <span class="n">YES</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="n">Mroonga</span>            <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">CJK</span><span class="o">-</span><span class="n">ready</span> <span class="n">fulltext</span> <span class="n">search</span><span class="p">,</span> <span class="n">column</span> <span class="n">store</span>                    <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">Aria</span>               <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Crash</span><span class="o">-</span><span class="n">safe</span> <span class="n">tables</span> <span class="k">with</span> <span class="n">MyISAM</span> <span class="n">heritage</span>                     <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">+--------------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="mi">8</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -187,7 +186,7 @@ MariaDB [(none)]&gt; SHOW ENGINES;
         <li class="right" >
           <a href="../install.html" title="2. インストール"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" ><span class="section-number">2. </span>インストール</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.1. </span>Windows</a></li> 
       </ul>

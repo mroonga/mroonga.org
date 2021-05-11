@@ -4,16 +4,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
+    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../../" src="../../static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../static/documentation_options.js"></script>
     <script src="../../static/jquery.js"></script>
     <script src="../../static/underscore.js"></script>
     <script src="../../static/doctools.js"></script>
     
-    <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="5.5.4. mroonga_last_insert_grn_id()" href="mroonga_last_insert_grn_id.html" />
@@ -64,7 +63,7 @@
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U"><span class="section-number">5.5. </span>UDF (User Defined Functions)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li> 
@@ -92,9 +91,9 @@ HTML.</p>
 <div class="section" id="syntax">
 <h2><span class="section-number">5.5.3.2. </span>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code> has required parameter and optional parameter:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mroonga_highlight_html(text, query AS query)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span>
 
-mroonga_highlight_html(text, keyword1, ..., keywordN)
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> is very important. You must specify it to extract keywords from query.</p>
@@ -104,31 +103,31 @@ mroonga_highlight_html(text, keyword1, ..., keywordN)
 <p>Here is a sample to highlight keywords “mroonga” and “groonga” in
 target text by query “mroonga OR groonga”. You must specify <code class="docutils literal notranslate"><span class="pre">AS</span>
 <span class="pre">query</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;Mroonga is the Groonga based storage engine.&#39;,
-                              &#39;mroonga OR groonga&#39; AS query) AS highlighted;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;mroonga OR groonga&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span> <span class="n">AS</span> <span class="n">highlighted</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Here is the result of the execution example:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------------------------------------------------------------------------------------------------------+
-| highlighted                                                                                            |
-+--------------------------------------------------------------------------------------------------------+
-| &lt;span class=&quot;keyword&quot;&gt;Mroonga&lt;/span&gt; is the &lt;span class=&quot;keyword&quot;&gt;Groonga&lt;/span&gt; based storage engine. |
-+--------------------------------------------------------------------------------------------------------+
-1 row in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">highlighted</span>                                                                                            <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Mroonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Groonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">based</span> <span class="n">storage</span> <span class="n">engine</span><span class="o">.</span> <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Here is a sample to highlight keywords “mroonga” and “groonga” in
 target text by keywords “mroonga” and “groonga”:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;Mroonga is the Groonga based storage engine.&#39;,
-                              &#39;mroonga&#39;, &#39;groonga&#39;) AS highlighted;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;mroonga&#39;</span><span class="p">,</span> <span class="s1">&#39;groonga&#39;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">highlighted</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Here is the result of the execution example:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------------------------------------------------------------------------------------------------------+
-| highlighted                                                                                            |
-+--------------------------------------------------------------------------------------------------------+
-| &lt;span class=&quot;keyword&quot;&gt;Mroonga&lt;/span&gt; is the &lt;span class=&quot;keyword&quot;&gt;Groonga&lt;/span&gt; based storage engine. |
-+--------------------------------------------------------------------------------------------------------+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">highlighted</span>                                                                                            <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Mroonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Groonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">based</span> <span class="n">storage</span> <span class="n">engine</span><span class="o">.</span> <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -150,7 +149,7 @@ target text by keywords “mroonga” and “groonga”:</p>
 <p>Specify query in <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/query_syntax.html">Groonga’s query syntax</a>.</p>
 <p>You must specify <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> to extract keywords from query like the
 following:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SELECT mroonga_highlight_html(&#39;...&#39;, &#39;mroonga OR groonga&#39; AS query);
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;mroonga OR groonga&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -230,7 +229,7 @@ only escapes special characters in HTML such as <code class="docutils literal no
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" ><span class="section-number">5.5. </span>UDF (User Defined Functions)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li> 

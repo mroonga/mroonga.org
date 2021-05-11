@@ -4,17 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5.5.6. mroonga_snippet() &#8212; Mroonga v11.01 documentation</title>
-    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../static/mroonga.css" type="text/css" />
+    <title>5.5.6. mroonga_snippet() &#8212; Mroonga v11.02 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/mroonga.css" />
     
-    <script id="documentation_options" data-url_root="../../" src="../../static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../static/documentation_options.js"></script>
     <script src="../../static/jquery.js"></script>
     <script src="../../static/underscore.js"></script>
     <script src="../../static/doctools.js"></script>
     <script src="../../static/translations.js"></script>
     
-    <link rel="shortcut icon" href="../../static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
     <link rel="next" title="5.5.7. mroonga_snippet_html()" href="mroonga_snippet_html.html" />
@@ -65,7 +64,7 @@
         <li class="right" >
           <a href="mroonga_normalize.html" title="5.5.5. mroonga_normalize()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U"><span class="section-number">5.5. </span>UDF (ユーザ定義関数)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.6. </span><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li> 
@@ -93,17 +92,17 @@
 <div class="section" id="syntax">
 <h2><span class="section-number">5.5.6.2. </span>構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code> には必須引数と省略可能引数とがあります。:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mroonga_snippet(document,
-                max_length,
-                max_count,
-                encoding,
-                skip_leading_spaces,
-                html_escape,
-                snippet_prefix,
-                snippet_suffix,
-                word1, word1_prefix, word1_suffix,
-                ...,
-                [wordN, wordN_prefix, wordN_suffix])
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroonga_snippet</span><span class="p">(</span><span class="n">document</span><span class="p">,</span>
+                <span class="n">max_length</span><span class="p">,</span>
+                <span class="n">max_count</span><span class="p">,</span>
+                <span class="n">encoding</span><span class="p">,</span>
+                <span class="n">skip_leading_spaces</span><span class="p">,</span>
+                <span class="n">html_escape</span><span class="p">,</span>
+                <span class="n">snippet_prefix</span><span class="p">,</span>
+                <span class="n">snippet_suffix</span><span class="p">,</span>
+                <span class="n">word1</span><span class="p">,</span> <span class="n">word1_prefix</span><span class="p">,</span> <span class="n">word1_suffix</span><span class="p">,</span>
+                <span class="o">...</span><span class="p">,</span>
+                <span class="p">[</span><span class="n">wordN</span><span class="p">,</span> <span class="n">wordN_prefix</span><span class="p">,</span> <span class="n">wordN_suffix</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -115,14 +114,14 @@
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code> UDFはストレージモードとラッパーモードいずれでも使
 えます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code> 関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME &#39;ha_mroonga.so&#39;;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">FUNCTION</span> <span class="n">mroonga_snippet</span> <span class="n">RETURNS</span> <span class="n">STRING</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code> 関数は MATCH ... AGAINST構文とともに使用して、テキストに含まれるキーワードとその関連語句を検索するのに便利です。</p>
 <p>'fulltext'というキーワードと'MySQL'と'search'という関連語を含む文書の検索をしてみましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code> 関数は上記のことができます。</p>
 <p>実行例のスキーマ定義(ストレージモード)はこちらです:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -131,7 +130,7 @@
 </pre></div>
 </div>
 <p>実行例(ラッパーモード)のスキーマ定義はこちらです。:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `snippet_test` (
   `id` int(11) NOT NULL,
   `text` text,
   PRIMARY KEY (`id`),
@@ -140,31 +139,31 @@
 </pre></div>
 </div>
 <p>Here is the sample data for execution examples:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>INSERt INTO snippet_test (id, text) VALUES (1, &#39;An open-source fulltext search engine and column store.&#39;);
-INSERT INTO snippet_test (id, text) VALUES (2, &#39;An open-source storage engine for fast fulltext search with MySQL.&#39;);
-INSERT INTO snippet_test (id, text) VALUES (3, &#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;);
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INSERt</span> <span class="n">INTO</span> <span class="n">snippet_test</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;An open-source fulltext search engine and column store.&#39;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">snippet_test</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;An open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">snippet_test</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>実行結果がこちらです。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mysql&gt; SELECT * FROM snippet_test;
-+----+-------------------------------------------------------------------------------------------------+
-| id | text                                                                                            |
-+----+-------------------------------------------------------------------------------------------------+
-|  1 | An open-source fulltext search engine and column store.                                         |
-|  2 | An open-source storage engine for fast fulltext search with MySQL.                              |
-|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. |
-+----+-------------------------------------------------------------------------------------------------+
-3 rows in set (0.00 sec)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">snippet_test</span><span class="p">;</span>
+<span class="o">+----+-------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">text</span>                                                                                            <span class="o">|</span>
+<span class="o">+----+-------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">An</span> <span class="nb">open</span><span class="o">-</span><span class="n">source</span> <span class="n">fulltext</span> <span class="n">search</span> <span class="n">engine</span> <span class="ow">and</span> <span class="n">column</span> <span class="n">store</span><span class="o">.</span>                                         <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">2</span> <span class="o">|</span> <span class="n">An</span> <span class="nb">open</span><span class="o">-</span><span class="n">source</span> <span class="n">storage</span> <span class="n">engine</span> <span class="k">for</span> <span class="n">fast</span> <span class="n">fulltext</span> <span class="n">search</span> <span class="k">with</span> <span class="n">MySQL</span><span class="o">.</span>                              <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">3</span> <span class="o">|</span> <span class="n">Tritonn</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">patched</span> <span class="n">version</span> <span class="n">of</span> <span class="n">MySQL</span> <span class="n">that</span> <span class="n">supports</span> <span class="n">better</span> <span class="n">fulltext</span> <span class="n">search</span> <span class="n">function</span> <span class="k">with</span> <span class="n">Senna</span><span class="o">.</span> <span class="o">|</span>
+<span class="o">+----+-------------------------------------------------------------------------------------------------+</span>
+<span class="mi">3</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) FROM snippet_test WHERE MATCH(text) AGAINST (&#39;+fulltext&#39; IN BOOLEAN MODE);
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| id | text                                                                                            | mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39;, 1, 1, &#39;...&#39;, &#39;...&lt;br&gt;&#39;, &#39;fulltext&#39;, &#39;&lt;span class=&quot;w1&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;MySQL&#39;, &#39;&lt;span class=&quot;w2&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;, &#39;search&#39;, &#39;&lt;span calss=&quot;w3&quot;&gt;&#39;, &#39;&lt;/span&gt;&#39;) |
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|  1 | An open-source fulltext search engine and column store.                                         | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
-|  2 | An open-source storage engine for fast fulltext search with MySQL.                              | ...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;... &lt;span calss=&quot;w3&quot;&gt;search&lt;/span&gt; ...&lt;br&gt;                                                                                                                   |
-|  3 | Tritonn is a patched version of MySQL that supports better fulltext search function with Senna. | ...f &lt;span class=&quot;w2&quot;&gt;MySQL&lt;/span&gt; ...&lt;br&gt;...&lt;span class=&quot;w1&quot;&gt;fulltext&lt;/span&gt;...&lt;br&gt;                                                                                                                   |
-+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-3 rows in set (0.00 sec)
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="nb">id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">mroonga_snippet</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;ascii_general_ci&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;...&lt;br&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;fulltext&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span class=&quot;w1&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;MySQL&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span class=&quot;w2&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span calss=&quot;w3&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">)</span> <span class="n">FROM</span> <span class="n">snippet_test</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;+fulltext&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">text</span>                                                                                            <span class="o">|</span> <span class="n">mroonga_snippet</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;ascii_general_ci&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;...&lt;br&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;fulltext&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span class=&quot;w1&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;MySQL&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span class=&quot;w2&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span calss=&quot;w3&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">An</span> <span class="nb">open</span><span class="o">-</span><span class="n">source</span> <span class="n">fulltext</span> <span class="n">search</span> <span class="n">engine</span> <span class="ow">and</span> <span class="n">column</span> <span class="n">store</span><span class="o">.</span>                                         <span class="o">|</span> <span class="o">...&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;w1&quot;</span><span class="o">&gt;</span><span class="n">fulltext</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;...&lt;</span><span class="n">br</span><span class="o">&gt;...</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">calss</span><span class="o">=</span><span class="s2">&quot;w3&quot;</span><span class="o">&gt;</span><span class="n">search</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">...&lt;</span><span class="n">br</span><span class="o">&gt;</span>                                                                                                                   <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">2</span> <span class="o">|</span> <span class="n">An</span> <span class="nb">open</span><span class="o">-</span><span class="n">source</span> <span class="n">storage</span> <span class="n">engine</span> <span class="k">for</span> <span class="n">fast</span> <span class="n">fulltext</span> <span class="n">search</span> <span class="k">with</span> <span class="n">MySQL</span><span class="o">.</span>                              <span class="o">|</span> <span class="o">...&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;w1&quot;</span><span class="o">&gt;</span><span class="n">fulltext</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;...&lt;</span><span class="n">br</span><span class="o">&gt;...</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">calss</span><span class="o">=</span><span class="s2">&quot;w3&quot;</span><span class="o">&gt;</span><span class="n">search</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">...&lt;</span><span class="n">br</span><span class="o">&gt;</span>                                                                                                                   <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">3</span> <span class="o">|</span> <span class="n">Tritonn</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">patched</span> <span class="n">version</span> <span class="n">of</span> <span class="n">MySQL</span> <span class="n">that</span> <span class="n">supports</span> <span class="n">better</span> <span class="n">fulltext</span> <span class="n">search</span> <span class="n">function</span> <span class="k">with</span> <span class="n">Senna</span><span class="o">.</span> <span class="o">|</span> <span class="o">...</span><span class="n">f</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;w2&quot;</span><span class="o">&gt;</span><span class="n">MySQL</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">...&lt;</span><span class="n">br</span><span class="o">&gt;...&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;w1&quot;</span><span class="o">&gt;</span><span class="n">fulltext</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;...&lt;</span><span class="n">br</span><span class="o">&gt;</span>                                                                                                                   <span class="o">|</span>
+<span class="o">+----+-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="mi">3</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The keyword 'fulltext' and associated keyword 'MySQL' and 'search' has been extracted.</p>
@@ -303,7 +302,7 @@ mysql&gt; SELECT id, text, mroonga_snippet(text, 8, 2, &#39;ascii_general_ci&#39
         <li class="right" >
           <a href="mroonga_normalize.html" title="5.5.5. mroonga_normalize()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v11.02 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" ><span class="section-number">5.5. </span>UDF (ユーザ定義関数)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.6. </span><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li> 
