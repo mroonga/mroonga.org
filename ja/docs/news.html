@@ -88,6 +88,20 @@
 </ul>
 </div></blockquote>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>このバージョンには非互換の変更があります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code> 型を使用しているユーザーは、Mroonga 11.03にアップグレードする前に現在のデータを保存し、アップグレード後に保存したデータをリストアする必要があります。 データのダンプ/リストアには、以下の方法が使えます。</p>
+<p>上記の処置を実施せずに、アップグレードするとデータが破損するので注意してください。</p>
+<p>データのダンプ/リストアには、以下の方法が使えます。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>mysqldump</p></li>
+<li><p>アップグレード前に <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENGINE=InnoDB</span></code> を実行し、アップグレード後に <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENGINE=Mroonga</span></code> を実行する。</p></li>
+</ul>
+</div></blockquote>
+<p>この修正を適用しない場合、 <code class="docutils literal notranslate"><span class="pre">INSERT/UPDATE/SELECT/SELECT</span></code> はうまく動作しますが、データはGroongaが誤った(緯度と経度はGroonga内で逆にされます)保存をします。そのため、 空間データに対する、 <code class="docutils literal notranslate"><span class="pre">mroonga_command('select</span> <span class="pre">...')</span></code> は動作しません。</p>
+</div>
 </div></blockquote>
 <div class="section" id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
