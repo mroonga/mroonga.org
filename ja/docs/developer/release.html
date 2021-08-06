@@ -101,17 +101,9 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">V</span> <span class="n">ruby</span> <span class="n">mecab</span> <span class="n">libmecab</span><span class="o">-</span><span class="n">dev</span> <span class="n">gnupg2</span> <span class="n">dh</span><span class="o">-</span><span class="n">autoreconf</span> <span class="n">python</span><span class="o">-</span><span class="n">sphinx</span> <span class="n">bison</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://www.docker.com/">Docker</a> をdebやrpmパッケージのビルドに使うので、まだインストールしていなければ、Dcokerの公式ドキュメントに従ってインストールしてください。</p>
-</div>
-<div class="section" id="bump-version">
-<h2><span class="section-number">9.2.3. </span>バージョンをあげる<a class="headerlink" href="#bump-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>最新のリリースへバージョンをあげる:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">version</span> <span class="n">NEW_VERSION_MAJOR</span><span class="o">=</span><span class="mi">9</span> <span class="n">NEW_VERSION_MINOR</span><span class="o">=</span><span class="mi">1</span> <span class="n">NEW_VERSION_MICRO</span><span class="o">=</span><span class="mi">0</span>
-</pre></div>
-</div>
 </div>
 <div class="section" id="describe-the-changes">
-<h2><span class="section-number">9.2.4. </span>変更点を記述する<a class="headerlink" href="#describe-the-changes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.3. </span>変更点を記述する<a class="headerlink" href="#describe-the-changes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>前回のリリース以降の最近の変更点を <code class="docutils literal notranslate"><span class="pre">doc/source/news.rst</span></code> へまとめます。このまとめはリリースノートでも使います。</p>
 <p>以下のコマンドを前回のリリースからの変更点を収集するのに使います:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% git log -p --reverse $(git tag | tail -1)..
@@ -129,7 +121,7 @@
 </ul>
 </div>
 <div class="section" id="generate-configure-script">
-<h2><span class="section-number">9.2.5. </span>configureスクリプトの生成<a class="headerlink" href="#generate-configure-script" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.4. </span>configureスクリプトの生成<a class="headerlink" href="#generate-configure-script" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>masterブランチはconfigureスクリプトを含んでいないのでビルドするのにconfigureスクリプトを生成する必要があります。</p>
 <p><code class="docutils literal notranslate"><span class="pre">autogen.sh</span></code> を以下のコマンドで実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sh</span> <span class="n">autogen</span><span class="o">.</span><span class="n">sh</span>
@@ -138,7 +130,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">configure</span></code> スクリプトを生成します。</p>
 </div>
 <div class="section" id="execute-configure-script">
-<h2><span class="section-number">9.2.6. </span>configureスクリプトの実行<a class="headerlink" href="#execute-configure-script" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.5. </span>configureスクリプトの実行<a class="headerlink" href="#execute-configure-script" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Makefile</span></code> を生成するために、 <code class="docutils literal notranslate"><span class="pre">configure</span></code> スクリプトを実行します。</p>
 <p>リリース向けに以下のオプションとともに実行します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% ./configure \
@@ -160,7 +152,7 @@
 </div>
 </div>
 <div class="section" id="check-whether-you-can-upload-packages">
-<h2><span class="section-number">9.2.7. </span>パッケージをアップロード可能か確認する<a class="headerlink" href="#check-whether-you-can-upload-packages" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.6. </span>パッケージをアップロード可能か確認する<a class="headerlink" href="#check-whether-you-can-upload-packages" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>pacakgesユーザーでpackages.groonga.orgにログインできるかを確認します。</p>
 <p>ログインできるかどうかは以下のコマンドで確認できます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">ssh</span> <span class="n">packages</span><span class="nd">@packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span>
@@ -168,17 +160,8 @@
 </div>
 <p>packages.groonga.orgにログインできないときは、sshの公開鍵を登録しておかないといけません。</p>
 </div>
-<div class="section" id="confirm-the-results-of-each-test">
-<h2><span class="section-number">9.2.8. </span>各テストの結果確認<a class="headerlink" href="#confirm-the-results-of-each-test" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>リリース用のタグを設定する前に、以下のテストが全てパスしているかを確認します。タグを設定してから問題が発覚すると、再度リリースすることになってしまうので、タグを設定する前に問題がないか確認します。</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/mroonga/mroonga/actions">GitHub Actions</a></p></li>
-<li><p><a class="reference external" href="https://travis-ci.org/github/mroonga/mroonga">Travis CI</a></p></li>
-<li><p><a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyor</a></p></li>
-</ul>
-</div>
 <div class="section" id="execute-make-update-latest-release">
-<h2><span class="section-number">9.2.9. </span>make update-latest-releaseを実行する<a class="headerlink" href="#execute-make-update-latest-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.7. </span>make update-latest-releaseを実行する<a class="headerlink" href="#execute-make-update-latest-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-latest-release</span></code> を OLD_RELEASE_DATE や NEW_RELEASE_DATE とともに実行します。</p>
 <p>9.09 のリリースの際は、以下のコマンドを実行しました。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">release</span> <span class="n">OLD_RELEASE</span><span class="o">=</span><span class="mf">9.09</span> <span class="n">OLD_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">27</span> <span class="n">NEW_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">30</span>
@@ -186,8 +169,15 @@
 </div>
 <p>このコマンドはMroongaのサイトのHTMLファイルやspecやdebian/changelogファイルのバージョンを更新します。</p>
 </div>
+<div class="section" id="confirm-the-results-of-each-test">
+<h2><span class="section-number">9.2.8. </span>各テストの結果確認<a class="headerlink" href="#confirm-the-results-of-each-test" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>リリース用のタグを設定する前に、以下のテストが全てパスしているかを確認します。タグを設定してから問題が発覚すると、再度リリースすることになってしまうので、タグを設定する前に問題がないか確認します。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mroonga/mroonga/actions">GitHub Actions</a></p></li>
+</ul>
+</div>
 <div class="section" id="tagging-for-release">
-<h2><span class="section-number">9.2.10. </span>リリースのためのタグ打ち<a class="headerlink" href="#tagging-for-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.9. </span>リリースのためのタグ打ち<a class="headerlink" href="#tagging-for-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>タグを打つために以下のコマンドを実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">tag</span>
 <span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span> <span class="n">origin</span>
@@ -199,7 +189,7 @@
 </div>
 </div>
 <div class="section" id="upload-archive-files">
-<h2><span class="section-number">9.2.11. </span>アーカイブファイルのアップロード<a class="headerlink" href="#upload-archive-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.10. </span>アーカイブファイルのアップロード<a class="headerlink" href="#upload-archive-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次に配布用のアーカイブファイル(<code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>)を作成します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">dist</span>
 </pre></div>
@@ -223,16 +213,16 @@
 <p>結果として、 <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> アーカイブ・ファイルが <a class="reference external" href="https://packages.groonga.org/source/mroonga">https://packages.groonga.org/source/mroonga</a>/から入手可能になります。</p>
 </div>
 <div class="section" id="create-packages-for-the-release">
-<h2><span class="section-number">9.2.12. </span>リリース向けにパッケージを作成する<a class="headerlink" href="#create-packages-for-the-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.11. </span>リリース向けにパッケージを作成する<a class="headerlink" href="#create-packages-for-the-release" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>LinuxとWindowsのパッケージを作成します。</p>
 <div class="section" id="debian">
-<h3><span class="section-number">9.2.12.1. </span>Debian<a class="headerlink" href="#debian" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3><span class="section-number">9.2.11.1. </span>Debian<a class="headerlink" href="#debian" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages</span></code> に変更します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
 </div>
 <p>以下のコマンドを実行します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">apt</span><span class="p">:</span><span class="n">release</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">apt</span>
 </pre></div>
 </div>
 <p>これで、パッケージのビルドと <a class="reference external" href="https://packages.groonga.org/">https://packages.groonga.org/</a> へのアップロードが完了しました。しかし、この段階ではビルドしたパッケージはまだ未署名なので、以下のコマンドでパッケージを署名します。</p>
@@ -242,26 +232,26 @@
 </div>
 </div>
 <div class="section" id="debian-derivatives-ubuntu">
-<h3><span class="section-number">9.2.12.2. </span>Debian系(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3><span class="section-number">9.2.11.2. </span>Debian系(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Ubuntuの場合、パッケージはlaunchpad.netのPPAで提供されます。</p>
 <p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages</span></code> にし、<code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">ubuntu:upload</span></code> コマンドを実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
-<span class="o">%</span> <span class="n">rake</span> <span class="n">ubuntu</span><span class="p">:</span><span class="n">upload</span>
+<span class="o">%</span> <span class="n">rake</span> <span class="n">ubuntu</span>
 </pre></div>
 </div>
 <p>パッケージのアップロードに成功すると、パッケージのビルドがlaunchpad.netにて行われます。アップロードに成功するとメールで通知が届きます。ビルドが成功するとパッケージをPPA経由でインストールできます。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">launchpad</span><span class="o">.</span><span class="n">net</span><span class="o">/~</span><span class="n">groonga</span><span class="o">/+</span><span class="n">archive</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">ppa</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">launchpad</span><span class="o">.</span><span class="n">net</span><span class="o">/~</span><span class="n">groonga</span><span class="o">/+</span><span class="n">archive</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">ppa</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="red-hat-derivatives">
-<h3><span class="section-number">9.2.12.3. </span>Red Hat系<a class="headerlink" href="#red-hat-derivatives" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3><span class="section-number">9.2.11.3. </span>Red Hat系<a class="headerlink" href="#red-hat-derivatives" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages</span></code> に変更します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
 </div>
 <p>以下のコマンドを実行します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">yum</span><span class="p">:</span><span class="n">release</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">yum</span>
 </pre></div>
 </div>
 <p>これで、パッケージのビルドと <a class="reference external" href="https://packages.groonga.org/">https://packages.groonga.org/</a> へのアップロードが完了しました。しかし、この段階ではビルドしたパッケージはまだ未署名なので、以下のコマンドでパッケージを署名します。</p>
@@ -271,20 +261,24 @@
 </div>
 </div>
 <div class="section" id="windows">
-<h3><span class="section-number">9.2.12.4. </span>Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Windows向けには、 <a class="reference external" href="https://ci.appveyor.com/project/groonga/mroonga">AppVeyor CI</a> の成果物を使っています。これらを <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> へアップロードします。</p>
+<h3><span class="section-number">9.2.11.4. </span>Windows<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Windows向けには、 <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> の成果物を使っています。</p>
 </div>
 </div>
 <div class="section" id="upload-documents">
-<h2><span class="section-number">9.2.13. </span>ドキュメントをアップロード<a class="headerlink" href="#upload-documents" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ol class="arabic simple">
+<h2><span class="section-number">9.2.12. </span>ドキュメントをアップロード<a class="headerlink" href="#upload-documents" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ol class="arabic">
 <li><p>mroonga.github.comリポジトリをcloneする</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code> 配下で実行する</p></li>
+<li><p>以下のように <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> を <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code> 配下で実行する</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">document</span> <span class="n">DOCUMENT_VERSION</span><span class="o">=</span><span class="n">xx</span><span class="o">.</span><span class="n">xx_VERSION</span> <span class="n">DOCUMENT_VERSION_FULL</span><span class="o">=</span><span class="n">xx</span><span class="o">.</span><span class="n">xx</span>
+</pre></div>
+</div>
+</li>
 <li><p>Mroonga.github.comの変更点をcommit&amp;&amp;pushする</p></li>
 </ol>
 </div>
 <div class="section" id="update-blog-mroonga-blog">
-<h2><span class="section-number">9.2.14. </span>Blog(Mroongaブログ)の更新<a class="headerlink" href="#update-blog-mroonga-blog" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.13. </span>Blog(Mroongaブログ)の更新<a class="headerlink" href="#update-blog-mroonga-blog" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下のファイルを更新します。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/ja/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
@@ -309,7 +303,7 @@ published: false
 </div>
 </div>
 <div class="section" id="announce-release-for-mailing-list">
-<h2><span class="section-number">9.2.15. </span>リリースをメーリングリストで告知<a class="headerlink" href="#announce-release-for-mailing-list" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.14. </span>リリースをメーリングリストで告知<a class="headerlink" href="#announce-release-for-mailing-list" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>リリースアナウンスをそれぞれのメーリングリストに送ります</p>
 <ul class="simple">
 <li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
@@ -318,14 +312,21 @@ published: false
 </ul>
 </div>
 <div class="section" id="announce-release-for-twitter">
-<h2><span class="section-number">9.2.16. </span>リリースをTwitterで告知<a class="headerlink" href="#announce-release-for-twitter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.15. </span>リリースをTwitterで告知<a class="headerlink" href="#announce-release-for-twitter" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Tweetリンクをクリックすると、最新のリリースについてツイートできます。タイトルやブログエントリのURLがツイートに含まれます。</p>
 <p>ツイートは日本語と英語のブログエントリから行います。ツイートは <code class="docutils literal notranslate"><span class="pre">groonga</span></code> アカウントでログインした状態で行ってください。</p>
 </div>
 <div class="section" id="announce-release-for-facebook">
-<h2><span class="section-number">9.2.17. </span>リリースをFacebookで告知<a class="headerlink" href="#announce-release-for-facebook" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">9.2.16. </span>リリースをFacebookで告知<a class="headerlink" href="#announce-release-for-facebook" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>FacebookのMroongaグループからリリースを告知します。</p>
 <p><a class="reference external" href="https://www.facebook.com/mroonga/">https://www.facebook.com/mroonga/</a></p>
+</div>
+<div class="section" id="bump-version">
+<h2><span class="section-number">9.2.17. </span>バージョンをあげる<a class="headerlink" href="#bump-version" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>最新のリリースへバージョンをあげる:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">version</span> <span class="n">NEW_VERSION_MAJOR</span><span class="o">=</span><span class="mi">9</span> <span class="n">NEW_VERSION_MINOR</span><span class="o">=</span><span class="mi">1</span> <span class="n">NEW_VERSION_MICRO</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -341,27 +342,27 @@ published: false
 <li><a class="reference internal" href="#">9.2. Release procedure</a><ul>
 <li><a class="reference internal" href="#requirements">9.2.1. 必要なもの</a></li>
 <li><a class="reference internal" href="#setup-build-environment">9.2.2. ビルド環境をセットアップする</a></li>
-<li><a class="reference internal" href="#bump-version">9.2.3. バージョンをあげる</a></li>
-<li><a class="reference internal" href="#describe-the-changes">9.2.4. 変更点を記述する</a></li>
-<li><a class="reference internal" href="#generate-configure-script">9.2.5. configureスクリプトの生成</a></li>
-<li><a class="reference internal" href="#execute-configure-script">9.2.6. configureスクリプトの実行</a></li>
-<li><a class="reference internal" href="#check-whether-you-can-upload-packages">9.2.7. パッケージをアップロード可能か確認する</a></li>
+<li><a class="reference internal" href="#describe-the-changes">9.2.3. 変更点を記述する</a></li>
+<li><a class="reference internal" href="#generate-configure-script">9.2.4. configureスクリプトの生成</a></li>
+<li><a class="reference internal" href="#execute-configure-script">9.2.5. configureスクリプトの実行</a></li>
+<li><a class="reference internal" href="#check-whether-you-can-upload-packages">9.2.6. パッケージをアップロード可能か確認する</a></li>
+<li><a class="reference internal" href="#execute-make-update-latest-release">9.2.7. make update-latest-releaseを実行する</a></li>
 <li><a class="reference internal" href="#confirm-the-results-of-each-test">9.2.8. 各テストの結果確認</a></li>
-<li><a class="reference internal" href="#execute-make-update-latest-release">9.2.9. make update-latest-releaseを実行する</a></li>
-<li><a class="reference internal" href="#tagging-for-release">9.2.10. リリースのためのタグ打ち</a></li>
-<li><a class="reference internal" href="#upload-archive-files">9.2.11. アーカイブファイルのアップロード</a></li>
-<li><a class="reference internal" href="#create-packages-for-the-release">9.2.12. リリース向けにパッケージを作成する</a><ul>
-<li><a class="reference internal" href="#debian">9.2.12.1. Debian</a></li>
-<li><a class="reference internal" href="#debian-derivatives-ubuntu">9.2.12.2. Debian系(Ubuntu)</a></li>
-<li><a class="reference internal" href="#red-hat-derivatives">9.2.12.3. Red Hat系</a></li>
-<li><a class="reference internal" href="#windows">9.2.12.4. Windows</a></li>
+<li><a class="reference internal" href="#tagging-for-release">9.2.9. リリースのためのタグ打ち</a></li>
+<li><a class="reference internal" href="#upload-archive-files">9.2.10. アーカイブファイルのアップロード</a></li>
+<li><a class="reference internal" href="#create-packages-for-the-release">9.2.11. リリース向けにパッケージを作成する</a><ul>
+<li><a class="reference internal" href="#debian">9.2.11.1. Debian</a></li>
+<li><a class="reference internal" href="#debian-derivatives-ubuntu">9.2.11.2. Debian系(Ubuntu)</a></li>
+<li><a class="reference internal" href="#red-hat-derivatives">9.2.11.3. Red Hat系</a></li>
+<li><a class="reference internal" href="#windows">9.2.11.4. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#upload-documents">9.2.13. ドキュメントをアップロード</a></li>
-<li><a class="reference internal" href="#update-blog-mroonga-blog">9.2.14. Blog(Mroongaブログ)の更新</a></li>
-<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.15. リリースをメーリングリストで告知</a></li>
-<li><a class="reference internal" href="#announce-release-for-twitter">9.2.16. リリースをTwitterで告知</a></li>
-<li><a class="reference internal" href="#announce-release-for-facebook">9.2.17. リリースをFacebookで告知</a></li>
+<li><a class="reference internal" href="#upload-documents">9.2.12. ドキュメントをアップロード</a></li>
+<li><a class="reference internal" href="#update-blog-mroonga-blog">9.2.13. Blog(Mroongaブログ)の更新</a></li>
+<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.14. リリースをメーリングリストで告知</a></li>
+<li><a class="reference internal" href="#announce-release-for-twitter">9.2.15. リリースをTwitterで告知</a></li>
+<li><a class="reference internal" href="#announce-release-for-facebook">9.2.16. リリースをFacebookで告知</a></li>
+<li><a class="reference internal" href="#bump-version">9.2.17. バージョンをあげる</a></li>
 </ul>
 </li>
 </ul>
