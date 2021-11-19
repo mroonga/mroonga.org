@@ -282,8 +282,35 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="centos-7-with-mariadb-10-6-package">
+<span id="centos-7-mariadb-10-6"></span><h2><span class="section-number">2.5.9. </span>CentOS 7 (with MariaDB 10.6 package)<a class="headerlink" href="#centos-7-with-mariadb-10-6-package" title="Permalink to this headline">¶</a></h2>
+<p>You can use MariaDB’s MariaDB packages version 10.6 on CentOS 7 since
+Mroonga 11.09 release.</p>
+<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">MariaDB</span>
+<span class="n">baseurl</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.6</span><span class="o">/</span><span class="n">centos7</span><span class="o">-</span><span class="n">amd64</span>
+<span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">RPM</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">-</span><span class="n">MariaDB</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">server</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.6</span><span class="o">-</span><span class="n">mroonga</span>
+<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="centos-8-with-the-oracle-mysql-8-0-package">
-<span id="centos-8-oracle-8-0"></span><h2><span class="section-number">2.5.9. </span>CentOS 8 (with the Oracle MySQL 8.0 package)<a class="headerlink" href="#centos-8-with-the-oracle-mysql-8-0-package" title="Permalink to this headline">¶</a></h2>
+<span id="centos-8-oracle-8-0"></span><h2><span class="section-number">2.5.10. </span>CentOS 8 (with the Oracle MySQL 8.0 package)<a class="headerlink" href="#centos-8-with-the-oracle-mysql-8-0-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use Oracle’s MySQL packages version 8.0 on CentOS 8 since
 Mroonga 9.10 release.</p>
 <div class="admonition note">
@@ -306,7 +333,7 @@ Mroonga 9.10 release.</p>
 </div>
 </div>
 <div class="section" id="centos-8-with-percona-server-8-0-package">
-<span id="centos-8-percona-8-0"></span><h2><span class="section-number">2.5.10. </span>CentOS 8 (with Percona Server 8.0 package)<a class="headerlink" href="#centos-8-with-percona-server-8-0-package" title="Permalink to this headline">¶</a></h2>
+<span id="centos-8-percona-8-0"></span><h2><span class="section-number">2.5.11. </span>CentOS 8 (with Percona Server 8.0 package)<a class="headerlink" href="#centos-8-with-percona-server-8-0-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use Percona Server packages version 8.0 on CentOS 8
 since Mroonga 10.06 release.</p>
 <p>Install:</p>
@@ -326,7 +353,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </div>
 <div class="section" id="centos-8-with-mariadb-10-3-package">
-<span id="centos-8-mariadb-10-3"></span><h2><span class="section-number">2.5.11. </span>CentOS 8 (with MariaDB 10.3 package)<a class="headerlink" href="#centos-8-with-mariadb-10-3-package" title="Permalink to this headline">¶</a></h2>
+<span id="centos-8-mariadb-10-3"></span><h2><span class="section-number">2.5.12. </span>CentOS 8 (with MariaDB 10.3 package)<a class="headerlink" href="#centos-8-with-mariadb-10-3-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.3 on CentOS 8 since
 Mroonga 9.10 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -348,7 +375,7 @@ Mroonga 9.10 release.</p>
 </div>
 </div>
 <div class="section" id="centos-8-with-mariadb-10-4-package">
-<span id="centos-8-mariadb-10-4"></span><h2><span class="section-number">2.5.12. </span>CentOS 8 (with MariaDB 10.4 package)<a class="headerlink" href="#centos-8-with-mariadb-10-4-package" title="Permalink to this headline">¶</a></h2>
+<span id="centos-8-mariadb-10-4"></span><h2><span class="section-number">2.5.13. </span>CentOS 8 (with MariaDB 10.4 package)<a class="headerlink" href="#centos-8-with-mariadb-10-4-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.4 on CentOS 8 since
 Mroonga 9.10 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -370,7 +397,7 @@ Mroonga 9.10 release.</p>
 </div>
 </div>
 <div class="section" id="centos-8-with-mariadb-10-5-package">
-<span id="centos-8-mariadb-10-5"></span><h2><span class="section-number">2.5.13. </span>CentOS 8 (with MariaDB 10.5 package)<a class="headerlink" href="#centos-8-with-mariadb-10-5-package" title="Permalink to this headline">¶</a></h2>
+<span id="centos-8-mariadb-10-5"></span><h2><span class="section-number">2.5.14. </span>CentOS 8 (with MariaDB 10.5 package)<a class="headerlink" href="#centos-8-with-mariadb-10-5-package" title="Permalink to this headline">¶</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.5 on CentOS 8 since
 Mroonga 10.06 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -411,11 +438,12 @@ Mroonga 10.06 release.</p>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-3-package">2.5.6. CentOS 7 (with MariaDB 10.3 package)</a></li>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-4-package">2.5.7. CentOS 7 (with MariaDB 10.4 package)</a></li>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-5-package">2.5.8. CentOS 7 (with MariaDB 10.5 package)</a></li>
-<li><a class="reference internal" href="#centos-8-with-the-oracle-mysql-8-0-package">2.5.9. CentOS 8 (with the Oracle MySQL 8.0 package)</a></li>
-<li><a class="reference internal" href="#centos-8-with-percona-server-8-0-package">2.5.10. CentOS 8 (with Percona Server 8.0 package)</a></li>
-<li><a class="reference internal" href="#centos-8-with-mariadb-10-3-package">2.5.11. CentOS 8 (with MariaDB 10.3 package)</a></li>
-<li><a class="reference internal" href="#centos-8-with-mariadb-10-4-package">2.5.12. CentOS 8 (with MariaDB 10.4 package)</a></li>
-<li><a class="reference internal" href="#centos-8-with-mariadb-10-5-package">2.5.13. CentOS 8 (with MariaDB 10.5 package)</a></li>
+<li><a class="reference internal" href="#centos-7-with-mariadb-10-6-package">2.5.9. CentOS 7 (with MariaDB 10.6 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-the-oracle-mysql-8-0-package">2.5.10. CentOS 8 (with the Oracle MySQL 8.0 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-percona-server-8-0-package">2.5.11. CentOS 8 (with Percona Server 8.0 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-3-package">2.5.12. CentOS 8 (with MariaDB 10.3 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-4-package">2.5.13. CentOS 8 (with MariaDB 10.4 package)</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-5-package">2.5.14. CentOS 8 (with MariaDB 10.5 package)</a></li>
 </ul>
 </li>
 </ul>

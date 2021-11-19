@@ -262,8 +262,33 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="centos-7-with-mariadb-10-6-package">
+<span id="centos-7-mariadb-10-6"></span><h2><span class="section-number">2.5.9. </span>CentOS 7（MariaDB 10.6のパッケージを利用）<a class="headerlink" href="#centos-7-with-mariadb-10-6-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>CentOS 7では、Mroonga 11.09からMariaDB提供のMariaDB 10.6パッケージを利用できます。</p>
+<p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">MariaDB</span>
+<span class="n">baseurl</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.6</span><span class="o">/</span><span class="n">centos7</span><span class="o">-</span><span class="n">amd64</span>
+<span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">RPM</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">-</span><span class="n">MariaDB</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">server</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.6</span><span class="o">-</span><span class="n">mroonga</span>
+<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="centos-8-with-the-oracle-mysql-8-0-package">
-<span id="centos-8-oracle-8-0"></span><h2><span class="section-number">2.5.9. </span>CentOS 8（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#centos-8-with-the-oracle-mysql-8-0-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-8-oracle-8-0"></span><h2><span class="section-number">2.5.10. </span>CentOS 8（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#centos-8-with-the-oracle-mysql-8-0-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 8では、Mroonga 9.10からOracleのMySQL 8.0パッケージを利用できます。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
@@ -285,7 +310,7 @@
 </div>
 </div>
 <div class="section" id="centos-8-with-percona-server-8-0-package">
-<span id="centos-8-percona-8-0"></span><h2><span class="section-number">2.5.10. </span>CentOS 8（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#centos-8-with-percona-server-8-0-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-8-percona-8-0"></span><h2><span class="section-number">2.5.11. </span>CentOS 8（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#centos-8-with-percona-server-8-0-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 8では、Mroonga 10.06からPercona Server 8.0パッケージを利用できます。</p>
 <p>インストール:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://packages.groonga.org/centos/groonga-release-latest.noarch.rpm
@@ -303,7 +328,7 @@
 </div>
 </div>
 <div class="section" id="centos-8-with-mariadb-10-3-package">
-<span id="centos-8-mariadb-10-3"></span><h2><span class="section-number">2.5.11. </span>CentOS 8（MariaDB 10.3のパッケージを利用）<a class="headerlink" href="#centos-8-with-mariadb-10-3-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-8-mariadb-10-3"></span><h2><span class="section-number">2.5.12. </span>CentOS 8（MariaDB 10.3のパッケージを利用）<a class="headerlink" href="#centos-8-with-mariadb-10-3-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 8では、Mroonga 9.10からMariaDB提供のMariaDB 10.3パッケージを利用できます。</p>
 <p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
@@ -324,7 +349,7 @@
 </div>
 </div>
 <div class="section" id="centos-8-with-mariadb-10-4-package">
-<span id="centos-8-mariadb-10-4"></span><h2><span class="section-number">2.5.12. </span>CentOS 8（MariaDB 10.4のパッケージを利用）<a class="headerlink" href="#centos-8-with-mariadb-10-4-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-8-mariadb-10-4"></span><h2><span class="section-number">2.5.13. </span>CentOS 8（MariaDB 10.4のパッケージを利用）<a class="headerlink" href="#centos-8-with-mariadb-10-4-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 8では、Mroonga 9.10からMariaDB提供のMariaDB 10.4パッケージを利用できます。</p>
 <p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
@@ -345,7 +370,7 @@
 </div>
 </div>
 <div class="section" id="centos-8-with-mariadb-10-5-package">
-<span id="centos-8-mariadb-10-5"></span><h2><span class="section-number">2.5.13. </span>CentOS 8（MariaDB 10.5のパッケージを利用）<a class="headerlink" href="#centos-8-with-mariadb-10-5-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="centos-8-mariadb-10-5"></span><h2><span class="section-number">2.5.14. </span>CentOS 8（MariaDB 10.5のパッケージを利用）<a class="headerlink" href="#centos-8-with-mariadb-10-5-package" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CentOS 8では、Mroonga 10.06からMariaDB提供のMariaDB 10.5パッケージを利用できます。</p>
 <p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
@@ -385,11 +410,12 @@
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-3-package">2.5.6. CentOS 7（MariaDB 10.3のパッケージを利用）</a></li>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-4-package">2.5.7. CentOS 7（MariaDB 10.4のパッケージを利用）</a></li>
 <li><a class="reference internal" href="#centos-7-with-mariadb-10-5-package">2.5.8. CentOS 7（MariaDB 10.5のパッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-8-with-the-oracle-mysql-8-0-package">2.5.9. CentOS 8（OracleのMySQL 8.0パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-8-with-percona-server-8-0-package">2.5.10. CentOS 8（Percona Server 8.0パッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-8-with-mariadb-10-3-package">2.5.11. CentOS 8（MariaDB 10.3のパッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-8-with-mariadb-10-4-package">2.5.12. CentOS 8（MariaDB 10.4のパッケージを利用）</a></li>
-<li><a class="reference internal" href="#centos-8-with-mariadb-10-5-package">2.5.13. CentOS 8（MariaDB 10.5のパッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-7-with-mariadb-10-6-package">2.5.9. CentOS 7（MariaDB 10.6のパッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-8-with-the-oracle-mysql-8-0-package">2.5.10. CentOS 8（OracleのMySQL 8.0パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-8-with-percona-server-8-0-package">2.5.11. CentOS 8（Percona Server 8.0パッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-3-package">2.5.12. CentOS 8（MariaDB 10.3のパッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-4-package">2.5.13. CentOS 8（MariaDB 10.4のパッケージを利用）</a></li>
+<li><a class="reference internal" href="#centos-8-with-mariadb-10-5-package">2.5.14. CentOS 8（MariaDB 10.5のパッケージを利用）</a></li>
 </ul>
 </li>
 </ul>
