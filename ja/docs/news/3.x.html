@@ -3,8 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News - 3.x &#8212; Mroonga v12.02 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>News - 3.x &#8212; Mroonga v12.03 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
@@ -56,7 +57,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.02 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">News - 3.x</a></li> 
       </ul>
     </div>  
@@ -66,37 +67,37 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="news-3-x">
+  <section id="news-3-x">
 <h1>News - 3.x<a class="headerlink" href="#news-3-x" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="release-3-12-2014-01-29">
+<section id="release-3-12-2014-01-29">
 <span id="release-3-12"></span><h2>3.12リリース - 2014/01/29<a class="headerlink" href="#release-3-12-2014-01-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="improvements">
+<section id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>システム変数 <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-lock-timeout"><span class="std std-ref">mroonga_lock_timeout</span></a> を追加しました。この変更で、Groongaのロックタイムアウトを動的に変更できるようになりました。</p></li>
 <li><p>Tritonnの&quot;W&quot;プラグマとの互換性を改善しました。以前のバージョンでは、Mroongaは省略したセクションの重みを0としていました。この変更で、省略時
 のセクションの重みを1にしています。これはTritonnと同じ振舞いです。[#2152] [丸山さんがパッチ提供]</p></li>
 </ul>
-</div>
-<div class="section" id="fixes">
+</section>
+<section id="fixes">
 <h3>修正<a class="headerlink" href="#fixes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>SELECT MATCH AGAINST ... クエリ実行中にFLUSH TABLESを実行するとクラッシュする不具合を修正しました。 [#2137] [yokuさんが報告]</p></li>
 <li><p>&quot;W&quot;プラグマの実装の誤りを修正しました。1オリジンに修正しています。以前のバージョンでは、0オリジンとして実装されていましたが、これはTritonnとは互換性がありませんでした。これは非互換な変更なので、既存の&quot;W&quot;プラグマを使ったクエリを確認してください。 [#2151]</p></li>
 <li><p>空のレコードを否定で検索すると重複した結果が返ってくる不具合を修正しました。 [#2215] [groonga-dev,02052] [村上さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="thanks">
+</section>
+<section id="thanks">
 <h3>感謝<a class="headerlink" href="#thanks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>yokuさん</p></li>
 <li><p>村上さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-11-2013-12-29">
+</section>
+</section>
+<section id="release-3-11-2013-12-29">
 <span id="release-3-11"></span><h2>3.11リリース - 2013/12/29<a class="headerlink" href="#release-3-11-2013-12-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id1">
+<section id="id1">
 <h3>改良<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[deb] Debian 6.0 (squeeze)のサポートを終了しました。</p></li>
@@ -114,34 +115,34 @@
 <li><p>Fedora 20に対応しました。</p></li>
 <li><p>CentOS 5でmysql-mroongaパッケージの提供を終了しました。これからはmysql55-mroongaパッケージを使ってください。</p></li>
 </ul>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h3>修正<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] ダンプやリストア中の'LOCK TABLE .. READ'でMySQLがクラッシュする不具合を修正しました。[#2098]</p></li>
 <li><p>&quot;*D-&quot;プラグマの挙動を間違って実装していたのを修正しました。 [#2099]</p></li>
 <li><p>全文検索時のメモリリークを修正しました。&quot;MATCH AGAINST ... ORDER BY LIMIT ...&quot;といったクエリがこの影響を受けます。 [#2144]</p></li>
 </ul>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h3>感謝<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Horikoshi Yukiさん</p></li>
 <li><p>yokuさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-10-2013-11-29">
+</section>
+</section>
+<section id="release-3-10-2013-11-29">
 <span id="release-3-10"></span><h2>3.10リリース - 2013/11/29<a class="headerlink" href="#release-3-10-2013-11-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id4">
+<section id="id4">
 <h3>改良<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>MariaDB 10.0.6に対応しました。</p></li>
 <li><p>[プラグイン][mroonga_snippet] サポートしていない文字コードをエラー時に
 報告するようにしました。</p></li>
 </ul>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>修正<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Disk Sweep Multi Range Read(DS-MRR)と呼ばれる最適化に関する問題を修正しまし
@@ -159,42 +160,42 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>&quot;_i&quot;といった短いカラム名が特別なカラムである&quot;_id&quot;として扱われてし
 まう不具合を修正しました。[Alexander Barkovさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h3>感謝<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>木村さん</p></li>
 <li><p>Alexander Barkovさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-09-2013-10-29">
+</section>
+</section>
+<section id="release-3-09-2013-10-29">
 <span id="release-3-09"></span><h2>3.09リリース - 2013/10/29<a class="headerlink" href="#release-3-09-2013-10-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id7">
+<section id="id7">
 <h3>改良<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Ubuntu 13.10 (Saucy Salamander)に対応しました。</p></li>
 <li><p>[rpm][centos] CentOS 5でMySQL 5.5向けのRPMパッケージをサポートしました。mysql55-mroongaというパッケージを提供します。 [groonga-dev,01869] [WINGさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h3>修正<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ラッパーモード] メモリリークを修正しました。これはラッパーモードのハンドラが排他制御の後始末を適切に行なっていないことによるものです。ストレージエンジンとしてMyISAMを使用していると影響を受けることが知られています。</p></li>
 <li><p>[ラッパーモード] MySQL 5.6でFORCE INDEXを使うとクラッシュする不具合を修正しました。 [#2015] [groonga-dev,01867] [安田さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h3>感謝<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>WINGさん</p></li>
 <li><p>安田一郎さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-08-2013-9-29">
+</section>
+</section>
+<section id="release-3-08-2013-9-29">
 <span id="release-3-08"></span><h2>3.08リリース - 2013/9/29<a class="headerlink" href="#release-3-08-2013-9-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id10">
+<section id="id10">
 <h3>改良<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] ラッパーモード特有の事項に関する追記をしました。[groonga-dev,01747] [磯部和広さんが報告]</p></li>
@@ -203,16 +204,16 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>[ラッパーモード] REPAIR TABLEをgroongaのテーブルが壊れていても実行できるようにしました。[groonga-dev,01540] [村上さんが提案]</p></li>
 <li><p>configureを使ったMariaDB 10.xとのビルドをできるようにしました。 [groonga-dev,01727] [WINGさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id11">
+</section>
+<section id="id11">
 <h3>修正<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>mroongaがアップグレード時に意図せず削除される不具合を修正しました。[#1918][&#64;ceekzさんが報告]</p></li>
 <li><p>Windows環境でinstall pluginするとmysqld 32bit実行バイナリがクラッシュする不具合を修正しました。</p></li>
 <li><p>[ストレージ][mariadb] mroonga_log_fileのメモリリークを修正しました。このメモリリークはログファイル名を変更したときに発生していました。</p></li>
 </ul>
-</div>
-<div class="section" id="id12">
+</section>
+<section id="id12">
 <h3>感謝<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>磯部和広さん</p></li>
@@ -221,11 +222,11 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>村上さん</p></li>
 <li><p>WINGさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-07-2013-8-29">
+</section>
+</section>
+<section id="release-3-07-2013-8-29">
 <span id="release-3-07"></span><h2>3.07リリース - 2013/8/29<a class="headerlink" href="#release-3-07-2013-8-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id13">
+<section id="id13">
 <h3>改良<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>BOOLEAN MODEのクエリで特別な文字をエスケープする  <a class="reference internal" href="../reference/udf/mroonga_escape.html"><span class="doc">mroonga_escape()</span></a> を追加しました。 [groonga-dev,01576]  [田辺さんが提案]</p></li>
@@ -233,8 +234,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>MariaDB 5.5.32 timestampをサポートしました。</p></li>
 <li><p>MariaDB 10.0.4をサポートしました。[WINGさんが報告] [yoku tsさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id14">
+</section>
+<section id="id14">
 <h3>修正<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[mariadb] Windowsでプラグインをインストールするときにクラッシュする不具合を修正しました。</p></li>
@@ -243,8 +244,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>[ストレージモード] インデックス化されていないVARCHARに対しては ORDERBY LIMITを無効にしました。インデックスがないとCOLLATIONを正しく扱えないためです。</p></li>
 <li><p>MySQL 5.6.13で内部的に使っているフラグが未設定なことによりクラッシュする不具合を修正しました。</p></li>
 </ul>
-</div>
-<div class="section" id="id15">
+</section>
+<section id="id15">
 <h3>感謝<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>田辺公平さん</p></li>
@@ -252,11 +253,11 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>WINGさん</p></li>
 <li><p>yoku tsさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-06-2013-7-29">
+</section>
+</section>
+<section id="release-3-06-2013-7-29">
 <span id="release-3-06"></span><h2>3.06リリース - 2013/7/29<a class="headerlink" href="#release-3-06-2013-7-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id16">
+<section id="id16">
 <h3>改良<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-action-on-fulltext-query-error"><span class="std std-ref">mroonga_action_on_fulltext_query_error</span></a> セッション変数を追加しました。これは不正なエスケープに対するエラーを報告する方法に影響します。 [groonga-dev,01529] [田辺公平さんが報告]</p></li>
@@ -264,18 +265,18 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>Fedora 19に対応しました。</p></li>
 <li><p>Fedora 18対応をやめました。</p></li>
 </ul>
-</div>
-<div class="section" id="id17">
+</section>
+<section id="id17">
 <h3>感謝<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>田辺公平さん</p></li>
 <li><p>村上さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-05-2013-6-29">
+</section>
+</section>
+<section id="release-3-05-2013-6-29">
 <span id="release-3-05"></span><h2>3.05リリース - 2013/6/29<a class="headerlink" href="#release-3-05-2013-6-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id18">
+<section id="id18">
 <h3>改良<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>切り詰められた日付データに対する警告を表示するようにしました。 [#1768] [Y.Kentaroさんが提案]</p></li>
@@ -283,8 +284,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>トラブルシューティングのためのドキュメントを追加しました。</p></li>
 <li><p>fast mutexesオプションをビルド設定で有効にできるようにしました。 [#1760][WINGさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id19">
+</section>
+<section id="id19">
 <h3>修正<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>3カラム以上のセクションに対するWプラグマが動作しない不具合を修正しました。 [#1770] [shizuinさんが報告]</p></li>
@@ -295,8 +296,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>where句なしで <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">...</span> <span class="pre">LIMIT</span></code> を指定するとクラッシュする不具合を修正しました。[&#64;memorycraftさんが報告]</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">LOCK</span> <span class="pre">TABLES</span></code> と <code class="docutils literal notranslate"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code> を同時に使うと検索データとしてヒットしない不具合を修正しました。</p></li>
 </ul>
-</div>
-<div class="section" id="id20">
+</section>
+<section id="id20">
 <h3>感謝<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Y.Kentaroさん</p></li>
@@ -305,11 +306,11 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>吉田光男さん</p></li>
 <li><p>&#64;memorycraftさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-04-2013-5-29">
+</section>
+</section>
+<section id="release-3-04-2013-5-29">
 <span id="release-3-04"></span><h2>3.04リリース - 2013/5/29<a class="headerlink" href="#release-3-04-2013-5-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id21">
+<section id="id21">
 <h3>改良<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>MariaDB 10.0.2のサポートを改善しました。 [#1729]</p></li>
@@ -328,8 +329,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>初期セットアップのためのインストール用SQLを追加しました。 [groonga-dev,01434] [かずひこさんが提案]</p></li>
 <li><p>Debian 8.0 (jessie)に対応しました。</p></li>
 </ul>
-</div>
-<div class="section" id="id22">
+</section>
+<section id="id22">
 <h3>修正<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>空の検索クエリがSEGVを引き起す不具合を修正しました。 [groonga-dev,01346][中井さんが報告]</p></li>
@@ -339,8 +340,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>デフォルトのトークナイザーが正しく開放されずメモリリークする不具合を修正しました。</p></li>
 <li><p>[ラッパーモード] ストレージエンジン名なしでALTER TABLEによりコメントを変更するとテーブルが消失する不具合を修正しました。 [Y.Kentaroさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id23">
+</section>
+<section id="id23">
 <h3>感謝<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Y.Kentaroさん</p></li>
@@ -350,11 +351,11 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>磯部和広さん</p></li>
 <li><p>かずひこさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-03-2013-4-29">
+</section>
+</section>
+<section id="release-3-03-2013-4-29">
 <span id="release-3-03"></span><h2>3.03リリース - 2013/4/29<a class="headerlink" href="#release-3-03-2013-4-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id24">
+<section id="id24">
 <h3>改良<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] テーブルの制限に関するドキュメントを追加した。 [groonga-dev,01281] [磯部和広さんが報告]</p></li>
@@ -368,8 +369,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>FULLTEXT INDEXに対するノーマライザー指定をサポートした。コメントでノーマライザーを指定できます。指定方法は <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(column)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;NormalizerXXX&quot;'</span></code> です。[groonga-dev:01303] [田辺公平さんが提案]</p></li>
 <li><p>Ubuntu 13.04 Raring Ringtailをサポートした。</p></li>
 </ul>
-</div>
-<div class="section" id="id25">
+</section>
+<section id="id25">
 <h3>修正<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] 保存した値を検索できないという不具合を修正した。これは数値が意図しないキャストにより丸められていたためです。[#1696] [groonga-dev,01266] [smztksさんが報告]</p></li>
@@ -379,8 +380,8 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>[doc] ストレージエンジンの動作モードの誤字と不明瞭な説明文を修正した。 [鈴木一郎さんが報告]</p></li>
 <li><p>[mysql55] 一行でまとめてインデックスの再作成を行うとクラッシュする不具合を修正した。[groonga-dev,01319] [田辺公平さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id26">
+</section>
+<section id="id26">
 <h3>感謝<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>smztksさん</p></li>
@@ -389,60 +390,60 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p>田辺公平さん</p></li>
 <li><p>鈴木一郎さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-02-2013-3-29">
+</section>
+</section>
+<section id="release-3-02-2013-3-29">
 <span id="release-3-02"></span><h2>3.02リリース - 2013/3/29<a class="headerlink" href="#release-3-02-2013-3-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id27">
+<section id="id27">
 <h3>改良<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>LinuxでMariaDB 10.0へバンドルできるようにした。 [#1644]</p></li>
 <li><p>[doc] <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> に指定できる値のドキュメントをリファレンスマニュアルにも追加した。[groonga-dev,01255] [磯部和広さんが報告]</p></li>
 <li><p>[実験的] <code class="docutils literal notranslate"><span class="pre">mroonga_command</span></code> というUDFを追加しました。 [#1643] このUDFを使うと <code class="docutils literal notranslate"><span class="pre">groonga</span></code> に直接クエリを送れるようになります。</p></li>
 </ul>
-</div>
-<div class="section" id="id28">
+</section>
+<section id="id28">
 <h3>修正<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>複合インデックスを使用している場合にWHERE節の表現が動作しない不具合を修正しました。 [groonga-dev,01253] [#1670] [堀越さんが報告]</p></li>
 <li><p>[ラッパーモード] <code class="docutils literal notranslate"><span class="pre">key</span></code> オブジェクトが開放されるタイミングが早すぎて不正となるのを修正した。この不具合は DISABLE KEYS/ENABLE KEYSによってインデックスの再作成を行ったときに発生することがあります。 [#1671] [keigo itoさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id29">
+</section>
+<section id="id29">
 <h3>感謝<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>磯部和広さん</p></li>
 <li><p>Horikoshi Yukiさん</p></li>
 <li><p>keigo itoさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-01-2013-2-28">
+</section>
+</section>
+<section id="release-3-01-2013-2-28">
 <span id="release-3-01"></span><h2>3.01リリース - 2013/2/28<a class="headerlink" href="#release-3-01-2013-2-28" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id30">
+<section id="id30">
 <h3>改良<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">utf8_unicode_ci</span></code> と <code class="docutils literal notranslate"><span class="pre">utf8mb4_unicode_ci</span></code> をサポート。 <code class="docutils literal notranslate"><span class="pre">groonga-normalizer-mysql</span></code> &gt;= 1.0.1が必須です。</p></li>
 <li><p>[実験的] ストレージモードでFOREIGN KEY制約をサポート。 [#1612]</p></li>
 </ul>
-</div>
-<div class="section" id="id31">
+</section>
+<section id="id31">
 <h3>修正<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>特定の範囲のレコードで検索結果が0件になることがあるというgroongaに由来する不具合を修正した。 [groonga-dev,01192] [b senbokuさんが報告]</p></li>
 <li><p>Mac OS X向けにデフォルトではDTraceを無効にした。</p></li>
 </ul>
-</div>
-<div class="section" id="id32">
+</section>
+<section id="id32">
 <h3>感謝<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>b senbokuさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-3-00-2013-2-9">
+</section>
+</section>
+<section id="release-3-00-2013-2-9">
 <span id="release-3-00"></span><h2>3.00リリース - 2013/2/9<a class="headerlink" href="#release-3-00-2013-2-9" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id33">
+<section id="id33">
 <h3>改良<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Fedora 18に対応。</p></li>
@@ -450,21 +451,21 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
 <li><p><code class="docutils literal notranslate"><span class="pre">utf8_general_ci</span></code> と <code class="docutils literal notranslate"><span class="pre">utf8mb4_generic_ci</span></code> 互換なノーマライザーをサポートした。</p></li>
 <li><p>[rpm][centos] CentOS 5にてMySQL 5.6.10に対応した。</p></li>
 </ul>
-</div>
-<div class="section" id="id34">
+</section>
+<section id="id34">
 <h3>修正<a class="headerlink" href="#id34" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] ユニークキーとなるカラムに対し大文字小文字混在のキーワードではマッチしないgroonga由来の不具合を修正した。 [groonga-dev,01187] [田辺公平さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id35">
+</section>
+<section id="id35">
 <h3>感謝<a class="headerlink" href="#id35" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>田辺公平さん</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -579,7 +580,7 @@ UPDATE'クエリで適切に更新できない不具合を修正しました。<
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.02 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">News - 3.x</a></li> 
       </ul>
     </div>
