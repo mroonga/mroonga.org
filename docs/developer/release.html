@@ -3,15 +3,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>9.2. Release procedure &#8212; Mroonga v12.03 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9.2. Release procedure &#8212; Mroonga v12.04 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
+    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
@@ -64,7 +64,7 @@
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.2. </span>Release procedure</a></li> 
       </ul>
@@ -75,10 +75,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="release-procedure">
-<h1><span class="section-number">9.2. </span>Release procedure<a class="headerlink" href="#release-procedure" title="Permalink to this headline">¶</a></h1>
-<section id="requirements">
-<h2><span class="section-number">9.2.1. </span>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="release-procedure">
+<h1><span class="section-number">9.2. </span>Release procedure<a class="headerlink" href="#release-procedure" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="requirements">
+<h2><span class="section-number">9.2.1. </span>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
 <p>Here is the requirements about release procedure.</p>
 <ul class="simple">
 <li><p>Debian GNU/Linux (sid)</p></li>
@@ -94,16 +94,16 @@
 <li><p>GROONGA_SOURCE_PATH=$HOME/work/groonga/groonga.clean</p></li>
 <li><p>PACKAGES_GROONGA_ORG_REPOSITORY=$HOME/work/groonga/packages.groonga.org</p></li>
 </ul>
-</section>
-<section id="setup-build-environment">
-<h2><span class="section-number">9.2.2. </span>Setup build environment<a class="headerlink" href="#setup-build-environment" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="setup-build-environment">
+<h2><span class="section-number">9.2.2. </span>Setup build environment<a class="headerlink" href="#setup-build-environment" title="Permalink to this heading">¶</a></h2>
 <p>Install the following packages:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">V</span> <span class="n">ruby</span> <span class="n">mecab</span> <span class="n">libmecab</span><span class="o">-</span><span class="n">dev</span> <span class="n">gnupg2</span> <span class="n">dh</span><span class="o">-</span><span class="n">autoreconf</span> <span class="n">python</span><span class="o">-</span><span class="n">sphinx</span> <span class="n">bison</span>
 </pre></div>
 </div>
-</section>
-<section id="describe-the-changes">
-<h2><span class="section-number">9.2.3. </span>Describe the changes<a class="headerlink" href="#describe-the-changes" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="describe-the-changes">
+<h2><span class="section-number">9.2.3. </span>Describe the changes<a class="headerlink" href="#describe-the-changes" title="Permalink to this heading">¶</a></h2>
 <p>Summarize recent changes since the previous release into <code class="docutils literal notranslate"><span class="pre">doc/source/news.txt</span></code>.
 This summary is also used in release note.</p>
 <p>Execute the following command to collect change logs since the previous version:</p>
@@ -120,18 +120,18 @@ This summary is also used in release note.</p>
 <ul class="simple">
 <li><p>The changes which doesn’t affect to users (Internal source code changes or refactoring)</p></li>
 </ul>
-</section>
-<section id="generate-configure-script">
-<h2><span class="section-number">9.2.4. </span>Generate configure script<a class="headerlink" href="#generate-configure-script" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="generate-configure-script">
+<h2><span class="section-number">9.2.4. </span>Generate configure script<a class="headerlink" href="#generate-configure-script" title="Permalink to this heading">¶</a></h2>
 <p>Because of master branch doesn’t include configure script, then it is required to generate configure script for building.</p>
 <p>Execute <code class="docutils literal notranslate"><span class="pre">autogen.sh</span></code> with the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sh</span> <span class="n">autogen</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>It generates <code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
-</section>
-<section id="execute-configure-script">
-<h2><span class="section-number">9.2.5. </span>Execute configure script<a class="headerlink" href="#execute-configure-script" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="execute-configure-script">
+<h2><span class="section-number">9.2.5. </span>Execute configure script<a class="headerlink" href="#execute-configure-script" title="Permalink to this heading">¶</a></h2>
 <p>For generating <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, execute the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
 <p>Execute with the following options for the release:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% ./configure \
@@ -152,35 +152,35 @@ This summary is also used in release note.</p>
 <p>We can not upload and override the same name packages to PPA repository.
 Therefore, we upload packages to a stable repository after confirming the successful build of they in the nightly repository.</p>
 </div>
-</section>
-<section id="check-whether-you-can-upload-packages">
-<h2><span class="section-number">9.2.6. </span>Check whether you can upload packages<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="check-whether-you-can-upload-packages">
+<h2><span class="section-number">9.2.6. </span>Check whether you can upload packages<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Permalink to this heading">¶</a></h2>
 <p>Check whether you can login to packages.groonga.org as packages user.</p>
 <p>You can check with the following command whether you can login:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">ssh</span> <span class="n">packages</span><span class="nd">@packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span>
 </pre></div>
 </div>
 <p>If you can’t login to packages.groonga.org, you must be registered ssh public key.</p>
-</section>
-<section id="execute-make-update-latest-release">
-<h2><span class="section-number">9.2.7. </span>Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="execute-make-update-latest-release">
+<h2><span class="section-number">9.2.7. </span>Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Permalink to this heading">¶</a></h2>
 <p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-latest-release</span></code> command with OLD_RELEASE_DATE, NEW_RELEASE_DATE.</p>
 <p>When 9.09 release, we executed the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">release</span> <span class="n">OLD_RELEASE</span><span class="o">=</span><span class="mf">9.09</span> <span class="n">OLD_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">27</span> <span class="n">NEW_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">30</span>
 </pre></div>
 </div>
 <p>This command updates some html files (which is used for web sites of Mroonga - index.html,ja/index.html) and the version of spec file or debian/changelog entry.</p>
-</section>
-<section id="confirm-the-results-of-each-test">
-<h2><span class="section-number">9.2.8. </span>Confirm the results of each test<a class="headerlink" href="#confirm-the-results-of-each-test" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="confirm-the-results-of-each-test">
+<h2><span class="section-number">9.2.8. </span>Confirm the results of each test<a class="headerlink" href="#confirm-the-results-of-each-test" title="Permalink to this heading">¶</a></h2>
 <p>We confirm the results of all the below tests before setting the tag to Mroonga.
 Because if we will find problems in Mroonga after setting the tag to it, we must release it again.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/mroonga/mroonga/actions">GitHub Actions</a></p></li>
 </ul>
-</section>
-<section id="tagging-for-release">
-<h2><span class="section-number">9.2.9. </span>Tagging for release<a class="headerlink" href="#tagging-for-release" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="tagging-for-release">
+<h2><span class="section-number">9.2.9. </span>Tagging for release<a class="headerlink" href="#tagging-for-release" title="Permalink to this heading">¶</a></h2>
 <p>Execute the following command for tagging:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">tag</span>
 <span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span> <span class="n">origin</span>
@@ -190,9 +190,9 @@ Because if we will find problems in Mroonga after setting the tag to it, we must
 <p class="admonition-title">Note</p>
 <p>After tagging for the release, execute <code class="docutils literal notranslate"><span class="pre">configure</span></code> script. This tag information is reflected when generating the documents.</p>
 </div>
-</section>
-<section id="upload-archive-files">
-<h2><span class="section-number">9.2.10. </span>Upload archive files<a class="headerlink" href="#upload-archive-files" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="upload-archive-files">
+<h2><span class="section-number">9.2.10. </span>Upload archive files<a class="headerlink" href="#upload-archive-files" title="Permalink to this heading">¶</a></h2>
 <p>Then, create archive file (<code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>) for distribution:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">dist</span>
 </pre></div>
@@ -214,12 +214,12 @@ Because if we will find problems in Mroonga after setting the tag to it, we must
 </pre></div>
 </div>
 <p>As a result, <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> archive file is available from <a class="reference external" href="https://packages.groonga.org/source/mroonga/">https://packages.groonga.org/source/mroonga/</a>.</p>
-</section>
-<section id="create-packages-for-the-release">
-<h2><span class="section-number">9.2.11. </span>Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="create-packages-for-the-release">
+<h2><span class="section-number">9.2.11. </span>Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Permalink to this heading">¶</a></h2>
 <p>Create Linux and Windows packages.</p>
-<section id="debian">
-<h3><span class="section-number">9.2.11.1. </span>Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="debian">
+<h3><span class="section-number">9.2.11.1. </span>Debian<a class="headerlink" href="#debian" title="Permalink to this heading">¶</a></h3>
 <p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
@@ -234,9 +234,9 @@ However, these packages are unsigned. We sign packages by executing the below co
 % rake apt
 </pre></div>
 </div>
-</section>
-<section id="debian-derivatives-ubuntu">
-<h3><span class="section-number">9.2.11.2. </span>Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="debian-derivatives-ubuntu">
+<h3><span class="section-number">9.2.11.2. </span>Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Permalink to this heading">¶</a></h3>
 <p>For Ubuntu, packages are provided by PPA on launchpad.net.</p>
 <p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code> and execute <code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">ubuntu:upload</span></code> command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
@@ -248,9 +248,9 @@ You can install packages via Groonga PPA on launchpad.net:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">launchpad</span><span class="o">.</span><span class="n">net</span><span class="o">/~</span><span class="n">groonga</span><span class="o">/+</span><span class="n">archive</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">ppa</span>
 </pre></div>
 </div>
-</section>
-<section id="red-hat-derivatives">
-<h3><span class="section-number">9.2.11.3. </span>Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="red-hat-derivatives">
+<h3><span class="section-number">9.2.11.3. </span>Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Permalink to this heading">¶</a></h3>
 <p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
@@ -265,14 +265,14 @@ However, these packages are unsigned. We sign packages by executing the below co
 % rake yum
 </pre></div>
 </div>
-</section>
-<section id="windows">
-<h3><span class="section-number">9.2.11.4. </span>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="windows">
+<h3><span class="section-number">9.2.11.4. </span>Windows<a class="headerlink" href="#windows" title="Permalink to this heading">¶</a></h3>
 <p>For windows packages, we use artifacts of <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> .</p>
-</section>
-</section>
-<section id="upload-documents">
-<h2><span class="section-number">9.2.12. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="upload-documents">
+<h2><span class="section-number">9.2.12. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Clone mroonga.github.com repository</p></li>
 <li><p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> as below in <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code>:</p>
@@ -282,9 +282,9 @@ However, these packages are unsigned. We sign packages by executing the below co
 </li>
 <li><p>Commit changes in mroonga.github.com repository &amp;&amp; push them</p></li>
 </ol>
-</section>
-<section id="update-blog-mroonga-blog">
-<h2><span class="section-number">9.2.13. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="update-blog-mroonga-blog">
+<h2><span class="section-number">9.2.13. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Permalink to this heading">¶</a></h2>
 <p>We update the below files.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/ja/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
@@ -307,36 +307,36 @@ published: false
 </pre></div>
 </div>
 </div>
-</section>
-<section id="announce-release-for-mailing-list">
-<h2><span class="section-number">9.2.14. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="announce-release-for-mailing-list">
+<h2><span class="section-number">9.2.14. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this heading">¶</a></h2>
 <p>Send release announce for each mailing list</p>
 <ul class="simple">
 <li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
 <li><p><a class="reference external" href="mailto:groonga-dev&#37;&#52;&#48;lists&#46;osdn&#46;me">groonga-dev<span>&#64;</span>lists<span>&#46;</span>osdn<span>&#46;</span>me</a> for Japanese</p></li>
 <li><p><a class="reference external" href="mailto:groonga-talk&#37;&#52;&#48;lists&#46;sourceforge&#46;net">groonga-talk<span>&#64;</span>lists<span>&#46;</span>sourceforge<span>&#46;</span>net</a> for English</p></li>
 </ul>
-</section>
-<section id="announce-release-for-twitter">
-<h2><span class="section-number">9.2.15. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="announce-release-for-twitter">
+<h2><span class="section-number">9.2.15. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this heading">¶</a></h2>
 <p>Click Tweet link in Mrooga blog entry. You can share tweet about latest release.
 If you use tweet link, title of release announce and URL is embedded into your tweet.</p>
 <p>Execute sharing tweet in Japanese and English version of blog entry.
 Note that this tweet should be done when logged in by <code class="docutils literal notranslate"><span class="pre">groonga</span></code> account.</p>
-</section>
-<section id="announce-release-for-facebook">
-<h2><span class="section-number">9.2.16. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="announce-release-for-facebook">
+<h2><span class="section-number">9.2.16. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Permalink to this heading">¶</a></h2>
 <p>We announce release from Mroonga group in Facebook.</p>
 <p><a class="reference external" href="https://www.facebook.com/mroonga/">https://www.facebook.com/mroonga/</a></p>
-</section>
-<section id="bump-version">
-<h2><span class="section-number">9.2.17. </span>Bump version<a class="headerlink" href="#bump-version" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="bump-version">
+<h2><span class="section-number">9.2.17. </span>Bump version<a class="headerlink" href="#bump-version" title="Permalink to this heading">¶</a></h2>
 <p>Bump version to the latest release:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">version</span> <span class="n">NEW_VERSION_MAJOR</span><span class="o">=</span><span class="mi">9</span> <span class="n">NEW_VERSION_MINOR</span><span class="o">=</span><span class="mi">1</span> <span class="n">NEW_VERSION_MICRO</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -396,7 +396,7 @@ Note that this tweet should be done when logged in by <code class="docutils lite
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -413,7 +413,7 @@ Note that this tweet should be done when logged in by <code class="docutils lite
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.2. </span>Release procedure</a></li> 
       </ul>

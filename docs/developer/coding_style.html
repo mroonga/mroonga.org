@@ -3,15 +3,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>9.3. コーディングスタイル &#8212; Mroonga v12.03 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9.3. コーディングスタイル &#8212; Mroonga v12.04 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
+    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
@@ -60,7 +60,7 @@
         <li class="right" >
           <a href="release.html" title="9.2. Release procedure"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.3. </span>コーディングスタイル</a></li> 
       </ul>
@@ -72,8 +72,8 @@
           <div class="body" role="main">
             
   <p>TODO: Translate.</p>
-<section id="id1">
-<h1><span class="section-number">9.3. </span>コーディングスタイル<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h1><span class="section-number">9.3. </span>コーディングスタイル<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <p>一般的に1つのコードベースに複数のスタイルがまざっているとソースコードが読みづらくなります。たとえ、それぞれのスタイル単独では読みやすいスタイルあっても、まざると読みづらくなります。そのため、Mroongaプロジェクトでもスタイルを統一して、読みやすいソースコードになるようにします。</p>
 <p>読みやすいソースコードにする理由は以下の通りです。</p>
 <blockquote>
@@ -84,8 +84,8 @@
 </div></blockquote>
 <p>どちらの場合も周辺のソースコードを読んで、それをベースにコードを追加・変更します。このとき、ソースコードが読みやすい状態だと周辺のソースコードの把握をスムーズに行うことができ、スムーズにその後の作業に移れます。</p>
 <p>TODO: 読みやすさの他にデバッグのしやすさ（gdbでの追いやすさ）も考慮に入れたほうがよさそうだがどうしよう。</p>
-<section id="id2">
-<h2><span class="section-number">9.3.1. </span>言語<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2><span class="section-number">9.3.1. </span>言語<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
 <p>基本的にすべてC++で記述します。よほどのことがない限りCは使いません。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span>
@@ -95,9 +95,9 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrn_sys</span><span class="o">.</span><span class="n">c</span>
 </pre></div>
 </div>
-</section>
-<section id="id3">
-<h2><span class="section-number">9.3.2. </span>ファイル名<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">9.3.2. </span>ファイル名<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
 <p>ソースコードのファイル名は全て小文字にします。また、単語ごとに”_”で区切ります。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span>
@@ -133,9 +133,9 @@
 <blockquote>
 <div><p>ha_mroonga.h</p>
 </div></blockquote>
-</section>
-<section id="id4">
-<h2><span class="section-number">9.3.3. </span>名前空間<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">9.3.3. </span>名前空間<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
 <p>ヘッダーファイルでは <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span></code> を使わない。ソースコードでは <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code> であれば使ってもよい。他の名前空間は使ってはいけない。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span>
@@ -152,9 +152,9 @@
   <span class="n">using</span> <span class="n">namespace</span> <span class="n">zmq</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="include">
-<h2><span class="section-number">9.3.4. </span><code class="docutils literal notranslate"><span class="pre">include</span></code> ガード<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="include">
+<h2><span class="section-number">9.3.4. </span><code class="docutils literal notranslate"><span class="pre">include</span></code> ガード<a class="headerlink" href="#include" title="Permalink to this heading">¶</a></h2>
 <p>2重 <code class="docutils literal notranslate"><span class="pre">include</span></code> を防ぐためのマクロは、ヘッダーファイルの名前をすべて大文字にし、単語の区切りをアンダースコアにしたものにし、最後にアンダースコアをつけて <code class="docutils literal notranslate"><span class="pre">HEADER_FILE_NAME_HPP_</span></code> という名前にする。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrn_db_path</span><span class="o">.</span><span class="n">hpp</span><span class="p">:</span>
@@ -180,9 +180,9 @@
   <span class="c1">#endif // _MRN_DB_PATH_HPP</span>
 </pre></div>
 </div>
-</section>
-<section id="id5">
-<h2><span class="section-number">9.3.5. </span>代入<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">9.3.5. </span>代入<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">=</span></code> の前後に1つスペースを入れる。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -196,9 +196,9 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">i</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="id6">
-<h2><span class="section-number">9.3.6. </span>文字列<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">9.3.6. </span>文字列<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h2>
 <p>文字列はポインタと長さで表現する。 <code class="docutils literal notranslate"><span class="pre">\0</span></code> での終端を仮定しない。</p>
 <p>よい例（本当はもっとすっきりした例がよいけど。。。）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;table_name column_name column_value&quot;</span>
@@ -233,16 +233,16 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">database_path</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="id7">
-<h2><span class="section-number">9.3.7. </span>バッファ<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">9.3.7. </span>バッファ<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h2>
 <p>TODO: ちゃんと考える。</p>
 <p>何度も繰り返し使う領域（バッファ）が必要な場合は <code class="docutils literal notranslate"><span class="pre">GRN_BULK</span></code> を使う。例えば、カラムの値を取得する領域などである。</p>
-</section>
-<section id="id8">
-<h2><span class="section-number">9.3.8. </span>命名規則<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<section id="id9">
-<h3><span class="section-number">9.3.8.1. </span>クラス名<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">9.3.8. </span>命名規則<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id9">
+<h3><span class="section-number">9.3.8.1. </span>クラス名<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
 <p>クラスの名前は <code class="docutils literal notranslate"><span class="pre">UpperCamelCase</span></code> とする。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span>
@@ -269,9 +269,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id10">
-<h3><span class="section-number">9.3.8.2. </span>メンバー変数名<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">9.3.8.2. </span>メンバー変数名<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
 <p>メンバー変数名は <code class="docutils literal notranslate"><span class="pre">snail_case</span></code> とし、末尾にアンダースコア（ <code class="docutils literal notranslate"><span class="pre">_</span></code> ）を付ける。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span>
@@ -294,9 +294,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id11">
-<h3><span class="section-number">9.3.8.3. </span>読み込み用アクセサ名<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">9.3.8.3. </span>読み込み用アクセサ名<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
 <p>メンバー変数の値を読み込むメソッドの名前はメンバー変数名の末尾のアンダースコアを除いたものにする。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span>
@@ -322,9 +322,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id12">
-<h3><span class="section-number">9.3.8.4. </span>書き込み用アクセサ名<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">9.3.8.4. </span>書き込み用アクセサ名<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
 <p>メンバー変数の値を設定するメソッドの名前は、メンバー変数名の末尾のアンダースコアを除き、先頭に <code class="docutils literal notranslate"><span class="pre">set_</span></code> を加えたものにする。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span>
@@ -359,10 +359,10 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id13">
-<h2><span class="section-number">9.3.9. </span>コピーコンストラクター<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id13">
+<h2><span class="section-number">9.3.9. </span>コピーコンストラクター<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h2>
 <p>基本的にコピーコンストラクターの使用を禁止する。よほどのことがなければ使用しないこと。</p>
 <p>コピーコンストラクターは暗黙的に無駄なコピーが発生する可能性があるためパフォーマンス上の問題がある。コピーではなくポインターやリファレンスを用いること。</p>
 <p>また、デフォルトのコピーコンストラクター実装はメンバー変数のポインターの値をそのままコピーするため、デコンストラクターで二重に解放してしまう危険性がある。そのため、明示的にコピーコンストラクターを定義しない場合は無効にする。</p>
@@ -391,9 +391,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id14">
-<h2><span class="section-number">9.3.10. </span>クラスの代入<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id14">
+<h2><span class="section-number">9.3.10. </span>クラスの代入<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h2>
 <p>基本的に定義したクラスの代入を禁止する。よほどのことがなければ使用しないこと。</p>
 <p>代入演算子は暗黙的に無駄なコピーが発生する可能性があるためパフォーマンス上の問題がある。コピーではなくポインターやリファレンスを用いること。</p>
 <p>また、デフォルトの代入演算子の実装はメンバー変数のポインターの値をそのままコピーするため、デコンストラクターで二重に解放してしまう危険性がある。そのため、明示的に代入演算子を定義しない場合は無効にする。</p>
@@ -423,11 +423,11 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id15">
-<h2><span class="section-number">9.3.11. </span>引数<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
-<section id="void">
-<h3><span class="section-number">9.3.11.1. </span>voidを省略<a class="headerlink" href="#void" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id15">
+<h2><span class="section-number">9.3.11. </span>引数<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="void">
+<h3><span class="section-number">9.3.11.1. </span>voidを省略<a class="headerlink" href="#void" title="Permalink to this heading">¶</a></h3>
 <p>引数がない場合は <code class="docutils literal notranslate"><span class="pre">void</span></code> を省略する。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span>
@@ -451,9 +451,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="const">
-<h3><span class="section-number">9.3.11.2. </span>入力用引数にはconstを付ける<a class="headerlink" href="#const" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="const">
+<h3><span class="section-number">9.3.11.2. </span>入力用引数にはconstを付ける<a class="headerlink" href="#const" title="Permalink to this heading">¶</a></h3>
 <p>入力のみに用いる引数には <code class="docutils literal notranslate"><span class="pre">const</span></code> を付ける。これは、入力のみに用いる引数である事を明示するためと、間違って引数を変更してしまわないためである。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Table</span>
@@ -479,10 +479,10 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id16">
-<h2><span class="section-number">9.3.12. </span>定数<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id16">
+<h2><span class="section-number">9.3.12. </span>定数<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
 <p>フラグやサイズなどを示す定数には <code class="docutils literal notranslate"><span class="pre">const</span></code> オブジェクトを用いる。これはデバッガー上でプログラムを走らせているときに名前で値を参照できるようにするためである。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">MRN_LOG_FILE_PATH</span> <span class="o">=</span> <span class="s2">&quot;groonga.log&quot;</span><span class="p">;</span>
@@ -492,11 +492,11 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define MRN_LOG_FILE_PATH &quot;groonga.log&quot;</span>
 </pre></div>
 </div>
-</section>
-<section id="id17">
-<h2><span class="section-number">9.3.13. </span>真偽値<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
-<section id="bool">
-<h3><span class="section-number">9.3.13.1. </span>bool型を用いる<a class="headerlink" href="#bool" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id17">
+<h2><span class="section-number">9.3.13. </span>真偽値<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="bool">
+<h3><span class="section-number">9.3.13.1. </span>bool型を用いる<a class="headerlink" href="#bool" title="Permalink to this heading">¶</a></h3>
 <p>真偽値には <code class="docutils literal notranslate"><span class="pre">bool</span></code> 型を用いる。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_searching</span><span class="p">;</span>
@@ -506,9 +506,9 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">is_searching</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="true-false">
-<h3><span class="section-number">9.3.13.2. </span>真偽値のリテラルには <code class="docutils literal notranslate"><span class="pre">true</span></code> または <code class="docutils literal notranslate"><span class="pre">false</span></code> を用いる<a class="headerlink" href="#true-false" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="true-false">
+<h3><span class="section-number">9.3.13.2. </span>真偽値のリテラルには <code class="docutils literal notranslate"><span class="pre">true</span></code> または <code class="docutils literal notranslate"><span class="pre">false</span></code> を用いる<a class="headerlink" href="#true-false" title="Permalink to this heading">¶</a></h3>
 <p>真偽値の値として <code class="docutils literal notranslate"><span class="pre">true</span></code> と <code class="docutils literal notranslate"><span class="pre">false</span></code> はより完結で説明的だからである。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_searching</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
@@ -518,12 +518,12 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_searching</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id18">
-<h2><span class="section-number">9.3.14. </span>条件式<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
-<section id="id19">
-<h3><span class="section-number">9.3.14.1. </span>真偽値は比較しない<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id18">
+<h2><span class="section-number">9.3.14. </span>条件式<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id19">
+<h3><span class="section-number">9.3.14.1. </span>真偽値は比較しない<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h3>
 <p>真偽値の値は <code class="docutils literal notranslate"><span class="pre">boolean_value</span> <span class="pre">==</span> <span class="pre">true</span></code> などとせず、 <code class="docutils literal notranslate"><span class="pre">boolean_value</span></code> として条件式に使用する。すでに真偽値の値を真偽値のリテラルと比較することは重複したコードだからである。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>boolean is_searching = true;
@@ -535,9 +535,9 @@ if (!is_searching) { ... }
 <span class="k">if</span> <span class="p">(</span><span class="n">is_searching</span> <span class="o">==</span> <span class="n">false</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="null">
-<h3><span class="section-number">9.3.14.2. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較しない<a class="headerlink" href="#null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="null">
+<h3><span class="section-number">9.3.14.2. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較しない<a class="headerlink" href="#null" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> かどうかを条件式に使う場合は <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">==</span> <span class="pre">NULL</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">!value</span></code> というように書く。多くの言語で <code class="docutils literal notranslate"><span class="pre">NULL</span></code> に相当する値（たとえばLispの <code class="docutils literal notranslate"><span class="pre">nil</span></code> ）は偽を表すため、明示的に <code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較しなくても意図は伝わるからである。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>char *name = NULL;
@@ -549,9 +549,9 @@ if (!name) { ... }
 <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id20">
-<h3><span class="section-number">9.3.14.3. </span>数値は比較する<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id20">
+<h3><span class="section-number">9.3.14.3. </span>数値は比較する<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h3>
 <p>CやC++では <code class="docutils literal notranslate"><span class="pre">0</span></code> は偽、 <code class="docutils literal notranslate"><span class="pre">0</span></code> 以外は真の値となるが、条件式に数値を使う場合は <code class="docutils literal notranslate"><span class="pre">strcmp(...)</span> <span class="pre">==</span> <span class="pre">0</span></code> などというように明示的に比較する。</p>
 <p>C++では真偽値に <code class="docutils literal notranslate"><span class="pre">bool</span></code> を使うためこのような状況は発生しないが、C言語由来のAPIでは <code class="docutils literal notranslate"><span class="pre">int</span></code> で真偽値を表現している場合が多い。しかし、 <code class="docutils literal notranslate"><span class="pre">int</span></code> だけでは真偽値として使っているか本当に数値として使っているかがわかりにくいため、 <code class="docutils literal notranslate"><span class="pre">int</span></code> のときはすべて数値として扱う。</p>
 <p>よい例:</p>
@@ -566,12 +566,12 @@ if (!name) { ... }
 }
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id21">
-<h2><span class="section-number">9.3.15. </span>初期化<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
-<section id="id22">
-<h3><span class="section-number">9.3.15.1. </span>メンバー変数の初期化には初期化リストを用いる<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id21">
+<h2><span class="section-number">9.3.15. </span>初期化<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id22">
+<h3><span class="section-number">9.3.15.1. </span>メンバー変数の初期化には初期化リストを用いる<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h3>
 <p>無駄な処理を省くためにコンストラクターでのメンバー変数の初期化には初期化リストを用いる。初期化リストを用いないとコンストラクターの処理とコピーコンストラクター・代入処理が行われたりなど非効率である。（後述）</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Table</span>
@@ -599,9 +599,9 @@ if (!name) { ... }
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="id23">
-<h3><span class="section-number">9.3.15.2. </span>変数宣言と同時に初期化する<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id23">
+<h3><span class="section-number">9.3.15.2. </span>変数宣言と同時に初期化する<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h3>
 <p>変数を宣言したときに同時に初期化する。宣言時に初期化せずに代入して初期化すると、無駄な処理が発生する可能性があるため非効率である。（後述）</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">);</span>
@@ -612,12 +612,12 @@ if (!name) { ... }
 <span class="n">name</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id24">
-<h2><span class="section-number">9.3.16. </span>インクリメント・デクリメント<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
-<section id="id25">
-<h3><span class="section-number">9.3.16.1. </span>前置形式を用いる<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id24">
+<h2><span class="section-number">9.3.16. </span>インクリメント・デクリメント<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id25">
+<h3><span class="section-number">9.3.16.1. </span>前置形式を用いる<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h3>
 <p>後置形式ではオブジェクトのコピーをしなければいけないため非効率である。そのため、できるだけ前置形式を用いる。</p>
 <p>よい例（ <code class="docutils literal notranslate"><span class="pre">int</span></code> だと効率は変わらないので本当はあんまりよい例ではない）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
@@ -629,12 +629,12 @@ if (!name) { ... }
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id26">
-<h2><span class="section-number">9.3.17. </span>キャスト<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
-<section id="c">
-<h3><span class="section-number">9.3.17.1. </span>C++のスタイルを用いる<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id26">
+<h2><span class="section-number">9.3.17. </span>キャスト<a class="headerlink" href="#id26" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="c">
+<h3><span class="section-number">9.3.17.1. </span>C++のスタイルを用いる<a class="headerlink" href="#c" title="Permalink to this heading">¶</a></h3>
 <p>Cスタイルのキャストはなんでもキャストできてしまうため、意図しないキャストにも気付かない可能性がある。例えば、単に <code class="docutils literal notranslate"><span class="pre">const</span></code> を外したいだけなのに、間違って違う型に変換していても気付けない。C++のキャストでは <code class="docutils literal notranslate"><span class="pre">const</span></code> を外したいときは <code class="docutils literal notranslate"><span class="pre">const_cast</span></code> を使用し、型を変換するときは <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> を指定する。こうすれば、 <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> で間違って <code class="docutils literal notranslate"><span class="pre">const</span></code> を外してしまっている場合も気付ける。 <code class="docutils literal notranslate"><span class="pre">reinterpret_cast</span></code> はどうしても必要なときのみ注意して使う。</p>
 <p>よい例（ <code class="docutils literal notranslate"><span class="pre">const_cast</span></code> を使っている）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uchar</span> <span class="o">*</span><span class="n">to_key</span><span class="p">;</span>
@@ -667,12 +667,12 @@ if (!name) { ... }
 <span class="n">name</span> <span class="o">=</span> <span class="n">reinterpret_cast</span><span class="o">&lt;</span><span class="n">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id27">
-<h2><span class="section-number">9.3.18. </span>変数宣言<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
-<section id="id28">
-<h3><span class="section-number">9.3.18.1. </span>ポインタ型を示す <code class="docutils literal notranslate"><span class="pre">*</span></code> とリファレンス型を示す <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> は変数名に寄せる<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id27">
+<h2><span class="section-number">9.3.18. </span>変数宣言<a class="headerlink" href="#id27" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id28">
+<h3><span class="section-number">9.3.18.1. </span>ポインタ型を示す <code class="docutils literal notranslate"><span class="pre">*</span></code> とリファレンス型を示す <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> は変数名に寄せる<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h3>
 <p>Cと同様にポインタ型を示す <code class="docutils literal notranslate"><span class="pre">*</span></code> は型名ではなく変数名に寄せる。これは、以下のように複数の変数を一度に宣言したときに一貫性がなくなるためである。2つめ以降の変数は近くに型名がないため <code class="docutils literal notranslate"><span class="pre">*</span></code> を寄せる場所がない。</p>
 <p>例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span><span class="o">*</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
@@ -692,10 +692,10 @@ if (!name) { ... }
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span><span class="o">*</span> <span class="n">key</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id29">
-<h2><span class="section-number">9.3.19. </span>その他<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id29">
+<h2><span class="section-number">9.3.19. </span>その他<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>ここに書いていないものについては特にスタイルを定めないが、
@@ -720,9 +720,9 @@ if (!name) { ... }
 <li><p>assertを積極的に使う</p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="id30">
-<h2><span class="section-number">9.3.20. </span>メモ<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id30">
+<h2><span class="section-number">9.3.20. </span>メモ<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>動的テンプレートを使わない。（要追加情報。implicit
@@ -733,8 +733,8 @@ template instantiationのことであれば、これはふつうに使わ
 界（MySQLの世界）にはださないようにする。</p></li>
 </ul>
 </div></blockquote>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -818,7 +818,7 @@ template instantiationのことであれば、これはふつうに使わ
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -832,7 +832,7 @@ template instantiationのことであれば、これはふつうに使わ
         <li class="right" >
           <a href="release.html" title="9.2. Release procedure"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.3. </span>コーディングスタイル</a></li> 
       </ul>

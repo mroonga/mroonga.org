@@ -3,15 +3,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>5.7.1. Boolean mode &#8212; Mroonga v12.03 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.7.1. Boolean mode &#8212; Mroonga v12.04 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../static/mroonga.css" />
     
     <script data-url_root="../../" id="documentation_options" src="../../static/documentation_options.js"></script>
     <script src="../../static/jquery.js"></script>
     <script src="../../static/underscore.js"></script>
+    <script src="../../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../static/doctools.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -64,7 +64,7 @@
         <li class="right" >
           <a href="../full_text_search.html" title="5.7. Full text search"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" accesskey="U"><span class="section-number">5.7. </span>Full text search</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.7.1. </span>Boolean mode</a></li> 
@@ -76,10 +76,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="boolean-mode">
-<h1><span class="section-number">5.7.1. </span>Boolean mode<a class="headerlink" href="#boolean-mode" title="Permalink to this headline">¶</a></h1>
-<section id="summary">
-<h2><span class="section-number">5.7.1.1. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="boolean-mode">
+<h1><span class="section-number">5.7.1. </span>Boolean mode<a class="headerlink" href="#boolean-mode" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="summary">
+<h2><span class="section-number">5.7.1.1. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>Mroonga can perform boolean full text searches using the <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span>
 <span class="pre">MODE</span></code> modifier for <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">...</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
@@ -96,9 +96,9 @@ results.</p>
 <p>In the case of a search string not using neither a qualifier nor a
 pragma, the search results that contain the search string will be
 rated higher.</p>
-</section>
-<section id="usage">
-<h2><span class="section-number">5.7.1.2. </span>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="usage">
+<h2><span class="section-number">5.7.1.2. </span>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>Here are schema and data to show examples:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE books (
   `id` INTEGER AUTO_INCREMENT,
@@ -112,12 +112,12 @@ INSERT INTO books (title) VALUES (&#39;MySQL for Professional&#39;);
 INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 </pre></div>
 </div>
-</section>
-<section id="qualifier">
-<span id="boolean-mode-qualifier"></span><h2><span class="section-number">5.7.1.3. </span>Qualifier<a class="headerlink" href="#qualifier" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="qualifier">
+<span id="boolean-mode-qualifier"></span><h2><span class="section-number">5.7.1.3. </span>Qualifier<a class="headerlink" href="#qualifier" title="Permalink to this heading">¶</a></h2>
 <p>Here are supported qualifiers.</p>
-<section id="keyword1-keyword2">
-<span id="boolean-mode-qualifier-none"></span><h3><span class="section-number">5.7.1.3.1. </span><code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-keyword2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="keyword1-keyword2">
+<span id="boolean-mode-qualifier-none"></span><h3><span class="section-number">5.7.1.3.1. </span><code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-keyword2" title="Permalink to this heading">¶</a></h3>
 <p>No operator between keywords such as <code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code> indicates
 that one of keywords must be present in each row that is returned.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> query means that <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span></code> must be
@@ -133,9 +133,9 @@ present:</p>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
-</section>
-<section id="keyword1-or-keyword2">
-<span id="boolean-mode-qualifier-or"></span><h3><span class="section-number">5.7.1.3.2. </span><code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-or-keyword2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="keyword1-or-keyword2">
+<span id="boolean-mode-qualifier-or"></span><h3><span class="section-number">5.7.1.3.2. </span><code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-or-keyword2" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">OR</span></code> (must be uppercase) indicates that left hand side keyword or
 right hand side keyword must be present in each row that is returned.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> query means that <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span></code> must be
@@ -153,9 +153,9 @@ present:</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">OR</span></code> is the default operator. You can omit it. Both <code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span>
 <span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> return the same result.</p>
-</section>
-<section id="keyword">
-<span id="boolean-mode-qualifier-plus"></span><h3><span class="section-number">5.7.1.3.3. </span><code class="docutils literal notranslate"><span class="pre">+KEYWORD</span></code><a class="headerlink" href="#keyword" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="keyword">
+<span id="boolean-mode-qualifier-plus"></span><h3><span class="section-number">5.7.1.3.3. </span><code class="docutils literal notranslate"><span class="pre">+KEYWORD</span></code><a class="headerlink" href="#keyword" title="Permalink to this heading">¶</a></h3>
 <p>A leading plus sign indicates that this word must be present in each
 row that is returned.</p>
 <p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">+Mroonga</span></code> query means that both <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> and <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code>
@@ -170,9 +170,9 @@ must be present:</p>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
-</section>
-<section id="boolean-mode-qualifier-minus">
-<span id="id1"></span><h3><span class="section-number">5.7.1.3.4. </span><code class="docutils literal notranslate"><span class="pre">-KEYWORD</span></code><a class="headerlink" href="#boolean-mode-qualifier-minus" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="boolean-mode-qualifier-minus">
+<span id="id1"></span><h3><span class="section-number">5.7.1.3.4. </span><code class="docutils literal notranslate"><span class="pre">-KEYWORD</span></code><a class="headerlink" href="#boolean-mode-qualifier-minus" title="Permalink to this heading">¶</a></h3>
 <p>A leading minus sign indicates that this word must not be present in
 any of the rows that are returned.</p>
 <p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">-Mroonga</span></code> query means that <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> must be present but
@@ -188,9 +188,9 @@ any of the rows that are returned.</p>
 <span class="o">--</span> <span class="o">+------------------------+</span>
 </pre></div>
 </div>
-</section>
-<section id="prefix">
-<span id="boolean-mode-qualifier-asterisk"></span><h3><span class="section-number">5.7.1.3.5. </span><code class="docutils literal notranslate"><span class="pre">PREFIX*</span></code><a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="prefix">
+<span id="boolean-mode-qualifier-asterisk"></span><h3><span class="section-number">5.7.1.3.5. </span><code class="docutils literal notranslate"><span class="pre">PREFIX*</span></code><a class="headerlink" href="#prefix" title="Permalink to this heading">¶</a></h3>
 <p>A following asterisk indicates that all words starting with this word
 must be present in any of the rows that are returned.</p>
 <p><code class="docutils literal notranslate"><span class="pre">+M*</span></code> query means that words starting <code class="docutils literal notranslate"><span class="pre">M</span></code> (<code class="docutils literal notranslate"><span class="pre">MySQL</span></code> and
@@ -240,9 +240,9 @@ context is “token”. “token” may not be word. For example, tokens in
 </div>
 <p>JSON value in the above result is formatted by hand.</p>
 </div>
-</section>
-<section id="phrase">
-<span id="boolean-mode-qualifier-double-quote"></span><h3><span class="section-number">5.7.1.3.6. </span><code class="docutils literal notranslate"><span class="pre">&quot;PHRASE&quot;</span></code><a class="headerlink" href="#phrase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="phrase">
+<span id="boolean-mode-qualifier-double-quote"></span><h3><span class="section-number">5.7.1.3.6. </span><code class="docutils literal notranslate"><span class="pre">&quot;PHRASE&quot;</span></code><a class="headerlink" href="#phrase" title="Permalink to this heading">¶</a></h3>
 <p>Quoting phrase by double quote (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>) indicates that the phrase must
 be present in any of the rows that are returned.</p>
 <p><code class="docutils literal notranslate"><span class="pre">+&quot;Professional</span> <span class="pre">MySQL&quot;</span></code> query means that <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code>
@@ -260,9 +260,9 @@ phrase:</p>
 <span class="o">--</span> <span class="o">+--------------------+</span>
 </pre></div>
 </div>
-</section>
-<section id="subexpression">
-<span id="boolean-mode-qualifier-parentheses"></span><h3><span class="section-number">5.7.1.3.7. </span><code class="docutils literal notranslate"><span class="pre">(SUBEXPRESSION...)</span></code><a class="headerlink" href="#subexpression" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="subexpression">
+<span id="boolean-mode-qualifier-parentheses"></span><h3><span class="section-number">5.7.1.3.7. </span><code class="docutils literal notranslate"><span class="pre">(SUBEXPRESSION...)</span></code><a class="headerlink" href="#subexpression" title="Permalink to this heading">¶</a></h3>
 <p>Parentheses groups expressions.</p>
 <p><code class="docutils literal notranslate"><span class="pre">+(Groonga</span> <span class="pre">OR</span> <span class="pre">Mroonga)</span> <span class="pre">+MySQL</span></code> query means the following:</p>
 <blockquote>
@@ -282,10 +282,10 @@ phrase:</p>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="pragma">
-<span id="boolean-mode-pragma"></span><h2><span class="section-number">5.7.1.4. </span>Pragma<a class="headerlink" href="#pragma" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="pragma">
+<span id="boolean-mode-pragma"></span><h2><span class="section-number">5.7.1.4. </span>Pragma<a class="headerlink" href="#pragma" title="Permalink to this heading">¶</a></h2>
 <p>Pragma is metadata for query. You can change how to parse query by
 specifying pragma.</p>
 <p>You can embed pragma at the head of query for specifying how to
@@ -300,8 +300,8 @@ a head of the query. Pragma starts with <code class="docutils literal notranslat
 </pre></div>
 </div>
 <p>Here are available pragmas.</p>
-<section id="d-pragma">
-<span id="boolean-mode-pragma-d"></span><h3><span class="section-number">5.7.1.4.1. </span><code class="docutils literal notranslate"><span class="pre">D</span></code> pragma<a class="headerlink" href="#d-pragma" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="d-pragma">
+<span id="boolean-mode-pragma-d"></span><h3><span class="section-number">5.7.1.4.1. </span><code class="docutils literal notranslate"><span class="pre">D</span></code> pragma<a class="headerlink" href="#d-pragma" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">D</span></code> pragma indicates the default operator. It’s used when an
 individual operator is omitted.</p>
 <p>Here is the <code class="docutils literal notranslate"><span class="pre">D</span></code> pragma syntax. You can choose one of <code class="docutils literal notranslate"><span class="pre">OR</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>
@@ -309,8 +309,8 @@ or <code class="docutils literal notranslate"><span class="pre">-</span></code> 
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*D${OPERATOR}
 </pre></div>
 </div>
-<section id="dor">
-<span id="boolean-mode-pragma-d-or"></span><h4><span class="section-number">5.7.1.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">DOR</span></code><a class="headerlink" href="#dor" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="dor">
+<span id="boolean-mode-pragma-d-or"></span><h4><span class="section-number">5.7.1.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">DOR</span></code><a class="headerlink" href="#dor" title="Permalink to this heading">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">DOR</span></code> means that “or” is used as the default operator.</p>
 <p>This is the default.</p>
 <p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">DOR</span></code>. <code class="docutils literal notranslate"><span class="pre">'*DOR</span> <span class="pre">for</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
@@ -326,9 +326,9 @@ or <code class="docutils literal notranslate"><span class="pre">-</span></code> 
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
-</section>
-<section id="d">
-<span id="boolean-mode-pragma-d-plus"></span><h4><span class="section-number">5.7.1.4.1.2. </span><code class="docutils literal notranslate"><span class="pre">D+</span></code><a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="d">
+<span id="boolean-mode-pragma-d-plus"></span><h4><span class="section-number">5.7.1.4.1.2. </span><code class="docutils literal notranslate"><span class="pre">D+</span></code><a class="headerlink" href="#d" title="Permalink to this heading">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">D+</span></code> means that “and” is used as the default operator. It’s similar
 to query in Web search engine.</p>
 <p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">D+</span></code>. <code class="docutils literal notranslate"><span class="pre">'*D+</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
@@ -343,9 +343,9 @@ to query in Web search engine.</p>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
-</section>
-<section id="boolean-mode-pragma-d-minus">
-<span id="id2"></span><h4><span class="section-number">5.7.1.4.1.3. </span><code class="docutils literal notranslate"><span class="pre">D-</span></code><a class="headerlink" href="#boolean-mode-pragma-d-minus" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="boolean-mode-pragma-d-minus">
+<span id="id2"></span><h4><span class="section-number">5.7.1.4.1.3. </span><code class="docutils literal notranslate"><span class="pre">D-</span></code><a class="headerlink" href="#boolean-mode-pragma-d-minus" title="Permalink to this heading">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">D-</span></code> means that “not” is used as the default operator.</p>
 <p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">D-</span></code>. <code class="docutils literal notranslate"><span class="pre">'*D-</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
 <span class="pre">MODE</span></code> returns records that includes <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> but doesn’t include
@@ -361,10 +361,10 @@ to query in Web search engine.</p>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="w-pragma">
-<span id="boolean-mode-pragma-w"></span><h3><span class="section-number">5.7.1.4.2. </span><code class="docutils literal notranslate"><span class="pre">W</span></code> pragma<a class="headerlink" href="#w-pragma" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="w-pragma">
+<span id="boolean-mode-pragma-w"></span><h3><span class="section-number">5.7.1.4.2. </span><code class="docutils literal notranslate"><span class="pre">W</span></code> pragma<a class="headerlink" href="#w-pragma" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">W</span></code> pragma indicates target section and its weight for multiple
 column index.</p>
 <p>You can specify different weight for each section. The default weight
@@ -421,9 +421,9 @@ column has score <code class="docutils literal notranslate"><span class="pre">10
 <p>The score of the third record is <code class="docutils literal notranslate"><span class="pre">1</span></code>. Because it has <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> in
 only <code class="docutils literal notranslate"><span class="pre">content</span></code> column. <code class="docutils literal notranslate"><span class="pre">`Groonga</span></code> in <code class="docutils literal notranslate"><span class="pre">content</span></code> column has score
 <code class="docutils literal notranslate"><span class="pre">1</span></code>. So the score of the record is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
-</section>
-<section id="s-pragma">
-<span id="boolean-mode-pragma-s"></span><h3><span class="section-number">5.7.1.4.3. </span><code class="docutils literal notranslate"><span class="pre">S</span></code> pragma<a class="headerlink" href="#s-pragma" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="s-pragma">
+<span id="boolean-mode-pragma-s"></span><h3><span class="section-number">5.7.1.4.3. </span><code class="docutils literal notranslate"><span class="pre">S</span></code> pragma<a class="headerlink" href="#s-pragma" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">S</span></code> pragma indicates syntax of the query.</p>
 <p>Here is a syntax of <code class="docutils literal notranslate"><span class="pre">S</span></code> pragma:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*S${SYNTAX}
@@ -435,8 +435,8 @@ only <code class="docutils literal notranslate"><span class="pre">content</span>
 <li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/script_syntax.html">Script syntax</a></p></li>
 </ul>
 </div></blockquote>
-<section id="ss">
-<span id="boolean-mode-pragma-ss"></span><h4><span class="section-number">5.7.1.4.3.1. </span><code class="docutils literal notranslate"><span class="pre">*SS</span></code><a class="headerlink" href="#ss" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="ss">
+<span id="boolean-mode-pragma-ss"></span><h4><span class="section-number">5.7.1.4.3.1. </span><code class="docutils literal notranslate"><span class="pre">*SS</span></code><a class="headerlink" href="#ss" title="Permalink to this heading">¶</a></h4>
 <p>You can use <a class="reference external" href="http://groonga.org/docs/reference/grn_expr/script_syntax.html">script syntax</a> by
 <code class="docutils literal notranslate"><span class="pre">*SS</span></code> pragma. You can use full Groonga search features in script
 syntax.</p>
@@ -471,10 +471,10 @@ specified words (<code class="docutils literal notranslate"><span class="pre">st
 <span class="pre">started</span> <span class="pre">...(8</span> <span class="pre">words)...</span> <span class="pre">very</span> <span class="pre">fast</span></code> is matched but <code class="docutils literal notranslate"><span class="pre">student</span> <span class="pre">also</span>
 <span class="pre">started</span> <span class="pre">...(8</span> <span class="pre">words)...</span> <span class="pre">very</span> <span class="pre">fast</span></code> isn’t matched.</p>
 <p>You can also use other advanced features.</p>
-</section>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -537,7 +537,7 @@ specified words (<code class="docutils literal notranslate"><span class="pre">st
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -554,7 +554,7 @@ specified words (<code class="docutils literal notranslate"><span class="pre">st
         <li class="right" >
           <a href="../full_text_search.html" title="5.7. Full text search"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../full_text_search.html" ><span class="section-number">5.7. </span>Full text search</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.7.1. </span>Boolean mode</a></li> 

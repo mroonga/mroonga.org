@@ -3,15 +3,15 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>4.1. インストールチェック &#8212; Mroonga v12.03 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.1. インストールチェック &#8212; Mroonga v12.04 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
+    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/translations.js"></script>
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="../tutorial.html" title="4. チュートリアル"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>チュートリアル</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.1. </span>インストールチェック</a></li> 
       </ul>
@@ -76,8 +76,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="installation-check">
-<h1><span class="section-number">4.1. </span>インストールチェック<a class="headerlink" href="#installation-check" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="installation-check">
+<h1><span class="section-number">4.1. </span>インストールチェック<a class="headerlink" href="#installation-check" title="Permalink to this heading">¶</a></h1>
 <p>Mroongaを使う前にMroongaのインストールチェックをした方がよいです。もし、Mroongaのインストールに失敗していると、このチュートリアルででてくるSQLが失敗してしまいます。</p>
 <p>MySQLサーバの起動停止方法は通常のMySQLと同じです。</p>
 <p>MySQLサーバを起動した上でmysqlコマンドで接続します。パスワードを設定済みの場合は <code class="docutils literal notranslate"><span class="pre">-p</span></code> オプションでパスワードを指定して下さい。</p>
@@ -85,7 +85,7 @@
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">ENGINES</span></code> コマンドでMroongaがインストールされているかどうかを確認します。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">ENGINES</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">ENGINES</span><span class="p">;</span>
 <span class="c1">-- +------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
 <span class="c1">-- | Engine     | Support | Comment                                                    | Transactions | XA   | Savepoints |</span>
 <span class="c1">-- +------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
@@ -105,14 +105,14 @@
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">install.sql</span></code> が見つからない場合は、以下のように手動で <code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> コマンドを実行します。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">INSTALL</span><span class="w"> </span><span class="n">PLUGIN</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">INSTALL</span> <span class="n">PLUGIN</span> <span class="n">Mroonga</span> <span class="n">SONAME</span> <span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Mroongaの正しいバージョンがインストールされているかどうかは、 <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">VARIABLES</span></code> コマンドを使ってサーバー変数を確認します。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_version&#39;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span> <span class="n">VARIABLES</span> <span class="k">LIKE</span> <span class="s1">&#39;mroonga_version&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
+</div>
 
 
             <div class="clearer"></div>
@@ -140,7 +140,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -157,7 +157,7 @@
         <li class="right" >
           <a href="../tutorial.html" title="4. チュートリアル"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>チュートリアル</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.1. </span>インストールチェック</a></li> 
       </ul>

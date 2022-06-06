@@ -3,15 +3,15 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>5.1. 最適化 &#8212; Mroonga v12.03 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.1. 最適化 &#8212; Mroonga v12.04 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
     <script src="../static/jquery.js"></script>
     <script src="../static/underscore.js"></script>
+    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/translations.js"></script>
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. リファレンス"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U"><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.1. </span>最適化</a></li> 
       </ul>
@@ -76,12 +76,12 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="optimizations">
-<h1><span class="section-number">5.1. </span>最適化<a class="headerlink" href="#optimizations" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="optimizations">
+<h1><span class="section-number">5.1. </span>最適化<a class="headerlink" href="#optimizations" title="Permalink to this heading">¶</a></h1>
 <p>Mroongaはより速くレスポンスを返すためにいくつか最適化しています。</p>
 <p>いくつかの最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でだけ有効です。</p>
-<section id="fetching-only-needed-columns">
-<span id="optimization-fetching-only-needed-columns"></span><h2><span class="section-number">5.1.1. </span>必要なカラムだけ取得<a class="headerlink" href="#fetching-only-needed-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="fetching-only-needed-columns">
+<span id="optimization-fetching-only-needed-columns"></span><h2><span class="section-number">5.1.1. </span>必要なカラムだけ取得<a class="headerlink" href="#fetching-only-needed-columns" title="Permalink to this heading">¶</a></h2>
 <p>この最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でだけ有効です。</p>
 <p>Groongaはカラム（列）ストアアーキテクチャーを採用しています。これは、1行の1つのカラムの値を取得するために、すべてのカラムの値を取得しなくてもよいということです。Groongaは必要なカラムの値だけを取得できます。</p>
 <p>InnoDBとMyISAMはロー（行）ストアアーキテクチャーを採用しています。InnoDBとMyISAMは、1行の1つのカラムの値が必要な場合でもすべてのカラムの値を取得する必要があります。</p>
@@ -106,9 +106,9 @@
 </pre></div>
 </div>
 <p>このケースではMroongaは <code class="docutils literal notranslate"><span class="pre">c1</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c2</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c11</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c12</span></code> カラムの値だけを取得します。 <code class="docutils literal notranslate"><span class="pre">c3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c4</span></code> 、 ...、 <code class="docutils literal notranslate"><span class="pre">c10</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c13</span></code> 、 ...、 <code class="docutils literal notranslate"><span class="pre">c19</span></code> 、<code class="docutils literal notranslate"><span class="pre">c20</span></code> カラムの値は取得しません。</p>
-</section>
-<section id="row-count">
-<span id="optimization-raw-count"></span><h2><span class="section-number">5.1.2. </span>行カウント<a class="headerlink" href="#row-count" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="row-count">
+<span id="optimization-raw-count"></span><h2><span class="section-number">5.1.2. </span>行カウント<a class="headerlink" href="#row-count" title="Permalink to this heading">¶</a></h2>
 <p>この最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> でだけ有効です。</p>
 <p>MySQLは <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> を処理する時、カラムの値が必要ないにも関わらず、ストレージエンジンモジュールにすべてのカラムの値を要求します。</p>
 <p>この場合、Mroongaはカラムの値を取得しません。</p>
@@ -131,9 +131,9 @@
 </div>
 <p><a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span class="std std-ref">Mroonga_count_skip</span></a> ステータス変数の値はMroongaがこの最適化を使うとインクリメントされます。</p>
 <p><a class="reference internal" href="server_variables.html#server-variable-mroonga-enable-optimization"><span class="std std-ref">mroonga_enable_optimization</span></a> に <code class="docutils literal notranslate"><span class="pre">false</span></code> を指定するとこの最適化を無効にできます。</p>
-</section>
-<section id="order-by-limit">
-<span id="optimization-order-by-limit"></span><h2><span class="section-number">5.1.3. </span><code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="order-by-limit">
+<span id="optimization-order-by-limit"></span><h2><span class="section-number">5.1.3. </span><code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code><a class="headerlink" href="#order-by-limit" title="Permalink to this heading">¶</a></h2>
 <p>この最適化は <a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> と <a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> 両方で有効です</p>
 <p>MySQLは、ヒットレコード数が多くても、インデックスを使ってソート済みの結果を取得できるなら <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> と <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> を少ないコストで処理できます。</p>
 <p>MySQLは <code class="docutils literal notranslate"><span class="pre">MATCH()</span> <span class="pre">AGAINST(IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE)</span></code> でこの処理を使えますが、 <code class="docutils literal notranslate"><span class="pre">MATCH()</span> <span class="pre">AGAINST(IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></code> では使えません。</p>
@@ -170,8 +170,8 @@
 <li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> 節にはカラムまたは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節で使っているものと同じ <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> しかない。</p></li>
 <li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ： <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> 節にはプライマリキーまたは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 節で使っているものと同じ <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> しかない。</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -211,7 +211,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -228,7 +228,7 @@
         <li class="right" >
           <a href="../reference.html" title="5. リファレンス"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.03 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.04 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.1. </span>最適化</a></li> 
       </ul>
