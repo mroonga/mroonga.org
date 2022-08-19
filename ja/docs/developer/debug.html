@@ -87,14 +87,18 @@
 </div>
 <div class="section" id="how-to-build-mysql-for-debugging">
 <h3><span class="section-number">9.1.1.1. </span>MySQLのデバッグ用ビルド方法<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="Permalink to this heading">¶</a></h3>
-<p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.5/en/installing-source-distribution.html">MySQL :: MySQL 5.5 Reference Manual :: 2.9.2 Installing MySQL from a Standard Source Distribution</a> にある通り、CMakeのオプションに <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=yes</span></code> オプションを渡すことでデバッグ用にビルドすることができます。</p>
+<p><a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/installing-source-distribution.html">MySQL :: 2.9.4 Installing MySQL Using a Standard Source Distribution</a> にある通り、CMakeのオプションに <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=yes</span></code> オプションを渡すことでデバッグ用にビルドすることができます。</p>
 <p>ダウンロードからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
 <span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
-<span class="o">%</span> <span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">jaist</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">jp</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.5</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mf">13.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mf">13.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="o">%</span> <span class="n">cd</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">13</span>
-<span class="o">%</span> <span class="n">cmake</span> <span class="o">.</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">local</span> <span class="o">-</span><span class="n">DWITH_DEBUG</span><span class="o">=</span><span class="n">yes</span>
+<span class="o">%</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cdn</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">8.0</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mf">29.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mf">29.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">mkdir</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span><span class="o">-</span><span class="n">build</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span><span class="o">-</span><span class="n">build</span>
+<span class="o">%</span> <span class="n">cmake</span> <span class="o">../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span> \
+    <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">local</span> \
+    <span class="o">-</span><span class="n">DWITH_DEBUG</span><span class="o">=</span><span class="n">yes</span> \
+    <span class="o">-</span><span class="n">DWITH_BOOST</span><span class="o">=../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span><span class="o">/</span><span class="n">boost</span>
 <span class="o">%</span> <span class="n">make</span>
 </pre></div>
 </div>
@@ -102,12 +106,21 @@
 <div class="section" id="how-tom-build-mroonga-for-debugging">
 <h3><span class="section-number">9.1.1.2. </span>Mroongaのデバッグ用ビルド方法<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Permalink to this heading">¶</a></h3>
 <p>Mroongaはconfigureのオプションに <code class="docutils literal notranslate"><span class="pre">--with-debug</span></code> を渡すことでデバッグ用にビルドすることができます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Mroongaをビルドするには、必要なツールやライブラリーを事前にインストールする必要があります。</p>
+<p>依存関係の詳細については <a class="reference internal" href="../install/others.html"><span class="doc">その他</span></a> を参照してください。</p>
+</div>
 <p>リポジトリのcloneからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% cd ~/work/
 % git clone git@github.com:mroonga/mroonga.git
 % cd mroonga
 % ./autogen.sh
-% ./configure CFLAGS=&quot;-g3 -O0&quot; CXXFLAGS=&quot;-g3 -O0&quot; --with-debug --prefix=/tmp/local --with-mysql-source=$HOME/work/mysql-5.5.13 --with-mysql-config=$HOME/work/mysql-5.5.13/scripts/mysql_config
+% ./configure --with-debug \
+              --prefix=/tmp/local \
+              --with-mysql-source=$HOME/work/mysql-8.0.29 \
+              --with-mysql-config=$HOME/work/mysql-8.0.29-build/scripts/mysql_config \
+              --with-mysql-build=$HOME/work/mysql-8.0.29-build
 % make
 </pre></div>
 </div>

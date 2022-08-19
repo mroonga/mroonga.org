@@ -95,10 +95,10 @@
 </ul>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf -y module disable mysql
+% sudo dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
 % sudo dnf install -y https://repo.mysql.com/mysql80-community-release-el8.rpm
-% sudo dnf install -y groonga-libs
-% sudo dnf install --disablerepo=AppStream -y --enablerepo=epel mysql-community-8.0-mroonga
+% sudo dnf install --disablerepo=AppStream -y --enablerepo=epel,powertools mysql-community-8.0-mroonga
 (% sudo systemctl start mysqld)
 (% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
 (% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
@@ -216,7 +216,7 @@
 <p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">MariaDB</span>
-<span class="n">baseurl</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.6</span><span class="o">/</span><span class="n">centos8</span><span class="o">-</span><span class="n">amd64</span>
+<span class="n">baseurl</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.6</span><span class="o">/</span><span class="n">rhel8</span><span class="o">-</span><span class="n">amd64</span>
 <span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">RPM</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">-</span><span class="n">MariaDB</span>
 <span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
@@ -228,6 +228,60 @@
 <span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
 <span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
 <span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.6</span><span class="o">-</span><span class="n">mroonga</span>
+<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="almalinux-8-with-mariadb-10-7-package">
+<span id="almalinux-8-mariadb-10-7"></span><h2><span class="section-number">2.5.7. </span>AlmaLinux 8（MariaDB 10.7のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-10-7-package" title="Permalink to this heading">¶</a></h2>
+<p>AlmaLinux 8では、Mroonga 12.02からMariaDB提供のMariaDB 10.7パッケージを利用できます。</p>
+<p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">MariaDB</span>
+<span class="n">baseurl</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.7</span><span class="o">/</span><span class="n">rhel8</span><span class="o">-</span><span class="n">amd64</span>
+<span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">RPM</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">-</span><span class="n">MariaDB</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.7</span><span class="o">-</span><span class="n">mroonga</span>
+<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="almalinux-8-with-mariadb-10-8-package">
+<span id="almalinux-8-mariadb-10-8"></span><h2><span class="section-number">2.5.8. </span>AlmaLinux 8（MariaDB 10.8のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-10-8-package" title="Permalink to this heading">¶</a></h2>
+<p>AlmaLinux 8では、Mroonga 12.06からMariaDB提供のMariaDB 10.8パッケージを利用できます。</p>
+<p>次の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作ります:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mariadb</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">MariaDB</span>
+<span class="n">baseurl</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.8</span><span class="o">/</span><span class="n">rhel8</span><span class="o">-</span><span class="n">amd64</span>
+<span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">yum</span><span class="o">.</span><span class="n">mariadb</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">RPM</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">-</span><span class="n">MariaDB</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.8</span><span class="o">-</span><span class="n">mroonga</span>
 <span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -256,6 +310,8 @@
 <li><a class="reference internal" href="#almalinux-8-with-mariadb-10-4-package">2.5.4. AlmaLinux 8（MariaDB 10.4のパッケージを利用）</a></li>
 <li><a class="reference internal" href="#almalinux-8-with-mariadb-10-5-package">2.5.5. AlmaLinux 8（MariaDB 10.5のパッケージを利用）</a></li>
 <li><a class="reference internal" href="#almalinux-8-with-mariadb-10-6-package">2.5.6. AlmaLinux 8（MariaDB 10.6のパッケージを利用）</a></li>
+<li><a class="reference internal" href="#almalinux-8-with-mariadb-10-7-package">2.5.7. AlmaLinux 8（MariaDB 10.7のパッケージを利用）</a></li>
+<li><a class="reference internal" href="#almalinux-8-with-mariadb-10-8-package">2.5.8. AlmaLinux 8（MariaDB 10.8のパッケージを利用）</a></li>
 </ul>
 </li>
 </ul>
