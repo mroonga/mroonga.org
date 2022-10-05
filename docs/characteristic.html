@@ -3,8 +3,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. The characteristics of Mroonga &#8212; Mroonga v12.07 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>1. The characteristics of Mroonga &#8212; Mroonga v12.08 documentation</title>
     <link rel="stylesheet" type="text/css" href="static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="static/mroonga.css" />
     
@@ -64,7 +65,7 @@
         <li class="right" >
           <a href="index.html" title="Mroonga"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.08 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>The characteristics of Mroonga</a></li> 
       </ul>
     </div>  
@@ -74,42 +75,42 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-characteristics-of-mroonga">
+  <section id="the-characteristics-of-mroonga">
 <h1><span class="section-number">1. </span>The characteristics of Mroonga<a class="headerlink" href="#the-characteristics-of-mroonga" title="Permalink to this heading">¶</a></h1>
-<div class="section" id="what-is-mroonga">
+<section id="what-is-mroonga">
 <h2><span class="section-number">1.1. </span>What is Mroonga?<a class="headerlink" href="#what-is-mroonga" title="Permalink to this heading">¶</a></h2>
 <p>Mroonga is a MySQL storage engine based on Groonga, the full text search engine.</p>
 <p>In MySQL 5.1 or later, Pluggable Storage Engine interface is introduced, and we can use custom storage engines easily. So we implement Mroonga, so that we can use Groonga through MySQL.</p>
 <p>By using Mroonga, you can use Groonga with SQL.</p>
-</div>
-<div class="section" id="the-successor-of-tritonn">
+</section>
+<section id="the-successor-of-tritonn">
 <h2><span class="section-number">1.2. </span>The successor of Tritonn<a class="headerlink" href="#the-successor-of-tritonn" title="Permalink to this heading">¶</a></h2>
 <p>To support Japanese full text search, Tritonn was developed by embedding Senna, the predecessor of Groonga, in MySQL.
 Mroogna is its successor.</p>
-</div>
-<div class="section" id="running-as-a-mysql-plugin">
+</section>
+<section id="running-as-a-mysql-plugin">
 <h2><span class="section-number">1.3. </span>Running as a MySQL plugin<a class="headerlink" href="#running-as-a-mysql-plugin" title="Permalink to this heading">¶</a></h2>
 <p>Since Tritonn was the modified version of MySQL, we need to build it by ourselves or use binary files provided by Tritonn project, thus we cannot use the official binary files provided by MySQL.</p>
 <p>On the other hand, Mroonga is an independent program (shared library) using Pluggable Storage Engine interface, and we can dynamically load it on MySQL’s official binary.
 So we can use it more easily than Tritonn.</p>
-</div>
-<div class="section" id="faster-index-update">
+</section>
+<section id="faster-index-update">
 <h2><span class="section-number">1.4. </span>Faster index update<a class="headerlink" href="#faster-index-update" title="Permalink to this heading">¶</a></h2>
 <p>Comparing to Senna, Groonga has much better throughput in adding or updating index.</p>
 <p>Mroonga also has the benefit of this performance improvement.</p>
-</div>
-<div class="section" id="faster-search">
+</section>
+<section id="faster-search">
 <h2><span class="section-number">1.5. </span>Faster search<a class="headerlink" href="#faster-search" title="Permalink to this heading">¶</a></h2>
 <p>In Tritonn, we use MyISAM storage engine, thus we have a exclusive table lock by updating data (and index), and it prevents the performance of search.</p>
 <p>But in Mroonga, we no longer have this issue, and the performance of search is better especially in frequent data update cases.</p>
-</div>
-<div class="section" id="geolocation-search">
+</section>
+<section id="geolocation-search">
 <h2><span class="section-number">1.6. </span>Geolocation search<a class="headerlink" href="#geolocation-search" title="Permalink to this heading">¶</a></h2>
 <p>Groonga supports not only the full text search, but also the fast geolocation search using index.
 And MySQL also has the syntax for geolocation search.
 With Mroonga, you can use Groonga’s fast geolocation search by using MySQL’s geolocation SQL syntax.</p>
-</div>
-<div class="section" id="sharing-the-same-groonga-storage">
+</section>
+<section id="sharing-the-same-groonga-storage">
 <h2><span class="section-number">1.7. </span>Sharing the same Groonga storage<a class="headerlink" href="#sharing-the-same-groonga-storage" title="Permalink to this heading">¶</a></h2>
 <p>Mroonga stores the data by using Groonga’s DB API.
 And its storage file’s format is same as that of the file that is managed by Groonga itself only.
@@ -119,8 +120,8 @@ Therefore you can share the same Groonga storage like below.</p>
 <li><p>Store data through Groonga server and search from Mroonga (MySQL).</p></li>
 </ul>
 <p>And Groonga’s storage file can be shared with multi-processes and multi-threads, so that we can invoke several search queries to the same storage file simultaneously.</p>
-</div>
-<div class="section" id="associate-with-other-storage-engines">
+</section>
+<section id="associate-with-other-storage-engines">
 <h2><span class="section-number">1.8. </span>Associate with other storage engines<a class="headerlink" href="#associate-with-other-storage-engines" title="Permalink to this heading">¶</a></h2>
 <p>Mroonga has two running modes.</p>
 <p>One is “storage mode”, that is the default mode, and we use Groonga for both storing data and searching.
@@ -130,13 +131,13 @@ But it does not support transactions.</p>
 With this mode, you can use Groonga’s fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB.
 But you cannot have benefits from Groonga’s read-lock free characteristic.
 And you might have the performance bottle neck in the storage engine in updating data.</p>
-</div>
-<div class="section" id="supported-platforms">
+</section>
+<section id="supported-platforms">
 <h2><span class="section-number">1.9. </span>Supported platforms<a class="headerlink" href="#supported-platforms" title="Permalink to this heading">¶</a></h2>
 <p>Mroonga supports many of the major platforms.</p>
 <p>Refer to <a class="reference internal" href="install.html"><span class="doc">Install</span></a> for supported platforms.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -199,7 +200,7 @@ And you might have the performance bottle neck in the storage engine in updating
         <li class="right" >
           <a href="index.html" title="Mroonga"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.08 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>The characteristics of Mroonga</a></li> 
       </ul>
     </div>

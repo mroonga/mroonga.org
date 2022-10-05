@@ -3,8 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4.4. ラッパーモード &#8212; Mroonga v12.07 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>4.4. ラッパーモード &#8212; Mroonga v12.08 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
@@ -65,7 +66,7 @@
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.08 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>チュートリアル</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.4. </span>ラッパーモード</a></li> 
       </ul>
@@ -76,10 +77,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="wrapper-mode">
+  <section id="wrapper-mode">
 <h1><span class="section-number">4.4. </span>ラッパーモード<a class="headerlink" href="#wrapper-mode" title="この見出しへのパーマリンク">¶</a></h1>
 <p>ここでは Mroonga におけるラッパーモードの利用方法を説明します。</p>
-<div class="section" id="how-to-use-wrapper-mode">
+<section id="how-to-use-wrapper-mode">
 <h2><span class="section-number">4.4.1. </span>ラッパーモードの利用方法<a class="headerlink" href="#how-to-use-wrapper-mode" title="この見出しへのパーマリンク">¶</a></h2>
 <p>ラッパーモードでは、既存のストレージエンジンをラップするかたちで Mroonga が動作します。ラップする対象となるストレージエンジンは、現在のところ SQL のコメントを利用して <code class="docutils literal notranslate"><span class="pre">COMMENT</span> <span class="pre">=</span> <span class="pre">'engine</span> <span class="pre">&quot;InnoDB&quot;'</span></code> のように指定するようになっています。</p>
 <div class="admonition note">
@@ -94,8 +95,8 @@
 <li><p>トランザクション (ストレージエンジンがサポートしている場合。ロールバックするとインデックスの不整合が発生します。インデックスを使った検索に影響するので、その場合にはMroongaのインデックスを再作成します。)</p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="how-to-use-full-text-search">
+</section>
+<section id="how-to-use-full-text-search">
 <h2><span class="section-number">4.4.2. </span>全文検索の利用方法<a class="headerlink" href="#how-to-use-full-text-search" title="この見出しへのパーマリンク">¶</a></h2>
 <p>インストールが確認できたら、テーブルを1つ作成してみましょう。 <code class="docutils literal notranslate"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code> とMroongaを指定するところがポイントです。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">diaries</span> <span class="p">(</span>
@@ -125,11 +126,11 @@
 </pre></div>
 </div>
 <p>おぉぉー。検索できましたね。</p>
-</div>
-<div class="section" id="how-to-get-search-score">
+</section>
+<section id="how-to-get-search-score">
 <h2><span class="section-number">4.4.3. </span>検索スコアの取得方法<a class="headerlink" href="#how-to-get-search-score" title="この見出しへのパーマリンク">¶</a></h2>
 <p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
-<p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference brackets" href="#score" id="id1">1</a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
+<p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference brackets" href="#score" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
 <p>それでは実際にやってみましょう。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">diaries</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s2">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
 <span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
@@ -161,10 +162,10 @@
 <span class="mi">3</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-to-specify-the-parser-for-full-text-search">
+</section>
+<section id="how-to-specify-the-parser-for-full-text-search">
 <h2><span class="section-number">4.4.4. </span>全文検索用パーサの変更<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="この見出しへのパーマリンク">¶</a></h2>
-<p>MySQLは全文検索用のパーサ <a class="footnote-reference brackets" href="#parser" id="id2">2</a> を指定する以下のような構文を持っています。:</p>
+<p>MySQLは全文検索用のパーサ <a class="footnote-reference brackets" href="#parser" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> を指定する以下のような構文を持っています。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">WITH</span> <span class="n">PARSER</span> <span class="n">parser_name</span>
 </pre></div>
 </div>
@@ -179,10 +180,6 @@
 <p>トークナイザーに指定できるのは以下の値です。</p>
 <table class="docutils align-default" id="id3">
 <caption><span class="caption-text">利用可能なトークナイザー一覧</span><a class="headerlink" href="#id3" title="このテーブルへのパーマリンク">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>トークナイザー</p></th>
 <th class="head"><p>説明</p></th>
@@ -274,8 +271,8 @@
 <span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-to-specify-the-normalizer">
+</section>
+<section id="how-to-specify-the-normalizer">
 <h2><span class="section-number">4.4.5. </span>ノーマライザーの指定方法<a class="headerlink" href="#how-to-specify-the-normalizer" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Mroongaは、文書のエンコーディング(照合順序)に応じたノーマライザーを使用します。これはテキストをトークナイズするときとテーブルのキーを保存するときに使われます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">utf8_general_ci</span></code> または <code class="docutils literal notranslate"><span class="pre">utf8mb4_general_ci</span></code> の場合、<code class="docutils literal notranslate"><span class="pre">NormalizerMySQLGeneralCI</span></code> ノーマライザーが使用されます。</p>
@@ -347,12 +344,12 @@ mysql&gt; SELECT * FROM diaries
 1 row in set (0.00 sec)
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-to-get-snippet-keyword-in-context">
+</section>
+<section id="how-to-get-snippet-keyword-in-context">
 <h2><span class="section-number">4.4.6. </span>スニペット（キーワード周辺のテキスト）の取得方法<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Mroongaは周辺テキスト付きでキーワードを取得する機能を提供しています。この機能は <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDFとして実装されています。</p>
-</div>
-<div class="section" id="logging">
+</section>
+<section id="logging">
 <h2><span class="section-number">4.4.7. </span>ログ出力<a class="headerlink" href="#logging" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Mroongaではデフォルトでログの出力を行うようになっています。</p>
 <p>ログファイルはMySQLのデータディレクトリ直下に <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> というファイル名で出力されます。</p>
@@ -403,21 +400,23 @@ mysql&gt; SELECT * FROM diaries
 <li><p><code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> ファイルの名前を変更（OSコマンドのmvなどで）</p></li>
 <li><p>MySQLサーバに対して&quot;FLUSH LOGS&quot;を実行（mysqlコマンドあるいはmysqladminコマンドにて）</p></li>
 </ol>
-</div>
-<div class="section" id="next-step">
+</section>
+<section id="next-step">
 <h2><span class="section-number">4.4.8. </span>次のステップ<a class="headerlink" href="#next-step" title="この見出しへのパーマリンク">¶</a></h2>
 <p>これでラッパーモードでMroongaを使えるようになりました！Mroongaをもっと速くしたい場合は <a class="reference internal" href="../reference/optimizations.html"><span class="doc">最適化</span></a> も参照してください。</p>
 <p class="rubric">脚注</p>
-<dl class="footnote brackets">
-<dt class="label" id="score"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 リファレンスマニュアル :: 11 関数と演算子 :: 11.7 全文検索関数</a></p>
-</dd>
-<dt class="label" id="parser"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>Groongaではトークナイザーと呼んでいる。</p>
-</dd>
-</dl>
-</div>
-</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="score" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 リファレンスマニュアル :: 11 関数と演算子 :: 11.7 全文検索関数</a></p>
+</aside>
+<aside class="footnote brackets" id="parser" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Groongaではトークナイザーと呼んでいる。</p>
+</aside>
+</aside>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -479,7 +478,7 @@ mysql&gt; SELECT * FROM diaries
         <li class="right" >
           <a href="storage.html" title="4.3. ストレージモード"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.08 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>チュートリアル</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.4. </span>ラッパーモード</a></li> 
       </ul>

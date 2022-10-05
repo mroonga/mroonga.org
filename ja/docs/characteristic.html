@@ -3,8 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. Mroongaの特徴 &#8212; Mroonga v12.07 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>1. Mroongaの特徴 &#8212; Mroonga v12.08 documentation</title>
     <link rel="stylesheet" type="text/css" href="static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="static/mroonga.css" />
     
@@ -65,7 +66,7 @@
         <li class="right" >
           <a href="index.html" title="Mroonga"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.08 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>Mroongaの特徴</a></li> 
       </ul>
     </div>  
@@ -75,38 +76,38 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-characteristics-of-mroonga">
+  <section id="the-characteristics-of-mroonga">
 <h1><span class="section-number">1. </span>Mroongaの特徴<a class="headerlink" href="#the-characteristics-of-mroonga" title="この見出しへのパーマリンク">¶</a></h1>
-<div class="section" id="what-is-mroonga">
+<section id="what-is-mroonga">
 <h2><span class="section-number">1.1. </span>Mroongaとは<a class="headerlink" href="#what-is-mroonga" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Mroongaは全文検索エンジンであるGroongaをベースとしたMySQLのストレージエンジンです。</p>
 <p>MySQLではver5.1からPluggable Storage Engineインタフェースが採用され、以前よりも柔軟に独自のストレージエンジンを利用できるようになりました。そこでGroongaにストレージエンジンインタフェースを実装し、MySQL経由でもGroongaを利用できるようにしました。</p>
 <p>Mroongaを経由することでGroongaをSQLコマンドでも利用することができるようになります。</p>
-</div>
-<div class="section" id="the-successor-of-tritonn">
+</section>
+<section id="the-successor-of-tritonn">
 <h2><span class="section-number">1.2. </span>Tritonnの後継<a class="headerlink" href="#the-successor-of-tritonn" title="この見出しへのパーマリンク">¶</a></h2>
 <p>MySQLで日本語全文検索を実現するための方法として、MySQLにGroongaの前身である全文検索ライブラリSennaを組み込んだプロダクトをTritonnプロジェクトから開発・リリースされて来ました。Mroongaはその後継プロダクトとなります。</p>
-</div>
-<div class="section" id="running-as-a-mysql-plugin">
+</section>
+<section id="running-as-a-mysql-plugin">
 <h2><span class="section-number">1.3. </span>MySQLのプラグインとして動作<a class="headerlink" href="#running-as-a-mysql-plugin" title="この見出しへのパーマリンク">¶</a></h2>
 <p>TritonnではMySQLサーバのソースコードを直接修正していましたので、使用するためには利用者がソースから自分でビルドするか、あるいはTritonnプロジェクトが配布するバイナリを使う必要がありました（MySQL本家が配布する公式バイナリを利用できませんでした）。</p>
 <p>一方、MroongaはPluggable Storage Engineインタフェースを利用した独立したプログラム(共有ライブラリ)であるため、MySQLの公式バイナリに手を加えずにプラグインとして動的にロードして利用することが可能となっています。これによりTritonnよりもさらに手軽に利用できるようになりました。</p>
-</div>
-<div class="section" id="faster-index-update">
+</section>
+<section id="faster-index-update">
 <h2><span class="section-number">1.4. </span>更新性能の向上<a class="headerlink" href="#faster-index-update" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Sennaと比較するとGroongaではインデックス追加/更新時のスループットが大幅に改善されています。</p>
 <p>Mroongaでもこの更新性能の向上の恩恵を受けています。</p>
-</div>
-<div class="section" id="faster-search">
+</section>
+<section id="faster-search">
 <h2><span class="section-number">1.5. </span>検索性能の向上<a class="headerlink" href="#faster-search" title="この見出しへのパーマリンク">¶</a></h2>
 <p>TritonnではMyISAMストレージエンジンを利用していたため、データ更新(インデックス更新)が発生するとテーブル全体に排他ロックがかかり、検索処理が阻害される問題がありました。</p>
 <p>Mroongaではこの問題がなくなり(参照ロックフリー)、特にデータ更新が多いケースでの検索性能が向上しています。</p>
-</div>
-<div class="section" id="geolocation-search">
+</section>
+<section id="geolocation-search">
 <h2><span class="section-number">1.6. </span>位置情報検索のサポート<a class="headerlink" href="#geolocation-search" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Groongaには全文検索機能だけではなく、インデックスを利用した高速な位置情報検索機能があります。また、MySQLにも位置情報検索のための記法があります。Mroongaでは、Groongaの位置情報検索機能を使ってMySQLの位置情報の記法で書かれたSQLを実行するため、高速に位置情報検索を行うことができます。</p>
-</div>
-<div class="section" id="sharing-the-same-groonga-storage">
+</section>
+<section id="sharing-the-same-groonga-storage">
 <h2><span class="section-number">1.7. </span>Groongaストレージファイル経由でのシステム連携<a class="headerlink" href="#sharing-the-same-groonga-storage" title="この見出しへのパーマリンク">¶</a></h2>
 <p>MroongaではGroongaのDB APIを使用してデータの格納を行っています。この時作成されるストレージファイルはGroonga単体でデータ管理を行う場合と同じフォーマットとなります。つまり以下のような使い方も可能となります。</p>
 <ul class="simple">
@@ -114,19 +115,19 @@
 <li><p>Groongaサーバ(単体)経由で格納したデータをMroonga(MySQL)経由で参照</p></li>
 </ul>
 <p>またGroongaのストレージファイルは複数プロセスや複数スレッドで共有することができますので、同じストレージファイルに対して複数パタンでの同時アクセスも可能です。</p>
-</div>
-<div class="section" id="associate-with-other-storage-engines">
+</section>
+<section id="associate-with-other-storage-engines">
 <h2><span class="section-number">1.8. </span>他のストレージエンジンとの連携<a class="headerlink" href="#associate-with-other-storage-engines" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Mroongaには2つの動作モードがあります。</p>
 <p>1つが「ストレージモード」で、データストアも検索機能もすべてGroongaを使うモードです。これがデフォルトのモードです。上述の参照ロックフリーなGroongaの性能特性をフルに活かした高速なデータ更新・全文検索・位置情報検索が特長です。一方、トランザクションなどの機能は提供されません。</p>
 <p>もう1つが「ラッパーモード」で、MyISAMやInnoDBといった他のストレージエンジンに <em>全文検索機能だけ</em> を追加するモードです。このモードではトランザクションなど他のストレージエンジンがサポートしている機能に加えてGroongaの高速な全文検索機能を利用することができます。一方、Groongaの参照ロックフリーな特性は活かすことができません。また、更新処理は他のストレージエンジンがボトルネックになることが多いでしょう。</p>
-</div>
-<div class="section" id="supported-platforms">
+</section>
+<section id="supported-platforms">
 <h2><span class="section-number">1.9. </span>サポートしているプラットフォーム<a class="headerlink" href="#supported-platforms" title="この見出しへのパーマリンク">¶</a></h2>
 <p>Mroongaは主要なプラットフォームの多くをサポートしています。</p>
 <p>サポートしているプラットフォームは <a class="reference internal" href="install.html"><span class="doc">インストール</span></a> を参照してください。</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -189,7 +190,7 @@
         <li class="right" >
           <a href="index.html" title="Mroonga"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mroonga v12.08 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>Mroongaの特徴</a></li> 
       </ul>
     </div>

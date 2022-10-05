@@ -3,8 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News - 4.x &#8212; Mroonga v12.07 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>News - 4.x &#8212; Mroonga v12.08 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
@@ -57,7 +58,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.08 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">News - 4.x</a></li> 
       </ul>
     </div>  
@@ -67,9 +68,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="news-4-x">
+  <section id="news-4-x">
 <h1>News - 4.x<a class="headerlink" href="#news-4-x" title="この見出しへのパーマリンク">¶</a></h1>
-<div class="section" id="release-4-10-2015-01-29">
+<section id="release-4-10-2015-01-29">
 <span id="release-4-10"></span><h2>4.10リリース - 2015-01-29<a class="headerlink" href="#release-4-10-2015-01-29" title="この見出しへのパーマリンク">¶</a></h2>
 <p>このリリースにはユニークインデックスのバグ修正が含まれています。もし、ストレージモードでユニークインデックスを使っている場合はデータが壊れている可能性があります。ストレージモードでユニークインデックスを使っている場合はこのバージョンへアップグレードし、アップグレード後にユニークインデックスを再構築することをオススメします。</p>
 <p>ユニークインデックスを含むすべてのインデックスを再構築するSQL文は次の通りです。:</p>
@@ -87,7 +88,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>再度重複したデータを挿入する。エラーなく重複したデータが挿入できてしまう。</p></li>
 </ul>
 </div></blockquote>
-<div class="section" id="improvements">
+<section id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] FULLTEXT INDEXのCOMMENTに参照テーブルが指定してあるときに、オフラインインデックス構築ができるようになりました。 オフラインインデックス構築には <code class="docutils literal notranslate"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></code> を実行してから <code class="docutils literal notranslate"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code> を実行します。[村上さんが報告]</p></li>
@@ -95,27 +96,27 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>[rpm][centos] CentOS 7でMariaDB 5.5.40-2向けにビルドするようにしました。</p></li>
 <li><p>[ストレージモード][mysql56] <code class="docutils literal notranslate"><span class="pre">ADD</span> <span class="pre">UNIQUE</span> <span class="pre">INDEX</span></code> で重複したときのエラーを報告するようにしました。[kazeburoさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="fixes">
+</section>
+<section id="fixes">
 <h3>修正<a class="headerlink" href="#fixes" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] 参照テーブルがエラーで意図せず削除される不具合を修正しました。これはたとえば FULLTEXT INDEXのコメントに <code class="docutils literal notranslate"><span class="pre">'table</span> <span class="pre">&quot;terms&quot;'</span></code> が指定されていたら、「terms」テーブルのインデックスを作成しているときにエラーが発生すると、「terms」テーブルが削除されてしまうということです。</p></li>
 <li><p>[ストレージモード] ユニークインデックスに対し重複したエントリを挿入しようとすると、重複によるエラーでインデックスが削除されてしまう不具合を修正しました。この不具合でインデックスの一貫性が損なわれてしまうので、Mroongaをアップグレードしたあとにインデックスを再構築しなおしてください。[kazeburoさんが報告]</p></li>
 <li><p>[ストレージモード] <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></code> が機能していなかった問題を修正しました。この不具合には挿入に失敗したあとの更新処理で既存の他のレコードを変更してしまう可能性があります。[kazeburoさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="thanks">
+</section>
+<section id="thanks">
 <h3>感謝<a class="headerlink" href="#thanks" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>村上さん</p></li>
 <li><p>各務さん</p></li>
 <li><p>kazeburoさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-09-2014-12-29">
+</section>
+</section>
+<section id="release-4-09-2014-12-29">
 <span id="release-4-09"></span><h2>4.09リリース - 2014-12-29<a class="headerlink" href="#release-4-09-2014-12-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id1">
+<section id="id1">
 <h3>改良<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[rpm] CentOS 6用のパッケージがMySQL 5.6.22に対応しました。 [&#64;oreradioさんが報告]</p></li>
@@ -123,17 +124,17 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p><code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span> <span class="pre">&quot;none&quot;'</span></code> というようにノーマライザーとして <code class="docutils literal notranslate"><span class="pre">none</span></code> を指定することでノーマライザーなしの <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> を作れるようにしました。</p></li>
 <li><p>自動で作られたレコードでもプライマリーキーの値を参照できるようになりました。</p></li>
 </ul>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h3>感謝<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>&#64;oreradioさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-08-2014-11-29">
+</section>
+</section>
+<section id="release-4-08-2014-11-29">
 <span id="release-4-08"></span><h2>4.08リリース - 2014/11/29<a class="headerlink" href="#release-4-08-2014-11-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id3">
+<section id="id3">
 <h3>改良<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[deb] Ubuntu 12.04をTravis-CI向けに再度サポートしました。</p></li>
@@ -142,8 +143,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>[doc] カラムサイズに関する <a class="reference internal" href="../reference/limitations.html"><span class="doc">制限事項</span></a> を追記しました。</p></li>
 <li><p>[ストレージモード] 主キーの指定が必要なクエリに主キーが指定されていなかったときのチェック漏れを修正しました。[groonga-dev,02963] [lkashiharaさんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>修正<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] 存在しないMySQLバージョンの記述を削除しました。[groonga-dev,02899] [GMOメディア株式会社さんが報告]</p></li>
@@ -151,8 +152,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>[doc] CentOS 5と6では <code class="docutils literal notranslate"><span class="pre">service</span></code> コマンドをMySQLの起動に使うようにしました。</p></li>
 <li><p>[doc] CentOS 7では <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> コマンドをMySQLの起動に使うようにしました。</p></li>
 </ul>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>感謝<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>GMOメディア株式会社さん</p></li>
@@ -160,11 +161,11 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>西山さん</p></li>
 <li><p>kashiharaさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-07-2014-10-29">
+</section>
+</section>
+<section id="release-4-07-2014-10-29">
 <span id="release-4-07"></span><h2>4.07リリース - 2014/10/29<a class="headerlink" href="#release-4-07-2014-10-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id6">
+<section id="id6">
 <h3>改良<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージ] 非推奨である <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">DELAYED</span></code> をエラーとして扱うようにしました。 [GitHub#20] [MDEV#6837] [Elena Stepanovaさんが報告]</p></li>
@@ -177,50 +178,50 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p><a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-libgroonga-support-lz4"><span class="std std-ref">mroonga_libgroonga_support_lz4</span></a> と <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-libgroonga-support-zlib"><span class="std std-ref">mroonga_libgroonga_support_zlib</span></a>  システム変数を追加しました。 [GitHub#33,#34,#35] [村上さんがパッチ提供]</p></li>
 <li><p>MySQL 5.1対応をやめました。</p></li>
 </ul>
-</div>
-<div class="section" id="id7">
+</section>
+<section id="id7">
 <h3>修正<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージ][mariadb10] 不適切なロックのせいでクラッシュする不具合を修正しました。 [GitHub#18] [Elena Stepanovaさんが報告]</p></li>
 <li><p>[ストレージ] signed tinyintでオーバーフローしていた問題を修正しました。 [GitHub#29]</p></li>
 <li><p>[doc] ノーマライザーに関するマークアップを修正しました。 [GitHub#32] [村上さんがパッチ提供]</p></li>
 </ul>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h3>感謝<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Elena Stepanovaさん</p></li>
 <li><p>村上さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-06-2014-09-29">
+</section>
+</section>
+<section id="release-4-06-2014-09-29">
 <span id="release-4-06"></span><h2>4.06リリース - 2014/09/29<a class="headerlink" href="#release-4-06-2014-09-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id9">
+<section id="id9">
 <h3>改良<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] Groongaの開発パッケージについて説明を追加しました。</p></li>
 <li><p>[doc] GitHub issue trackerの使用を推奨するようにしました。</p></li>
 <li><p>[deb] Debian jessieとsidのサポートを終了しました。</p></li>
 </ul>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h3>修正<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] マルチカラムインデックスを使った検索で空のレコードが返ってくる不具合を修正しました。この不具合は次の2つの条件を満たすと発生します。1つめは、カラムがマルチカラムインデックスによってインデックスが作成されており、ORDERとWHERE句に指定されていること。2つめが、マルチカラムインデックスに指定した最初のカラムがORDERで使われていないことです。[#2651] [foamcentime, 村上さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id11">
+</section>
+<section id="id11">
 <h3>感謝<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>foamcentimeさん</p></li>
 <li><p>村上さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-05-2014-08-29">
+</section>
+</section>
+<section id="release-4-05-2014-08-29">
 <span id="release-4-05"></span><h2>4.05リリース - 2014/08/29<a class="headerlink" href="#release-4-05-2014-08-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id12">
+<section id="id12">
 <h3>改良<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Ubuntu 13.10 (Saucy Salamander)のサポートをやめました。</p></li>
@@ -230,8 +231,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>MariaDB 10.0.13に対応しました。</p></li>
 <li><p>[rpm][centos] CentOS 7をサポートしました。mariadb-mroongaパッケージを提供しています。このパッケージはバンドルされているMariaDBを使います。 [groonga-dev,02604] [宮脇さんがテスト協力][河田さんがテスト協力]</p></li>
 </ul>
-</div>
-<div class="section" id="id13">
+</section>
+<section id="id13">
 <h3>修正<a class="headerlink" href="#id13" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] Mroonga 4.04のリリースエントリでMySQLのバージョンが間違っていたのを修正しました。[_so4さんが報告]</p></li>
@@ -241,8 +242,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>ストレージエンジンの表記に&quot;Mroonga&quot;を使うようにしました。</p></li>
 <li><p>[ストレージモード] テーブルを参照するインデックスがコメントで指定(<code class="docutils literal notranslate"><span class="pre">COMMENT</span> <span class="pre">'table</span> <span class="pre">&quot;XXX&quot;'</span></code>)されていると削除できない不具合を修正しました。[groonga-dev,02677] [村上さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id14">
+</section>
+<section id="id14">
 <h3>感謝<a class="headerlink" href="#id14" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>_so4さん</p></li>
@@ -253,11 +254,11 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>宮脇さん</p></li>
 <li><p>河田さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-04-2014-07-29">
+</section>
+</section>
+<section id="release-4-04-2014-07-29">
 <span id="release-4-04"></span><h2>4.04リリース - 2014/07/29<a class="headerlink" href="#release-4-04-2014-07-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id15">
+<section id="id15">
 <h3>改良<a class="headerlink" href="#id15" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Groongaとgroonga-normalizer-mysql特有のテストファイルをMariaDBバンドル版には含めないようにしました。これはファイル名が長すぎる問題があるためです。 [groonga-dev,02391] [横山昌史さんが報告]</p></li>
@@ -265,8 +266,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>妥当な日時であるかのチェックを32-bit環境で追加しました。[Tashiroさんがパッチ提供]</p></li>
 <li><p>[ストレージモード] INPLACE ALTER TABLEでカラムを追加削除できるようになりました。[#2277] [GitHub#12] [村上さんがパッチ提供]</p></li>
 </ul>
-</div>
-<div class="section" id="id16">
+</section>
+<section id="id16">
 <h3>修正<a class="headerlink" href="#id16" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[rpm][centos] CentOSでMySQL 5.5.37でビルドするようにしました。[吉田さんが報告]</p></li>
@@ -275,8 +276,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>[doc] CentOS6 SCLでのインストール手順で二重引用符が抜けているのを修正しました。[GitHub#11] [村上さんがパッチ提供]</p></li>
 <li><p>[ストレージモード] ALTER TABLE CHANGEでカラムを変更しようとするとクラッシュする問題を修正しました。[#2637]</p></li>
 </ul>
-</div>
-<div class="section" id="id17">
+</section>
+<section id="id17">
 <h3>感謝<a class="headerlink" href="#id17" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>吉田光男さん</p></li>
@@ -285,35 +286,35 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>cosmo0920さん</p></li>
 <li><p>村上さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-03-2014-05-29">
+</section>
+</section>
+<section id="release-4-03-2014-05-29">
 <span id="release-4-03"></span><h2>4.03リリース - 2014/05/29<a class="headerlink" href="#release-4-03-2014-05-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id18">
+<section id="id18">
 <h3>改良<a class="headerlink" href="#id18" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] MariaDBのバージョンを更新しました。 [cosmo0920さんがパッチ提供]</p></li>
 <li><p>夏時間をサポートしました。 [#2385]</p></li>
 <li><p>Ubuntuパッケージの配布サイトをLaunchpadのPPAに移行しました。詳細は <a class="reference internal" href="../install.html"><span class="doc">インストール</span></a> を参照してください。</p></li>
 </ul>
-</div>
-<div class="section" id="id19">
+</section>
+<section id="id19">
 <h3>修正<a class="headerlink" href="#id19" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[doc] <a class="reference internal" href="../install.html"><span class="doc">インストール</span></a> の間違ったコマンドラインを修正しました。 [吉田光男さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id20">
+</section>
+<section id="id20">
 <h3>感謝<a class="headerlink" href="#id20" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>cosmo0920さん</p></li>
 <li><p>吉田光男さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-02-2014-04-29">
+</section>
+</section>
+<section id="release-4-02-2014-04-29">
 <span id="release-4-02"></span><h2>4.02リリース - 2014/04/29<a class="headerlink" href="#release-4-02-2014-04-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id21">
+<section id="id21">
 <h3>改良<a class="headerlink" href="#id21" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>MariaDB 10.0.10に対応しました。 [#2460] [かずひこさんが報告]</p></li>
@@ -323,8 +324,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>Ubuntu 12.10 Quantal Quetzalの対応をやめました。</p></li>
 <li><p>[doc] MySQLのバージョンを更新しました。 [GitHub#8] [cosmo0920さんがパッチ提供]</p></li>
 </ul>
-</div>
-<div class="section" id="id22">
+</section>
+<section id="id22">
 <h3>修正<a class="headerlink" href="#id22" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] <code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code> のときにtruncateを使わないようにしました。 [groonga-dev,02222] [GMOメディア株式会社さんが報告]</p></li>
@@ -335,8 +336,8 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>my.cnfやコマンドラインオプションで <code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code> を指定しても無視される問題を修正しました。 [GitHub#7] [GMOメディア株式会社さんがパッチ提供]</p></li>
 <li><p>プライマリーキーを指定してレコードを削除するとユニークインデックスが更新されない問題を修正しました。 [groonga-dev,02244] [津久井玲宏さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id23">
+</section>
+<section id="id23">
 <h3>感謝<a class="headerlink" href="#id23" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>かずひこさん</p></li>
@@ -346,63 +347,63 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
 <li><p>津久井玲宏さん</p></li>
 <li><p>cosmo0920さん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-01-2014-03-29">
+</section>
+</section>
+<section id="release-4-01-2014-03-29">
 <span id="release-4-01"></span><h2>4.01リリース - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="この見出しへのパーマリンク">¶</a></h2>
-<div class="section" id="id24">
+<section id="id24">
 <h3>改良<a class="headerlink" href="#id24" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>MariaDB 10.0.9に対応しました。 [#2387] [かずひこさんが報告]</p></li>
 <li><p>10以上のセクションをWプラグマで扱えるようにしました。[#2348] [groonga-dev,02138] [yoku0825さんが報告]</p></li>
 <li><p>[rpm][centos] CentOS 6にてSCLのMySQLパッケージに対応しました。</p></li>
 </ul>
-</div>
-<div class="section" id="id25">
+</section>
+<section id="id25">
 <h3>修正<a class="headerlink" href="#id25" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>[ストレージモード] テーブル参照型のフルテキストインデックスをALTER TABLEしようとするとmysqldがクラッシュする問題を修正しました。 [#2327] [groonga-dev,02130] [村上さんが報告]</p></li>
 <li><p>[doc] &quot;Mroongaの特徴&quot;でMroonga/Groongaを大文字表記するようにしました。[GitHub#5] [村上さんがパッチ提供]</p></li>
 </ul>
-</div>
-<div class="section" id="id26">
+</section>
+<section id="id26">
 <h3>感謝<a class="headerlink" href="#id26" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>yokuさん</p></li>
 <li><p>村上さん</p></li>
 <li><p>かずひこさん</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="release-4-00-2014-02-09">
+</section>
+</section>
+<section id="release-4-00-2014-02-09">
 <span id="release-4-00"></span><h2>4.00リリース - 2014/02/29<a class="headerlink" href="#release-4-00-2014-02-09" title="この見出しへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li><p>バージョン4.00になりました。クラッシュする不具合や更新時の不具合が修正されたのでアップグレードをおすすめします。</p></li>
 </ul>
-<div class="section" id="id27">
+<section id="id27">
 <h3>改良<a class="headerlink" href="#id27" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>Ubuntu 13.04 Raring Ringtailのサポートをやめました。</p></li>
 <li><p>[ストレージモード] 空の文字列でも検索できるようにしました。 [#2214] [groonga-dev,02052] [村上さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id28">
+</section>
+<section id="id28">
 <h3>修正<a class="headerlink" href="#id28" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>NULL値をNOT NULL制約のあるgeometryカラムに対してインサートしようとするとクラッシュする不具合を修正しました。 [#2281] [groonga-dev,02095] [yokuさんが報告]</p></li>
 <li><p>[ストレージモード] ON DUPLICATE KEY UPDATEにより、既存のレコードが意図せず削除される不具合を修正しました。以前のバージョンではカラムの値を正しく更新できていませんでした。 [#2263] [長野雅広さんが報告]</p></li>
 </ul>
-</div>
-<div class="section" id="id29">
+</section>
+<section id="id29">
 <h3>感謝<a class="headerlink" href="#id29" title="この見出しへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><p>yokuさん</p></li>
 <li><p>村上さん</p></li>
 <li><p>長野雅広さん</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -505,7 +506,7 @@ ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.08 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">News - 4.x</a></li> 
       </ul>
     </div>

@@ -3,8 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>9.1. デバッグ方法 &#8212; Mroonga v12.07 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>9.1. デバッグ方法 &#8212; Mroonga v12.08 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
@@ -65,7 +66,7 @@
         <li class="right" >
           <a href="../developer.html" title="9. 開発者向け情報"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.08 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>開発者向け情報</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.1. </span>デバッグ方法</a></li> 
       </ul>
@@ -76,34 +77,34 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="how-to-debug">
+  <section id="how-to-debug">
 <h1><span class="section-number">9.1. </span>デバッグ方法<a class="headerlink" href="#how-to-debug" title="この見出しへのパーマリンク">¶</a></h1>
-<div class="section" id="building-for-debugging">
+<section id="building-for-debugging">
 <h2><span class="section-number">9.1.1. </span>デバッグ用ビルド方法<a class="headerlink" href="#building-for-debugging" title="この見出しへのパーマリンク">¶</a></h2>
 <p>デバッグ用にビルドすることにより、gdb上でのシンボル解決など開発時に得られる情報が多くなります。そのため、開発時はデバッグ用にMySQLとMroongaをビルドします。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>片方だけデバッグ用ビルドにすると構造体のサイズなどが異なってしまうため、Mroongaがロードできなかったり、実行時にassertに引っかかったりしてうまく動作しません。</p>
 </div>
-<div class="section" id="how-to-build-mysql-for-debugging">
+<section id="how-to-build-mysql-for-debugging">
 <h3><span class="section-number">9.1.1.1. </span>MySQLのデバッグ用ビルド方法<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="この見出しへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/installing-source-distribution.html">MySQL :: 2.9.4 Installing MySQL Using a Standard Source Distribution</a> にある通り、CMakeのオプションに <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=yes</span></code> オプションを渡すことでデバッグ用にビルドすることができます。</p>
 <p>ダウンロードからビルドまでの流れは以下の通りです。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
 <span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
-<span class="o">%</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cdn</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">8.0</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mf">29.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mf">29.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="o">%</span> <span class="n">mkdir</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span><span class="o">-</span><span class="n">build</span>
-<span class="o">%</span> <span class="n">cd</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span><span class="o">-</span><span class="n">build</span>
-<span class="o">%</span> <span class="n">cmake</span> <span class="o">../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span> \
+<span class="o">%</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cdn</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">8.0</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">%</span> <span class="n">mkdir</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">-</span><span class="n">build</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">-</span><span class="n">build</span>
+<span class="o">%</span> <span class="n">cmake</span> <span class="o">../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span> \
     <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">local</span> \
     <span class="o">-</span><span class="n">DWITH_DEBUG</span><span class="o">=</span><span class="n">yes</span> \
-    <span class="o">-</span><span class="n">DWITH_BOOST</span><span class="o">=../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">29</span><span class="o">/</span><span class="n">boost</span>
+    <span class="o">-</span><span class="n">DWITH_BOOST</span><span class="o">=../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">/</span><span class="n">boost</span>
 <span class="o">%</span> <span class="n">make</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-tom-build-mroonga-for-debugging">
+</section>
+<section id="how-tom-build-mroonga-for-debugging">
 <h3><span class="section-number">9.1.1.2. </span>Mroongaのデバッグ用ビルド方法<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="この見出しへのパーマリンク">¶</a></h3>
 <p>Mroongaはconfigureのオプションに <code class="docutils literal notranslate"><span class="pre">--with-debug</span></code> を渡すことでデバッグ用にビルドすることができます。</p>
 <div class="admonition note">
@@ -128,20 +129,20 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="more-about-run-sql-test-sh">
+</section>
+</section>
+<section id="more-about-run-sql-test-sh">
 <h2><span class="section-number">9.1.2. </span>run-sql-test.sh を使いこなす<a class="headerlink" href="#more-about-run-sql-test-sh" title="この見出しへのパーマリンク">¶</a></h2>
 <p>run-sql-test.sh はデバッグの友。ここでは、その便利な使い方の一例をご紹介します。</p>
-<div class="section" id="run-the-specified-test-only">
+<section id="run-the-specified-test-only">
 <h3><span class="section-number">9.1.2.1. </span>指定したテストを実行する<a class="headerlink" href="#run-the-specified-test-only" title="この見出しへのパーマリンク">¶</a></h3>
 <p>何もオプションを渡さずに run-sql-test.sh を実行すると <code class="docutils literal notranslate"><span class="pre">mysql-test/mroonga</span></code> 以下にある全てのテスト (<code class="docutils literal notranslate"><span class="pre">*.test</span></code>) が実行されてしまいます。</p>
 <p>特定のテストだけを実行したい、という場合は次のようにしてテスト名を <code class="docutils literal notranslate"><span class="pre">--do-test</span></code> オプションに渡します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">do</span><span class="o">-</span><span class="n">test</span><span class="o">=</span><span class="n">foobar</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="see-the-trace">
+</section>
+<section id="see-the-trace">
 <h3><span class="section-number">9.1.2.2. </span>トレースを見る<a class="headerlink" href="#see-the-trace" title="この見出しへのパーマリンク">¶</a></h3>
 <p>次のようにして <code class="docutils literal notranslate"><span class="pre">--debug</span></code> オプションをつけてテストを実行すると、関数の呼び出しなどが記録されます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">do</span><span class="o">-</span><span class="n">test</span><span class="o">=</span><span class="n">foobar</span>
@@ -149,16 +150,16 @@
 </div>
 <p>この呼び出しは <code class="docutils literal notranslate"><span class="pre">${MySQLの作業ディレクトリ}/${MySQLのバージョン}/mysql-test/var/log/mysqld.1.trace</span></code> に格納されます。</p>
 <p>新しく関数を作成した場合は MRN_DBUG_ENTER_FUNCTION 関数の先頭に配置し、関数の呼び出しを記録するようにすると良いでしょう。</p>
-</div>
-<div class="section" id="invoking-gdb">
+</section>
+<section id="invoking-gdb">
 <h3><span class="section-number">9.1.2.3. </span>GDB を立ち上げる<a class="headerlink" href="#invoking-gdb" title="この見出しへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">--gdb</span></code> オプションを指定することで、テストを実行する際に GDB を用いてデバッグを行うことができます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">gdb</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -223,7 +224,7 @@
         <li class="right" >
           <a href="../developer.html" title="9. 開発者向け情報"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.07 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.08 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>開発者向け情報</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.1. </span>デバッグ方法</a></li> 
       </ul>
