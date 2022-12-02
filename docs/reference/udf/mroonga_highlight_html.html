@@ -3,9 +3,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v12.09 documentation</title>
+    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v12.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../static/mroonga.css" />
     
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U"><span class="section-number">5.5. </span>UDF (User Defined Functions)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li> 
@@ -94,11 +94,18 @@ HTML.</p>
 <h2><span class="section-number">5.5.3.2. </span>Syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code> has required parameter and optional parameter:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
 
 <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> is very important. You must specify it to extract keywords from query.</p>
+<p><code class="docutils literal notranslate"><span class="pre">open_tag</span></code> and <code class="docutils literal notranslate"><span class="pre">close_tag</span></code> are optional. You can specify a tag for highlighting.</p>
 </section>
 <section id="usage">
 <h2><span class="section-number">5.5.3.3. </span>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
@@ -159,6 +166,38 @@ following:</p>
 <h4><span class="section-number">5.5.3.4.2.2. </span><code class="docutils literal notranslate"><span class="pre">keyword</span></code><a class="headerlink" href="#keyword" title="Permalink to this heading">¶</a></h4>
 <p>Specify 0 or more keywords to be highlighted.</p>
 </section>
+<section id="open-tag">
+<h4><span class="section-number">5.5.3.4.2.3. </span><code class="docutils literal notranslate"><span class="pre">open_tag</span></code><a class="headerlink" href="#open-tag" title="Permalink to this heading">¶</a></h4>
+<p>Specify an open tag for highlighting.</p>
+<p>You must specify <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">open_tag</span></code> to specify this parameter like the following.</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="s1">&#39;&lt;span class=&quot;my-class&quot;&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                                                |</span>
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;span class=&quot;my-class&quot;&gt;Groonga&lt;/span&gt; based storage engine. |</span>
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>The default value is <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;</span></code>.</p>
+</section>
+<section id="close-tag">
+<h4><span class="section-number">5.5.3.4.2.4. </span><code class="docutils literal notranslate"><span class="pre">close_tag</span></code><a class="headerlink" href="#close-tag" title="Permalink to this heading">¶</a></h4>
+<p>Specify a close tag for highlighting.</p>
+<p>You must specify <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">close_tag</span></code> to specify this parameter like the following.</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="s1">&#39;&lt;mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;/mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">close_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                               |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;mark&gt;Groonga&lt;/mark&gt; based storage engine. |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>The default value is <code class="docutils literal notranslate"><span class="pre">&lt;/span&gt;</span></code>.</p>
+</section>
 </section>
 </section>
 <section id="return-value">
@@ -191,6 +230,8 @@ only escapes special characters in HTML such as <code class="docutils literal no
 <li><a class="reference internal" href="#optional-parameters">5.5.3.4.2. Optional parameters</a><ul>
 <li><a class="reference internal" href="#query">5.5.3.4.2.1. <code class="docutils literal notranslate"><span class="pre">query</span></code></a></li>
 <li><a class="reference internal" href="#keyword">5.5.3.4.2.2. <code class="docutils literal notranslate"><span class="pre">keyword</span></code></a></li>
+<li><a class="reference internal" href="#open-tag">5.5.3.4.2.3. <code class="docutils literal notranslate"><span class="pre">open_tag</span></code></a></li>
+<li><a class="reference internal" href="#close-tag">5.5.3.4.2.4. <code class="docutils literal notranslate"><span class="pre">close_tag</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -237,7 +278,7 @@ only escapes special characters in HTML such as <code class="docutils literal no
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" ><span class="section-number">5.5. </span>UDF (User Defined Functions)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li> 

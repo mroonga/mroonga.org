@@ -3,9 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v12.09 documentation</title>
+    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v12.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../static/mroonga.css" />
     
@@ -66,7 +66,7 @@
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" accesskey="U"><span class="section-number">5.5. </span>UDF (ユーザ定義関数)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li> 
@@ -79,26 +79,33 @@
           <div class="body" role="main">
             
   <section id="mroonga-highlight-html">
-<h1><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code><a class="headerlink" href="#mroonga-highlight-html" title="この見出しへのパーマリンク">¶</a></h1>
+<h1><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code><a class="headerlink" href="#mroonga-highlight-html" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">バージョン 7.05 で追加.</span></p>
 </div>
 <section id="summary">
-<h2><span class="section-number">5.5.3.1. </span>概要<a class="headerlink" href="#summary" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">5.5.3.1. </span>概要<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code> は対象のテキストの中の指定されたキーワードをハイライトします。各キーワードを <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;...&lt;/span&gt;</span></code> で囲み、<code class="docutils literal notranslate"><span class="pre">&lt;</span></code> や <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> といったHTMLの特殊文字をエスケープします。この関数の結果は、安全なHTMLとして使うことができます。</p>
 </section>
 <section id="syntax">
-<h2><span class="section-number">5.5.3.2. </span>構文<a class="headerlink" href="#syntax" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">5.5.3.2. </span>構文<a class="headerlink" href="#syntax" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code> には必須引数と省略可能引数とがあります。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
 
 <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> はとても重要です。クエリーを使ってキーワードを抽出する場合に指定する必要があります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">open_tag</span></code> と <code class="docutils literal notranslate"><span class="pre">close_tag</span></code> は省略可能です。ハイライトに使用するタグを指定することができます。</p>
 </section>
 <section id="usage">
-<h2><span class="section-number">5.5.3.3. </span>使いかた<a class="headerlink" href="#usage" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">5.5.3.3. </span>使いかた<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>以下は'mroonga OR groonga'というクエリーによって、対象テキストの中の'mroonga'と'groonga'をハイライトする例です。 <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> を指定する必要があります。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span>
                               <span class="s1">&#39;mroonga OR groonga&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span> <span class="n">AS</span> <span class="n">highlighted</span><span class="p">;</span>
@@ -128,20 +135,20 @@
 </div>
 </section>
 <section id="parameters">
-<h2><span class="section-number">5.5.3.4. </span>引数<a class="headerlink" href="#parameters" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">5.5.3.4. </span>引数<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h2>
 <section id="required-parameters">
-<h3><span class="section-number">5.5.3.4.1. </span>必須引数<a class="headerlink" href="#required-parameters" title="この見出しへのパーマリンク">¶</a></h3>
+<h3><span class="section-number">5.5.3.4.1. </span>必須引数<a class="headerlink" href="#required-parameters" title="Permalink to this heading">¶</a></h3>
 <p>必須引数が1つあります。</p>
 <section id="text">
-<h4><span class="section-number">5.5.3.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">text</span></code><a class="headerlink" href="#text" title="この見出しへのパーマリンク">¶</a></h4>
+<h4><span class="section-number">5.5.3.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">text</span></code><a class="headerlink" href="#text" title="Permalink to this heading">¶</a></h4>
 <p>ハイライトされるカラム名もしくは文字列が必要です。</p>
 </section>
 </section>
 <section id="optional-parameters">
-<h3><span class="section-number">5.5.3.4.2. </span>省略可能引数<a class="headerlink" href="#optional-parameters" title="この見出しへのパーマリンク">¶</a></h3>
+<h3><span class="section-number">5.5.3.4.2. </span>省略可能引数<a class="headerlink" href="#optional-parameters" title="Permalink to this heading">¶</a></h3>
 <p>いくつか省略可能な引数があります。</p>
 <section id="query">
-<h4><span class="section-number">5.5.3.4.2.1. </span><code class="docutils literal notranslate"><span class="pre">query</span></code><a class="headerlink" href="#query" title="この見出しへのパーマリンク">¶</a></h4>
+<h4><span class="section-number">5.5.3.4.2.1. </span><code class="docutils literal notranslate"><span class="pre">query</span></code><a class="headerlink" href="#query" title="Permalink to this heading">¶</a></h4>
 <p>詳細は <a class="reference external" href="http://groonga.org/ja/docs/reference/grn_expr/query_syntax.html">Groongaのクエリー構文</a> を参照してください。</p>
 <p>クエリーを使ってキーワードを抽出するには、以下のように <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> を指定する必要があります。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;mroonga OR groonga&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">);</span>
@@ -149,13 +156,45 @@
 </div>
 </section>
 <section id="keyword">
-<h4><span class="section-number">5.5.3.4.2.2. </span><code class="docutils literal notranslate"><span class="pre">keyword</span></code><a class="headerlink" href="#keyword" title="この見出しへのパーマリンク">¶</a></h4>
+<h4><span class="section-number">5.5.3.4.2.2. </span><code class="docutils literal notranslate"><span class="pre">keyword</span></code><a class="headerlink" href="#keyword" title="Permalink to this heading">¶</a></h4>
 <p>ハイライトする0個以上のキーワードを指定します。</p>
+</section>
+<section id="open-tag">
+<h4><span class="section-number">5.5.3.4.2.3. </span><code class="docutils literal notranslate"><span class="pre">open_tag</span></code><a class="headerlink" href="#open-tag" title="Permalink to this heading">¶</a></h4>
+<p>ハイライトの開始タグを指定します。</p>
+<p>このパラメーターを指定するには、以下のように <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">open_tag</span></code> を指定する必要があります。</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="s1">&#39;&lt;span class=&quot;my-class&quot;&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                                                |</span>
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;span class=&quot;my-class&quot;&gt;Groonga&lt;/span&gt; based storage engine. |</span>
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;</span></code> です。</p>
+</section>
+<section id="close-tag">
+<h4><span class="section-number">5.5.3.4.2.4. </span><code class="docutils literal notranslate"><span class="pre">close_tag</span></code><a class="headerlink" href="#close-tag" title="Permalink to this heading">¶</a></h4>
+<p>ハイライトの終了タグを指定します。</p>
+<p>このパラメーターを指定するには、以下のように <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">close_tag</span></code> を指定する必要があります。</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="s1">&#39;&lt;mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;/mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">close_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                               |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;mark&gt;Groonga&lt;/mark&gt; based storage engine. |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">&lt;/span&gt;</span></code> です。</p>
 </section>
 </section>
 </section>
 <section id="return-value">
-<h2><span class="section-number">5.5.3.5. </span>返り値<a class="headerlink" href="#return-value" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">5.5.3.5. </span>返り値<a class="headerlink" href="#return-value" title="Permalink to this heading">¶</a></h2>
 <p>ハイライトされたHTMLを返します。省略可能な引数が指定されない場合、<code class="docutils literal notranslate"><span class="pre">text</span></code> に含まれるHTMLの特殊文字 <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> や <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> をエスケープします。</p>
 </section>
 </section>
@@ -182,6 +221,8 @@
 <li><a class="reference internal" href="#optional-parameters">5.5.3.4.2. 省略可能引数</a><ul>
 <li><a class="reference internal" href="#query">5.5.3.4.2.1. <code class="docutils literal notranslate"><span class="pre">query</span></code></a></li>
 <li><a class="reference internal" href="#keyword">5.5.3.4.2.2. <code class="docutils literal notranslate"><span class="pre">keyword</span></code></a></li>
+<li><a class="reference internal" href="#open-tag">5.5.3.4.2.3. <code class="docutils literal notranslate"><span class="pre">open_tag</span></code></a></li>
+<li><a class="reference internal" href="#close-tag">5.5.3.4.2.4. <code class="docutils literal notranslate"><span class="pre">close_tag</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -228,7 +269,7 @@
         <li class="right" >
           <a href="mroonga_escape.html" title="5.5.2. mroonga_escape()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.09 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Mroonga v12.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../udf.html" ><span class="section-number">5.5. </span>UDF (ユーザ定義関数)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li> 
