@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>2.7. Oracle Linux &#8212; Mroonga v12.11 documentation</title>
+    <title>2.6. Amazon Linux &#8212; Mroonga v12.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
@@ -16,8 +16,8 @@
     
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="2.8. CentOS" href="centos.html" />
-    <link rel="prev" title="2.6. Amazon Linux" href="amazon-linux.html" /> 
+    <link rel="next" title="2.7. Oracle Linux" href="oracle-linux.html" />
+    <link rel="prev" title="2.5. AlmaLinux" href="almalinux.html" /> 
       <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
     <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
     <meta property="og:type" content="product" />
@@ -46,7 +46,7 @@
     <div class="other-language-links">
 
     <ul>
-      <li><a href="../../../docs/install/oracle-linux.html" title="English">English</a></li>
+      <li><a href="../../../docs/install/amazon-linux.html" title="English">English</a></li>
     </ul>
   </div>
 </div>
@@ -59,14 +59,14 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="centos.html" title="2.8. CentOS"
+          <a href="oracle-linux.html" title="2.7. Oracle Linux"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="amazon-linux.html" title="2.6. Amazon Linux"
+          <a href="almalinux.html" title="2.5. AlmaLinux"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U"><span class="section-number">2. </span>インストール</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.7. </span>Oracle Linux</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.6. </span>Amazon Linux</a></li> 
       </ul>
     </div>  
 
@@ -75,37 +75,22 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="oracle-linux">
-<h1><span class="section-number">2.7. </span>Oracle Linux<a class="headerlink" href="#oracle-linux" title="この見出しへのパーマリンク">¶</a></h1>
-<p>このセクションではAlmaLinux上でMroonga関連のRPMパッケージをインストールする方法を説明します。これらのパッケージは <code class="docutils literal notranslate"><span class="pre">dnf</span></code> でインストールできます。</p>
-<section id="oracle-linux-8-with-the-oracle-mysql-8-0-package">
-<span id="oracle-linux-8-oracle-8-0"></span><h2><span class="section-number">2.7.1. </span>Oracle Linux 8（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#oracle-linux-8-with-the-oracle-mysql-8-0-package" title="この見出しへのパーマリンク">¶</a></h2>
-<p>Oracle Linux 8では、Mroonga 12.08からOracleのMySQL 8.0パッケージを利用できます。</p>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>MySQL 8.0に関しては以下の既知の問題があります。</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ラッパーモードは未対応です。</p></li>
-<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ストレージモードは以下の機能が未対応です。</p>
-<ul>
-<li><p>最適化関連の機能</p></li>
-</ul>
-</li>
-</ul>
-</div>
+  <section id="amazon-linux">
+<h1><span class="section-number">2.6. </span>Amazon Linux<a class="headerlink" href="#amazon-linux" title="この見出しへのパーマリンク">¶</a></h1>
+<p>このセクションではAmazon Linux上でMroonga関連のRPMパッケージをインストールする方法を説明します。これらのパッケージは <code class="docutils literal notranslate"><span class="pre">yum</span></code> でインストールできます。</p>
+<section id="amazon-linux-2-with-mariadb-10-5-package">
+<span id="amazon-linux-2-mariadb-10-5"></span><h2><span class="section-number">2.6.1. </span>Amazon Linux 2（MariaDB 10.5のパッケージを利用）<a class="headerlink" href="#amazon-linux-2-with-mariadb-10-5-package" title="この見出しへのパーマリンク">¶</a></h2>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf -y module disable mysql
-% sudo dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
-% sudo dnf install -y https://repo.mysql.com/mysql80-community-release-el8.rpm
-% sudo dnf install --disablerepo=AppStream -y --enablerepo=ol8_codeready_builder mysql-community-8.0-mroonga
-(% sudo systemctl start mysqld)
-(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
-(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">amazon</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">extras</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">epel</span> <span class="n">mariadb10</span><span class="mf">.5</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">amazon</span><span class="o">-</span><span class="n">linux</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.5</span><span class="o">-</span><span class="n">mroonga</span>
+<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ol8_codeready_builder</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
 </pre></div>
 </div>
 </section>
@@ -121,8 +106,8 @@
   <div>
     <h3><a href="../index.html">目次</a></h3>
     <ul>
-<li><a class="reference internal" href="#">2.7. Oracle Linux</a><ul>
-<li><a class="reference internal" href="#oracle-linux-8-with-the-oracle-mysql-8-0-package">2.7.1. Oracle Linux 8（OracleのMySQL 8.0パッケージを利用）</a></li>
+<li><a class="reference internal" href="#">2.6. Amazon Linux</a><ul>
+<li><a class="reference internal" href="#amazon-linux-2-with-mariadb-10-5-package">2.6.1. Amazon Linux 2（MariaDB 10.5のパッケージを利用）</a></li>
 </ul>
 </li>
 </ul>
@@ -130,13 +115,13 @@
   </div>
   <div>
     <h4>前のトピックへ</h4>
-    <p class="topless"><a href="amazon-linux.html"
-                          title="前の章へ"><span class="section-number">2.6. </span>Amazon Linux</a></p>
+    <p class="topless"><a href="almalinux.html"
+                          title="前の章へ"><span class="section-number">2.5. </span>AlmaLinux</a></p>
   </div>
   <div>
     <h4>次のトピックへ</h4>
-    <p class="topless"><a href="centos.html"
-                          title="次の章へ"><span class="section-number">2.8. </span>CentOS</a></p>
+    <p class="topless"><a href="oracle-linux.html"
+                          title="次の章へ"><span class="section-number">2.7. </span>Oracle Linux</a></p>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">クイック検索</h3>
@@ -159,14 +144,14 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="centos.html" title="2.8. CentOS"
+          <a href="oracle-linux.html" title="2.7. Oracle Linux"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="amazon-linux.html" title="2.6. Amazon Linux"
+          <a href="almalinux.html" title="2.5. AlmaLinux"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" ><span class="section-number">2. </span>インストール</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.7. </span>Oracle Linux</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.6. </span>Amazon Linux</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

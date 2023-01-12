@@ -3,17 +3,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>9.2. Release procedure &#8212; Mroonga v12.10 documentation</title>
+    <title>9.2. Release procedure &#8212; Mroonga v12.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
-    <script src="../static/jquery.js"></script>
-    <script src="../static/underscore.js"></script>
-    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
+    <script src="../static/sphinx_highlight.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,7 +63,7 @@
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.10 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" accesskey="U"><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.2. </span>Release procedure</a></li> 
       </ul>
@@ -272,8 +270,31 @@ However, these packages are unsigned. We sign packages by executing the below co
 <p>For windows packages, we use artifacts of <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> .</p>
 </section>
 </section>
+<section id="update-docker-images">
+<h2><span class="section-number">9.2.12. </span>Update Docker images<a class="headerlink" href="#update-docker-images" title="Permalink to this heading">¶</a></h2>
+<p>We update Mroonga’s Docker images of <a class="reference external" href="https://hub.docker.com/r/groonga/mroonga">Docker Hub</a> .</p>
+<p>Clone <a class="reference external" href="https://github.com/mroonga/docker">the Mroonga’s Docker repository</a> and update Dockerfiles in tha repository.</p>
+<p>Here is an example for the case that the MySQL version is <code class="docutils literal notranslate"><span class="pre">5.7.26</span></code>, the Mroonga version is <code class="docutils literal notranslate"><span class="pre">9.01</span></code>, the Groonga version is <code class="docutils literal notranslate"><span class="pre">9.0.2</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span>
+<span class="o">%</span> <span class="n">test</span> <span class="o">-</span><span class="n">e</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span> <span class="o">||</span> <span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recursive</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">git</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span>
+<span class="o">%</span> <span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">xdf</span>
+<span class="o">%</span> <span class="n">git</span> <span class="n">checkout</span> <span class="o">.</span>
+<span class="o">%</span> <span class="n">git</span> <span class="n">pull</span>
+<span class="o">%</span> <span class="o">./</span><span class="n">update</span><span class="o">.</span><span class="n">sh</span> <span class="mf">5.7.26</span> <span class="mf">9.01</span> <span class="mf">9.0.2</span> <span class="c1">#Automatically update Dockerfiles and commit changes and create a tag.</span>
+<span class="o">%</span> <span class="n">git</span> <span class="n">push</span>
+</pre></div>
+</div>
+<p>You have to specify the latest versions.</p>
+<p>After you check <a class="reference external" href="https://github.com/mroonga/docker/actions">GitHub Actions of the Mroonga’s Docker repository</a> are succeeded, push tag to remote, push tag to remote.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span>
+</pre></div>
+</div>
+<p>GitHub Actions of the Mroonga’s Docker repository automatically update the Mroonga’s docker images of Docker Hub after you push the tag.</p>
+<p>You have to execute this procedure for both MySQL 5.x.x and 8.x.x.</p>
+</section>
 <section id="upload-documents">
-<h2><span class="section-number">9.2.12. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.2.13. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Clone mroonga.github.com repository</p></li>
 <li><p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> as below in <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code>:</p>
@@ -285,7 +306,7 @@ However, these packages are unsigned. We sign packages by executing the below co
 </ol>
 </section>
 <section id="update-blog-mroonga-blog">
-<h2><span class="section-number">9.2.13. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.2.14. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Permalink to this heading">¶</a></h2>
 <p>We update the below files.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/ja/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
@@ -310,7 +331,7 @@ published: false
 </div>
 </section>
 <section id="announce-release-for-mailing-list">
-<h2><span class="section-number">9.2.14. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.2.15. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Permalink to this heading">¶</a></h2>
 <p>Send release announce for each mailing list</p>
 <ul class="simple">
 <li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
@@ -319,19 +340,19 @@ published: false
 </ul>
 </section>
 <section id="announce-release-for-twitter">
-<h2><span class="section-number">9.2.15. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.2.16. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Permalink to this heading">¶</a></h2>
 <p>Click Tweet link in Mrooga blog entry. You can share tweet about latest release.
 If you use tweet link, title of release announce and URL is embedded into your tweet.</p>
 <p>Execute sharing tweet in Japanese and English version of blog entry.
 Note that this tweet should be done when logged in by <code class="docutils literal notranslate"><span class="pre">groonga</span></code> account.</p>
 </section>
 <section id="announce-release-for-facebook">
-<h2><span class="section-number">9.2.16. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.2.17. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Permalink to this heading">¶</a></h2>
 <p>We announce release from Mroonga group in Facebook.</p>
 <p><a class="reference external" href="https://www.facebook.com/mroonga/">https://www.facebook.com/mroonga/</a></p>
 </section>
 <section id="bump-version">
-<h2><span class="section-number">9.2.17. </span>Bump version<a class="headerlink" href="#bump-version" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.2.18. </span>Bump version<a class="headerlink" href="#bump-version" title="Permalink to this heading">¶</a></h2>
 <p>Bump version to the latest release:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">version</span> <span class="n">NEW_VERSION_MAJOR</span><span class="o">=</span><span class="mi">9</span> <span class="n">NEW_VERSION_MINOR</span><span class="o">=</span><span class="mi">1</span> <span class="n">NEW_VERSION_MICRO</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
@@ -367,12 +388,13 @@ Note that this tweet should be done when logged in by <code class="docutils lite
 <li><a class="reference internal" href="#windows">9.2.11.4. Windows</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#upload-documents">9.2.12. Upload documents</a></li>
-<li><a class="reference internal" href="#update-blog-mroonga-blog">9.2.13. Update blog(Mroonga blog)</a></li>
-<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.14. Announce release for mailing list</a></li>
-<li><a class="reference internal" href="#announce-release-for-twitter">9.2.15. Announce release for twitter</a></li>
-<li><a class="reference internal" href="#announce-release-for-facebook">9.2.16. Announce release for Facebook</a></li>
-<li><a class="reference internal" href="#bump-version">9.2.17. Bump version</a></li>
+<li><a class="reference internal" href="#update-docker-images">9.2.12. Update Docker images</a></li>
+<li><a class="reference internal" href="#upload-documents">9.2.13. Upload documents</a></li>
+<li><a class="reference internal" href="#update-blog-mroonga-blog">9.2.14. Update blog(Mroonga blog)</a></li>
+<li><a class="reference internal" href="#announce-release-for-mailing-list">9.2.15. Announce release for mailing list</a></li>
+<li><a class="reference internal" href="#announce-release-for-twitter">9.2.16. Announce release for twitter</a></li>
+<li><a class="reference internal" href="#announce-release-for-facebook">9.2.17. Announce release for Facebook</a></li>
+<li><a class="reference internal" href="#bump-version">9.2.18. Bump version</a></li>
 </ul>
 </li>
 </ul>
@@ -414,13 +436,13 @@ Note that this tweet should be done when logged in by <code class="docutils lite
         <li class="right" >
           <a href="debug.html" title="9.1. How to debug"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.10 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../developer.html" ><span class="section-number">9. </span>Developer’s guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">9.2. </span>Release procedure</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2022, Mroonga Project.
+        &#169; Copyright 2009-2023, Mroonga Project.
     </div>
       <script src="http://connect.facebook.net/en_US/all.js"></script>
 
