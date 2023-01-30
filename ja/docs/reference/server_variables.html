@@ -3,13 +3,16 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v12.11 documentation</title>
+    <title>5.3. サーバ変数の一覧 &#8212; Mroonga vmrn_version documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
+    <script src="../static/jquery.js"></script>
+    <script src="../static/underscore.js"></script>
+    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/sphinx_highlight.js"></script>
     <script src="../static/translations.js"></script>
@@ -64,7 +67,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="5.2. SQL commands"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga vmrn_version documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U"><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.3. </span>サーバ変数の一覧</a></li> 
       </ul>
@@ -84,6 +87,10 @@
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code> のデフォルト値は <code class="docutils literal notranslate"><span class="pre">ERROR_AND_LOG</span></code> です。これは従来のmroongaと同等に振舞います。</p>
 <p>使用可能な <code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code> のリストです。</p>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -121,6 +128,10 @@
 <p>この変数はシステム変数でもセッション変数でもあります。</p>
 <p>以下は利用可能なフラグの一覧です。</p>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>フラグ</p></th>
 <th class="head"><p>説明</p></th>
@@ -174,12 +185,12 @@
 </div>
 <p>デフォルトの全文検索用パーサ。デフォルト値はconfigureの <code class="docutils literal notranslate"><span class="pre">with-default-parser</span></code> オプションで指定できます（無指定時は <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> ）。</p>
 <p>全文検索パーサーとして <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使う例です。この例では <code class="docutils literal notranslate"><span class="pre">body_index</span></code> 全文検索インデックスは <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使います。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_default_parser</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
-<span class="linenos">2</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
-<span class="linenos">3</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-<span class="linenos">4</span><span class="w">  </span><span class="n">body</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
-<span class="linenos">5</span><span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">body_index</span><span class="w"> </span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-<span class="linenos">6</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_default_parser</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">2</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="linenos">3</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos">4</span><span class="w">  </span><span class="n">body</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos">5</span><span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">body_index</span><span class="w"> </span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="w"></span>
+<span class="linenos">6</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">UTF8</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -190,12 +201,12 @@
 </div>
 <p>全文検索用のデフォルトのトークナイザー。デフォルト値はconfigureの <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer=TOKENIZER</span></code> オプションで指定できます。このオプションを指定しないときは <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> になります。</p>
 <p>全文検索用インデックスのトークナイザーとして <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使う例です。この例では <code class="docutils literal notranslate"><span class="pre">body_index</span></code> 全文検索インデックスは <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> を使います。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span>
-<span class="linenos">2</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
-<span class="linenos">3</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-<span class="linenos">4</span><span class="w">  </span><span class="n">body</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
-<span class="linenos">5</span><span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">body_index</span><span class="w"> </span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-<span class="linenos">6</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenBigramSplitSymbolAlphaDigit</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">2</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="linenos">3</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos">4</span><span class="w">  </span><span class="n">body</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos">5</span><span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">body_index</span><span class="w"> </span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="w"></span>
+<span class="linenos">6</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">UTF8</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -296,11 +307,11 @@
 <span id="server-variable-mroonga-libgroonga-support-mecab"></span><h2><span class="section-number">5.3.12. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_mecab</span></code><a class="headerlink" href="#mroonga-libgroonga-support-mecab" title="この見出しへのパーマリンク">¶</a></h2>
 <p>GroongaライブラリーのMeCabサポート状況</p>
 <p>GroongaライブラリーがMeCabをサポートしているかを確認するためのSQL例です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_libgroonga_support_mecab&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_libgroonga_support_mecab&#39;</span><span class="p">;</span><span class="w"></span>
 <span class="o">+</span><span class="c1">----------------------------------+-------+</span>
-<span class="o">|</span><span class="w"> </span><span class="n">Variable_name</span><span class="w">                    </span><span class="o">|</span><span class="w"> </span><span class="n">Value</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w"> </span><span class="n">Variable_name</span><span class="w">                    </span><span class="o">|</span><span class="w"> </span><span class="n">Value</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
 <span class="o">+</span><span class="c1">----------------------------------+-------+</span>
-<span class="o">|</span><span class="w"> </span><span class="n">mroonga_libgroonga_support_mecab</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">ON</span><span class="w">    </span><span class="o">|</span>
+<span class="o">|</span><span class="w"> </span><span class="n">mroonga_libgroonga_support_mecab</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">ON</span><span class="w">    </span><span class="o">|</span><span class="w"></span>
 <span class="o">+</span><span class="c1">----------------------------------+-------+</span>
 </pre></div>
 </div>
@@ -353,6 +364,10 @@
 <p>Mroongaのログの出力レベル。デフォルト値は <code class="docutils literal notranslate"><span class="pre">NOTICE</span></code> 。</p>
 <p>使用可能な <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> のリストです。</p>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>ログレベル</p></th>
 <th class="head"><p>説明</p></th>
@@ -446,23 +461,23 @@
 <p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="http://groonga.org/docs/spec/search.html">Groongaの検索の仕様</a> を確認してください。</p>
 <p>デフォルト値はGroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></code> でデフォルト値を設定できます。</p>
 <p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_match_escalation_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_match_escalation_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>この変数の値による挙動の変化を示す別の例です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
-<span class="linenos"> 2</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-<span class="linenos"> 3</span><span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
-<span class="linenos"> 4</span><span class="w">  </span><span class="n">tags</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
-<span class="linenos"> 5</span><span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">tags_index</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenDelimit&quot;&#39;</span>
-<span class="linenos"> 6</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos"> 3</span><span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="n">tags</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w"></span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">tags_index</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenDelimit&quot;&#39;</span><span class="w"></span>
+<span class="linenos"> 6</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 7</span>
 <span class="linenos"> 8</span><span class="c1">-- Test data</span>
-<span class="linenos"> 9</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Hello groonga!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;groonga install&quot;</span><span class="p">);</span>
-<span class="linenos">10</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Hello mroonga!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;mroonga install&quot;</span><span class="p">);</span>
+<span class="linenos"> 9</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Hello groonga!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;groonga install&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="linenos">10</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Hello mroonga!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;mroonga install&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="linenos">11</span>
 <span class="linenos">12</span><span class="c1">-- Matches all records that have &quot;install&quot; tag.</span>
-<span class="linenos">13</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;install&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">13</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;install&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span><span class="w"></span>
 <span class="linenos">14</span><span class="c1">-- id        title   tags</span>
 <span class="linenos">15</span><span class="c1">-- 1 Hello groonga!  groonga install</span>
 <span class="linenos">16</span><span class="c1">-- 2 Hello mroonga!  mroonga install</span>
@@ -472,20 +487,20 @@
 <span class="linenos">20</span><span class="c1">-- method is escalated and prefix search with &quot;gr&quot; is used.</span>
 <span class="linenos">21</span><span class="c1">-- The default threshold is 0. It means that no records are matched then</span>
 <span class="linenos">22</span><span class="c1">-- search method is escalated.</span>
-<span class="linenos">23</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;gr&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">23</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;gr&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span><span class="w"></span>
 <span class="linenos">24</span><span class="c1">-- id        title   tags</span>
 <span class="linenos">25</span><span class="c1">-- 1 Hello groonga!  groonga install</span>
 <span class="linenos">26</span>
 <span class="linenos">27</span><span class="c1">-- Disables escalation.</span>
-<span class="linenos">28</span><span class="k">SET</span><span class="w"> </span><span class="n">mroonga_match_escalation_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">28</span><span class="k">SET</span><span class="w"> </span><span class="n">mroonga_match_escalation_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="linenos">29</span><span class="c1">-- No records are matched.</span>
-<span class="linenos">30</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;gr&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">30</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;gr&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span><span class="w"></span>
 <span class="linenos">31</span><span class="c1">-- id        title   tags</span>
 <span class="linenos">32</span>
 <span class="linenos">33</span><span class="c1">-- Enables escalation again.</span>
-<span class="linenos">34</span><span class="k">SET</span><span class="w"> </span><span class="n">mroonga_match_escalation_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">34</span><span class="k">SET</span><span class="w"> </span><span class="n">mroonga_match_escalation_threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="linenos">35</span><span class="c1">-- Matches a record by prefix search with &quot;gr&quot;.</span>
-<span class="linenos">36</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;gr&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="linenos">36</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;gr&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span><span class="w"></span>
 <span class="linenos">37</span><span class="c1">-- id        title   tags</span>
 <span class="linenos">38</span><span class="c1">-- 1 Hello groonga!  groonga install</span>
 </pre></div>
@@ -565,6 +580,10 @@
 <p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">ONE_FULL_TEXT_SEARCH</span></code> です。このときは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 句に <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> が1つしかない場合だけコンデイションプッシュダウンを有効にします。</p>
 <p>以下は有効な値の一覧です。</p>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -672,7 +691,7 @@
         <li class="right" >
           <a href="sql_commands.html" title="5.2. SQL commands"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v12.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga vmrn_version documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.3. </span>サーバ変数の一覧</a></li> 
       </ul>
