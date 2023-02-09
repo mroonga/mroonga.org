@@ -3,9 +3,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>5.6. 制限事項 &#8212; Mroonga vmrn_version documentation</title>
+    <title>5.6. 制限事項 &#8212; Mroonga v13.00 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
@@ -67,7 +67,7 @@
         <li class="right" >
           <a href="udf/mroonga_snippet_html.html" title="5.5.7. mroonga_snippet_html()"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga vmrn_version documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.00 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U"><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.6. </span>制限事項</a></li> 
       </ul>
@@ -117,24 +117,24 @@
 <p>このような自動変換は <code class="docutils literal notranslate"><span class="pre">DATE</span></code> 型や <code class="docutils literal notranslate"><span class="pre">DATETIME</span></code> 型に限定されません。</p>
 <p>NULL値はカラムのデフォルト値へと変換されます。多くの場合、文字列型であれば空文字列へ、数値型であれば0へと変換されます。</p>
 <p>上記挙動を示す例はこちらです。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">date_limitation</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="linenos"> 2</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
-<span class="linenos"> 3</span><span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
-<span class="linenos"> 4</span><span class="w">  </span><span class="nb">date</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
-<span class="linenos"> 5</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span><span class="w"></span>
-<span class="linenos"> 6</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">datetime_limitation</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="linenos"> 7</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
-<span class="linenos"> 8</span><span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
-<span class="linenos"> 9</span><span class="w">  </span><span class="n">datetime</span><span class="w"> </span><span class="n">DATETIME</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
-<span class="linenos">10</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">date_limitation</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="linenos"> 3</span><span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="nb">date</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="linenos"> 5</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">datetime_limitation</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos"> 7</span><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="n">datetime</span><span class="w"> </span><span class="n">DATETIME</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="linenos">10</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">UTF8</span><span class="p">;</span>
 <span class="linenos">11</span>
 <span class="linenos">12</span><span class="c1">-- Test data for date_limitation</span>
-<span class="linenos">13</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">date_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="linenos">14</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">date_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="linenos">13</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">date_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
+<span class="linenos">14</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">date_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;1970-00-00&quot;</span><span class="p">);</span>
 <span class="linenos">15</span>
 <span class="linenos">16</span><span class="c1">-- Test data for datetime_limitation</span>
-<span class="linenos">17</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">datetime_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="linenos">18</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">datetime_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">,</span><span class="w"> </span><span class="n">datetime</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="linenos">17</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">datetime_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;NULL&quot;</span><span class="p">);</span>
+<span class="linenos">18</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">datetime_limitation</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="p">,</span><span class="w"> </span><span class="n">datetime</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;1970-00-00 00:00:00&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>実行結果はこちらです。:</p>
@@ -223,7 +223,7 @@
         <li class="right" >
           <a href="udf/mroonga_snippet_html.html" title="5.5.7. mroonga_snippet_html()"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga vmrn_version documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.00 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.6. </span>制限事項</a></li> 
       </ul>
