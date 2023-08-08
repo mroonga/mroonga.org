@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>お知らせ - 12系 &#8212; Mroonga v13.05 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
+    <script src="../static/doctools.js"></script>
+    <script src="../static/sphinx_highlight.js"></script>
+    <script src="../static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+  <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/news/12.html" title="English">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">お知らせ - 12系</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="news-12-series">
+<h1>お知らせ - 12系<a class="headerlink" href="#news-12-series" title="この見出しへのパーマリンク">¶</a></h1>
+<section id="release-12-12-2023-01-29">
+<span id="release-12-12"></span><h2>12.12リリース - 2023-01-29<a class="headerlink" href="#release-12-12-2023-01-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="improvements">
+<h3>改良<a class="headerlink" href="#improvements" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] AlmaLinux 9 を新しくサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MySQL 8.0.32をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MySQL 5.7.41をサポートしました。</p></li>
+<li><p>複合主キーを設定しているテーブルで通常のカラムの更新ができるようになりました。 [GitHub#592] [handmoundさんが報告]</p>
+<p>以下のようにMroongaストレージエンジンを使ったテーブルに複合主キーを設定しているときは、通常のカラムを更新できませんでした。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">char</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">score</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="p">),</span>
+<span class="w">  </span><span class="n">note</span><span class="w"> </span><span class="nb">char</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">search_note_idx</span><span class="w"> </span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Taro Yamada&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">);</span>
+
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">note</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Note&quot;</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Taro Yamada&quot;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">29</span><span class="p">;</span>
+
+<span class="n">ERROR</span><span class="w"> </span><span class="mi">1265</span><span class="w"> </span><span class="p">(</span><span class="mi">01000</span><span class="p">):</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">truncated</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="k">column</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>このエラーはMariaDB向けMroongaでは発生しません。</p>
+</li>
+</ul>
+</section>
+<section id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>handmoundさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-11-2023-01-06">
+<span id="release-12-11"></span><h2>12.11リリース - 2020-01-06<a class="headerlink" href="#release-12-11-2023-01-06" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] 新しく、MariaDB 10.10をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/amazon-linux.html"><span class="doc">Amazon Linux</span></a>] MariaDB 10.5.10-2.amzn2.0.2をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../reference/server_variables.html"><span class="doc">サーバ変数の一覧</span></a>] 新しいサーバーステータス変数 <code class="docutils literal notranslate"><span class="pre">libgroonga_support_mecab</span></code> を追加しました。</p>
+<p>これはGroongaがTokenMecabをサポートしている時のみtrueです。</p>
+</li>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] MariaDB 10.5.18をサポートしました。</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>修正<a class="headerlink" href="#fixes" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../reference/udf/mroonga_highlight_html.html"><span class="doc">mroonga_highlight_html()</span></a>] <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html</span></code> を <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> と一緒に使った際にメモリーリークする問題を修正しました。</p></li>
+<li><p>Windows版MariaDB 10.9以降のMroongaを使った時にMeCabの初期化に失敗する問題を修正しました。</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-10-2022-11-29">
+<span id="release-12-10"></span><h2>12.10リリース - 2022-11-29<a class="headerlink" href="#release-12-10-2022-11-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id2">
+<h3>改良<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.3.37、10.4.27、10.5.18、10.6.11、10.7.7、10.8.6、10.9.4をサポートしました。 [GitHub #564][Josep Sanzさんの報告][かとうさんがパッチ提供]</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 8.0.30-22をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.40-43をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/windows.html"><span class="doc">Windows</span></a>] MariaDB 10.7、10.8、10.9をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/windows.html"><span class="doc">Windows</span></a>] 32bitバージョンのサポートをやめました。</p>
+<p>最近のMariaDBは32bitのWindowsでビルドできず、32bit向けの公式パッケージも存在しないためです。</p>
+</li>
+<li><p>[<a class="reference internal" href="../reference/udf/mroonga_highlight_html.html"><span class="doc">mroonga_highlight_html()</span></a>] 新しいパラメータ <code class="docutils literal notranslate"><span class="pre">open_tag</span></code> と <code class="docutils literal notranslate"><span class="pre">close_tag</span></code> を追加しました。 [GitHub #537][ishitakaさんによる報告]</p>
+<p>ハイライトに使うタグを <code class="docutils literal notranslate"><span class="pre">open_tag</span></code> と <code class="docutils literal notranslate"><span class="pre">close_tag</span></code> で指定できるようになりました。</p>
+<p>今までは固定で <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;...&lt;/span&gt;</span></code> というタグを使用しており、 <code class="docutils literal notranslate"><span class="pre">class</span></code> の変更や、別のタグが指定できず不便でした。今回からタグを指定できるようになったので、 <code class="docutils literal notranslate"><span class="pre">&lt;mark&gt;...&lt;/mark&gt;</span></code> などのハイライト用のタグも使えるようになって便利になりました。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span>
+<span class="w">                              </span><span class="s1">&#39;&lt;mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;/mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">close_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span>
+
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                               |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;mark&gt;Groonga&lt;/mark&gt; based storage engine. |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>詳細は <a class="reference internal" href="../reference/udf/mroonga_highlight_html.html"><span class="doc">mroonga_highlight_html()</span></a> を参照してください。</p>
+</li>
+<li><p>参照カウントモードをサポートしました。</p>
+<p>この機能によりメモリー使用量を一定量に保つことができますが、パフォーマンスが悪化します。そのため、メモリー不足の場合には、この機能を使用する前に、メモリーを増強することを検討してください。</p>
+<p>参照カウントモードは MySQLの <a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/ja/server-system-variables.html#sysvar_table_open_cache">table_open_cache</a> とともに使用します。</p>
+<p>MySQLは <code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> で指定した個数のテーブルをキャッシュしておくことができます。キャッシュされているテーブルはまだ使用中なので、Groongaのオブジェクトも解放されません。</p>
+<p><code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> で指定した個数よりも多いテーブルが開かれたとき、使用頻度が低いテーブルが閉じられます。参照カウントモードが有効なとき、そのタイミングでGroongaのオブジェクトも閉じられます。</p>
+<p>このようにして参照カウントモードではメモリー使用量を一定に保っています。</p>
+<p>実際に使用する際には、ステータス変数の <a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/ja/server-status-variables.html#statvar_Open_tables">Open_tables</a> の値とメモリー使用量を見ながら <code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> の値を調整することで、メモリー使用量とパフォーマンスのバランスを調整する必要があります。なぜなら、この機能はメモリー使用量を一定に保ちますが、その分パフォーマンスが悪化するためです。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Open_tables</span></code> の確認方法は以下の通りです。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;Open_tables&#39;</span><span class="p">;</span>
+<span class="c1">-- +---------------+-------+</span>
+<span class="c1">-- | Variable_name | Value |</span>
+<span class="c1">-- +---------------+-------+</span>
+<span class="c1">-- | Open_tables   | 643   |</span>
+<span class="c1">-- +---------------+-------+</span>
+</pre></div>
+</div>
+<p>通常は <code class="docutils literal notranslate"><span class="pre">Open_tables</span></code> より <code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> を大きくして常に使っているすべてテーブルをキャッシュします。しかし、メモリーに余裕がない環境では一部の使用頻度の低いテーブルをキャッシュから落として解放することでメモリー使用量を削減します。使用頻度の低いテーブルをキャッシュから落とすには <code class="docutils literal notranslate"><span class="pre">Open_tables</span></code> より <code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> を小さくします。<code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> を小さくすればするほど、より多くのテーブルがキャッシュから落ちます。その分メモリー使用量は減りますが、テーブルの開き直しが必要になるためパフォーマンスは悪化します。<code class="docutils literal notranslate"><span class="pre">table_open_cache</span></code> を小さくすればするほど、パフォーマンスが悪化するので、小さくするのはメモリー使用量が許容範囲内に収まる程度までにしておきます。</p>
+<p>参照カウントモードを有効にするには、my.cnfに以下の値を設定します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loose</span><span class="o">-</span><span class="n">mroonga</span><span class="o">-</span><span class="n">enable</span><span class="o">-</span><span class="n">reference</span><span class="o">-</span><span class="n">count</span> <span class="o">=</span> <span class="n">ON</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>MySQL起動後に変数で指定しても参照カウントモードは有効になりません。my.cnfで指定してください。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_enable_reference_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">ON</span>
+</pre></div>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>修正<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>Windows版のMroongaに groonga-normalizer-mysql をバンドルしていなかった問題を修正しました。</p>
+<p>Mroonga 12.09 にて groonga-normalizer-mysql をバンドルするよう修正したとアナウンスしましたが、修正されていませんでした。</p>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>感謝<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>Josep Sanzさん</p></li>
+<li><p>かとうさん</p></li>
+<li><p>ishitakaさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-09-2022-10-28">
+<span id="release-12-09"></span><h2>12.09リリース - 2022-10-28<a class="headerlink" href="#release-12-09-2022-10-28" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id5">
+<h3>改良<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.9.3をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MySQL 5.7.40をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MySQL 8.0.31をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 22.04 (Jammy Jellyfish) の MariaDB 10.6 をサポートしました。</p></li>
+<li><p>クエリーのタイムアウトパラメータをサポートしました。 [GitHub #344] [かずひこさんが報告]</p>
+<p>MySQL/MariaDB はクエリーの実行時間がタイムアウトパラメータで指定した時間を超過した場合、クエリーを中断することができます。タイムアウトパラメータは、MySQL では <code class="docutils literal notranslate"><span class="pre">MAX_EXECUTION_TIME</span></code> 、MariaDBでは <code class="docutils literal notranslate"><span class="pre">max_statement_time</span></code> です。</p>
+<p>しかし、MySQL/MariaDBがクエリーを中断し結果を返した後も、Mroongaは実行中のクエリーを中断していませんでした。そのため、クエリーが大量に結果にマッチする場合には、MySQL/MariaDBがクエリーを中断した後もメモリやCPUのリソースを消費し続けていました。</p>
+<p>本バージョンから、Mroongaは指定された時間でクエリーを中断できるようになり、タイムアウトパラメータが正しく動作するようになりました。そのため、クエリーを中断した後もメモリやCPUリソースを消費し続ける問題も発生しなくなりました。</p>
+<p>この機能の使い方は以下の通りです。</p>
+<p>以下はMySQLの場合の例です。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="p">(</span>
+<span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="cm">/*+ MAX_EXECUTION_TIME(1) */</span><span class="w"> </span><span class="n">title</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>以下はMariaDBの場合の例です。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="p">(</span>
+<span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+
+<span class="k">SET</span><span class="w"> </span><span class="k">STATEMENT</span><span class="w"> </span><span class="n">max_statement_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">001</span><span class="w"> </span><span class="k">FOR</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">title</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>この機能は、 <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> でも使えます。</p>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>修正<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>Windows版のMroongaに groonga-normalizer-mysql をバンドルしていなかった問題を修正しました。</p>
+<p>このバグは、 Mroonga 12.02から存在していました。したがって、Windows版のMroonga 12.02 から 12.08 では groonga-normalizer-mysql を使えません。</p>
+</li>
+</ul>
+</section>
+<section id="id7">
+<h3>感謝<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>かずひこさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-08-2022-10-03">
+<span id="release-12-08"></span><h2>12.08リリース - 2022-10-03<a class="headerlink" href="#release-12-08-2022-10-03" title="この見出しへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.6.10, 10.7.6, 10.8.5をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/oracle-linux.html"><span class="doc">Oracle Linux</span></a>] MySQL 8.0.30をサポートしました。</p></li>
+</ul>
+</section>
+<section id="release-12-07-2022-08-30">
+<span id="release-12-07"></span><h2>12.07リリース - 2022-08-30<a class="headerlink" href="#release-12-07-2022-08-30" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id8">
+<h3>改良<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.3.36、10.4.26、10.5.17、10.6.9、10.7.5、10.8.4をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 5.7.39-42をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 8.0.29-21をサポートしました。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Percona Server 8.0.29で使用しているMySQL 8.0.29には重大な問題があります。そのため、このバージョンの使用は推奨しません。</p>
+<p>問題に関する詳細は、 <a class="reference external" href="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-29.html">MySQL 8.0.29 リリースノート</a> を参照してください。</p>
+</div>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>修正<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>install.sqlを使用したインストールおよびアップグレードに失敗する問題を修正しました。[GitHub #525][Tomohiro KATOさんの報告][Jérome Perrinさんがパッチ提供]</p>
+<p>install.sqlが壊れていたことが原因です。この問題は、 Mroonga 12.06以降で発生していました。</p>
+</li>
+<li><p>MySQL 8.0 以上を使用しているとき、<code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> が16進数ダンプで結果を返す問題を修正しました。</p>
+<p>このバージョンから、<code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> が正しい文字コードで結果を返すようになります。</p>
+</li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] AlmaLinux 8 向けMroongaのインストール手順を修正しました。[Gitter/ja:62fe4ca5b16e8236e3ef225c][handmoundさんの報告]</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>感謝<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>handmoundさん</p></li>
+<li><p>Jérome Perrinさん</p></li>
+<li><p>かとうさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-06-2022-08-04">
+<span id="release-12-06"></span><h2>12.06リリース - 2022-08-04<a class="headerlink" href="#release-12-06-2022-08-04" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id11">
+<h3>改良<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.7.39をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MySQL 8.0.30をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 8.0.28-20をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.8をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.2のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Debian 10 (buster)のサポートをやめました。</p></li>
+<li><p>MroongaをMySQLに登録する際に、update.sql を実行する必要がないように変更しました。[GitHub #509][Jérome Perrin さんの報告]</p>
+<p>Mroonga 12.04から、MroongaをMySQLに登録するには、install.sqlとupdate.sqlの両方を実行する必要がありました。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sql</span>
+<span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">update</span><span class="o">.</span><span class="n">sql</span>
+</pre></div>
+</div>
+<p>この改善では、Mroonga 12.04 より前と同じように、install.sqlを実行するだけで良いように変更しています。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sql</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>感謝<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>Jérome Perrinさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-04-2022-06-01">
+<span id="release-12-04"></span><h2>12.04リリース - 2022-06-01<a class="headerlink" href="#release-12-04-2022-06-01" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id13">
+<h3>改良<a class="headerlink" href="#id13" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../reference/server_variables.html"><span class="doc">サーバ変数の一覧</span></a>] 新しいサーバー変数 <code class="docutils literal notranslate"><span class="pre">Mroonga_memory_map_size</span></code> を追加しました。</p>
+<p>以下のように、Mroongaのメモリーマップサイズの合計を取得できます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">&#39;Mroonga_memory_map_size&#39;</span><span class="p">;</span>
+<span class="o">+-------------------------+----------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>           <span class="o">|</span> <span class="n">Value</span>    <span class="o">|</span>
+<span class="o">+-------------------------+----------+</span>
+<span class="o">|</span> <span class="n">Mroonga_memory_map_size</span> <span class="o">|</span> <span class="mi">83406848</span> <span class="o">|</span>
+<span class="o">+-------------------------+----------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Windowsでは、Mroogaが物理メモリーとスワップ領域を使い果たした場合、それ以上メモリーをマップすることができません。そのため、この値を監視することで、メモリーが十分でない環境でもメモリーマップサイズを適切にコントロールできます。</p>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 8.0.28-19をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 5.7.38-41をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.2.44, 10.3.35、10.4.25、10.5.16、10.6.8、10.7.4をサポートしました。</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>修正<a class="headerlink" href="#id14" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>Mroongaのアップデートに失敗することがある問題を修正しました。 [groonga-dev,04982, groonga-dev,04987][Mitsuo YoshidaさんとOHTSUKA Soushiさんの報告]</p>
+<p>この問題が発生した場合、&quot;apt update&quot;等でMroongaを更新した後、Mroongaが無効になります。その場合、以下の手順でMroongaを手動でインストールしてください。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">install</span><span class="o">.</span><span class="n">sql</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id15">
+<h3>感謝<a class="headerlink" href="#id15" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>Mitsuo Yoshidaさん</p></li>
+<li><p>OHTSUKA Soushiさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-03-2022-05-06">
+<span id="release-12-03"></span><h2>12.03リリース - 2022-05-06<a class="headerlink" href="#release-12-03-2022-05-06" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id16">
+<h3>改良<a class="headerlink" href="#id16" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.37-40をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.7.38をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MySQL 8.0.29をサポートしました。</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>修正<a class="headerlink" href="#id17" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>MariaDB 10.5.14 上でMroongaがインデックスの作成に失敗することがある問題を修正しました。 [GitHub clear-code/redmine_full_text_search#103][wateさんの報告]</p></li>
+<li><p>全文検索でメモリーリークする問題を修正しました。[OHTSUKA SoushiさんとMitsuo Yoshidaさんの報告]</p>
+<p>この問題は、 <a class="reference external" href="https://mroonga.org/ja/docs/reference/optimizations.html#order-by-limit">order limit　の最適化</a> が使われた時に発生します。ただし、MariaDBを使っている場合はこの最適化を使っていなくても発生します。</p>
+<p>この問題は、 Mroonga 11.03以降で発生していました。</p>
+</li>
+</ul>
+</section>
+<section id="id18">
+<h3>感謝<a class="headerlink" href="#id18" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>wateさん</p></li>
+<li><p>OHTSUKA Soushiさん</p></li>
+<li><p>Mitsuo Yoshidaさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-12-02-2022-03-29">
+<span id="release-12-02"></span><h2>12.02リリース - 2022-03-29<a class="headerlink" href="#release-12-02-2022-03-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id19">
+<h3>改良<a class="headerlink" href="#id19" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>MySQL 8.0以降でラッパーモードのサポートをやめました。</p></li>
+<li><p>サーバー変数を使って、バックトレースを無効にできるようになりました。</p>
+<p>&quot;SET GLOBAL mroonga_enable_back_trace = false;&quot; とすることで、バックトレースを無効にできます。</p>
+</li>
+<li><p>重み付きベクターの重みに <code class="docutils literal notranslate"><span class="pre">float32</span></code> 型を追加しました。</p>
+<p><code class="docutils literal notranslate"><span class="pre">float32</span></code> で重みを格納できます。この機能を使うには、カラムを定義する時に <code class="docutils literal notranslate"><span class="pre">WEIGHT_FLOAT32</span></code> フラグを追加する必要があります。</p>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.3.34、10.4.24、10.5.15、10.6.7、10.7.3をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.2.43をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>][<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Percona Server 8.0.27-18をサポートしました。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MISSING_*</span></code> と <code class="docutils literal notranslate"><span class="pre">INVALID_*</span></code> フラグをサポートしました。</p>
+<p>これらのフラグの詳細は、 <a class="reference external" href="https://groonga.org/ja/docs/news.html#release-12-0-2">https://groonga.org/ja/docs/news.html#release-12-0-2</a> を参照してください。</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="release-12-00-2022-02-09">
+<span id="release-12-00"></span><h2>12.00リリース - 2022-02-09<a class="headerlink" href="#release-12-00-2022-02-09" title="この見出しへのパーマリンク">¶</a></h2>
+<p>メジャーバージョンアップです! メジャーバージョンアップですが、互換性は壊れていないので、データベースを再構築することなく12.00へアップグレードできます。</p>
+<p>まずはじめに、Mroonga 11.00から11.13までの変更点を紹介します。次に、12.00の主な変更点を紹介します。</p>
+</section>
+<section id="summary-of-changes-from-mroonga-11-0-0-to-11-1-3">
+<h2>Mroonga 11.00から 11.13までの主な変更点<a class="headerlink" href="#summary-of-changes-from-mroonga-11-0-0-to-11-1-3" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="new-features-and-improvements">
+<h3>新規機能と改良<a class="headerlink" href="#new-features-and-improvements" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>以下のようにパッケージ名を変更しました。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mariadb-server-10.x-mroonga</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">mariadb-10.x-mroonga</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mysql-server-5.x-mroonga</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">mysql-community-5.x-mroonga</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mysql-server-8.x-mroonga</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">mysql-community-8.x-mroonga</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">percona-server-5x-mroonga</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">percona-server-5.x-mroonga</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">percona-server-8x-mroonga</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">percona-server-8.x-mroonga</span></code></p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>パッケージ名を変更しています。この変更の影響でこのバージョンにアップグレード後、Mroongaが無効になることがあります。このバージョンにアップグレードする場合、以下の点を必ず確認してください。</p>
+<p>アップグレード後にMroongaが無効だった場合は、Mroongaを手動でインストールし直す必要があります。Mroongaの手動インストール及び、Mroongaが有効かどうかの確認については、以下のURLを参照してください。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://mroonga.org/docs/tutorial/installation_check.html">https://mroonga.org/docs/tutorial/installation_check.html</a></p></li>
+</ul>
+</div></blockquote>
+<p>Mroonga 11.03をまたいでMroongaをアップグレードする場合は、この現象が発生するので、注意してください。</p>
+<p>このバージョンにアップグレード後に、Mroongaは有効だがバージョンが古いという場合は、MySQL、MariaDB、PerconaServerを再起動する必要があります。Mroongaのバージョンは以下のコマンドで確認できます。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">VARIABLES</span> <span class="pre">LIKE</span> <span class="pre">'mroonga_version';</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+</li>
+<li><p>[<a class="reference internal" href="../reference/udf/mroonga_snippet_html.html"><span class="doc">mroonga_snippet_html()</span></a>] <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code> でカスタマイズしたノーマライザーをサポートしました。</p>
+<ul>
+<li><p>この機能によって、以下のように <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code> でカスタマイズしたノーマライザーを使えます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE terms (
+  term VARCHAR(64) NOT NULL PRIMARY KEY
+) COMMENT=&#39;normalizer &quot;NormalizerNFKC130(&#39;&#39;unify_kana&#39;&#39;, true)&quot;&#39;
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+SELECT mroonga_snippet_html(&#39;これはMroonga（ムルンガ）です。&#39;,
+                            &#39;terms&#39; as lexicon_name,
+                            &#39;むるんが&#39;) as snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;これはMroonga（&lt;span class=&quot;keyword&quot;&gt;ムルンガ&lt;/span&gt;）です。&lt;/div&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../reference/server_variables.html"><span class="doc">サーバ変数の一覧</span></a>] <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code> をデフォルトで無効にしました。</p>
+<p><code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code> 自動リカバリーのために操作の記録を有効にするかどうかを決めるものです。</p>
+<p>この操作記録はMroongaがクラッシュしたときに自動的にリカバリーするためのものです。通常、Mroonga内にロックが残留している場合、INSERT/DELETE/UPDATEは実行できませんが、 <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code> が有効な場合、INSERT/DELETE/UPDATEに加えてSELECTも実行出来ないことがあります。自動リカバリーがロックの残留によって、ブロックされるためです。</p>
+<p>したがって、このバージョンから、デフォルト値を <code class="docutils literal notranslate"><span class="pre">OFF</span></code> にしました。ISERT/DELETE/UPDATE は、ロックの残留によって変わらずブロックされますが、操作記録を無効にすることで、SELECTは動作する可能性があります。</p>
+<p>残留したロックに対する正しい対処は以下の通りです。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.clear-code.com/blog/2021/6/1/mroonga-recover-lock-failed-2021.html">https://www.clear-code.com/blog/2021/6/1/mroonga-recover-lock-failed-2021.html</a> (日本語のみ)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="id20">
+<h3>修正<a class="headerlink" href="#id20" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>MySQL/MariaDBのアップグレード後にクラッシュすることがある問題を修正しました。</p>
+<ul class="simple">
+<li><p>MySQL/MariaDB をアップグレード後に、 <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">...</span> <span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> を実行するとMroongaがクラッシュすることがあります。</p></li>
+</ul>
+</li>
+<li><p>WHERE句に &quot;WHERE primary_key IN (&quot;&quot;)&quot; と指定した際にMroongaが誤ったレコードを返すことがある問題を修正しました。</p>
+<p>詳細は、 <a class="reference internal" href="11.html#release-11-07"><span class="std std-ref">release 11.07</span></a> を参照してください。</p>
+</li>
+<li><p>[<a class="reference internal" href="../reference/optimizations.html"><span class="doc">最適化</span></a>] Mroongaが行カウントの最適化を誤って適用する問題を修正しました。</p>
+<p>詳細は、 <a class="reference internal" href="11.html#release-11-10"><span class="std std-ref">release 11.10</span></a> を参照してください。</p>
+</li>
+<li><p>MySQL 5.7で作成されたDBをMySQL 8.0にアップグレードすると、Mroongaがクラッシュする問題を修正しました。</p></li>
+<li><p>緯度と経度を逆に保存していた問題を修正しました。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>この修正によって、後方互換性が壊れます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code> 型を使用しているユーザーは、Mroonga 11.03にアップグレードする前に現在のデータを保存し、アップグレード後に保存したデータをリストアする必要があります。 データのダンプ/リストアには、以下の方法が使えます。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mysqldump</span></code></p></li>
+<li><p>アップグレード前に <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENGINE=InnoDB</span></code> を実行し、アップグレード後に <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">ENGINE=Mroonga</span></code> を実行する。</p></li>
+</ul>
+</div></blockquote>
+<p>この修正を適用しない場合、 <code class="docutils literal notranslate"><span class="pre">INSERT/UPDATE/SELECT/SELECT</span></code> はうまく動作しますが、データはGroongaが誤った(緯度と経度はGroonga内で逆にされます)保存をします。そのため、 空間データに対する、 <code class="docutils literal notranslate"><span class="pre">mroonga_command('select</span> <span class="pre">...')</span></code> は動作しません。</p>
+</div>
+</li>
+<li><p>外部キー制約が登録されない問題を修正しました。</p>
+<p>この問題は MySQL8.0 でのみ発生します。</p>
+<p>詳細は、 <a class="reference internal" href="11.html#release-11-01"><span class="std std-ref">release 11.01</span></a> を参照してください。</p>
+</li>
+<li><p>対象のデータベースに外部キー制約があると、 <code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">DATABASE</span></code> に失敗する問題を修正しました。</p>
+<p>詳細は、 <a class="reference internal" href="11.html#release-11-01"><span class="std std-ref">release 11.01</span></a> を参照してください。</p>
+</li>
+<li><p>対象のテーブルが別のテーブルから参照されていると、 <code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">COLUMN</span></code> に失敗する問題を修正しました。</p>
+<p>詳細は、 <a class="reference internal" href="11.html#release-11-01"><span class="std std-ref">release 11.01</span></a> を参照してください。</p>
+</li>
+<li><p>MariaDBのMroongaでアップデートに失敗する問題を修正しました。</p></li>
+</ul>
+</section>
+<section id="newly-supported-oses">
+<h3>新しくサポートしたOS<a class="headerlink" href="#newly-supported-oses" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Debian 11 (bullseye)をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] AlmaLinux 8 をサポートしました。</p></li>
+</ul>
+</section>
+<section id="dropped-oses">
+<h3>サポートをやめたOS<a class="headerlink" href="#dropped-oses" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] CentOS 8のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 21.04 (Hirsute Hippo) のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 20.10 (Groovy Gorilla) のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 16.04 LTS (Xenial Xerus)のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 18.04 LTSのMariaDB 10.1のサポートをやめました。</p></li>
+</ul>
+</section>
+<section id="id21">
+<h3>感謝<a class="headerlink" href="#id21" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>shibanao4870さん</p></li>
+<li><p>Marc Laporteさん</p></li>
+<li><p>santalexさん</p></li>
+<li><p>Josep Sanzさん</p></li>
+<li><p>かとうさん</p></li>
+<li><p>Katsuhito Watanabeさん</p></li>
+<li><p>kenichi arimotoさん</p></li>
+<li><p>Vincent Pelletierさん</p></li>
+<li><p>Kosuke Yamashitaさん</p></li>
+<li><p>ひじーさん</p></li>
+</ul>
+<p>12.00の主な変更点は以下の通りです。</p>
+</section>
+<section id="id22">
+<h3>改良<a class="headerlink" href="#id22" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntuの mysql-server パッケージの最新バージョンをサポートしました。</p>
+<p>以下のバージョンをサポートしました。</p>
+<ul class="simple">
+<li><p>Ubuntu 18.04 LTS (bionic) mysql-server (5.7.37-0ubuntu0.18.04.1)</p></li>
+<li><p>Ubuntu 20.04 LTS (focal) mysql-server (8.0.28-0ubuntu0.20.04.3)</p></li>
+<li><p>Ubuntu 21.10 LTS (impish) mysql-server (8.0.28-0ubuntu0.21.10.3)</p></li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.2.42、10.3.33、10.4.23、10.5.14、10.6.6をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.3.33、10.4.23、10.5.14、10.6.6をサポートしました。</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">お知らせ - 12系</a><ul>
+<li><a class="reference internal" href="#release-12-12-2023-01-29">12.12リリース - 2023-01-29</a><ul>
+<li><a class="reference internal" href="#improvements">改良</a></li>
+<li><a class="reference internal" href="#thanks">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-11-2023-01-06">12.11リリース - 2020-01-06</a><ul>
+<li><a class="reference internal" href="#id1">改良</a></li>
+<li><a class="reference internal" href="#fixes">修正</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-10-2022-11-29">12.10リリース - 2022-11-29</a><ul>
+<li><a class="reference internal" href="#id2">改良</a></li>
+<li><a class="reference internal" href="#id3">修正</a></li>
+<li><a class="reference internal" href="#id4">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-09-2022-10-28">12.09リリース - 2022-10-28</a><ul>
+<li><a class="reference internal" href="#id5">改良</a></li>
+<li><a class="reference internal" href="#id6">修正</a></li>
+<li><a class="reference internal" href="#id7">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-08-2022-10-03">12.08リリース - 2022-10-03</a></li>
+<li><a class="reference internal" href="#release-12-07-2022-08-30">12.07リリース - 2022-08-30</a><ul>
+<li><a class="reference internal" href="#id8">改良</a></li>
+<li><a class="reference internal" href="#id9">修正</a></li>
+<li><a class="reference internal" href="#id10">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-06-2022-08-04">12.06リリース - 2022-08-04</a><ul>
+<li><a class="reference internal" href="#id11">改良</a></li>
+<li><a class="reference internal" href="#id12">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-04-2022-06-01">12.04リリース - 2022-06-01</a><ul>
+<li><a class="reference internal" href="#id13">改良</a></li>
+<li><a class="reference internal" href="#id14">修正</a></li>
+<li><a class="reference internal" href="#id15">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-03-2022-05-06">12.03リリース - 2022-05-06</a><ul>
+<li><a class="reference internal" href="#id16">改良</a></li>
+<li><a class="reference internal" href="#id17">修正</a></li>
+<li><a class="reference internal" href="#id18">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-02-2022-03-29">12.02リリース - 2022-03-29</a><ul>
+<li><a class="reference internal" href="#id19">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-12-00-2022-02-09">12.00リリース - 2022-02-09</a></li>
+<li><a class="reference internal" href="#summary-of-changes-from-mroonga-11-0-0-to-11-1-3">Mroonga 11.00から 11.13までの主な変更点</a><ul>
+<li><a class="reference internal" href="#new-features-and-improvements">新規機能と改良</a></li>
+<li><a class="reference internal" href="#id20">修正</a></li>
+<li><a class="reference internal" href="#newly-supported-oses">新しくサポートしたOS</a></li>
+<li><a class="reference internal" href="#dropped-oses">サポートをやめたOS</a></li>
+<li><a class="reference internal" href="#id21">感謝</a></li>
+<li><a class="reference internal" href="#id22">改良</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">お知らせ - 12系</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2023, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

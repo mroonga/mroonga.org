@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>News - 10 series &#8212; Mroonga v13.05 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
+    <script src="../static/doctools.js"></script>
+    <script src="../static/sphinx_highlight.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+  <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../ja/docs/news/10.html" title="日本語">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">News - 10 series</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="news-10-series">
+<h1>News - 10 series<a class="headerlink" href="#news-10-series" title="Permalink to this heading">¶</a></h1>
+<section id="release-10-11-2021-01-29">
+<span id="release-10-11"></span><h2>Release 10.11 - 2021-01-29<a class="headerlink" href="#release-10-11-2021-01-29" title="Permalink to this heading">¶</a></h2>
+<section id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">lexicon_flags</span></code> parameter.</p>
+<ul>
+<li><p>We can add <code class="docutils literal notranslate"><span class="pre">KEY_LARGE</span></code> flag to a <code class="docutils literal notranslate"><span class="pre">USING</span> <span class="pre">HASH</span></code> (non full-text search index) index as below by this parameter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">title</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">UNIQUE</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">USING</span> <span class="n">HASH</span> <span class="n">COMMENT</span> <span class="s1">&#39;lexicon_flags &quot;KEY_LARGE&quot;&#39;</span>
+<span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MySQL 5.6.51, 5.7.33, and 8.0.23.</p>
+<ul class="simple">
+<li><p>There are below restrictions in the MySQL 8.0 package.</p>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>] Wrapper mode is not supported yet.</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>] JSON data type is not supported yet.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>] Fixed a bug that the fast order limit optimization doen’t work when “WHERE COLUMN IN (SUBQUERY)” exists.</p></li>
+<li><p>Fixed a bug that we can’t use in place <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> when we modify the data type of a column that has any indexes.</p>
+<ul>
+<li><p>This bug occur when we execute <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> in <code class="docutils literal notranslate"><span class="pre">ALGORITHM=INPLACE</span></code>.
+Therefore, this bug doesn’t occur when we use <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> in <code class="docutils literal notranslate"><span class="pre">ALGORITHM=COPY</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="release-10-10-2020-12-29">
+<span id="release-10-10"></span><h2>Release 10.10 - 2020-12-29<a class="headerlink" href="#release-10-10-2020-12-29" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>] Added support for customize table flags. [Gitter][Reported by Shinichi Takayanagi]</p>
+<ul>
+<li><p>Until now, we can’t customize table flags in storage mode.</p></li>
+<li><p>We can customize table flags as below since this release.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">terms</span> <span class="p">(</span>
+  <span class="n">term</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>
+<span class="p">)</span> <span class="n">COMMENT</span><span class="o">=</span><span class="s1">&#39;flags &quot;TABLE_HASH_KEY|KEY_LARGE&quot;&#39;</span>
+  <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Please refer to the following URL about customizable items.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://groonga.org/ja/docs/reference/commands/table_create.html#flags">https://groonga.org/ja/docs/reference/commands/table_create.html#flags</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for Ubuntu 20.10 (Groovy Gorilla).</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 8.0.22.</p></li>
+</ul>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Shinichi Takayanagi</p></li>
+<li><p>pinpikokun [Provided the patch at GitHub#373]</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-09-2020-12-04">
+<span id="release-10-09"></span><h2>Release 10.09 - 2020-12-04<a class="headerlink" href="#release-10-09-2020-12-04" title="Permalink to this heading">¶</a></h2>
+<section id="id2">
+<h3>Improvements<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MariaDB 10.2.36, 10.3.27, 10.4.17, and 10.5.8</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 5.6.50, 5.7.32, and 8.0.21.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MySQL 5.6.50, 5.7.32, and 8.0.22.</p>
+<ul class="simple">
+<li><p>There are below restrictions in the MySQL 8.0 package.</p>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>] Wrapper mode is not supported yet.</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>] JSON data type is not supported yet.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Dropped support for MariaDB 10.1 except Ubuntu 18.04 LTS.</p>
+<ul class="simple">
+<li><p>Because MariaDB 10.1 is EOL.</p></li>
+<li><p>However, we have only supported MariaDB 10.1 for Ubintu 18.04 LTS</p>
+<ul>
+<li><p>Because MariaDB 10.1 has supported yet on it.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Dropped support for CentOS 6.</p>
+<ul class="simple">
+<li><p>Because CentOS 6 is EOL.</p></li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../reference/udf/mroonga_snippet_html.html"><span class="doc">mroonga_snippet_html()</span></a>] Added support for customizing normalizer.</p>
+<ul>
+<li><p>We can use custom normalizer instead of the default normalizer(NromalizerAuto) by using <code class="docutils literal notranslate"><span class="pre">table_name</span></code> and <code class="docutils literal notranslate"><span class="pre">index_name</span></code>.</p>
+<ul class="simple">
+<li><p>We specify target table name to <code class="docutils literal notranslate"><span class="pre">table_name</span></code> as below.</p></li>
+<li><p>We specify index name that is specified on target table  to <code class="docutils literal notranslate"><span class="pre">index_name</span></code> as below.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
+
+CREATE TABLE memos (
+content text,
+fulltext index content_index (content)
+COMMENT &#39;normalizer &quot;NormalizerNFKC121(\&#39;unify_kana\&#39;, true)&quot;&#39;
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SELECT mroonga_snippet_html(&#39;This is Mroonga（ムルンガ）.&#39;,
+&#39;memos&#39; as table_name,
+&#39;content_index&#39; as index_name,
+&#39;むるんが&#39;) as snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;This is Mroonga（&lt;span class=&quot;keyword&quot;&gt;ムルンガ&lt;/span&gt;）.&lt;/div&gt;
+</pre></div>
+</div>
+<ul>
+<li><p>We can also use mixing search by query and search by keywords by this modification.</p></li>
+<li><p>For example as below, we can highlight keywords that we both specify by <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> and <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">snippet</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
+SELECT mroonga_snippet_html(&#39;Mroonga has two running modes.
+
+One is “storage mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data update, lock-free full text search and geolocation search. But it does not support transactions.
+
+Another one is “wrapper mode”, that adds full text search function on other storage engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB. But you cannot have benefits from Groonga’s read-lock free characteristic. And you might have the performance bottle neck in the storage engine in updating data.&#39;,
+&#39;lock storage&#39; AS query,
+&#39;update&#39; AS snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data &lt;span class=&quot;keyword&quot;&gt;update&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt;-fr&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;text search function on other &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine, ex. transaction in In&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;noDB. But you cannot have benefits from Groonga’s read-&lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt; free characteristic. And you might have the performance bottle neck in the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine in updating data.&lt;/div&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="release-10-07-2020-10-02">
+<span id="release-10-07"></span><h2>Release 10.07 - 2020-10-02<a class="headerlink" href="#release-10-07-2020-10-02" title="Permalink to this heading">¶</a></h2>
+<section id="id3">
+<h3>Improvements<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MariaDB 10.5.5</p></li>
+<li><p>Added new tests that use &gt; 256 byte strings in the column compression tests. [GitHub#350][Patched by KartikSoneji]</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Thanks<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>KartikSoneji</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-06-2020-09-02">
+<span id="release-10-06"></span><h2>Release 10.06 - 2020-09-02<a class="headerlink" href="#release-10-06-2020-09-02" title="Permalink to this heading">¶</a></h2>
+<section id="id5">
+<h3>Improvements<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We removed the news that “Added support for MariaDB 10.5.5”.</p>
+<p>At first, we announced that “Added support for MariaDB 10.5.5”.
+However, it had been wrong.
+Mroonga 10.06 can build on MariaDB 10.5. However, there are points that are not working normally yet.</p>
+</div>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Dropped Ubuntu 19.10 (Eoan Ermine) support.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 8.0.20.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MariaDB 10.1.46, 10.2.33, 10.3.24, and 10.4.14.</p></li>
+<li><p>Modify how to install into Debian GNU/Linux.</p>
+<ul>
+<li><p>We modify to use <code class="docutils literal notranslate"><span class="pre">groonga-apt-source</span></code> instead of <code class="docutils literal notranslate"><span class="pre">groonga-archive-keyring</span></code>.</p></li>
+<li><p>Because the <code class="docutils literal notranslate"><span class="pre">lintian</span></code> command recommends using apt-source if a package that it puts files under the <code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.lists.d/</span></code>.</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">lintian</span></code> command is the command which checks for many common packaging errors.</p></li>
+<li><p>Please also refer to the following for the details about installation procedures.</p>
+<ul>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 5.7.31.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-05-2020-07-29">
+<span id="release-10-05"></span><h2>Release 10.05 - 2020-07-29<a class="headerlink" href="#release-10-05-2020-07-29" title="Permalink to this heading">¶</a></h2>
+<section id="id6">
+<h3>Improvements<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MySQL 5.6.49, 5.7.31, and 8.0.21.</p>
+<ul>
+<li><p>There are below restrictions in the MySQL 8.0 package.</p>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>] Wrapper mode is not supported yet.</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>] JSON data type is not supported yet.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 5.6.49.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-03-2020-05-29">
+<span id="release-10-03"></span><h2>Release 10.03 - 2020-05-29<a class="headerlink" href="#release-10-03-2020-05-29" title="Permalink to this heading">¶</a></h2>
+<section id="id7">
+<h3>Improvements<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for Ubuntu 20.04 (Focal Fossa) support.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Dropped Ubuntu 19.04 (Disco Dingo) support.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MariaDB 10.1.45, 10.2.32, 10.3.23, and 10.4.13.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 5.6.48 and 5.7.30.</p></li>
+<li><p>Dropped support for MariaDB 10.1 in Windows.</p>
+<ul>
+<li><p>Because MariaDB 10.1 will be EOL soon.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h3>Fixes<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Fixed a bug that Mroonga for Ubuntu 19.10 (Eoan Ermine) was not provided.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-02-2020-04-29">
+<span id="release-10-02"></span><h2>Release 10.02 - 2020-04-29<a class="headerlink" href="#release-10-02-2020-04-29" title="Permalink to this heading">¶</a></h2>
+<section id="id9">
+<h3>Improvements<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">WITH_WEIGHT</span></code> column flag.</p>
+<ul>
+<li><p>This flag require Groonga 10.0.2 or later.</p></li>
+<li><p>We can insert vector with weight as below by this flag.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">tags</span> <span class="p">(</span>
+  <span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>
+<span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">bugs</span> <span class="p">(</span>
+  <span class="n">tags</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_VECTOR|WITH_WEIGHT&quot;, type &quot;tags&quot;&#39;</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="n">bugs_tags</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;table &quot;tags&quot;, flags &quot;WITH_WEIGHT&quot;&#39;</span>
+<span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">bugs</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s1">&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5}&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Dropped support for MariaDB 5.5 in CentOS7.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for MySQL 5.6.48, 5.7.30, 8.0.20</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-01-2020-03-30">
+<span id="release-10-01"></span><h2>Release 10.01 - 2020-03-30<a class="headerlink" href="#release-10-01-2020-03-30" title="Permalink to this heading">¶</a></h2>
+<section id="id10">
+<h3>Improvements<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Added support for Percona Server 5.7.29.</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Fixes<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed a bug that Mroonga crashed when we sent to query as below conditions. [GitHub#303][Reported by pinpikokun]</p>
+<ul>
+<li><p>When Mroonga’s optimize of <code class="docutils literal notranslate"><span class="pre">ORDER_BY_LIMIT</span></code> is valid.</p>
+<ul>
+<li><p>See <a class="reference external" href="https://mroonga.org/docs/reference/optimizations.html#order-by-limit">https://mroonga.org/docs/reference/optimizations.html#order-by-limit</a> about conditions of this optimize.</p></li>
+</ul>
+</li>
+<li><p>When sub query by using Mroonga does not use <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>Thanks<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>pinpikokun</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">News - 10 series</a><ul>
+<li><a class="reference internal" href="#release-10-11-2021-01-29">Release 10.11 - 2021-01-29</a><ul>
+<li><a class="reference internal" href="#improvements">Improvements</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-10-2020-12-29">Release 10.10 - 2020-12-29</a><ul>
+<li><a class="reference internal" href="#id1">Improvements</a></li>
+<li><a class="reference internal" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-09-2020-12-04">Release 10.09 - 2020-12-04</a><ul>
+<li><a class="reference internal" href="#id2">Improvements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-07-2020-10-02">Release 10.07 - 2020-10-02</a><ul>
+<li><a class="reference internal" href="#id3">Improvements</a></li>
+<li><a class="reference internal" href="#id4">Thanks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-06-2020-09-02">Release 10.06 - 2020-09-02</a><ul>
+<li><a class="reference internal" href="#id5">Improvements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-05-2020-07-29">Release 10.05 - 2020-07-29</a><ul>
+<li><a class="reference internal" href="#id6">Improvements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-03-2020-05-29">Release 10.03 - 2020-05-29</a><ul>
+<li><a class="reference internal" href="#id7">Improvements</a></li>
+<li><a class="reference internal" href="#id8">Fixes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-02-2020-04-29">Release 10.02 - 2020-04-29</a><ul>
+<li><a class="reference internal" href="#id9">Improvements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-01-2020-03-30">Release 10.01 - 2020-03-30</a><ul>
+<li><a class="reference internal" href="#id10">Improvements</a></li>
+<li><a class="reference internal" href="#id11">Fixes</a></li>
+<li><a class="reference internal" href="#id12">Thanks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">News - 10 series</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2023, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

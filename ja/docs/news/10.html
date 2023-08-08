@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>お知らせ - 10系 &#8212; Mroonga v13.05 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
+    <script src="../static/doctools.js"></script>
+    <script src="../static/sphinx_highlight.js"></script>
+    <script src="../static/translations.js"></script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" /> 
+      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
+    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
+    <meta property="og:type" content="product" />
+    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
+    <meta property="og:site_name" content="mroonga" />
+
+    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+  </head>
+  <body>
+    <div id="fb-root"></div>
+
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../">
+      <span class="project">mroonga</span>
+      <span class="separator">-</span>
+      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
+    </a>
+  </h1>
+
+      <div class="facebook-buttons">
+      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
+               layout="standard"
+               width="290"></fb:like>
+    </div>
+    <div class="other-language-links">
+
+    <ul>
+      <li><a href="../../../docs/news/10.html" title="English">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">お知らせ - 10系</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="news-10-series">
+<h1>お知らせ - 10系<a class="headerlink" href="#news-10-series" title="この見出しへのパーマリンク">¶</a></h1>
+<section id="release-10-11-2021-01-29">
+<span id="release-10-11"></span><h2>10.11リリース - 2021-01-29<a class="headerlink" href="#release-10-11-2021-01-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="improvements">
+<h3>改良<a class="headerlink" href="#improvements" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lexicon_flags</span></code> パラメータをサポートしました。</p>
+<ul>
+<li><p>このパラメータを使うことで、以下のように(全文検索インデックスではない)　<code class="docutils literal notranslate"><span class="pre">USING</span> <span class="pre">HASH</span></code> なインデックスに <code class="docutils literal notranslate"><span class="pre">KEY_LARGE</span></code> フラグを追加できます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
+  <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">title</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">UNIQUE</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">USING</span> <span class="n">HASH</span> <span class="n">COMMENT</span> <span class="s1">&#39;lexicon_flags &quot;KEY_LARGE&quot;&#39;</span>
+<span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.51、5.7.33、MySQL 8.0.23をサポートしました。</p>
+<ul class="simple">
+<li><p>MySQL 8.0 のパッケージには以下の制限があります。</p>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a>] ラッパーモードは未対応です。</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a>] JSONデータ型は未対応です。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="fixes">
+<h3>修正<a class="headerlink" href="#fixes" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../reference/optimizations.html"><span class="doc">最適化</span></a>] &quot;WHERE COLUMN IN (SUBQUERY)&quot; が存在する時、 &quot;fast order limit&quot; の最適化が効かない問題を修正しました。</p></li>
+<li><p>インデックスが付与されたカラムのデータ型を変更する時 インプレースの <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> が使えない問題を修正しました。</p>
+<ul>
+<li><p>この問題は、 <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> を <code class="docutils literal notranslate"><span class="pre">ALGORITHM=INPLACE</span></code> で実行した時に発生します。したがって、 <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> を <code class="docutils literal notranslate"><span class="pre">ALGORITHM=COPY</span></code> で実行した場合は、発生しません。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="release-10-10-2020-12-29">
+<span id="release-10-10"></span><h2>10.10リリース - 2020-12-29<a class="headerlink" href="#release-10-10-2020-12-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a>] テーブルフラグのカスタマイズをサポートしました。[Gitter][Shinichi Takayanagiさんが報告]</p>
+<ul>
+<li><p>今までは、ストレージモードでは、テーブルフラグのカスタマイズをサポートしていませんでした。</p></li>
+<li><p>このリリースから、以下のようにテーブルフラグのカスタマイズができます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">terms</span> <span class="p">(</span>
+  <span class="n">term</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>
+<span class="p">)</span> <span class="n">COMMENT</span><span class="o">=</span><span class="s1">&#39;flags &quot;TABLE_HASH_KEY|KEY_LARGE&quot;&#39;</span>
+  <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p>カスタマイズ可能な項目については、以下のURLを参照してください。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://groonga.org/ja/docs/reference/commands/table_create.html#flags">https://groonga.org/ja/docs/reference/commands/table_create.html#flags</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 20.10 (Groovy Gorilla)をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 8.0.22をサポートしました。</p></li>
+</ul>
+</section>
+<section id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>Shinichi Takayanagiさん</p></li>
+<li><p>pinpikokunさん [GitHub#373にてパッチ提供]</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-09-2020-12-04">
+<span id="release-10-09"></span><h2>10.09リリース - 2020-12-04<a class="headerlink" href="#release-10-09-2020-12-04" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id2">
+<h3>改良<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.2.36、10.3.27、10.4.17、10.5.8をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.6.50、5.7.32、8.0.21をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.50、5.7.32、MySQL 8.0.22をサポートしました。</p>
+<ul class="simple">
+<li><p>MySQL 8.0 のパッケージには以下の制限があります。</p>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a>] ラッパーモードは未対応です。</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a>] JSONデータ型は未対応です。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Ubuntu 18.04 LTS以外のMariaDB 10.1のサポートをやめました。</p>
+<ul class="simple">
+<li><p>MariaDB 10.1はEOLになったためです。</p></li>
+<li><p>ただ、Ubuntu 18.04 LTS では、MariaDB10.1をサポートします。</p>
+<ul>
+<li><p>MariaDB 10.1は、Ubuntu 18.04 LTSではまだサポートされているためです。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CentOS 6のサポートをやめました。</p>
+<ul class="simple">
+<li><p>CentOS 6はEOLになったためです。</p></li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../reference/udf/mroonga_snippet_html.html"><span class="doc">mroonga_snippet_html()</span></a>] ノーマライザーのカスタマイズをサポートしました。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> と <code class="docutils literal notranslate"><span class="pre">index_name</span></code> を使用することで、デフォルトのノーマライザー(NormalizerAuto)の代わりにカスタムのノーマライザーを使えます。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> には、以下のように、対象のテーブルの名前を指定します。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index_name</span></code> には、以下のように、対象のテーブル上で指定されたインデックスの名前を指定します。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
+
+CREATE TABLE memos (
+content text,
+fulltext index content_index (content)
+COMMENT &#39;normalizer &quot;NormalizerNFKC121(\&#39;unify_kana\&#39;, true)&quot;&#39;
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SELECT mroonga_snippet_html(&#39;This is Mroonga（ムルンガ）.&#39;,
+&#39;memos&#39; as table_name,
+&#39;content_index&#39; as index_name,
+&#39;むるんが&#39;) as snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;This is Mroonga（&lt;span class=&quot;keyword&quot;&gt;ムルンガ&lt;/span&gt;）.&lt;/div&gt;
+</pre></div>
+</div>
+<ul>
+<li><p>この変更によって、クエリーによる検索とキーワードによる検索を混在して使うことができます。</p></li>
+<li><p>例えば以下のように、<code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> と <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">snippet</span></code> の両方で指定したキーワードをハイライトできます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
+SELECT mroonga_snippet_html(&#39;Mroonga has two running modes.
+
+One is “storage mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data update, lock-free full text search and geolocation search. But it does not support transactions.
+
+Another one is “wrapper mode”, that adds full text search function on other storage engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB. But you cannot have benefits from Groonga’s read-lock free characteristic. And you might have the performance bottle neck in the storage engine in updating data.&#39;,
+&#39;lock storage&#39; AS query,
+&#39;update&#39; AS snippet;
+
+snippet
+&lt;div class=&quot;snippet&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data &lt;span class=&quot;keyword&quot;&gt;update&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt;-fr&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;text search function on other &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine, ex. transaction in In&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;noDB. But you cannot have benefits from Groonga’s read-&lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt; free characteristic. And you might have the performance bottle neck in the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine in updating data.&lt;/div&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="release-10-07-2020-10-02">
+<span id="release-10-07"></span><h2>10.07リリース - 2020-10-02<a class="headerlink" href="#release-10-07-2020-10-02" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id3">
+<h3>改良<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.5.5をサポートしました。</p></li>
+<li><p>カラム圧縮のテストで256byte以上の文字列を使うテストを追加しました。 [GitHub#350][KartikSonejiさんがパッチ提供]</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>感謝<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>KartikSonejiさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-06-2020-09-02">
+<span id="release-10-06"></span><h2>10.06リリース - 2020-09-02<a class="headerlink" href="#release-10-06-2020-09-02" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id5">
+<h3>改良<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>「MariaDB 10.5.5をサポートしました。」 というニュースを削除しました。</p>
+<p>当初、「MariaDB 10.5.5をサポートしました。」とアナウンスしましたが、これは誤りでした。Mroonga 10.06はMariaDB10.5でビルドできるようになりましたが、まだ動作しない箇所があります。</p>
+</div>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 19.10 (Eoan Ermine) のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 8.0.20をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.46、10.2.33、10.3.24、10.4.14をサポートしました。</p></li>
+<li><p>Debian GNU/Linux へのインストール方法を変更しました。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">groonga-archive-keyring</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">groonga-apt-source</span></code> を使うように変更しました。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lintian</span></code> コマンドが <code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.lists.d/</span></code> 配下にファイルを置くパッケージは <code class="docutils literal notranslate"><span class="pre">apt-source</span></code> を使うよう推奨しているためです。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lintian</span></code> コマンドはパッケージングに共通のエラーをチェックするためのコマンドです。</p></li>
+<li><p>インストール方法についての詳細は、以下も参照してください。</p>
+<ul>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.31をサポートしました。</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-05-2020-07-29">
+<span id="release-10-05"></span><h2>10.05リリース - 2020-07-29<a class="headerlink" href="#release-10-05-2020-07-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id6">
+<h3>改良<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.49と5.7.31とMySQL 8.0.21をサポートしました。</p>
+<ul>
+<li><p>MySQL 8.0 のパッケージには以下の制限があります。</p>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a>] ラッパーモードは未対応です。</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a>] JSONデータ型は未対応です。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.6.49をサポートしました。</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-03-2020-05-29">
+<span id="release-10-03"></span><h2>10.03リリース - 2020-05-29<a class="headerlink" href="#release-10-03-2020-05-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id7">
+<h3>改良<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 20.04 (Focal Fossa)をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 19.04 (Disco Dingo) のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MariaDB 10.1.45、10.2.32、10.3.23、10.4.13をサポートしました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.6.48、5.7.30をサポートしました。</p></li>
+<li><p>WindowsのMariaDB 10.1のサポートをやめました。</p>
+<ul>
+<li><p>MariaDB 10.1はもうすぐEOLになるためです。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h3>修正<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Ubuntu 19.10 (Eoan Ermine)向けMroongaが提供されていなかった問題を修正しました。</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-02-2020-04-29">
+<span id="release-10-02"></span><h2>10.02リリース - 2020-04-29<a class="headerlink" href="#release-10-02-2020-04-29" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id9">
+<h3>改良<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">WITH_WEIGHT</span></code> フラグをサポートしました。</p>
+<ul>
+<li><p>このフラグは10.0.2以降のGroongaが必要です。</p></li>
+<li><p>このフラグを使用して以下のように重み付きベクターを挿入できます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">tags</span> <span class="p">(</span>
+  <span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>
+<span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">bugs</span> <span class="p">(</span>
+  <span class="n">tags</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_VECTOR|WITH_WEIGHT&quot;, type &quot;tags&quot;&#39;</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="n">bugs_tags</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;table &quot;tags&quot;, flags &quot;WITH_WEIGHT&quot;&#39;</span>
+<span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">bugs</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s1">&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5}&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>CentOS7のMariaDB 5.5のサポートをやめました。</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] MySQL 5.6.48, 5.7.30, 8.0.20をサポートしました。</p></li>
+</ul>
+</section>
+</section>
+<section id="release-10-01-2020-03-30">
+<span id="release-10-01"></span><h2>10.01リリース - 2020-03-30<a class="headerlink" href="#release-10-01-2020-03-30" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id10">
+<h3>改良<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Percona Server 5.7.29をサポートしました。</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>修正<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>以下の条件を満たしたクエリーを送信した際に、Mroongaがクラッシュする問題を修正しました。 [GitHub#303] [pinpikokunさんが報告]</p>
+<ul>
+<li><p>Mroongaの <code class="docutils literal notranslate"><span class="pre">ORDER_BY_LIMIT</span></code> の最適化が有効な時</p>
+<ul>
+<li><p>この最適化の条件については、 <a class="reference external" href="https://mroonga.org/ja/docs/reference/optimizations.html#order-by-limit">https://mroonga.org/ja/docs/reference/optimizations.html#order-by-limit</a> を参照してください。</p></li>
+</ul>
+</li>
+<li><p>Mroongaを使ったサブクエリーで <code class="docutils literal notranslate"><span class="pre">ORDER_BY_LIMIT</span></code> を使っていない時。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>感謝<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>pinpikokunさん</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">お知らせ - 10系</a><ul>
+<li><a class="reference internal" href="#release-10-11-2021-01-29">10.11リリース - 2021-01-29</a><ul>
+<li><a class="reference internal" href="#improvements">改良</a></li>
+<li><a class="reference internal" href="#fixes">修正</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-10-2020-12-29">10.10リリース - 2020-12-29</a><ul>
+<li><a class="reference internal" href="#id1">改良</a></li>
+<li><a class="reference internal" href="#thanks">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-09-2020-12-04">10.09リリース - 2020-12-04</a><ul>
+<li><a class="reference internal" href="#id2">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-07-2020-10-02">10.07リリース - 2020-10-02</a><ul>
+<li><a class="reference internal" href="#id3">改良</a></li>
+<li><a class="reference internal" href="#id4">感謝</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-06-2020-09-02">10.06リリース - 2020-09-02</a><ul>
+<li><a class="reference internal" href="#id5">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-05-2020-07-29">10.05リリース - 2020-07-29</a><ul>
+<li><a class="reference internal" href="#id6">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-03-2020-05-29">10.03リリース - 2020-05-29</a><ul>
+<li><a class="reference internal" href="#id7">改良</a></li>
+<li><a class="reference internal" href="#id8">修正</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-02-2020-04-29">10.02リリース - 2020-04-29</a><ul>
+<li><a class="reference internal" href="#id9">改良</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-10-01-2020-03-30">10.01リリース - 2020-03-30</a><ul>
+<li><a class="reference internal" href="#id10">改良</a></li>
+<li><a class="reference internal" href="#id11">修正</a></li>
+<li><a class="reference internal" href="#id12">感謝</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">お知らせ - 10系</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2023, Mroonga Project.
+    </div>
+      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+
+    <script>
+      FB.init({
+         appId  : null,
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+      });
+    </script>
+  </body>
+
+</html>

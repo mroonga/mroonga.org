@@ -5,14 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>2.3. Debian GNU/Linux &#8212; Mroonga v13.01 documentation</title>
+    <title>2.3. Debian GNU/Linux &#8212; Mroonga v13.05 documentation</title>
     <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
     
     <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
-    <script src="../static/jquery.js"></script>
-    <script src="../static/underscore.js"></script>
-    <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../static/doctools.js"></script>
     <script src="../static/sphinx_highlight.js"></script>
     <script src="../static/translations.js"></script>
@@ -67,7 +64,7 @@
         <li class="right" >
           <a href="macos.html" title="2.2. macOS"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U"><span class="section-number">2. </span>インストール</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.3. </span>Debian GNU/Linux</a></li> 
       </ul>
@@ -81,8 +78,28 @@
   <section id="debian-gnu-linux">
 <h1><span class="section-number">2.3. </span>Debian GNU/Linux<a class="headerlink" href="#debian-gnu-linux" title="この見出しへのパーマリンク">¶</a></h1>
 <p>このセクションではDebian GNU/Linux上でMroonga関連のdebパッケージをインストールする方法を説明します。これらのパッケージは <code class="docutils literal notranslate"><span class="pre">apt</span></code> でインストールできます。</p>
+<section id="bookworm-mariadb">
+<h2><span class="section-number">2.3.1. </span>bookworm (MariaDB)<a class="headerlink" href="#bookworm-mariadb" title="この見出しへのパーマリンク">¶</a></h2>
+<p>インストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo apt update
+% sudo apt install -y -V apt-transport-https
+% sudo apt install -y -V wget
+% wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr &#39;A-Z&#39; &#39;a-z&#39;)/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+% sudo apt install -y -V ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+% wget https://packages.groonga.org/debian/groonga-apt-source-latest-bookworm.deb
+% sudo apt install -y -V ./groonga-apt-source-latest-bookworm.deb
+% sudo apt update
+% sudo apt install -y -V mariadb-10.11-mroonga
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+</pre></div>
+</div>
+</section>
 <section id="bullseye-mariadb">
-<h2><span class="section-number">2.3.1. </span>bullseye (MariaDB)<a class="headerlink" href="#bullseye-mariadb" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">2.3.2. </span>bullseye (MariaDB)<a class="headerlink" href="#bullseye-mariadb" title="この見出しへのパーマリンク">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
 <span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
@@ -100,7 +117,7 @@
 </div>
 </section>
 <section id="bullseye-with-the-oracle-mysql-8-0-package">
-<h2><span class="section-number">2.3.2. </span>bullseye（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#bullseye-with-the-oracle-mysql-8-0-package" title="この見出しへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">2.3.3. </span>bullseye（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#bullseye-with-the-oracle-mysql-8-0-package" title="この見出しへのパーマリンク">¶</a></h2>
 <p>インストール:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
 <span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
@@ -132,8 +149,9 @@
     <h3><a href="../index.html">目次</a></h3>
     <ul>
 <li><a class="reference internal" href="#">2.3. Debian GNU/Linux</a><ul>
-<li><a class="reference internal" href="#bullseye-mariadb">2.3.1. bullseye (MariaDB)</a></li>
-<li><a class="reference internal" href="#bullseye-with-the-oracle-mysql-8-0-package">2.3.2. bullseye（OracleのMySQL 8.0パッケージを利用）</a></li>
+<li><a class="reference internal" href="#bookworm-mariadb">2.3.1. bookworm (MariaDB)</a></li>
+<li><a class="reference internal" href="#bullseye-mariadb">2.3.2. bullseye (MariaDB)</a></li>
+<li><a class="reference internal" href="#bullseye-with-the-oracle-mysql-8-0-package">2.3.3. bullseye（OracleのMySQL 8.0パッケージを利用）</a></li>
 </ul>
 </li>
 </ul>
@@ -175,7 +193,7 @@
         <li class="right" >
           <a href="macos.html" title="2.2. macOS"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.01 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../install.html" ><span class="section-number">2. </span>インストール</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><span class="section-number">2.3. </span>Debian GNU/Linux</a></li> 
       </ul>
