@@ -1,0 +1,638 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>News - 14 series &#8212; Mroonga v14.07 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=8cffaf5e"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'news/14';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+   
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.07 documentation - Home"/>
+    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.07 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">News - 14 series</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="news-14-series">
+<h1>News - 14 series<a class="headerlink" href="#news-14-series" title="Link to this heading">#</a></h1>
+<section id="release-14-07-2024-09-06">
+<span id="release-14-07"></span><h2>Release 14.07 - 2024-09-06<a class="headerlink" href="#release-14-07-2024-09-06" title="Link to this heading">#</a></h2>
+<section id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL community 8.4.2.</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL community 8.0.39.</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Added support for Percona Server 8.0.37-29.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL 8.0.39</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Added support for MariaDB 11.4.3, 10.11.9, 10.6.19, and 10.5.26.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MariaDB 10.6.18 and 10.11.8.</p></li>
+<li><p>Disable descending index support [GitHub #764][Reported by Josep Sanz]</p>
+<p>If we don’t add support for descending index with MariaDB &gt;= 10.8, Mroonga returns wrong result with descending index.
+So, we disable descending index support now. However, we may re-try it later.</p>
+<p>By the way, if we use descending index with MySQL &gt;= 8.0, MySQL returns error.</p>
+</li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fix a crash bug with concurrent <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> and <code class="docutils literal notranslate"><span class="pre">INSERT</span></code>. [GitHub #743][Reported by Watson]</p></li>
+</ul>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Josep Sanz</p></li>
+<li><p>Watson</p></li>
+</ul>
+</section>
+</section>
+<section id="release-14-04-2024-06-12">
+<span id="release-14-04"></span><h2>Release 14.04 - 2024-06-12<a class="headerlink" href="#release-14-04-2024-06-12" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Added support for MariaDB 10.5.25, 10.6.18, and 10.11.8.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MariaDB 10.11.7.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MariaDB 10.6.18.</p></li>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Added support for MariaDB 10.11.8.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL 8.0.36.</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL Community Server 8.0.37.</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL Community Server 8.4.</p></li>
+<li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Added support for Percona Server 8.0.36-28.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for Ubuntu 24.04 (Noble Numbat).</p></li>
+<li><p>Dropped support MySQL Community Server 5.7.</p>
+<p>Because MySQL Community Server 5.7 reached EOL.</p>
+</li>
+<li><p>Dropped support Percona Server 5.7</p>
+<p>Because Percona Server for MySQL 5.7 reached EOL.</p>
+</li>
+<li><p>Dropped support for MariaDB 10.4.</p>
+<p>Because MariaDB 10.4 will reach EOL on 2024-06-18.</p>
+</li>
+<li><p>Dropped support for MariaDB 10.7, 10.8, and 10.9.</p>
+<p>Because MariaDB 10.7, 10.8, and 10.9 reached EOL.</p>
+</li>
+<li><p>Dropped support for MariaDB 10.10.</p>
+<p>Because the support term of MariaDB 10.10 is short.</p>
+</li>
+<li><p>Dropped support for Amazon Linux 2.</p>
+<p>Because Groonga already dropped support for Amazon Linux 2.</p>
+</li>
+<li><p>Dropped support for CentOS 7.</p>
+<p>Because CentOS 7 reached EOL.</p>
+</li>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Dropped support for Debian GNU/Linux bullseye.</p>
+<p>Because Debian GNU/Linux bullseye will reach EOL on 2024-07.</p>
+</li>
+<li><p>Added functionality to output an error when Mroonga’s UDF is used while Mroonga is uninitialized. [MDEV-21166][Reported by Ian Gilfillan.]</p>
+<p>Before this fix, using Mroonga’s UDF without initializing Mroonga (not having run <code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span> <span class="pre">mroonga</span></code>) would cause a crash.
+This patch changes the output from a crash to logging an error.</p>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>] Fixed memory leaks in cases where engines not supporting online DDL are wrapped.</p>
+<p>In general, DDL operations like <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> block access to the target table while in progress to maintain exclusive control.
+However, some storage engines allow operations on the target table during these operations (they can also be executed exclusively).
+The capability to operate on a table during such DDL operations is referred to as online DDL.</p>
+<p>The issue addressed occurs when wrapping storage engines that do not support online DDL in Mroonga’s wrapper mode.
+It does not occur in storage mode or when using a combination of wrapper mode + InnoDB.</p>
+</li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>] Fixed a bug causing crashes when inserting into tables with compressed <code class="docutils literal notranslate"><span class="pre">VARCHAR</span></code> or <code class="docutils literal notranslate"><span class="pre">TEXT</span></code> columns. [MDEV-31966][Reported by Elena Stepanova.]</p>
+<p>This issue occurs only in storage mode and not in wrapper mode.</p>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Ian Gilfillan</p></li>
+<li><p>Elena Stepanova</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-07-2024-09-06">Release 14.07 - 2024-09-06</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-04-2024-06-12">Release 14.04 - 2024-06-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Thanks</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/news/14.md">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2024, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

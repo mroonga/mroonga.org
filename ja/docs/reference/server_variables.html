@@ -1,89 +1,467 @@
+
 <!DOCTYPE html>
 
-<html lang="ja">
+
+<html lang="ja" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v13.05 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
-    
-    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
-    <script src="../static/doctools.js"></script>
-    <script src="../static/sphinx_highlight.js"></script>
-    <script src="../static/translations.js"></script>
-    
+    <title>5.3. サーバ変数の一覧 &#8212; Mroonga v14.07 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=bd083b0a"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=4dbe4bdc"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/server_variables';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'japanese';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="5.4. ステータス変数の一覧" href="status_variables.html" />
-    <link rel="prev" title="5.2. SQL commands" href="sql_commands.html" /> 
-      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
-    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
-    <meta property="og:type" content="product" />
-    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
-    <meta property="og:site_name" content="mroonga" />
-
-    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+    <link rel="prev" title="5.2. SQLコマンド" href="sql_commands.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
   </head>
-  <body>
-    <div id="fb-root"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<div class="header">
-  <h1 class="title">
-    <a id="top-link" href="../../">
-      <span class="project">mroonga</span>
-      <span class="separator">-</span>
-      <span class="description">MySQLで高速に全文検索するためのオープンソースのストレージエンジン</span>
-    </a>
-  </h1>
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-      <div class="facebook-buttons">
-      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
-               layout="standard"
-               width="290"></fb:like>
-    </div>
-    <div class="other-language-links">
-
-    <ul>
-      <li><a href="../../../docs/reference/server_variables.html" title="English">English</a></li>
-    </ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+   
+
+<a class="navbar-brand logo" href="https://mroonga.org/ja/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.07 documentation - Home"/>
+    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.07 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">検索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">検索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>ナビゲーション</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="status_variables.html" title="5.4. ステータス変数の一覧"
-             accesskey="N">次へ</a> |</li>
-        <li class="right" >
-          <a href="sql_commands.html" title="5.2. SQL commands"
-             accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U"><span class="section-number">5. </span>リファレンス</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.3. </span>サーバ変数の一覧</a></li> 
-      </ul>
-    </div>  
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="optimizations.html">5.1. 最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sql_commands.html">5.2. SQLコマンド</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5.3. サーバ変数の一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status_variables.html">5.4. ステータス変数の一覧</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="udf.html">5.5. UDF (ユーザ定義関数)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_command.html">5.5.1. <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_escape.html">5.5.2. <code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_highlight_html.html">5.5.3. <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_last_insert_grn_id.html">5.5.4. <code class="docutils literal notranslate"><span class="pre">mroonga_last_insert_grn_id()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_normalize.html">5.5.5. <code class="docutils literal notranslate"><span class="pre">mroonga_normalize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_snippet.html">5.5.6. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="udf/mroonga_snippet_html.html">5.5.7. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="limitations.html">5.6. 制限事項</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="full_text_search.html">5.7. 全文検索</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="full_text_search/boolean_mode.html">5.7.1. ブーリアンモード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="full_text_search/scoring.html">5.7.2. Mroongaにおける検索スコア</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link"><span class="section-number">5. </span>リファレンス</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="server-variables">
-<h1><span class="section-number">5.3. </span>サーバ変数の一覧<a class="headerlink" href="#server-variables" title="この見出しへのパーマリンク">¶</a></h1>
+<h1><span class="section-number">5.3. </span>サーバ変数の一覧<a class="headerlink" href="#server-variables" title="Link to this heading">#</a></h1>
 <p>独自に追加されたサーバ変数を説明します。</p>
 <section id="mroonga-action-on-fulltext-query-error">
-<span id="server-variable-mroonga-action-on-fulltext-query-error"></span><h2><span class="section-number">5.3.1. </span><code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code><a class="headerlink" href="#mroonga-action-on-fulltext-query-error" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-action-on-fulltext-query-error"></span><h2><span class="section-number">5.3.1. </span><code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code><a class="headerlink" href="#mroonga-action-on-fulltext-query-error" title="Link to this heading">#</a></h2>
 <p>全文検索クエリエラーの振舞いです。</p>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code> のデフォルト値は <code class="docutils literal notranslate"><span class="pre">ERROR_AND_LOG</span></code> です。これは従来のmroongaと同等に振舞います。</p>
 <p>使用可能な <code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code> のリストです。</p>
-<table class="docutils align-default">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -104,6 +482,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code> を確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_action_on_fulltext_query_error&#39;</span><span class="p">;</span>
 <span class="o">+----------------------------------------+---------------+</span>
@@ -116,11 +495,11 @@
 </div>
 </section>
 <section id="mroonga-boolean-mode-syntax-flags">
-<span id="server-variable-mroonga-boolean-mode-syntax-flags"></span><h2><span class="section-number">5.3.2. </span><code class="docutils literal notranslate"><span class="pre">mroonga_boolean_mode_syntax_flags</span></code><a class="headerlink" href="#mroonga-boolean-mode-syntax-flags" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-boolean-mode-syntax-flags"></span><h2><span class="section-number">5.3.2. </span><code class="docutils literal notranslate"><span class="pre">mroonga_boolean_mode_syntax_flags</span></code><a class="headerlink" href="#mroonga-boolean-mode-syntax-flags" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">()</span> <span class="pre">AGAINST</span> <span class="pre">('...'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></code> の構文をカスタマイズするフラグです。</p>
 <p>この変数はシステム変数でもセッション変数でもあります。</p>
 <p>以下は利用可能なフラグの一覧です。</p>
-<table class="docutils align-default">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>フラグ</p></th>
 <th class="head"><p>説明</p></th>
@@ -156,6 +535,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>デフォルトのフラグは <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> です。これはMySQLのBOOLEAN MODEと互換性のある構文です。</p>
 <p><code class="docutils literal notranslate"><span class="pre">SYNTAX_QUERY,ALLOW_LEADING_NOT</span></code> というようにカンマで区切って複数のフラグを指定できます。</p>
 <p>Groongaのスクリプト構文を使うようにするSQLの例です:</p>
@@ -164,11 +544,11 @@
 </div>
 </section>
 <section id="mroonga-database-path-prefix">
-<span id="server-variable-mroonga-database-path-prefix"></span><h2><span class="section-number">5.3.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_database_path_prefix</span></code><a class="headerlink" href="#mroonga-database-path-prefix" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-database-path-prefix"></span><h2><span class="section-number">5.3.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_database_path_prefix</span></code><a class="headerlink" href="#mroonga-database-path-prefix" title="Link to this heading">#</a></h2>
 <p>TODO:</p>
 </section>
 <section id="mroonga-default-parser">
-<span id="server-variable-mroonga-default-parser"></span><h2><span class="section-number">5.3.4. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code><a class="headerlink" href="#mroonga-default-parser" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-default-parser"></span><h2><span class="section-number">5.3.4. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code><a class="headerlink" href="#mroonga-default-parser" title="Link to this heading">#</a></h2>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">バージョン 5.04 で非推奨: </span>Use <a class="reference internal" href="#server-variable-mroonga-default-tokenizer"><span class="std std-ref">mroonga_default_tokenizer</span></a> instead.</p>
 </div>
@@ -184,7 +564,7 @@
 </div>
 </section>
 <section id="mroonga-default-tokenizer">
-<span id="server-variable-mroonga-default-tokenizer"></span><h2><span class="section-number">5.3.5. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code><a class="headerlink" href="#mroonga-default-tokenizer" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-default-tokenizer"></span><h2><span class="section-number">5.3.5. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code><a class="headerlink" href="#mroonga-default-tokenizer" title="Link to this heading">#</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">バージョン 5.04 で追加.</span></p>
 </div>
@@ -200,11 +580,11 @@
 </div>
 </section>
 <section id="mroonga-default-wrapper-engine">
-<span id="server-variable-mroonga-default-wrapper-engine"></span><h2><span class="section-number">5.3.6. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_wrapper_engine</span></code><a class="headerlink" href="#mroonga-default-wrapper-engine" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-default-wrapper-engine"></span><h2><span class="section-number">5.3.6. </span><code class="docutils literal notranslate"><span class="pre">mroonga_default_wrapper_engine</span></code><a class="headerlink" href="#mroonga-default-wrapper-engine" title="Link to this heading">#</a></h2>
 <p>TODO:</p>
 </section>
 <section id="mroonga-dry-write">
-<span id="server-variable-mroonga-dry-write"></span><h2><span class="section-number">5.3.7. </span><code class="docutils literal notranslate"><span class="pre">mroonga_dry_write</span></code><a class="headerlink" href="#mroonga-dry-write" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-dry-write"></span><h2><span class="section-number">5.3.7. </span><code class="docutils literal notranslate"><span class="pre">mroonga_dry_write</span></code><a class="headerlink" href="#mroonga-dry-write" title="Link to this heading">#</a></h2>
 <p>Groongaデータベースに実際にデータを書き込むかどうかを指定します。デフォルト値は <code class="docutils literal notranslate"><span class="pre">OFF</span></code> で、実際にGroongaデータベースにデータを書き込みます。通常はこの値を変更する必要はありません。この変数はベンチマーク時に便利です。この値を <code class="docutils literal notranslate"><span class="pre">ON</span></code> にすることでMySQLとMroongaだけの処理時間を計測することができます。この時間にGroongaの処理時間は含まれません。</p>
 <p>Groongaデータベースに値を書き込まないようにするSQLの例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_dry_write&#39;</span><span class="p">;</span>
@@ -229,7 +609,7 @@
 </div>
 </section>
 <section id="mroonga-enable-optimization">
-<span id="server-variable-mroonga-enable-optimization"></span><h2><span class="section-number">5.3.8. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_optimization</span></code><a class="headerlink" href="#mroonga-enable-optimization" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-enable-optimization"></span><h2><span class="section-number">5.3.8. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_optimization</span></code><a class="headerlink" href="#mroonga-enable-optimization" title="Link to this heading">#</a></h2>
 <p>最適化を有効にするかどうかを指定します。デフォルト値は <code class="docutils literal notranslate"><span class="pre">ON</span></code> で最適化は有効になっています。通常はこの値を変更する必要はありません。この変数はベンチマーク時に便利です。</p>
 <p>最適化を無効にするSQLの例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_enable_optimization&#39;</span><span class="p">;</span>
@@ -254,7 +634,7 @@
 </div>
 </section>
 <section id="mroonga-libgroonga-support-lz4">
-<span id="server-variable-mroonga-libgroonga-support-lz4"></span><h2><span class="section-number">5.3.9. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_lz4</span></code><a class="headerlink" href="#mroonga-libgroonga-support-lz4" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-libgroonga-support-lz4"></span><h2><span class="section-number">5.3.9. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_lz4</span></code><a class="headerlink" href="#mroonga-libgroonga-support-lz4" title="Link to this heading">#</a></h2>
 <p>GroongaライブラリーのLZ4サポート状況</p>
 <p>GroongaライブラリーがLZ4をサポートしているかを確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_support_lz4&#39;</span><span class="p">;</span>
@@ -267,7 +647,7 @@
 </div>
 </section>
 <section id="mroonga-libgroonga-support-zlib">
-<span id="server-variable-mroonga-libgroonga-support-zlib"></span><h2><span class="section-number">5.3.10. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zlib</span></code><a class="headerlink" href="#mroonga-libgroonga-support-zlib" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-libgroonga-support-zlib"></span><h2><span class="section-number">5.3.10. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zlib</span></code><a class="headerlink" href="#mroonga-libgroonga-support-zlib" title="Link to this heading">#</a></h2>
 <p>Groongaライブラリーのzlibサポート状況</p>
 <p>Groongaライブラリーがzlibをサポートしているかを確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_support_zlib&#39;</span><span class="p">;</span>
@@ -280,7 +660,7 @@
 </div>
 </section>
 <section id="mroonga-libgroonga-support-zstd">
-<span id="server-variable-mroonga-libgroonga-support-zstd"></span><h2><span class="section-number">5.3.11. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zstd</span></code><a class="headerlink" href="#mroonga-libgroonga-support-zstd" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-libgroonga-support-zstd"></span><h2><span class="section-number">5.3.11. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zstd</span></code><a class="headerlink" href="#mroonga-libgroonga-support-zstd" title="Link to this heading">#</a></h2>
 <p>GroongaライブラリーのZstandardサポート状況</p>
 <p>GroongaライブラリーがZstandardをサポートしているかを確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">GLOBAL</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_support_zstd&#39;</span><span class="p">;</span>
@@ -293,7 +673,7 @@
 </div>
 </section>
 <section id="mroonga-libgroonga-support-mecab">
-<span id="server-variable-mroonga-libgroonga-support-mecab"></span><h2><span class="section-number">5.3.12. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_mecab</span></code><a class="headerlink" href="#mroonga-libgroonga-support-mecab" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-libgroonga-support-mecab"></span><h2><span class="section-number">5.3.12. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_mecab</span></code><a class="headerlink" href="#mroonga-libgroonga-support-mecab" title="Link to this heading">#</a></h2>
 <p>GroongaライブラリーのMeCabサポート状況</p>
 <p>GroongaライブラリーがMeCabをサポートしているかを確認するためのSQL例です。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_libgroonga_support_mecab&#39;</span><span class="p">;</span>
@@ -306,7 +686,7 @@
 </div>
 </section>
 <section id="mroonga-libgroonga-version">
-<span id="serer-variable-mroonga-libgroonga-version"></span><h2><span class="section-number">5.3.13. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_version</span></code><a class="headerlink" href="#mroonga-libgroonga-version" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="serer-variable-mroonga-libgroonga-version"></span><h2><span class="section-number">5.3.13. </span><code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_version</span></code><a class="headerlink" href="#mroonga-libgroonga-version" title="Link to this heading">#</a></h2>
 <p>groongaライブラリのバージョン</p>
 <p>groongaライブラリのバージョンを確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_libgroonga_version&#39;</span><span class="p">;</span>
@@ -320,11 +700,11 @@
 </div>
 </section>
 <section id="mroonga-lock-timeout">
-<span id="server-variable-mroonga-lock-timeout"></span><h2><span class="section-number">5.3.14. </span><code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code><a class="headerlink" href="#mroonga-lock-timeout" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-lock-timeout"></span><h2><span class="section-number">5.3.14. </span><code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code><a class="headerlink" href="#mroonga-lock-timeout" title="Link to this heading">#</a></h2>
 <p>TODO:</p>
 </section>
 <section id="mroonga-log-file">
-<span id="serer-variable-mroonga-log-file"></span><h2><span class="section-number">5.3.15. </span><code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code><a class="headerlink" href="#mroonga-log-file" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="serer-variable-mroonga-log-file"></span><h2><span class="section-number">5.3.15. </span><code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code><a class="headerlink" href="#mroonga-log-file" title="Link to this heading">#</a></h2>
 <p>Mroongaのログファイル名。デフォルト値は <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> 。</p>
 <p>ログファイルを <code class="docutils literal notranslate"><span class="pre">/tmp/mroonga.log</span></code> に変更する例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_log_file&#39;</span><span class="p">;</span>
@@ -349,10 +729,10 @@
 </div>
 </section>
 <section id="mroonga-log-level">
-<span id="server-variable-mroonga-log-level"></span><h2><span class="section-number">5.3.16. </span><code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code><a class="headerlink" href="#mroonga-log-level" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-log-level"></span><h2><span class="section-number">5.3.16. </span><code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code><a class="headerlink" href="#mroonga-log-level" title="Link to this heading">#</a></h2>
 <p>Mroongaのログの出力レベル。デフォルト値は <code class="docutils literal notranslate"><span class="pre">NOTICE</span></code> 。</p>
 <p>使用可能な <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> のリストです。</p>
-<table class="docutils align-default">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>ログレベル</p></th>
 <th class="head"><p>説明</p></th>
@@ -393,6 +773,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>ログレベルを <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> に変更する例です。 <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> レベルにするとデバッグ用のたくさんのメッセージがログに出力されます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
 <span class="o">+-------------------+--------+</span>
@@ -416,7 +797,7 @@
 </div>
 </section>
 <section id="mroonga-query-log-file">
-<span id="server-variable-mroonga-query-log-file"></span><h2><span class="section-number">5.3.17. </span><code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code><a class="headerlink" href="#mroonga-query-log-file" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-query-log-file"></span><h2><span class="section-number">5.3.17. </span><code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code><a class="headerlink" href="#mroonga-query-log-file" title="Link to this heading">#</a></h2>
 <p>Mroongaのクエリーログファイル名。デフォルト値は空です。</p>
 <p>この値が空の場合、クエリーログはファイルに保存されません。この値が空ではない場合は、クエリーログは指定されたファイルに保存されます。</p>
 <p>クエリーログファイルを <code class="docutils literal notranslate"><span class="pre">/tmp/mroonga_query.log</span></code> に変更する例です:</p>
@@ -442,7 +823,7 @@
 </div>
 </section>
 <section id="mroonga-match-escalation-threshold">
-<span id="server-variable-mroonga-match-escalation-threshold"></span><h2><span class="section-number">5.3.18. </span><code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code><a class="headerlink" href="#mroonga-match-escalation-threshold" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-match-escalation-threshold"></span><h2><span class="section-number">5.3.18. </span><code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code><a class="headerlink" href="#mroonga-match-escalation-threshold" title="Link to this heading">#</a></h2>
 <p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="http://groonga.org/docs/spec/search.html">Groongaの検索の仕様</a> を確認してください。</p>
 <p>デフォルト値はGroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></code> でデフォルト値を設定できます。</p>
 <p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
@@ -492,14 +873,14 @@
 </div>
 </section>
 <section id="mroonga-max-n-records-for-estimate">
-<span id="server-variable-mroonga-max-n-records-for-estimate"></span><h2><span class="section-number">5.3.19. </span><code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-max-n-records-for-estimate"></span><h2><span class="section-number">5.3.19. </span><code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="Link to this heading">#</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">バージョン 5.02 で追加.</span></p>
 </div>
 <p>TODO:</p>
 </section>
 <section id="mroonga-enable-operations-recording">
-<span id="server-variable-mroonga-enable-operations-recording"></span><h2><span class="section-number">5.3.20. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code><a class="headerlink" href="#mroonga-enable-operations-recording" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-enable-operations-recording"></span><h2><span class="section-number">5.3.20. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code><a class="headerlink" href="#mroonga-enable-operations-recording" title="Link to this heading">#</a></h2>
 <p>復旧のために操作を記録するかどうかを指定します。デフォルトは <code class="docutils literal notranslate"><span class="pre">OFF</span></code> です。これはGroongaデータベースに操作を記録しないというおkとです。この変数の変更を反映するには <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> でデータベースを開き直す必要があります。</p>
 <p>操作記録を無効にするSQLの例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_enable_operations_recording</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
@@ -518,7 +899,7 @@
 </div>
 </section>
 <section id="mroonga-vector-column-delimiter">
-<span id="server-variable-mroonga-vector-column-delimiter"></span><h2><span class="section-number">5.3.21. </span><code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-vector-column-delimiter"></span><h2><span class="section-number">5.3.21. </span><code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="Link to this heading">#</a></h2>
 <p>ベクターカラムを出力する際の区切り文字。デフォルト値は空白です。</p>
 <p>区切り文字を空白からセミコロンに変更するSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_vector_column_delimiter&#39;</span><span class="p">;</span>
@@ -543,7 +924,7 @@
 </div>
 </section>
 <section id="mroonga-version">
-<span id="server-variable-mroonga-version"></span><h2><span class="section-number">5.3.22. </span><code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-version"></span><h2><span class="section-number">5.3.22. </span><code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="Link to this heading">#</a></h2>
 <p>Mroongaのバージョン</p>
 <p>実行中のmroongaのバージョンを確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_version&#39;</span><span class="p">;</span>
@@ -557,14 +938,14 @@
 </div>
 </section>
 <section id="mroonga-condition-push-down-type">
-<span id="server-variable-mroonga-condition-push-down-type"></span><h2><span class="section-number">5.3.23. </span><code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code><a class="headerlink" href="#mroonga-condition-push-down-type" title="この見出しへのパーマリンク">¶</a></h2>
+<span id="server-variable-mroonga-condition-push-down-type"></span><h2><span class="section-number">5.3.23. </span><code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code><a class="headerlink" href="#mroonga-condition-push-down-type" title="Link to this heading">#</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">バージョン 7.10 で追加.</span></p>
 </div>
 <p>コンデイションプッシュダウンサポートをどのように有効にするかを制御します。</p>
 <p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">ONE_FULL_TEXT_SEARCH</span></code> です。このときは <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> 句に <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> が1つしかない場合だけコンデイションプッシュダウンを有効にします。</p>
 <p>以下は有効な値の一覧です。</p>
-<table class="docutils align-default">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -584,6 +965,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>現在の値を確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_condition_push_down_type&#39;</span><span class="p">;</span>
 <span class="o">+----------------------------------+----------------------+</span>
@@ -598,98 +980,123 @@
 </section>
 
 
-            <div class="clearer"></div>
-          </div>
-        </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sql_commands.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">5.2. </span>SQLコマンド</p>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目次</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">5.3. サーバ変数の一覧</a><ul>
-<li><a class="reference internal" href="#mroonga-action-on-fulltext-query-error">5.3.1. <code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-boolean-mode-syntax-flags">5.3.2. <code class="docutils literal notranslate"><span class="pre">mroonga_boolean_mode_syntax_flags</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-database-path-prefix">5.3.3. <code class="docutils literal notranslate"><span class="pre">mroonga_database_path_prefix</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-default-parser">5.3.4. <code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-default-tokenizer">5.3.5. <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-default-wrapper-engine">5.3.6. <code class="docutils literal notranslate"><span class="pre">mroonga_default_wrapper_engine</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-dry-write">5.3.7. <code class="docutils literal notranslate"><span class="pre">mroonga_dry_write</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-enable-optimization">5.3.8. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_optimization</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-support-lz4">5.3.9. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_lz4</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-support-zlib">5.3.10. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zlib</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-support-zstd">5.3.11. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zstd</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-support-mecab">5.3.12. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_mecab</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-libgroonga-version">5.3.13. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_version</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-lock-timeout">5.3.14. <code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-log-file">5.3.15. <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-log-level">5.3.16. <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-query-log-file">5.3.17. <code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-match-escalation-threshold">5.3.18. <code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-max-n-records-for-estimate">5.3.19. <code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-enable-operations-recording">5.3.20. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-vector-column-delimiter">5.3.21. <code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-version">5.3.22. <code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code></a></li>
-<li><a class="reference internal" href="#mroonga-condition-push-down-type">5.3.23. <code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
-  <div>
-    <h4>前のトピックへ</h4>
-    <p class="topless"><a href="sql_commands.html"
-                          title="前の章へ"><span class="section-number">5.2. </span>SQL commands</a></p>
-  </div>
-  <div>
-    <h4>次のトピックへ</h4>
-    <p class="topless"><a href="status_variables.html"
-                          title="次の章へ"><span class="section-number">5.4. </span>ステータス変数の一覧</a></p>
-  </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">クイック検索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="検索" />
-    </form>
-    </div>
+    </a>
+    <a class="right-next"
+       href="status_variables.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">5.4. </span>ステータス変数の一覧</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>ナビゲーション</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="総合索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="status_variables.html" title="5.4. ステータス変数の一覧"
-             >次へ</a> |</li>
-        <li class="right" >
-          <a href="sql_commands.html" title="5.2. SQL commands"
-             >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../reference.html" ><span class="section-number">5. </span>リファレンス</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.3. </span>サーバ変数の一覧</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2023, Mroonga Project.
-    </div>
-      <script src="http://connect.facebook.net/ja_JP/all.js"></script>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-    <script>
-      FB.init({
-         appId  : null,
-         status : true, // check login status
-         cookie : true, // enable cookies to allow the server to access the session
-         xfbml  : true  // parse XFBML
-      });
-    </script>
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-action-on-fulltext-query-error">5.3.1. <code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-boolean-mode-syntax-flags">5.3.2. <code class="docutils literal notranslate"><span class="pre">mroonga_boolean_mode_syntax_flags</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-database-path-prefix">5.3.3. <code class="docutils literal notranslate"><span class="pre">mroonga_database_path_prefix</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-default-parser">5.3.4. <code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-default-tokenizer">5.3.5. <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-default-wrapper-engine">5.3.6. <code class="docutils literal notranslate"><span class="pre">mroonga_default_wrapper_engine</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-dry-write">5.3.7. <code class="docutils literal notranslate"><span class="pre">mroonga_dry_write</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-enable-optimization">5.3.8. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_optimization</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-libgroonga-support-lz4">5.3.9. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_lz4</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-libgroonga-support-zlib">5.3.10. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zlib</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-libgroonga-support-zstd">5.3.11. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zstd</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-libgroonga-support-mecab">5.3.12. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_mecab</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-libgroonga-version">5.3.13. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_version</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-lock-timeout">5.3.14. <code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-log-file">5.3.15. <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-log-level">5.3.16. <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-query-log-file">5.3.17. <code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-match-escalation-threshold">5.3.18. <code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-max-n-records-for-estimate">5.3.19. <code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-enable-operations-recording">5.3.20. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-vector-column-delimiter">5.3.21. <code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-version">5.3.22. <code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-condition-push-down-type">5.3.23. <code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2024, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
   </body>
-
 </html>

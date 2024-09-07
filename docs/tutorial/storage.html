@@ -1,84 +1,446 @@
+
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4.3. Storage mode &#8212; Mroonga v13.05 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../static/mroonga.css" />
-    
-    <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
-    <script src="../static/doctools.js"></script>
-    <script src="../static/sphinx_highlight.js"></script>
-    
+    <title>4.3. Storage mode &#8212; Mroonga v14.07 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=8cffaf5e"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/storage';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="4.4. Wrapper mode" href="wrapper.html" />
-    <link rel="prev" title="4.2. Mode" href="mode.html" /> 
-      <meta property="fb:page_id" content="238184682903165" /><!-- mroonga -->
-    <meta property="fb:admins" content="664204556" /><!-- kouhei.sutou -->
-    <meta property="og:type" content="product" />
-    <meta property="og:image" content="http://mroonga.org/images/logos/mroonga-icon-full-size.png" />
-    <meta property="og:site_name" content="mroonga" />
-
-    <link rel="stylesheet" href="/css/sphinx.css" type="text/css" />
+    <link rel="prev" title="4.2. Mode" href="mode.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body>
-    <div id="fb-root"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<div class="header">
-  <h1 class="title">
-    <a id="top-link" href="../../">
-      <span class="project">mroonga</span>
-      <span class="separator">-</span>
-      <span class="description">An open-source storage engine for fast fulltext search with MySQL.</span>
-    </a>
-  </h1>
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-      <div class="facebook-buttons">
-      <fb:like href="http://www.facebook.com/pages/mroonga/238184682903165"
-               layout="standard"
-               width="290"></fb:like>
-    </div>
-    <div class="other-language-links">
-
-    <ul>
-      <li><a href="../../ja/docs/tutorial/storage.html" title="日本語">日本語</a></li>
-    </ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+   
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.07 documentation - Home"/>
+    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.07 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
   
 
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="wrapper.html" title="4.4. Wrapper mode"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="mode.html" title="4.2. Mode"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U"><span class="section-number">4. </span>Tutorial</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span>Storage mode</a></li> 
-      </ul>
-    </div>  
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation_check.html">4.1. Installation check</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mode.html">4.2. Mode</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4.3. Storage mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">4.4. Wrapper mode</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../tutorial.html" class="nav-link"><span class="section-number">4. </span>Tutorial</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="storage-mode">
-<h1><span class="section-number">4.3. </span>Storage mode<a class="headerlink" href="#storage-mode" title="Permalink to this heading">¶</a></h1>
+<h1><span class="section-number">4.3. </span>Storage mode<a class="headerlink" href="#storage-mode" title="Link to this heading">#</a></h1>
 <p>Here we explain how to use storage mode of Mroonga</p>
 <section id="how-to-use-full-text-search">
-<h2><span class="section-number">4.3.1. </span>How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.1. </span>How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Link to this heading">#</a></h2>
 <p>After confirming the installation, let’s create a table. The important point is to specify Mroonga by <code class="docutils literal notranslate"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
@@ -109,7 +471,7 @@
 <p>Yes, full text search works.</p>
 </section>
 <section id="how-to-get-search-score">
-<h2><span class="section-number">4.3.2. </span>How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.2. </span>How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Link to this heading">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In version 1.0.0 or before, Mroonga used a special column named <code class="docutils literal notranslate"><span class="pre">_score</span></code> to get search score. From version 1.0.0, it follows MySQL’s standard way to get search score.</p>
@@ -159,7 +521,7 @@
 </div>
 </section>
 <section id="how-to-specify-the-parser-for-full-text-search">
-<h2><span class="section-number">4.3.3. </span>How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.3. </span>How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Link to this heading">#</a></h2>
 <p>MySQL has the following syntax to specify the parser <a class="footnote-reference brackets" href="#parser" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> for full text search:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">WITH</span> <span class="n">PARSER</span> <span class="n">parser_name</span>
 </pre></div>
@@ -173,8 +535,8 @@
 <p><code class="docutils literal notranslate"><span class="pre">COMMENT</span></code> in <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code> variable described below.</p>
 </div>
 <p>You can specify one of the following values as the tokenizer. “tokenizer” in Mroonga equals to “parser” in MySQL.</p>
-<table class="docutils align-default" id="id4">
-<caption><span class="caption-text">Available tokenizers</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Available tokenizers</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Tokenizer</p></th>
 <th class="head"><p>Description</p></th>
@@ -291,6 +653,7 @@ letters or more. It is to reduce noises.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>You can specify the default parser by passing <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when you build Mroonga:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">tokenizer</span> <span class="n">TokenMecab</span> <span class="o">...</span>
 </pre></div>
@@ -308,7 +671,7 @@ letters or more. It is to reduce noises.</p></td>
 </div>
 </section>
 <section id="how-to-specify-the-normalizer">
-<h2><span class="section-number">4.3.4. </span>How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.4. </span>How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Link to this heading">#</a></h2>
 <p>Mroonga uses normalizer corresponding to the encoding of document.
 It is used when tokenizing text and storing table key.</p>
 <p>It is used <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLGeneralCI</span></code> normalizer when the encoding is
@@ -388,7 +751,7 @@ It is used when tokenizing text and storing table key.</p>
 </div>
 </section>
 <section id="how-to-specify-the-token-filters">
-<h2><span class="section-number">4.3.5. </span>How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.5. </span>How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Link to this heading">#</a></h2>
 <p>Mroonga has the following syntax to specify Groonga’s token filters.:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;token_filters &quot;TokenFilterStem&quot;&#39;</span>
 </pre></div>
@@ -481,7 +844,7 @@ It is used when tokenizing text and storing table key.</p>
 <p>It’s used that specifying the lexicon table for fulltext search.</p>
 </section>
 <section id="how-to-specify-groonga-s-column-flags">
-<h2><span class="section-number">4.3.6. </span>How to specify Groonga’s column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.6. </span>How to specify Groonga’s column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Link to this heading">#</a></h2>
 <p>Mroonga has the following syntax to specify Groonga’s column flags:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
 </pre></div>
@@ -497,7 +860,7 @@ It is used when tokenizing text and storing table key.</p>
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/commands/column_create.html#parameters">Groonga’s documentation about column flags</a> for more details.</p>
 </section>
 <section id="how-to-use-geolocation-search">
-<h2><span class="section-number">4.3.7. </span>How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.7. </span>How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Link to this heading">#</a></h2>
 <p>In storage mode, you can use fast geolocation search in addition to full text search. But unlike MyISAM, you can only store POINT type data. You cannot store other types data like LINE. And fast search using index only supports MBRContains. It does not support MBRDisjoint.</p>
 <p>For the table definition for geolocation search, you need to define a POINT type column like in MyISAM and define SPATIAL INDEX for it.:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="p">(</span>
@@ -535,7 +898,7 @@ It is used when tokenizing text and storing table key.</p>
 <p>Here you can search by geolocation!</p>
 </section>
 <section id="how-to-get-the-record-id">
-<h2><span class="section-number">4.3.8. </span>How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.8. </span>How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Link to this heading">#</a></h2>
 <p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
 <p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
 <p>To get the record ID, you need to create a column named <code class="docutils literal notranslate"><span class="pre">_id</span></code> when you create a table:</p>
@@ -602,12 +965,12 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </div>
 </section>
 <section id="how-to-get-snippet-keyword-in-context">
-<h2><span class="section-number">4.3.9. </span>How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.9. </span>How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Link to this heading">#</a></h2>
 <p>Mroonga provides functionality to get keyword in context.
 It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDF.</p>
 </section>
 <section id="how-to-use-similar-search">
-<h2><span class="section-number">4.3.10. </span>How to use similar search<a class="headerlink" href="#how-to-use-similar-search" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.10. </span>How to use similar search<a class="headerlink" href="#how-to-use-similar-search" title="Link to this heading">#</a></h2>
 <p>Similar search is supported by specifying document itself instead of specifying keywords in query.</p>
 <p>It is useful if you want to find documents which is related to specific document.</p>
 <p>Here is the schema definition for execution examples:</p>
@@ -656,7 +1019,7 @@ Here is the schema definition to use <cite>TokenMecab</cite> tokenizer:</p>
 </div>
 </section>
 <section id="how-to-run-groonga-command">
-<h2><span class="section-number">4.3.11. </span>How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.11. </span>How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Link to this heading">#</a></h2>
 <p>In storage mode, Mroonga stores all your data into Groonga
 database. You can access Groonga database by SQL with Mroonga. SQL is
 very powerful but it is not good for some operations such as faceted
@@ -828,7 +1191,7 @@ as <code class="docutils literal notranslate"><span class="pre">tag</span></code
 details.</p>
 </section>
 <section id="how-to-search-by-regular-expression">
-<h2><span class="section-number">4.3.12. </span>How to search by regular expression<a class="headerlink" href="#how-to-search-by-regular-expression" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.12. </span>How to search by regular expression<a class="headerlink" href="#how-to-search-by-regular-expression" title="Link to this heading">#</a></h2>
 <p>In storage mode, you can use a Groonga’s functionality from Mroonga as described above.
 Thus, you can search records by using a regular expression via Groonga’s functionality.</p>
 <p>There are some conditions to use regular expression in Mroonga.</p>
@@ -861,7 +1224,7 @@ Thus, you can search records by using a regular expression via Groonga’s funct
 <p>See <a class="reference external" href="http://groonga.org/docs/reference/regular_expression.html#syntax">Groonga’s regular expression document</a> for more syntax details.</p>
 </section>
 <section id="logging">
-<h2><span class="section-number">4.3.13. </span>Logging<a class="headerlink" href="#logging" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.13. </span>Logging<a class="headerlink" href="#logging" title="Link to this heading">#</a></h2>
 <p>Mroonga outputs the logs by default.</p>
 <p>Log files are located in MySQL’s data directory with the filename  <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code>.</p>
 <p>Here is the example of the log.</p>
@@ -913,16 +1276,16 @@ Thus, you can search records by using a regular expression via Groonga’s funct
 </ol>
 </section>
 <section id="next-step">
-<h2><span class="section-number">4.3.14. </span>Next step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">4.3.14. </span>Next step<a class="headerlink" href="#next-step" title="Link to this heading">#</a></h2>
 <p>Now, you can use Mroonga as storage mode! If you want Mroonga to be
 faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
 <p class="rubric">Footnotes</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="score" role="note">
+<aside class="footnote brackets" id="score" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 Reference Manual :: 11 Functions and Operations :: 11.7 Full-Text Search Functions</a></p>
 </aside>
-<aside class="footnote brackets" id="parser" role="note">
+<aside class="footnote brackets" id="parser" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>In Groonga, we call it a ‘tokenizer’.</p>
 </aside>
@@ -931,89 +1294,130 @@ faster, see also <a class="reference internal" href="../reference/optimizations.
 </section>
 
 
-            <div class="clearer"></div>
-          </div>
-        </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mode.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4.2. </span>Mode</p>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">4.3. Storage mode</a><ul>
-<li><a class="reference internal" href="#how-to-use-full-text-search">4.3.1. How to use full text search</a></li>
-<li><a class="reference internal" href="#how-to-get-search-score">4.3.2. How to get search score</a></li>
-<li><a class="reference internal" href="#how-to-specify-the-parser-for-full-text-search">4.3.3. How to specify the parser for full text search</a></li>
-<li><a class="reference internal" href="#how-to-specify-the-normalizer">4.3.4. How to specify the normalizer</a></li>
-<li><a class="reference internal" href="#how-to-specify-the-token-filters">4.3.5. How to specify the token filters</a></li>
-<li><a class="reference internal" href="#how-to-specify-groonga-s-column-flags">4.3.6. How to specify Groonga’s column flags</a></li>
-<li><a class="reference internal" href="#how-to-use-geolocation-search">4.3.7. How to use geolocation search</a></li>
-<li><a class="reference internal" href="#how-to-get-the-record-id">4.3.8. How to get the record ID</a></li>
-<li><a class="reference internal" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
-<li><a class="reference internal" href="#how-to-use-similar-search">4.3.10. How to use similar search</a></li>
-<li><a class="reference internal" href="#how-to-run-groonga-command">4.3.11. How to run Groonga command</a></li>
-<li><a class="reference internal" href="#how-to-search-by-regular-expression">4.3.12. How to search by regular expression</a></li>
-<li><a class="reference internal" href="#logging">4.3.13. Logging</a></li>
-<li><a class="reference internal" href="#next-step">4.3.14. Next step</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
-  <div>
-    <h4>Previous topic</h4>
-    <p class="topless"><a href="mode.html"
-                          title="previous chapter"><span class="section-number">4.2. </span>Mode</a></p>
-  </div>
-  <div>
-    <h4>Next topic</h4>
-    <p class="topless"><a href="wrapper.html"
-                          title="next chapter"><span class="section-number">4.4. </span>Wrapper mode</a></p>
-  </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
+    </a>
+    <a class="right-next"
+       href="wrapper.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4.4. </span>Wrapper mode</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="wrapper.html" title="4.4. Wrapper mode"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="mode.html" title="4.2. Mode"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Mroonga v13.05 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../tutorial.html" ><span class="section-number">4. </span>Tutorial</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span>Storage mode</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2009-2023, Mroonga Project.
-    </div>
-      <script src="http://connect.facebook.net/en_US/all.js"></script>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-    <script>
-      FB.init({
-         appId  : null,
-         status : true, // check login status
-         cookie : true, // enable cookies to allow the server to access the session
-         xfbml  : true  // parse XFBML
-      });
-    </script>
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-full-text-search">4.3.1. How to use full text search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-search-score">4.3.2. How to get search score</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-the-parser-for-full-text-search">4.3.3. How to specify the parser for full text search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-the-normalizer">4.3.4. How to specify the normalizer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-the-token-filters">4.3.5. How to specify the token filters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-groonga-s-column-flags">4.3.6. How to specify Groonga’s column flags</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-geolocation-search">4.3.7. How to use geolocation search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-the-record-id">4.3.8. How to get the record ID</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-similar-search">4.3.10. How to use similar search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-run-groonga-command">4.3.11. How to run Groonga command</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-search-by-regular-expression">4.3.12. How to search by regular expression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging">4.3.13. Logging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-step">4.3.14. Next step</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/tutorial/storage.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2024, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
   </body>
-
 </html>
