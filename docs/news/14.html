@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>News - 14 series &#8212; Mroonga v14.07 documentation</title>
+    <title>News - 14 series &#8212; Mroonga v14.08 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
 
-    <script src="../_static/documentation_options.js?v=8cffaf5e"></script>
+    <script src="../_static/documentation_options.js?v=f97d1661"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
@@ -138,8 +138,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.07 documentation - Home"/>
-    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.07 documentation - Home"/>`);</script>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.08 documentation - Home"/>
+    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.08 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -427,10 +427,50 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="news-14-series">
 <h1>News - 14 series<a class="headerlink" href="#news-14-series" title="Link to this heading">#</a></h1>
-<section id="release-14-07-2024-09-06">
-<span id="release-14-07"></span><h2>Release 14.07 - 2024-09-06<a class="headerlink" href="#release-14-07-2024-09-06" title="Link to this heading">#</a></h2>
+<section id="release-14-08-2024-09-25">
+<span id="release-14-08"></span><h2>Release 14.08 - 2024-09-25<a class="headerlink" href="#release-14-08-2024-09-25" title="Link to this heading">#</a></h2>
 <section id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>We use CMake for building instead of the GNU Autotools.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">configure</span></code> is deprecated. We recommend using <code class="docutils literal notranslate"><span class="pre">cmake</span></code> to build from source.</p>
+<p>Please refer [<a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a>] about how to build from source with <code class="docutils literal notranslate"><span class="pre">cmake</span></code>.</p>
+</li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Fixed a bug that <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> returned wrong result when we used multiple primary keys and primary keys included <code class="docutils literal notranslate"><span class="pre">VARBINARY</span></code> or <code class="docutils literal notranslate"><span class="pre">BLOB</span></code> type column. [GH-783][Reported by Jérome Perrin]</p>
+<p>If this bug occurred, the following query retrieved nothing.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="n">VARBINARY</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+<span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">logs</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;aaa&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">logs</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bbb&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;aaa&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This bug only occurred in Mroonga 14.07.</p>
+<p>This bug doesn’t break an index. So, we don’t need to execute <code class="docutils literal notranslate"><span class="pre">REINDEX</span></code> command after this fix.</p>
+</li>
+</ul>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Jérome Perrin</p></li>
+</ul>
+</section>
+</section>
+<section id="release-14-07-2024-09-06">
+<span id="release-14-07"></span><h2>Release 14.07 - 2024-09-06<a class="headerlink" href="#release-14-07-2024-09-06" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL community 8.4.2.</p></li>
 <li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MySQL community 8.0.39.</p></li>
@@ -445,14 +485,14 @@ So, we disable descending index support now. However, we may re-try it later.</p
 </li>
 </ul>
 </section>
-<section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fix a crash bug with concurrent <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> and <code class="docutils literal notranslate"><span class="pre">INSERT</span></code>. [GitHub #743][Reported by Watson]</p></li>
 </ul>
 </section>
-<section id="thanks">
-<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Josep Sanz</p></li>
 <li><p>Watson</p></li>
@@ -461,8 +501,8 @@ So, we disable descending index support now. However, we may re-try it later.</p
 </section>
 <section id="release-14-04-2024-06-12">
 <span id="release-14-04"></span><h2>Release 14.04 - 2024-06-12<a class="headerlink" href="#release-14-04-2024-06-12" title="Link to this heading">#</a></h2>
-<section id="id1">
-<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>Improvements<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] Added support for MariaDB 10.5.25, 10.6.18, and 10.11.8.</p></li>
 <li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added support for MariaDB 10.11.7.</p></li>
@@ -503,8 +543,8 @@ This patch changes the output from a crash to logging an error.</p>
 </li>
 </ul>
 </section>
-<section id="id2">
-<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a>] Fixed memory leaks in cases where engines not supporting online DDL are wrapped.</p>
 <p>In general, DDL operations like <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> block access to the target table while in progress to maintain exclusive control.
@@ -518,8 +558,8 @@ It does not occur in storage mode or when using a combination of wrapper mode + 
 </li>
 </ul>
 </section>
-<section id="id3">
-<h3>Thanks<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id6">
+<h3>Thanks<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Ian Gilfillan</p></li>
 <li><p>Elena Stepanova</p></li>
@@ -556,16 +596,22 @@ It does not occur in storage mode or when using a combination of wrapper mode + 
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-07-2024-09-06">Release 14.07 - 2024-09-06</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-08-2024-09-25">Release 14.08 - 2024-09-25</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-04-2024-06-12">Release 14.04 - 2024-06-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-07-2024-09-06">Release 14.07 - 2024-09-06</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-04-2024-06-12">Release 14.04 - 2024-06-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Thanks</a></li>
 </ul>
 </li>
 </ul>

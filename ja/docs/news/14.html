@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>お知らせ - 14系 &#8212; Mroonga v14.07 documentation</title>
+    <title>お知らせ - 14系 &#8212; Mroonga v14.08 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
 
-    <script src="../_static/documentation_options.js?v=bd083b0a"></script>
+    <script src="../_static/documentation_options.js?v=c88a8235"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/translations.js?v=4dbe4bdc"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.07 documentation - Home"/>
-    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.07 documentation - Home"/>`);</script>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.08 documentation - Home"/>
+    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.08 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -428,10 +428,50 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="news-14-series">
 <h1>お知らせ - 14系<a class="headerlink" href="#news-14-series" title="Link to this heading">#</a></h1>
-<section id="release-14-07-2024-09-06">
-<span id="release-14-07"></span><h2>14.07リリース - 2024-09-06<a class="headerlink" href="#release-14-07-2024-09-06" title="Link to this heading">#</a></h2>
+<section id="release-14-08-2024-09-25">
+<span id="release-14-08"></span><h2>14.08リリース - 2024-09-25<a class="headerlink" href="#release-14-08-2024-09-25" title="Link to this heading">#</a></h2>
 <section id="improvements">
 <h3>改良<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>ビルドにGNU Autotoolsの代わりにCMakeを使うようにしました</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">configure</span></code> is deprecated. We recommend using <code class="docutils literal notranslate"><span class="pre">cmake</span></code> to build from source.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cmake</span></code>でのビルド方法については、[<a class="reference internal" href="../install/others.html"><span class="doc">その他</span></a>]を参照してください。</p>
+</li>
+</ul>
+</section>
+<section id="fixes">
+<h3>修正<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>複数の主キーがあり、かつ主キーに<code class="docutils literal notranslate"><span class="pre">VARBINARY</span></code>型または <code class="docutils literal notranslate"><span class="pre">BLOB</span></code>型のカラムがある場合に、<code class="docutils literal notranslate"><span class="pre">SELECT</span></code>が誤った結果を返す問題を修正しました。</p>
+<p>If this bug occurred, the following query retrieved nothing.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="n">VARBINARY</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+<span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">logs</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;aaa&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">logs</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bbb&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;aaa&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This bug only occurred in Mroonga 14.07.</p>
+<p>This bug doesn't break an index. So, we don't need to execute <code class="docutils literal notranslate"><span class="pre">REINDEX</span></code> command after this fix.</p>
+</li>
+</ul>
+</section>
+<section id="thanks">
+<h3>感謝<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Jérome Perrinさん</p></li>
+</ul>
+</section>
+</section>
+<section id="release-14-07-2024-09-06">
+<span id="release-14-07"></span><h2>14.07リリース - 2024-09-06<a class="headerlink" href="#release-14-07-2024-09-06" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>改良<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MySQL Community Server 8.4.2 をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>][<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>][<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MySQL Community Server 8.0.39 をサポートしました。</p></li>
@@ -445,14 +485,14 @@ document.write(`
 </li>
 </ul>
 </section>
-<section id="fixes">
-<h3>修正<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>修正<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> と <code class="docutils literal notranslate"><span class="pre">INSERT</span></code>の同時実行でクラッシュする問題を修正しました。 [GitHub #743][Watsonさんの報告]</p></li>
 </ul>
 </section>
-<section id="thanks">
-<h3>感謝<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>感謝<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Josep Sanzさん</p></li>
 <li><p>Watsonさん</p></li>
@@ -461,8 +501,8 @@ document.write(`
 </section>
 <section id="release-14-04-2024-06-12">
 <span id="release-14-04"></span><h2>14.04リリース - 2024-06-12<a class="headerlink" href="#release-14-04-2024-06-12" title="Link to this heading">#</a></h2>
-<section id="id1">
-<h3>改良<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>改良<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="../install/almalinux.html"><span class="doc">AlmaLinux</span></a>] MariaDB 10.5.25、10.6.18、10.11.8 をサポートしました。</p></li>
 <li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] MariaDB 10.11.7 をサポートしました。</p></li>
@@ -502,8 +542,8 @@ document.write(`
 </li>
 </ul>
 </section>
-<section id="id2">
-<h3>修正<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>修正<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>[<a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a>] オンラインDDLに対応していないストレージエンジンをラップしている場合にメモリーリークする問題を修正しました。</p>
 <p>通常、<code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code>のようなDDL操作は、排他制御を行うため、実行中は対象のテーブルへの操作がブロックされますが、ストレージエンジンによっては、実行中であっても、対象のテーブルを操作することもできます。（もちろん排他的に実行することもできます。）<code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code>のようなDDL操作中であっても対象のテーブルへの操作を可能にする機能をオンラインDDLと呼びます。</p>
@@ -514,8 +554,8 @@ document.write(`
 </li>
 </ul>
 </section>
-<section id="id3">
-<h3>感謝<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id6">
+<h3>感謝<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Ian Gilfillanさん</p></li>
 <li><p>Elena Stepanovaさん</p></li>
@@ -552,16 +592,22 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-07-2024-09-06">14.07リリース - 2024-09-06</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-08-2024-09-25">14.08リリース - 2024-09-25</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">改良</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">修正</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">感謝</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-04-2024-06-12">14.04リリース - 2024-06-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-07-2024-09-06">14.07リリース - 2024-09-06</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">改良</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">修正</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">感謝</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-14-04-2024-06-12">14.04リリース - 2024-06-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">改良</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">修正</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">感謝</a></li>
 </ul>
 </li>
 </ul>

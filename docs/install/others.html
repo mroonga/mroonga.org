@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.9. Others &#8212; Mroonga v14.07 documentation</title>
+    <title>2.9. Others &#8212; Mroonga v14.08 documentation</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
 
-    <script src="../_static/documentation_options.js?v=8cffaf5e"></script>
+    <script src="../_static/documentation_options.js?v=f97d1661"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.07 documentation - Home"/>
-    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.07 documentation - Home"/>`);</script>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.08 documentation - Home"/>
+    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.08 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -465,14 +465,14 @@ MariaDB instead of MySQL.</p>
 <p>You must get them ready.</p>
 <p>Here are optional tools.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://www.gratisoft.us/sudo/">sudo</a> for installing built Mroonga.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span></code> for installing built Mroonga</p></li>
 </ul>
 </section>
 <section id="libraries">
 <h3><span class="section-number">2.9.1.2. </span>Libraries<a class="headerlink" href="#libraries" title="Link to this heading">#</a></h3>
 <p>Here are required libraries.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://groonga.org/">Groonga</a>. (If you use package, install development package such as <code class="docutils literal notranslate"><span class="pre">libgroonga-dev</span></code> for deb or <code class="docutils literal notranslate"><span class="pre">groonga-devel</span></code> for RPM.)</p></li>
+<li><p><a class="reference external" href="https://groonga.org/">Groonga</a>. (If you use package, install development package such as <code class="docutils literal notranslate"><span class="pre">libgroonga-dev</span></code> for deb or <code class="docutils literal notranslate"><span class="pre">groonga-devel</span></code> for RPM.)</p></li>
 <li><p><a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a>.</p></li>
 </ul>
 <p>Here are optional libraries.</p>
@@ -496,50 +496,54 @@ source and build directory. You need MySQL source and build directory!</p>
 <p>See also <a class="reference external" href="http://dev.mysql.com/downloads/mysql/">Download MySQL Community Server</a></p>
 <p>Here we assume that you use mysql-8.4.1 and its source code is
 extracted in the following directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/local/src/mysql-8.4.1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${HOME}/local/src/mysql-8.4.1
 </pre></div>
 </div>
 <p>Then build in the following directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/local/build/mysql-8.4.1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${HOME}/local/build/mysql-8.4.1
 </pre></div>
 </div>
 <p>Here are command lines to build and install MySQL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>cmake<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-S<span class="w"> </span><span class="nv">$HOME</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-B<span class="w"> </span><span class="nv">$HOME</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-S<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-B<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="nv">$HOME</span>/local
-<span class="gp">% </span>cmake<span class="w"> </span>--build<span class="w"> </span><span class="nv">$HOME</span>/local/build/mysql-8.4.1
-<span class="gp">% </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="nv">$HOME</span>/local/build/mysql-8.4.1
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1
+<span class="gp">$ </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1
 </pre></div>
 </div>
-<p>And we assume that MySQL is installed in the following directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/local
-</pre></div>
-</div>
+<p>You need to run MySQL before you install Mroonga. Because you need to
+run some SQL statements to register Mroonga.</p>
 </section>
 </section>
 <section id="build-from-source">
 <h2><span class="section-number">2.9.2. </span>Build from source<a class="headerlink" href="#build-from-source" title="Link to this heading">#</a></h2>
-<p>Mroonga uses GNU build system. So the following is the simplest build
-steps.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>wget<span class="w"> </span>https://packages.groonga.org/source/mroonga/mroonga-6.12.tar.gz
-<span class="gp">% </span>tar<span class="w"> </span>xvzf<span class="w"> </span>mroonga-6.12.tar.gz
-<span class="gp">% </span><span class="nb">cd</span><span class="w"> </span>mroonga-6.12
-<span class="gp">% </span>./configure<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-source<span class="o">=</span><span class="nv">$HOME</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-build<span class="o">=</span><span class="nv">$HOME</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-config<span class="o">=</span><span class="nv">$HOME</span>/local/bin/mysql_config
-<span class="gp">% </span>make
-<span class="gp">% </span>sudo<span class="w"> </span>make<span class="w"> </span>install
-<span class="gp">% </span><span class="nv">$HOME</span>/local/bin/mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>&lt;<span class="w"> </span>/usr/local/share/mroonga/install.sql
+<p>Mroonga uses CMake. So the following is the simplest build steps.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src
+<span class="gp">$ </span>wget<span class="w"> </span>https://packages.groonga.org/source/mroonga/mroonga-latest.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>xvf<span class="w"> </span>mroonga-latest.tar.gz
+<span class="gp">$ </span><span class="nv">mroonga_base_name</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span>mroonga-*<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">0</span><span class="w"> </span>-type<span class="w"> </span>d<span class="k">)</span>
+<span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-S<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-B<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_BUILD_DIR<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_CONFIG<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/bin/mysql_config<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_SOURCE_DIR<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/mysql-8.4.1
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span>
+<span class="gp">$ </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span>
+<span class="gp">$ </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/bin/mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/share/mroonga/install.sql
 </pre></div>
 </div>
-<p>You need to specify the following on <code class="docutils literal notranslate"><span class="pre">configure</span></code>.</p>
+<p>You need to specify the following on <code class="docutils literal notranslate"><span class="pre">cmake</span></code>.</p>
 <ul class="simple">
-<li><p>The location of MySQL source code with <code class="docutils literal notranslate"><span class="pre">--with-mysql-source</span></code>.</p></li>
-<li><p>The location of MySQL build directory with <code class="docutils literal notranslate"><span class="pre">--with-mysql-build</span></code>.</p></li>
-<li><p>The path of <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> command with <code class="docutils literal notranslate"><span class="pre">--with-mysql-config</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DMYSQL_BUILD_DIR</span></code>: The location of MySQL build directory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DMYSQL_CONFIG</span></code>: The path of <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> command</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DMYSQL_SOURCE_DIR</span></code>: The location of MySQL source code</p></li>
 </ul>
 <p>You can confirm Mroonga is installed successfully by <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">ENGINES</span></code>
 SQL. If you can find <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> row, Mroonga is installed
@@ -559,139 +563,87 @@ successfully.</p>
 </pre></div>
 </div>
 <p>The following describes details about each step.</p>
-<section id="configure">
-<span id="source-configure"></span><h3><span class="section-number">2.9.2.1. </span><code class="docutils literal notranslate"><span class="pre">configure</span></code><a class="headerlink" href="#configure" title="Link to this heading">#</a></h3>
-<p>First, you need to run <code class="docutils literal notranslate"><span class="pre">configure</span></code>. Here are important <code class="docutils literal notranslate"><span class="pre">configure</span></code>
+<section id="cmake">
+<span id="source-cmake"></span><h3><span class="section-number">2.9.2.1. </span><code class="docutils literal notranslate"><span class="pre">cmake</span></code><a class="headerlink" href="#cmake" title="Link to this heading">#</a></h3>
+<p>First, you need to run <code class="docutils literal notranslate"><span class="pre">cmake</span></code>. Here are important <code class="docutils literal notranslate"><span class="pre">cmake</span></code>
 parameters.</p>
-<section id="with-mysql-source-path">
-<h4><span class="section-number">2.9.2.1.1. </span><code class="docutils literal notranslate"><span class="pre">--with-mysql-source=PATH</span></code><a class="headerlink" href="#with-mysql-source-path" title="Link to this heading">#</a></h4>
+<section id="dmysql-source-dir-path">
+<h4><span class="section-number">2.9.2.1.1. </span><code class="docutils literal notranslate"><span class="pre">-DMYSQL_SOURCE_DIR=PATH</span></code><a class="headerlink" href="#dmysql-source-dir-path" title="Link to this heading">#</a></h4>
 <p>Specifies the location of MySQL source code.</p>
 <p>This is required parameter.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>./configure<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-source<span class="o">=</span><span class="nv">$HOME</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-config<span class="o">=</span><span class="nv">$HOME</span>/local/bin/mysql_config
-</pre></div>
-</div>
 </section>
-<section id="with-mysql-build-path">
-<h4><span class="section-number">2.9.2.1.2. </span><code class="docutils literal notranslate"><span class="pre">--with-mysql-build=PATH</span></code><a class="headerlink" href="#with-mysql-build-path" title="Link to this heading">#</a></h4>
+<section id="dmysql-build-dir-path">
+<h4><span class="section-number">2.9.2.1.2. </span><code class="docutils literal notranslate"><span class="pre">-DMYSQL_BUILD_DIR=PATH</span></code><a class="headerlink" href="#dmysql-build-dir-path" title="Link to this heading">#</a></h4>
 <p>Specifies the location where you build MySQL source code.</p>
 <p>If you build MySQL in MySQL source code directory, you don’t need to
 specify this parameter. If you build MySQL in other directory, you
 need to specify this parameter.</p>
-<p>Here is an example when you build MySQL in
-<code class="docutils literal notranslate"><span class="pre">$HOME/local/build/mysql-8.4.1</span></code>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>./configure<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-source<span class="o">=</span><span class="nv">$HOME</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-build<span class="o">=</span><span class="nv">$HOME</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-config<span class="o">=</span><span class="nv">$HOME</span>/local/bin/mysql_config
-</pre></div>
-</div>
 </section>
-<section id="with-mysql-config-path">
-<h4><span class="section-number">2.9.2.1.3. </span><code class="docutils literal notranslate"><span class="pre">--with-mysql-config=PATH</span></code><a class="headerlink" href="#with-mysql-config-path" title="Link to this heading">#</a></h4>
+<section id="dmysql-config-path">
+<h4><span class="section-number">2.9.2.1.3. </span><code class="docutils literal notranslate"><span class="pre">-DMYSQL_CONFIG=PATH</span></code><a class="headerlink" href="#dmysql-config-path" title="Link to this heading">#</a></h4>
 <p>Specifies the path of <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> command.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> command can be found by <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, you don’t
 need to specify this parameter. For example, if <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code>
 command exists at <code class="docutils literal notranslate"><span class="pre">/usr/bin/mysql_config</span></code>, you don’t need to specify
 this parameter.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>./configure<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-source<span class="o">=</span><span class="nv">$HOME</span>/local/src/mysql-8.4.1
-</pre></div>
-</div>
 </section>
-<section id="with-default-tokenizer-tokenizer">
-<h4><span class="section-number">2.9.2.1.4. </span><code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer=TOKENIZER</span></code><a class="headerlink" href="#with-default-tokenizer-tokenizer" title="Link to this heading">#</a></h4>
+<section id="dmrn-default-tokenizer-tokenizer">
+<h4><span class="section-number">2.9.2.1.4. </span><code class="docutils literal notranslate"><span class="pre">-DMRN_DEFAULT_TOKENIZER=TOKENIZER</span></code><a class="headerlink" href="#dmrn-default-tokenizer-tokenizer" title="Link to this heading">#</a></h4>
 <p>Specifies the default tokenizer for full text. You can custom it in
-my.cnf.</p>
+<code class="docutils literal notranslate"><span class="pre">my.cnf</span></code>.</p>
 <p>The default is <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>.</p>
-<p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code> as the default tokenizer.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>./configure<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-source<span class="o">=</span><span class="nv">$HOME</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-config<span class="o">=</span><span class="nv">$HOME</span>/local/bin/mysql_config<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-default-tokenizer<span class="o">=</span>TokenMecab
+<p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code> as the default tokenizer:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>...<span class="w"> </span>-DMRN_DEFAULT_TOKENIZER<span class="o">=</span>TokenMecab
 </pre></div>
 </div>
 </section>
-<section id="prefix-path">
-<h4><span class="section-number">2.9.2.1.5. </span><code class="docutils literal notranslate"><span class="pre">--prefix=PATH</span></code><a class="headerlink" href="#prefix-path" title="Link to this heading">#</a></h4>
+<section id="dcmake-build-type-release-debug-relwithdebinfo">
+<h4><span class="section-number">2.9.2.1.5. </span><code class="docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE={Release,Debug,RelWithDebInfo}</span></code><a class="headerlink" href="#dcmake-build-type-release-debug-relwithdebinfo" title="Link to this heading">#</a></h4>
+<p>Specifies the build type.</p>
+<p>If you use this Mroonga as a production environment, you must use
+<code class="docutils literal notranslate"><span class="pre">-DCAMKE_BUILD_TYPE=Release</span></code> or
+<code class="docutils literal notranslate"><span class="pre">-DCAMKE_BUILD_TYPE=RelWithDebInfo</span></code>. They enable optimization.</p>
+<p>If you use this Mroonga for development, you must use
+<code class="docutils literal notranslate"><span class="pre">-DCAMKE_BUILD_TYPE=Debug</span></code>. It disables optimization and enables debug
+symbols. They are useful for development.</p>
+</section>
+<section id="dcmake-install-prefix-prefix">
+<h4><span class="section-number">2.9.2.1.6. </span><code class="docutils literal notranslate"><span class="pre">-DCMAKE_INSTALL_PREFIX=PREFIX</span></code><a class="headerlink" href="#dcmake-install-prefix-prefix" title="Link to this heading">#</a></h4>
 <p>Specifies the install base directory. Mroonga related files are
-installed under <code class="docutils literal notranslate"><span class="pre">${PATH}/</span></code> directory except
+installed under <code class="docutils literal notranslate"><span class="pre">${PREFIX}/</span></code> directory except
 <code class="docutils literal notranslate"><span class="pre">ha_mroonga.so</span></code>. <code class="docutils literal notranslate"><span class="pre">ha_mroonga.so</span></code> is a MySQL plugin file. It is
 installed the plugin directory of MySQL.</p>
 <p>The default is <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>. In this case, <code class="docutils literal notranslate"><span class="pre">install.sql</span></code> that is
 used for installing Mroonga is installed to
 <code class="docutils literal notranslate"><span class="pre">/usr/local/share/mroonga/install.sql</span></code>.</p>
-<p>Here is an example that installs Mroonga into <code class="docutils literal notranslate"><span class="pre">$HOME/local</span></code> for an user
-use instead of system wide use.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>./configure<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--prefix<span class="o">=</span><span class="nv">$HOME</span>/local<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-source<span class="o">=</span><span class="nv">$HOME</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--with-mysql-config<span class="o">=</span><span class="nv">$HOME</span>/local/bin/mysql_config
-</pre></div>
-</div>
-</section>
-<section id="pkg-config-path-path">
-<h4><span class="section-number">2.9.2.1.6. </span><code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH=PATH</span></code><a class="headerlink" href="#pkg-config-path-path" title="Link to this heading">#</a></h4>
-<p>This is not a <code class="docutils literal notranslate"><span class="pre">configure</span></code> parameter but we describe it for users who
-doesn’t install Groonga into the standard location.</p>
-<p>If Groonga is not installed in the standard location like
-<code class="docutils literal notranslate"><span class="pre">/usr/lib</span></code>, you need to specify its location by
-<code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH</span></code>. For example, if Groonga is installed with
-<code class="docutils literal notranslate"><span class="pre">--prefix=$HOME/local</span></code>, use the following command line.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">./configure \</span>
-<span class="go">  PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig \</span>
-<span class="go">  --with-mysql-source=$HOME/local/src/mysql-8.4.1 \</span>
-<span class="go">  --with-mysql-config=$HOME/local/bin/mysql_config</span>
-</pre></div>
-</div>
 </section>
 </section>
-<section id="make">
-<h3><span class="section-number">2.9.2.2. </span><code class="docutils literal notranslate"><span class="pre">make</span></code><a class="headerlink" href="#make" title="Link to this heading">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">configure</span></code> is succeeded, you can build Mroonga by <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>make
-</pre></div>
-</div>
-<p>If you have multi cores CPU, you can make faster by using <code class="docutils literal notranslate"><span class="pre">-j</span></code>
-option. If you have 4 cores CPU, it’s good for using <code class="docutils literal notranslate"><span class="pre">-j4</span></code> option.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>make<span class="w"> </span>-j4
-</pre></div>
-</div>
-<p>If you get some errors by <code class="docutils literal notranslate"><span class="pre">make</span></code>, please report them to us:
+<section id="cmake-build">
+<h3><span class="section-number">2.9.2.2. </span><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code><a class="headerlink" href="#cmake-build" title="Link to this heading">#</a></h3>
+<p>If <code class="docutils literal notranslate"><span class="pre">cmake</span></code> is succeeded, you can build Mroonga by <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code>.</p>
+<p>If you get some errors by <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code>, please report them to us:
 <a class="reference internal" href="../contribution/report.html"><span class="doc">How to report a bug</span></a></p>
 </section>
-<section id="make-install">
-<h3><span class="section-number">2.9.2.3. </span><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code><a class="headerlink" href="#make-install" title="Link to this heading">#</a></h3>
+<section id="cmake-install">
+<h3><span class="section-number">2.9.2.3. </span><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--install</span></code><a class="headerlink" href="#cmake-install" title="Link to this heading">#</a></h3>
 <p>Now, you can install built Mroonga!</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>sudo<span class="w"> </span>make<span class="w"> </span>install
-</pre></div>
-</div>
-<p>If you have write permission for <code class="docutils literal notranslate"><span class="pre">${PREFIX}</span></code> and the plugin
-directory of MySQL, you don’t need to use
-<code class="docutils literal notranslate"><span class="pre">sudo</span></code>. e.g. <code class="docutils literal notranslate"><span class="pre">--prefix=$HOME/local</span></code> case. In this case, use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>make<span class="w"> </span>install
+<p>If you don’t have write permission for <code class="docutils literal notranslate"><span class="pre">${PREFIX}</span></code> and the plugin
+directory of MySQL, you need to use <code class="docutils literal notranslate"><span class="pre">sudo</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span>
 </pre></div>
 </div>
 </section>
 <section id="mysql-u-root-install-sql">
 <h3><span class="section-number">2.9.2.4. </span><code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">&lt;</span> <span class="pre">install.sql</span></code><a class="headerlink" href="#mysql-u-root-install-sql" title="Link to this heading">#</a></h3>
-<p>You need to run some SQLs to register Mroonga to MySQL such as
-<code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> and <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">FUNCTION</span></code>. They are written in
+<p>You need to run some SQL statements to register Mroonga to MySQL such
+as <code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> and <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">FUNCTION</span></code>. They are written in
 <code class="docutils literal notranslate"><span class="pre">${PREFIX}/share/mroonga/install.sql</span></code>.</p>
-<p>Here is an example when you specify <code class="docutils literal notranslate"><span class="pre">--prefix=$HOME/local</span></code> to
-<code class="docutils literal notranslate"><span class="pre">configure</span></code>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>&lt;<span class="w"> </span><span class="nv">$HOME</span>/local/share/mroonga/install.sql
-</pre></div>
-</div>
 </section>
 <section id="uninstall-mroonga">
-<h3><span class="section-number">2.9.2.5. </span><code class="docutils literal notranslate"><span class="pre">uninstall</span> <span class="pre">Mroonga</span></code><a class="headerlink" href="#uninstall-mroonga" title="Link to this heading">#</a></h3>
-<p>If you want to remove Mroonga,
-type below commands.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">% </span>mysql<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span>/share/mroonga/uninstall.sql
-<span class="gp">% </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">MROONGA_BUILD_DIR</span><span class="si">}</span>
-<span class="gp">% </span>sudo<span class="w"> </span>make<span class="w"> </span>uninstall
+<h3><span class="section-number">2.9.2.5. </span>Uninstall Mroonga<a class="headerlink" href="#uninstall-mroonga" title="Link to this heading">#</a></h3>
+<p>If you want to uninstall Mroonga, use the following command lines:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/bin/mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span>/share/mroonga/uninstall.sql
+<span class="gp">$ </span>xargs<span class="w"> </span>rm<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mroonga/install_manifest.txt
 </pre></div>
 </div>
 </section>
@@ -751,19 +703,19 @@ type below commands.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-from-source">2.9.2. Build from source</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure">2.9.2.1. <code class="docutils literal notranslate"><span class="pre">configure</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#with-mysql-source-path">2.9.2.1.1. <code class="docutils literal notranslate"><span class="pre">--with-mysql-source=PATH</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#with-mysql-build-path">2.9.2.1.2. <code class="docutils literal notranslate"><span class="pre">--with-mysql-build=PATH</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#with-mysql-config-path">2.9.2.1.3. <code class="docutils literal notranslate"><span class="pre">--with-mysql-config=PATH</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#with-default-tokenizer-tokenizer">2.9.2.1.4. <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer=TOKENIZER</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix-path">2.9.2.1.5. <code class="docutils literal notranslate"><span class="pre">--prefix=PATH</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pkg-config-path-path">2.9.2.1.6. <code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH=PATH</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmake">2.9.2.1. <code class="docutils literal notranslate"><span class="pre">cmake</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmysql-source-dir-path">2.9.2.1.1. <code class="docutils literal notranslate"><span class="pre">-DMYSQL_SOURCE_DIR=PATH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmysql-build-dir-path">2.9.2.1.2. <code class="docutils literal notranslate"><span class="pre">-DMYSQL_BUILD_DIR=PATH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmysql-config-path">2.9.2.1.3. <code class="docutils literal notranslate"><span class="pre">-DMYSQL_CONFIG=PATH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrn-default-tokenizer-tokenizer">2.9.2.1.4. <code class="docutils literal notranslate"><span class="pre">-DMRN_DEFAULT_TOKENIZER=TOKENIZER</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dcmake-build-type-release-debug-relwithdebinfo">2.9.2.1.5. <code class="docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE={Release,Debug,RelWithDebInfo}</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dcmake-install-prefix-prefix">2.9.2.1.6. <code class="docutils literal notranslate"><span class="pre">-DCMAKE_INSTALL_PREFIX=PREFIX</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make">2.9.2.2. <code class="docutils literal notranslate"><span class="pre">make</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-install">2.9.2.3. <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmake-build">2.9.2.2. <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmake-install">2.9.2.3. <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--install</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysql-u-root-install-sql">2.9.2.4. <code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">&lt;</span> <span class="pre">install.sql</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uninstall-mroonga">2.9.2.5. <code class="docutils literal notranslate"><span class="pre">uninstall</span> <span class="pre">Mroonga</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uninstall-mroonga">2.9.2.5. Uninstall Mroonga</a></li>
 </ul>
 </li>
 </ul>
