@@ -434,7 +434,7 @@ document.write(`
 <h3>改良<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>ビルドにGNU Autotoolsの代わりにCMakeを使うようにしました</p>
-<p>Using <code class="docutils literal notranslate"><span class="pre">configure</span></code> is deprecated. We recommend using <code class="docutils literal notranslate"><span class="pre">cmake</span></code> to build from source.</p>
+<p><code class="docutils literal notranslate"><span class="pre">configure</span></code>は非推奨となります。ソースからのビルドには、<code class="docutils literal notranslate"><span class="pre">cmake</span></code>を使うことをおすすめします。</p>
 <p><code class="docutils literal notranslate"><span class="pre">cmake</span></code>でのビルド方法については、[<a class="reference internal" href="../install/others.html"><span class="doc">その他</span></a>]を参照してください。</p>
 </li>
 </ul>
@@ -443,7 +443,7 @@ document.write(`
 <h3>修正<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>複数の主キーがあり、かつ主キーに<code class="docutils literal notranslate"><span class="pre">VARBINARY</span></code>型または <code class="docutils literal notranslate"><span class="pre">BLOB</span></code>型のカラムがある場合に、<code class="docutils literal notranslate"><span class="pre">SELECT</span></code>が誤った結果を返す問題を修正しました。</p>
-<p>If this bug occurred, the following query retrieved nothing.</p>
+<p>この問題が発生した場合、以下のクエリーは何も取得しません。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="n">VARBINARY</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
@@ -456,8 +456,8 @@ document.write(`
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;aaa&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This bug only occurred in Mroonga 14.07.</p>
-<p>This bug doesn't break an index. So, we don't need to execute <code class="docutils literal notranslate"><span class="pre">REINDEX</span></code> command after this fix.</p>
+<p>この問題はMroonga 14.07でのみ発生します。</p>
+<p>この問題はインデックスを破壊しません。そのため、この修正後に<code class="docutils literal notranslate"><span class="pre">REINDEX</span></code>を実行する必要はありません。</p>
 </li>
 </ul>
 </section>
