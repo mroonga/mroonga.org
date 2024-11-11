@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>9.1. How to debug &#8212; Mroonga v14.08 documentation</title>
+    <title>9.1. How to debug &#8212; Mroonga v14.10 documentation</title>
   
   
   
@@ -16,27 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=f97d1661"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=1834d29a"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
     <script>
@@ -53,7 +56,7 @@
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'developer/debug';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
@@ -65,6 +68,7 @@
     <link rel="prev" title="9. Developer’s guide" href="../developer.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.10" />
   </head>
   
   
@@ -80,19 +84,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -100,7 +93,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search the docs ..."
          aria-label="Search the docs ..."
          autocomplete="off"
@@ -108,8 +100,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -118,7 +110,7 @@
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -127,7 +119,9 @@
     
       <div class="navbar-item">
 
-   
+  
+     
+  
 
 <a class="navbar-brand logo" href="https://mroonga.org/">
   
@@ -140,8 +134,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.08 documentation - Home"/>
-    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.08 documentation - Home"/>`);</script>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.10 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.10 documentation - Home"/>
   
   
 </a></div>
@@ -156,31 +150,23 @@
         <div class="navbar-item navbar-persistent--container">
           
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
       
       
         <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+        <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -191,7 +177,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -203,7 +189,7 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
@@ -215,34 +201,30 @@ document.write(`
           
           
           
-          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Blog</span></a>
         </li>
 </ul></div>
       
         <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-2"
-      type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-2"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-2"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-2">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
       
     </div>
     
@@ -251,20 +233,16 @@ document.write(`
   
     <div class="navbar-persistent--mobile">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
     </div>
   
 
   
-    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -278,7 +256,8 @@ document.write(`
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -291,17 +270,13 @@ document.write(`
         
           <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
         
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+          <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -312,7 +287,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -324,7 +299,7 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
@@ -336,34 +311,30 @@ document.write(`
           
           
           
-          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Blog</span></a>
         </li>
 </ul></div>
         
           <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-3"
-      type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-3"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-3"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-3">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
         
       </div>
     
@@ -405,8 +376,6 @@ document.write(`
       
         <div class="header-article-item">
 
-
-
 <nav aria-label="Breadcrumb" class="d-print-none">
   <ul class="bd-breadcrumbs">
     
@@ -418,7 +387,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../developer.html" class="nav-link"><span class="section-number">9. </span>Developer’s guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span...</li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">9.1. </span>How to debug</span></li>
   </ul>
 </nav>
 </div>
@@ -435,89 +404,112 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="how-to-debug">
+  <section class="tex2jax_ignore mathjax_ignore" id="how-to-debug">
 <h1><span class="section-number">9.1. </span>How to debug<a class="headerlink" href="#how-to-debug" title="Link to this heading">#</a></h1>
 <section id="building-for-debugging">
 <h2><span class="section-number">9.1.1. </span>Building for debugging<a class="headerlink" href="#building-for-debugging" title="Link to this heading">#</a></h2>
-<p>When you build software for debugging, you can get more information like symbol resolutions in gdb.
-So we build both MySQL and Mroonga for debugging in development.</p>
+<p>When you build software for debugging, you can get more information like symbol resolutions in GDB. So we build both MySQL and Mroonga for debugging in development.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you build one of them for debugging, the size of structures etc. might be different, and you might not be able to load Mroonga, or assertions don’t work in running.</p>
 </div>
 <section id="how-to-build-mysql-for-debugging">
 <h3><span class="section-number">9.1.1.1. </span>How to build MySQL for debugging<a class="headerlink" href="#how-to-build-mysql-for-debugging" title="Link to this heading">#</a></h3>
-<p>As you can see in <a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/installing-source-distribution.html">MySQL :: 2.9.4 Installing MySQL Using a Standard Source Distribution</a>, you can build MySQL for debugging by passing <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=yes</span></code> option in CMAKE options.</p>
-<p>The procedure from download to build is the following.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
-<span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span>
-<span class="o">%</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cdn</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">8.0</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="o">%</span> <span class="n">tar</span> <span class="n">xvzf</span> <span class="n">mysql</span><span class="o">-</span><span class="n">boost</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="o">%</span> <span class="n">mkdir</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">-</span><span class="n">build</span>
-<span class="o">%</span> <span class="n">cd</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">-</span><span class="n">build</span>
-<span class="o">%</span> <span class="n">cmake</span> <span class="o">../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span> \
-    <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">local</span> \
-    <span class="o">-</span><span class="n">DWITH_DEBUG</span><span class="o">=</span><span class="n">yes</span> \
-    <span class="o">-</span><span class="n">DWITH_BOOST</span><span class="o">=../</span><span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.29</span><span class="o">/</span><span class="n">boost</span>
-<span class="o">%</span> <span class="n">make</span>
+<p>As you can see in <a class="reference external" href="https://dev.mysql.com/doc/refman/8.4/en/installing-source-distribution.html">MySQL :: 2.9.4 Installing MySQL Using a Standard Source Distribution</a>, you can build MySQL for debugging by passing <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=ON</span></code> option in CMake options.</p>
+<p>The procedure from download to build is the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/work/
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/work/
+<span class="gp">$ </span>wget<span class="w"> </span>https://cdn.mysql.com/Downloads/MySQL-8.4/mysql-8.4.2.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>mysql-8.4.2.tar.gz
+<span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Smysql-8.4.2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Bmysql-8.4.2.build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/tmp/local<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DWITH_DEBUG<span class="o">=</span>ON
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span>mysql-8.4.2.build
+</pre></div>
+</div>
+</section>
+<section id="how-to-build-mariadb-for-debugging">
+<h3><span class="section-number">9.1.1.2. </span>How to build MariaDB for debugging<a class="headerlink" href="#how-to-build-mariadb-for-debugging" title="Link to this heading">#</a></h3>
+<p>If you want to use MariaDB instead of MySQL, you can use <code class="docutils literal notranslate"><span class="pre">-DWITH_DEBUG=ON</span></code> too.</p>
+<p>Note that you need to remove <code class="docutils literal notranslate"><span class="pre">storage/mroonga/</span></code> (Mroonga bundled in
+MariaDB) before you build MariaDB.</p>
+<p>The procedure from download to build is the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/work/
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/work/
+<span class="gp">$ </span>wget<span class="w"> </span>https://downloads.mariadb.org/rest-api/mariadb/11.4.3/mariadb-11.4.3.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>mariadb-11.4.3.tar.gz
+<span class="gp">$ </span>rm<span class="w"> </span>-rf<span class="w"> </span>mariadb-11.4.3/storage/mroonga
+<span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Smariadb-11.4.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Bmariadb-11.4.3.build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/tmp/local<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DWITH_DEBUG<span class="o">=</span>ON
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span>mariadb-11.4.3.build
 </pre></div>
 </div>
 </section>
 <section id="how-tom-build-mroonga-for-debugging">
-<h3><span class="section-number">9.1.1.2. </span>How tom build Mroonga for debugging<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Link to this heading">#</a></h3>
-<p>You can build Mroonga for debugging by passing <code class="docutils literal notranslate"><span class="pre">--with-debug</span></code> in configure options.</p>
+<h3><span class="section-number">9.1.1.3. </span>How tom build Mroonga for debugging<a class="headerlink" href="#how-tom-build-mroonga-for-debugging" title="Link to this heading">#</a></h3>
+<p>You can build Mroonga for debugging by passing <code class="docutils literal notranslate"><span class="pre">--preset=debug</span></code> in CMake options.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In order to build Mroonga, you need to install required tools and libraries beforehand.</p>
 <p>See <a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a> for the details of dependencies.</p>
 </div>
-<p>The procedure from cloning repository to build is the following.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% cd ~/work/
-% git clone git@github.com:mroonga/mroonga.git
-% cd mroonga
-% ./autogen.sh
-% ./configure --with-debug \
-              --prefix=/tmp/local \
-              --with-mysql-source=$HOME/work/mysql-8.0.29 \
-              --with-mysql-config=$HOME/work/mysql-8.0.29-build/scripts/mysql_config \
-              --with-mysql-build=$HOME/work/mysql-8.0.29-build
-% make
+<p>The procedure from cloning repository to build is the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/work/
+<span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:mroonga/mroonga.git
+<span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Smroonga<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Bmroonga.mysql-8.4<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--preset<span class="o">=</span>debug<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/tmp/local<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_BUILD_DIR<span class="o">=</span><span class="nv">$HOME</span>/work/mysql-8.4.2.build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_CONFIG<span class="o">=</span><span class="nv">$HOME</span>/work/mysql-8.4.2.build/scripts/mysql_config<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_SOURCE_DIR<span class="o">=</span><span class="nv">$HOME</span>/work/mysql-8.4.2
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span>mroonga.mysql-8.4
 </pre></div>
 </div>
-<p>When you successfully build both, please invoke tests like the following.
-If you get <code class="docutils literal notranslate"><span class="pre">[pass]</span></code> for all tests, you succeeded to build for debugging.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span>
+<p>When you successfully build both, please invoke tests like the following. If you get <code class="docutils literal notranslate"><span class="pre">[pass]</span></code> for all tests, you succeeded to build for debugging:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>mroonga.mysql-8.4
+<span class="gp">$ </span>../mroonga/test/run-sql-test.sh
 </pre></div>
 </div>
 </section>
 </section>
 <section id="more-about-run-sql-test-sh">
-<h2><span class="section-number">9.1.2. </span>More about run-sql-test.sh<a class="headerlink" href="#more-about-run-sql-test-sh" title="Link to this heading">#</a></h2>
-<p>run-sql-test.sh is our friend for debugging.
-Here we show some examples of its usage.</p>
+<h2><span class="section-number">9.1.2. </span>More about <code class="docutils literal notranslate"><span class="pre">run-sql-test.sh</span></code><a class="headerlink" href="#more-about-run-sql-test-sh" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">run-sql-test.sh</span></code> is our friend for debugging. Here we show some examples of its usage.</p>
 <section id="run-the-specified-test-only">
 <h3><span class="section-number">9.1.2.1. </span>Run the specified test only<a class="headerlink" href="#run-the-specified-test-only" title="Link to this heading">#</a></h3>
-<p>When you invoke run-sql-test.sh without any option, all tests under <code class="docutils literal notranslate"><span class="pre">mysql-test/mroonga</span></code> will be invoked.</p>
-<p>So if you want to run certain tests only, you can specify the test name in <code class="docutils literal notranslate"><span class="pre">--do-test</span></code> option.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">do</span><span class="o">-</span><span class="n">test</span><span class="o">=</span><span class="n">foobar</span>
+<p>When you invoke <code class="docutils literal notranslate"><span class="pre">run-sql-test.sh</span></code> without any option, all tests under <code class="docutils literal notranslate"><span class="pre">mysql-test/mroonga</span></code> will be invoked.</p>
+<p>So if you want to run certain tests only, you can specify the test:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>../mroonga/test/run-sql-test.sh<span class="w"> </span>../mroonga/mysql-test/mroonga/storage/t/truncate.test
 </pre></div>
 </div>
 </section>
 <section id="see-the-trace">
 <h3><span class="section-number">9.1.2.2. </span>See the trace<a class="headerlink" href="#see-the-trace" title="Link to this heading">#</a></h3>
-<p>When you run tests by adding <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option like the following, function calls information is recorded.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">do</span><span class="o">-</span><span class="n">test</span><span class="o">=</span><span class="n">foobar</span>
+<p>When you run tests by adding <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option like the following, function calls information is recorded:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>../mroonga/test/run-sql-test.sh<span class="w"> </span>--debug<span class="w"> </span>../mroonga/mysql-test/mroonga/storage/t/truncate.test
 </pre></div>
 </div>
-<p>This information is stored in <code class="docutils literal notranslate"><span class="pre">${MySQL's</span> <span class="pre">working</span> <span class="pre">directory}/${MySQL</span> <span class="pre">version}/mysql-test/var/log/mysqld.1.trace</span></code>.</p>
-<p>When you add a new function, it would be a good idea to put it in the beginning of MRN_DBUG_ENTER_FUNCTION function and record its calls.</p>
+<p>This information is stored in <code class="docutils literal notranslate"><span class="pre">${MySQL's</span> <span class="pre">build</span> <span class="pre">directory}/mysql-test/var/log/mysqld.1.trace</span></code>.</p>
+<p>When you add a new method, it would be a good idea to put <code class="docutils literal notranslate"><span class="pre">MRN_DBUG_ENTER_METHOD()</span></code>/<code class="docutils literal notranslate"><span class="pre">DBUG_RETURN()</span></code> in the beginning/ending of method and record its calls.</p>
 </section>
 <section id="invoking-gdb">
 <h3><span class="section-number">9.1.2.3. </span>Invoking GDB<a class="headerlink" href="#invoking-gdb" title="Link to this heading">#</a></h3>
-<p>By adding <code class="docutils literal notranslate"><span class="pre">--gdb</span></code> option, you can debug with GDB when you run tests.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">sql</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">gdb</span>
+<p>By adding <code class="docutils literal notranslate"><span class="pre">--manual-gdb</span></code> option, you can debug with GDB when you run tests:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>../mroonga/test/run-sql-test.sh<span class="w"> </span>--manual-gdb<span class="w"> </span>../mroonga/mysql-test/mroonga/storage/t/truncate.test
 </pre></div>
 </div>
+<p>You need to run <code class="docutils literal notranslate"><span class="pre">gdb</span></code> in other terminal for this. The command line to run <code class="docutils literal notranslate"><span class="pre">gdb</span></code> will be showed by <code class="docutils literal notranslate"><span class="pre">run-sql-test.sh</span></code>.</p>
 </section>
 </section>
 </section>
@@ -557,7 +549,8 @@ Here we show some examples of its usage.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -570,10 +563,11 @@ Here we show some examples of its usage.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-for-debugging">9.1.1. Building for debugging</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-build-mysql-for-debugging">9.1.1.1. How to build MySQL for debugging</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tom-build-mroonga-for-debugging">9.1.1.2. How tom build Mroonga for debugging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-build-mariadb-for-debugging">9.1.1.2. How to build MariaDB for debugging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tom-build-mroonga-for-debugging">9.1.1.3. How tom build Mroonga for debugging</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-about-run-sql-test-sh">9.1.2. More about run-sql-test.sh</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-about-run-sql-test-sh">9.1.2. More about <code class="docutils literal notranslate"><span class="pre">run-sql-test.sh</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-specified-test-only">9.1.2.1. Run the specified test only</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#see-the-trace">9.1.2.2. See the trace</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#invoking-gdb">9.1.2.3. Invoking GDB</a></li>
@@ -586,7 +580,7 @@ Here we show some examples of its usage.</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/developer/debug.rst">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/developer/debug.md">
       <i class="fa-solid fa-pencil"></i>
       
       
@@ -611,8 +605,8 @@ Here we show some examples of its usage.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -637,7 +631,7 @@ Here we show some examples of its usage.</p>
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
 </p></div>
       
     </div>

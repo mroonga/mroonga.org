@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>9.2. Release procedure &#8212; Mroonga v14.08 documentation</title>
+    <title>9.2. Release procedure &#8212; Mroonga v14.10 documentation</title>
   
   
   
@@ -16,27 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=f97d1661"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=1834d29a"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
     <script>
@@ -53,7 +56,7 @@
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'developer/release';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
@@ -65,6 +68,7 @@
     <link rel="prev" title="9.1. How to debug" href="debug.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.10" />
   </head>
   
   
@@ -80,19 +84,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -100,7 +93,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search the docs ..."
          aria-label="Search the docs ..."
          autocomplete="off"
@@ -108,8 +100,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -118,7 +110,7 @@
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -127,7 +119,9 @@
     
       <div class="navbar-item">
 
-   
+  
+     
+  
 
 <a class="navbar-brand logo" href="https://mroonga.org/">
   
@@ -140,8 +134,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.08 documentation - Home"/>
-    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.08 documentation - Home"/>`);</script>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.10 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.10 documentation - Home"/>
   
   
 </a></div>
@@ -156,31 +150,23 @@
         <div class="navbar-item navbar-persistent--container">
           
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
       
       
         <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+        <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -191,7 +177,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -203,7 +189,7 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
@@ -215,34 +201,30 @@ document.write(`
           
           
           
-          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Blog</span></a>
         </li>
 </ul></div>
       
         <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-2"
-      type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-2"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-2"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-2">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
       
     </div>
     
@@ -251,20 +233,16 @@ document.write(`
   
     <div class="navbar-persistent--mobile">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
     </div>
   
 
   
-    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -278,7 +256,8 @@ document.write(`
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -291,17 +270,13 @@ document.write(`
         
           <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
         
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+          <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -312,7 +287,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -324,7 +299,7 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
@@ -336,34 +311,30 @@ document.write(`
           
           
           
-          <a href="/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Blog</span></a>
         </li>
 </ul></div>
         
           <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-3"
-      type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-3"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-3"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-3">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
         
       </div>
     
@@ -405,8 +376,6 @@ document.write(`
       
         <div class="header-article-item">
 
-
-
 <nav aria-label="Breadcrumb" class="d-print-none">
   <ul class="bd-breadcrumbs">
     
@@ -418,7 +387,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../developer.html" class="nav-link"><span class="section-number">9. </span>Developer’s guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span...</li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">9.2. </span>Release procedure</span></li>
   </ul>
 </nav>
 </div>
@@ -446,13 +415,14 @@ document.write(`
 </ul>
 <p>Use the following working directories.</p>
 <ul class="simple">
-<li><p>MROONGA_DIR=$HOME/work/mroonga</p></li>
-<li><p>MROONGA_CLONE_DIR=$HOME/work/mroonga/mroonga.clean</p></li>
-<li><p>MROONGA_GITHUB_COM_PATH=$HOME/work/mroonga/mroonga.github.com</p></li>
-<li><p>CUTTER_DIR=$HOME/work/cutter</p></li>
-<li><p>CUTTER_SOURCE_PATH=$HOME/work/cutter/cutter</p></li>
-<li><p>GROONGA_SOURCE_PATH=$HOME/work/groonga/groonga.clean</p></li>
-<li><p>PACKAGES_GROONGA_ORG_REPOSITORY=$HOME/work/groonga/packages.groonga.org</p></li>
+<li><p>MROONGA_SOURCE_DIR=$HOME/work/mroonga</p></li>
+<li><p>MROONGA_BUILD_DIR=$HOME/work/build-dir/mroonga</p></li>
+<li><p>MROONGA_ORG_DIR=$HOME/work/mroonga.org</p></li>
+<li><p>MARIADB_SOURCE_DIR=$HOME/work/mariadb</p></li>
+<li><p>MARIADB_BUILD_DIR=$HOME/work/build-dir/mariadb</p></li>
+<li><p>GROONGA_SOURCE_DIR=$HOME/work/groonga</p></li>
+<li><p>GROONGA_BUILD_DIR=$HOME/work/build-dir/groonga</p></li>
+<li><p>INSTALL_DIR=/tmp/local</p></li>
 </ul>
 </section>
 <section id="setup-build-environment">
@@ -465,13 +435,7 @@ document.write(`
 </section>
 <section id="describe-the-changes">
 <h2><span class="section-number">9.2.3. </span>Describe the changes<a class="headerlink" href="#describe-the-changes" title="Link to this heading">#</a></h2>
-<p>Summarize recent changes since the previous release into <code class="docutils literal notranslate"><span class="pre">doc/source/news.txt</span></code>.
-This summary is also used in release note.</p>
-<p>Execute the following command to collect change logs since the previous version:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% git log -p --reverse $(git tag | tail -1)..
-</pre></div>
-</div>
-<p>Search the logs by <code class="docutils literal notranslate"><span class="pre">^commit</span></code>, and pick up collect remarkable changes.</p>
+<p>Summarize recent changes since the previous release into <code class="docutils literal notranslate"><span class="pre">doc/source/news/xx.md</span></code>.</p>
 <p>Should be included</p>
 <ul class="simple">
 <li><p>The changes which affect to users</p></li>
@@ -481,46 +445,20 @@ This summary is also used in release note.</p>
 <ul class="simple">
 <li><p>The changes which doesn’t affect to users (Internal source code changes or refactoring)</p></li>
 </ul>
-<p>Execute the following command to create HTML for news.</p>
-<blockquote>
-<div><p>% make update-files
-% make -C doc html</p>
-</div></blockquote>
-</section>
-<section id="generate-configure-script">
-<h2><span class="section-number">9.2.4. </span>Generate configure script<a class="headerlink" href="#generate-configure-script" title="Link to this heading">#</a></h2>
-<p>Because of main branch doesn’t include configure script, then it is required to generate configure script for building.</p>
-<p>Execute <code class="docutils literal notranslate"><span class="pre">autogen.sh</span></code> with the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sh</span> <span class="n">autogen</span><span class="o">.</span><span class="n">sh</span>
+<p>Execute the following command to create HTML for news:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% cmake -S ${MARIADB_SOURCE_DIR} -B ${MARIADB_BUILD_DIR} -GNinja -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} -DPLUGIN_CASSANDRA=NO
+% cmake --build ${MARIADB_BUILD_DIR}
+% cmake --install ${MARIADB_BUILD_DIR}
+% cmake -S ${GROONGA_SOURCE_DIRECTORY} -B ${GROONGA_BUILD_DIR} --preset=release-default --fresh -DCMAKE_INSTALL_PREFIX=&quot;${INSTALL_DIR}&quot;
+% cmake --build ${GROONGA_BUILD_DIR}
+% cmake --install ${GROONGA_BUILD_DIR}
+% PKG_CONFIG_PATH=${INSTALL_DIR}/lib/pkgconfig cmake -S ${MROONGA_SOURCE_DIRECTORY} -B ${MROONGA_BUILD_DIR} --fresh --preset=doc -DCMAKE_INSTALL_PREFIX=&quot;${INSTALL_DIR}&quot; -DMYSQL_SOURCE_DIR=~${MARIADB_SOURCE_DIR} -DMYSQL_BUILD_DIR=${MARIADB_BUILD_DIR} -DMYSQL_CONFIG=${INSTALL_DIR}/bin/mariadb_config
+% cmake --build ${MROONGA_BUILD_DIR}
 </pre></div>
-</div>
-<p>It generates <code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
-</section>
-<section id="execute-configure-script">
-<h2><span class="section-number">9.2.5. </span>Execute configure script<a class="headerlink" href="#execute-configure-script" title="Link to this heading">#</a></h2>
-<p>For generating <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, execute the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
-<p>Execute with the following options for the release:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% ./configure \
-    --enable-document \
-    --prefix=/tmp/local \
-    --with-launchpad-uploader-pgp-key=(The key ID that is registered Launchpad) \
-    --with-mroonga-github-com-path=$MROONGA_GITHUB_COM_PATH \
-    --with-cutter-source-path=$CUTTER_SOURCE_PATH \
-    --with-groonga-source-path=$GROONGA_SOURCE_PATH \
-    --with-mysql-source=(The directory of MySQL source code) \
-    --with-mysql-build=(The build directory of MySQL) \
-    --with-mysql-config=(The path to mysql_config command)
-</pre></div>
-</div>
-<p>See <a class="reference internal" href="../install/others.html"><span class="doc">Others</span></a>  for the details of <code class="docutils literal notranslate"><span class="pre">--with-mysql-source</span></code> option.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We can not upload and override the same name packages to PPA repository.
-Therefore, we upload packages to a stable repository after confirming the successful build of they in the nightly repository.</p>
 </div>
 </section>
 <section id="check-whether-you-can-upload-packages">
-<h2><span class="section-number">9.2.6. </span>Check whether you can upload packages<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.4. </span>Check whether you can upload packages<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Link to this heading">#</a></h2>
 <p>Check whether you can login to packages.groonga.org as packages user.</p>
 <p>You can check with the following command whether you can login:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">ssh</span> <span class="n">packages</span><span class="nd">@packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span>
@@ -529,63 +467,51 @@ Therefore, we upload packages to a stable repository after confirming the succes
 <p>If you can’t login to packages.groonga.org, you must be registered ssh public key.</p>
 </section>
 <section id="execute-make-update-latest-release">
-<h2><span class="section-number">9.2.7. </span>Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Link to this heading">#</a></h2>
-<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-latest-release</span></code> command with OLD_RELEASE_DATE, NEW_RELEASE_DATE.</p>
-<p>When 9.09 release, we executed the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">release</span> <span class="n">OLD_RELEASE</span><span class="o">=</span><span class="mf">9.09</span> <span class="n">OLD_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">27</span> <span class="n">NEW_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">30</span>
+<h2><span class="section-number">9.2.5. </span>Execute make update-latest-release<a class="headerlink" href="#execute-make-update-latest-release" title="Link to this heading">#</a></h2>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">release:version:update</span></code> command with OLD_RELEASE_DATE, NEW_RELEASE_DATE.</p>
+<p>When 14.07 release, we executed the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">release</span><span class="p">:</span><span class="n">version</span><span class="p">:</span><span class="n">update</span> <span class="n">OLD_RELEASE</span><span class="o">=</span><span class="mf">14.04</span> <span class="n">OLD_RELEASE_DATE</span><span class="o">=</span><span class="mi">2024</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">12</span> <span class="n">NEW_RELEASE_DATE</span><span class="o">=</span><span class="mi">2024</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span>
 </pre></div>
 </div>
-<p>This command updates some html files (which is used for web sites of Mroonga - index.html,ja/index.html) and the version of spec file or debian/changelog entry.</p>
+<p>This command updates the version of spec file or debian/changelog entry.</p>
 </section>
 <section id="confirm-the-results-of-each-test">
-<h2><span class="section-number">9.2.8. </span>Confirm the results of each test<a class="headerlink" href="#confirm-the-results-of-each-test" title="Link to this heading">#</a></h2>
-<p>We confirm the results of all the below tests before setting the tag to Mroonga.
+<h2><span class="section-number">9.2.6. </span>Confirm the results of each test<a class="headerlink" href="#confirm-the-results-of-each-test" title="Link to this heading">#</a></h2>
+<p>We confirm the results of all the below tests and build before setting the tag to Mroonga.
 Because if we will find problems in Mroonga after setting the tag to it, we must release it again.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/mroonga/mroonga/actions">GitHub Actions</a></p></li>
+<li><p><a class="reference external" href="https://launchpad.net/~groonga/+archive/ubuntu/nightly/+packages">Launchpad</a></p></li>
 </ul>
-</section>
-<section id="tagging-for-release">
-<h2><span class="section-number">9.2.9. </span>Tagging for release<a class="headerlink" href="#tagging-for-release" title="Link to this heading">#</a></h2>
-<p>Execute the following command for tagging:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">tag</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span> <span class="n">origin</span>
+<p>How to build packages for Ubuntu on Nightly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Download</span> <span class="n">source</span> <span class="n">archive</span> <span class="kn">from</span> <span class="nn">GitHub</span> <span class="n">actions</span><span class="o">.</span>
+<span class="o">%</span> <span class="n">mv</span> <span class="n">mroonga</span><span class="o">-</span><span class="mf">14.07</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">mroonga</span><span class="o">/</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="n">mroonga</span><span class="o">/</span><span class="n">packages</span>
+<span class="o">%</span> <span class="n">rake</span> <span class="n">ubuntu</span> <span class="n">DPUT_CONFIGURATION_NAME</span><span class="o">=</span><span class="n">groonga</span><span class="o">-</span><span class="n">ppa</span><span class="o">-</span><span class="n">nightly</span> <span class="n">DPUT_INCOMING</span><span class="o">=</span><span class="s2">&quot;~groonga/ubuntu/nightly&quot;</span> <span class="n">LAUNCHPAD_UPLOADER_PGP_KEY</span><span class="o">=</span><span class="n">xxxxxxx</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>After tagging for the release, execute <code class="docutils literal notranslate"><span class="pre">configure</span></code> script. This tag information is reflected when generating the documents.</p>
+</section>
+<section id="tagging-for-release">
+<h2><span class="section-number">9.2.7. </span>Tagging for release<a class="headerlink" href="#tagging-for-release" title="Link to this heading">#</a></h2>
+<p>Execute the following command for tagging:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">release</span><span class="p">:</span><span class="n">tag</span>
+</pre></div>
 </div>
 </section>
 <section id="upload-archive-files">
-<h2><span class="section-number">9.2.10. </span>Upload archive files<a class="headerlink" href="#upload-archive-files" title="Link to this heading">#</a></h2>
-<p>Then, create archive file (<code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>) for distribution:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">dist</span>
-</pre></div>
-</div>
-<p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages/source</span></code>:</p>
+<h2><span class="section-number">9.2.8. </span>Upload archive files<a class="headerlink" href="#upload-archive-files" title="Link to this heading">#</a></h2>
+<p>Execute the following command for uploading source archive:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span><span class="o">/</span><span class="n">source</span>
-</pre></div>
-</div>
-<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">download</span></code> for syncing with the upstream:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">download</span>
-</pre></div>
-</div>
-<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">archive</span></code> for generating source archive:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">archive</span>
-</pre></div>
-</div>
-<p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">upload</span></code> for uploading archive file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">upload</span>
+<span class="o">%</span> <span class="n">rake</span> <span class="n">source</span>
 </pre></div>
 </div>
 <p>As a result, <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> archive file is available from <a class="reference external" href="https://packages.groonga.org/source/mroonga/">https://packages.groonga.org/source/mroonga/</a>.</p>
 </section>
 <section id="create-packages-for-the-release">
-<h2><span class="section-number">9.2.11. </span>Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.9. </span>Create packages for the release<a class="headerlink" href="#create-packages-for-the-release" title="Link to this heading">#</a></h2>
 <p>Create Linux and Windows packages.</p>
 <section id="debian">
-<h3><span class="section-number">9.2.11.1. </span>Debian<a class="headerlink" href="#debian" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.1. </span>Debian<a class="headerlink" href="#debian" title="Link to this heading">#</a></h3>
 <p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
@@ -602,7 +528,7 @@ However, these packages are unsigned. We sign packages by executing the below co
 </div>
 </section>
 <section id="debian-derivatives-ubuntu">
-<h3><span class="section-number">9.2.11.2. </span>Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.2. </span>Debian derivatives(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Link to this heading">#</a></h3>
 <p>For Ubuntu, packages are provided by PPA on launchpad.net.</p>
 <p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code> and execute <code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">ubuntu:upload</span></code> command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
@@ -616,7 +542,7 @@ You can install packages via Groonga PPA on launchpad.net:</p>
 </div>
 </section>
 <section id="red-hat-derivatives">
-<h3><span class="section-number">9.2.11.3. </span>Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.3. </span>Red Hat derivatives<a class="headerlink" href="#red-hat-derivatives" title="Link to this heading">#</a></h3>
 <p>Change working directory to <code class="docutils literal notranslate"><span class="pre">packages</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
@@ -633,47 +559,24 @@ However, these packages are unsigned. We sign packages by executing the below co
 </div>
 </section>
 <section id="windows">
-<h3><span class="section-number">9.2.11.4. </span>Windows<a class="headerlink" href="#windows" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.4. </span>Windows<a class="headerlink" href="#windows" title="Link to this heading">#</a></h3>
 <p>For windows packages, we use artifacts of <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> .</p>
 </section>
 </section>
 <section id="update-docker-images">
-<h2><span class="section-number">9.2.12. </span>Update Docker images<a class="headerlink" href="#update-docker-images" title="Link to this heading">#</a></h2>
-<p>We update Mroonga’s Docker images of <a class="reference external" href="https://hub.docker.com/r/groonga/mroonga">Docker Hub</a> .</p>
-<p>Clone <a class="reference external" href="https://github.com/mroonga/docker">the Mroonga’s Docker repository</a> and update Dockerfiles in tha repository.</p>
-<p>Here is an example for the case that the MySQL version is <code class="docutils literal notranslate"><span class="pre">5.7.26</span></code>, the Mroonga version is <code class="docutils literal notranslate"><span class="pre">9.01</span></code>, the Groonga version is <code class="docutils literal notranslate"><span class="pre">9.0.2</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span>
-<span class="o">%</span> <span class="n">test</span> <span class="o">-</span><span class="n">e</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span> <span class="o">||</span> <span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recursive</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">git</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span>
-<span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">xdf</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">checkout</span> <span class="o">.</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">pull</span>
-<span class="o">%</span> <span class="o">./</span><span class="n">update</span><span class="o">.</span><span class="n">sh</span> <span class="mf">5.7.26</span> <span class="mf">9.01</span> <span class="mf">9.0.2</span> <span class="c1">#Automatically update Dockerfiles and commit changes and create a tag.</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">push</span>
-</pre></div>
-</div>
-<p>You have to specify the latest versions.</p>
-<p>After you check <a class="reference external" href="https://github.com/mroonga/docker/actions">GitHub Actions of the Mroonga’s Docker repository</a> are succeeded, push tag to remote, push tag to remote.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span>
-</pre></div>
-</div>
-<p>GitHub Actions of the Mroonga’s Docker repository automatically update the Mroonga’s docker images of Docker Hub after you push the tag.</p>
-<p>You have to execute this procedure for both MySQL 5.x.x and 8.x.x.</p>
+<h2><span class="section-number">9.2.10. </span>Update Docker images<a class="headerlink" href="#update-docker-images" title="Link to this heading">#</a></h2>
+<p>TODO</p>
 </section>
 <section id="upload-documents">
-<h2><span class="section-number">9.2.13. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Link to this heading">#</a></h2>
-<ol class="arabic">
-<li><p>Clone mroonga.github.com repository</p></li>
-<li><p>Execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> as below in <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">document</span>
+<h2><span class="section-number">9.2.11. </span>Upload documents<a class="headerlink" href="#upload-documents" title="Link to this heading">#</a></h2>
+<p>Execute the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% rake release:document:update BUILD_DIR=${MROONGA_BUILD_DIR} MROONGA_ORG_DIR=${MROONGA_ORG_DIR}
 </pre></div>
 </div>
-</li>
-<li><p>Commit changes in mroonga.github.com repository &amp;&amp; push them</p></li>
-</ol>
+<p>Commit changes in mroonga.org repository &amp;&amp; push them.</p>
 </section>
 <section id="update-blog-mroonga-blog">
-<h2><span class="section-number">9.2.14. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.12. </span>Update blog(Mroonga blog)<a class="headerlink" href="#update-blog-mroonga-blog" title="Link to this heading">#</a></h2>
 <p>We update the below files.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/ja/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
@@ -698,7 +601,7 @@ published: false
 </div>
 </section>
 <section id="announce-release-for-mailing-list">
-<h2><span class="section-number">9.2.15. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.13. </span>Announce release for mailing list<a class="headerlink" href="#announce-release-for-mailing-list" title="Link to this heading">#</a></h2>
 <p>Send release announce for each mailing list</p>
 <ul class="simple">
 <li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
@@ -707,21 +610,21 @@ published: false
 </ul>
 </section>
 <section id="announce-release-for-twitter">
-<h2><span class="section-number">9.2.16. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.14. </span>Announce release for twitter<a class="headerlink" href="#announce-release-for-twitter" title="Link to this heading">#</a></h2>
 <p>Click Tweet link in Mrooga blog entry. You can share tweet about latest release.
 If you use tweet link, title of release announce and URL is embedded into your tweet.</p>
 <p>Execute sharing tweet in Japanese and English version of blog entry.
 Note that this tweet should be done when logged in by <code class="docutils literal notranslate"><span class="pre">groonga</span></code> account.</p>
 </section>
 <section id="announce-release-for-facebook">
-<h2><span class="section-number">9.2.17. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.15. </span>Announce release for Facebook<a class="headerlink" href="#announce-release-for-facebook" title="Link to this heading">#</a></h2>
 <p>We announce release from Mroonga group in Facebook.</p>
 <p><a class="reference external" href="https://www.facebook.com/mroonga/">https://www.facebook.com/mroonga/</a></p>
 </section>
 <section id="bump-version">
-<h2><span class="section-number">9.2.18. </span>Bump version<a class="headerlink" href="#bump-version" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.16. </span>Bump version<a class="headerlink" href="#bump-version" title="Link to this heading">#</a></h2>
 <p>Bump version to the latest release:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">version</span> <span class="n">NEW_VERSION_MAJOR</span><span class="o">=</span><span class="mi">9</span> <span class="n">NEW_VERSION_MINOR</span><span class="o">=</span><span class="mi">1</span> <span class="n">NEW_VERSION_MICRO</span><span class="o">=</span><span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">dev</span><span class="p">:</span><span class="n">version</span><span class="p">:</span><span class="n">bump</span> <span class="n">NEW_VERSION</span><span class="o">=</span><span class="n">xx</span><span class="o">.</span><span class="n">xx</span>
 </pre></div>
 </div>
 </section>
@@ -762,7 +665,8 @@ Note that this tweet should be done when logged in by <code class="docutils lite
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -776,27 +680,25 @@ Note that this tweet should be done when logged in by <code class="docutils lite
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">9.2.1. Requirements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-build-environment">9.2.2. Setup build environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe-the-changes">9.2.3. Describe the changes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-configure-script">9.2.4. Generate configure script</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-configure-script">9.2.5. Execute configure script</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-whether-you-can-upload-packages">9.2.6. Check whether you can upload packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-make-update-latest-release">9.2.7. Execute make update-latest-release</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confirm-the-results-of-each-test">9.2.8. Confirm the results of each test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tagging-for-release">9.2.9. Tagging for release</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-archive-files">9.2.10. Upload archive files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-packages-for-the-release">9.2.11. Create packages for the release</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian">9.2.11.1. Debian</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian-derivatives-ubuntu">9.2.11.2. Debian derivatives(Ubuntu)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#red-hat-derivatives">9.2.11.3. Red Hat derivatives</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">9.2.11.4. Windows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-whether-you-can-upload-packages">9.2.4. Check whether you can upload packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-make-update-latest-release">9.2.5. Execute make update-latest-release</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confirm-the-results-of-each-test">9.2.6. Confirm the results of each test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tagging-for-release">9.2.7. Tagging for release</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-archive-files">9.2.8. Upload archive files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-packages-for-the-release">9.2.9. Create packages for the release</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian">9.2.9.1. Debian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian-derivatives-ubuntu">9.2.9.2. Debian derivatives(Ubuntu)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#red-hat-derivatives">9.2.9.3. Red Hat derivatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">9.2.9.4. Windows</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-docker-images">9.2.12. Update Docker images</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-documents">9.2.13. Upload documents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-blog-mroonga-blog">9.2.14. Update blog(Mroonga blog)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-mailing-list">9.2.15. Announce release for mailing list</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-twitter">9.2.16. Announce release for twitter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-facebook">9.2.17. Announce release for Facebook</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bump-version">9.2.18. Bump version</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-docker-images">9.2.10. Update Docker images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-documents">9.2.11. Upload documents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-blog-mroonga-blog">9.2.12. Update blog(Mroonga blog)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-mailing-list">9.2.13. Announce release for mailing list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-twitter">9.2.14. Announce release for twitter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-facebook">9.2.15. Announce release for Facebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bump-version">9.2.16. Bump version</a></li>
 </ul>
   </nav></div>
 
@@ -829,8 +731,8 @@ Note that this tweet should be done when logged in by <code class="docutils lite
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -855,7 +757,7 @@ Note that this tweet should be done when logged in by <code class="docutils lite
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
 </p></div>
       
     </div>

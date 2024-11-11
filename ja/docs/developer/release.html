@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>9.2. Release procedure &#8212; Mroonga v14.08 documentation</title>
+    <title>9.2. Release procedure &#8212; Mroonga v14.10 documentation</title>
   
   
   
@@ -16,29 +16,32 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=c88a8235"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=29c346ce"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/translations.js?v=4dbe4bdc"></script>
+    <script src="../_static/translations.js?v=4755f45a"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -54,7 +57,7 @@
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'developer/release';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'japanese';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
@@ -66,6 +69,7 @@
     <link rel="prev" title="9.1. デバッグ方法" href="debug.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="14.10" />
   </head>
   
   
@@ -81,19 +85,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -101,7 +94,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search the docs ..."
          aria-label="Search the docs ..."
          autocomplete="off"
@@ -109,8 +101,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -119,7 +111,7 @@
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -128,7 +120,9 @@
     
       <div class="navbar-item">
 
-   
+  
+     
+  
 
 <a class="navbar-brand logo" href="https://mroonga.org/ja/">
   
@@ -141,8 +135,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.08 documentation - Home"/>
-    <script>document.write(`<img src="../_static/mroonga.png" class="logo__image only-dark" alt="Mroonga v14.08 documentation - Home"/>`);</script>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.10 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.10 documentation - Home"/>
   
   
 </a></div>
@@ -157,31 +151,23 @@
         <div class="navbar-item navbar-persistent--container">
           
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">検索</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
       
       
         <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+        <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -192,7 +178,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -204,7 +190,7 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
@@ -216,34 +202,30 @@ document.write(`
           
           
           
-          <a href="/ja/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Blog</span></a>
         </li>
 </ul></div>
       
         <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-2"
-      type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-2"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-2"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-2">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
       
     </div>
     
@@ -252,20 +234,16 @@ document.write(`
   
     <div class="navbar-persistent--mobile">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">検索</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
     </div>
   
 
   
-    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -279,7 +257,8 @@ document.write(`
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -292,17 +271,13 @@ document.write(`
         
           <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
         
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+          <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -313,7 +288,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -325,7 +300,7 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
@@ -337,34 +312,30 @@ document.write(`
           
           
           
-          <a href="/ja/blog" title="Blog" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-blog fa-lg" aria-hidden="true"></i></span>
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Blog</span></a>
         </li>
 </ul></div>
         
           <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-3"
-      type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-3"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-3"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-3">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
         
       </div>
     
@@ -406,8 +377,6 @@ document.write(`
       
         <div class="header-article-item">
 
-
-
 <nav aria-label="Breadcrumb" class="d-print-none">
   <ul class="bd-breadcrumbs">
     
@@ -419,7 +388,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../developer.html" class="nav-link"><span class="section-number">9. </span>開発者向け情報</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span...</li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">9.2. </span>Release procedure</span></li>
   </ul>
 </nav>
 </div>
@@ -447,13 +416,14 @@ document.write(`
 </ul>
 <p>以下の作業ディレクトリを使います。</p>
 <ul class="simple">
-<li><p>MROONGA_DIR=$HOME/work/mroonga</p></li>
-<li><p>MROONGA_CLONE_DIR=$HOME/work/mroonga/mroonga.clean</p></li>
-<li><p>MROONGA_GITHUB_COM_PATH=$HOME/work/mroonga/mroonga.github.com</p></li>
-<li><p>CUTTER_DIR=$HOME/work/cutter</p></li>
-<li><p>CUTTER_SOURCE_PATH=$HOME/work/cutter/cutter</p></li>
-<li><p>GROONGA_SOURCE_PATH=$HOME/work/groonga/groonga.clean</p></li>
-<li><p>PACKAGES_GROONGA_ORG_REPOSITORY=$HOME/work/groonga/packages.groonga.org</p></li>
+<li><p>MROONGA_SOURCE_DIR=$HOME/work/mroonga</p></li>
+<li><p>MROONGA_BUILD_DIR=$HOME/work/build-dir/mroonga</p></li>
+<li><p>MROONGA_ORG_DIR=$HOME/work/mroonga.org</p></li>
+<li><p>MARIADB_SOURCE_DIR=$HOME/work/mariadb</p></li>
+<li><p>MARIADB_BUILD_DIR=$HOME/work/build-dir/mariadb</p></li>
+<li><p>GROONGA_SOURCE_DIR=$HOME/work/groonga</p></li>
+<li><p>GROONGA_BUILD_DIR=$HOME/work/build-dir/groonga</p></li>
+<li><p>INSTALL_DIR=/tmp/local</p></li>
 </ul>
 </section>
 <section id="setup-build-environment">
@@ -466,12 +436,7 @@ document.write(`
 </section>
 <section id="describe-the-changes">
 <h2><span class="section-number">9.2.3. </span>変更点を記述する<a class="headerlink" href="#describe-the-changes" title="Link to this heading">#</a></h2>
-<p>前回のリリース以降の最近の変更点を <code class="docutils literal notranslate"><span class="pre">doc/source/news.rst</span></code> へまとめます。このまとめはリリースノートでも使います。</p>
-<p>以下のコマンドを前回のリリースからの変更点を収集するのに使います:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% git log -p --reverse $(git tag | tail -1)..
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">^commit</span></code> でログを検索し、主な変更点を拾います。</p>
+<p>前回のリリース以降の最近の変更点を <code class="docutils literal notranslate"><span class="pre">doc/source/news/xx.md</span></code> へまとめます。</p>
 <p>含めるべきもの</p>
 <ul class="simple">
 <li><p>ユーザーに影響のある変更点</p></li>
@@ -481,45 +446,20 @@ document.write(`
 <ul class="simple">
 <li><p>ユーザーに影響のない内部的な変更やリファクタリング</p></li>
 </ul>
-<p>Execute the following command to create HTML for news.</p>
-<blockquote>
-<div><p>% make update-files
-% make -C doc html</p>
-</div></blockquote>
-</section>
-<section id="generate-configure-script">
-<h2><span class="section-number">9.2.4. </span>configureスクリプトの生成<a class="headerlink" href="#generate-configure-script" title="Link to this heading">#</a></h2>
-<p>mainブランチはconfigureスクリプトを含んでいないのでビルドするのにconfigureスクリプトを生成する必要があります。</p>
-<p><code class="docutils literal notranslate"><span class="pre">autogen.sh</span></code> を以下のコマンドで実行します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sh</span> <span class="n">autogen</span><span class="o">.</span><span class="n">sh</span>
+<p>Execute the following command to create HTML for news:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% cmake -S ${MARIADB_SOURCE_DIR} -B ${MARIADB_BUILD_DIR} -GNinja -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} -DPLUGIN_CASSANDRA=NO
+% cmake --build ${MARIADB_BUILD_DIR}
+% cmake --install ${MARIADB_BUILD_DIR}
+% cmake -S ${GROONGA_SOURCE_DIRECTORY} -B ${GROONGA_BUILD_DIR} --preset=release-default --fresh -DCMAKE_INSTALL_PREFIX=&quot;${INSTALL_DIR}&quot;
+% cmake --build ${GROONGA_BUILD_DIR}
+% cmake --install ${GROONGA_BUILD_DIR}
+% PKG_CONFIG_PATH=${INSTALL_DIR}/lib/pkgconfig cmake -S ${MROONGA_SOURCE_DIRECTORY} -B ${MROONGA_BUILD_DIR} --fresh --preset=doc -DCMAKE_INSTALL_PREFIX=&quot;${INSTALL_DIR}&quot; -DMYSQL_SOURCE_DIR=~${MARIADB_SOURCE_DIR} -DMYSQL_BUILD_DIR=${MARIADB_BUILD_DIR} -DMYSQL_CONFIG=${INSTALL_DIR}/bin/mariadb_config
+% cmake --build ${MROONGA_BUILD_DIR}
 </pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">configure</span></code> スクリプトを生成します。</p>
-</section>
-<section id="execute-configure-script">
-<h2><span class="section-number">9.2.5. </span>configureスクリプトの実行<a class="headerlink" href="#execute-configure-script" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Makefile</span></code> を生成するために、 <code class="docutils literal notranslate"><span class="pre">configure</span></code> スクリプトを実行します。</p>
-<p>リリース向けに以下のオプションとともに実行します。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% ./configure \
-    --enable-document \
-    --prefix=/tmp/local \
-    --with-launchpad-uploader-pgp-key=(The key ID that is registered Launchpad) \
-    --with-mroonga-github-com-path=$MROONGA_GITHUB_COM_PATH \
-    --with-cutter-source-path=$CUTTER_SOURCE_PATH \
-    --with-groonga-source-path=$GROONGA_SOURCE_PATH \
-    --with-mysql-source=(The directory of MySQL source code) \
-    --with-mysql-build=(The build directory of MySQL) \
-    --with-mysql-config=(The path to mysql_config command)
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">--with-mysql-source</span></code> の詳細については <a class="reference internal" href="../install/others.html"><span class="doc">その他</span></a>  を参照してください。</p>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>PPAのリポジトリは、同名のパッケージを上書いてアップロードできないので、不安定版のリポジトリでビルドできることを確認してから、安定版のリポジトリへアップロードするようにしてください。</p>
 </div>
 </section>
 <section id="check-whether-you-can-upload-packages">
-<h2><span class="section-number">9.2.6. </span>パッケージをアップロード可能か確認する<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.4. </span>パッケージをアップロード可能か確認する<a class="headerlink" href="#check-whether-you-can-upload-packages" title="Link to this heading">#</a></h2>
 <p>pacakgesユーザーでpackages.groonga.orgにログインできるかを確認します。</p>
 <p>ログインできるかどうかは以下のコマンドで確認できます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">ssh</span> <span class="n">packages</span><span class="nd">@packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span>
@@ -528,62 +468,50 @@ document.write(`
 <p>packages.groonga.orgにログインできないときは、sshの公開鍵を登録しておかないといけません。</p>
 </section>
 <section id="execute-make-update-latest-release">
-<h2><span class="section-number">9.2.7. </span>make update-latest-releaseを実行する<a class="headerlink" href="#execute-make-update-latest-release" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-latest-release</span></code> を OLD_RELEASE_DATE や NEW_RELEASE_DATE とともに実行します。</p>
-<p>9.09 のリリースの際は、以下のコマンドを実行しました。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">release</span> <span class="n">OLD_RELEASE</span><span class="o">=</span><span class="mf">9.09</span> <span class="n">OLD_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">27</span> <span class="n">NEW_RELEASE_DATE</span><span class="o">=</span><span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">30</span>
+<h2><span class="section-number">9.2.5. </span>make update-latest-releaseを実行する<a class="headerlink" href="#execute-make-update-latest-release" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">release:version:update</span></code> を OLD_RELEASE_DATE や NEW_RELEASE_DATE とともに実行します。</p>
+<p>14.07 のリリースの際は、以下のコマンドを実行しました</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">release</span><span class="p">:</span><span class="n">version</span><span class="p">:</span><span class="n">update</span> <span class="n">OLD_RELEASE</span><span class="o">=</span><span class="mf">14.04</span> <span class="n">OLD_RELEASE_DATE</span><span class="o">=</span><span class="mi">2024</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">12</span> <span class="n">NEW_RELEASE_DATE</span><span class="o">=</span><span class="mi">2024</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span>
 </pre></div>
 </div>
-<p>このコマンドはMroongaのサイトのHTMLファイルやspecやdebian/changelogファイルのバージョンを更新します。</p>
+<p>このコマンドはdebian/changelogファイルのバージョンを更新します。</p>
 </section>
 <section id="confirm-the-results-of-each-test">
-<h2><span class="section-number">9.2.8. </span>各テストの結果確認<a class="headerlink" href="#confirm-the-results-of-each-test" title="Link to this heading">#</a></h2>
-<p>リリース用のタグを設定する前に、以下のテストが全てパスしているかを確認します。タグを設定してから問題が発覚すると、再度リリースすることになってしまうので、タグを設定する前に問題がないか確認します。</p>
+<h2><span class="section-number">9.2.6. </span>各テストの結果確認<a class="headerlink" href="#confirm-the-results-of-each-test" title="Link to this heading">#</a></h2>
+<p>リリース用のタグを設定する前に、以下のテストとビルドが全てパスしているかを確認します。タグを設定してから問題が発覚すると、再度リリースすることになってしまうので、タグを設定する前に問題がないか確認します。</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/mroonga/mroonga/actions">GitHub Actions</a></p></li>
+<li><p><a class="reference external" href="https://launchpad.net/~groonga/+archive/ubuntu/nightly/+packages">Launchpad</a></p></li>
 </ul>
-</section>
-<section id="tagging-for-release">
-<h2><span class="section-number">9.2.9. </span>リリースのためのタグ打ち<a class="headerlink" href="#tagging-for-release" title="Link to this heading">#</a></h2>
-<p>タグを打つために以下のコマンドを実行します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">tag</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span> <span class="n">origin</span>
+<p>How to build packages for Ubuntu on Nightly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Download</span> <span class="n">source</span> <span class="n">archive</span> <span class="kn">from</span> <span class="nn">GitHub</span> <span class="n">actions</span><span class="o">.</span>
+<span class="o">%</span> <span class="n">mv</span> <span class="n">mroonga</span><span class="o">-</span><span class="mf">14.07</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">mroonga</span><span class="o">/</span>
+<span class="o">%</span> <span class="n">cd</span> <span class="n">mroonga</span><span class="o">/</span><span class="n">packages</span>
+<span class="o">%</span> <span class="n">rake</span> <span class="n">ubuntu</span> <span class="n">DPUT_CONFIGURATION_NAME</span><span class="o">=</span><span class="n">groonga</span><span class="o">-</span><span class="n">ppa</span><span class="o">-</span><span class="n">nightly</span> <span class="n">DPUT_INCOMING</span><span class="o">=</span><span class="s2">&quot;~groonga/ubuntu/nightly&quot;</span> <span class="n">LAUNCHPAD_UPLOADER_PGP_KEY</span><span class="o">=</span><span class="n">xxxxxxx</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>リリースのためにタグを打ったら、<code class="docutils literal notranslate"><span class="pre">confiugre</span></code> スクリプトを実行します。このタグの情報はドキュメントを生成するときに反映されます。</p>
+</section>
+<section id="tagging-for-release">
+<h2><span class="section-number">9.2.7. </span>リリースのためのタグ打ち<a class="headerlink" href="#tagging-for-release" title="Link to this heading">#</a></h2>
+<p>タグを打つために以下のコマンドを実行します:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">release</span><span class="p">:</span><span class="n">tag</span>
+</pre></div>
 </div>
 </section>
 <section id="upload-archive-files">
-<h2><span class="section-number">9.2.10. </span>アーカイブファイルのアップロード<a class="headerlink" href="#upload-archive-files" title="Link to this heading">#</a></h2>
-<p>次に配布用のアーカイブファイル(<code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>)を作成します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">dist</span>
-</pre></div>
-</div>
-<p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages/source</span></code> に変更します。</p>
+<h2><span class="section-number">9.2.8. </span>アーカイブファイルのアップロード<a class="headerlink" href="#upload-archive-files" title="Link to this heading">#</a></h2>
+<p>Execute the following command for uploading source archive:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span><span class="o">/</span><span class="n">source</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">download</span></code> を実行し、同期します。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">download</span>
-</pre></div>
-</div>
-<p>ソースアーカイブを生成するために、 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">archive</span></code> を実行します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">archive</span>
-</pre></div>
-</div>
-<p>アーカイブファイルをアップロードするために、<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">upload</span></code> を実行します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">upload</span>
+<span class="o">%</span> <span class="n">rake</span> <span class="n">source</span>
 </pre></div>
 </div>
 <p>結果として、 <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> アーカイブ・ファイルが <a class="reference external" href="https://packages.groonga.org/source/mroonga">https://packages.groonga.org/source/mroonga</a>/から入手可能になります。</p>
 </section>
 <section id="create-packages-for-the-release">
-<h2><span class="section-number">9.2.11. </span>リリース向けにパッケージを作成する<a class="headerlink" href="#create-packages-for-the-release" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.9. </span>リリース向けにパッケージを作成する<a class="headerlink" href="#create-packages-for-the-release" title="Link to this heading">#</a></h2>
 <p>LinuxとWindowsのパッケージを作成します。</p>
 <section id="debian">
-<h3><span class="section-number">9.2.11.1. </span>Debian<a class="headerlink" href="#debian" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.1. </span>Debian<a class="headerlink" href="#debian" title="Link to this heading">#</a></h3>
 <p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages</span></code> に変更します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
@@ -599,7 +527,7 @@ document.write(`
 </div>
 </section>
 <section id="debian-derivatives-ubuntu">
-<h3><span class="section-number">9.2.11.2. </span>Debian系(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.2. </span>Debian系(Ubuntu)<a class="headerlink" href="#debian-derivatives-ubuntu" title="Link to this heading">#</a></h3>
 <p>Ubuntuの場合、パッケージはlaunchpad.netのPPAで提供されます。</p>
 <p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages</span></code> にし、<code class="docutils literal notranslate"><span class="pre">rake</span> <span class="pre">ubuntu:upload</span></code> コマンドを実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
@@ -612,7 +540,7 @@ document.write(`
 </div>
 </section>
 <section id="red-hat-derivatives">
-<h3><span class="section-number">9.2.11.3. </span>Red Hat系<a class="headerlink" href="#red-hat-derivatives" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.3. </span>Red Hat系<a class="headerlink" href="#red-hat-derivatives" title="Link to this heading">#</a></h3>
 <p>作業ディレクトリを <code class="docutils literal notranslate"><span class="pre">packages</span></code> に変更します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">packages</span>
 </pre></div>
@@ -628,47 +556,24 @@ document.write(`
 </div>
 </section>
 <section id="windows">
-<h3><span class="section-number">9.2.11.4. </span>Windows<a class="headerlink" href="#windows" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">9.2.9.4. </span>Windows<a class="headerlink" href="#windows" title="Link to this heading">#</a></h3>
 <p>Windows向けには、 <a class="reference external" href="https://github.com/mroonga/mroonga/releases">GitHub release page</a> の成果物を使っています。</p>
 </section>
 </section>
 <section id="update-docker-images">
-<h2><span class="section-number">9.2.12. </span>Update Docker images<a class="headerlink" href="#update-docker-images" title="Link to this heading">#</a></h2>
-<p><a class="reference external" href="https://hub.docker.com/r/groonga/mroonga">Docker Hub</a> のMroongaのDockerイメージを更新します。</p>
-<p><a class="reference external" href="https://github.com/mroonga/docker">MroongaのDockerリポジトリー</a> をクローンし、リポジトリーの中のDockerfileを更新します。</p>
-<p>以下は、MySQLのバージョンが <code class="docutils literal notranslate"><span class="pre">5.7.26</span></code>、 Mroongaのバージョンが <code class="docutils literal notranslate"><span class="pre">9.01</span></code>、Groongaのバージョンが <code class="docutils literal notranslate"><span class="pre">9.0.2</span></code> の場合の例です。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span>
-<span class="o">%</span> <span class="n">test</span> <span class="o">-</span><span class="n">e</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span> <span class="o">||</span> <span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recursive</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">git</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span>
-<span class="o">%</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">mroonga</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">clean</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">xdf</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">checkout</span> <span class="o">.</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">pull</span>
-<span class="o">%</span> <span class="o">./</span><span class="n">update</span><span class="o">.</span><span class="n">sh</span> <span class="mf">5.7.26</span> <span class="mf">9.01</span> <span class="mf">9.0.2</span> <span class="c1">#Automatically update Dockerfiles and commit changes and create a tag.</span>
-<span class="o">%</span> <span class="n">git</span> <span class="n">push</span>
-</pre></div>
-</div>
-<p>作業時には最新のバージョンを指定してください。</p>
-<p><a class="reference external" href="https://github.com/mroonga/docker/actions">MroongaのDockerリポジトリーのGithub Actions</a> が成功しているのを確認してから、タグをpushします。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span>
-</pre></div>
-</div>
-<p>タグをpushすると、MroongaのDockerリポジトリーのGithub ActionsがDocker HubのMroongaのDockerイメージを自動で更新します。</p>
-<p>MySQL 5.x.x と 8.x.x の両方でこの手順を実行する必要があります。</p>
+<h2><span class="section-number">9.2.10. </span>Update Docker images<a class="headerlink" href="#update-docker-images" title="Link to this heading">#</a></h2>
+<p>TODO</p>
 </section>
 <section id="upload-documents">
-<h2><span class="section-number">9.2.13. </span>ドキュメントをアップロード<a class="headerlink" href="#upload-documents" title="Link to this heading">#</a></h2>
-<ol class="arabic">
-<li><p>mroonga.github.comリポジトリをcloneする</p></li>
-<li><p>以下のように <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-document</span></code> を <code class="docutils literal notranslate"><span class="pre">$MROONGA_CLONE_DIR</span></code> 配下で実行する</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">document</span>
+<h2><span class="section-number">9.2.11. </span>ドキュメントをアップロード<a class="headerlink" href="#upload-documents" title="Link to this heading">#</a></h2>
+<p>以下のコマンドを実行します:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% rake release:document:update BUILD_DIR=${MROONGA_BUILD_DIR} MROONGA_ORG_DIR=${MROONGA_ORG_DIR}
 </pre></div>
 </div>
-</li>
-<li><p>Mroonga.github.comの変更点をcommit&amp;&amp;pushする</p></li>
-</ol>
+<p>mroonga.orgの変更点をcommit&amp;&amp;pushする。</p>
 </section>
 <section id="update-blog-mroonga-blog">
-<h2><span class="section-number">9.2.14. </span>Blog(Mroongaブログ)の更新<a class="headerlink" href="#update-blog-mroonga-blog" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.12. </span>Blog(Mroongaブログ)の更新<a class="headerlink" href="#update-blog-mroonga-blog" title="Link to this heading">#</a></h2>
 <p>以下のファイルを更新します。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$MROONGA_GITHUB_COM_PATH/ja/_posts/(the</span> <span class="pre">date</span> <span class="pre">of</span> <span class="pre">release)-mroonga-(version).md</span></code></p></li>
@@ -693,7 +598,7 @@ published: false
 </div>
 </section>
 <section id="announce-release-for-mailing-list">
-<h2><span class="section-number">9.2.15. </span>リリースをメーリングリストで告知<a class="headerlink" href="#announce-release-for-mailing-list" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.13. </span>リリースをメーリングリストで告知<a class="headerlink" href="#announce-release-for-mailing-list" title="Link to this heading">#</a></h2>
 <p>リリースアナウンスをそれぞれのメーリングリストに送ります</p>
 <ul class="simple">
 <li><p><a class="reference external" href="mailto:ml&#37;&#52;&#48;mysql&#46;gr&#46;jp">ml<span>&#64;</span>mysql<span>&#46;</span>gr<span>&#46;</span>jp</a> for Japanese</p></li>
@@ -702,19 +607,19 @@ published: false
 </ul>
 </section>
 <section id="announce-release-for-twitter">
-<h2><span class="section-number">9.2.16. </span>リリースをTwitterで告知<a class="headerlink" href="#announce-release-for-twitter" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.14. </span>リリースをTwitterで告知<a class="headerlink" href="#announce-release-for-twitter" title="Link to this heading">#</a></h2>
 <p>Tweetリンクをクリックすると、最新のリリースについてツイートできます。タイトルやブログエントリのURLがツイートに含まれます。</p>
 <p>ツイートは日本語と英語のブログエントリから行います。ツイートは <code class="docutils literal notranslate"><span class="pre">groonga</span></code> アカウントでログインした状態で行ってください。</p>
 </section>
 <section id="announce-release-for-facebook">
-<h2><span class="section-number">9.2.17. </span>リリースをFacebookで告知<a class="headerlink" href="#announce-release-for-facebook" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.15. </span>リリースをFacebookで告知<a class="headerlink" href="#announce-release-for-facebook" title="Link to this heading">#</a></h2>
 <p>FacebookのMroongaグループからリリースを告知します。</p>
 <p><a class="reference external" href="https://www.facebook.com/mroonga/">https://www.facebook.com/mroonga/</a></p>
 </section>
 <section id="bump-version">
-<h2><span class="section-number">9.2.18. </span>バージョンをあげる<a class="headerlink" href="#bump-version" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">9.2.16. </span>バージョンをあげる<a class="headerlink" href="#bump-version" title="Link to this heading">#</a></h2>
 <p>最新のリリースへバージョンをあげる:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">make</span> <span class="n">update</span><span class="o">-</span><span class="n">version</span> <span class="n">NEW_VERSION_MAJOR</span><span class="o">=</span><span class="mi">9</span> <span class="n">NEW_VERSION_MINOR</span><span class="o">=</span><span class="mi">1</span> <span class="n">NEW_VERSION_MICRO</span><span class="o">=</span><span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">rake</span> <span class="n">dev</span><span class="p">:</span><span class="n">version</span><span class="p">:</span><span class="n">bump</span> <span class="n">NEW_VERSION</span><span class="o">=</span><span class="n">xx</span><span class="o">.</span><span class="n">xx</span>
 </pre></div>
 </div>
 </section>
@@ -755,7 +660,8 @@ published: false
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -769,27 +675,25 @@ published: false
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">9.2.1. 必要なもの</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-build-environment">9.2.2. ビルド環境をセットアップする</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe-the-changes">9.2.3. 変更点を記述する</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-configure-script">9.2.4. configureスクリプトの生成</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-configure-script">9.2.5. configureスクリプトの実行</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-whether-you-can-upload-packages">9.2.6. パッケージをアップロード可能か確認する</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-make-update-latest-release">9.2.7. make update-latest-releaseを実行する</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confirm-the-results-of-each-test">9.2.8. 各テストの結果確認</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tagging-for-release">9.2.9. リリースのためのタグ打ち</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-archive-files">9.2.10. アーカイブファイルのアップロード</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-packages-for-the-release">9.2.11. リリース向けにパッケージを作成する</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian">9.2.11.1. Debian</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian-derivatives-ubuntu">9.2.11.2. Debian系(Ubuntu)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#red-hat-derivatives">9.2.11.3. Red Hat系</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">9.2.11.4. Windows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-whether-you-can-upload-packages">9.2.4. パッケージをアップロード可能か確認する</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-make-update-latest-release">9.2.5. make update-latest-releaseを実行する</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confirm-the-results-of-each-test">9.2.6. 各テストの結果確認</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tagging-for-release">9.2.7. リリースのためのタグ打ち</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-archive-files">9.2.8. アーカイブファイルのアップロード</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-packages-for-the-release">9.2.9. リリース向けにパッケージを作成する</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian">9.2.9.1. Debian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debian-derivatives-ubuntu">9.2.9.2. Debian系(Ubuntu)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#red-hat-derivatives">9.2.9.3. Red Hat系</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">9.2.9.4. Windows</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-docker-images">9.2.12. Update Docker images</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-documents">9.2.13. ドキュメントをアップロード</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-blog-mroonga-blog">9.2.14. Blog(Mroongaブログ)の更新</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-mailing-list">9.2.15. リリースをメーリングリストで告知</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-twitter">9.2.16. リリースをTwitterで告知</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-facebook">9.2.17. リリースをFacebookで告知</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bump-version">9.2.18. バージョンをあげる</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-docker-images">9.2.10. Update Docker images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-documents">9.2.11. ドキュメントをアップロード</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-blog-mroonga-blog">9.2.12. Blog(Mroongaブログ)の更新</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-mailing-list">9.2.13. リリースをメーリングリストで告知</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-twitter">9.2.14. リリースをTwitterで告知</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announce-release-for-facebook">9.2.15. リリースをFacebookで告知</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bump-version">9.2.16. バージョンをあげる</a></li>
 </ul>
   </nav></div>
 
@@ -806,8 +710,8 @@ published: false
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -832,7 +736,7 @@ published: false
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
 </p></div>
       
     </div>
