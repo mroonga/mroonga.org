@@ -32,12 +32,18 @@ jobs:
           ruby-version: ruby
       - name: Install dependencies
         run: |
+          mroonga/setup.sh
           pip install -r mroonga/doc/requirements.txt
           (cd mroonga/doc && bundle install)
       - name: Build document
         run: |
           ccache --show-stats --verbose --version || :
-          cmake -S mroonga -B /tmp/mroonga.build --preset=doc
+          cmake \
+            -S mroonga \
+            -B /tmp/mroonga.build --preset=doc \
+            -DMYSQL_SOURCE_DIR=/tmp/mariadb-${mariadb-version} \
+            -DMYSQL_BUILD_DIR=/tmp/mariadb-${mariadb-version}.build \
+            -DMYSQL_CONFIG=/usr/bin/mariadb_config
           rm -rf dev/docs dev/ja/docs
           mkdir -p dev/ja
           rake -C mroonga release:document:update BUILD_DIR=/tmp/mroonga.build MROONGA_ORG_DIR=../dev
