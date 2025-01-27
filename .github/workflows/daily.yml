@@ -1,0 +1,54 @@
+name: Daily
+on:
+  push:
+    paths:
+      - '.github/workflows/daily.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/daily.yml'
+  schedule:
+    - cron: 0 0 * * *
+jobs:
+  documents:
+    name: Documents
+    runs-on: ubuntu-latest
+    env:
+      BUNDLER_GEMFILE: mroonga/docs/Gemfile
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: mroonga.org
+      - uses: actions/checkout@v4
+        with:
+          repository: mroonga/mroonga
+          path: mroonga
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+          bundler-cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r mroonga/doc/requirements.txt
+      - name: Build
+        run: |
+          rake -C mroonga \
+            release:document:update \
+            MROONGA_ORG_DIR=$PWD/mroonga.org/dev
+          cd mroonga.org
+          git add -N dev
+          if ! git diff --exit-code dev; then
+            echo "GIT_DIFF=yes" >> ${GITHUB_ENV}
+          fi
+      - name: Git push
+        if: env.GIT_DIFF == 'yes' && github.event_name == 'schedule'
+        run: |
+          cd mroonga.org
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dev/docs dev/ja/docs
+          git commit -m "Update documents for main"
+          git push origin HEAD:master
