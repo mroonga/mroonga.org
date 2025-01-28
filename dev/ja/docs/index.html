@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mroonga &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=84933602"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=4755f45a"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'japanese';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="1. Mroongaの特徴" href="characteristic.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="サイトナビゲーション">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/ja/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="このページでは">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="mroonga">
+<h1>Mroonga<a class="headerlink" href="#mroonga" title="Link to this heading">#</a></h1>
+<p>リリース情報はこちら: <a class="reference internal" href="news.html"><span class="doc">お知らせ</span></a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="characteristic.html">1. Mroongaの特徴</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#what-is-mroonga">1.1. Mroongaとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#the-successor-of-tritonn">1.2. Tritonnの後継</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#running-as-a-mysql-plugin">1.3. MySQLのプラグインとして動作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#faster-index-update">1.4. 更新性能の向上</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#faster-search">1.5. 検索性能の向上</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#geolocation-search">1.6. 位置情報検索のサポート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#sharing-the-same-groonga-storage">1.7. Groongaストレージファイル経由でのシステム連携</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#associate-with-other-storage-engines">1.8. 他のストレージエンジンとの連携</a></li>
+<li class="toctree-l2"><a class="reference internal" href="characteristic.html#supported-platforms">1.9. サポートしているプラットフォーム</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">2. インストール</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html">2.1. Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/windows.html#install">2.1.1. インストール</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/windows.html#build-from-source-with-mariadb">2.1.2. MariaDBと一緒にソースからビルド</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/macos.html">2.2. macOS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/macos.html#install-macos-homebrew">2.2.1. Homebrew</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html">2.3. Debian GNU/Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/debian.html#bookworm-mariadb">2.3.1. bookworm (MariaDB)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/debian.html#bookworm-with-the-oracle-mysql-8-0-package">2.3.2. bookworm（OracleのMySQL 8.0パッケージを利用）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/ubuntu.html">2.4. Ubuntu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/ubuntu.html#ppa-personal-package-archive">2.4.1. PPA (Personal Package Archive)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/almalinux.html">2.5. AlmaLinux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-8-with-the-oracle-mysql-8-0-package">2.5.1. AlmaLinux 8（OracleのMySQL 8.0パッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-8-with-percona-server-8-0-package">2.5.2. AlmaLinux 8（Percona Server 8.0パッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-8-with-mariadb-10-5-package">2.5.3. AlmaLinux 8（MariaDB 10.5のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-8-with-mariadb-10-6-package">2.5.4. AlmaLinux 8（MariaDB 10.6のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-8-with-mariadb-10-11-package">2.5.5. AlmaLinux 8（MariaDB 10.11のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-8-with-mariadb-11-4-package">2.5.6. AlmaLinux 8（MariaDB 11.4のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-9-with-the-oracle-mysql-8-0-package">2.5.7. AlmaLinux 9（OracleのMySQL 8.0パッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-9-with-percona-server-8-0-package">2.5.8. AlmaLinux 9（Percona Server 8.0パッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-9-with-mariadb-10-5-package">2.5.9. AlmaLinux 9（MariaDB 10.5のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-9-with-mariadb-10-6-package">2.5.10. AlmaLinux 9（MariaDB 10.6のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-9-with-mariadb-10-11-package">2.5.11. AlmaLinux 9（MariaDB 10.11のパッケージを利用）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/almalinux.html#almalinux-9-with-mariadb-11-4-package">2.5.12. AlmaLinux 9（MariaDB 11.4のパッケージを利用）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/oracle-linux.html">2.6. Oracle Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/oracle-linux.html#oracle-linux-8-with-the-oracle-mysql-8-0-package">2.6.1. Oracle Linux 8 (with the Oracle MySQL 8.0 package)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/fedora.html">2.7. Fedora</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/fedora.html#fedora-21">2.7.1. Fedora 21</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/docker.html">2.8. Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/others.html">2.9. その他</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#dependencies">2.9.1. 依存関係</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#build-from-source">2.9.2. ソースからビルド</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">3. アップグレード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">4. チュートリアル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/installation_check.html">4.1. インストールチェック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/mode.html">4.2. モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/storage.html">4.3. ストレージモード</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-use-full-text-search">4.3.1. 全文検索の利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-get-search-score">4.3.2. 検索スコアの取得方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-specify-the-parser-for-full-text-search">4.3.3. 全文検索用パーサの変更</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-specify-the-normalizer">4.3.4. ノーマライザーの指定方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-specify-the-token-filters">4.3.5. トークンフィルターの指定方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-specify-groonga-s-column-flags">4.3.6. Groongaのカラムフラグの指定方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-use-geolocation-search">4.3.7. 位置情報検索の利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-get-the-record-id">4.3.8. レコードIDの取得方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-get-snippet-keyword-in-context">4.3.9. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-use-similar-search">4.3.10. 類似文書検索の利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-run-groonga-command">4.3.11. Groongaコマンドの実行方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#how-to-search-by-regular-expression">4.3.12. 正規表現検索の利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#logging">4.3.13. ログ出力</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/storage.html#next-step">4.3.14. 次のステップ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/wrapper.html">4.4. ラッパーモード</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#how-to-use-wrapper-mode">4.4.1. ラッパーモードの利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#how-to-use-full-text-search">4.4.2. 全文検索の利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#how-to-get-search-score">4.4.3. 検索スコアの取得方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#how-to-specify-the-parser-for-full-text-search">4.4.4. 全文検索用パーサの変更</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#how-to-specify-the-normalizer">4.4.5. ノーマライザーの指定方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#how-to-get-snippet-keyword-in-context">4.4.6. スニペット（キーワード周辺のテキスト）の取得方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#logging">4.4.7. ログ出力</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/wrapper.html#next-step">4.4.8. 次のステップ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">5. リファレンス</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/optimizations.html">5.1. 最適化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/optimizations.html#fetching-only-needed-columns">5.1.1. 必要なカラムだけ取得</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/optimizations.html#row-count">5.1.2. 行カウント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/optimizations.html#order-by-limit">5.1.3. <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">LIMIT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sql_commands.html">5.2. SQLコマンド</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/sql_commands.html#list-of-available-sql-commands">5.2.1. 利用可能なSQLコマンドの一覧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/sql_commands.html#list-of-unavailable-sql-commands">5.2.2. 利用できないSQLコマンドの一覧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/sql_commands.html#i-found-an-unlisted-sql-command">5.2.3. リストにないSQLコマンドを見つけました</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/server_variables.html">5.3. サーバ変数の一覧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-action-on-fulltext-query-error">5.3.1. <code class="docutils literal notranslate"><span class="pre">mroonga_action_on_fulltext_query_error</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-boolean-mode-syntax-flags">5.3.2. <code class="docutils literal notranslate"><span class="pre">mroonga_boolean_mode_syntax_flags</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-database-path-prefix">5.3.3. <code class="docutils literal notranslate"><span class="pre">mroonga_database_path_prefix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-default-parser">5.3.4. <code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-default-tokenizer">5.3.5. <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-default-wrapper-engine">5.3.6. <code class="docutils literal notranslate"><span class="pre">mroonga_default_wrapper_engine</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-dry-write">5.3.7. <code class="docutils literal notranslate"><span class="pre">mroonga_dry_write</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-enable-optimization">5.3.8. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_optimization</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-support-lz4">5.3.9. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_lz4</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-support-zlib">5.3.10. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zlib</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-support-zstd">5.3.11. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_zstd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-support-mecab">5.3.12. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_support_mecab</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-libgroonga-version">5.3.13. <code class="docutils literal notranslate"><span class="pre">mroonga_libgroonga_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-lock-timeout">5.3.14. <code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-log-file">5.3.15. <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-log-level">5.3.16. <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-query-log-file">5.3.17. <code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-match-escalation-threshold">5.3.18. <code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-max-n-records-for-estimate">5.3.19. <code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-enable-operations-recording">5.3.20. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-vector-column-delimiter">5.3.21. <code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-version">5.3.22. <code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/server_variables.html#mroonga-condition-push-down-type">5.3.23. <code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/status_variables.html">5.4. ステータス変数の一覧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/status_variables.html#mroonga-count-skip">5.4.1. <code class="docutils literal notranslate"><span class="pre">Mroonga_count_skip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/status_variables.html#mroonga-fast-order-limit">5.4.2. <code class="docutils literal notranslate"><span class="pre">Mroonga_fast_order_limit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/status_variables.html#mroonga-condition-push-down">5.4.3. <code class="docutils literal notranslate"><span class="pre">Mroonga_condition_push_down</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/status_variables.html#mroonga-n-pooling-contexts">5.4.4. <code class="docutils literal notranslate"><span class="pre">Mroonga_n_pooling_contexts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/status_variables.html#mroonga-memory-map-size">5.4.5. <code class="docutils literal notranslate"><span class="pre">Mroonga_memory_map_size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/udf.html">5.5. UDF (ユーザ定義関数)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_command.html">5.5.1. <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_escape.html">5.5.2. <code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_highlight_html.html">5.5.3. <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_last_insert_grn_id.html">5.5.4. <code class="docutils literal notranslate"><span class="pre">mroonga_last_insert_grn_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_normalize.html">5.5.5. <code class="docutils literal notranslate"><span class="pre">mroonga_normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_snippet.html">5.5.6. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/udf/mroonga_snippet_html.html">5.5.7. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/limitations.html">5.6. 制限事項</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/limitations.html#limitations-of-table">5.6.1. テーブルの制限事項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/limitations.html#limitations-of-indexing">5.6.2. インデックスの制限事項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/limitations.html#limitations-about-the-value-of-columns">5.6.3. カラムの値に関する制限事項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/limitations.html#limitations-of-column-size">5.6.4. カラムサイズの制限事項</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/full_text_search.html">5.7. 全文検索</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/full_text_search/boolean_mode.html">5.7.1. ブーリアンモード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/full_text_search/scoring.html">5.7.2. Mroongaにおける検索スコア</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">6. FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq/mmap_cannot_allocate_memory.html">6.1. 「mmap Cannot allocate memory」エラーを回避するにはどうしたらよいですか？</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/mmap_cannot_allocate_memory.html#short-answer">6.1.1. 短い回答</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/mmap_cannot_allocate_memory.html#long-answer">6.1.2. 長い回答</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">7. コミュニティ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#mailing-list">7.1. メーリングリスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#chat-room">7.2. チャットルーム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#twitter">7.3. Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#facebook">7.4. Facebook</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribution.html">8. How to contribute to Mroonga</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/report.html">8.1. 見つけたバグを報告するには</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/report.html#submit-a-bug-to-the-issue-tracker">8.1.1. Issue trackerにバグを報告する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/report.html#report-a-bug-with-the-other-ways">8.1.2. バグを報告する他の方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/report.html#how-to-collect-data-for-reporting-a-reproducible-bug">8.2. 再現可能なバグ報告をするためのデータをあつめるには</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation.html">8.3. How to contribute in documentation topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation.html#the-things-you-must-do-at-first">8.3.1. The things you must do at first</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation.html#the-things-you-need-to-do-every-tasks">8.3.2. The things you need to do every tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation.html#the-things-you-need-to-do-every-files">8.3.3. The things you need to do every files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">9. 開発者向け情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/debug.html">9.1. デバッグ方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/debug.html#building-for-debugging">9.1.1. デバッグ用ビルド方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/debug.html#more-about-run-sql-test-sh">9.1.2. <code class="docutils literal notranslate"><span class="pre">run-sql-test.sh</span></code>を使いこなす</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer/release.html">9.2. Release procedure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#requirements">9.2.1. 必要なもの</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#setup-build-environment">9.2.2. ビルド環境をセットアップする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#describe-the-changes">9.2.3. 変更点を記述する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#check-whether-you-can-upload-packages">9.2.4. パッケージをアップロード可能か確認する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#execute-make-update-latest-release">9.2.5. make update-latest-releaseを実行する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#confirm-the-results-of-each-test">9.2.6. 各テストの結果確認</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#tagging-for-release">9.2.7. リリースのためのタグ打ち</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#upload-archive-files">9.2.8. アーカイブファイルのアップロード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#create-packages-for-the-release">9.2.9. リリース向けにパッケージを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#update-docker-images">9.2.10. Update Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#upload-documents">9.2.11. ドキュメントをアップロード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#update-blog-mroonga-blog">9.2.12. Blog(Mroongaブログ)の更新</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#announce-release-for-mailing-list">9.2.13. リリースをメーリングリストで告知</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#announce-release-for-twitter">9.2.14. リリースをTwitterで告知</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#announce-release-for-facebook">9.2.15. リリースをFacebookで告知</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/release.html#bump-version">9.2.16. バージョンをあげる</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer/coding_style.html">9.3. コーディングスタイル</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id2">9.3.1. 言語</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id3">9.3.2. ファイル名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id4">9.3.3. 名前空間</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#include">9.3.4. <code class="docutils literal notranslate"><span class="pre">include</span></code> ガード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id5">9.3.5. 代入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id6">9.3.6. 文字列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id7">9.3.7. バッファ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id8">9.3.8. 命名規則</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id13">9.3.9. コピーコンストラクター</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id14">9.3.10. クラスの代入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id15">9.3.11. 引数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id16">9.3.12. 定数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id17">9.3.13. 真偽値</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id18">9.3.14. 条件式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id21">9.3.15. 初期化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id24">9.3.16. インクリメント・デクリメント</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id26">9.3.17. キャスト</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id27">9.3.18. 変数宣言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id29">9.3.19. その他</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/coding_style.html#id30">9.3.20. メモ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#how-we-are-developing">9.4. 開発手法について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#roadmap">9.5. ロードマップについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#source-code-management">9.6. ソースコード管理について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#development-process">9.7. 開発環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#development-environment">9.8. 開発環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#contents-of-the-source-tree">9.9. ソースディレクトリ解説</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#adding-and-running-tests">9.10. テストコードの追加と実行について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#adding-and-updating-documents">9.11. ドキュメントの追加と変更について</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices">
+<h1>索引<a class="headerlink" href="#indices" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">モジュール索引</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">検索ページ</span></a></p></li>
+</ul>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="characteristic.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Mroongaの特徴</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> このページでは
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Mroonga</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices">索引</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1 で構築されています。
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1235 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>9.3. コーディングスタイル &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=b564a256"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'developer/coding_style';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="9.2. Release procedure" href="release.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="debug.html">9.1. How to debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">9.2. Release procedure</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">9.3. コーディングスタイル</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../developer.html" class="nav-link"><span class="section-number">9. </span>Developer’s guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">9.3. </span>コーディングスタイル</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>TODO: Translate.</p>
+<section id="id1">
+<h1><span class="section-number">9.3. </span>コーディングスタイル<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>一般的に1つのコードベースに複数のスタイルがまざっているとソースコードが読みづらくなります。たとえ、それぞれのスタイル単独では読みやすいスタイルあっても、まざると読みづらくなります。そのため、Mroongaプロジェクトでもスタイルを統一して、読みやすいソースコードになるようにします。</p>
+<p>読みやすいソースコードにする理由は以下の通りです。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>機能を拡張するときのコストを下げる。</p></li>
+<li><p>問題を修正するときのコストを下げる。</p></li>
+</ul>
+</div></blockquote>
+<p>どちらの場合も周辺のソースコードを読んで、それをベースにコードを追加・変更します。このとき、ソースコードが読みやすい状態だと周辺のソースコードの把握をスムーズに行うことができ、スムーズにその後の作業に移れます。</p>
+<p>TODO: 読みやすさの他にデバッグのしやすさ（gdbでの追いやすさ）も考慮に入れたほうがよさそうだがどうしよう。</p>
+<section id="id2">
+<h2><span class="section-number">9.3.1. </span>言語<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>基本的にすべてC++で記述します。よほどのことがない限りCは使いません。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>悪い例（C言語を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrn_sys</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">9.3.2. </span>ファイル名<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>ソースコードのファイル名は全て小文字にします。また、単語ごとに”_”で区切ります。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>悪い例（大文字を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HA_MROONGA</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>悪い例（単語を”_”で区切らずにくっつけている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hamroonga</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>悪い例（単語を”-“で区切っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha</span><span class="o">-</span><span class="n">mroonga</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>ソースコードの拡張子 <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> にします。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">.cc</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cc</span>
+</pre></div>
+</div>
+<p>ヘッダーファイルの拡張子は <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> にします。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">hpp</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">.h</span></code> を使っている）:</p>
+<blockquote>
+<div><p>ha_mroonga.h</p>
+</div></blockquote>
+</section>
+<section id="id4">
+<h2><span class="section-number">9.3.3. </span>名前空間<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>ヘッダーファイルでは <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span></code> を使わない。ソースコードでは <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code> であれば使ってもよい。他の名前空間は使ってはいけない。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span>
+  <span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ヘッダーファイル内で <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">hpp</span><span class="p">:</span>
+  <span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">std</span></code> 以外の名前空間に対して <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ha_mroonga</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span>
+  <span class="n">using</span> <span class="n">namespace</span> <span class="n">zmq</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="include">
+<h2><span class="section-number">9.3.4. </span><code class="docutils literal notranslate"><span class="pre">include</span></code> ガード<a class="headerlink" href="#include" title="Link to this heading">#</a></h2>
+<p>2重 <code class="docutils literal notranslate"><span class="pre">include</span></code> を防ぐためのマクロは、ヘッダーファイルの名前をすべて大文字にし、単語の区切りをアンダースコアにしたものにし、最後にアンダースコアをつけて <code class="docutils literal notranslate"><span class="pre">HEADER_FILE_NAME_HPP_</span></code> という名前にする。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrn_db_path</span><span class="o">.</span><span class="n">hpp</span><span class="p">:</span>
+  <span class="c1">#ifndef MRN_DB_PATH_HPP_</span>
+  <span class="c1">#define MRN_DB_PATH_HPP_</span>
+  <span class="o">...</span>
+  <span class="c1">#endif // MRN_DB_PATH_HPP_</span>
+</pre></div>
+</div>
+<p>悪い例（小文字になっている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrn_db_path</span><span class="o">.</span><span class="n">hpp</span><span class="p">:</span>
+  <span class="c1">#ifndef mrn_db_path_hpp_</span>
+  <span class="c1">#define mrn_db_path_hpp_</span>
+  <span class="o">...</span>
+  <span class="c1">#endif // mrn_db_path_hpp_</span>
+</pre></div>
+</div>
+<p>悪い例（アンダースコアが最後ではなく先頭についている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrn_db_path</span><span class="o">.</span><span class="n">hpp</span><span class="p">:</span>
+  <span class="c1">#ifndef _MRN_DB_PATH_HPP</span>
+  <span class="c1">#define _MRN_DB_PATH_HPP</span>
+  <span class="o">...</span>
+  <span class="c1">#endif // _MRN_DB_PATH_HPP</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><span class="section-number">9.3.5. </span>代入<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">=</span></code> の前後に1つスペースを入れる。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（スペースが入っていない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（2つスペースが入っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">i</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><span class="section-number">9.3.6. </span>文字列<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>文字列はポインタと長さで表現する。 <code class="docutils literal notranslate"><span class="pre">\0</span></code> での終端を仮定しない。</p>
+<p>よい例（本当はもっとすっきりした例がよいけど。。。）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;table_name column_name column_value&quot;</span>
+<span class="n">char</span> <span class="o">*</span><span class="n">column_name</span><span class="p">;</span>
+<span class="n">size_t</span> <span class="n">column_name_size</span><span class="p">;</span>
+<span class="n">column_name</span> <span class="o">=</span> <span class="n">raw_data</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;table_name &quot;</span><span class="p">);</span>
+<span class="n">column_name_size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;column_name&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>悪い例（無理やり <code class="docutils literal notranslate"><span class="pre">\0</span></code> 終端にしている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;table_name column_name column_value&quot;</span>
+<span class="n">char</span> <span class="o">*</span><span class="n">column_name</span><span class="p">;</span>
+<span class="n">column_name</span> <span class="o">=</span> <span class="n">strndup</span><span class="p">(</span><span class="n">raw_data</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;table_name &quot;</span><span class="p">),</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;column_name&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>ただし、ファイル名など <code class="docutils literal notranslate"><span class="pre">\0</span></code> が前提であるものに関しては <code class="docutils literal notranslate"><span class="pre">\0</span></code> 終端を仮定してよい。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">database_path</span> <span class="o">=</span> <span class="s2">&quot;db/test.mrn&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">\0</span></code> 終端を仮定せず、長さも管理している）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">database_path</span> <span class="o">=</span> <span class="s2">&quot;db/test.mrn&quot;</span><span class="p">;</span>
+<span class="n">size_t</span> <span class="n">database_path_size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;db/test.mrn&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">std::string</span></code> は内部でメモリ確保などの処理が発生するので多用しない。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="n">database_path</span><span class="p">[</span><span class="n">MAX_PATH</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>悪い例（最大サイズがわかっているのに <code class="docutils literal notranslate"><span class="pre">std::string</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">database_path</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2><span class="section-number">9.3.7. </span>バッファ<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>TODO: ちゃんと考える。</p>
+<p>何度も繰り返し使う領域（バッファ）が必要な場合は <code class="docutils literal notranslate"><span class="pre">GRN_BULK</span></code> を使う。例えば、カラムの値を取得する領域などである。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">9.3.8. </span>命名規則<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3><span class="section-number">9.3.8.1. </span>クラス名<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>クラスの名前は <code class="docutils literal notranslate"><span class="pre">UpperCamelCase</span></code> とする。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">snail_case</span></code> である）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">my_class</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>ただし、 <code class="docutils literal notranslate"><span class="pre">ha_mroonga</span></code> などMySQLとのインターフェイスとなるクラスでかつ他の類似のモジュールに命名規則がある場合はそれに従う。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ha_mroonga</span><span class="p">:</span> <span class="n">public</span> <span class="n">handler</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">UpperCamelCase</span></code> になっている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HaMroonga</span><span class="p">:</span> <span class="n">public</span> <span class="n">handler</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3><span class="section-number">9.3.8.2. </span>メンバー変数名<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>メンバー変数名は <code class="docutils literal notranslate"><span class="pre">snail_case</span></code> とし、末尾にアンダースコア（ <code class="docutils literal notranslate"><span class="pre">_</span></code> ）を付ける。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">char</span> <span class="o">*</span><span class="n">my_name_</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">UpperCamelCase</span></code> である）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">char</span> <span class="o">*</span><span class="n">MyName_</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（末尾にアンダースコアがない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">char</span> <span class="o">*</span><span class="n">my_name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><span class="section-number">9.3.8.3. </span>読み込み用アクセサ名<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>メンバー変数の値を読み込むメソッドの名前はメンバー変数名の末尾のアンダースコアを除いたものにする。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">char</span> <span class="o">*</span><span class="n">my_name_</span><span class="p">;</span>
+  <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">my_name</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="n">my_name_</span><span class="p">;};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（末尾にアンダースコアが残っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">char</span> <span class="o">*</span><span class="n">my_name_</span><span class="p">;</span>
+  <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">my_name_</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="n">my_name_</span><span class="p">;};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（先頭に <code class="docutils literal notranslate"><span class="pre">get_</span></code> を付けている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">char</span> <span class="o">*</span><span class="n">my_name_</span><span class="p">;</span>
+  <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">_my_name</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="n">my_name_</span><span class="p">;};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><span class="section-number">9.3.8.4. </span>書き込み用アクセサ名<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p>メンバー変数の値を設定するメソッドの名前は、メンバー変数名の末尾のアンダースコアを除き、先頭に <code class="docutils literal notranslate"><span class="pre">set_</span></code> を加えたものにする。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">void</span> <span class="n">set_age</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">age_</span> <span class="o">=</span> <span class="n">age</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（末尾にアンダースコアが残っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">void</span> <span class="n">set_age_</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">age_</span> <span class="o">=</span> <span class="n">age</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（先頭に <code class="docutils literal notranslate"><span class="pre">set_</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">update_</span></code> を付けている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">void</span> <span class="n">update_age</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">age_</span> <span class="o">=</span> <span class="n">age</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id13">
+<h2><span class="section-number">9.3.9. </span>コピーコンストラクター<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<p>基本的にコピーコンストラクターの使用を禁止する。よほどのことがなければ使用しないこと。</p>
+<p>コピーコンストラクターは暗黙的に無駄なコピーが発生する可能性があるためパフォーマンス上の問題がある。コピーではなくポインターやリファレンスを用いること。</p>
+<p>また、デフォルトのコピーコンストラクター実装はメンバー変数のポインターの値をそのままコピーするため、デコンストラクターで二重に解放してしまう危険性がある。そのため、明示的にコピーコンストラクターを定義しない場合は無効にする。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+<span class="n">private</span><span class="p">:</span>
+  <span class="n">MyClass</span><span class="p">(</span><span class="n">const</span> <span class="n">MyClass</span> <span class="o">&amp;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（コピーコンストラクターを禁止していない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（カスタムコピーコンストラクターを使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">MyClass</span><span class="p">(</span><span class="n">const</span> <span class="n">MyClass</span> <span class="o">&amp;</span><span class="nb">object</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">age_</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">age_</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h2><span class="section-number">9.3.10. </span>クラスの代入<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<p>基本的に定義したクラスの代入を禁止する。よほどのことがなければ使用しないこと。</p>
+<p>代入演算子は暗黙的に無駄なコピーが発生する可能性があるためパフォーマンス上の問題がある。コピーではなくポインターやリファレンスを用いること。</p>
+<p>また、デフォルトの代入演算子の実装はメンバー変数のポインターの値をそのままコピーするため、デコンストラクターで二重に解放してしまう危険性がある。そのため、明示的に代入演算子を定義しない場合は無効にする。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+<span class="n">private</span><span class="p">:</span>
+  <span class="n">MyClass</span> <span class="o">&amp;</span><span class="n">operator</span><span class="o">=</span><span class="p">(</span><span class="n">const</span> <span class="n">MyClass</span> <span class="o">&amp;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（代入を禁止していない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（代入を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">MyClass</span> <span class="o">&amp;</span><span class="n">operator</span><span class="o">=</span><span class="p">(</span><span class="n">const</span> <span class="n">MyClass</span> <span class="o">&amp;</span><span class="nb">object</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">age_</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">age_</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="n">this</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h2><span class="section-number">9.3.11. </span>引数<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<section id="void">
+<h3><span class="section-number">9.3.11.1. </span>voidを省略<a class="headerlink" href="#void" title="Link to this heading">#</a></h3>
+<p>引数がない場合は <code class="docutils literal notranslate"><span class="pre">void</span></code> を省略する。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age</span><span class="p">()</span>
+  <span class="p">{</span>
+     <span class="k">return</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">void</span></code> を省略していない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span>
+<span class="p">{</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">age</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="k">return</span> <span class="n">age_</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="const">
+<h3><span class="section-number">9.3.11.2. </span>入力用引数にはconstを付ける<a class="headerlink" href="#const" title="Link to this heading">#</a></h3>
+<p>入力のみに用いる引数には <code class="docutils literal notranslate"><span class="pre">const</span></code> を付ける。これは、入力のみに用いる引数である事を明示するためと、間違って引数を変更してしまわないためである。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Table</span>
+<span class="p">{</span>
+  <span class="n">void</span> <span class="n">insert</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span> <span class="nb">id</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">column_name</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="n">Record</span> <span class="o">*</span><span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+     <span class="n">Column</span> <span class="o">*</span><span class="n">column</span> <span class="o">=</span> <span class="n">columns</span><span class="p">[</span><span class="n">column_name</span><span class="p">];</span>
+     <span class="n">column</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（入力のみに用いているのに <code class="docutils literal notranslate"><span class="pre">const</span></code> が付いていない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Table</span>
+<span class="p">{</span>
+  <span class="n">void</span> <span class="n">insert</span><span class="p">(</span><span class="n">unsigned</span> <span class="nb">int</span> <span class="nb">id</span><span class="p">,</span> <span class="n">char</span> <span class="o">*</span><span class="n">column_name</span><span class="p">,</span> <span class="n">char</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="n">Record</span> <span class="o">*</span><span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+     <span class="n">Column</span> <span class="o">*</span><span class="n">column</span> <span class="o">=</span> <span class="n">columns</span><span class="p">[</span><span class="n">column_name</span><span class="p">];</span>
+     <span class="n">column</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h2><span class="section-number">9.3.12. </span>定数<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<p>フラグやサイズなどを示す定数には <code class="docutils literal notranslate"><span class="pre">const</span></code> オブジェクトを用いる。これはデバッガー上でプログラムを走らせているときに名前で値を参照できるようにするためである。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">MRN_LOG_FILE_PATH</span> <span class="o">=</span> <span class="s2">&quot;groonga.log&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">#define</span></code> を用いている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define MRN_LOG_FILE_PATH &quot;groonga.log&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h2><span class="section-number">9.3.13. </span>真偽値<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<section id="bool">
+<h3><span class="section-number">9.3.13.1. </span>bool型を用いる<a class="headerlink" href="#bool" title="Link to this heading">#</a></h3>
+<p>真偽値には <code class="docutils literal notranslate"><span class="pre">bool</span></code> 型を用いる。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_searching</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">int</span></code> 型を用いている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">is_searching</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="true-false">
+<h3><span class="section-number">9.3.13.2. </span>真偽値のリテラルには <code class="docutils literal notranslate"><span class="pre">true</span></code> または <code class="docutils literal notranslate"><span class="pre">false</span></code> を用いる<a class="headerlink" href="#true-false" title="Link to this heading">#</a></h3>
+<p>真偽値の値として <code class="docutils literal notranslate"><span class="pre">true</span></code> と <code class="docutils literal notranslate"><span class="pre">false</span></code> はより完結で説明的だからである。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_searching</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">0</span></code> 以外の値を真の値として用いている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_searching</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id18">
+<h2><span class="section-number">9.3.14. </span>条件式<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<section id="id19">
+<h3><span class="section-number">9.3.14.1. </span>真偽値は比較しない<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<p>真偽値の値は <code class="docutils literal notranslate"><span class="pre">boolean_value</span> <span class="pre">==</span> <span class="pre">true</span></code> などとせず、 <code class="docutils literal notranslate"><span class="pre">boolean_value</span></code> として条件式に使用する。すでに真偽値の値を真偽値のリテラルと比較することは重複したコードだからである。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>boolean is_searching = true;
+if (!is_searching) { ... }
+</pre></div>
+</div>
+<p>悪い例（真偽値のリテラルと比較している）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">boolean</span> <span class="n">is_searching</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">is_searching</span> <span class="o">==</span> <span class="n">false</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="null">
+<h3><span class="section-number">9.3.14.2. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較しない<a class="headerlink" href="#null" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> かどうかを条件式に使う場合は <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">==</span> <span class="pre">NULL</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">!value</span></code> というように書く。多くの言語で <code class="docutils literal notranslate"><span class="pre">NULL</span></code> に相当する値（たとえばLispの <code class="docutils literal notranslate"><span class="pre">nil</span></code> ）は偽を表すため、明示的に <code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較しなくても意図は伝わるからである。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>char *name = NULL;
+if (!name) { ... }
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較している）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">name</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id20">
+<h3><span class="section-number">9.3.14.3. </span>数値は比較する<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<p>CやC++では <code class="docutils literal notranslate"><span class="pre">0</span></code> は偽、 <code class="docutils literal notranslate"><span class="pre">0</span></code> 以外は真の値となるが、条件式に数値を使う場合は <code class="docutils literal notranslate"><span class="pre">strcmp(...)</span> <span class="pre">==</span> <span class="pre">0</span></code> などというように明示的に比較する。</p>
+<p>C++では真偽値に <code class="docutils literal notranslate"><span class="pre">bool</span></code> を使うためこのような状況は発生しないが、C言語由来のAPIでは <code class="docutils literal notranslate"><span class="pre">int</span></code> で真偽値を表現している場合が多い。しかし、 <code class="docutils literal notranslate"><span class="pre">int</span></code> だけでは真偽値として使っているか本当に数値として使っているかがわかりにくいため、 <code class="docutils literal notranslate"><span class="pre">int</span></code> のときはすべて数値として扱う。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;same value!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">0</span></code> を偽の値として扱っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if (!memcmp(value1, value2, value_size)) {
+  printf(&quot;same value!\n&quot;);
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id21">
+<h2><span class="section-number">9.3.15. </span>初期化<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<section id="id22">
+<h3><span class="section-number">9.3.15.1. </span>メンバー変数の初期化には初期化リストを用いる<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<p>無駄な処理を省くためにコンストラクターでのメンバー変数の初期化には初期化リストを用いる。初期化リストを用いないとコンストラクターの処理とコピーコンストラクター・代入処理が行われたりなど非効率である。（後述）</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Table</span>
+<span class="p">{</span>
+  <span class="n">Table</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Table</span><span class="p">::</span><span class="n">Table</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+  <span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">std::string(name)</span></code> のところでコンストラクターが動き、 <code class="docutils literal notranslate"><span class="pre">name_</span> <span class="pre">=</span> <span class="pre">...</span></code> のところで代入演算子が動いて2回初期化している）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Table</span>
+<span class="p">{</span>
+  <span class="n">Table</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Table</span><span class="p">::</span><span class="n">Table</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">name_</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id23">
+<h3><span class="section-number">9.3.15.2. </span>変数宣言と同時に初期化する<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<p>変数を宣言したときに同時に初期化する。宣言時に初期化せずに代入して初期化すると、無駄な処理が発生する可能性があるため非効率である。（後述）</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">std::string()</span></code> のところでコンストラクターが動き、 <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">...</span></code> のところで代入演算子が動いて2回初期化している）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id24">
+<h2><span class="section-number">9.3.16. </span>インクリメント・デクリメント<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<section id="id25">
+<h3><span class="section-number">9.3.16.1. </span>前置形式を用いる<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<p>後置形式ではオブジェクトのコピーをしなければいけないため非効率である。そのため、できるだけ前置形式を用いる。</p>
+<p>よい例（ <code class="docutils literal notranslate"><span class="pre">int</span></code> だと効率は変わらないので本当はあんまりよい例ではない）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>悪い例（後置形式を用いている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id26">
+<h2><span class="section-number">9.3.17. </span>キャスト<a class="headerlink" href="#id26" title="Link to this heading">#</a></h2>
+<section id="c">
+<h3><span class="section-number">9.3.17.1. </span>C++のスタイルを用いる<a class="headerlink" href="#c" title="Link to this heading">#</a></h3>
+<p>Cスタイルのキャストはなんでもキャストできてしまうため、意図しないキャストにも気付かない可能性がある。例えば、単に <code class="docutils literal notranslate"><span class="pre">const</span></code> を外したいだけなのに、間違って違う型に変換していても気付けない。C++のキャストでは <code class="docutils literal notranslate"><span class="pre">const</span></code> を外したいときは <code class="docutils literal notranslate"><span class="pre">const_cast</span></code> を使用し、型を変換するときは <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> を指定する。こうすれば、 <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> で間違って <code class="docutils literal notranslate"><span class="pre">const</span></code> を外してしまっている場合も気付ける。 <code class="docutils literal notranslate"><span class="pre">reinterpret_cast</span></code> はどうしても必要なときのみ注意して使う。</p>
+<p>よい例（ <code class="docutils literal notranslate"><span class="pre">const_cast</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uchar</span> <span class="o">*</span><span class="n">to_key</span><span class="p">;</span>
+<span class="n">const</span> <span class="n">ucahr</span> <span class="o">*</span><span class="n">from_key</span><span class="p">;</span>
+<span class="n">KEY</span> <span class="o">*</span><span class="n">key_info</span><span class="p">;</span>
+<span class="n">uint</span> <span class="n">key_length</span><span class="p">;</span>
+<span class="n">key_copy</span><span class="p">(</span><span class="n">to_key</span><span class="p">,</span> <span class="n">const_cast</span><span class="o">&lt;</span><span class="n">uchar</span> <span class="o">*&gt;</span><span class="n">from_key</span><span class="p">,</span> <span class="n">key_info</span><span class="p">,</span> <span class="n">key_length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>よい例（ <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">n_hits</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">int</span> <span class="n">n_documents</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nb">float</span> <span class="n">hit_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">)(</span><span class="n">n_hits</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_documents</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>よい例（ <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> では無理なので <code class="docutils literal notranslate"><span class="pre">reinterpret_cast</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">THD</span> <span class="o">*</span><span class="n">thread</span> <span class="o">=</span> <span class="n">current_thd</span><span class="p">;</span>
+<span class="n">my_hash_delete</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mrn_allocated_thds</span><span class="p">,</span> <span class="n">reinterpret_cast</span><span class="o">&lt;</span><span class="n">uchar</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">thread</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>悪い例（Cスタイルのキャストを使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">n_hits</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">int</span> <span class="n">n_documents</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nb">float</span> <span class="n">hit_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">)(</span><span class="n">n_hits</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_documents</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>悪い例（ <code class="docutils literal notranslate"><span class="pre">static_cast</span></code> で十分なのに <code class="docutils literal notranslate"><span class="pre">reinterpret_cast</span></code> を使っている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="o">*</span><span class="n">value</span> <span class="o">=</span> <span class="n">get_value</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="n">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">reinterpret_cast</span><span class="o">&lt;</span><span class="n">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id27">
+<h2><span class="section-number">9.3.18. </span>変数宣言<a class="headerlink" href="#id27" title="Link to this heading">#</a></h2>
+<section id="id28">
+<h3><span class="section-number">9.3.18.1. </span>ポインタ型を示す <code class="docutils literal notranslate"><span class="pre">*</span></code> とリファレンス型を示す <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> は変数名に寄せる<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
+<p>Cと同様にポインタ型を示す <code class="docutils literal notranslate"><span class="pre">*</span></code> は型名ではなく変数名に寄せる。これは、以下のように複数の変数を一度に宣言したときに一貫性がなくなるためである。2つめ以降の変数は近くに型名がないため <code class="docutils literal notranslate"><span class="pre">*</span></code> を寄せる場所がない。</p>
+<p>例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span><span class="o">*</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>同様に、リファレンス型を示す <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> も変数名に寄せる。</p>
+<p>なお、 <code class="docutils literal notranslate"><span class="pre">*</span></code> や <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> と型名の間にはスペースを入れない。</p>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>よい例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">is_exist</span><span class="p">(</span><span class="n">const</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">file_name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>悪い例（型名に寄せている）:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span><span class="o">*</span> <span class="n">key</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id29">
+<h2><span class="section-number">9.3.19. </span>その他<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>ここに書いていないものについては特にスタイルを定めないが、
+プロジェクト内で常に一貫性のあるスタイルを使用すること。
+同じような事をするときは同じような書き方にすること。
+複数の書き方で同じようなことを実現している場合は1つの方法に合わせること。</p></li>
+</ul>
+</div></blockquote>
+<p>以下、具体例が必要。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ビルド時にできることを実行時に延ばさない(静的チェックを活用)</p></li>
+<li><p>なるべく局所的に変数を定義し、同時に初期化する</p></li>
+<li><p>長い関数や深いブロックのネストを避ける</p>
+<ul>
+<li><p>2つに分けた方がよさそう。あと目安があるといいかも。
+100行以上は長いよねーとか3段以上はデンジャーとか。</p></li>
+</ul>
+</li>
+<li><p>必要以上にオブジェクトを複製しない</p></li>
+<li><p>暗黙の型変換はなるべく避ける</p></li>
+<li><p>assertを積極的に使う</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id30">
+<h2><span class="section-number">9.3.20. </span>メモ<a class="headerlink" href="#id30" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>動的テンプレートを使わない。（要追加情報。implicit
+template instantiationのことであれば、これはふつうに使わ
+れているものなので特に禁止しないんでいいんじゃない説？）</p></li>
+<li><p>typeidを使わない。</p></li>
+<li><p>例外はMySQLで問題がないようであればOK。Mroongaから外の世
+界（MySQLの世界）にはださないようにする。</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="release.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">9.2. </span>Release procedure</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.3.1. 言語</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.3.2. ファイル名</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.3.3. 名前空間</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#include">9.3.4. <code class="docutils literal notranslate"><span class="pre">include</span></code> ガード</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.3.5. 代入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">9.3.6. 文字列</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">9.3.7. バッファ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">9.3.8. 命名規則</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.8.1. クラス名</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.3.8.2. メンバー変数名</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.3.8.3. 読み込み用アクセサ名</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.3.8.4. 書き込み用アクセサ名</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.3.9. コピーコンストラクター</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.3.10. クラスの代入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.3.11. 引数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#void">9.3.11.1. voidを省略</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#const">9.3.11.2. 入力用引数にはconstを付ける</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.3.12. 定数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.3.13. 真偽値</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bool">9.3.13.1. bool型を用いる</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-false">9.3.13.2. 真偽値のリテラルには <code class="docutils literal notranslate"><span class="pre">true</span></code> または <code class="docutils literal notranslate"><span class="pre">false</span></code> を用いる</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">9.3.14. 条件式</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">9.3.14.1. 真偽値は比較しない</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null">9.3.14.2. <code class="docutils literal notranslate"><span class="pre">NULL</span></code> と比較しない</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">9.3.14.3. 数値は比較する</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">9.3.15. 初期化</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">9.3.15.1. メンバー変数の初期化には初期化リストを用いる</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">9.3.15.2. 変数宣言と同時に初期化する</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">9.3.16. インクリメント・デクリメント</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">9.3.16.1. 前置形式を用いる</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">9.3.17. キャスト</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">9.3.17.1. C++のスタイルを用いる</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">9.3.18. 変数宣言</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">9.3.18.1. ポインタ型を示す <code class="docutils literal notranslate"><span class="pre">*</span></code> とリファレンス型を示す <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> は変数名に寄せる</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">9.3.19. その他</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">9.3.20. メモ</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/developer/coding_style.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

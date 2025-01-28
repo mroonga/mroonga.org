@@ -1,0 +1,904 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.7.1. ブーリアンモード &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=84933602"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=4755f45a"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/full_text_search/boolean_mode';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'japanese';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="5.7.2. Mroongaにおける検索スコア" href="scoring.html" />
+    <link rel="prev" title="5.7. 全文検索" href="../full_text_search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="サイトナビゲーション">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/ja/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="このページでは">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="セクションナビゲーション">
+  <p class="bd-links__title" role="heading" aria-level="1">セクションナビゲーション</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimizations.html">5.1. 最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql_commands.html">5.2. SQLコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server_variables.html">5.3. サーバ変数の一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status_variables.html">5.4. ステータス変数の一覧</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../udf.html">5.5. UDF (ユーザ定義関数)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_command.html">5.5.1. <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_escape.html">5.5.2. <code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_highlight_html.html">5.5.3. <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_last_insert_grn_id.html">5.5.4. <code class="docutils literal notranslate"><span class="pre">mroonga_last_insert_grn_id()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_normalize.html">5.5.5. <code class="docutils literal notranslate"><span class="pre">mroonga_normalize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_snippet.html">5.5.6. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_snippet_html.html">5.5.7. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../limitations.html">5.6. 制限事項</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../full_text_search.html">5.7. 全文検索</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.7.1. ブーリアンモード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scoring.html">5.7.2. Mroongaにおける検索スコア</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="パンくずリスト" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="ホーム">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../reference.html" class="nav-link"><span class="section-number">5. </span>リファレンス</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../full_text_search.html" class="nav-link"><span class="section-number">5.7. </span>全文検索</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">5.7.1. </span>ブーリアンモード</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="boolean-mode">
+<h1><span class="section-number">5.7.1. </span>ブーリアンモード<a class="headerlink" href="#boolean-mode" title="Link to this heading">#</a></h1>
+<section id="summary">
+<h2><span class="section-number">5.7.1.1. </span>概要<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Mroongaは <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> に <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> 修飾子をつけることでブーリアン全文検索を実行できます。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">...</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>通常、デフォルトの <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></code> よりも <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> の方が適切です。なぜなら <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> はWeb検索エンジンのクエリーと似ているからです。多くのユーザーはWeb検索エンジンのクエリーに慣れています。</p>
+<p>ブーリアン全文検索のクエリーでは <a class="reference external" href="https://dev.mysql.com/doc/refman/5.6/ja/fulltext-boolean.html">MySQLがサポートしている修飾子</a> とMroonga独自のプラグマを使うことができます。</p>
+<p>この修飾子とプラグマで検索結果の順位を変更できます。</p>
+<p>修飾子もプラグマもどちらも使わずに検索した場合、検索キーワードをより多く含むレコードの方が順位が高くなります。</p>
+</section>
+<section id="usage">
+<h2><span class="section-number">5.7.1.2. </span>使いかた<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<p>以下は例を示すためのスキーマとデータです。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE books (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX title_index (title)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO books (title) VALUES (&#39;Professional MySQL&#39;);
+INSERT INTO books (title) VALUES (&#39;MySQL for Professional&#39;);
+INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
+</pre></div>
+</div>
+</section>
+<section id="qualifier">
+<span id="boolean-mode-qualifier"></span><h2><span class="section-number">5.7.1.3. </span>修飾子<a class="headerlink" href="#qualifier" title="Link to this heading">#</a></h2>
+<p>サポートしている修飾子は次の通りです。</p>
+<section id="keyword1-keyword2">
+<span id="boolean-mode-qualifier-none"></span><h3><span class="section-number">5.7.1.3.1. </span><code class="docutils literal notranslate"><span class="pre">キーワード1</span> <span class="pre">キーワード2</span></code><a class="headerlink" href="#keyword1-keyword2" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">キーワード1</span> <span class="pre">キーワード2</span></code> のようにキーワードの間に演算子がない場合は、指定したキーワードのどれかひとつでも含まれていればヒット、という検索条件になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> または <code class="docutils literal notranslate"><span class="pre">for</span></code> が含まれているという意味です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="keyword1-or-keyword2">
+<span id="boolean-mode-qualifier-or"></span><h3><span class="section-number">5.7.1.3.2. </span><code class="docutils literal notranslate"><span class="pre">キーワード1</span> <span class="pre">OR</span> <span class="pre">キーワード2</span></code><a class="headerlink" href="#keyword1-or-keyword2" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">OR</span></code> （大文字にすること）は左辺のキーワードまたは右辺のキーワードのうち少なくともどちらか1つは含まれていること、という意味です。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> または <code class="docutils literal notranslate"><span class="pre">for</span></code> が含まれているという意味です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga OR for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">OR</span></code> はデフォルトの演算子です。省略可能です。 <code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> と <code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> はどちらも同じ結果を返します。</p>
+</section>
+<section id="keyword">
+<span id="boolean-mode-qualifier-plus"></span><h3><span class="section-number">5.7.1.3.3. </span><code class="docutils literal notranslate"><span class="pre">+キーワード</span></code><a class="headerlink" href="#keyword" title="Link to this heading">#</a></h3>
+<p>キーワードの前に「+」をつけると、そのキーワードは必ず含まれていること、という検索条件になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">+Mroonga</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> も <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> もどちらも含まれていること、という意味になります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="boolean-mode-qualifier-minus">
+<span id="id1"></span><h3><span class="section-number">5.7.1.3.4. </span><code class="docutils literal notranslate"><span class="pre">-キーワード</span></code><a class="headerlink" href="#boolean-mode-qualifier-minus" title="Link to this heading">#</a></h3>
+<p>キーワードの前に「-」をつけると、そのキーワードは含まれないこと、という検索条件になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">-Mroonga</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> は含まれるけど <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> は含まれないという意味になります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL -Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="prefix">
+<span id="boolean-mode-qualifier-asterisk"></span><h3><span class="section-number">5.7.1.3.5. </span><code class="docutils literal notranslate"><span class="pre">プレフィックス*</span></code><a class="headerlink" href="#prefix" title="Link to this heading">#</a></h3>
+<p>プレフィックスの後に「*」をつけると、そのプレフィックスの単語を含むこと、という検索条件になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+M*</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">M</span></code> から始まる単語（この場合は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> と <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> ）が含まれていること、という意味になります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+M*&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>正確に言うと、「単語」はあなたが思っている「単語」ではないかもしれません。この文脈での「単語」は「トークン」ということです。「トークン」は単語ではないかもしれません。たとえば、「It's」の中のトークンは「It」と「'」と「s」です。</p>
+<p><a class="reference internal" href="../udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> と <a class="reference external" href="https://groonga.org/ja/docs/reference/commands/tokenize.html">tokenize</a> を使うとトークンを確認できます。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="p">[</span>                                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;IT&quot;</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;S&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">}</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="p">]</span>                                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>上の結果のJSONの値は手で整形しています。</p>
+</div>
+</section>
+<section id="phrase">
+<span id="boolean-mode-qualifier-double-quote"></span><h3><span class="section-number">5.7.1.3.6. </span><code class="docutils literal notranslate"><span class="pre">&quot;フレーズ&quot;</span></code><a class="headerlink" href="#phrase" title="Link to this heading">#</a></h3>
+<p>ダブルクォート（ <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> ）でフレーズを囲むと、そのフレーズが必ず含まれていること、という検索条件になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+&quot;Professional</span> <span class="pre">MySQL&quot;</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code> というフレーズが含まれていること、という意味になります。このクエリーは <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> にはマッチしません。 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> という単語も <code class="docutils literal notranslate"><span class="pre">Professional</span></code> という単語も含んでいますが、 <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code> というフレーズは含んでいません。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+&quot;Professional MySQL&quot;&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>              <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="subexpression">
+<span id="boolean-mode-qualifier-parentheses"></span><h3><span class="section-number">5.7.1.3.7. </span><code class="docutils literal notranslate"><span class="pre">(サブ式...)</span></code><a class="headerlink" href="#subexpression" title="Link to this heading">#</a></h3>
+<p>カッコを使うと式をグルーピングできます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+(Groonga</span> <span class="pre">OR</span> <span class="pre">Mroonga)</span> <span class="pre">+MySQL</span></code> というクエリーは次のような意味です。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Groonga</span></code> あるいは <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> のどちらかが含まれている。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MySQL</span></code> が含まれている。</p></li>
+</ul>
+</div></blockquote>
+<p>以下はこのクエリーの実行結果です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+(Groonga OR Mroonga) +MySQL&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pragma">
+<span id="boolean-mode-pragma"></span><h2><span class="section-number">5.7.1.4. </span>プラグマ<a class="headerlink" href="#pragma" title="Link to this heading">#</a></h2>
+<p>プラグマはクエリーのメタデータです。プラグマを指定することでクエリーのパース方法を変更できます。</p>
+<p>実行方法をカスタマイズするためにクエリーの先頭にプラグマを埋め込むことができます。</p>
+<p>プラグマはクエリーの先頭になければいけません。クエリーの先頭に空白を入れてはいけません。プラグマは <code class="docutils literal notranslate"><span class="pre">*</span></code> から始まります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>複数のプラグマを指定することができます。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA1PRAGMA2 ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>以下は利用可能なプラグマの一覧です。</p>
+<section id="d-pragma">
+<span id="boolean-mode-pragma-d"></span><h3><span class="section-number">5.7.1.4.1. </span><code class="docutils literal notranslate"><span class="pre">D</span></code> プラグマ<a class="headerlink" href="#d-pragma" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">D</span></code> プラグマはデフォルトの演算子を指定します。個別の演算子を省略するとデフォルトの演算子を使います。</p>
+<p><code class="docutils literal notranslate"><span class="pre">D</span></code> プラグマの構文は次の通りです。 <code class="docutils literal notranslate"><span class="pre">${OPERATOR}</span></code> には <code class="docutils literal notranslate"><span class="pre">OR</span></code> または <code class="docutils literal notranslate"><span class="pre">+</span></code> または <code class="docutils literal notranslate"><span class="pre">-</span></code> を指定します。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*D${OPERATOR}
+</pre></div>
+</div>
+<section id="dor">
+<span id="boolean-mode-pragma-d-or"></span><h4><span class="section-number">5.7.1.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">DOR</span></code><a class="headerlink" href="#dor" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">DOR</span></code> はデフォルトの演算子として「OR」を使うという意味です。</p>
+<p>これがデフォルトです。</p>
+<p><code class="docutils literal notranslate"><span class="pre">DOR</span></code> を使う例は次の通りです。 <code class="docutils literal notranslate"><span class="pre">'*DOR</span> <span class="pre">for</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal notranslate"><span class="pre">for</span></code> または <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> を含むという意味です。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*DOR for Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="d">
+<span id="boolean-mode-pragma-d-plus"></span><h4><span class="section-number">5.7.1.4.1.2. </span><code class="docutils literal notranslate"><span class="pre">D+</span></code><a class="headerlink" href="#d" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">D+</span></code> はデフォルトの演算子として「AND」を使うという意味です。これはWeb検索エンジンのクエリーと同じ挙動です。</p>
+<p><code class="docutils literal notranslate"><span class="pre">D+</span></code> を使う例は次の通りです。 <code class="docutils literal notranslate"><span class="pre">'*D+</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> と <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> の両方を含むという意味です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D+ MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="boolean-mode-pragma-d-minus">
+<span id="id2"></span><h4><span class="section-number">5.7.1.4.1.3. </span><code class="docutils literal notranslate"><span class="pre">D-</span></code><a class="headerlink" href="#boolean-mode-pragma-d-minus" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">D-</span></code> はデフォルトの演算子として「NOT」を使うという意味です。</p>
+<p><code class="docutils literal notranslate"><span class="pre">D-</span></code> を使う例は次の通りです。 <code class="docutils literal notranslate"><span class="pre">'*D-</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> を含むが <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> を含まないという意味です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D- MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="w-pragma">
+<span id="boolean-mode-pragma-w"></span><h3><span class="section-number">5.7.1.4.2. </span><code class="docutils literal notranslate"><span class="pre">W</span></code> プラグマ<a class="headerlink" href="#w-pragma" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">W</span></code> プラグマはマルチカラムインデックス用のプラグマです。検索対象のセクションとその重みを指定します。</p>
+<p>各セクションごとに違う重みを指定できます。デフォルトの重みは <code class="docutils literal notranslate"><span class="pre">1</span></code> です。 <code class="docutils literal notranslate"><span class="pre">1</span></code> は重みがないという意味です。</p>
+<p><code class="docutils literal notranslate"><span class="pre">W</span></code> プラグマの構文は次の通りです。 <code class="docutils literal notranslate"><span class="pre">${SECTION}</span></code> は0ではなく1から始まる数値です。 <code class="docutils literal notranslate"><span class="pre">${WEIGHT}</span></code> は省略可能です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*W[${SECTION1}[:${WEIGHT1}]][,${SECTION2}[:${WEIGHT2}]][,...]
+</pre></div>
+</div>
+<p>次は例を示すためのスキーマとデータです。 <code class="docutils literal notranslate"><span class="pre">W</span></code> プラグマを使うためにはマルチカラムインデックスを作る必要があります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  `content` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX text_index (title, content)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO memos (title, content) VALUES (
+  &#39;MySQL&#39;, &#39;MySQL is a RDBMS.&#39;
+);
+INSERT INTO memos (title, content) VALUES (
+  &#39;Groonga&#39;, &#39;Groonga is a full text search engine.&#39;
+);
+INSERT INTO memos (title, content) VALUES (
+  &#39;Mroonga&#39;, &#39;Mroonga is a storage engine for MySQL based on Groonga.&#39;
+);
+</pre></div>
+</div>
+<p>次の例は重みの使い方を示す例です。 <code class="docutils literal notranslate"><span class="pre">title</span></code> カラムは重みが <code class="docutils literal notranslate"><span class="pre">10</span></code> で、 <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムは重みが <code class="docutils literal notranslate"><span class="pre">1</span></code> です。これは <code class="docutils literal notranslate"><span class="pre">title</span></code> カラムの中にあるキーワードは <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムの中にあるキーワードよりも10倍重要だということです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span><span class="p">,</span>
+       <span class="n">content</span><span class="p">,</span>
+       <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*W1:10,2:1 +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+  <span class="n">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>   <span class="o">|</span> <span class="n">content</span>                                                <span class="o">|</span> <span class="n">score</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span>   <span class="o">|</span> <span class="n">MySQL</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">RDBMS</span><span class="o">.</span>                                      <span class="o">|</span>     <span class="mi">0</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Groonga</span> <span class="o">|</span> <span class="n">Groonga</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">full</span> <span class="n">text</span> <span class="n">search</span> <span class="n">engine</span><span class="o">.</span>                  <span class="o">|</span>    <span class="mi">11</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">storage</span> <span class="n">engine</span> <span class="k">for</span> <span class="n">MySQL</span> <span class="n">based</span> <span class="n">on</span> <span class="n">Groonga</span> <span class="o">|</span>     <span class="mi">1</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+</pre></div>
+</div>
+<p>最初のレコードのスコアーは <code class="docutils literal notranslate"><span class="pre">0</span></code> です。なぜなら、 <code class="docutils literal notranslate"><span class="pre">title</span></code> カラムにも <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムにも <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> が含まれていないからです。</p>
+<p>二つめのレコードのスコアーは <code class="docutils literal notranslate"><span class="pre">11</span></code> です。なぜなら、 <code class="docutils literal notranslate"><span class="pre">title</span></code> カラムにも <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムにもどちらにも <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> が含まれているからです。 <code class="docutils literal notranslate"><span class="pre">title</span></code> カラム内の <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> のスコアーは <code class="docutils literal notranslate"><span class="pre">10</span></code> です。 <code class="docutils literal notranslate"><span class="pre">content</span></code> カラム内の <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> のスコアーは <code class="docutils literal notranslate"><span class="pre">1</span></code> です。 <code class="docutils literal notranslate"><span class="pre">11</span></code> はこれらのスコアーの合計値です。</p>
+<p>三つめのレコードのスコアーは <code class="docutils literal notranslate"><span class="pre">1</span></code> です。なぜなら、 <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムにだけ <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> が含まれているからです。 <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムの <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> のスコアーは <code class="docutils literal notranslate"><span class="pre">1</span></code> です。そのため、このレコードのスコアーは <code class="docutils literal notranslate"><span class="pre">1</span></code> になります。</p>
+</section>
+<section id="s-pragma">
+<span id="boolean-mode-pragma-s"></span><h3><span class="section-number">5.7.1.4.3. </span><code class="docutils literal notranslate"><span class="pre">S</span></code> プラグマ<a class="headerlink" href="#s-pragma" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">S</span></code> プラグマはクエリーの構文を指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">S</span></code> プラグマの構文は次の通りです。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*S${SYNTAX}
+</pre></div>
+</div>
+<p>利用可能な <code class="docutils literal notranslate"><span class="pre">syntax</span></code> は次の通りです。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: <a class="reference external" href="https://groonga.org/ja/docs/reference/grn_expr/script_syntax.html">スクリプト構文</a></p></li>
+</ul>
+</div></blockquote>
+<section id="ss">
+<span id="boolean-mode-pragma-ss"></span><h4><span class="section-number">5.7.1.4.3.1. </span><code class="docutils literal notranslate"><span class="pre">*SS</span></code><a class="headerlink" href="#ss" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">*SS</span></code> プラグマを使うと <a class="reference external" href="https://groonga.org/ja/docs/reference/grn_expr/script_syntax.html">スクリプト構文</a> を使えます。スクリプト構文ではGroongaのすべての検索機能を使えます。</p>
+<p>以下はスクリプト構文の使い方を示す例のためのスキーマとデータです。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE comments (
+  `content` text,
+  FULLTEXT INDEX content_index (content)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO comments VALUES (
+  &#39;A student started to use Mroonga storage engine. It is very fast!&#39;
+);
+INSERT INTO comments VALUES (
+  &#39;Another student also started to use Mroonga storage engine. It is very fast!&#39;
+);
+</pre></div>
+</div>
+<p>以下はスクリプト構文で <a class="reference external" href="https://groonga.org/ja/docs/reference/grn_expr/script_syntax.html#near-search-operator">近傍検索</a> を使う例です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT content,
+       MATCH (content) AGAINST(&#39;*SS content *N &quot;student fast&quot;&#39; IN BOOLEAN MODE) AS score
+  FROM comments;
+-- +------------------------------------------------------------------------------+-------+
+-- | content                                                                      | score |
+-- +------------------------------------------------------------------------------+-------+
+-- | A student started to use Mroonga storage engine. It is very fast!            |     1 |
+-- | Another student also started to use Mroonga storage engine. It is very fast! |     0 |
+-- +------------------------------------------------------------------------------+-------+
+</pre></div>
+</div>
+<p>近傍検索は指定した単語間（今回の場合は <code class="docutils literal notranslate"><span class="pre">student</span></code> と <code class="docutils literal notranslate"><span class="pre">fast</span></code> ）に10単語以下しかない場合のみマッチします。そのため、 <code class="docutils literal notranslate"><span class="pre">student</span> <span class="pre">started</span> <span class="pre">...（8単語）...</span> <span class="pre">very</span> <span class="pre">fast</span></code> はマッチしますが、 <code class="docutils literal notranslate"><span class="pre">student</span> <span class="pre">also</span> <span class="pre">started</span> <span class="pre">...（8単語）...</span> <span class="pre">very</span> <span class="pre">fast</span></code> はマッチしません。</p>
+<p>他の上級者向け機能も使えます。</p>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../full_text_search.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">5.7. </span>全文検索</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="scoring.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">5.7.2. </span>Mroongaにおける検索スコア</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> このページでは
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">5.7.1.1. 概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">5.7.1.2. 使いかた</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qualifier">5.7.1.3. 修飾子</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword1-keyword2">5.7.1.3.1. <code class="docutils literal notranslate"><span class="pre">キーワード1</span> <span class="pre">キーワード2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword1-or-keyword2">5.7.1.3.2. <code class="docutils literal notranslate"><span class="pre">キーワード1</span> <span class="pre">OR</span> <span class="pre">キーワード2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword">5.7.1.3.3. <code class="docutils literal notranslate"><span class="pre">+キーワード</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-mode-qualifier-minus">5.7.1.3.4. <code class="docutils literal notranslate"><span class="pre">-キーワード</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix">5.7.1.3.5. <code class="docutils literal notranslate"><span class="pre">プレフィックス*</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phrase">5.7.1.3.6. <code class="docutils literal notranslate"><span class="pre">"フレーズ"</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subexpression">5.7.1.3.7. <code class="docutils literal notranslate"><span class="pre">(サブ式...)</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pragma">5.7.1.4. プラグマ</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-pragma">5.7.1.4.1. <code class="docutils literal notranslate"><span class="pre">D</span></code> プラグマ</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dor">5.7.1.4.1.1. <code class="docutils literal notranslate"><span class="pre">DOR</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">5.7.1.4.1.2. <code class="docutils literal notranslate"><span class="pre">D+</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-mode-pragma-d-minus">5.7.1.4.1.3. <code class="docutils literal notranslate"><span class="pre">D-</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#w-pragma">5.7.1.4.2. <code class="docutils literal notranslate"><span class="pre">W</span></code> プラグマ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s-pragma">5.7.1.4.3. <code class="docutils literal notranslate"><span class="pre">S</span></code> プラグマ</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ss">5.7.1.4.3.1. <code class="docutils literal notranslate"><span class="pre">*SS</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1 で構築されています。
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

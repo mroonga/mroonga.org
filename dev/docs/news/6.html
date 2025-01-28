@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>News - 6 series &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=b564a256"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'news/6';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">News - 6 series</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="news-6-series">
+<h1>News - 6 series<a class="headerlink" href="#news-6-series" title="Link to this heading">#</a></h1>
+<section id="release-6-13-2017-01-13">
+<span id="release-6-13"></span><h2>Release 6.13 - 2017-01-13<a class="headerlink" href="#release-6-13-2017-01-13" title="Link to this heading">#</a></h2>
+<section id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Supported the latest Percona Server 5.6.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Supported the latest Percona Server 5.7.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Supported the latest MySQL 5.5.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Supported the latest MySQL 5.6.</p></li>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Supported the latest MySQL 5.7.</p></li>
+<li><p>Supported MariaDB 10.2.3.</p></li>
+<li><p>Supported MySQL 5.7.17.</p></li>
+<li><p>[<a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>] Reduced index size for multiple column index.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-11-2016-11-29">
+<span id="release-6-11"></span><h2>Release 6.11 - 2016-11-29<a class="headerlink" href="#release-6-11-2016-11-29" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[deb][debian] Supported MariaDB 10.x package for Debian jessie.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-10-2016-10-29">
+<span id="release-6-10"></span><h2>Release 6.10 - 2016-10-29<a class="headerlink" href="#release-6-10-2016-10-29" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>Improvements<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[deb][ubuntu] Supported MariaDB 10.x package for Ubuntu 16.04</p></li>
+<li><p>[deb][ubuntu] Supported Ubuntu 16.10 (Yakkety Yak)</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Added document how to install Mroonga for
+MariaDB on Ubuntu 16.04.</p></li>
+<li><p>[<a class="reference internal" href="../install.html"><span class="doc">Install</span></a>][<a class="reference internal" href="../tutorial.html"><span class="doc">Tutorial</span></a>] Improved sample SQL format for
+easy to copy and paste.</p></li>
+<li><p>[rpm][centos] Supported latest MySQL 5.6.34, MySQL 5.7.16, Percona
+Server 5.6.33 and Percona Server 5.7.15. [groonga-dev,04169]
+[Reported by Hiroshi Kagami]</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[mysql57][wrapper] Fixed a bug that <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> with InnoDB doesn’t
+return correct number of records because behavior of InnoDB was
+changed since MySQL 5.7.  [Reported by koyama_wataru_7]</p></li>
+</ul>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Hiroshi Kagami</p></li>
+<li><p>koyama_wataru_7</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-09-2016-09-29">
+<span id="release-6-09"></span><h2>Release 6.09 - 2016-09-29<a class="headerlink" href="#release-6-09-2016-09-29" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Improvements<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Supported nonexistent reference insert check for <code class="docutils literal notranslate"><span class="pre">FOREIGN</span>
+<span class="pre">KEY</span></code>. [Gitter:https://gitter.im/groonga/ja?at=57d629477b9f8167113efb04]
+[Reported by mizutamazukki]</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Thanks<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>mizutamazukki</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-08-2016-08-29">
+<span id="release-6-08"></span><h2>Release 6.08 - 2016-08-29<a class="headerlink" href="#release-6-08-2016-08-29" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>Improvements<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[rpm][centos] Supported latest MariaDB 5.5.50 on CentOS 7.</p></li>
+<li><p>[rpm][centos] Supported Percona Server 5.6/5.7 on CentOS 6/7.</p></li>
+<li><p>[<a class="reference internal" href="../reference/limitations.html"><span class="doc">Limitations</span></a>] Updated description about table
+limitations. There is a good news that the limitation about the
+maximum number of records are relaxed. In the past, it is described
+as 268,435,455 records, but it turns out that actually you can store
+more records.</p></li>
+<li><p>Supported MariaDB 10.2.1</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Fixes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed compile error with GCC 6.1.1.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-07-2016-08-04">
+<span id="release-6-07"></span><h2>Release 6.07 - 2016-08-04<a class="headerlink" href="#release-6-07-2016-08-04" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h3>Improvements<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage mysql57] Supported <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> skip optimization for
+<code class="docutils literal notranslate"><span class="pre">BETWEEN</span></code> again.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Dropped Ubuntu 15.10 (Wily Werewolf)
+support. It had been reached to End of Life on July 28, 2016.</p></li>
+<li><p>[windows] Updated bundled MariaDB to 10.1.16.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Fixes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[mariadb55] Fixed to disable <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> skip optimization when it
+can’t be applied correctly. For example, <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">COUNT(*)</span> <span class="pre">FROM</span>
+<span class="pre">users</span> <span class="pre">WHERE</span> <span class="pre">age</span> <span class="pre">=</span> <span class="pre">29;</span></code> is such a case on MariaDB 5.5.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-06-2016-06-30">
+<span id="release-6-06"></span><h2>Release 6.06 - 2016-06-30<a class="headerlink" href="#release-6-06-2016-06-30" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3>Fixes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[mariadb10] Fixed a crash bug on MariaDB 10.x.
+[Gitter:groonga/ja:57746049265214c130a655ed][Reported by yoyoshifgs]</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Thanks<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>yoyoshifgs</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-05-2016-06-29">
+<span id="release-6-05"></span><h2>Release 6.05 - 2016-06-29<a class="headerlink" href="#release-6-05-2016-06-29" title="Link to this heading">#</a></h2>
+<section id="id11">
+<h3>Improvements<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[centos] Supported CentOS 6.8.</p></li>
+<li><p>[storage] Supported multibyte column name in inplace ALTER TABLE.
+Note that MySQL 5.6 or later can use inplace ALTER TABLE for adding
+columns and indexes.</p></li>
+<li><p>[storage] Supported ORDER BY LIMIT optimization for multibyte column.
+[Gitter:groonga/ja:575e6e671cf76dd64536997c][Reported by yoyoshifgs]</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>Fixes<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage count skip] Fixed invalid optimization which should no be
+applied. It affects to the result of row count.
+[Gitter:groonga/ja:5761ea97da1c26b045368c84][Reported by yoyoshifgs]</p></li>
+<li><p>Fixed to apply custom normalizer even if collation is bin family.
+[Gitter:groonga/ja:576d2a2d80f1c6a5257f1270][Reported by
+big_bridge_]</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Thanks<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>yoyoshifgs</p></li>
+<li><p>big_bridge_</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-03-2016-05-29">
+<span id="release-6-03"></span><h2>Release 6.03 - 2016-05-29<a class="headerlink" href="#release-6-03-2016-05-29" title="Link to this heading">#</a></h2>
+<section id="id14">
+<h3>Improvements<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference internal" href="../install/centos.html"><span class="doc">CentOS</span></a>] Supported Percona Server 5.7 on CentOS 6/7.</p></li>
+<li><p>[UDF][<code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html</span></code>] Supported query format as keywords:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroonga_snippet_html</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;...query format...&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> is important in the above example.</p>
+</li>
+<li><p>[<a class="reference internal" href="../install/windows.html"><span class="doc">Windows</span></a>] Supported MariaDB 10.1.14 on Windows.</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>Fixes<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Fixed a bug that full text index against multibyte column
+doesn’t work. [Gitter:groonga/ja:5745315728011d9f574b9425][Reported
+by yoyoshifgs]</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>Thanks<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>yoyoshifgs</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-02-2016-04-29">
+<span id="release-6-02"></span><h2>Release 6.02 - 2016-04-29<a class="headerlink" href="#release-6-02-2016-04-29" title="Link to this heading">#</a></h2>
+<section id="id17">
+<h3>Improvements<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[deb] Supported multiarch. [Reported by hirobanex]</p></li>
+<li><p>[<a class="reference internal" href="../developer/release.html"><span class="doc">Release procedure</span></a>] Updated to use Visual Studio 12(2013) in
+building instruction in Windows.</p></li>
+<li><p>[<a class="reference internal" href="../reference/full_text_search/boolean_mode.html"><span class="doc">Boolean mode</span></a>] Translated
+documentation about boolean mode.</p></li>
+<li><p>[experimental][mariadb10.2] Supported MariaDB 10.2.0.</p></li>
+<li><p>[<a class="reference internal" href="../install/debian.html"><span class="doc">Debian GNU/Linux</span></a>] Dropped Debian 7.0 (Wheezy).
+It had been reached to End of Life on April 26, 2016.</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Supported Ubuntu 16.04 (Xenial Xerus)</p></li>
+<li><p>[storage] Supported mutlibyte characters in column name.
+[Gitter:groonga/ja:570270f7d478c81e2cbcdc89][Reported by yoyoshifgs]</p></li>
+</ul>
+</section>
+<section id="id18">
+<h3>Fixes<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed compile error with MySQL 5.7.</p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Thanks<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>hirobanex</p></li>
+<li><p>yoyoshifgs</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-01-2016-03-29">
+<span id="release-6-01"></span><h2>Release 6.01 - 2016-03-29<a class="headerlink" href="#release-6-01-2016-03-29" title="Link to this heading">#</a></h2>
+<section id="id20">
+<h3>Improvements<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added a warning when deprecated keyword “parser” is used.
+[Patch by GMO Media, Inc.]</p></li>
+<li><p>[storage] Reduced index size when <code class="docutils literal notranslate"><span class="pre">WITH_POSITION</span></code> is used without tokenizer.
+Stopped to add <code class="docutils literal notranslate"><span class="pre">WITH_POSITION</span></code> to index that doesn’t use tokenizer.
+Index without tokenizer doesn’t need to store position information.
+Because there is only one token.</p></li>
+<li><p>[<a class="reference internal" href="../install/windows.html"><span class="doc">Windows</span></a>] Fixed URLs of binaries for Windows. [Reported by torinky]</p></li>
+<li><p>Added missing LZ4 source. [GitHub#100][Reported by Hiroshi Hatake]</p></li>
+<li><p>[<a class="reference internal" href="../install/ubuntu.html"><span class="doc">Ubuntu</span></a>] Dropped Ubuntu 15.04 (Vivid Vervet) support. It had been
+reached to End of Life on February 4, 2016.</p></li>
+<li><p>[<a class="reference internal" href="../install/windows.html"><span class="doc">Windows</span></a>] Updated base MariaDB to 10.1.13.</p></li>
+</ul>
+</section>
+<section id="id21">
+<h3>Fixes<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed a bug that the following UDFs can’t be used in <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>.
+[groonga-dev,03964][Reported by Hironori Matsubara]</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mroonga_normalize()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></p></li>
+</ul>
+</li>
+<li><p>[storage] Fixed a bug that <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> without condition remains unique indexes.
+[GitHub#99][Reported by GMO Media, Inc.]</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>Thanks<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>GMO Media, Inc.</p></li>
+<li><p>Hironori Matsubara</p></li>
+<li><p>torinky</p></li>
+<li><p>Hiroshi Hatake</p></li>
+</ul>
+</section>
+</section>
+<section id="release-6-00-2016-02-29">
+<span id="release-6-00"></span><h2>Release 6.00 - 2016-02-29<a class="headerlink" href="#release-6-00-2016-02-29" title="Link to this heading">#</a></h2>
+<section id="id23">
+<h3>Improvements<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../reference/full_text_search/boolean_mode.html#boolean-mode-pragma-ss"><span class="std std-ref">*SS</span></a>] Added a pragma to use <a class="reference external" href="https://groonga.org/docs/reference/grn_expr/script_syntax.html">script syntax</a>
+for search. [GitHub#95][Patch by Naoya Murakami]</p></li>
+<li><p>[Windows] Bundled LZ4.</p></li>
+<li><p>[Windows] Updated base MariaDB to 10.1.12.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h3>Fixes<a class="headerlink" href="#id24" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[<a class="reference internal" href="../reference/udf/mroonga_normalize.html"><span class="doc">mroonga_normalize()</span></a>] Add missing <code class="docutils literal notranslate"><span class="pre">CREATE</span>
+<span class="pre">FUNCTION</span></code> to install SQL. [GitHub#94][Patch by Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Thanks<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Naoya Murakami</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-13-2017-01-13">Release 6.13 - 2017-01-13</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-11-2016-11-29">Release 6.11 - 2016-11-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-10-2016-10-29">Release 6.10 - 2016-10-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-09-2016-09-29">Release 6.09 - 2016-09-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-08-2016-08-29">Release 6.08 - 2016-08-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-07-2016-08-04">Release 6.07 - 2016-08-04</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-06-2016-06-30">Release 6.06 - 2016-06-30</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-05-2016-06-29">Release 6.05 - 2016-06-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-03-2016-05-29">Release 6.03 - 2016-05-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-02-2016-04-29">Release 6.02 - 2016-04-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-01-2016-03-29">Release 6.01 - 2016-03-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-6-00-2016-02-29">Release 6.00 - 2016-02-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Thanks</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/news/6.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

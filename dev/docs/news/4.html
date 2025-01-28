@@ -1,0 +1,977 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>News - 4 series &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=b564a256"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'news/4';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">News - 4 series</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="news-4-series">
+<h1>News - 4 series<a class="headerlink" href="#news-4-series" title="Link to this heading">#</a></h1>
+<section id="release-4-10-2015-01-29">
+<span id="release-4-10"></span><h2>Release 4.10 - 2015-01-29<a class="headerlink" href="#release-4-10-2015-01-29" title="Link to this heading">#</a></h2>
+<p>This release has a bug fix for unique index. If you’re using unique
+index in storage mode, your data may be broken. If you’re using unique
+index in storage mode, we recommend to upgrade to this version and
+re-create your unique indexes.</p>
+<p>Here are SQL statements to re-create your indexes including unique
+indexes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ALTER TABLE ${YOUR_TABLE} DISABLE KEYS;
+ALTER TABLE ${YOUR_TABLE} ENABLE KEYS;
+</pre></div>
+</div>
+<p>You may get “duplicated record” error on <code class="docutils literal notranslate"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code>. If you get
+the error, please confirm your data carefully and fix the duplication.</p>
+<p>Here are broken data scenario:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>An unique index is created.</p></li>
+<li><p>Insert data.</p></li>
+<li><p>Insert duplicated data. It’s reported as an error.</p></li>
+<li><p>Insert duplicated data again. It can be inserted. It breaks unique
+consistency.</p></li>
+</ul>
+</div></blockquote>
+<section id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Supported static index construction in FULLTEXT
+INDEX comment with <code class="docutils literal notranslate"><span class="pre">'table</span> <span class="pre">&quot;XXX&quot;'</span></code>. Execute <code class="docutils literal notranslate"><span class="pre">DISABLE</span> <span class="pre">KEYS</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">ENABLE</span> <span class="pre">KEYS</span></code> for static index construction.
+[Reported by Naoya Murakami]</p></li>
+<li><p>[rpm][centos] Built with MySQL 5.6.22 on CentOS 7.
+[groonga-dev,03047] [Reported by Hiroshi Kagami]</p></li>
+<li><p>[rpm][centos] Built with MariaDB 5.5.40-2 on CentOS 7.</p></li>
+<li><p>[storage][mysql56] Supported to report duplicated error
+for <code class="docutils literal notranslate"><span class="pre">ADD</span> <span class="pre">UNIQUE</span> <span class="pre">INDEX</span></code>. [Reported by kazeburo]</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Fixed a bug that referenced table is accidentally
+removed on error. This means that index creation is failed for
+FULLTEXT INDEX comment with <code class="docutils literal notranslate"><span class="pre">'table</span> <span class="pre">&quot;terms&quot;'</span></code>, “terms”
+table can be removed on error.</p></li>
+<li><p>[storage] Fixed a bug that duplicated entry is removed in unique index
+when duplicated error is occurred. This bug makes consistency of indexes broken,
+so recommended to recreate existing indexes again after upgrading Mroonga. [Reported by kazeburo]</p></li>
+<li><p>[storage] Fixed a bug that <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></code> is
+broken. This bug may change existing other records by executing update fallback when
+insert error occurred. [Reported by kazeburo]</p></li>
+</ul>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Naoya Murakami</p></li>
+<li><p>Hiroshi Kagami</p></li>
+<li><p>kazeburo</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-09-2014-12-29">
+<span id="release-4-09"></span><h2>Release 4.09 - 2014-12-29<a class="headerlink" href="#release-4-09-2014-12-29" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[rpm] Supported MySQL 5.6.22 on CentOS 6.
+[Reported by &#64;oreradio]</p></li>
+<li><p>Added <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-boolean-mode-syntax-flags"><span class="std std-ref">mroonga_boolean_mode_syntax_flags</span></a> that
+custom syntax in <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">()</span> <span class="pre">AGAINST</span> <span class="pre">('...'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></code>.</p></li>
+<li><p>Supported no normalizer <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> by specifying <code class="docutils literal notranslate"><span class="pre">none</span></code> as
+normalizer such as <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span> <span class="pre">(...)</span> <span class="pre">COMMENT</span> <span class="pre">'normalizer</span>
+<span class="pre">&quot;none&quot;'</span></code>.</p></li>
+<li><p>Supported referencing primary key value of auto created records.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Thanks<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>&#64;oreradio</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-08-2014-11-29">
+<span id="release-4-08"></span><h2>Release 4.08 - 2014/11/29<a class="headerlink" href="#release-4-08-2014-11-29" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Improvements<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[deb] Supported Ubuntu 12.04 again for Travis-CI.</p></li>
+<li><p>[test] Added script which checks performance schema.
+[Patch by Elena Stepanova]</p></li>
+<li><p>[rpm] Supported MySQL 5.5.40 on CentOS 6 and 7.
+[groonga-dev,02955] [Reported Noboru Nishiyama]</p></li>
+<li><p>[doc] Added <a class="reference internal" href="../reference/limitations.html"><span class="doc">Limitations</span></a> about column size.</p></li>
+<li><p>[storage] Added missing primary key check when primary key
+is required to specify.
+[groonga-dev,02963] [Reported by kashihara]</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[doc] Fixed nonexistent MySQL version. [groonga-dev,02899]
+[Reported by GMO Media, Inc.]</p></li>
+<li><p>[doc] Removed needless SCL related install description for CentOS 5.</p></li>
+<li><p>[doc] Use <code class="docutils literal notranslate"><span class="pre">service</span></code> command to start MySQL on CentOS 5 and 6.</p></li>
+<li><p>[doc] Use <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> command to start MySQL on CentOS 7.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Thanks<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>GMO Media, Inc.</p></li>
+<li><p>Elena Stepanova</p></li>
+<li><p>Noboru Nishiyama</p></li>
+<li><p>kashihara</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-07-2014-10-29">
+<span id="release-4-07"></span><h2>Release 4.07 - 2014/10/29<a class="headerlink" href="#release-4-07-2014-10-29" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h3>Improvements<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Changed to treat deprecated <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">DELAYED</span></code> as error. [GitHub#20] [MDEV#6837] [Reported by Elena Stepanova]</p></li>
+<li><p>[storage][mariadb10] Added proper error message for duplicated entries on adding an unique index.
+[GitHub#19] [Reported by Elena Stepanova]</p></li>
+<li><p>[cmake] Removed needless status message for compiler flag checks [GitHub#22]</p></li>
+<li><p>Supported token filter in table/index comment for wrapper/storage mode.
+[GitHub#25] [Patch by Naoya Murakami]</p></li>
+<li><p>[mroonga_command] Improved to need not to know whether Groonga database already exists
+before executing mroonga_command. In the previous versions, you must prepare table which use Mroonga.</p></li>
+<li><p>[storage] Supported to specify normalizer in table comment.
+[GitHub#27] [Patch by Naoya Murakami]</p></li>
+<li><p>[storage] Supported column compression flag (<code class="docutils literal notranslate"><span class="pre">COMPRESS_LZ4</span></code>, <code class="docutils literal notranslate"><span class="pre">COMPRESS_ZLIB</span></code>).
+[GitHub#32] [Patch by Naoya Murakami]</p></li>
+<li><p>Added <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-libgroonga-support-lz4"><span class="std std-ref">mroonga_libgroonga_support_lz4</span></a> and
+<a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-libgroonga-support-zlib"><span class="std std-ref">mroonga_libgroonga_support_zlib</span></a> system
+variables. [GitHub#33,#34,#35] [Patch by Naoya Murakami]</p></li>
+<li><p>Dropped MySQL 5.1 support.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage][mariadb10] Fixed a crash bug that it doesn’t properly locked.
+[GitHub#18] [Reported by Elena Stepanova]</p></li>
+<li><p>[storage] Fixed overflow about signed tinyint. [GitHub#29]</p></li>
+<li><p>[doc] Fixed markups about normalizer. [GitHub#32] [Patch by Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Thanks<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Elena Stepanova</p></li>
+<li><p>Naoya Murakami</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-06-2014-09-29">
+<span id="release-4-06"></span><h2>Release 4.06 - 2014/09/29<a class="headerlink" href="#release-4-06-2014-09-29" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3>Improvements<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[doc] Added more details about Groonga’s development package.</p></li>
+<li><p>[doc] Changed to recommend GitHub issue tracker.</p></li>
+<li><p>[deb] Dropped Debian jessie and sid support.</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Fixes<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Fixed a bug that no record returns with multiple column index.
+This bug occurs when it meets two conditions. First, columns indexed by
+multiple column index are used in order and WHERE clause. Second,
+a column indexed by multiple column index but it’s no the first column is
+used in ORDER by clause.
+[#2651] [Reported by foamcentime, Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Thanks<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>foamcentime</p></li>
+<li><p>Naoya Murakami</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-05-2014-08-29">
+<span id="release-4-05"></span><h2>Release 4.05 - 2014/08/29<a class="headerlink" href="#release-4-05-2014-08-29" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h3>Improvements<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Dropped Ubuntu 13.10 Saucy Salamander support.</p></li>
+<li><p>Added new variable
+<a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-vector-column-delimiter"><span class="std std-ref">mroonga_vector_column_delimiter</span></a>.  It is used
+to change delimiter of vector column.
+[GitHub#16] [Patch by Naoya Murakami]</p></li>
+<li><p>[rpm][centos] Supported MySQL 5.6 official repository packages on CentOS 6/7.
+Use mysql56-community-mroonga package. [Patch by miko]</p></li>
+<li><p>[doc] Moved document about upgrading which is included in install document.
+Now, you can refer it as <a class="reference internal" href="../upgrade.html"><span class="doc">Upgrade</span></a>.</p></li>
+<li><p>Supported MariaDB 10.0.13.</p></li>
+<li><p>[rpm][centos] Supported CentOS 7 as mariadb-mroonga package. It uses
+the bundled MariaDB.
+[groonga-dev,02604] [Tested by Miyawaki][Tested by Kawada]</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Fixes<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[doc] Fixed wrong MySQL version about news of Mroonga 4.04. [Reported by _so4]</p></li>
+<li><p>[doc] Removed needless explicit install procedure for groonga-normalizer-mysql package.</p></li>
+<li><p>[storage] Fixed a bug that value remains in unique index on duplicated primary key error.
+[groonga-dev,02633] [Reported by 6elz]</p></li>
+<li><p>[doc] Fixed a bug that building document in other directory fails.
+[groonga-dev,02652] [Reported by cosmo0920]</p></li>
+<li><p>Changed to use “Mroonga” form for engine name.</p></li>
+<li><p>[storage] Fixed a bug that table specified index (<code class="docutils literal notranslate"><span class="pre">COMMENT</span> <span class="pre">'table</span> <span class="pre">&quot;XXX&quot;'</span></code>)
+can’t be removed. [groonga-dev,02677] [Reported by Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>Thanks<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>_so4</p></li>
+<li><p>Naoya Murakami</p></li>
+<li><p>miko</p></li>
+<li><p>6elz</p></li>
+<li><p>cosmo0920</p></li>
+<li><p>Miyawaki</p></li>
+<li><p>Kawada</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-04-2014-07-29">
+<span id="release-4-04"></span><h2>Release 4.04 - 2014/07/29<a class="headerlink" href="#release-4-04-2014-07-29" title="Link to this heading">#</a></h2>
+<section id="id15">
+<h3>Improvements<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Removed Groonga and groonga-normalizer-mysql specific test files for
+MariaDB bundled version on Windows. There is too long file name issue.
+[groonga-dev,02391] [Reported by Masafumi Yokoyama]</p></li>
+<li><p>[doc] Updated <a class="reference internal" href="../developer.html"><span class="doc">Developer’s guide</span></a>.</p></li>
+<li><p>Added overflow/underflow check whether valid time to find errors on 32-bit
+environment. [Patch by Toshihisa Tashiro]</p></li>
+<li><p>[storage] Supproted INPLACE ALTER TABLE for adding/dropping columns.
+[#2277] [GitHub#12] [Patch by Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>Fixes<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[rpm][centos] Built with MySQL 5.5.37 on CentOS.
+[Reported by YOSHIDA Mitsuo]</p></li>
+<li><p>Fixed to use lowercase for table name to avoid  lower/upper-case specific
+issue on Mac OS. [Patch by Toshihisa Tashiro]</p></li>
+<li><p>Fixed build error for VC++ 2013 [GitHub#10] [Patch by cosmo0920]</p></li>
+<li><p>[doc] Added missing quote for install procedure on CentOS6 SCL.
+[GitHub#11] [Patch by Naoya Murakami]</p></li>
+<li><p>[storage] Fixed a bug that renaming column by ALTER TABLE CHANGE
+causes crash. [#2637]</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>Thanks<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>YOSHIDA Mitsuo</p></li>
+<li><p>Masafumi Yokoyama</p></li>
+<li><p>Toshihisa Tashiro</p></li>
+<li><p>cosmo0920</p></li>
+<li><p>Naoya Murakami</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-03-2014-05-29">
+<span id="release-4-03"></span><h2>Release 4.03 - 2014/05/29<a class="headerlink" href="#release-4-03-2014-05-29" title="Link to this heading">#</a></h2>
+<section id="id18">
+<h3>Improvements<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[doc] Updated MariaDB version. [Patch by cosmo0920]</p></li>
+<li><p>Supported daylight saving time. [#2385]</p></li>
+<li><p>Migrated Ubuntu package distribution site to PPA on Launchpad.
+See <a class="reference internal" href="../install.html"><span class="doc">Install</span></a> for details.</p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Fixes<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[doc] Fixed command line in <a class="reference internal" href="../install.html"><span class="doc">Install</span></a>. [Reported by YOSHIDA Mitsuo]</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>Thanks<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>cosmo0920</p></li>
+<li><p>YOSHIDA Mitsuo</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-02-2014-04-29">
+<span id="release-4-02"></span><h2>Release 4.02 - 2014/04/29<a class="headerlink" href="#release-4-02-2014-04-29" title="Link to this heading">#</a></h2>
+<section id="id21">
+<h3>Improvements<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Supported MariaDB 10.0.10 [#2460] [Reported by Kazuhiko Shiozaki]</p></li>
+<li><p>Supported MySQL 5.6.17.</p></li>
+<li><p>Supported Ubuntu 14.04 LTS Trusty Tahr.</p></li>
+<li><p>Enabled MariaDB bundled build.</p></li>
+<li><p>Dropped Ubuntu 12.10 Quantal Quetzal support.</p></li>
+<li><p>[doc] Updated MySQL version. [GitHub#8] [Patch by cosmo0920]</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>Fixes<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Stopped to use truncate for <code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code>.
+[groonga-dev,02222] [Reported by GMO Media, Inc.]</p></li>
+<li><p>[wrapper] Stopped to use truncate for <code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code>.</p></li>
+<li><p>[storage] Fixed a bug that inplace alter table with no primary key
+crashes. [groonga-dev,02227] [Reported by GMO Media, Inc.]</p></li>
+<li><p>[storage] Fixed a bug that <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">function(vector_reference_column)</span></code>
+doesn’t work.
+[groonga-dev,02234] [Reported by Naoya Murakami]</p></li>
+<li><p>Fixed a bug that setting the current value to <code class="docutils literal notranslate"><span class="pre">mroonga_default_parser</span></code>
+or <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code> crash.
+[GitHub#6] [Patch by Satoshi MITANI]</p></li>
+<li><p>Fixed a bug that <code class="docutils literal notranslate"><span class="pre">mroonga_lock_timeout</span></code> in my.cnf or command line option
+is ignored.
+[GitHub#7] [Patch by GMO Media, Inc.]</p></li>
+<li><p>Fixed a bug that deleting by primary key doesn’t update unique index.
+[groonga-dev,02244] [Reported by Akihiro Tsukui]</p></li>
+</ul>
+</section>
+<section id="id23">
+<h3>Thanks<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Kazuhiko Shiozaki</p></li>
+<li><p>GMO Media, Inc.</p></li>
+<li><p>Naoya Murakami</p></li>
+<li><p>Satoshi MITANI</p></li>
+<li><p>Akihiro Tsukui</p></li>
+<li><p>cosmo0920</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-01-2014-03-29">
+<span id="release-4-01"></span><h2>Release 4.01 - 2014/03/29<a class="headerlink" href="#release-4-01-2014-03-29" title="Link to this heading">#</a></h2>
+<section id="id24">
+<h3>Improvements<a class="headerlink" href="#id24" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Supported MariaDB 10.0.9 [#2387] [Reported by Kazuhiko Shiozaki]</p></li>
+<li><p>Supported ten or more sections in W pragma [#2348] [groonga-dev,02138]
+[Reported by yoku0825]</p></li>
+<li><p>[rpm][centos] Supported SCL MySQL package on CentOS 6.</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Fixes<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage] Fixed a bug that ALTER TABLE with fulltext index which refer to table causes mysqld crash.
+[#2327] [groonga-dev,02130] [Reported by Naoya Murakami]</p></li>
+<li><p>[doc] Fixed to use Mroonga/Groonga (capitalized notation) in characteristics document.
+[GitHub#5] [Patch by Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id26">
+<h3>Thanks<a class="headerlink" href="#id26" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>yoku0825</p></li>
+<li><p>Naoya Murakami</p></li>
+<li><p>Kazuhiko Shiozaki</p></li>
+</ul>
+</section>
+</section>
+<section id="release-4-00-2014-02-09">
+<span id="release-4-00"></span><h2>Release 4.00 - 2014/02/09<a class="headerlink" href="#release-4-00-2014-02-09" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Bump version to 4.00! We recommend to upgrade because crash bug and updating issue are fixed now!</p></li>
+</ul>
+<section id="id27">
+<h3>Improvements<a class="headerlink" href="#id27" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Dropped Ubuntu 13.04 (Raring Ringtail) support.</p></li>
+<li><p>[storage] Supported to search with empty string.
+[#2214] [groonga-dev,02052] [Reported by Naoya Murakami]</p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>Fixes<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed a crash bug that bulk inserting null value into geometry column which has NOT NULL constraint.
+[#2281] [groonga-dev,02095] [Reported by yoku]</p></li>
+<li><p>[storage] Fixed a bug that existing records may be unexectedlly removed by ON DUPLICATE KEY
+UPDATE. In the previous versions, such a query can’t update the value of column correctly.
+[#2263] [Reported Masahiro Nagano]</p></li>
+</ul>
+</section>
+<section id="id29">
+<h3>Thanks<a class="headerlink" href="#id29" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>yoku</p></li>
+<li><p>Naoya Murakami</p></li>
+<li><p>Masahiro Nagano</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-10-2015-01-29">Release 4.10 - 2015-01-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-09-2014-12-29">Release 4.09 - 2014-12-29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-08-2014-11-29">Release 4.08 - 2014/11/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-07-2014-10-29">Release 4.07 - 2014/10/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-06-2014-09-29">Release 4.06 - 2014/09/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-05-2014-08-29">Release 4.05 - 2014/08/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-04-2014-07-29">Release 4.04 - 2014/07/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-03-2014-05-29">Release 4.03 - 2014/05/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-02-2014-04-29">Release 4.02 - 2014/04/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-01-2014-03-29">Release 4.01 - 2014/03/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-4-00-2014-02-09">Release 4.00 - 2014/02/09</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Thanks</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/news/4.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

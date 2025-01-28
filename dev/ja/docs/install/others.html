@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.9. その他 &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=84933602"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'install/others';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'japanese';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="3. アップグレード" href="../upgrade.html" />
+    <link rel="prev" title="2.8. Docker" href="docker.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="サイトナビゲーション">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/ja/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="このページでは">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="セクションナビゲーション">
+  <p class="bd-links__title" role="heading" aria-level="1">セクションナビゲーション</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="windows.html">2.1. Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="macos.html">2.2. macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debian.html">2.3. Debian GNU/Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">2.4. Ubuntu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="almalinux.html">2.5. AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle-linux.html">2.6. Oracle Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fedora.html">2.7. Fedora</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">2.8. Docker</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2.9. その他</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="パンくずリスト" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="ホーム">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../install.html" class="nav-link"><span class="section-number">2. </span>インストール</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">2.9. </span>その他</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="others">
+<h1><span class="section-number">2.9. </span>その他<a class="headerlink" href="#others" title="Link to this heading">#</a></h1>
+<p>このセクションではUNIX系の環境でMroongaをソースコードからインストールする方法を説明します。</p>
+<section id="dependencies">
+<h2><span class="section-number">2.9.1. </span>依存関係<a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h2>
+<p>MroongaをビルドするためにはいくつかのツールとライブラリーとMySQLが必要です。MySQLの代わりにMariaDBを使うこともできます。</p>
+<section id="tools">
+<h3><span class="section-number">2.9.1.1. </span>ツール<a class="headerlink" href="#tools" title="Link to this heading">#</a></h3>
+<p>必須のツール</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wget</span></code>、<code class="docutils literal notranslate"><span class="pre">curl</span></code> または Web ブラウザ（ソースアーカイブをダウンロードするため）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tar</span></code> と <code class="docutils literal notranslate"><span class="pre">gzip</span></code>（ソースアーカイブを展開するため）</p></li>
+<li><p>シェル（ <code class="docutils literal notranslate"><span class="pre">dash</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bash</span></code> 、 <code class="docutils literal notranslate"><span class="pre">zsh</span></code> など、どのようなシェルでもたぶん大丈夫）</p></li>
+<li><p>CコンパイラーとC++コンパイラー （ <code class="docutils literal notranslate"><span class="pre">gcc</span></code> と <code class="docutils literal notranslate"><span class="pre">g++</span></code> がサポート対象だが、他のコンパイラーでもたぶん大丈夫）</p></li>
+<li><p><a class="reference external" href="https://cmake.org/">CMake</a>（クロスプラットフォームのビルドシステムとして利用するため）</p></li>
+<li><p><a class="reference external" href="https://ninja-build.org/">Ninja</a>（高速にビルドするため）</p></li>
+<li><p><a class="reference external" href="http://www.freedesktop.org/wiki/Software/pkg-config">pkg-config</a>（ライブラリを検出するため）</p></li>
+</ul>
+<p>これらを用意してください。</p>
+<p>あるとよいツール</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span></code>（ビルドしたGroongaをインストールするため）</p></li>
+</ul>
+</section>
+<section id="libraries">
+<h3><span class="section-number">2.9.1.2. </span>ライブラリー<a class="headerlink" href="#libraries" title="Link to this heading">#</a></h3>
+<p>必須のライブラリー</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://groonga.org/">Groonga</a></p>
+<ul>
+<li><p>もしパッケージを使うなら、開発用パッケージをインストールしてください。debなら <code class="docutils literal notranslate"><span class="pre">libgroonga-dev</span></code> で、RPMなら <code class="docutils literal notranslate"><span class="pre">groonga-devel</span></code> です</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a></p></li>
+</ul>
+<p>あるとよいライブラリー</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a>: 日本語形態素解析器</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>形態素単位でトークナイズした全文検索索引を使用したい場合は、Groongaのインストール前に <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a>をインストールしてください。</p>
+</div>
+</section>
+<section id="mysql">
+<h3><span class="section-number">2.9.1.3. </span>MySQL<a class="headerlink" href="#mysql" title="Link to this heading">#</a></h3>
+<p>Mroongaはインストール済みのMySQLだけでなくMySQLのソースとビルドディレクトリーも必要です。そのため、MySQLのパッケージを使うことはできません。MySQLのパッケージはMySQLのソースとビルドディレクトリーを提供していないからです。MySQLのソースとビルドディレクトリーが必要です！</p>
+<p>MySQLの代わりにMariaDBを使う場合でもMariaDBのソースが必要です。</p>
+<p>MySQL 8.4最新版のソースコードをダウンロードし、ビルド＆インストールして下さい。</p>
+<p>こちらの<a class="reference external" href="http://dev.mysql.com/downloads/mysql/">Download MySQL Community Server</a> を参照して下さい。</p>
+<p>mysql-8.4.1を使用し、以下にソースディレクトリが展開されているものと仮定します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${HOME}/local/src/mysql-8.4.1
+</pre></div>
+</div>
+<p>次のディレクトリーでビルドします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${HOME}/local/build/mysql-8.4.1
+</pre></div>
+</div>
+<p>次のコマンドラインはMySQLをビルド・インストールするコマンドラインです。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-S<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-B<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1
+<span class="gp">$ </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1
+</pre></div>
+</div>
+<p>Mroongaをインストールする前にMySQLを起動する必要があります。なぜならMroongaを登録するためにいくつかのSQL文を実行する必要があるからです。</p>
+</section>
+<section id="mariadb">
+<h3><span class="section-number">2.9.1.4. </span>MariaDB<a class="headerlink" href="#mariadb" title="Link to this heading">#</a></h3>
+<p>MySQLの代わりにMariaDBを使うことができます。</p>
+<p>MariaDBをビルドする前に<code class="docutils literal notranslate"><span class="pre">storage/mroonga/</span></code>（MariDBにバンドルされているMroonga）を削除しなければいけないことに注意してください。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src
+<span class="gp">$ </span>wget<span class="w"> </span>https://downloads.mariadb.org/rest-api/mariadb/11.4.3/mariadb-11.4.3.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>mariadb-11.4.3.tar.gz
+<span class="gp">$ </span>rm<span class="w"> </span>-rf<span class="w"> </span>mariadb-11.4.3/storage/mroonga
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>-
+<span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-S<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/mariadb-11.4.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-B<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mariadb-11.4.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mariadb-11.4.3
+<span class="gp">$ </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mariadb-11.4.3
+</pre></div>
+</div>
+</section>
+</section>
+<section id="build-from-source">
+<h2><span class="section-number">2.9.2. </span>ソースからビルド<a class="headerlink" href="#build-from-source" title="Link to this heading">#</a></h2>
+<p>MroongaはCMakeを使っています。以下は一番簡単なビルド手順です。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src
+<span class="gp">$ </span>wget<span class="w"> </span>https://packages.groonga.org/source/mroonga/mroonga-latest.tar.gz
+<span class="gp">$ </span>tar<span class="w"> </span>xvf<span class="w"> </span>mroonga-latest.tar.gz
+<span class="gp">$ </span><span class="nv">mroonga_base_name</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span>mroonga-*<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">0</span><span class="w"> </span>-type<span class="w"> </span>d<span class="k">)</span>
+<span class="gp">$ </span>cmake<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-S<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-B<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-GNinja<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_BUILD_DIR<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mysql-8.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_CONFIG<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/bin/mysql_config<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DMYSQL_SOURCE_DIR<span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/src/mysql-8.4.1
+<span class="gp">$ </span>cmake<span class="w"> </span>--build<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span>
+<span class="gp">$ </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span>
+<span class="gp">$ </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/bin/mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/share/mroonga/install.sql
+</pre></div>
+</div>
+<p>次のことを <code class="docutils literal notranslate"><span class="pre">cmake</span></code> で指定しなければいけません。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-DMYSQL_BUILD_DIR</span></code>: MySQLのビルドディレクトリー</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DMYSQL_CONFIG</span></code>: <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code>コマンドのパス</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DMYSQL_SOURCE_DIR</span></code>: MySQLのソースディレクトリー</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">ENGINES</span></code> SQLを実行することでMroongaが正常にインストールされているかを確認できます。 <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> という行があればMroongaは正常にインストールされています。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">ENGINES</span><span class="p">;</span>
+<span class="o">+------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="o">|</span> <span class="n">Engine</span>     <span class="o">|</span> <span class="n">Support</span> <span class="o">|</span> <span class="n">Comment</span>                                                    <span class="o">|</span> <span class="n">Transactions</span> <span class="o">|</span> <span class="n">XA</span>   <span class="o">|</span> <span class="n">Savepoints</span> <span class="o">|</span>
+<span class="o">+------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="o">|</span> <span class="n">Mroonga</span>    <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Fulltext</span> <span class="n">search</span><span class="p">,</span> <span class="n">column</span> <span class="n">base</span>                               <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MRG_MYISAM</span> <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Collection</span> <span class="n">of</span> <span class="n">identical</span> <span class="n">MyISAM</span> <span class="n">tables</span>                      <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">CSV</span>        <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">CSV</span> <span class="n">storage</span> <span class="n">engine</span>                                         <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">MyISAM</span>     <span class="o">|</span> <span class="n">DEFAULT</span> <span class="o">|</span> <span class="n">Default</span> <span class="n">engine</span> <span class="k">as</span> <span class="n">of</span> <span class="n">MySQL</span> <span class="mf">3.23</span> <span class="k">with</span> <span class="n">great</span> <span class="n">performance</span>     <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">InnoDB</span>     <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Supports</span> <span class="n">transactions</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="n">level</span> <span class="n">locking</span><span class="p">,</span> <span class="ow">and</span> <span class="n">foreign</span> <span class="n">keys</span> <span class="o">|</span> <span class="n">YES</span>          <span class="o">|</span> <span class="n">YES</span>  <span class="o">|</span> <span class="n">YES</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="n">MEMORY</span>     <span class="o">|</span> <span class="n">YES</span>     <span class="o">|</span> <span class="n">Hash</span> <span class="n">based</span><span class="p">,</span> <span class="n">stored</span> <span class="ow">in</span> <span class="n">memory</span><span class="p">,</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">temporary</span> <span class="n">tables</span>  <span class="o">|</span> <span class="n">NO</span>           <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">NO</span>         <span class="o">|</span>
+<span class="o">+------------+---------+------------------------------------------------------------+--------------+------+------------+</span>
+<span class="mi">6</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>以下、それぞれの手順の詳細を説明します。</p>
+<section id="cmake">
+<span id="source-cmake"></span><h3><span class="section-number">2.9.2.1. </span><code class="docutils literal notranslate"><span class="pre">cmake</span></code><a class="headerlink" href="#cmake" title="Link to this heading">#</a></h3>
+<p>まず <code class="docutils literal notranslate"><span class="pre">cmake</span></code> を実行します。重要な <code class="docutils literal notranslate"><span class="pre">cmake</span></code> の引数は以下の通りです。</p>
+<section id="dmysql-source-dir-path">
+<h4><span class="section-number">2.9.2.1.1. </span><code class="docutils literal notranslate"><span class="pre">-DMYSQL_SOURCE_DIR=PATH</span></code><a class="headerlink" href="#dmysql-source-dir-path" title="Link to this heading">#</a></h4>
+<p>MySQLのソースコードがあるディレクトリーを指定します。</p>
+<p>これは必須の引数です。</p>
+</section>
+<section id="dmysql-build-dir-path">
+<h4><span class="section-number">2.9.2.1.2. </span><code class="docutils literal notranslate"><span class="pre">-DMYSQL_BUILD_DIR=PATH</span></code><a class="headerlink" href="#dmysql-build-dir-path" title="Link to this heading">#</a></h4>
+<p>MySQLのソースコードをビルドしたディレクトリーを指定します。</p>
+<p>MySQLのソースコードがあるディレクトリーでビルドした場合はこの引数を指定する必要はありません。他のディレクトリーでビルドしたときはこの引数を指定する必要があります。</p>
+</section>
+<section id="dmysql-config-path">
+<h4><span class="section-number">2.9.2.1.3. </span><code class="docutils literal notranslate"><span class="pre">-DMYSQL_CONFIG=PATH</span></code><a class="headerlink" href="#dmysql-config-path" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> コマンドのパスを指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> コマンドが <code class="docutils literal notranslate"><span class="pre">PATH</span></code> から探索可能であればこの引数を指定する必要はありません。例えば、 <code class="docutils literal notranslate"><span class="pre">mysql_config</span></code> が <code class="docutils literal notranslate"><span class="pre">/usr/bin/mysql_config</span></code> にある場合はこの引数を指定する必要はありません。</p>
+</section>
+<section id="dmrn-default-tokenizer-tokenizer">
+<h4><span class="section-number">2.9.2.1.4. </span><code class="docutils literal notranslate"><span class="pre">-DMRN_DEFAULT_TOKENIZER=TOKENIZER</span></code><a class="headerlink" href="#dmrn-default-tokenizer-tokenizer" title="Link to this heading">#</a></h4>
+<p>全文検索用のデフォルトのトークナイザーを指定します。この値は<code class="docutils literal notranslate"><span class="pre">my.cnf</span></code>でもカスタマイズできます。</p>
+<p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code> です。</p>
+<p>デフォルトのトークナイザーとして <code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code> を使う例です。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>...<span class="w"> </span>-DMRN_DEFAULT_TOKENIZER<span class="o">=</span>TokenMecab
+</pre></div>
+</div>
+</section>
+<section id="dcmake-build-type-release-debug-relwithdebinfo">
+<h4><span class="section-number">2.9.2.1.5. </span><code class="docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE={Release,Debug,RelWithDebInfo}</span></code><a class="headerlink" href="#dcmake-build-type-release-debug-relwithdebinfo" title="Link to this heading">#</a></h4>
+<p>ビルドタイプを指定します。</p>
+<p>本番環境でこのMroongaを使う場合は<code class="docutils literal notranslate"><span class="pre">-DCAMKE_BUILD_TYPE=Release</span></code>または<code class="docutils literal notranslate"><span class="pre">-DCAMKE_BUILD_TYPE=RelWithDebInfo</span></code>を指定するべきです。最適化が有効になります。</p>
+<p>開発用にこのMroongaを使う場合は<code class="docutils literal notranslate"><span class="pre">-DCAMKE_BUILD_TYPE=Debug</span></code>を使うべきです。最適化が無効になり、デバッグシンボルが有効になります。これらは開発時に有用です。</p>
+</section>
+<section id="dcmake-install-prefix-prefix">
+<h4><span class="section-number">2.9.2.1.6. </span><code class="docutils literal notranslate"><span class="pre">-DCMAKE_INSTALL_PREFIX=PREFIX</span></code><a class="headerlink" href="#dcmake-install-prefix-prefix" title="Link to this heading">#</a></h4>
+<p>インストール先となるディレクトリを指定します。Mroonga関連のファイルは  <code class="docutils literal notranslate"><span class="pre">ha_mroonga.so</span></code> を除いて <code class="docutils literal notranslate"><span class="pre">${PREFIX}/</span></code> ディレクトリ以下にインストールされます。 <code class="docutils literal notranslate"><span class="pre">ha_mroonga.so</span></code> はMySQLのプラグインファイルです。これはMySQLのプラグインディレクトリーにインストールされます。</p>
+<p>デフォルトは <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> です。この場合、Mroongaをインストールするために使う <code class="docutils literal notranslate"><span class="pre">install.sql</span></code> は <code class="docutils literal notranslate"><span class="pre">/usr/local/share/mroonga/install.sql</span></code> にインストールされます。</p>
+</section>
+</section>
+<section id="cmake-build">
+<h3><span class="section-number">2.9.2.2. </span><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code><a class="headerlink" href="#cmake-build" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cmake</span></code> が成功したら <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code> でMroongaをビルドします。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code> で何かエラーが発生した場合は、そのエラーをレポートしてください: <a class="reference internal" href="../contribution/report.html"><span class="doc">見つけたバグを報告するには</span></a></p>
+</section>
+<section id="cmake-install">
+<h3><span class="section-number">2.9.2.3. </span><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--install</span></code><a class="headerlink" href="#cmake-install" title="Link to this heading">#</a></h3>
+<p>これでビルドしたMroongaをインストールできます！</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PREFIX}</span></code>とMySQLのプラグインディレクトリーへの書き込み権限がない場合は、<code class="docutils literal notranslate"><span class="pre">sudo</span></code>を使わないといけません。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>cmake<span class="w"> </span>--install<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/<span class="si">${</span><span class="nv">mroonga_base_name</span><span class="si">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mysql-u-root-install-sql">
+<h3><span class="section-number">2.9.2.4. </span><code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">&lt;</span> <span class="pre">install.sql</span></code><a class="headerlink" href="#mysql-u-root-install-sql" title="Link to this heading">#</a></h3>
+<p>MroongaをMySQLに登録するために <code class="docutils literal notranslate"><span class="pre">INSTALL</span> <span class="pre">PLUGIN</span></code> や <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">FUNCTION</span></code> といったSQL文を実行する必要があります。これらのSQLは <code class="docutils literal notranslate"><span class="pre">${PREFIX}/share/mroonga/install.sql</span></code> に書かれています。</p>
+</section>
+<section id="uninstall-mroonga">
+<h3><span class="section-number">2.9.2.5. </span>Mroongaのアンインストール<a class="headerlink" href="#uninstall-mroonga" title="Link to this heading">#</a></h3>
+<p>Mroongaをアンインストールしたい場合は次のコマンドラインを使ってください。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/bin/mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span>/share/mroonga/uninstall.sql
+<span class="gp">$ </span>xargs<span class="w"> </span>rm<span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/local/build/mroonga/install_manifest.txt
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="docker.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">2.8. </span>Docker</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../upgrade.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>アップグレード</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> このページでは
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">2.9.1. 依存関係</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tools">2.9.1.1. ツール</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">2.9.1.2. ライブラリー</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysql">2.9.1.3. MySQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mariadb">2.9.1.4. MariaDB</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-from-source">2.9.2. ソースからビルド</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmake">2.9.2.1. <code class="docutils literal notranslate"><span class="pre">cmake</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmysql-source-dir-path">2.9.2.1.1. <code class="docutils literal notranslate"><span class="pre">-DMYSQL_SOURCE_DIR=PATH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmysql-build-dir-path">2.9.2.1.2. <code class="docutils literal notranslate"><span class="pre">-DMYSQL_BUILD_DIR=PATH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmysql-config-path">2.9.2.1.3. <code class="docutils literal notranslate"><span class="pre">-DMYSQL_CONFIG=PATH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrn-default-tokenizer-tokenizer">2.9.2.1.4. <code class="docutils literal notranslate"><span class="pre">-DMRN_DEFAULT_TOKENIZER=TOKENIZER</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dcmake-build-type-release-debug-relwithdebinfo">2.9.2.1.5. <code class="docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE={Release,Debug,RelWithDebInfo}</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dcmake-install-prefix-prefix">2.9.2.1.6. <code class="docutils literal notranslate"><span class="pre">-DCMAKE_INSTALL_PREFIX=PREFIX</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmake-build">2.9.2.2. <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmake-install">2.9.2.3. <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--install</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysql-u-root-install-sql">2.9.2.4. <code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">&lt;</span> <span class="pre">install.sql</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uninstall-mroonga">2.9.2.5. Mroongaのアンインストール</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1 で構築されています。
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

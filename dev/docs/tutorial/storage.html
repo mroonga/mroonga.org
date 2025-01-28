@@ -1,0 +1,1400 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.3. Storage mode &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=b564a256"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/storage';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.4. Wrapper mode" href="wrapper.html" />
+    <link rel="prev" title="4.2. Mode" href="mode.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation_check.html">4.1. Installation check</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mode.html">4.2. Mode</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4.3. Storage mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">4.4. Wrapper mode</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../tutorial.html" class="nav-link"><span class="section-number">4. </span>Tutorial</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">4.3. </span>Storage mode</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="storage-mode">
+<h1><span class="section-number">4.3. </span>Storage mode<a class="headerlink" href="#storage-mode" title="Link to this heading">#</a></h1>
+<p>Here we explain how to use storage mode of Mroonga</p>
+<section id="how-to-use-full-text-search">
+<h2><span class="section-number">4.3.1. </span>How to use full text search<a class="headerlink" href="#how-to-use-full-text-search" title="Link to this heading">#</a></h2>
+<p>After confirming the installation, let’s create a table. The important point is to specify Mroonga by <code class="docutils literal notranslate"><span class="pre">ENGINE</span> <span class="pre">=</span> <span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.10 sec)</span>
+</pre></div>
+</div>
+<p>We put data by INSERT:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+</pre></div>
+</div>
+<p>Try full text search:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +----+-----------------------------------------+</span>
+<span class="c1">-- | id | content                                 |</span>
+<span class="c1">-- +----+-----------------------------------------+</span>
+<span class="c1">-- |  1 | It&#39;ll be fine tomorrow. |</span>
+<span class="c1">-- +----+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>Yes, full text search works.</p>
+</section>
+<section id="how-to-get-search-score">
+<h2><span class="section-number">4.3.2. </span>How to get search score<a class="headerlink" href="#how-to-get-search-score" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In version 1.0.0 or before, Mroonga used a special column named <code class="docutils literal notranslate"><span class="pre">_score</span></code> to get search score. From version 1.0.0, it follows MySQL’s standard way to get search score.</p>
+</div>
+<p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
+<p>We can get search score by MySQL’s standard way <a class="footnote-reference brackets" href="#score" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, i.e. we use MATCH…AGAINST in one of columns in SELECT or ORDER BY.</p>
+<p>Let’s try:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
+<span class="c1">-- | id | content                                          | MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) |</span>
+<span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
+<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                                 2 |</span>
+<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |                                                 1 |</span>
+<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |                                                 1 |</span>
+<span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
+<span class="c1">-- 3 rows in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>The result having the search word <code class="docutils literal notranslate"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">AS</span></code> to change the attribute name:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">score</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<span class="c1">-- +----+--------------------------------------------------+-------+</span>
+<span class="c1">-- | id | content                                          | score |</span>
+<span class="c1">-- +----+--------------------------------------------------+-------+</span>
+<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |</span>
+<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |     1 |</span>
+<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |     1 |</span>
+<span class="c1">-- +----+--------------------------------------------------+-------+</span>
+<span class="c1">-- 3 rows in set (0.00 sec)</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-specify-the-parser-for-full-text-search">
+<h2><span class="section-number">4.3.3. </span>How to specify the parser for full text search<a class="headerlink" href="#how-to-specify-the-parser-for-full-text-search" title="Link to this heading">#</a></h2>
+<p>MySQL has the following syntax to specify the parser <a class="footnote-reference brackets" href="#parser" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> for full text search:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">WITH</span> <span class="n">PARSER</span> <span class="n">parser_name</span>
+</pre></div>
+</div>
+<p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">COMMENT</span></code> in <code class="docutils literal notranslate"><span class="pre">FULLTEXT</span> <span class="pre">INDEX</span></code> is only supported MySQL 5.5 or later. If you use MySQL 5.1, use <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code> variable described below.</p>
+</div>
+<p>You can specify one of the following values as the tokenizer. “tokenizer” in Mroonga equals to “parser” in MySQL.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Available tokenizers</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tokenizer</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">off</span></code></p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">Deprecated</span></code>) It does not tokenize at all. Use <code class="docutils literal notranslate"><span class="pre">off</span></code> if you want to treat
+<code class="docutils literal notranslate"><span class="pre">content</span></code> as is. For example, this value is used for prefix
+search.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+<td><div class="versionadded">
+<p><span class="versionmodified added">Added in version 8.07: </span>It does not tokenize at all. Use <code class="docutils literal notranslate"><span class="pre">none</span></code> if you want to treat <code class="docutils literal notranslate"><span class="pre">content</span></code> as is. For example, this value is used for prefix search.</p>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code></p></td>
+<td><p>It tokenises in bigram. But continuous alphabets, numbers or
+symbols are treated as a token. So there can exist tokes with 3
+letters or more. It is to reduce noises.</p>
+<p>This is the default value.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TokenMecab</span></code></p></td>
+<td><p>It tokenises using MeCab. Groonga should be built with MeCab
+support.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code></p></td>
+<td><p>It tokenises in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, continuous
+symbols are not treated as a token, but tokenised in bigram.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;!?&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;!?!?!?&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">&quot;Is</span> <span class="pre">it</span>
+<span class="pre">really!?!?!?&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only
+<code class="docutils literal notranslate"><span class="pre">&quot;!?!?!?&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code></p></td>
+<td><p>It tokenise in bigram. In addition to <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>,
+continuous alphabets are not treated as a token either, but
+tokenised in bigram.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;real&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;Is</span> <span class="pre">it</span> <span class="pre">really?&quot;</span></code>. But
+when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;really&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code></p></td>
+<td><p>It tokenise in bigram. In addition to
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, continuous numbers are not treated
+as a token either, but tokenised in bigram. So any kind of
+characters are treated equally in bigram.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;567&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;090-0123-4567&quot;</span></code>. But
+when you use <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;4567&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code></p></td>
+<td><p>It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, it ignores white
+spaces.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlank</span></code> instead of <code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;みなさん&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん</span> <span class="pre">注</span> <span class="pre">目&quot;</span></code>. But when you use
+<code class="docutils literal notranslate"><span class="pre">TokenBigram</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;み</span> <span class="pre">な</span> <span class="pre">さ</span> <span class="pre">ん&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code></p></td>
+<td><p>It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, it
+ignores white spaces.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbol</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;???&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;!</span> <span class="pre">?</span>
+<span class="pre">???&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbol</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;?</span>
+<span class="pre">??&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code></p></td>
+<td><p>It tokenise in bigram. Unlike <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
+it ignores white spaces.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlpha</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ama&quot;</span></code> can match <code class="docutils literal notranslate"><span class="pre">&quot;I</span> <span class="pre">am</span>
+<span class="pre">a</span> <span class="pre">pen.&quot;</span></code>. But when you use <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>,
+only <code class="docutils literal notranslate"><span class="pre">&quot;am</span> <span class="pre">a&quot;</span></code> can match as well.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code></p></td>
+<td><p>It tokenise in bigram. Unlike
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, it ignores white spaces.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">TokenBigramIgnoreBlankSplitSymbolAlphaDigit</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;9001&quot;</span></code> can
+match <code class="docutils literal notranslate"><span class="pre">&quot;090</span> <span class="pre">0123</span> <span class="pre">4567&quot;</span></code>. But when you use
+<code class="docutils literal notranslate"><span class="pre">TokenBigramSplitSymbolAlphaDigit</span></code>, only <code class="docutils literal notranslate"><span class="pre">&quot;90</span> <span class="pre">01&quot;</span></code> can
+match as well.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TokenDelimit</span></code></p></td>
+<td><p>It tokenise by splitting with a white space.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;movie</span> <span class="pre">horror</span> <span class="pre">topic&quot;</span></code> will be tokenised as <code class="docutils literal notranslate"><span class="pre">&quot;movie&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;topic&quot;</span></code>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenDelimitNull</span></code></p></td>
+<td><p>It tokenise by splitting with a null character (<code class="docutils literal notranslate"><span class="pre">\\0</span></code>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;movie\\0horror\\0topic&quot;</span></code> will be tokenised as <code class="docutils literal notranslate"><span class="pre">&quot;movie&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;horror&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;topic&quot;</span></code>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TokenUnigram</span></code></p></td>
+<td><p>It tokenises in unigram. But continuous alphabets, numbers or
+symbols are treated as a token. So there can exist tokes with 2
+letters or more. It is to reduce noises.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TokenTrigram</span></code></p></td>
+<td><p>It tokenises in trigram. But continuous alphabets, numbers or
+symbols are treated as a token. So there can exist tokes with 4
+letters or more. It is to reduce noises.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>You can specify the default parser by passing <code class="docutils literal notranslate"><span class="pre">--with-default-tokenizer</span></code> option in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when you build Mroonga:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">tokenizer</span> <span class="n">TokenMecab</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Or you can set <code class="docutils literal notranslate"><span class="pre">mroonga_default_tokenizer</span></code> variable in <code class="docutils literal notranslate"><span class="pre">my.cnf</span></code> or by SQL. If you specify it in <code class="docutils literal notranslate"><span class="pre">my.cnf</span></code>, the change will not be lost after restarting MySQL, but you need to restart MySQL to make it effective. On the other hand, if you set it in SQL, the change is effective immediately, but it will be lost when you restart MySQL.</p>
+<p>my.cnf:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">mroonga_default_tokenizer</span><span class="o">=</span><span class="n">TokenMecab</span>
+</pre></div>
+</div>
+<p>SQL:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_default_tokenizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TokenMecab</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-specify-the-normalizer">
+<h2><span class="section-number">4.3.4. </span>How to specify the normalizer<a class="headerlink" href="#how-to-specify-the-normalizer" title="Link to this heading">#</a></h2>
+<p>Mroonga uses normalizer corresponding to the encoding of document.
+It is used when tokenizing text and storing table key.</p>
+<p>It is used <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLGeneralCI</span></code> normalizer when the encoding is
+<code class="docutils literal notranslate"><span class="pre">utf8_general_ci</span></code> or <code class="docutils literal notranslate"><span class="pre">utf8mb4_general_ci</span></code>.</p>
+<p>It is used <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer when the encoding is
+<code class="docutils literal notranslate"><span class="pre">utf8_unicode_ci</span></code> or <code class="docutils literal notranslate"><span class="pre">utf8mb4_unicode_ci</span></code>.</p>
+<p>It isn’t used normalizer when the encoding is <code class="docutils literal notranslate"><span class="pre">utf8_bin</span></code>.</p>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">NormalizerMySQLUnicodeCI</span></code> normalizer by specifying <code class="docutils literal notranslate"><span class="pre">utf8_unicode_ci</span></code>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span><span class="w"> </span><span class="k">NAMES</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">day</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | day        | content                                 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | 2013-04-23 | ブラックコーヒーを飲んだ。 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | day        | content                                 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | 2013-04-23 | ブラックコーヒーを飲んだ。 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>Mroonga has the following syntax to specify Groonga’s normalizer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://groonga.org/docs/reference/normalizers.html">Groonga’s documentation about normalizer</a> for more details.</p>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span><span class="w"> </span><span class="k">NAMES</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">day</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.19 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- Empty set (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | day        | content                                 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- | 2013-04-23 | ブラックコーヒーを飲んだ。 |</span>
+<span class="c1">-- +------------+-----------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-specify-the-token-filters">
+<h2><span class="section-number">4.3.5. </span>How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Link to this heading">#</a></h2>
+<p>Mroonga has the following syntax to specify Groonga’s token filters.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;token_filters &quot;TokenFilterStem&quot;&#39;</span>
+</pre></div>
+</div>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStem</span></code> token filter:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<span class="c1">-- +------------------------------------------------+</span>
+<span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
+<span class="c1">-- +------------------------------------------------+</span>
+<span class="c1">-- | true                                           |</span>
+<span class="c1">-- +------------------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I develop Groonga&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I&#39;m developing Groonga&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I developed Groonga&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+develops&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +----+------------------------+</span>
+<span class="c1">-- | id | content                |</span>
+<span class="c1">-- +----+------------------------+</span>
+<span class="c1">-- |  1 | I develop Groonga      |</span>
+<span class="c1">-- |  2 | I&#39;m developing Groonga |</span>
+<span class="c1">-- |  3 | I developed Groonga    |</span>
+<span class="c1">-- +----+------------------------+</span>
+<span class="c1">-- 3 rows in set (0.01 sec)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://groonga.org/docs/reference/token_filters.html">Groonga’s documentation about token filter documentation</a> for more details.</p>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStopWord</span></code> token filter:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<span class="c1">-- +-----------------------------------------------------+</span>
+<span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
+<span class="c1">-- +-----------------------------------------------------+</span>
+<span class="c1">-- | true                                                |</span>
+<span class="c1">-- +-----------------------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">term</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">is_stop_word</span><span class="w"> </span><span class="n">BOOL</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">COMMENT</span><span class="o">=</span><span class="s1">&#39;tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39;</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;table &quot;terms&quot;&#39;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.17 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;and&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Hello&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Hello and Good-bye&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Good-bye&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;+&quot;Hello and&quot;&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +----+--------------------+</span>
+<span class="c1">-- | id | content            |</span>
+<span class="c1">-- +----+--------------------+</span>
+<span class="c1">-- |  1 | Hello              |</span>
+<span class="c1">-- |  2 | Hello and Good-bye |</span>
+<span class="c1">-- +----+--------------------+</span>
+<span class="c1">-- 2 rows in set (0.01 sec)</span>
+</pre></div>
+</div>
+<p>It’s used that specifying the lexicon table for fulltext search.</p>
+</section>
+<section id="how-to-specify-groonga-s-column-flags">
+<h2><span class="section-number">4.3.6. </span>How to specify Groonga’s column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Link to this heading">#</a></h2>
+<p>Mroonga has the following syntax to specify Groonga’s column flags:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+</pre></div>
+</div>
+<p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">COMPRESS_ZLIB</span></code> flag:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="n">UNSIGNED</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://groonga.org/docs/reference/commands/column_create.html#parameters">Groonga’s documentation about column flags</a> for more details.</p>
+</section>
+<section id="how-to-use-geolocation-search">
+<h2><span class="section-number">4.3.7. </span>How to use geolocation search<a class="headerlink" href="#how-to-use-geolocation-search" title="Link to this heading">#</a></h2>
+<p>In storage mode, you can use fast geolocation search in addition to full text search. But unlike MyISAM, you can only store POINT type data. You cannot store other types data like LINE. And fast search using index only supports MBRContains. It does not support MBRDisjoint.</p>
+<p>For the table definition for geolocation search, you need to define a POINT type column like in MyISAM and define SPATIAL INDEX for it.:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="k">location</span><span class="w"> </span><span class="n">POINT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SPATIAL</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.06 sec)</span>
+</pre></div>
+</div>
+<p>To store data, you create POINT type data by using geomFromText() function like in MyISAM:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Yanagiya Taiyaki&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.783981 35.685341)&#39;</span><span class="p">));</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+</pre></div>
+</div>
+<p>If you want to find shops within the rectangle where Ikebukuro station (139.7101 35.7292) is the top-left point and Tokyo Station (139.7662 35.6815) is the bottom-right point, SELECT phrase is like the following:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">shops</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span><span class="w"> </span><span class="k">location</span><span class="p">);</span>
+<span class="c1">-- +----+-----------------------+------------------------------------------+</span>
+<span class="c1">-- | id | name                  | AsText(location)                         |</span>
+<span class="c1">-- +----+-----------------------+------------------------------------------+</span>
+<span class="c1">-- |  1 | Nezu&#39;s Taiyaki        | POINT(139.762572777778 35.7202527777778) |</span>
+<span class="c1">-- +----+-----------------------+------------------------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>Here you can search by geolocation!</p>
+</section>
+<section id="how-to-get-the-record-id">
+<h2><span class="section-number">4.3.8. </span>How to get the record ID<a class="headerlink" href="#how-to-get-the-record-id" title="Link to this heading">#</a></h2>
+<p>Groonga assigns a unique number to identify the record when a record is added in the table.</p>
+<p>To make the development of applications easier, you can get this record ID by SQL in Mroonga</p>
+<p>To get the record ID, you need to create a column named <code class="docutils literal notranslate"><span class="pre">_id</span></code> when you create a table:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">_id</span><span class="p">)</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">HASH</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.04 sec)</span>
+</pre></div>
+</div>
+<p>Tye typo of <code class="docutils literal notranslate"><span class="pre">_id</span></code> column should be integer one (TINYINT, SMALLINT, MEDIUMINT, INT or BIGINT).</p>
+<p>You can create an index for _id column, but it should be HASH type.</p>
+<p>Let’s add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
+So you need to exclude it from setting columns, or you need to use <code class="docutils literal notranslate"><span class="pre">null</span></code> as its value:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Buy some dumpling on the way home.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Thank God It&#39;s meat day.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+</pre></div>
+</div>
+<p>To get the record ID, you invoke SELECT with _id column:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span><span class="p">;</span>
+<span class="c1">-- +------+------------------------------------------+</span>
+<span class="c1">-- | _id  | content                                  |</span>
+<span class="c1">-- +------+------------------------------------------+</span>
+<span class="c1">-- |    1 | Saury for today&#39;s dinner.                |</span>
+<span class="c1">-- |    2 | Update mroonga tomorrow.                 |</span>
+<span class="c1">-- |    3 | Buy some dumpling on the way home.       |</span>
+<span class="c1">-- |    4 | Thank God It&#39;s meat day.                 |</span>
+<span class="c1">-- +------+------------------------------------------+</span>
+<span class="c1">-- 4 rows in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>By using last_insert_grn_id function, you can also get the record ID that is assigned by the last INSERT:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
+<span class="c1">-- +----------------------+</span>
+<span class="c1">-- | last_insert_grn_id() |</span>
+<span class="c1">-- +----------------------+</span>
+<span class="c1">-- |                    5 |</span>
+<span class="c1">-- +----------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>last_insert_grn_id function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="w"> </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;So much milk in the fridge.&quot;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
+<span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
+<span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-get-snippet-keyword-in-context">
+<h2><span class="section-number">4.3.9. </span>How to get snippet (Keyword in context)<a class="headerlink" href="#how-to-get-snippet-keyword-in-context" title="Link to this heading">#</a></h2>
+<p>Mroonga provides functionality to get keyword in context.
+It is implemented as <a class="reference internal" href="../reference/udf/mroonga_snippet.html"><span class="doc">mroonga_snippet()</span></a> UDF.</p>
+</section>
+<section id="how-to-use-similar-search">
+<h2><span class="section-number">4.3.10. </span>How to use similar search<a class="headerlink" href="#how-to-use-similar-search" title="Link to this heading">#</a></h2>
+<p>Similar search is supported by specifying document itself instead of specifying keywords in query.</p>
+<p>It is useful if you want to find documents which is related to specific document.</p>
+<p>Here is the schema definition for execution examples:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here is the sample data for execution examples:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Groonga similar search&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Mroonga similar search&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Rroonga library&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A library to use Groonga features from Ruby.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here is the example of similar search by content itself.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that you need to specify an content of document in <cite>AGAINST(’…’ IN NATURAL LANGUAGE MODE)</cite>.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +------------------------+</span>
+<span class="c1">-- | title                  |</span>
+<span class="c1">-- +------------------------+</span>
+<span class="c1">-- | Groonga similar search |</span>
+<span class="c1">-- | Mroonga similar search |</span>
+<span class="c1">-- +------------------------+</span>
+<span class="c1">-- 2 rows in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>To improve degree of similarity, you may need to use language specific tokenizer or use labeled data such as tag to get rid of some undesirable search results.</p>
+<p>For example, if you want to execute similar search against Japanese text, it is recommended to use language specific tokenizer - <cite>TokenMecab</cite>.
+Here is the schema definition to use <cite>TokenMecab</cite> tokenizer:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-run-groonga-command">
+<h2><span class="section-number">4.3.11. </span>How to run Groonga command<a class="headerlink" href="#how-to-run-groonga-command" title="Link to this heading">#</a></h2>
+<p>In storage mode, Mroonga stores all your data into Groonga
+database. You can access Groonga database by SQL with Mroonga. SQL is
+very powerful but it is not good for some operations such as faceted
+search.</p>
+<p>Faceted search is popular recently. Many online shopping sites such as
+amazon.com and ebay.com support faceted search. Faceted search refines
+the current search by available search parameters before users refine
+their search. And faceted search shows refined searches. Users just
+select a refined search. Users benefit from faceted search:</p>
+<ul class="simple">
+<li><p>Users don’t need to think about how to refine their search.
+Users just select a showed refined search.</p></li>
+<li><p>Users don’t get boared “not match” page. Faceted search showes only
+refined searches that has one or more matched items.</p></li>
+</ul>
+<p>Faceted search needs multiple <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> operations against searched
+result set. To do faceted search by SQL, multiple <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> requests
+are needed. It is not effective.</p>
+<p>Groonga can do faceted search by only one groonga command. It is
+effective. Groonga has the <code class="docutils literal notranslate"><span class="pre">select</span></code> command that can search records
+with faceted search. Faceted search is called as “drilldown” in
+Groonga. See <a class="reference external" href="https://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more
+details.</p>
+<p>Mroonga provides <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> function. You can run Groonga
+command in SQL by the function. But you should use only <code class="docutils literal notranslate"><span class="pre">select</span></code>
+command. Other commands that change schema or data may break
+consistency.</p>
+<p>Here is the schema definition for execution examples:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">  </span><span class="nb">date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">  </span><span class="k">year</span><span class="w"> </span><span class="k">YEAR</span><span class="p">,</span>
+<span class="w">  </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+<span class="w">  </span><span class="n">tag</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here is the sample data for execution examples:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;groonga&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013-04-09&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013-03-29&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;2013-03&#39;</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Each record has <code class="docutils literal notranslate"><span class="pre">groonga</span></code> or <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code>. Each record also
+has <code class="docutils literal notranslate"><span class="pre">year</span></code> and <code class="docutils literal notranslate"><span class="pre">year_month</span></code>. You can use <code class="docutils literal notranslate"><span class="pre">tag</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and
+<code class="docutils literal notranslate"><span class="pre">year_month</span></code> as faceted search keys.</p>
+<p>Groonga calls faceted search as drilldown. So parameter key in Groonga
+is <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code>. Groonga returns search result as JSON. So
+<code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> also returns search result as JSON. It is not
+SQL friendly. You need to parse search result JSON by yourself.</p>
+<p>Here is the example of faceted search by all available faceted search
+keys (result JSON is pretty printed):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">faceted_result</span><span class="p">;</span>
+<span class="c1">-- +-----------------------------+</span>
+<span class="c1">-- | faceted_result              |</span>
+<span class="c1">-- +-----------------------------+</span>
+<span class="c1">-- | [[[3],                      |</span>
+<span class="c1">-- |   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |</span>
+<span class="c1">-- |  [[2],                      |</span>
+<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
+<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [&quot;groonga&quot;,1],            |</span>
+<span class="c1">-- |   [&quot;MySQL&quot;,2]],             |</span>
+<span class="c1">-- |  [[1],                      |</span>
+<span class="c1">-- |   [[&quot;_key&quot;,&quot;Time&quot;],         |</span>
+<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [1356998400.0,3]],        |</span>
+<span class="c1">-- |  [[2],                      |</span>
+<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
+<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [&quot;2013-04&quot;,2],            |</span>
+<span class="c1">-- |   [&quot;2013-03&quot;,1]]]           |</span>
+<span class="c1">-- +-----------------------------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>The first element <code class="docutils literal notranslate"><span class="pre">[[3],</span> <span class="pre">[[&quot;_id&quot;,&quot;UInt32&quot;]]]</span></code> is normal search
+result. It’s not faceted search result.</p>
+<p>The second, third and forth elements are faceted search results:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;Time&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="mf">1356998400.0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;2013-04&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;2013-03&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The order of faceted search results is corresponding to the value of
+<code class="docutils literal notranslate"><span class="pre">--drilldown</span></code>. In this example, we specified <code class="docutils literal notranslate"><span class="pre">tag</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> and
+<code class="docutils literal notranslate"><span class="pre">year_month</span></code> as <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code> value. So the first faceted search
+result is for <code class="docutils literal notranslate"><span class="pre">tag</span></code>, the second one is for <code class="docutils literal notranslate"><span class="pre">year</span></code> and the third
+one is for <code class="docutils literal notranslate"><span class="pre">year_month</span></code>.</p>
+<p>Each faceted search result uses the following format. This is the same
+as normal search result:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[${THE_NUMBER_OF_RECORDS}],
+ [[${OUTPUT_COLUMN_NAME_0}, ${OUTPUT_COLUMN_TYPE_0}],
+  [${OUTPUT_COLUMN_NAME_1}, ${OUTPUT_COLUMN_TYPE_1}],
+  ...,
+  [${OUTPUT_COLUMN_NAME_N}, ${OUTPUT_COLUMN_TYPE_N}]]
+ [${OUTPUT_COLUMN_VALUE_0_FOR_RECORD_0},
+  ${OUTPUT_COLUMN_VALUE_1_FOR_RECORD_0},
+  ...,
+  ${OUTPUT_COLUMN_VALUE_N_FOR_RECORD_0}],
+ [${OUTPUT_COLUMN_VALUE_0_FOR_RECORD_1},
+  ${OUTPUT_COLUMN_VALUE_1_FOR_RECORD_1},
+  ...,
+  ${OUTPUT_COLUMN_VALUE_N_FOR_RECORD_1}],
+ ...
+ [${OUTPUT_COLUMN_VALUE_0_FOR_RECORD_M},
+  ${OUTPUT_COLUMN_VALUE_1_FOR_RECORD_M},
+  ...,
+  ${OUTPUT_COLUMN_VALUE_N_FOR_RECORD_M}]]
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">_key</span></code> column value in faceted search result shows faceted
+search key.</p>
+<p>For example, the first faceted search result (the faceted search
+result for <code class="docutils literal notranslate"><span class="pre">tag</span></code>) shows that matched records (all records in this
+case) have <code class="docutils literal notranslate"><span class="pre">groonga</span></code> and <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">_nsubrecs</span></code> column value in faceted search result shows the
+number of records that have the corresponding faceted search key.</p>
+<p>For example, the first faceted search result (the faceted search
+result for <code class="docutils literal notranslate"><span class="pre">tag</span></code>) shows that there are 1 record that has <code class="docutils literal notranslate"><span class="pre">groonga</span></code>
+as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value and 2 records that have <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more
+details.</p>
+</section>
+<section id="how-to-search-by-regular-expression">
+<h2><span class="section-number">4.3.12. </span>How to search by regular expression<a class="headerlink" href="#how-to-search-by-regular-expression" title="Link to this heading">#</a></h2>
+<p>In storage mode, you can use a Groonga’s functionality from Mroonga as described above.
+Thus, you can search records by using a regular expression via Groonga’s functionality.</p>
+<p>There are some conditions to use regular expression in Mroonga.</p>
+<ul class="simple">
+<li><p>Create an index with <code class="docutils literal notranslate"><span class="pre">TokenRegexp</span></code> tokenizer which is used in <code class="docutils literal notranslate"><span class="pre">COMMENT</span></code></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">*SS</span></code> pragma and <code class="docutils literal notranslate"><span class="pre">&#64;~</span></code> in <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">MATCH</span> <span class="pre">...</span> <span class="pre">AGAINST</span></code> clause</p></li>
+</ul>
+<p>Here is the example of search by regular expression.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">content_index</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenRegexp&quot;, normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/usr/bin/groonga&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/var/log/auth.log&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/var/log/messages&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/tmp/local/var/log/auth.log&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;*SS content @~ &quot;\\\\A/var/log/auth&quot;&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- | content           |</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- | /var/log/auth.log |</span>
+<span class="c1">-- +-------------------+</span>
+<span class="c1">-- 1 row in set (0.024 sec)</span>
+</pre></div>
+</div>
+<p>By using <a class="reference internal" href="../reference/full_text_search/boolean_mode.html#boolean-mode-pragma-ss"><span class="std std-ref">*SS</span></a> pragma, you can search the records which matches <code class="docutils literal notranslate"><span class="pre">/var/log/auth.log</span></code> with <code class="docutils literal notranslate"><span class="pre">content</span> <span class="pre">&#64;~</span> <span class="pre">&quot;\\\\A/var/log/auth&quot;</span></code>.
+<code class="docutils literal notranslate"><span class="pre">&#64;~</span></code> is a Groonga’s operator which executes a regular expression search, and <code class="docutils literal notranslate"><span class="pre">&quot;\\\\A/var/log/auth&quot;</span></code> executes prefix search, so it matches to only <code class="docutils literal notranslate"><span class="pre">/var/log/auth.log</span></code>. <code class="docutils literal notranslate"><span class="pre">/tmp/local/var/log/auth.log</span></code> doesn’t match because it doesn’t begin with “/var/log/auth”.</p>
+<p>See <a class="reference external" href="https://groonga.org/docs/reference/regular_expression.html#syntax">Groonga’s regular expression document</a> for more syntax details.</p>
+</section>
+<section id="logging">
+<h2><span class="section-number">4.3.13. </span>Logging<a class="headerlink" href="#logging" title="Link to this heading">#</a></h2>
+<p>Mroonga outputs the logs by default.</p>
+<p>Log files are located in MySQL’s data directory with the filename  <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code>.</p>
+<p>Here is the example of the log.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2010</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mf">39.209379</span><span class="o">|</span><span class="n">n</span><span class="o">|</span><span class="n">b1858f80</span><span class="o">|</span><span class="n">mroonga</span> <span class="mf">1.10</span> <span class="n">started</span><span class="o">.</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mf">44.934048</span><span class="o">|</span><span class="n">d</span><span class="o">|</span><span class="mi">46953940</span><span class="o">|</span><span class="nb">hash</span> <span class="n">get</span> <span class="ow">not</span> <span class="n">found</span> <span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">test</span><span class="p">)</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mf">44.936113</span><span class="o">|</span><span class="n">d</span><span class="o">|</span><span class="mi">46953940</span><span class="o">|</span><span class="nb">hash</span> <span class="n">put</span> <span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default log level is NOTICE, i.e. we have important information only and we don’t have debug information etc.).</p>
+<p>You can get the log level by <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="c1">-- +-------------------+--------+</span>
+<span class="c1">-- | Variable_name     | Value  |</span>
+<span class="c1">-- +-------------------+--------+</span>
+<span class="c1">-- | mroonga_log_level | NOTICE |</span>
+<span class="c1">-- +-------------------+--------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+
+<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_log_level</span><span class="o">=</span><span class="n">DUMP</span><span class="p">;</span>
+<span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
+
+<span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="c1">-- +-------------------+-------+</span>
+<span class="c1">-- | Variable_name     | Value |</span>
+<span class="c1">-- +-------------------+-------+</span>
+<span class="c1">-- | mroonga_log_level | DUMP  |</span>
+<span class="c1">-- +-------------------+-------+</span>
+<span class="c1">-- 1 row in set (0.00 sec)</span>
+</pre></div>
+</div>
+<p>Available log levels are the followings.</p>
+<ul class="simple">
+<li><p>NONE</p></li>
+<li><p>EMERG</p></li>
+<li><p>ALERT</p></li>
+<li><p>CRIT</p></li>
+<li><p>ERROR</p></li>
+<li><p>WARNING</p></li>
+<li><p>NOTICE</p></li>
+<li><p>INFO</p></li>
+<li><p>DEBUG</p></li>
+<li><p>DUMP</p></li>
+</ul>
+<p>See <a class="reference internal" href="../reference/server_variables.html#server-variable-mroonga-log-level"><span class="std std-ref">mroonga_log_level</span></a> about details.</p>
+<p>You can reopen the log file by FLUSH LOGS. If you want to rotate the log file without stopping MySQL server, you can do in the following procedure.</p>
+<ol class="arabic simple">
+<li><p>change the file name of <code class="docutils literal notranslate"><span class="pre">groonga.log</span></code> (by using OS’s mv command etc.).</p></li>
+<li><p>invoke “FLUSH LOGS” in MySQL server (by mysql command or mysqladmin command).</p></li>
+</ol>
+</section>
+<section id="next-step">
+<h2><span class="section-number">4.3.14. </span>Next step<a class="headerlink" href="#next-step" title="Link to this heading">#</a></h2>
+<p>Now, you can use Mroonga as storage mode! If you want Mroonga to be
+faster, see also <a class="reference internal" href="../reference/optimizations.html"><span class="doc">Optimizations</span></a>.</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="score" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/ja/fulltext-search.html">MySQL 5.1 Reference Manual :: 11 Functions and Operations :: 11.7 Full-Text Search Functions</a></p>
+</aside>
+<aside class="footnote brackets" id="parser" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>In Groonga, we call it a ‘tokenizer’.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mode.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4.2. </span>Mode</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="wrapper.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4.4. </span>Wrapper mode</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-full-text-search">4.3.1. How to use full text search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-search-score">4.3.2. How to get search score</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-the-parser-for-full-text-search">4.3.3. How to specify the parser for full text search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-the-normalizer">4.3.4. How to specify the normalizer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-the-token-filters">4.3.5. How to specify the token filters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-specify-groonga-s-column-flags">4.3.6. How to specify Groonga’s column flags</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-geolocation-search">4.3.7. How to use geolocation search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-the-record-id">4.3.8. How to get the record ID</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-snippet-keyword-in-context">4.3.9. How to get snippet (Keyword in context)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-similar-search">4.3.10. How to use similar search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-run-groonga-command">4.3.11. How to run Groonga command</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-search-by-regular-expression">4.3.12. How to search by regular expression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging">4.3.13. Logging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-step">4.3.14. Next step</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/tutorial/storage.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

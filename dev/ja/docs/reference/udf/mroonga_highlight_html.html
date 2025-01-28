@@ -1,0 +1,672 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.5.3. mroonga_highlight_html() &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=84933602"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=4755f45a"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/udf/mroonga_highlight_html';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'japanese';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="5.5.4. mroonga_last_insert_grn_id()" href="mroonga_last_insert_grn_id.html" />
+    <link rel="prev" title="5.5.2. mroonga_escape()" href="mroonga_escape.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="サイトナビゲーション">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/ja/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="このページでは">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/ja/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="セクションナビゲーション">
+  <p class="bd-links__title" role="heading" aria-level="1">セクションナビゲーション</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimizations.html">5.1. 最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql_commands.html">5.2. SQLコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server_variables.html">5.3. サーバ変数の一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status_variables.html">5.4. ステータス変数の一覧</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../udf.html">5.5. UDF (ユーザ定義関数)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mroonga_command.html">5.5.1. <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mroonga_escape.html">5.5.2. <code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.5.3. <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mroonga_last_insert_grn_id.html">5.5.4. <code class="docutils literal notranslate"><span class="pre">mroonga_last_insert_grn_id()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mroonga_normalize.html">5.5.5. <code class="docutils literal notranslate"><span class="pre">mroonga_normalize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mroonga_snippet.html">5.5.6. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mroonga_snippet_html.html">5.5.7. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../limitations.html">5.6. 制限事項</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../full_text_search.html">5.7. 全文検索</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../full_text_search/boolean_mode.html">5.7.1. ブーリアンモード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../full_text_search/scoring.html">5.7.2. Mroongaにおける検索スコア</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="パンくずリスト" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="ホーム">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../reference.html" class="nav-link"><span class="section-number">5. </span>リファレンス</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../udf.html" class="nav-link"><span class="section-number">5.5. </span>UDF (ユーザ定義関数)</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="mroonga-highlight-html">
+<h1><span class="section-number">5.5.3. </span><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code><a class="headerlink" href="#mroonga-highlight-html" title="Link to this heading">#</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 7.05.</span></p>
+</div>
+<section id="summary">
+<h2><span class="section-number">5.5.3.1. </span>概要<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code> は対象のテキストの中の指定されたキーワードをハイライトします。各キーワードを <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;...&lt;/span&gt;</span></code> で囲み、<code class="docutils literal notranslate"><span class="pre">&lt;</span></code> や <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> といったHTMLの特殊文字をエスケープします。この関数の結果は、安全なHTMLとして使うことができます。</p>
+</section>
+<section id="syntax">
+<h2><span class="section-number">5.5.3.2. </span>構文<a class="headerlink" href="#syntax" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code> には必須引数と省略可能引数とがあります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">query</span> <span class="n">AS</span> <span class="n">query</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+<span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">keywordN</span><span class="p">,</span> <span class="n">open_tag</span> <span class="n">AS</span> <span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span> <span class="n">AS</span> <span class="n">close_tag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> はとても重要です。クエリーを使ってキーワードを抽出する場合に指定する必要があります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">open_tag</span></code> と <code class="docutils literal notranslate"><span class="pre">close_tag</span></code> は省略可能です。ハイライトに使用するタグを指定することができます。</p>
+</section>
+<section id="usage">
+<h2><span class="section-number">5.5.3.3. </span>使いかた<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<p>以下は'mroonga OR groonga'というクエリーによって、対象テキストの中の'mroonga'と'groonga'をハイライトする例です。 <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> を指定する必要があります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;mroonga OR groonga&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">)</span> <span class="n">AS</span> <span class="n">highlighted</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>実行結果はこちらです。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">highlighted</span>                                                                                            <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Mroonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Groonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">based</span> <span class="n">storage</span> <span class="n">engine</span><span class="o">.</span> <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>'mroonga'と'groonga'というキーワードで対象となるテキストのハイライトをするクエリーです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;mroonga&#39;</span><span class="p">,</span> <span class="s1">&#39;groonga&#39;</span><span class="p">)</span> <span class="n">AS</span> <span class="n">highlighted</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>実行結果はこちらです。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">highlighted</span>                                                                                            <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Mroonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;keyword&quot;</span><span class="o">&gt;</span><span class="n">Groonga</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">based</span> <span class="n">storage</span> <span class="n">engine</span><span class="o">.</span> <span class="o">|</span>
+<span class="o">+--------------------------------------------------------------------------------------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="parameters">
+<h2><span class="section-number">5.5.3.4. </span>引数<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h2>
+<section id="required-parameters">
+<h3><span class="section-number">5.5.3.4.1. </span>必須引数<a class="headerlink" href="#required-parameters" title="Link to this heading">#</a></h3>
+<p>必須引数が1つあります。</p>
+<section id="text">
+<h4><span class="section-number">5.5.3.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">text</span></code><a class="headerlink" href="#text" title="Link to this heading">#</a></h4>
+<p>ハイライトされるカラム名もしくは文字列が必要です。</p>
+</section>
+</section>
+<section id="optional-parameters">
+<h3><span class="section-number">5.5.3.4.2. </span>省略可能引数<a class="headerlink" href="#optional-parameters" title="Link to this heading">#</a></h3>
+<p>いくつか省略可能な引数があります。</p>
+<section id="query">
+<h4><span class="section-number">5.5.3.4.2.1. </span><code class="docutils literal notranslate"><span class="pre">query</span></code><a class="headerlink" href="#query" title="Link to this heading">#</a></h4>
+<p>詳細は <a class="reference external" href="https://groonga.org/ja/docs/reference/grn_expr/query_syntax.html">Groongaのクエリー構文</a> を参照してください。</p>
+<p>クエリーを使ってキーワードを抽出するには、以下のように <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> を指定する必要があります。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;mroonga OR groonga&#39;</span> <span class="n">AS</span> <span class="n">query</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="keyword">
+<h4><span class="section-number">5.5.3.4.2.2. </span><code class="docutils literal notranslate"><span class="pre">keyword</span></code><a class="headerlink" href="#keyword" title="Link to this heading">#</a></h4>
+<p>ハイライトする0個以上のキーワードを指定します。</p>
+</section>
+<section id="open-tag">
+<h4><span class="section-number">5.5.3.4.2.3. </span><code class="docutils literal notranslate"><span class="pre">open_tag</span></code><a class="headerlink" href="#open-tag" title="Link to this heading">#</a></h4>
+<p>ハイライトの開始タグを指定します。</p>
+<p>このパラメーターを指定するには、以下のように <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">open_tag</span></code> を指定する必要があります。</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span>
+<span class="w">                              </span><span class="s1">&#39;&lt;span class=&quot;my-class&quot;&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span>
+
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                                                |</span>
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;span class=&quot;my-class&quot;&gt;Groonga&lt;/span&gt; based storage engine. |</span>
+<span class="c1">-- +----------------------------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;</span></code> です。</p>
+</section>
+<section id="close-tag">
+<h4><span class="section-number">5.5.3.4.2.4. </span><code class="docutils literal notranslate"><span class="pre">close_tag</span></code><a class="headerlink" href="#close-tag" title="Link to this heading">#</a></h4>
+<p>ハイライトの終了タグを指定します。</p>
+<p>このパラメーターを指定するには、以下のように <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">close_tag</span></code> を指定する必要があります。</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span>
+<span class="w">                              </span><span class="s1">&#39;&lt;mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;/mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">close_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span>
+
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | highlighted                                               |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+<span class="c1">-- | Mroonga is the &lt;mark&gt;Groonga&lt;/mark&gt; based storage engine. |</span>
+<span class="c1">-- +-----------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>デフォルト値は <code class="docutils literal notranslate"><span class="pre">&lt;/span&gt;</span></code> です。</p>
+</section>
+</section>
+</section>
+<section id="return-value">
+<h2><span class="section-number">5.5.3.5. </span>返り値<a class="headerlink" href="#return-value" title="Link to this heading">#</a></h2>
+<p>ハイライトされたHTMLを返します。省略可能な引数が指定されない場合、<code class="docutils literal notranslate"><span class="pre">text</span></code> に含まれるHTMLの特殊文字 <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> や <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> をエスケープします。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mroonga_escape.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">5.5.2. </span><code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mroonga_last_insert_grn_id.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">5.5.4. </span><code class="docutils literal notranslate"><span class="pre">mroonga_last_insert_grn_id()</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> このページでは
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">5.5.3.1. 概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">5.5.3.2. 構文</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">5.5.3.3. 使いかた</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">5.5.3.4. 引数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#required-parameters">5.5.3.4.1. 必須引数</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#text">5.5.3.4.1.1. <code class="docutils literal notranslate"><span class="pre">text</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-parameters">5.5.3.4.2. 省略可能引数</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#query">5.5.3.4.2.1. <code class="docutils literal notranslate"><span class="pre">query</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword">5.5.3.4.2.2. <code class="docutils literal notranslate"><span class="pre">keyword</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#open-tag">5.5.3.4.2.3. <code class="docutils literal notranslate"><span class="pre">open_tag</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#close-tag">5.5.3.4.2.4. <code class="docutils literal notranslate"><span class="pre">close_tag</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-value">5.5.3.5. 返り値</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1 で構築されています。
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

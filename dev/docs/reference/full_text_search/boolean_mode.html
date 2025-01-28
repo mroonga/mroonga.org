@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.7.1. Boolean mode &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=b564a256"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/full_text_search/boolean_mode';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.7.2. Search and Scoring in Mroonga" href="scoring.html" />
+    <link rel="prev" title="5.7. Full text search" href="../full_text_search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimizations.html">5.1. Optimizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql_commands.html">5.2. SQL commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server_variables.html">5.3. Server variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status_variables.html">5.4. Status variables</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../udf.html">5.5. UDF (User Defined Functions)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_command.html">5.5.1. <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_escape.html">5.5.2. <code class="docutils literal notranslate"><span class="pre">mroonga_escape()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_highlight_html.html">5.5.3. <code class="docutils literal notranslate"><span class="pre">mroonga_highlight_html()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_last_insert_grn_id.html">5.5.4. <code class="docutils literal notranslate"><span class="pre">mroonga_last_insert_grn_id()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_normalize.html">5.5.5. <code class="docutils literal notranslate"><span class="pre">mroonga_normalize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_snippet.html">5.5.6. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../udf/mroonga_snippet_html.html">5.5.7. <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../limitations.html">5.6. Limitations</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../full_text_search.html">5.7. Full text search</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.7.1. Boolean mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scoring.html">5.7.2. Search and Scoring in Mroonga</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../reference.html" class="nav-link"><span class="section-number">5. </span>Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../full_text_search.html" class="nav-link"><span class="section-number">5.7. </span>Full text search</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">5.7.1. </span>Boolean mode</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="boolean-mode">
+<h1><span class="section-number">5.7.1. </span>Boolean mode<a class="headerlink" href="#boolean-mode" title="Link to this heading">#</a></h1>
+<section id="summary">
+<h2><span class="section-number">5.7.1.1. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Mroonga can perform boolean full text searches using the <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> modifier for <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">...</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Normally, <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> is suitable rather than the default <code class="docutils literal notranslate"><span class="pre">IN</span>
+<span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></code>. Because <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> is similar to
+query in Web search engine. Most people familiar with query in Web
+search engine.</p>
+<p>You can use <a class="reference external" href="https://dev.mysql.com/doc/refman/5.7/en/fulltext-boolean.html">qualifiers which MySQL support</a> and
+Mroonga original pragmas in boolean full text search query.</p>
+<p>These qualifiers and pragmas can change the relative rank of search
+results.</p>
+<p>In the case of a search string not using neither a qualifier nor a
+pragma, the search results that contain the search string will be
+rated higher.</p>
+</section>
+<section id="usage">
+<h2><span class="section-number">5.7.1.2. </span>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<p>Here are schema and data to show examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE books (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX title_index (title)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO books (title) VALUES (&#39;Professional MySQL&#39;);
+INSERT INTO books (title) VALUES (&#39;MySQL for Professional&#39;);
+INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
+</pre></div>
+</div>
+</section>
+<section id="qualifier">
+<span id="boolean-mode-qualifier"></span><h2><span class="section-number">5.7.1.3. </span>Qualifier<a class="headerlink" href="#qualifier" title="Link to this heading">#</a></h2>
+<p>Here are supported qualifiers.</p>
+<section id="keyword1-keyword2">
+<span id="boolean-mode-qualifier-none"></span><h3><span class="section-number">5.7.1.3.1. </span><code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-keyword2" title="Link to this heading">#</a></h3>
+<p>No operator between keywords such as <code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code> indicates
+that one of keywords must be present in each row that is returned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> query means that <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span></code> must be
+present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="keyword1-or-keyword2">
+<span id="boolean-mode-qualifier-or"></span><h3><span class="section-number">5.7.1.3.2. </span><code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code><a class="headerlink" href="#keyword1-or-keyword2" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">OR</span></code> (must be uppercase) indicates that left hand side keyword or
+right hand side keyword must be present in each row that is returned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> query means that <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span></code> must be
+present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga OR for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">OR</span></code> is the default operator. You can omit it. Both <code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span>
+<span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> return the same result.</p>
+</section>
+<section id="keyword">
+<span id="boolean-mode-qualifier-plus"></span><h3><span class="section-number">5.7.1.3.3. </span><code class="docutils literal notranslate"><span class="pre">+KEYWORD</span></code><a class="headerlink" href="#keyword" title="Link to this heading">#</a></h3>
+<p>A leading plus sign indicates that this word must be present in each
+row that is returned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">+Mroonga</span></code> query means that both <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> and <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code>
+must be present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="boolean-mode-qualifier-minus">
+<span id="id1"></span><h3><span class="section-number">5.7.1.3.4. </span><code class="docutils literal notranslate"><span class="pre">-KEYWORD</span></code><a class="headerlink" href="#boolean-mode-qualifier-minus" title="Link to this heading">#</a></h3>
+<p>A leading minus sign indicates that this word must not be present in
+any of the rows that are returned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">-Mroonga</span></code> query means that <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> must be present but
+<code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> must not be present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL -Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="prefix">
+<span id="boolean-mode-qualifier-asterisk"></span><h3><span class="section-number">5.7.1.3.5. </span><code class="docutils literal notranslate"><span class="pre">PREFIX*</span></code><a class="headerlink" href="#prefix" title="Link to this heading">#</a></h3>
+<p>A following asterisk indicates that all words starting with this word
+must be present in any of the rows that are returned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">+M*</span></code> query means that words starting <code class="docutils literal notranslate"><span class="pre">M</span></code> (<code class="docutils literal notranslate"><span class="pre">MySQL</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> in this case) must be present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+M*&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To be precise, “word” may not be “word” you think. “word” in this
+context is “token”. “token” may not be word. For example, tokens in
+“It’s” are “It”, “’” and “s”.</p>
+<p>You can confirm token by <a class="reference internal" href="../udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> and
+<a class="reference external" href="https://groonga.org/docs/reference/commands/tokenize.html">tokenize</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="p">[</span>                                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;IT&quot;</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;S&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>   <span class="p">}</span>                                                                      <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="p">]</span>                                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>JSON value in the above result is formatted by hand.</p>
+</div>
+</section>
+<section id="phrase">
+<span id="boolean-mode-qualifier-double-quote"></span><h3><span class="section-number">5.7.1.3.6. </span><code class="docutils literal notranslate"><span class="pre">&quot;PHRASE&quot;</span></code><a class="headerlink" href="#phrase" title="Link to this heading">#</a></h3>
+<p>Quoting phrase by double quote (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>) indicates that the phrase must
+be present in any of the rows that are returned.</p>
+<p><code class="docutils literal notranslate"><span class="pre">+&quot;Professional</span> <span class="pre">MySQL&quot;</span></code> query means that <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code>
+phrase must be present. The query doesn’t match to <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span>
+<span class="pre">Profession</span></code>. <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> includes both <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Professional</span></code> words but doesn’t include <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code>
+phrase:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+&quot;Professional MySQL&quot;&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>              <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+--------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="subexpression">
+<span id="boolean-mode-qualifier-parentheses"></span><h3><span class="section-number">5.7.1.3.7. </span><code class="docutils literal notranslate"><span class="pre">(SUBEXPRESSION...)</span></code><a class="headerlink" href="#subexpression" title="Link to this heading">#</a></h3>
+<p>Parentheses groups expressions.</p>
+<p><code class="docutils literal notranslate"><span class="pre">+(Groonga</span> <span class="pre">OR</span> <span class="pre">Mroonga)</span> <span class="pre">+MySQL</span></code> query means the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Groonga</span></code> or <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> must be present.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MySQL</span></code> must be present.</p></li>
+</ul>
+</div></blockquote>
+<p>Here is the result of the query:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+  <span class="n">FROM</span> <span class="n">books</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+(Groonga OR Mroonga) +MySQL&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pragma">
+<span id="boolean-mode-pragma"></span><h2><span class="section-number">5.7.1.4. </span>Pragma<a class="headerlink" href="#pragma" title="Link to this heading">#</a></h2>
+<p>Pragma is metadata for query. You can change how to parse query by
+specifying pragma.</p>
+<p>You can embed pragma at the head of query for specifying how to
+execute.</p>
+<p>Pragma must exist in the beginning of a query. Don’t put a blank into
+a head of the query. Pragma starts with <code class="docutils literal notranslate"><span class="pre">*</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can specify multiple pragmas:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA1PRAGMA2 ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here are available pragmas.</p>
+<section id="d-pragma">
+<span id="boolean-mode-pragma-d"></span><h3><span class="section-number">5.7.1.4.1. </span><code class="docutils literal notranslate"><span class="pre">D</span></code> pragma<a class="headerlink" href="#d-pragma" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">D</span></code> pragma indicates the default operator. It’s used when an
+individual operator is omitted.</p>
+<p>Here is the <code class="docutils literal notranslate"><span class="pre">D</span></code> pragma syntax. You can choose one of <code class="docutils literal notranslate"><span class="pre">OR</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>
+or <code class="docutils literal notranslate"><span class="pre">-</span></code> as <code class="docutils literal notranslate"><span class="pre">${OPERATOR}</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*D${OPERATOR}
+</pre></div>
+</div>
+<section id="dor">
+<span id="boolean-mode-pragma-d-or"></span><h4><span class="section-number">5.7.1.4.1.1. </span><code class="docutils literal notranslate"><span class="pre">DOR</span></code><a class="headerlink" href="#dor" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">DOR</span></code> means that “or” is used as the default operator.</p>
+<p>This is the default.</p>
+<p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">DOR</span></code>. <code class="docutils literal notranslate"><span class="pre">'*DOR</span> <span class="pre">for</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> returns records that includes <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*DOR for Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span>    <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="d">
+<span id="boolean-mode-pragma-d-plus"></span><h4><span class="section-number">5.7.1.4.1.2. </span><code class="docutils literal notranslate"><span class="pre">D+</span></code><a class="headerlink" href="#d" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">D+</span></code> means that “and” is used as the default operator. It’s similar
+to query in Web search engine.</p>
+<p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">D+</span></code>. <code class="docutils literal notranslate"><span class="pre">'*D+</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> returns records that includes <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> and <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D+ MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">=</span> <span class="n">MySQL</span> <span class="o">+</span> <span class="n">Groonga</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="boolean-mode-pragma-d-minus">
+<span id="id2"></span><h4><span class="section-number">5.7.1.4.1.3. </span><code class="docutils literal notranslate"><span class="pre">D-</span></code><a class="headerlink" href="#boolean-mode-pragma-d-minus" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">D-</span></code> means that “not” is used as the default operator.</p>
+<p>Here is an example to use <code class="docutils literal notranslate"><span class="pre">D-</span></code>. <code class="docutils literal notranslate"><span class="pre">'*D-</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span>
+<span class="pre">MODE</span></code> returns records that includes <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> but doesn’t include
+<code class="docutils literal notranslate"><span class="pre">Mroonga</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
+ <span class="n">FROM</span> <span class="n">books</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D- MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="o">+------------------------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Professional</span> <span class="n">MySQL</span>     <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span> <span class="k">for</span> <span class="n">Professional</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------------------------+</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="w-pragma">
+<span id="boolean-mode-pragma-w"></span><h3><span class="section-number">5.7.1.4.2. </span><code class="docutils literal notranslate"><span class="pre">W</span></code> pragma<a class="headerlink" href="#w-pragma" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">W</span></code> pragma indicates target section and its weight for multiple
+column index.</p>
+<p>You can specify different weight for each section. The default weight
+is <code class="docutils literal notranslate"><span class="pre">1</span></code>. <code class="docutils literal notranslate"><span class="pre">1</span></code> means that no weight.</p>
+<p>Here is the <code class="docutils literal notranslate"><span class="pre">W</span></code> pragma syntax. <code class="docutils literal notranslate"><span class="pre">${SECTION}</span></code> is a number that is
+begun not from 0 but from 1. <code class="docutils literal notranslate"><span class="pre">${WEIGHT}</span></code> is omitable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*W[${SECTION1}[:${WEIGHT1}]][,${SECTION2}[:${WEIGHT2}]][,...]
+</pre></div>
+</div>
+<p>Here are schema and data to show examples. You need to create a
+multiple column index to use <code class="docutils literal notranslate"><span class="pre">W</span></code> pragma:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE memos (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` text,
+  `content` text,
+  PRIMARY KEY(`id`),
+  FULLTEXT INDEX text_index (title, content)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO memos (title, content) VALUES (
+  &#39;MySQL&#39;, &#39;MySQL is a RDBMS.&#39;
+);
+INSERT INTO memos (title, content) VALUES (
+  &#39;Groonga&#39;, &#39;Groonga is a full text search engine.&#39;
+);
+INSERT INTO memos (title, content) VALUES (
+  &#39;Mroonga&#39;, &#39;Mroonga is a storage engine for MySQL based on Groonga.&#39;
+);
+</pre></div>
+</div>
+<p>Here is an example to show how to use weight. <code class="docutils literal notranslate"><span class="pre">title</span></code> column has
+<code class="docutils literal notranslate"><span class="pre">10</span></code> weight and <code class="docutils literal notranslate"><span class="pre">content</span></code> columns has <code class="docutils literal notranslate"><span class="pre">1</span></code> weight. It means that
+keyword in <code class="docutils literal notranslate"><span class="pre">title</span></code> column is 10 times important than keyword in
+<code class="docutils literal notranslate"><span class="pre">content</span></code> column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span><span class="p">,</span>
+       <span class="n">content</span><span class="p">,</span>
+       <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*W1:10,2:1 +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+  <span class="n">FROM</span> <span class="n">memos</span><span class="p">;</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">title</span>   <span class="o">|</span> <span class="n">content</span>                                                <span class="o">|</span> <span class="n">score</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">MySQL</span>   <span class="o">|</span> <span class="n">MySQL</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">RDBMS</span><span class="o">.</span>                                      <span class="o">|</span>     <span class="mi">0</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Groonga</span> <span class="o">|</span> <span class="n">Groonga</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">full</span> <span class="n">text</span> <span class="n">search</span> <span class="n">engine</span><span class="o">.</span>                  <span class="o">|</span>    <span class="mi">11</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="o">|</span> <span class="n">Mroonga</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">storage</span> <span class="n">engine</span> <span class="k">for</span> <span class="n">MySQL</span> <span class="n">based</span> <span class="n">on</span> <span class="n">Groonga</span> <span class="o">|</span>     <span class="mi">1</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
+</pre></div>
+</div>
+<p>The score of the first record is <code class="docutils literal notranslate"><span class="pre">0</span></code>. Because it doesn’t have any
+<code class="docutils literal notranslate"><span class="pre">Groonga</span></code> in both <code class="docutils literal notranslate"><span class="pre">title</span></code> column and <code class="docutils literal notranslate"><span class="pre">content</span></code> column.</p>
+<p>The score of the second record is <code class="docutils literal notranslate"><span class="pre">11</span></code>. Because it has <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> in
+both <code class="docutils literal notranslate"><span class="pre">title</span></code> column and <code class="docutils literal notranslate"><span class="pre">content</span></code> column. <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> in <code class="docutils literal notranslate"><span class="pre">title</span></code>
+column has score <code class="docutils literal notranslate"><span class="pre">10</span></code>. <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> in <code class="docutils literal notranslate"><span class="pre">content</span></code> column has score
+<code class="docutils literal notranslate"><span class="pre">1</span></code>. <code class="docutils literal notranslate"><span class="pre">11</span></code> is sum of them.</p>
+<p>The score of the third record is <code class="docutils literal notranslate"><span class="pre">1</span></code>. Because it has <code class="docutils literal notranslate"><span class="pre">Groonga</span></code> in
+only <code class="docutils literal notranslate"><span class="pre">content</span></code> column. <code class="docutils literal notranslate"><span class="pre">`Groonga</span></code> in <code class="docutils literal notranslate"><span class="pre">content</span></code> column has score
+<code class="docutils literal notranslate"><span class="pre">1</span></code>. So the score of the record is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</section>
+<section id="s-pragma">
+<span id="boolean-mode-pragma-s"></span><h3><span class="section-number">5.7.1.4.3. </span><code class="docutils literal notranslate"><span class="pre">S</span></code> pragma<a class="headerlink" href="#s-pragma" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">S</span></code> pragma indicates syntax of the query.</p>
+<p>Here is a syntax of <code class="docutils literal notranslate"><span class="pre">S</span></code> pragma:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*S${SYNTAX}
+</pre></div>
+</div>
+<p>Here is a list of available <code class="docutils literal notranslate"><span class="pre">syntax</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: <a class="reference external" href="https://groonga.org/docs/reference/grn_expr/script_syntax.html">Script syntax</a></p></li>
+</ul>
+</div></blockquote>
+<section id="ss">
+<span id="boolean-mode-pragma-ss"></span><h4><span class="section-number">5.7.1.4.3.1. </span><code class="docutils literal notranslate"><span class="pre">*SS</span></code><a class="headerlink" href="#ss" title="Link to this heading">#</a></h4>
+<p>You can use <a class="reference external" href="https://groonga.org/docs/reference/grn_expr/script_syntax.html">script syntax</a> by
+<code class="docutils literal notranslate"><span class="pre">*SS</span></code> pragma. You can use full Groonga search features in script
+syntax.</p>
+<p>Here are schema and data to show example of script syntax usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE comments (
+  `content` text,
+  FULLTEXT INDEX content_index (content)
+) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO comments VALUES (
+  &#39;A student started to use Mroonga storage engine. It is very fast!&#39;
+);
+INSERT INTO comments VALUES (
+  &#39;Another student also started to use Mroonga storage engine. It is very fast!&#39;
+);
+</pre></div>
+</div>
+<p>Here is an example to use <a class="reference external" href="https://groonga.org/docs/reference/grn_expr/script_syntax.html#near-search-operator">near search</a> by script syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT content,
+       MATCH (content) AGAINST(&#39;*SS content *N &quot;student fast&quot;&#39; IN BOOLEAN MODE) AS score
+  FROM comments;
+-- +------------------------------------------------------------------------------+-------+
+-- | content                                                                      | score |
+-- +------------------------------------------------------------------------------+-------+
+-- | A student started to use Mroonga storage engine. It is very fast!            |     1 |
+-- | Another student also started to use Mroonga storage engine. It is very fast! |     0 |
+-- +------------------------------------------------------------------------------+-------+
+</pre></div>
+</div>
+<p>Near search matches only when there are 10 or less words between
+specified words (<code class="docutils literal notranslate"><span class="pre">student</span></code> and <code class="docutils literal notranslate"><span class="pre">fast</span></code> in this case). So <code class="docutils literal notranslate"><span class="pre">student</span>
+<span class="pre">started</span> <span class="pre">...(8</span> <span class="pre">words)...</span> <span class="pre">very</span> <span class="pre">fast</span></code> is matched but <code class="docutils literal notranslate"><span class="pre">student</span> <span class="pre">also</span>
+<span class="pre">started</span> <span class="pre">...(8</span> <span class="pre">words)...</span> <span class="pre">very</span> <span class="pre">fast</span></code> isn’t matched.</p>
+<p>You can also use other advanced features.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../full_text_search.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5.7. </span>Full text search</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="scoring.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.7.2. </span>Search and Scoring in Mroonga</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">5.7.1.1. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">5.7.1.2. Usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qualifier">5.7.1.3. Qualifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword1-keyword2">5.7.1.3.1. <code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">KEYWORD2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword1-or-keyword2">5.7.1.3.2. <code class="docutils literal notranslate"><span class="pre">KEYWORD1</span> <span class="pre">OR</span> <span class="pre">KEYWORD2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword">5.7.1.3.3. <code class="docutils literal notranslate"><span class="pre">+KEYWORD</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-mode-qualifier-minus">5.7.1.3.4. <code class="docutils literal notranslate"><span class="pre">-KEYWORD</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefix">5.7.1.3.5. <code class="docutils literal notranslate"><span class="pre">PREFIX*</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phrase">5.7.1.3.6. <code class="docutils literal notranslate"><span class="pre">"PHRASE"</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subexpression">5.7.1.3.7. <code class="docutils literal notranslate"><span class="pre">(SUBEXPRESSION...)</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pragma">5.7.1.4. Pragma</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-pragma">5.7.1.4.1. <code class="docutils literal notranslate"><span class="pre">D</span></code> pragma</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dor">5.7.1.4.1.1. <code class="docutils literal notranslate"><span class="pre">DOR</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d">5.7.1.4.1.2. <code class="docutils literal notranslate"><span class="pre">D+</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-mode-pragma-d-minus">5.7.1.4.1.3. <code class="docutils literal notranslate"><span class="pre">D-</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#w-pragma">5.7.1.4.2. <code class="docutils literal notranslate"><span class="pre">W</span></code> pragma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s-pragma">5.7.1.4.3. <code class="docutils literal notranslate"><span class="pre">S</span></code> pragma</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ss">5.7.1.4.3.1. <code class="docutils literal notranslate"><span class="pre">*SS</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/reference/full_text_search/boolean_mode.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

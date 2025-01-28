@@ -1,0 +1,817 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>News - 1 series &#8212; Mroonga v14.13 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=b564a256"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-7532323-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'news/1';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mroonga.org/docs/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'english';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="14.13" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://mroonga.org/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v14.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v14.13 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mroonga/mroonga" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/groonga" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/blog" title="Blog" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-blog fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">News - 1 series</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="news-1-series">
+<h1>News - 1 series<a class="headerlink" href="#news-1-series" title="Link to this heading">#</a></h1>
+<section id="release-1-20-2012-01-29">
+<span id="release-1-20"></span><h2>Release 1.20 - 2012/01/29<a class="headerlink" href="#release-1-20-2012-01-29" title="Link to this heading">#</a></h2>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This release breaks backward compatibility. We need to
+dump and restore our database for upgrading.</p>
+</div>
+<p>In this release, mroonga has two changes that requires
+database recreation:</p>
+<ol class="arabic simple">
+<li><p>Storage engine name is changed to “mroonga” from “groonga”.</p></li>
+<li><p>Groonga’s native time data type is used for DATE, DATETIME
+and TIMESTAMP type in MySQL.</p></li>
+</ol>
+<p>We need to modify dumped database to change “ENGINE=groonga”
+in “CREATE TABLE” SQL. Here are upgrade sequence.</p>
+<p>We dump a database that uses mroonga:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysqldump</span> <span class="n">MY_MROONGA_DATABASE</span> <span class="o">&gt;</span> <span class="n">database</span><span class="o">-</span><span class="n">groonga</span><span class="o">.</span><span class="n">dump</span>
+</pre></div>
+</div>
+<p>We convert storage engine in dump file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39;</span> <span class="n">database</span><span class="o">-</span><span class="n">groonga</span><span class="o">.</span><span class="n">dump</span> <span class="o">&gt;</span> <span class="n">database</span><span class="o">-</span><span class="n">mroonga</span><span class="o">.</span><span class="n">dump</span>
+</pre></div>
+</div>
+<p>We confirm that <code class="docutils literal notranslate"><span class="pre">ENGINE=groonga</span></code> only in <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>
+is replaced with <code class="docutils literal notranslate"><span class="pre">ENGINE=mroonga</span></code>. We need to check <code class="docutils literal notranslate"><span class="pre">&#64;&#64;</span>
+<span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> line includes <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>. If the line
+includes <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>, the hunk will be a change for
+<code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% diff -up database-groonga.dump database-mroonga.dump
+--- database-groonga.dump     2012-01-29 16:53:20.732624670 +0900
++++ database-mroonga.dump     2012-01-29 16:54:47.608420981 +0900
+@@ -29,7 +29,7 @@ CREATE TABLE `diaries` (
+   PRIMARY KEY (`id`),
+   FULLTEXT KEY `title_index` (`title`),
+   FULLTEXT KEY `body_index` (`body`)
+-) ENGINE=groonga DEFAULT CHARSET=utf8;
++) ENGINE=mroonga DEFAULT CHARSET=utf8;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+</pre></div>
+</div>
+<p>We drop the existing database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;DROP DATABASE MY_MROONGA_DATABASE&#39;</span>
+</pre></div>
+</div>
+<p>We upgrade to “mroonga” storage engine. We will use
+<code class="docutils literal notranslate"><span class="pre">apt-get</span></code> on Debian GNU/Linux or Ubuntu and <code class="docutils literal notranslate"><span class="pre">yum</span></code> on
+CentOS or Fedora.</p>
+<p>apt-get:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mroonga</span>
+</pre></div>
+</div>
+<p>yum:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">remove</span> <span class="o">-</span><span class="n">y</span> <span class="n">mysql</span><span class="o">-</span><span class="n">mroonga</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mysql</span><span class="o">-</span><span class="n">mroonga</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>We don’t forget to run <code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">remove</span></code> before <code class="docutils literal notranslate"><span class="pre">yum</span>
+<span class="pre">install</span></code>. If we forget to run <code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">remove</span></code>, we will break
+a MySQL’s system table.</p>
+</div>
+<p>We recreate a database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;</span>
+</pre></div>
+</div>
+<p>We restore a database by modified dump file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">MY_MROONGA_DATABASE</span> <span class="o">&lt;</span> <span class="n">database</span><span class="o">-</span><span class="n">mroonga</span><span class="o">.</span><span class="n">dump</span>
+</pre></div>
+</div>
+<p>Now, we can use mroonga 1.20.</p>
+<section id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Supported MySQL 5.5.20.</p></li>
+<li><p>Supported MySQL 5.1.61.</p></li>
+<li><p>Required groonga 1.3.0 or later.</p></li>
+<li><p>[incompatible] Changed storage engine name to “mroonga” from “groonga”.</p></li>
+<li><p>Supported UTF8_BIN collate. [#1150]</p></li>
+<li><p>Disabled strict-aliasing warnings. [Reported by &#64;issm]</p></li>
+<li><p>Supported decimal. [#1249] [Reported by &#64;Kiske]</p></li>
+<li><p>[storage mode] Supported HA_KEYREAD_ONLY. It will improve
+column value access in index. [#1212]</p></li>
+<li><p>[storage mode] Supported float value in multiple column index.</p></li>
+<li><p>[storage mode] Supported double value in multiple column index.</p></li>
+<li><p>[storage mode] Mapped enum and set types to more suitable
+groonga data types.</p></li>
+<li><p>[wrapper mode] Supported REPAIR TABLE.</p></li>
+<li><p>[storage mode] Supported <code class="docutils literal notranslate"><span class="pre">count(*)</span></code> on view. [#1255]
+[Reported by Takahiro Nagai]</p></li>
+<li><p>[incompatible] Groonga’s native time value is used for
+DATE, DATETIME and TIMESTAMP type values.</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[debian] Fixed wrong mysql-server-groonga version in
+replaces and breaks. [Reported by &#64;ytaka5]</p></li>
+<li><p>[doc] Fixed wrong execution result. [Reported by Hidekazu Tanaka]</p></li>
+<li><p>[wrapper mode] Fixed a memory leak. [Reported by montywi]</p></li>
+</ul>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>&#64;ytaka5</p></li>
+<li><p>Hidekazu Tanaka</p></li>
+<li><p>&#64;issm</p></li>
+<li><p>montywi</p></li>
+<li><p>&#64;Kiske</p></li>
+</ul>
+</section>
+</section>
+<section id="release-1-11-2011-12-29">
+<span id="release-1-11"></span><h2>Release 1.11 - 2011/12/29<a class="headerlink" href="#release-1-11-2011-12-29" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Supported MySQL 5.5.19.</p></li>
+<li><p>Supported MySQL 5.6.4.</p></li>
+<li><p>Dropped MySQL 5.6.3 support.</p></li>
+<li><p>Supported Fedora 16.</p></li>
+<li><p>Dropped Fedora 15 support.</p></li>
+<li><p>Suppress strict-aliasing warnings. [groonga-dev,00659]
+[Reported by Kazuhiko Shiozaki]</p></li>
+<li><p>Supported utf8, binary, ascii, latin1, cp932, sjis,
+eucjpms, ujis and koi8r charset. [#1160] [Reported by nobody]</p></li>
+<li><p>[wrapper mode] Improved rollback handling on
+delete. [#1224] [Reported by Koichi Shishikura]</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage mode] Fixed a bug that full text search on a
+table without primary key returns empty results. [#1193]
+[Reported by Kazuhiko Shiozaki]</p></li>
+<li><p>Fixed -Wno- compiler flag detection. [Patch by Arnaud Fontaine]</p></li>
+<li><p>[wrapper mode] Fixed a problem that index isn’t
+used for full count. [#1196][groonga-dev,0653] [Reported by Kaneoka]</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Kazuhiko Shiozaki</p></li>
+<li><p>Arnaud Fontaine</p></li>
+<li><p>Kaneoka</p></li>
+<li><p>nobody</p></li>
+<li><p>Koichi Shishikura</p></li>
+</ul>
+</section>
+</section>
+<section id="release-1-10-2011-11-29">
+<span id="release-1-10"></span><h2>Release 1.10 - 2011/11/29<a class="headerlink" href="#release-1-10-2011-11-29" title="Link to this heading">#</a></h2>
+<p>Since this release, this project and product is called
+“mroonga” instead of “groonga storage engine”.</p>
+<p>This release introduces MariaDB support and fixes several bugs.</p>
+<section id="id4">
+<h3>Improvements<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>rename to “mroonga” from “groonga storage engine”. #1170</p></li>
+<li><p>add groonga_libgroonga_version and groonga_version variables. #1158</p></li>
+<li><p>information_schema.plugins.plugin_version returns mroonga’s version. #1157</p></li>
+<li><p>add groonga_log_file variable. #1178 [Suggested by nobody]</p></li>
+<li><p>FLUSH STATUS flushes groonga_* status variables. #1166 [Reported by Kazuhiko]</p></li>
+<li><p>support TRUNCATE TABLE #1151. [Suggested by Takahiro Nagai]</p></li>
+<li><p>support ALTER TABLE #1168.</p></li>
+<li><p>support MariaDB 5.2.9. #1152 [Reported by Kazuhiko]</p></li>
+<li><p>support MariaDB 5.3.2-beta. #1152 [Reported by Kazuhiko]</p></li>
+<li><p>[rpm] split document package.</p></li>
+<li><p>improve memory allocation for string system variables.</p></li>
+<li><p>use PLUGIN_LICENSE_GPL. [Suggested by Kazuhiko]</p></li>
+<li><p>remove needless MeCab related configurations.</p></li>
+<li><p>support FOUND_ROWS() and SQL_CALC_FOUND_ROWS. #1163 [Reported by Horikoshi Yuki]</p></li>
+<li><p>support table name that contains ‘-’. #1165 [Reported by nobody]</p></li>
+<li><p>support inplace index change on MySQL 5.1.</p></li>
+<li><p>[deb] support i386.</p></li>
+<li><p>[rpm] support i386.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage mode] fix a bug that REPLACE INTO with TEXT column does not work. #1153 [Reported by Kazuhiko]</p></li>
+<li><p>[wrapper mode] fix a bug that INSERT inside LOCK TABLE does not work with InnoDB. #1154 [Reported by Kazuhiko]</p></li>
+<li><p>fix a bug that using ORDER and LIMIT returns a wrong result. #1161 [Reported by Horikoshi Yuki]</p></li>
+<li><p>fix a crash bug when FORCE INDEX with unknown key is used. #1181 [Reported by Takahiro Nagai]</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Thanks<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Kazuhiko</p></li>
+<li><p>Horikoshi Yuki</p></li>
+<li><p>nobody</p></li>
+<li><p>Takahiro Nagai</p></li>
+</ul>
+</section>
+</section>
+<section id="release-1-0-1-2011-10-29">
+<span id="release-1-0-1"></span><h2>Release 1.0.1 - 2011/10/29<a class="headerlink" href="#release-1-0-1-2011-10-29" title="Link to this heading">#</a></h2>
+<p>The important changes in this release are the enhancement of geolocation search and the improvement of dynamic index modification in storage mode.</p>
+<section id="id7">
+<h3>Improvements<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[storage mode][wrapper mode] support reopening a database by <cite>flush tables</cite>.</p></li>
+<li><p>[wrapper mode] support geolocation index. (Only Point type can be stored in a column. Search using index is only available for MBRContains).</p></li>
+<li><p>[benchmark] add <cite>groonga_dry_write</cite> variable to specify not to write to groonga database, that is useful to check bottle necks in benchmarks.</p></li>
+<li><p>mention MySQL version in the installation guide for CentOS 6. [proposed by &#64;yoshi_ken]</p></li>
+<li><p>[geolocation] improve performance by skip needless processes.</p></li>
+<li><p>add  <cite>–disable-fast-mutexes</cite> configure option to ignore fast mutexes even if mysql_config says it is enabled.</p></li>
+<li><p>[storage mode] support <cite>create index</cite>.</p></li>
+<li><p>[storage mode] support <cite>drop index</cite>.</p></li>
+<li><p>[storage mode] support multi columns index for full text search.</p></li>
+<li><p>support <cite>D</cite> pragma.</p></li>
+<li><p>support MySQL 5.5.17.</p></li>
+<li><p>support MySQL 5.6.3-m6.</p></li>
+<li><p>support groonga 1.2.7. (1.2.6 or below are no longer supported).</p></li>
+<li><p>support Ubuntu 11.10 Oneiric Ocelot.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Fixes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>fix a bug that we have no results if we specify ‘+’ at the beginning of the query in boolean mode. [reported by Hajime Nishiyama]</p></li>
+<li><p>[Fedora] fix package dependencies. [reported by Takahiro Nagai]</p></li>
+<li><p>[Fedora] fix a problem that we get undefined symbol error when the plugin is loaded. [reported by Takahiro Nagai]</p></li>
+<li><p>[storage mode] fix a bug that index will not be correctly created if <cite>varchar</cite> is used in a multi-column index. #1143 [reported by Takahiro Nagai]</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Thanks<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>&#64;yoshi_ken</p></li>
+<li><p>Hajime Nishiyama</p></li>
+<li><p>Takahiro Nagai</p></li>
+</ul>
+</section>
+</section>
+<section id="release-1-0-0">
+<span id="id10"></span><h2>1.0.0 リリース - 2011/09/29<a class="headerlink" href="#release-1-0-0" title="Link to this heading">#</a></h2>
+<p>初回リリースから約1年経って、初のメジャーリリース！</p>
+<section id="id11">
+<h3>改良<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[ラッパーモード] drop index対応。 #1040</p></li>
+<li><p>[ストレージモード] GEOMETRY対応。（ただし、カラムに保存できる型はPointのみ対応。インデックスを利用した位置検索はMBRContainsのみ対応。） #1041</p></li>
+<li><p>[ストレージモード] マルチカラムインデックスに対応。 #455</p></li>
+<li><p>[ストレージモード][ラッパーモード] 全文検索用パーサー（トークナイザー）のカスタマイズに対応。 #592</p></li>
+<li><p>configureにデフォルトの全文検索用パーサーを指定する <cite>–with-default-parser</cite> オプションを追加。</p></li>
+<li><p>実行時にデフォルトの全文検索用パーサーを指定する <cite>groonga_default_parser</cite> 変数を追加。</p></li>
+<li><p>[ラッパーモード] ストレージモードで実装している <cite>order</cite> と <cite>limit</cite> が指定された場合に必要のないレコードを返さないようにする高速化に対応。</p></li>
+<li><p>[ストレージモード] 1つの <cite>select</cite> 中での複数の <cite>match against</cite> 指定に対応。</p></li>
+<li><p>[非互換][ストレージモード] <cite>_score</cite> カラムの削除。代わりにMySQL標準の書き方である <cite>match against</cite> を使ってください。</p></li>
+<li><p>[ラッパーモード] プライマリキーの更新に対応。</p></li>
+<li><p>MySQL 5.5.16に対応。</p></li>
+<li><p>CentOS 6に対応。</p></li>
+<li><p>groonga 1.2.6に対応。（1.2.5以下のサポートを削除。）</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>修正<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>[Ubuntu] Lucid上でインストールエラーが発生する問題を修正。 （Isao Sugimotoさんが報告）</p></li>
+<li><p>auto_incrementを使った場合にテキストデータが壊れる問題を修正。 （&#64;zaubermaerchenさんが報告） #1072</p></li>
+<li><p>[Ubuntu] Lucid上でテーブルを削除するとクラッシュする問題を修正。 #1063 （Isao Sugimotoさんが報告）</p></li>
+<li><p>MySQLと同じビルドオプションを使っていなかった問題を修正。 GitHub#4 (groongaのGitHubのIssues) （Tomohiro MITSUMUNEさんが報告）</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>感謝<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Isao Sugimotoさん</p></li>
+<li><p>&#64;zaubermaerchenさん</p></li>
+<li><p>Tomohiro MITSUMUNEさん</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-1-20-2012-01-29">Release 1.20 - 2012/01/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-1-11-2011-12-29">Release 1.11 - 2011/12/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-1-10-2011-11-29">Release 1.10 - 2011/11/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-1-0-1-2011-10-29">Release 1.0.1 - 2011/10/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-1-0-0">1.0.0 リリース - 2011/09/29</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">改良</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">修正</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">感謝</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mroonga/mroonga/edit/main/doc/source/news/1.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2009-2025, Mroonga Project.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
