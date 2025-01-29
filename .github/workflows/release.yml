@@ -30,7 +30,10 @@ jobs:
                      --status success \
                      --json databaseId \
                      --jq ".[].databaseId")
-          gh run watch "${run_id}" --repo mroonga/mroonga --exit-status
+          gh run watch "${run_id}" \
+            --interval 300 \
+            --repo mroonga/mroonga \
+            --exit-status
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update docs
