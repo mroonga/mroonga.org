@@ -23,17 +23,17 @@ jobs:
       - name: Wait for upload of mroonga/mroonga asset
         run: |
           run_id=$(gh run list \
-                     --repo mroonga/mroonga \
-                     --workflow release.yml \
-                     --limit 1 \
                      --branch "v${GITHUB_REF_NAME}" \
-                     --status success \
+                     --jq ".[].databaseId" \
                      --json databaseId \
-                     --jq ".[].databaseId")
+                     --limit 1 \
+                     --repo mroonga/mroonga \
+                     --status success \
+                     --workflow release.yml)
           gh run watch "${run_id}" \
+            --exit-status \
             --interval 300 \
-            --repo mroonga/mroonga \
-            --exit-status
+            --repo mroonga/mroonga
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update docs
