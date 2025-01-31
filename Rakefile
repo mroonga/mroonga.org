@@ -18,7 +18,7 @@ groonga_org_repository = ENV["GROONGA_ORG_REPOSITORY"]
 if groonga_org_repository.nil?
   raise "Specify GROONGA_ORG_REPOSITORY environment variable"
 end
-require "#{groonga_org_repository}/release_task"
+require_relative "#{groonga_org_repository}/release_task"
 
 release_task = ReleaseTask.new("Mroonga", __dir__)
 release_task.define
