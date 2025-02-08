@@ -797,8 +797,59 @@
 </pre></div>
 </div>
 </section>
+<section id="mroonga-n-workers">
+<span id="server-variable-mroonga-n-workers"></span><h2><span class="section-number">5.3.18. </span><code class="docutils literal notranslate"><span class="pre">mroonga_n_workers</span></code><a class="headerlink" href="#mroonga-n-workers" title="Link to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 15.00.</span></p>
+</div>
+<p>Groongaの内部処理の並列数を指定します。</p>
+<p>Mroongaにおいては並列処理を有効にすると <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">INDEX</span></code> 時に並列で処理され高速化が見込まれます。</p>
+<p>使用可能な値のリストです。デフォルト値は <code class="docutils literal notranslate"><span class="pre">0</span></code> です。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> または <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>並列実行しません。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">2</span></code> 以上</p></td>
+<td><p>指定したスレッド数以下で並列実行します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-1</span></code></p></td>
+<td><p>CPUのコア数以下のスレッドで並列実行します。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>並列数を <code class="docutils literal notranslate"><span class="pre">2</span></code> に変更するSQLの例です:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_n_workers&#39;</span><span class="p">;</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>     <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_n_workers</span> <span class="o">|</span> <span class="mi">0</span>     <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.001</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_n_workers</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.000</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_n_workers&#39;</span><span class="p">;</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>     <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="o">|</span> <span class="n">mroonga_n_workers</span> <span class="o">|</span> <span class="mi">2</span>     <span class="o">|</span>
+<span class="o">+-------------------+-------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.001</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">GLOBAL</span></code> でのみ設定可能です。</p>
+<p><code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">GLOBAL</span></code> で設定すると、次のセッションから有効になります。現在のセッションでは有効にならないことに注意してください。永続的に設定する場合は、<code class="docutils literal notranslate"><span class="pre">my.cnf</span></code> で設定してください。</p>
+</section>
 <section id="mroonga-match-escalation-threshold">
-<span id="server-variable-mroonga-match-escalation-threshold"></span><h2><span class="section-number">5.3.18. </span><code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code><a class="headerlink" href="#mroonga-match-escalation-threshold" title="Link to this heading">#</a></h2>
+<span id="server-variable-mroonga-match-escalation-threshold"></span><h2><span class="section-number">5.3.19. </span><code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code><a class="headerlink" href="#mroonga-match-escalation-threshold" title="Link to this heading">#</a></h2>
 <p>マッチ方法をエスカレーションするかどうかを決定する閾値です。マッチ方法については <a class="reference external" href="https://groonga.org/docs/spec/search.html">Groongaの検索の仕様</a> を確認してください。</p>
 <p>デフォルト値はGroongaのデフォルト値と同じです。デフォルトの設定でインストールした場合は0になります。この変数のスコープは「グローバル」と「セッション」の両方なので、my.cnfまたは <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">GLOBAL</span> <span class="pre">mroonga_match_escalation_threshold</span> <span class="pre">=</span> <span class="pre">THRESHOLD;</span></code> でデフォルト値を設定できます。</p>
 <p>マッチ方法がエスカレーションするかどうかを決定する閾値として-1を使った例です。-1は絶対エスカレーションしないという意味です。</p>
@@ -848,14 +899,14 @@
 </div>
 </section>
 <section id="mroonga-max-n-records-for-estimate">
-<span id="server-variable-mroonga-max-n-records-for-estimate"></span><h2><span class="section-number">5.3.19. </span><code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="Link to this heading">#</a></h2>
+<span id="server-variable-mroonga-max-n-records-for-estimate"></span><h2><span class="section-number">5.3.20. </span><code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code><a class="headerlink" href="#mroonga-max-n-records-for-estimate" title="Link to this heading">#</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 5.02.</span></p>
 </div>
 <p>TODO:</p>
 </section>
 <section id="mroonga-enable-operations-recording">
-<span id="server-variable-mroonga-enable-operations-recording"></span><h2><span class="section-number">5.3.20. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code><a class="headerlink" href="#mroonga-enable-operations-recording" title="Link to this heading">#</a></h2>
+<span id="server-variable-mroonga-enable-operations-recording"></span><h2><span class="section-number">5.3.21. </span><code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code><a class="headerlink" href="#mroonga-enable-operations-recording" title="Link to this heading">#</a></h2>
 <p>復旧のために操作を記録するかどうかを指定します。デフォルトは <code class="docutils literal notranslate"><span class="pre">OFF</span></code> です。これはGroongaデータベースに操作を記録しないというおkとです。この変数の変更を反映するには <code class="docutils literal notranslate"><span class="pre">FLUSH</span> <span class="pre">TABLES</span></code> でデータベースを開き直す必要があります。</p>
 <p>操作記録を無効にするSQLの例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">GLOBAL</span> <span class="n">mroonga_enable_operations_recording</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
@@ -874,7 +925,7 @@
 </div>
 </section>
 <section id="mroonga-vector-column-delimiter">
-<span id="server-variable-mroonga-vector-column-delimiter"></span><h2><span class="section-number">5.3.21. </span><code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="Link to this heading">#</a></h2>
+<span id="server-variable-mroonga-vector-column-delimiter"></span><h2><span class="section-number">5.3.22. </span><code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code><a class="headerlink" href="#mroonga-vector-column-delimiter" title="Link to this heading">#</a></h2>
 <p>ベクターカラムを出力する際の区切り文字。デフォルト値は空白です。</p>
 <p>区切り文字を空白からセミコロンに変更するSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_vector_column_delimiter&#39;</span><span class="p">;</span>
@@ -899,7 +950,7 @@
 </div>
 </section>
 <section id="mroonga-version">
-<span id="server-variable-mroonga-version"></span><h2><span class="section-number">5.3.22. </span><code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="Link to this heading">#</a></h2>
+<span id="server-variable-mroonga-version"></span><h2><span class="section-number">5.3.23. </span><code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code><a class="headerlink" href="#mroonga-version" title="Link to this heading">#</a></h2>
 <p>Mroongaのバージョン</p>
 <p>実行中のmroongaのバージョンを確認するためのSQL例です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">VARIABLES</span> <span class="n">LIKE</span> <span class="s1">&#39;mroonga_version&#39;</span><span class="p">;</span>
@@ -913,7 +964,7 @@
 </div>
 </section>
 <section id="mroonga-condition-push-down-type">
-<span id="server-variable-mroonga-condition-push-down-type"></span><h2><span class="section-number">5.3.23. </span><code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code><a class="headerlink" href="#mroonga-condition-push-down-type" title="Link to this heading">#</a></h2>
+<span id="server-variable-mroonga-condition-push-down-type"></span><h2><span class="section-number">5.3.24. </span><code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code><a class="headerlink" href="#mroonga-condition-push-down-type" title="Link to this heading">#</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 7.10.</span></p>
 </div>
@@ -1018,12 +1069,13 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-log-file">5.3.15. <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-log-level">5.3.16. <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-query-log-file">5.3.17. <code class="docutils literal notranslate"><span class="pre">mroonga_query_log_file</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-match-escalation-threshold">5.3.18. <code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-max-n-records-for-estimate">5.3.19. <code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-enable-operations-recording">5.3.20. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-vector-column-delimiter">5.3.21. <code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-version">5.3.22. <code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-condition-push-down-type">5.3.23. <code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-n-workers">5.3.18. <code class="docutils literal notranslate"><span class="pre">mroonga_n_workers</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-match-escalation-threshold">5.3.19. <code class="docutils literal notranslate"><span class="pre">mroonga_match_escalation_threshold</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-max-n-records-for-estimate">5.3.20. <code class="docutils literal notranslate"><span class="pre">mroonga_max_n_records_for_estimate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-enable-operations-recording">5.3.21. <code class="docutils literal notranslate"><span class="pre">mroonga_enable_operations_recording</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-vector-column-delimiter">5.3.22. <code class="docutils literal notranslate"><span class="pre">mroonga_vector_column_delimiter</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-version">5.3.23. <code class="docutils literal notranslate"><span class="pre">mroonga_version</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mroonga-condition-push-down-type">5.3.24. <code class="docutils literal notranslate"><span class="pre">mroonga_condition_push_down_type</span></code></a></li>
 </ul>
   </nav></div>
 
