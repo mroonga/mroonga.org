@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.5. AlmaLinux &#8212; Mroonga v15.11 documentation</title>
+    <title>2.5. AlmaLinux &#8212; Mroonga v15.16 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=818b3d98"></script>
+    <script src="../_static/documentation_options.js?v=64950a05"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-7532323-1"></script>
@@ -63,7 +63,7 @@
     <link rel="prev" title="2.4. Ubuntu" href="ubuntu.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="15.11" />
+  <meta name="docsearch:version" content="15.16" />
   </head>
   
   
@@ -129,8 +129,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.11 documentation - Home"/>
-    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.11 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.16 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.16 documentation - Home"/>
   
   
 </a></div>
@@ -470,39 +470,8 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </section>
-<section id="almalinux-8-with-mariadb-10-5-package">
-<span id="almalinux-8-mariadb-10-5"></span><h2><span class="section-number">2.5.3. </span>AlmaLinux 8 (with MariaDB 10.5 package)<a class="headerlink" href="#almalinux-8-with-mariadb-10-5-package" title="Link to this heading">#</a></h2>
-<p>You can use MariaDB’s MariaDB packages version 10.5 on AlmaLinux 8 since
-Mroonga 11.10 release.</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
-name = MariaDB
-baseurl = https://rpm.mariadb.org/10.5/rhel/$releasever/$basearch
-gpgkey = https://rpm.mariadb.org/RPM-GPG-KEY-MariaDB
-gpgcheck = 1
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.5</span><span class="o">-</span><span class="n">mroonga</span>
-<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> as a
-tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">enable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
-</pre></div>
-</div>
-</section>
 <section id="almalinux-8-with-mariadb-10-6-package">
-<span id="almalinux-8-mariadb-10-6"></span><h2><span class="section-number">2.5.4. </span>AlmaLinux 8 (with MariaDB 10.6 package)<a class="headerlink" href="#almalinux-8-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-8-mariadb-10-6"></span><h2><span class="section-number">2.5.3. </span>AlmaLinux 8 (with MariaDB 10.6 package)<a class="headerlink" href="#almalinux-8-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.6 on AlmaLinux 8 since
 Mroonga 11.10 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -533,7 +502,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </section>
 <section id="almalinux-8-with-mariadb-10-11-package">
-<span id="almalinux-8-mariadb-10-11"></span><h2><span class="section-number">2.5.5. </span>AlmaLinux 8 (with MariaDB 10.11 package)<a class="headerlink" href="#almalinux-8-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-8-mariadb-10-11"></span><h2><span class="section-number">2.5.4. </span>AlmaLinux 8 (with MariaDB 10.11 package)<a class="headerlink" href="#almalinux-8-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.11 on AlmaLinux 8 since
 Mroonga 13.01 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -564,7 +533,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </section>
 <section id="almalinux-8-with-mariadb-11-4-package">
-<span id="almalinux-8-mariadb-11-4"></span><h2><span class="section-number">2.5.6. </span>AlmaLinux 8 (with MariaDB 11.4 package)<a class="headerlink" href="#almalinux-8-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-8-mariadb-11-4"></span><h2><span class="section-number">2.5.5. </span>AlmaLinux 8 (with MariaDB 11.4 package)<a class="headerlink" href="#almalinux-8-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 11.4 on AlmaLinux 8 since
 Mroonga 14.07 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -595,7 +564,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </section>
 <section id="almalinux-9-with-the-oracle-mysql-8-0-package">
-<span id="almalinux-9-oracle-8-0"></span><h2><span class="section-number">2.5.7. </span>AlmaLinux 9 (with the Oracle MySQL 8.0 package)<a class="headerlink" href="#almalinux-9-with-the-oracle-mysql-8-0-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-oracle-8-0"></span><h2><span class="section-number">2.5.6. </span>AlmaLinux 9 (with the Oracle MySQL 8.0 package)<a class="headerlink" href="#almalinux-9-with-the-oracle-mysql-8-0-package" title="Link to this heading">#</a></h2>
 <p>You can use Oracle’s MySQL packages version 8.0 on AlmaLinux 9 since
 Mroonga 12.12 release.</p>
 <div class="admonition note">
@@ -628,7 +597,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </section>
 <section id="almalinux-9-with-percona-server-8-0-package">
-<span id="almalinux-9-percona-8-0"></span><h2><span class="section-number">2.5.8. </span>AlmaLinux 9 (with Percona Server 8.0 package)<a class="headerlink" href="#almalinux-9-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-percona-8-0"></span><h2><span class="section-number">2.5.7. </span>AlmaLinux 9 (with Percona Server 8.0 package)<a class="headerlink" href="#almalinux-9-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
 <p>You can use Percona Server packages version 8.0 on AlmaLinux 9
 since Mroonga 12.12 release.</p>
 <p>Install:</p>
@@ -649,36 +618,8 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </pre></div>
 </div>
 </section>
-<section id="almalinux-9-with-mariadb-10-5-package">
-<span id="almalinux-9-mariadb-10-5"></span><h2><span class="section-number">2.5.9. </span>AlmaLinux 9 (with MariaDB 10.5 package)<a class="headerlink" href="#almalinux-9-with-mariadb-10-5-package" title="Link to this heading">#</a></h2>
-<p>You can use MariaDB’s MariaDB packages version 10.5 on AlmaLinux 9 since
-Mroonga 12.12 release.</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
-name = MariaDB
-baseurl = https://rpm.mariadb.org/10.5/rhel/$releasever/$basearch
-gpgkey = https://rpm.mariadb.org/RPM-GPG-KEY-MariaDB
-gpgcheck = 1
-</pre></div>
-</div>
-<p>Install:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">apache</span><span class="o">.</span><span class="n">jfrog</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">artifactory</span><span class="o">/</span><span class="n">arrow</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">arrow</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.5</span><span class="o">-</span><span class="n">mroonga</span>
-<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> as a
-tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
-</pre></div>
-</div>
-</section>
 <section id="almalinux-9-with-mariadb-10-6-package">
-<span id="almalinux-9-mariadb-10-6"></span><h2><span class="section-number">2.5.10. </span>AlmaLinux 9 (with MariaDB 10.6 package)<a class="headerlink" href="#almalinux-9-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-mariadb-10-6"></span><h2><span class="section-number">2.5.8. </span>AlmaLinux 9 (with MariaDB 10.6 package)<a class="headerlink" href="#almalinux-9-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.6 on AlmaLinux 9 since
 Mroonga 12.12 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -706,7 +647,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </section>
 <section id="almalinux-9-with-mariadb-10-11-package">
-<span id="almalinux-9-mariadb-10-11"></span><h2><span class="section-number">2.5.11. </span>AlmaLinux 9 (with MariaDB 10.11 package)<a class="headerlink" href="#almalinux-9-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-mariadb-10-11"></span><h2><span class="section-number">2.5.9. </span>AlmaLinux 9 (with MariaDB 10.11 package)<a class="headerlink" href="#almalinux-9-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 10.11 on AlmaLinux 9 since
 Mroonga 13.01 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -734,7 +675,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
 </div>
 </section>
 <section id="almalinux-9-with-mariadb-11-4-package">
-<span id="almalinux-9-mariadb-11-4"></span><h2><span class="section-number">2.5.12. </span>AlmaLinux 9 (with MariaDB 11.4 package)<a class="headerlink" href="#almalinux-9-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-mariadb-11-4"></span><h2><span class="section-number">2.5.10. </span>AlmaLinux 9 (with MariaDB 11.4 package)<a class="headerlink" href="#almalinux-9-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
 <p>You can use MariaDB’s MariaDB packages version 11.4 on AlmaLinux 9 since
 Mroonga 14.07 release.</p>
 <p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
@@ -812,16 +753,14 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-the-oracle-mysql-8-0-package">2.5.1. AlmaLinux 8 (with the Oracle MySQL 8.0 package)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-percona-server-8-0-package">2.5.2. AlmaLinux 8 (with Percona Server 8.0 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-5-package">2.5.3. AlmaLinux 8 (with MariaDB 10.5 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-6-package">2.5.4. AlmaLinux 8 (with MariaDB 10.6 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-11-package">2.5.5. AlmaLinux 8 (with MariaDB 10.11 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-11-4-package">2.5.6. AlmaLinux 8 (with MariaDB 11.4 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-the-oracle-mysql-8-0-package">2.5.7. AlmaLinux 9 (with the Oracle MySQL 8.0 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-percona-server-8-0-package">2.5.8. AlmaLinux 9 (with Percona Server 8.0 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-5-package">2.5.9. AlmaLinux 9 (with MariaDB 10.5 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-6-package">2.5.10. AlmaLinux 9 (with MariaDB 10.6 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-11-package">2.5.11. AlmaLinux 9 (with MariaDB 10.11 package)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-11-4-package">2.5.12. AlmaLinux 9 (with MariaDB 11.4 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-6-package">2.5.3. AlmaLinux 8 (with MariaDB 10.6 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-11-package">2.5.4. AlmaLinux 8 (with MariaDB 10.11 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-11-4-package">2.5.5. AlmaLinux 8 (with MariaDB 11.4 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-the-oracle-mysql-8-0-package">2.5.6. AlmaLinux 9 (with the Oracle MySQL 8.0 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-percona-server-8-0-package">2.5.7. AlmaLinux 9 (with Percona Server 8.0 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-6-package">2.5.8. AlmaLinux 9 (with MariaDB 10.6 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-11-package">2.5.9. AlmaLinux 9 (with MariaDB 10.11 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-11-4-package">2.5.10. AlmaLinux 9 (with MariaDB 11.4 package)</a></li>
 </ul>
   </nav></div>
 

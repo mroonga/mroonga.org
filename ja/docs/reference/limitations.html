@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5.6. 制限事項 &#8212; Mroonga v15.11 documentation</title>
+    <title>5.6. 制限事項 &#8212; Mroonga v15.16 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=b07ca9cc"></script>
+    <script src="../_static/documentation_options.js?v=55629e51"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/translations.js?v=4755f45a"></script>
@@ -64,7 +64,7 @@
     <link rel="prev" title="5.5.7. mroonga_snippet_html()" href="udf/mroonga_snippet_html.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
-  <meta name="docsearch:version" content="15.11" />
+  <meta name="docsearch:version" content="15.16" />
   </head>
   
   
@@ -130,8 +130,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.11 documentation - Home"/>
-    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.11 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.16 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.16 documentation - Home"/>
   
   
 </a></div>
@@ -451,8 +451,12 @@
 <p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
 <p>テーブルがこの制限に該当するかは <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">TABLE</span> <span class="pre">STATUS</span></code> や <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">INDEX</span> <span class="pre">FROM</span> <span class="pre">...</span></code> などで確認してください。</p>
 </section>
+<section id="limitations-about-the-primary-key">
+<h2><span class="section-number">5.6.3. </span>プライマリーキーに関する制限事項<a class="headerlink" href="#limitations-about-the-primary-key" title="Link to this heading">#</a></h2>
+<p>プライマリーキーに空データ（0バイトのデータ）は使用できません。</p>
+</section>
 <section id="limitations-about-the-value-of-columns">
-<h2><span class="section-number">5.6.3. </span>カラムの値に関する制限事項<a class="headerlink" href="#limitations-about-the-value-of-columns" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.6.4. </span>カラムの値に関する制限事項<a class="headerlink" href="#limitations-about-the-value-of-columns" title="Link to this heading">#</a></h2>
 <p>ストレージモードにおいて、カラムの値には制限があります。</p>
 <p>MroongaストレージエンジンはNULL値を自動的に補正します。</p>
 <p>例えば、 <code class="docutils literal notranslate"><span class="pre">DATE</span></code> 型や <code class="docutils literal notranslate"><span class="pre">DATETIME</span></code> 型に指定されたNULL値はMroongaストレージエンジンが日や月の値として0を1へと自動的に補正します。</p>
@@ -503,7 +507,7 @@
 </div>
 </section>
 <section id="limitations-of-column-size">
-<h2><span class="section-number">5.6.4. </span>カラムサイズの制限事項<a class="headerlink" href="#limitations-of-column-size" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.6.5. </span>カラムサイズの制限事項<a class="headerlink" href="#limitations-of-column-size" title="Link to this heading">#</a></h2>
 <p>1つのカラムにつき、次の制限があります。</p>
 <ul class="simple">
 <li><p>カラムに格納した値の合計サイズの上限値: 256GiB</p></li>
@@ -560,8 +564,9 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-table">5.6.1. テーブルの制限事項</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-indexing">5.6.2. インデックスの制限事項</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-about-the-value-of-columns">5.6.3. カラムの値に関する制限事項</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-column-size">5.6.4. カラムサイズの制限事項</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-about-the-primary-key">5.6.3. プライマリーキーに関する制限事項</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-about-the-value-of-columns">5.6.4. カラムの値に関する制限事項</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-column-size">5.6.5. カラムサイズの制限事項</a></li>
 </ul>
   </nav></div>
 
