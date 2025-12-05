@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.5. AlmaLinux &#8212; Mroonga v15.17 documentation</title>
+    <title>2.5. AlmaLinux &#8212; Mroonga v15.21 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=31ad4e15"></script>
+    <script src="../_static/documentation_options.js?v=22037727"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/translations.js?v=4755f45a"></script>
@@ -64,7 +64,7 @@
     <link rel="prev" title="2.4. Ubuntu" href="ubuntu.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
-  <meta name="docsearch:version" content="15.17" />
+  <meta name="docsearch:version" content="15.21" />
   </head>
   
   
@@ -130,8 +130,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.17 documentation - Home"/>
-    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.17 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.21 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.21 documentation - Home"/>
   
   
 </a></div>
@@ -430,20 +430,21 @@
 </ul>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf -y module disable mysql
-% sudo dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
-% sudo dnf install -y https://repo.mysql.com/mysql80-community-release-el8.rpm
-% sudo dnf install --disablerepo=AppStream -y --enablerepo=epel,powertools mysql-community-8.0-mroonga
-(% sudo systemctl start mysqld)
-(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
-(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>module<span class="w"> </span>disable<span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.mysql.com/mysql80-community-release-el8.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>--disablerepo<span class="o">=</span>AppStream<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel,powertools<span class="w"> </span>mysql-community-8.0-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="o">-</span><span class="n">y</span> <span class="n">module</span> <span class="n">enable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="o">-</span><span class="n">y</span> <span class="n">module</span> <span class="n">disable</span> <span class="n">mysql</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>module<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>module<span class="w"> </span>disable<span class="w"> </span>mysql
 </pre></div>
 </div>
 </section>
@@ -451,18 +452,19 @@
 <span id="almalinux-8-percona-8-0"></span><h2><span class="section-number">2.5.2. </span>AlmaLinux 8（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#almalinux-8-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 8では、Mroonga 11.10からPercona Server 8.0パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
-% sudo dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm
-% sudo percona-release setup ps80
-% sudo dnf install -y --enablerepo=epel,powertools percona-server-8.0-mroonga
-(% sudo systemctl start mysqld)
-(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
-(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>percona-release<span class="w"> </span>setup<span class="w"> </span>ps80
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel,powertools<span class="w"> </span>percona-server-8.0-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -478,20 +480,21 @@ gpgcheck = 1
 </pre></div>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.6</span><span class="o">-</span><span class="n">mroonga</span>
-<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-server
+<span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-10.6-mroonga
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root password &#39;new-password&#39;)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">enable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
 </pre></div>
 </div>
 </section>
@@ -508,20 +511,21 @@ gpgcheck = 1
 </pre></div>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">powertools</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.11</span><span class="o">-</span><span class="n">mroonga</span>
-<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-server
+<span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-10.11-mroonga
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root password &#39;new-password&#39;)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">enable</span> <span class="n">mysql</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">module</span> <span class="o">-</span><span class="n">y</span> <span class="n">disable</span> <span class="n">mysql</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
 </pre></div>
 </div>
 </section>
@@ -536,8 +540,9 @@ gpgkey = https://rpm.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck = 1
 </pre></div>
 </div>
-<p>Install:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mariadb
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-server
@@ -547,7 +552,7 @@ gpgcheck = 1
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
-<p>Install groonga-tokenizer-mecab package:</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mysql
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
@@ -570,18 +575,18 @@ gpgcheck = 1
 </ul>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://apache.jfrog.io/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
-% sudo dnf install -y https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
-% sudo dnf install -y https://repo.mysql.com/mysql80-community-release-el9.rpm
-% sudo dnf install --disablerepo=AppStream -y --enablerepo=epel,crb mysql-community-8.0-mroonga
-(% sudo systemctl start mysqld)
-(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
-(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.mysql.com/mysql80-community-release-el9.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>--disablerepo<span class="o">=</span>AppStream<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel,crb<span class="w"> </span>mysql-community-8.0-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -589,19 +594,19 @@ gpgcheck = 1
 <span id="almalinux-9-percona-8-0"></span><h2><span class="section-number">2.5.7. </span>AlmaLinux 9（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#almalinux-9-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 9では、Mroonga 12.12からPercona Server 8.0パッケージを利用できます。</p>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf install -y https://apache.jfrog.io/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
-% sudo dnf install -y https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
-% sudo dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm
-% sudo percona-release setup ps80
-% sudo dnf install -y --enablerepo=epel percona-server-8.0-mroonga
-(% sudo systemctl start mysqld)
-(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
-(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>percona-release<span class="w"> </span>setup<span class="w"> </span>ps80
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>percona-server-8.0-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -617,17 +622,17 @@ gpgcheck = 1
 </pre></div>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">apache</span><span class="o">.</span><span class="n">jfrog</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">artifactory</span><span class="o">/</span><span class="n">arrow</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">arrow</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.6</span><span class="o">-</span><span class="n">mroonga</span>
-<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mariadb-server
+<span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mariadb-10.6-mroonga
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root password &#39;new-password&#39;)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -643,17 +648,17 @@ gpgcheck = 1
 </pre></div>
 </div>
 <p>インストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">apache</span><span class="o">.</span><span class="n">jfrog</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">artifactory</span><span class="o">/</span><span class="n">arrow</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">arrow</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">groonga</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">almalinux</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">groonga</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.11</span><span class="o">-</span><span class="n">mroonga</span>
-<span class="p">(</span><span class="o">%</span> <span class="n">sudo</span> <span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="n">password</span> <span class="s1">&#39;new-password&#39;</span><span class="p">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mariadb-server
+<span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mariadb-10.11-mroonga
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root password &#39;new-password&#39;)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -668,8 +673,8 @@ gpgkey = https://rpm.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck = 1
 </pre></div>
 </div>
-<p>Install:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://apache.jfrog.io/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mariadb-server
 <span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
@@ -678,7 +683,7 @@ gpgcheck = 1
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
-<p>Install groonga-tokenizer-mecab package:</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
 </pre></div>
 </div>
