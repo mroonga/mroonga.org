@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.5. AlmaLinux &#8212; Mroonga v15.23 documentation</title>
+    <title>2.5. AlmaLinux &#8212; Mroonga v15.25 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=eb9cd7af"></script>
+    <script src="../_static/documentation_options.js?v=6a4d3076"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/translations.js?v=4755f45a"></script>
@@ -64,7 +64,7 @@
     <link rel="prev" title="2.4. Ubuntu" href="ubuntu.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
-  <meta name="docsearch:version" content="15.23" />
+  <meta name="docsearch:version" content="15.25" />
   </head>
   
   
@@ -130,8 +130,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.23 documentation - Home"/>
-    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.23 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v15.25 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v15.25 documentation - Home"/>
   
   
 </a></div>
@@ -448,8 +448,38 @@
 </pre></div>
 </div>
 </section>
+<section id="almalinux-8-with-the-oracle-mysql-8-4-package">
+<span id="almalinux-8-oracle-8-4"></span><h2><span class="section-number">2.5.2. </span>AlmaLinux 8（OracleのMySQL 8.4パッケージを利用）<a class="headerlink" href="#almalinux-8-with-the-oracle-mysql-8-4-package" title="Link to this heading">#</a></h2>
+<p>AlmaLinux 8では、Mroonga 14.04からOracleのMySQL 8.4パッケージを利用できます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>MySQL 8.4に関しては以下の既知の問題があります。</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ラッパーモードは未対応です。</p></li>
+<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ストレージモードは最適化関連の機能が未対応です。</p></li>
+</ul>
+</div>
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>module<span class="w"> </span>disable<span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.mysql.com/mysql84-community-release-el8.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel,powertools<span class="w"> </span>mysql-community-8.4-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>module<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>-y<span class="w"> </span>module<span class="w"> </span>disable<span class="w"> </span>mysql
+</pre></div>
+</div>
+</section>
 <section id="almalinux-8-with-percona-server-8-0-package">
-<span id="almalinux-8-percona-8-0"></span><h2><span class="section-number">2.5.2. </span>AlmaLinux 8（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#almalinux-8-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-8-percona-8-0"></span><h2><span class="section-number">2.5.3. </span>AlmaLinux 8（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#almalinux-8-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 8では、Mroonga 11.10からPercona Server 8.0パッケージを利用できます。</p>
 <p>インストール:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
@@ -469,9 +499,9 @@
 </div>
 </section>
 <section id="almalinux-8-with-mariadb-10-6-package">
-<span id="almalinux-8-mariadb-10-6"></span><h2><span class="section-number">2.5.3. </span>AlmaLinux 8（MariaDB 10.6のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-8-mariadb-10-6"></span><h2><span class="section-number">2.5.4. </span>AlmaLinux 8（MariaDB 10.6のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 8では、Mroonga 11.10からMariaDB提供のMariaDB 10.6パッケージを利用できます。</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
 name = MariaDB
 baseurl = https://rpm.mariadb.org/10.6/rhel/$releasever/$basearch
@@ -499,10 +529,9 @@ gpgcheck = 1
 </div>
 </section>
 <section id="almalinux-8-with-mariadb-10-11-package">
-<span id="almalinux-8-mariadb-10-11"></span><h2><span class="section-number">2.5.4. </span>AlmaLinux 8（MariaDB 10.11のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
-<p>You can use MariaDB's MariaDB packages version 10.11 on AlmaLinux 8 since
-Mroonga 13.01 release.</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<span id="almalinux-8-mariadb-10-11"></span><h2><span class="section-number">2.5.5. </span>AlmaLinux 8（MariaDB 10.11のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
+<p>AlmaLinux 8では、Mroonga 13.01からMariaDB提供のMariaDB 10.11パッケージを利用できます。</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
 name = MariaDB
 baseurl = https://rpm.mariadb.org/10.11/rhel/$releasever/$basearch
@@ -530,9 +559,9 @@ gpgcheck = 1
 </div>
 </section>
 <section id="almalinux-8-with-mariadb-11-4-package">
-<span id="almalinux-8-mariadb-11-4"></span><h2><span class="section-number">2.5.5. </span>AlmaLinux 8（MariaDB 11.4のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-8-mariadb-11-4"></span><h2><span class="section-number">2.5.6. </span>AlmaLinux 8（MariaDB 11.4のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 8では、Mroonga 14.07からMariaDB提供のMariaDB 11.4パッケージを利用できます。</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
 name = MariaDB
 baseurl = https://rpm.mariadb.org/11.4/rhel/$releasever/$basearch
@@ -559,8 +588,38 @@ gpgcheck = 1
 </pre></div>
 </div>
 </section>
+<section id="almalinux-8-with-mariadb-11-8-package">
+<span id="almalinux-8-mariadb-11-8"></span><h2><span class="section-number">2.5.7. </span>AlmaLinux 8（MariaDB 11.8のパッケージを利用）<a class="headerlink" href="#almalinux-8-with-mariadb-11-8-package" title="Link to this heading">#</a></h2>
+<p>AlmaLinux 8では、Mroonga 15.21からMariaDB提供のMariaDB 11.8パッケージを利用できます。</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
+name = MariaDB
+baseurl = https://rpm.mariadb.org/11.8/rhel/$releasever/$basearch
+gpgkey = https://rpm.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck = 1
+</pre></div>
+</div>
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/8/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-server
+<span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>powertools<span class="w"> </span>mariadb-11.8-mroonga
+<span class="gp gp-VirtualEnv">($ sudo mariadb-admin -u root password &#39;new-password&#39;)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mysql
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>module<span class="w"> </span>-y<span class="w"> </span>disable<span class="w"> </span>mysql
+</pre></div>
+</div>
+</section>
 <section id="almalinux-9-with-the-oracle-mysql-8-0-package">
-<span id="almalinux-9-oracle-8-0"></span><h2><span class="section-number">2.5.6. </span>AlmaLinux 9（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#almalinux-9-with-the-oracle-mysql-8-0-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-oracle-8-0"></span><h2><span class="section-number">2.5.8. </span>AlmaLinux 9（OracleのMySQL 8.0パッケージを利用）<a class="headerlink" href="#almalinux-9-with-the-oracle-mysql-8-0-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 9では、Mroonga 12.12からOracleのMySQL 8.0パッケージを利用できます。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
@@ -590,8 +649,35 @@ gpgcheck = 1
 </pre></div>
 </div>
 </section>
+<section id="almalinux-9-with-the-oracle-mysql-8-4-package">
+<span id="almalinux-9-oracle-8-4"></span><h2><span class="section-number">2.5.9. </span>AlmaLinux 9（OracleのMySQL 8.4パッケージを利用）<a class="headerlink" href="#almalinux-9-with-the-oracle-mysql-8-4-package" title="Link to this heading">#</a></h2>
+<p>AlmaLinux 9では、Mroonga 14.04からOracleのMySQL 8.4パッケージを利用できます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>MySQL 8.4に関しては以下の既知の問題があります。</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ラッパーモードは未対応です。</p></li>
+<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ストレージモードは最適化関連の機能が未対応です。</p></li>
+</ul>
+</div>
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.mysql.com/mysql84-community-release-el9.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel,crb<span class="w"> </span>mysql-community-8.4-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+</pre></div>
+</div>
+</section>
 <section id="almalinux-9-with-percona-server-8-0-package">
-<span id="almalinux-9-percona-8-0"></span><h2><span class="section-number">2.5.7. </span>AlmaLinux 9（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#almalinux-9-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-percona-8-0"></span><h2><span class="section-number">2.5.10. </span>AlmaLinux 9（Percona Server 8.0パッケージを利用）<a class="headerlink" href="#almalinux-9-with-percona-server-8-0-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 9では、Mroonga 12.12からPercona Server 8.0パッケージを利用できます。</p>
 <p>インストール:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
@@ -610,10 +696,30 @@ gpgcheck = 1
 </pre></div>
 </div>
 </section>
+<section id="almalinux-9-with-percona-server-8-4-package">
+<span id="almalinux-9-percona-8-4"></span><h2><span class="section-number">2.5.11. </span>AlmaLinux 9（Percona Server 8.4パッケージを利用）<a class="headerlink" href="#almalinux-9-with-percona-server-8-4-package" title="Link to this heading">#</a></h2>
+<p>AlmaLinux 9では、Mroonga 15.04からPercona Server 8.4パッケージを利用できます。</p>
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.apache.org/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>percona-release<span class="w"> </span>enable-only<span class="w"> </span>ps-84-lts<span class="w"> </span>release
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>percona-server-8.4-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+</pre></div>
+</div>
+</section>
 <section id="almalinux-9-with-mariadb-10-6-package">
-<span id="almalinux-9-mariadb-10-6"></span><h2><span class="section-number">2.5.8. </span>AlmaLinux 9（MariaDB 10.6のパッケージを利用）<a class="headerlink" href="#almalinux-9-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-mariadb-10-6"></span><h2><span class="section-number">2.5.12. </span>AlmaLinux 9（MariaDB 10.6のパッケージを利用）<a class="headerlink" href="#almalinux-9-with-mariadb-10-6-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 9では、Mroonga 12.12からMariaDB提供のMariaDB 10.6パッケージを利用できます。</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
 name = MariaDB
 baseurl = https://rpm.mariadb.org/10.6/rhel/$releasever/$basearch
@@ -637,9 +743,9 @@ gpgcheck = 1
 </div>
 </section>
 <section id="almalinux-9-with-mariadb-10-11-package">
-<span id="almalinux-9-mariadb-10-11"></span><h2><span class="section-number">2.5.9. </span>AlmaLinux 9（MariaDB 10.11のパッケージを利用）<a class="headerlink" href="#almalinux-9-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-mariadb-10-11"></span><h2><span class="section-number">2.5.13. </span>AlmaLinux 9（MariaDB 10.11のパッケージを利用）<a class="headerlink" href="#almalinux-9-with-mariadb-10-11-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 9では、Mroonga 13.01からMariaDB提供のMariaDB 10.11パッケージを利用できます。</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
 name = MariaDB
 baseurl = https://rpm.mariadb.org/10.11/rhel/$releasever/$basearch
@@ -663,9 +769,9 @@ gpgcheck = 1
 </div>
 </section>
 <section id="almalinux-9-with-mariadb-11-4-package">
-<span id="almalinux-9-mariadb-11-4"></span><h2><span class="section-number">2.5.10. </span>AlmaLinux 9（MariaDB 11.4のパッケージを利用）<a class="headerlink" href="#almalinux-9-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
+<span id="almalinux-9-mariadb-11-4"></span><h2><span class="section-number">2.5.14. </span>AlmaLinux 9（MariaDB 11.4のパッケージを利用）<a class="headerlink" href="#almalinux-9-with-mariadb-11-4-package" title="Link to this heading">#</a></h2>
 <p>AlmaLinux 9では、Mroonga 14.07からMariaDB提供のMariaDB 11.4パッケージを利用できます。</p>
-<p>Create <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> with the following content:</p>
+<p>以下の内容で <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/MariaDB.repo</span></code> を作成してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[mariadb]
 name = MariaDB
 baseurl = https://rpm.mariadb.org/11.4/rhel/$releasever/$basearch
@@ -680,6 +786,32 @@ gpgcheck = 1
 <span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
 <span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>mariadb-11.4-mroonga
 <span class="gp gp-VirtualEnv">($ sudo mariadb-admin -u root password &#39;new-password&#39;)</span>
+</pre></div>
+</div>
+<p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
+<p>groonga-tokenizer-mecabをインストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>groonga-tokenizer-mecab
+</pre></div>
+</div>
+</section>
+<section id="almalinux-10-with-the-oracle-mysql-8-4-package">
+<span id="almalinux-10-oracle-8-4"></span><h2><span class="section-number">2.5.15. </span>AlmaLinux 10（OracleのMySQL 8.4パッケージを利用）<a class="headerlink" href="#almalinux-10-with-the-oracle-mysql-8-4-package" title="Link to this heading">#</a></h2>
+<p>AlmaLinux 10では、Mroonga 15.18からOracleのMySQL 8.4パッケージを利用できます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">ラッパーモード</span></a> ラッパーモードは未対応です。</p></li>
+<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">ストレージモード</span></a> ストレージモードは最適化関連の機能が未対応です。</p></li>
+</ul>
+</div>
+<p>インストール:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>https://packages.apache.org/artifactory/arrow/almalinux/10/apache-arrow-release-latest.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://packages.groonga.org/almalinux/10/groonga-release-latest.noarch.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://repo.mysql.com/mysql84-community-release-el10.rpm
+<span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>--disablerepo<span class="o">=</span>AppStream<span class="w"> </span>-y<span class="w"> </span>--enablerepo<span class="o">=</span>epel<span class="w"> </span>mysql-community-8.4-mroonga
+<span class="gp gp-VirtualEnv">($ sudo systemctl start mysqld)</span>
+<span class="gp gp-VirtualEnv">($ tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;)</span><span class="go">)</span>
+<span class="gp gp-VirtualEnv">($ sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)</span>
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
@@ -738,15 +870,20 @@ gpgcheck = 1
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-the-oracle-mysql-8-0-package">2.5.1. AlmaLinux 8（OracleのMySQL 8.0パッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-percona-server-8-0-package">2.5.2. AlmaLinux 8（Percona Server 8.0パッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-6-package">2.5.3. AlmaLinux 8（MariaDB 10.6のパッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-11-package">2.5.4. AlmaLinux 8（MariaDB 10.11のパッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-11-4-package">2.5.5. AlmaLinux 8（MariaDB 11.4のパッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-the-oracle-mysql-8-0-package">2.5.6. AlmaLinux 9（OracleのMySQL 8.0パッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-percona-server-8-0-package">2.5.7. AlmaLinux 9（Percona Server 8.0パッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-6-package">2.5.8. AlmaLinux 9（MariaDB 10.6のパッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-11-package">2.5.9. AlmaLinux 9（MariaDB 10.11のパッケージを利用）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-11-4-package">2.5.10. AlmaLinux 9（MariaDB 11.4のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-the-oracle-mysql-8-4-package">2.5.2. AlmaLinux 8（OracleのMySQL 8.4パッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-percona-server-8-0-package">2.5.3. AlmaLinux 8（Percona Server 8.0パッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-6-package">2.5.4. AlmaLinux 8（MariaDB 10.6のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-10-11-package">2.5.5. AlmaLinux 8（MariaDB 10.11のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-11-4-package">2.5.6. AlmaLinux 8（MariaDB 11.4のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-8-with-mariadb-11-8-package">2.5.7. AlmaLinux 8（MariaDB 11.8のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-the-oracle-mysql-8-0-package">2.5.8. AlmaLinux 9（OracleのMySQL 8.0パッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-the-oracle-mysql-8-4-package">2.5.9. AlmaLinux 9（OracleのMySQL 8.4パッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-percona-server-8-0-package">2.5.10. AlmaLinux 9（Percona Server 8.0パッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-percona-server-8-4-package">2.5.11. AlmaLinux 9（Percona Server 8.4パッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-6-package">2.5.12. AlmaLinux 9（MariaDB 10.6のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-10-11-package">2.5.13. AlmaLinux 9（MariaDB 10.11のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-9-with-mariadb-11-4-package">2.5.14. AlmaLinux 9（MariaDB 11.4のパッケージを利用）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#almalinux-10-with-the-oracle-mysql-8-4-package">2.5.15. AlmaLinux 10（OracleのMySQL 8.4パッケージを利用）</a></li>
 </ul>
   </nav></div>
 
