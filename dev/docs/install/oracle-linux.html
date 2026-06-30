@@ -446,38 +446,9 @@
 <h1><span class="section-number">2.6. </span>Oracle Linux<a class="headerlink" href="#oracle-linux" title="Link to this heading">#</a></h1>
 <p>This section describes how to install Mroonga related RPM packages on
 AlmaLinux. You can install them by <code class="docutils literal notranslate"><span class="pre">dnf</span></code>.</p>
-<section id="oracle-linux-8-with-the-oracle-mysql-8-0-package">
-<span id="oracle-linux-8-oracle-8-0"></span><h2><span class="section-number">2.6.1. </span>Oracle Linux 8 (with the Oracle MySQL 8.0 package)<a class="headerlink" href="#oracle-linux-8-with-the-oracle-mysql-8-0-package" title="Link to this heading">#</a></h2>
-<p>You can use Oracle’s MySQL packages version 8.0 on Oracle Linux 8 since
-Mroonga 12.08 release.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>There are already known issues about MySQL 8.0.</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="../tutorial/wrapper.html"><span class="doc">Wrapper mode</span></a> Wrapper mode is not supported yet</p></li>
-<li><p><a class="reference internal" href="../tutorial/storage.html"><span class="doc">Storage mode</span></a>  Storage mode does not support the following feature.</p>
-<ul>
-<li><p>The feature of relevant to the optimization.</p></li>
-</ul>
-</li>
-</ul>
-</div>
-<p>Install:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% sudo dnf -y module disable mysql
-% sudo dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm
-% sudo dnf install -y https://repo.mysql.com/mysql80-community-release-el8.rpm
-% sudo dnf install --disablerepo=AppStream -y --enablerepo=ol8_codeready_builder mysql-community-8.0-mroonga
-(% sudo systemctl start mysqld)
-(% tmp_password=$(sudo grep &#39;A temporary password&#39; /var/log/mysqld.log | sed -e &#39;s/^.*: //&#39;))
-(% sudo mysqladmin -u root --password=&quot;${tmp_password}&quot; password)
-</pre></div>
-</div>
-<p>If you want to use <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> as a
-tokenizer, install groonga-tokenizer-mecab package.</p>
-<p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ol8_codeready_builder</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
-</pre></div>
-</div>
+<section id="oracle-linux-8-with-the-oracle-mysql-8-4-package">
+<span id="oracle-linux-8-oracle-8-4"></span><h2><span class="section-number">2.6.1. </span>Oracle Linux 8 (with the Oracle MySQL 8.4 package)<a class="headerlink" href="#oracle-linux-8-with-the-oracle-mysql-8-4-package" title="Link to this heading">#</a></h2>
+<p>This package will be included in a future release.</p>
 </section>
 </section>
 
@@ -528,7 +499,7 @@ tokenizer, install groonga-tokenizer-mecab package.</p>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oracle-linux-8-with-the-oracle-mysql-8-0-package">2.6.1. Oracle Linux 8 (with the Oracle MySQL 8.0 package)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oracle-linux-8-with-the-oracle-mysql-8-4-package">2.6.1. Oracle Linux 8 (with the Oracle MySQL 8.4 package)</a></li>
 </ul>
   </nav></div>
 
