@@ -447,10 +447,11 @@
 <h1><span class="section-number">2.4. </span>Ubuntu<a class="headerlink" href="#ubuntu" title="Link to this heading">#</a></h1>
 <p>This section describes how to install Mroonga related deb packages on
 Ubuntu. You can install them by <code class="docutils literal notranslate"><span class="pre">apt</span></code>.</p>
-<section id="ppa-personal-package-archive">
-<h2><span class="section-number">2.4.1. </span>PPA (Personal Package Archive)<a class="headerlink" href="#ppa-personal-package-archive" title="Link to this heading">#</a></h2>
-<p>The Mroonga APT repository for Ubuntu uses PPA (Personal Package
-Archive) on Launchpad. You can install Mroonga by APT from the PPA.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The PPA (Personal Package Archive, <code class="docutils literal notranslate"><span class="pre">ppa:groonga/ppa</span></code>) is deprecated.
+Use the Groonga APT repository (<code class="docutils literal notranslate"><span class="pre">packages.groonga.org</span></code>) described below instead.</p>
+</div>
 <p>Here are supported Ubuntu versions:</p>
 <ul class="simple">
 <li><p>22.04 Jammy Jellyfish</p></li>
@@ -466,29 +467,35 @@ Archive) on Launchpad. You can install Mroonga by APT from the PPA.</p>
 <li><p>22.04 Jammy Jellyfish</p></li>
 <li><p>24.04 Noble Numbat</p></li>
 </ul>
+<section id="groonga-apt-repository">
+<h2><span class="section-number">2.4.1. </span>Groonga APT Repository<a class="headerlink" href="#groonga-apt-repository" title="Link to this heading">#</a></h2>
 <p>Enable the universe repository and the security update repository to
 install Mroonga:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">software</span><span class="o">-</span><span class="n">properties</span><span class="o">-</span><span class="n">common</span> <span class="n">lsb</span><span class="o">-</span><span class="n">release</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="o">-</span><span class="n">y</span> <span class="n">universe</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="s2">&quot;deb http://security.ubuntu.com/ubuntu $(lsb_release --short --codename)-security main restricted&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V software-properties-common lsb-release
+$ sudo add-apt-repository -y universe
+$ sudo add-apt-repository -y &quot;deb http://security.ubuntu.com/ubuntu $(lsb_release --short --codename)-security main restricted&quot;
 </pre></div>
 </div>
-<p>Add the <code class="docutils literal notranslate"><span class="pre">ppa:groonga/ppa</span></code> PPA to your system:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="o">-</span><span class="n">y</span> <span class="n">ppa</span><span class="p">:</span><span class="n">groonga</span><span class="o">/</span><span class="n">ppa</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<p>Add the Groonga APT repository to your system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt update
+$ sudo apt install -y -V ca-certificates wget
+$ wget https://packages.groonga.org/ubuntu/groonga-apt-source-latest-$(lsb_release --codename --short).deb
+$ sudo apt install -y -V ./groonga-apt-source-latest-$(lsb_release --codename --short).deb
+$ rm -f groonga-apt-source-latest-$(lsb_release --codename --short).deb
+$ sudo apt update
 </pre></div>
 </div>
 <p>Install Mroonga for MySQL:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mroonga</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V mysql-mroonga
 </pre></div>
 </div>
 <p>Install Mroonga for MariaDB:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mroonga</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V mariadb-mroonga
 </pre></div>
 </div>
 <p>If you want to use <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> as a tokenizer, install groonga-tokenizer-mecab package.</p>
 <p>Install groonga-tokenizer-mecab package:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -541,7 +548,7 @@ install Mroonga:</p>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ppa-personal-package-archive">2.4.1. PPA (Personal Package Archive)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groonga-apt-repository">2.4.1. Groonga APT Repository</a></li>
 </ul>
   </nav></div>
 

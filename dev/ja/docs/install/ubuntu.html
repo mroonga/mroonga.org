@@ -447,9 +447,10 @@
   <section id="ubuntu">
 <h1><span class="section-number">2.4. </span>Ubuntu<a class="headerlink" href="#ubuntu" title="Link to this heading">#</a></h1>
 <p>このセクションではUbuntu上でMroonga関連のdebパッケージをインストールする方法を説明します。これらのパッケージは <code class="docutils literal notranslate"><span class="pre">apt</span></code> でインストールできます。</p>
-<section id="ppa-personal-package-archive">
-<h2><span class="section-number">2.4.1. </span>PPA (Personal Package Archive)<a class="headerlink" href="#ppa-personal-package-archive" title="Link to this heading">#</a></h2>
-<p>Ubuntu用のMroongaのAPTリポジトリーはLaunchpad上のPPA（Personal Package Archive）を使っています。このPPAからAPTでMroongaをインストールできます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>PPA（Personal Package Archive、<code class="docutils literal notranslate"><span class="pre">ppa:groonga/ppa</span></code>）は非推奨です。代わりに、Groonga APTリポジトリ（<code class="docutils literal notranslate"><span class="pre">packages.groonga.org</span></code>）を使用してください。</p>
+</div>
 <p>サポートしているUbuntuのバージョンは次の通りです。</p>
 <ul class="simple">
 <li><p>22.04 Jammy Jellyfish</p></li>
@@ -465,28 +466,34 @@
 <li><p>22.04 Jammy Jellyfish</p></li>
 <li><p>24.04 Noble Numbat</p></li>
 </ul>
+<section id="groonga-apt-repository">
+<h2><span class="section-number">2.4.1. </span>Groonga APTリポジトリー<a class="headerlink" href="#groonga-apt-repository" title="Link to this heading">#</a></h2>
 <p>Mroongaをインストールするときは、universeリポジトリーとセキュリティアップデートリポジトリを有効にしてください。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">software</span><span class="o">-</span><span class="n">properties</span><span class="o">-</span><span class="n">common</span> <span class="n">lsb</span><span class="o">-</span><span class="n">release</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="o">-</span><span class="n">y</span> <span class="n">universe</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="s2">&quot;deb http://security.ubuntu.com/ubuntu $(lsb_release --short --codename)-security main restricted&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V software-properties-common lsb-release
+$ sudo add-apt-repository -y universe
+$ sudo add-apt-repository -y &quot;deb http://security.ubuntu.com/ubuntu $(lsb_release --short --codename)-security main restricted&quot;
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">ppa:groonga/ppa</span></code> PPAをシステムに追加します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="o">-</span><span class="n">y</span> <span class="n">ppa</span><span class="p">:</span><span class="n">groonga</span><span class="o">/</span><span class="n">ppa</span>
-<span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<p>Groonga APTリポジトリーをシステムに追加します:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt update
+$ sudo apt install -y -V ca-certificates wget
+$ wget https://packages.groonga.org/ubuntu/groonga-apt-source-latest-$(lsb_release --codename --short).deb
+$ sudo apt install -y -V ./groonga-apt-source-latest-$(lsb_release --codename --short).deb
+$ rm -f groonga-apt-source-latest-$(lsb_release --codename --short).deb
+$ sudo apt update
 </pre></div>
 </div>
 <p>MySQL用のMroongaをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mroonga</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V mysql-mroonga
 </pre></div>
 </div>
 <p>MariaDB用のMroongaをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mroonga</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V mariadb-mroonga
 </pre></div>
 </div>
 <p>トークナイザーとして <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> を利用したい場合はgroonga-tokenizer-mecabをインストールしてください。</p>
 <p>groonga-tokenizer-mecabをインストール:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">V</span> <span class="n">groonga</span><span class="o">-</span><span class="n">tokenizer</span><span class="o">-</span><span class="n">mecab</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install -y -V groonga-tokenizer-mecab
 </pre></div>
 </div>
 </section>
@@ -539,7 +546,7 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ppa-personal-package-archive">2.4.1. PPA (Personal Package Archive)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groonga-apt-repository">2.4.1. Groonga APTリポジトリー</a></li>
 </ul>
   </nav></div>
 
