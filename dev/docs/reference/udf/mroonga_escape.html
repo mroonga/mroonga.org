@@ -478,12 +478,12 @@ It also accepts parameter what character should be escaped.</p>
 <section id="usage">
 <h2><span class="section-number">5.5.2.3. </span>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
 <p>Here is the example query which use special characters to be escaped:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT * FROM `symbols` WHERE MATCH(`content`) AGAINST(mroonga_escape(&quot;+hello_world()&quot;, &quot;()&quot;) IN BOOLEAN MODE);
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT * FROM `symbols` WHERE MATCH(`content`) AGAINST(mroonga_escape("+hello_world()", "()") IN BOOLEAN MODE);
 </pre></div>
 </div>
 <p>Here is the example about special characters which is escaped:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_escape</span><span class="p">(</span><span class="s2">&quot;+-&lt;&gt;~*()</span><span class="se">\&quot;\\</span><span class="s2">\:&quot;</span><span class="p">);</span>
-<span class="o">--</span> \<span class="o">+</span>\<span class="o">-</span>\<span class="o">&lt;</span>\<span class="o">&gt;</span>\<span class="o">~</span>\<span class="o">*</span>\<span class="p">(</span>\<span class="p">)</span>\<span class="s2">&quot;</span><span class="se">\\</span><span class="s2">\:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_escape</span><span class="p">(</span><span class="s2">"+-&lt;&gt;~*()</span><span class="se">\"\\</span><span class="s2">\:"</span><span class="p">);</span>
+<span class="o">--</span> \<span class="o">+</span>\<span class="o">-</span>\<span class="o">&lt;</span>\<span class="o">&gt;</span>\<span class="o">~</span>\<span class="o">*</span>\<span class="p">(</span>\<span class="p">)</span>\<span class="s2">"</span><span class="se">\\</span><span class="s2">\:</span>
 </pre></div>
 </div>
 </section>

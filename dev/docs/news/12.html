@@ -447,10 +447,10 @@
 <span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">search_note_idx</span><span class="w"> </span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Taro Yamada&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"Taro Yamada"</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">);</span>
 
-<span class="k">UPDATE</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">note</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Note&quot;</span>
-<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;Taro Yamada&quot;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">29</span><span class="p">;</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">note</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"Note"</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"Taro Yamada"</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">29</span><span class="p">;</span>
 
 <span class="n">ERROR</span><span class="w"> </span><span class="mi">1265</span><span class="w"> </span><span class="p">(</span><span class="mi">01000</span><span class="p">):</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">truncated</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="k">column</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span>
 </pre></div>
@@ -504,8 +504,8 @@
 <p>Now we can specify a tag for highlighting with <code class="docutils literal notranslate"><span class="pre">open_tag</span></code> and <code class="docutils literal notranslate"><span class="pre">close_tag</span></code>.</p>
 <p>It was inconvinient for us to unable specifying different tags or changing <code class="docutils literal notranslate"><span class="pre">class</span></code> because the fixed tag <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;...&lt;/span&gt;</span></code> was used.
 Now, this new parameter provides more convenience for us because it allows specifying tags to highlight, such as <code class="docutils literal notranslate"><span class="pre">&lt;mark&gt;...&lt;/mark&gt;</span></code>.</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">&#39;Mroonga is the Groonga based storage engine.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groonga&#39;</span><span class="p">,</span>
-<span class="w">                              </span><span class="s1">&#39;&lt;mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;/mark&gt;&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">close_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_highlight_html</span><span class="p">(</span><span class="s1">'Mroonga is the Groonga based storage engine.'</span><span class="p">,</span><span class="w"> </span><span class="s1">'groonga'</span><span class="p">,</span>
+<span class="w">                              </span><span class="s1">'&lt;mark&gt;'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_tag</span><span class="p">,</span><span class="w"> </span><span class="s1">'&lt;/mark&gt;'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">close_tag</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">highlighted</span><span class="p">;</span>
 
 <span class="c1">-- +-----------------------------------------------------------+</span>
 <span class="c1">-- | highlighted                                               |</span>
@@ -529,7 +529,7 @@ Groonga objects would be released at the same time with table closing if the ref
 memory usage and value of status variables <a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Open_tables">Open_tables</a>.
 Because this feature can keep fixed memory usage, but its performance would be dropped.</p>
 <p>There is how to check <code class="docutils literal notranslate"><span class="pre">Open_tables</span></code> as follows.</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;Open_tables&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'Open_tables'</span><span class="p">;</span>
 <span class="c1">-- +---------------+-------+</span>
 <span class="c1">-- | Variable_name | Value |</span>
 <span class="c1">-- +---------------+-------+</span>
@@ -597,12 +597,12 @@ So if the Groonga queries match too many results, it could continue to consume m
 <span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll be fine tomorrow."</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll rain tomorrow"</span><span class="p">);</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="cm">/*+ MAX_EXECUTION_TIME(1) */</span><span class="w"> </span><span class="n">title</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Here is a sample for MariaDB.</p>
@@ -611,13 +611,13 @@ So if the Groonga queries match too many results, it could continue to consume m
 <span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll be fine tomorrow."</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll rain tomorrow"</span><span class="p">);</span>
 
 <span class="k">SET</span><span class="w"> </span><span class="k">STATEMENT</span><span class="w"> </span><span class="n">max_statement_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">001</span><span class="w"> </span><span class="k">FOR</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">title</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This feature can use in <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> also.</p>
@@ -722,7 +722,7 @@ Therefore, We can’t groonga-normalizer-mysql from Mroonga 12.02 for Windows to
 <ul>
 <li><p>[<a class="reference internal" href="../reference/server_variables.html"><span class="doc">Server variables</span></a>] Add a new status variable <code class="docutils literal notranslate"><span class="pre">Mroonga_memory_map_size</span></code>.</p>
 <p>We can get the total memory map size in bytes of Mroonga as below.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">&#39;Mroonga_memory_map_size&#39;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">'Mroonga_memory_map_size'</span><span class="p">;</span>
 <span class="o">+-------------------------+----------+</span>
 <span class="o">|</span> <span class="n">Variable_name</span>           <span class="o">|</span> <span class="n">Value</span>    <span class="o">|</span>
 <span class="o">+-------------------------+----------+</span>
@@ -858,16 +858,16 @@ We can confirm Mroonga’s version as the below command.</p>
 <li><p>We can use custom normalizer in <code class="docutils literal notranslate"><span class="pre">mroonga_snippet_html()</span></code> by this feature as below.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE terms (
   term VARCHAR(64) NOT NULL PRIMARY KEY
-) COMMENT=&#39;normalizer &quot;NormalizerNFKC130(&#39;&#39;unify_kana&#39;&#39;, true)&quot;&#39;
+) COMMENT='normalizer "NormalizerNFKC130(''unify_kana'', true)"'
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
-SELECT mroonga_snippet_html(&#39;これはMroonga（ムルンガ）です。&#39;,
-                            &#39;terms&#39; as lexicon_name,
-                            &#39;むるんが&#39;) as snippet;
+SELECT mroonga_snippet_html('これはMroonga（ムルンガ）です。',
+                            'terms' as lexicon_name,
+                            'むるんが') as snippet;
 
 snippet
-&lt;div class=&quot;snippet&quot;&gt;これはMroonga（&lt;span class=&quot;keyword&quot;&gt;ムルンガ&lt;/span&gt;）です。&lt;/div&gt;
+&lt;div class="snippet"&gt;これはMroonga（&lt;span class="keyword"&gt;ムルンガ&lt;/span&gt;）です。&lt;/div&gt;
 </pre></div>
 </div>
 </li>

@@ -441,7 +441,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">memos</span> <span class="p">(</span>
   <span class="nb">id</span> <span class="n">INT</span> <span class="n">UNSIGNED</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
   <span class="n">title</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
-  <span class="n">UNIQUE</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">USING</span> <span class="n">HASH</span> <span class="n">COMMENT</span> <span class="s1">&#39;lexicon_flags &quot;KEY_LARGE&quot;&#39;</span>
+  <span class="n">UNIQUE</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">USING</span> <span class="n">HASH</span> <span class="n">COMMENT</span> <span class="s1">'lexicon_flags "KEY_LARGE"'</span>
 <span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -483,7 +483,7 @@
 <li><p>このリリースから、以下のようにテーブルフラグのカスタマイズができます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">terms</span> <span class="p">(</span>
   <span class="n">term</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>
-<span class="p">)</span> <span class="n">COMMENT</span><span class="o">=</span><span class="s1">&#39;flags &quot;TABLE_HASH_KEY|KEY_LARGE&quot;&#39;</span>
+<span class="p">)</span> <span class="n">COMMENT</span><span class="o">=</span><span class="s1">'flags "TABLE_HASH_KEY|KEY_LARGE"'</span>
   <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -551,32 +551,32 @@
 CREATE TABLE memos (
 content text,
 fulltext index content_index (content)
-COMMENT &#39;normalizer &quot;NormalizerNFKC121(\&#39;unify_kana\&#39;, true)&quot;&#39;
+COMMENT 'normalizer "NormalizerNFKC121(\'unify_kana\', true)"'
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-SELECT mroonga_snippet_html(&#39;This is Mroonga（ムルンガ）.&#39;,
-&#39;memos&#39; as table_name,
-&#39;content_index&#39; as index_name,
-&#39;むるんが&#39;) as snippet;
+SELECT mroonga_snippet_html('This is Mroonga（ムルンガ）.',
+'memos' as table_name,
+'content_index' as index_name,
+'むるんが') as snippet;
 
 snippet
-&lt;div class=&quot;snippet&quot;&gt;This is Mroonga（&lt;span class=&quot;keyword&quot;&gt;ムルンガ&lt;/span&gt;）.&lt;/div&gt;
+&lt;div class="snippet"&gt;This is Mroonga（&lt;span class="keyword"&gt;ムルンガ&lt;/span&gt;）.&lt;/div&gt;
 </pre></div>
 </div>
 <ul>
 <li><p>この変更によって、クエリーによる検索とキーワードによる検索を混在して使うことができます。</p></li>
 <li><p>例えば以下のように、<code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">query</span></code> と <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">snippet</span></code> の両方で指定したキーワードをハイライトできます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SET NAMES utf8mb4;
-SELECT mroonga_snippet_html(&#39;Mroonga has two running modes.
+SELECT mroonga_snippet_html('Mroonga has two running modes.
 
 One is “storage mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data update, lock-free full text search and geolocation search. But it does not support transactions.
 
-Another one is “wrapper mode”, that adds full text search function on other storage engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB. But you cannot have benefits from Groonga’s read-lock free characteristic. And you might have the performance bottle neck in the storage engine in updating data.&#39;,
-&#39;lock storage&#39; AS query,
-&#39;update&#39; AS snippet;
+Another one is “wrapper mode”, that adds full text search function on other storage engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the storage engine, ex. transaction in InnoDB. But you cannot have benefits from Groonga’s read-lock free characteristic. And you might have the performance bottle neck in the storage engine in updating data.',
+'lock storage' AS query,
+'update' AS snippet;
 
 snippet
-&lt;div class=&quot;snippet&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data &lt;span class=&quot;keyword&quot;&gt;update&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt;-fr&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;text search function on other &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine, ex. transaction in In&lt;/div&gt;&lt;div class=&quot;snippet&quot;&gt;noDB. But you cannot have benefits from Groonga’s read-&lt;span class=&quot;keyword&quot;&gt;lock&lt;/span&gt; free characteristic. And you might have the performance bottle neck in the &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; engine in updating data.&lt;/div&gt;
+&lt;div class="snippet"&gt;&lt;span class="keyword"&gt;storage&lt;/span&gt; mode”, that is the default mode, and we use Groonga for both storing data and searching. With this mode, you can have full benefits of Groonga described above, like fast data &lt;span class="keyword"&gt;update&lt;/span&gt;, &lt;span class="keyword"&gt;lock&lt;/span&gt;-fr&lt;/div&gt;&lt;div class="snippet"&gt;text search function on other &lt;span class="keyword"&gt;storage&lt;/span&gt; engines like MyISAM or InnoDB. With this mode, you can use Groonga’s fast full text search with having the benefits of the &lt;span class="keyword"&gt;storage&lt;/span&gt; engine, ex. transaction in In&lt;/div&gt;&lt;div class="snippet"&gt;noDB. But you cannot have benefits from Groonga’s read-&lt;span class="keyword"&gt;lock&lt;/span&gt; free characteristic. And you might have the performance bottle neck in the &lt;span class="keyword"&gt;storage&lt;/span&gt; engine in updating data.&lt;/div&gt;
 </pre></div>
 </div>
 </li>
@@ -691,11 +691,11 @@ snippet
 <span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
 <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">bugs</span> <span class="p">(</span>
-  <span class="n">tags</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_VECTOR|WITH_WEIGHT&quot;, type &quot;tags&quot;&#39;</span><span class="p">,</span>
-  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="n">bugs_tags</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;table &quot;tags&quot;, flags &quot;WITH_WEIGHT&quot;&#39;</span>
+  <span class="n">tags</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">'flags "COLUMN_VECTOR|WITH_WEIGHT", type "tags"'</span><span class="p">,</span>
+  <span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="n">bugs_tags</span> <span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'table "tags", flags "WITH_WEIGHT"'</span>
 <span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
-<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">bugs</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s1">&#39;{&quot;package&quot;: 100, &quot;priority&quot;: 5}&#39;</span><span class="p">);</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">bugs</span> <span class="n">VALUES</span> <span class="p">(</span><span class="s1">'{"package": 100, "priority": 5}'</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>

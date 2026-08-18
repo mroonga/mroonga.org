@@ -454,19 +454,19 @@
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">INSERT</span></code> でデータを投入してみましょう。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll be fine tomorrow."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll rain tomorrow"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
 <p>全文検索を実行してみます。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- | id | content                                 |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
-<span class="c1">-- |  1 | It&#39;ll be fine tomorrow. |</span>
+<span class="c1">-- |  1 | It'll be fine tomorrow. |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
@@ -482,24 +482,24 @@
 <p>全文検索を行う際、指定したキーワードにより内容が一致するレコードを上位に表示したいというような場合があります。そうしたケースでは検索スコアを利用します。</p>
 <p>検索スコアはMySQLの標準的な方法 <a class="footnote-reference brackets" href="#score" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> で取得できます。つまり、SELECTの取得するカラム名を指定するところやORDER BYのところにMATCH...AGAINSTを指定します。</p>
 <p>それでは実際にやってみましょう。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It's fine today. It'll be fine tomorrow as well."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It's fine today. But it'll rain tomorrow."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
 <span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 <span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
-<span class="c1">-- | id | content                                          | MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) |</span>
+<span class="c1">-- | id | content                                          | MATCH (content) AGAINST ("+fine" IN BOOLEAN MODE) |</span>
 <span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
-<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                                 2 |</span>
-<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |                                                 1 |</span>
-<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |                                                 1 |</span>
+<span class="c1">-- |  3 | It's fine today. It'll be fine tomorrow as well. |                                                 2 |</span>
+<span class="c1">-- |  1 | It'll be fine tomorrow.                          |                                                 1 |</span>
+<span class="c1">-- |  4 | It's fine today. But it'll rain tomorrow.        |                                                 1 |</span>
 <span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
 <span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
@@ -507,17 +507,17 @@
 <p>検索対象の文字列 <code class="docutils literal notranslate"><span class="pre">fine</span></code> をより多く含む、すなわち検索スコアの高い <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> のメッセージが上に来ていることが確認できます。また、SELECT句にMATCH AGAINSTを記述しているため、検索スコアも取得できています。</p>
 <p>属性名を変更したい場合は <code class="docutils literal notranslate"><span class="pre">AS</span></code> を使って下さい。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">score</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">score</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
 <span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 <span class="c1">-- +----+--------------------------------------------------+-------+</span>
 <span class="c1">-- | id | content                                          | score |</span>
 <span class="c1">-- +----+--------------------------------------------------+-------+</span>
-<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |</span>
-<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |     1 |</span>
-<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |     1 |</span>
+<span class="c1">-- |  3 | It's fine today. It'll be fine tomorrow as well. |     2 |</span>
+<span class="c1">-- |  1 | It'll be fine tomorrow.                          |     1 |</span>
+<span class="c1">-- |  4 | It's fine today. But it'll rain tomorrow.        |     1 |</span>
 <span class="c1">-- +----+--------------------------------------------------+-------+</span>
 <span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
@@ -530,7 +530,7 @@
 </pre></div>
 </div>
 <p>しかし、この構文を利用する場合は、あらかじめすべてのパーサをMySQLに登録しておく必要があります。一方、Groongaはトークナイザー（MySQLでいうパーサ）を動的に追加することができます。そのため、Mroongaでもこの構文を採用するとGroonga側に動的に追加されたトークナイザーに対応できなくなります。Groongaに動的に追加されるトークナイザーにはMeCabを用いたトークナイザーもあり、この制限に縛られることは利便性を損なうと判断し、以下のようなコメントを用いた独自の構文を採用することにしました。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'tokenizer "TokenMecab"'</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -650,12 +650,12 @@
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"2013-04-23"</span><span class="p">,</span><span class="w"> </span><span class="ss">"ブラックコーヒーを飲んだ。"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ふらつく"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
 <span class="c1">-- | day        | content                                 |</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
@@ -665,7 +665,7 @@
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ﾌﾞﾗｯｸ"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
 <span class="c1">-- | day        | content                                 |</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
@@ -675,7 +675,7 @@
 </pre></div>
 </div>
 <p>Mroongaは、Groongaのノーマライザーを指定する以下のような構文を持っています。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'normalizer "NormalizerAuto"'</span>
 </pre></div>
 </div>
 <p>詳細は <a class="reference external" href="https://groonga.org/ja/docs/reference/normalizers.html">Groongaのノーマライザーのドキュメント</a> を確認してください。</p>
@@ -686,21 +686,21 @@
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="k">day</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'normalizer "NormalizerAuto"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.19 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"2013-04-23"</span><span class="p">,</span><span class="w"> </span><span class="ss">"ブラックコーヒーを飲んだ。"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ふらつく"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- Empty set (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ﾌﾞﾗｯｸ"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
 <span class="c1">-- | day        | content                                 |</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
@@ -713,13 +713,13 @@
 <section id="how-to-specify-the-token-filters">
 <h2><span class="section-number">4.3.5. </span>トークンフィルターの指定方法<a class="headerlink" href="#how-to-specify-the-token-filters" title="Link to this heading">#</a></h2>
 <p>Mroongaは、Groongaのトークンフィルターを指定する以下のような構文を持っています。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;token_filters &quot;TokenFilterStem&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'token_filters "TokenFilterStem"'</span>
 </pre></div>
 </div>
 <p>以下は、<code class="docutils literal notranslate"><span class="pre">TokenFilterStem</span></code> のトークンフィルターを使用する例です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="s1">'register token_filters/stem'</span><span class="p">);</span>
 <span class="c1">-- +------------------------------------------------+</span>
-<span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
+<span class="c1">-- | mroonga_command('register token_filters/stem') |</span>
 <span class="c1">-- +------------------------------------------------+</span>
 <span class="c1">-- | true                                           |</span>
 <span class="c1">-- +------------------------------------------------+</span>
@@ -728,27 +728,27 @@
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'normalizer "NormalizerAuto", token_filters "TokenFilterStem"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I develop Groonga&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">"I develop Groonga"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I&#39;m developing Groonga&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">"I'm developing Groonga"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I developed Groonga&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">"I developed Groonga"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+develops&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+develops"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+------------------------+</span>
 <span class="c1">-- | id | content                |</span>
 <span class="c1">-- +----+------------------------+</span>
 <span class="c1">-- |  1 | I develop Groonga      |</span>
-<span class="c1">-- |  2 | I&#39;m developing Groonga |</span>
+<span class="c1">-- |  2 | I'm developing Groonga |</span>
 <span class="c1">-- |  3 | I developed Groonga    |</span>
 <span class="c1">-- +----+------------------------+</span>
 <span class="c1">-- 3 rows in set (0.01 sec)</span>
@@ -756,9 +756,9 @@
 </div>
 <p>詳細は <a class="reference external" href="https://groonga.org/ja/docs/reference/token_filters.html">Groongaのトークンフィルターのドキュメント</a> を確認してください。</p>
 <p>以下は、<code class="docutils literal notranslate"><span class="pre">TokenFilterStopWord</span></code> のトークンフィルターを使用する例です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">"register token_filters/stop_word"</span><span class="p">);</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
-<span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
+<span class="c1">-- | mroonga_command("register token_filters/stop_word") |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
 <span class="c1">-- | true                                                |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
@@ -767,31 +767,31 @@
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">term</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">is_stop_word</span><span class="w"> </span><span class="n">BOOL</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">COMMENT</span><span class="o">=</span><span class="s1">&#39;tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39;</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">COMMENT</span><span class="o">=</span><span class="s1">'tokenizer "TokenBigram", token_filters "TokenFilterStopWord"'</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;table &quot;terms&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'table "terms"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.17 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;and&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"and"</span><span class="p">,</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Hello&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">"Hello"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Hello and Good-bye&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">"Hello and Good-bye"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Good-bye&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">"Good-bye"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;+&quot;Hello and&quot;&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'+"Hello and"'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+--------------------+</span>
 <span class="c1">-- | id | content            |</span>
 <span class="c1">-- +----+--------------------+</span>
@@ -806,13 +806,13 @@
 <section id="how-to-specify-groonga-s-column-flags">
 <h2><span class="section-number">4.3.6. </span>Groongaのカラムフラグの指定方法<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Link to this heading">#</a></h2>
 <p>Mroongaは、Groongaのカラムフラグを指定する以下のような構文を持っています。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">'flags "COLUMN_SCALAR|COMPRESS_ZLIB"'</span>
 </pre></div>
 </div>
 <p>以下は、<code class="docutils literal notranslate"><span class="pre">COMPRESS_ZLIB</span></code> フラグを使用する例です。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="n">UNSIGNED</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'flags "COLUMN_SCALAR|COMPRESS_ZLIB"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 </pre></div>
@@ -833,24 +833,24 @@
 </pre></div>
 </div>
 <p>データの登録方法もMyISAMのときと同様にGeomFromText()関数を使って文字列からPOINT型の値を作成します。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">'Nezu''s Taiyaki'</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'POINT(139.762573 35.720253)'</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">'Naniwaya'</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'POINT(139.796234 35.730061)'</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Yanagiya Taiyaki&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.783981 35.685341)&#39;</span><span class="p">));</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">'Yanagiya Taiyaki'</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'POINT(139.783981 35.685341)'</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
 <p>池袋駅（139.7101 35.7292）が左上の点、東京駅（139.7662 35.6815）が右下の点となるような長方形内にあるお店を探す場合は以下のようなSELECTになります。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">shops</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span><span class="w"> </span><span class="k">location</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'LineString(139.7101 35.7292, 139.7662 35.6815)'</span><span class="p">),</span><span class="w"> </span><span class="k">location</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
 <span class="c1">-- | id | name                  | AsText(location)                         |</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
-<span class="c1">-- |  1 | Nezu&#39;s Taiyaki        | POINT(139.762572777778 35.7202527777778) |</span>
+<span class="c1">-- |  1 | Nezu's Taiyaki        | POINT(139.762572777778 35.7202527777778) |</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
@@ -873,16 +873,16 @@
 <p><code class="docutils literal notranslate"><span class="pre">_id</span></code> カラムのデータ型は整数型(TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT)である必要があります。</p>
 <p>また_idカラムにはインデックスを作成することが可能ですが、HASH形式である必要があります。</p>
 <p>INSERTでテーブルにレコードを追加してみましょう。_idカラムは仮想カラムとして実装されており、また_idの値であるレコードIDはGroongaにより割当てられるため、SQLによる更新時に値を指定することはできません。更新対象から外すか、値に <code class="docutils literal notranslate"><span class="pre">null</span></code> を使用する必要があります。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Saury for today's dinner."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Update mroonga tomorrow."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Buy some dumpling on the way home.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Buy some dumpling on the way home."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Thank God It&#39;s meat day.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Thank God It's meat day."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
@@ -891,16 +891,16 @@
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- | _id  | content                                  |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
-<span class="c1">-- |    1 | Saury for today&#39;s dinner.                |</span>
+<span class="c1">-- |    1 | Saury for today's dinner.                |</span>
 <span class="c1">-- |    2 | Update mroonga tomorrow.                 |</span>
 <span class="c1">-- |    3 | Buy some dumpling on the way home.       |</span>
-<span class="c1">-- |    4 | Thank God It&#39;s meat day.                 |</span>
+<span class="c1">-- |    4 | Thank God It's meat day.                 |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- 4 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>また直前のINSERTにより割当てられたレコードIDについては、last_insert_grn_id関数により取得することもできます。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Just one bottle of milk in the fridge."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
@@ -913,11 +913,11 @@
 </pre></div>
 </div>
 <p>last_insert_grn_id関数はユーザ定義関数(UDF)としてMroongaに含まれていますが、インストール時にCREATE FUNCTIONでMySQLに追加していない場合には、以下の関数定義DDLを実行しておく必要があります。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="w"> </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="w"> </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">'ha_mroonga.so'</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>ご覧のように_idカラムやlast_insert_grn_id関数を通じてレコードIDを取得することができました。ここで取得したレコードIDは後続のUPDATEなどのSQL文で利用すると便利です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;So much milk in the fridge.&quot;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"So much milk in the fridge."</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 <span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
 </pre></div>
@@ -942,19 +942,19 @@
 </div>
 <p>実行例で使用するサンプルデータはこちら。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Groonga similar search&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Groonga similar search'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Groonga is an open-source fulltext search engine and column store.'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Mroonga similar search&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Mroonga similar search'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Mroonga is an open-source storage engine for fast fulltext search with MySQL.'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Rroonga library&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A library to use Groonga features from Ruby.&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Rroonga library'</span><span class="p">,</span><span class="w"> </span><span class="s1">'A library to use Groonga features from Ruby.'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>以下は文書の内容による類似文書検索の出力例です。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'There are many open-source fulltext search engine.'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><cite>AGAINST('...' IN NATURAL LANGUAGE MODE)</cite> に文書の内容を指定する必要があることに注意してください。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'There are many open-source fulltext search engine.'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------------------+</span>
 <span class="c1">-- | title                  |</span>
 <span class="c1">-- +------------------------+</span>
@@ -970,7 +970,7 @@
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
 <span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'tokenizer "TokenMecab"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1000,48 +1000,48 @@
 </div>
 <p>実行例で使用するサンプルデータはこちら。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;groonga&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Groonga is an open-source fulltext search engine and column store.'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04-08'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'groonga'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04-09&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Mroonga is an open-source storage engine for fast fulltext search with MySQL.'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04-09'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'MySQL'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-03-29&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-03&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-03-29'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-03'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'MySQL'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>各レコードには <code class="docutils literal notranslate"><span class="pre">tag</span></code> として <code class="docutils literal notranslate"><span class="pre">groonga</span></code> あるいは <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> が付いています。各レコードは <code class="docutils literal notranslate"><span class="pre">year</span></code> と <code class="docutils literal notranslate"><span class="pre">year_month</span></code> カラムも持っています。ファセット検索のキーとして <code class="docutils literal notranslate"><span class="pre">tag</span></code> 、 <code class="docutils literal notranslate"><span class="pre">year</span></code> 、 <code class="docutils literal notranslate"><span class="pre">year_month</span></code> を使えます。</p>
 <p>Groongaはファセット検索のことをドリルダウンと呼んでいます。そのため、Groongaでのパラメータ名は <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code> となっています。Groongaは検索結果をJSONで返します。そのため、 <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> も検索結果をJSONで返します。これはSQLらしくありません。JSON形式の検索結果は自分でパースしないといけません。</p>
 <p>以下は利用可能なファセット検索キーをすべて使った例です。（結果のJSONは整形済み）</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">faceted_result</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">"select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month"</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">faceted_result</span><span class="p">;</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | faceted_result              |</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | [[[3],                      |</span>
-<span class="c1">-- |   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |</span>
+<span class="c1">-- |   [["_id","UInt32"]]],      |</span>
 <span class="c1">-- |  [[2],                      |</span>
-<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
-<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
-<span class="c1">-- |   [&quot;groonga&quot;,1],            |</span>
-<span class="c1">-- |   [&quot;MySQL&quot;,2]],             |</span>
+<span class="c1">-- |   [["_key","ShortText"],    |</span>
+<span class="c1">-- |    ["_nsubrecs","Int32"]],  |</span>
+<span class="c1">-- |   ["groonga",1],            |</span>
+<span class="c1">-- |   ["MySQL",2]],             |</span>
 <span class="c1">-- |  [[1],                      |</span>
-<span class="c1">-- |   [[&quot;_key&quot;,&quot;Time&quot;],         |</span>
-<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [["_key","Time"],         |</span>
+<span class="c1">-- |    ["_nsubrecs","Int32"]],  |</span>
 <span class="c1">-- |   [1356998400.0,3]],        |</span>
 <span class="c1">-- |  [[2],                      |</span>
-<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
-<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
-<span class="c1">-- |   [&quot;2013-04&quot;,2],            |</span>
-<span class="c1">-- |   [&quot;2013-03&quot;,1]]]           |</span>
+<span class="c1">-- |   [["_key","ShortText"],    |</span>
+<span class="c1">-- |    ["_nsubrecs","Int32"]],  |</span>
+<span class="c1">-- |   ["2013-04",2],            |</span>
+<span class="c1">-- |   ["2013-03",1]]]           |</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
@@ -1049,23 +1049,23 @@
 <p>最初の要素 <code class="docutils literal notranslate"><span class="pre">[[3],</span> <span class="pre">[[&quot;_id&quot;,&quot;UInt32&quot;]]]</span></code> は通常の検索の結果です。これはファセット検索の結果ではありません。</p>
 <p>2番目、3番目、4番目の要素がファセット検索の結果です。</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"groonga"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"MySQL"</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;Time&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"Time"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
 <span class="w"> </span><span class="p">[</span><span class="mf">1356998400.0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
 </pre></div>
 </div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;2013-04&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;2013-03&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"2013-04"</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"2013-03"</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>ファセット検索の結果の順序は <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code> に指定した値に対応します。この例では、 <code class="docutils literal notranslate"><span class="pre">--drilldown</span></code> の値に <code class="docutils literal notranslate"><span class="pre">tag</span></code> と <code class="docutils literal notranslate"><span class="pre">year</span></code> と <code class="docutils literal notranslate"><span class="pre">year_month</span></code> を指定しています。そのため、最初のファセット検索の結果は <code class="docutils literal notranslate"><span class="pre">tag</span></code> 用の結果で、2番目は <code class="docutils literal notranslate"><span class="pre">year</span></code> 用の結果で、 3番目は <code class="docutils literal notranslate"><span class="pre">year_month</span></code> 用の結果です。</p>
@@ -1093,19 +1093,19 @@
 <p>ファセット検索の結果の <code class="docutils literal notranslate"><span class="pre">_key</span></code> カラムの値はファセット検索で使用したキーを示します。</p>
 <p>たとえば、最初のファセット検索の結果（ <code class="docutils literal notranslate"><span class="pre">tag</span></code> のファセット検索の結果）はマッチしたレコード（今回のケースではすべてのレコード）は <code class="docutils literal notranslate"><span class="pre">tag</span></code> の値として <code class="docutils literal notranslate"><span class="pre">groonga</span></code> と <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> があることを示しています。</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"groonga"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"MySQL"</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>ファセット検索の結果の <code class="docutils literal notranslate"><span class="pre">_nsubrecs</span></code> カラムの値は対応するファセット検索のキーを持つレコードが何件あるかを示します。</p>
 <p>たとえば、最初のファセット検索の結果（ <code class="docutils literal notranslate"><span class="pre">tag</span></code> のファセット検索の結果）は <code class="docutils literal notranslate"><span class="pre">tag</span></code> の値として <code class="docutils literal notranslate"><span class="pre">groonga</span></code> を持つレコードは1件あり、 <code class="docutils literal notranslate"><span class="pre">tag</span></code> の値として <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> を持つレコードは2件あることを示しています。</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"groonga"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"MySQL"</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>詳細は <a class="reference external" href="https://groonga.org/ja/docs/reference/commands/select.html">Groongaのselectコマンドのドキュメント</a> を確認してください。</p>
@@ -1121,15 +1121,15 @@
 <p>以下は正規表現による検索の出力例です。</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">content_index</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenRegexp&quot;, normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">content_index</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'tokenizer "TokenRegexp", normalizer "NormalizerAuto"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/usr/bin/groonga&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/var/log/auth.log&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/var/log/messages&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/tmp/local/var/log/auth.log&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/usr/bin/groonga'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/var/log/auth.log'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/var/log/messages'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/tmp/local/var/log/auth.log'</span><span class="p">);</span>
 
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;*SS content @~ &quot;\\\\A/var/log/auth&quot;&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'*SS content @~ "\\\\A/var/log/auth"'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +-------------------+</span>
 <span class="c1">-- | content           |</span>
 <span class="c1">-- +-------------------+</span>
@@ -1153,7 +1153,7 @@
 </div>
 <p>ログのデフォルトの出力レベルはNOTICE（必要な情報のみ出力。デバッグ情報などは出力しない）となっております。</p>
 <p>ログの出力レベルは <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> というシステム変数で確認することができます（グローバル変数）。またSET文で動的に出力レベルを変更することもできます。</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'mroonga_log_level'</span><span class="p">;</span>
 <span class="c1">-- +-------------------+--------+</span>
 <span class="c1">-- | Variable_name     | Value  |</span>
 <span class="c1">-- +-------------------+--------+</span>
@@ -1164,7 +1164,7 @@
 <span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_log_level</span><span class="o">=</span><span class="n">DUMP</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
-<span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'mroonga_log_level'</span><span class="p">;</span>
 <span class="c1">-- +-------------------+-------+</span>
 <span class="c1">-- | Variable_name     | Value |</span>
 <span class="c1">-- +-------------------+-------+</span>

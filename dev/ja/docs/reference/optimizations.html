@@ -481,7 +481,7 @@
 </pre></div>
 </div>
 <p>以下はこの最適化を説明するための <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> です。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c11</span> <span class="n">FROM</span> <span class="n">t1</span> <span class="n">WHERE</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">XX</span> <span class="n">AND</span> <span class="n">c12</span> <span class="o">=</span> <span class="s2">&quot;XXX&quot;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c11</span> <span class="n">FROM</span> <span class="n">t1</span> <span class="n">WHERE</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">XX</span> <span class="n">AND</span> <span class="n">c12</span> <span class="o">=</span> <span class="s2">"XXX"</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>このケースではMroongaは <code class="docutils literal notranslate"><span class="pre">c1</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c2</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c11</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c12</span></code> カラムの値だけを取得します。 <code class="docutils literal notranslate"><span class="pre">c3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c4</span></code> 、 ...、 <code class="docutils literal notranslate"><span class="pre">c10</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c13</span></code> 、 ...、 <code class="docutils literal notranslate"><span class="pre">c19</span></code> 、<code class="docutils literal notranslate"><span class="pre">c20</span></code> カラムの値は取得しません。</p>
@@ -494,12 +494,12 @@
 <p>Mroongaは処理とI/Oを減らすことでより高速になります。</p>
 <p>これがこの最適化です。</p>
 <p>以下はこの最適化を説明するための <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> です。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">FROM</span> <span class="n">t1</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s2">&quot;+keyword&quot;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">FROM</span> <span class="n">t1</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s2">"+keyword"</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>この <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> は <code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code> だけを取得し、 <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> の条件はインデックスだけで処理できます。この場合、Mroongaはこの最適化を使います。</p>
 <p>この最適化が使われたかどうかは <a class="reference internal" href="status_variables.html#status-variable-mroonga-count-skip"><span class="std std-ref">Mroonga_count_skip</span></a> ステータス変数を参照するとわかります。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">&#39;Mroonga_count_skip&#39;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">'Mroonga_count_skip'</span><span class="p">;</span>
 <span class="o">+--------------------+-------+</span>
 <span class="o">|</span> <span class="n">Variable_name</span>      <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
 <span class="o">+--------------------+-------+</span>
@@ -522,13 +522,13 @@
 <p>以下はこの最適化を説明するための <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span>
   <span class="n">FROM</span> <span class="n">t1</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s2">&quot;+keyword&quot;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s2">"+keyword"</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span>
  <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">c1</span> <span class="n">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>この <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> は全文検索とソートをGroongaで実行し、MySQLには1件のレコードのみ返します。</p>
 <p>この最適化が使われたかどうかは <a class="reference internal" href="status_variables.html#status-variable-mroonga-fast-order-limit"><span class="std std-ref">Mroonga_fast_order_limit</span></a> ステータス変数を参照するとわかります。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">&#39;Mroonga_fast_order_limit&#39;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">STATUS</span> <span class="n">LIKE</span> <span class="s1">'Mroonga_fast_order_limit'</span><span class="p">;</span>
 <span class="o">+--------------------------+-------+</span>
 <span class="o">|</span> <span class="n">Variable_name</span>            <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
 <span class="o">+--------------------------+-------+</span>

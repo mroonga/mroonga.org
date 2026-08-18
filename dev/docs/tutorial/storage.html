@@ -453,19 +453,19 @@
 </pre></div>
 </div>
 <p>We put data by INSERT:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll be fine tomorrow.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll be fine tomorrow."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.01 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;ll rain tomorrow&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It'll rain tomorrow"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
 <p>Try full text search:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- | id | content                                 |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
-<span class="c1">-- |  1 | It&#39;ll be fine tomorrow. |</span>
+<span class="c1">-- |  1 | It'll be fine tomorrow. |</span>
 <span class="c1">-- +----+-----------------------------------------+</span>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
@@ -481,24 +481,24 @@
 <p>We often want to display more relevant results first in full text search. We use search score in such case.</p>
 <p>We can get search score by MySQL’s standard way <a class="footnote-reference brackets" href="#score" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, i.e. we use MATCH…AGAINST in one of columns in SELECT or ORDER BY.</p>
 <p>Let’s try:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;s fine today. It&#39;ll be fine tomorrow as well.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It's fine today. It'll be fine tomorrow as well."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;It&#39;s fine today. But it&#39;ll rain tomorrow.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"It's fine today. But it'll rain tomorrow."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
 <span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 <span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
-<span class="c1">-- | id | content                                          | MATCH (content) AGAINST (&quot;+fine&quot; IN BOOLEAN MODE) |</span>
+<span class="c1">-- | id | content                                          | MATCH (content) AGAINST ("+fine" IN BOOLEAN MODE) |</span>
 <span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
-<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |                                                 2 |</span>
-<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |                                                 1 |</span>
-<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |                                                 1 |</span>
+<span class="c1">-- |  3 | It's fine today. It'll be fine tomorrow as well. |                                                 2 |</span>
+<span class="c1">-- |  1 | It'll be fine tomorrow.                          |                                                 1 |</span>
+<span class="c1">-- |  4 | It's fine today. But it'll rain tomorrow.        |                                                 1 |</span>
 <span class="c1">-- +----+--------------------------------------------------+---------------------------------------------------+</span>
 <span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
@@ -506,17 +506,17 @@
 <p>The result having the search word <code class="docutils literal notranslate"><span class="pre">fine</span></code> more, i.e. <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">=</span> <span class="pre">3</span></code> message having the higher search score, is displayed first. And you also get search score by using MATCH AGAINST in SELECT phrase.</p>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">AS</span></code> to change the attribute name:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">score</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">score</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span>
 <span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+fine&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<span class="w">       </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+fine"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 <span class="c1">-- +----+--------------------------------------------------+-------+</span>
 <span class="c1">-- | id | content                                          | score |</span>
 <span class="c1">-- +----+--------------------------------------------------+-------+</span>
-<span class="c1">-- |  3 | It&#39;s fine today. It&#39;ll be fine tomorrow as well. |     2 |</span>
-<span class="c1">-- |  1 | It&#39;ll be fine tomorrow.                          |     1 |</span>
-<span class="c1">-- |  4 | It&#39;s fine today. But it&#39;ll rain tomorrow.        |     1 |</span>
+<span class="c1">-- |  3 | It's fine today. It'll be fine tomorrow as well. |     2 |</span>
+<span class="c1">-- |  1 | It'll be fine tomorrow.                          |     1 |</span>
+<span class="c1">-- |  4 | It's fine today. But it'll rain tomorrow.        |     1 |</span>
 <span class="c1">-- +----+--------------------------------------------------+-------+</span>
 <span class="c1">-- 3 rows in set (0.00 sec)</span>
 </pre></div>
@@ -529,7 +529,7 @@
 </pre></div>
 </div>
 <p>To use this syntax, you need to register all parsers in MySQL beforehand. On the other hand, Groonga can dynamically add a tokenizer, that is a parser in MySQL. So if use this syntax in Mroonga, tokenizers that are added in Groonga dynamically cannot be supported. We think that this limitation decreases the convenience, and we choose our own syntax using COMMENT like the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'tokenizer "TokenMecab"'</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -692,12 +692,12 @@ It is used when tokenizing text and storing table key.</p>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"2013-04-23"</span><span class="p">,</span><span class="w"> </span><span class="ss">"ブラックコーヒーを飲んだ。"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ふらつく"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
 <span class="c1">-- | day        | content                                 |</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
@@ -707,7 +707,7 @@ It is used when tokenizing text and storing table key.</p>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ﾌﾞﾗｯｸ"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
 <span class="c1">-- | day        | content                                 |</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
@@ -717,7 +717,7 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>Mroonga has the following syntax to specify Groonga’s normalizer:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'normalizer "NormalizerAuto"'</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://groonga.org/docs/reference/normalizers.html">Groonga’s documentation about normalizer</a> for more details.</p>
@@ -728,21 +728,21 @@ It is used when tokenizing text and storing table key.</p>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="k">day</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'normalizer "NormalizerAuto"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8_unicode_ci</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.19 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;2013-04-23&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ブラックコーヒーを飲んだ。&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"2013-04-23"</span><span class="p">,</span><span class="w"> </span><span class="ss">"ブラックコーヒーを飲んだ。"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ふらつく&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ふらつく"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- Empty set (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">diaries</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+ﾌﾞﾗｯｸ&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+ﾌﾞﾗｯｸ"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
 <span class="c1">-- | day        | content                                 |</span>
 <span class="c1">-- +------------+-----------------------------------------+</span>
@@ -755,13 +755,13 @@ It is used when tokenizing text and storing table key.</p>
 <section id="how-to-specify-the-token-filters">
 <h2><span class="section-number">4.3.5. </span>How to specify the token filters<a class="headerlink" href="#how-to-specify-the-token-filters" title="Link to this heading">#</a></h2>
 <p>Mroonga has the following syntax to specify Groonga’s token filters.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">&#39;token_filters &quot;TokenFilterStem&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FULLTEXT</span> <span class="n">INDEX</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="n">COMMENT</span> <span class="s1">'token_filters "TokenFilterStem"'</span>
 </pre></div>
 </div>
 <p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStem</span></code> token filter:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;register token_filters/stem&#39;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="s1">'register token_filters/stem'</span><span class="p">);</span>
 <span class="c1">-- +------------------------------------------------+</span>
-<span class="c1">-- | mroonga_command(&#39;register token_filters/stem&#39;) |</span>
+<span class="c1">-- | mroonga_command('register token_filters/stem') |</span>
 <span class="c1">-- +------------------------------------------------+</span>
 <span class="c1">-- | true                                           |</span>
 <span class="c1">-- +------------------------------------------------+</span>
@@ -770,27 +770,27 @@ It is used when tokenizing text and storing table key.</p>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;normalizer &quot;NormalizerAuto&quot;, token_filters &quot;TokenFilterStem&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'normalizer "NormalizerAuto", token_filters "TokenFilterStem"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.18 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I develop Groonga&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">"I develop Groonga"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I&#39;m developing Groonga&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">"I'm developing Groonga"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;I developed Groonga&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">"I developed Groonga"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;+develops&quot;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="ss">"+develops"</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+------------------------+</span>
 <span class="c1">-- | id | content                |</span>
 <span class="c1">-- +----+------------------------+</span>
 <span class="c1">-- |  1 | I develop Groonga      |</span>
-<span class="c1">-- |  2 | I&#39;m developing Groonga |</span>
+<span class="c1">-- |  2 | I'm developing Groonga |</span>
 <span class="c1">-- |  3 | I developed Groonga    |</span>
 <span class="c1">-- +----+------------------------+</span>
 <span class="c1">-- 3 rows in set (0.01 sec)</span>
@@ -798,9 +798,9 @@ It is used when tokenizing text and storing table key.</p>
 </div>
 <p>See <a class="reference external" href="https://groonga.org/docs/reference/token_filters.html">Groonga’s documentation about token filter documentation</a> for more details.</p>
 <p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">TokenFilterStopWord</span></code> token filter:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;register token_filters/stop_word&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">"register token_filters/stop_word"</span><span class="p">);</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
-<span class="c1">-- | mroonga_command(&quot;register token_filters/stop_word&quot;) |</span>
+<span class="c1">-- | mroonga_command("register token_filters/stop_word") |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
 <span class="c1">-- | true                                                |</span>
 <span class="c1">-- +-----------------------------------------------------+</span>
@@ -809,31 +809,31 @@ It is used when tokenizing text and storing table key.</p>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">term</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">is_stop_word</span><span class="w"> </span><span class="n">BOOL</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">COMMENT</span><span class="o">=</span><span class="s1">&#39;tokenizer &quot;TokenBigram&quot;, token_filters &quot;TokenFilterStopWord&quot;&#39;</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">COMMENT</span><span class="o">=</span><span class="s1">'tokenizer "TokenBigram", token_filters "TokenFilterStopWord"'</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;table &quot;terms&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'table "terms"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.17 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;and&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">terms</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">"and"</span><span class="p">,</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Hello&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">"Hello"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Hello and Good-bye&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">"Hello and Good-bye"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Good-bye&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="ss">"Good-bye"</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">memos</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;+&quot;Hello and&quot;&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'+"Hello and"'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +----+--------------------+</span>
 <span class="c1">-- | id | content            |</span>
 <span class="c1">-- +----+--------------------+</span>
@@ -848,13 +848,13 @@ It is used when tokenizing text and storing table key.</p>
 <section id="how-to-specify-groonga-s-column-flags">
 <h2><span class="section-number">4.3.6. </span>How to specify Groonga’s column flags<a class="headerlink" href="#how-to-specify-groonga-s-column-flags" title="Link to this heading">#</a></h2>
 <p>Mroonga has the following syntax to specify Groonga’s column flags:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="n">TEXT</span> <span class="n">COMMENT</span> <span class="s1">'flags "COLUMN_SCALAR|COMPRESS_ZLIB"'</span>
 </pre></div>
 </div>
 <p>Here is an example that uses <code class="docutils literal notranslate"><span class="pre">COMPRESS_ZLIB</span></code> flag:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="n">UNSIGNED</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;flags &quot;COLUMN_SCALAR|COMPRESS_ZLIB&quot;&#39;</span>
+<span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'flags "COLUMN_SCALAR|COMPRESS_ZLIB"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">Engine</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.12 sec)</span>
 </pre></div>
@@ -875,24 +875,24 @@ It is used when tokenizing text and storing table key.</p>
 </pre></div>
 </div>
 <p>To store data, you create POINT type data by using geomFromText() function like in MyISAM:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Nezu&#39;&#39;s Taiyaki&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.762573 35.720253)&#39;</span><span class="p">));</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">'Nezu''s Taiyaki'</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'POINT(139.762573 35.720253)'</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Naniwaya&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.796234 35.730061)&#39;</span><span class="p">));</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">'Naniwaya'</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'POINT(139.796234 35.730061)'</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Yanagiya Taiyaki&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(139.783981 35.685341)&#39;</span><span class="p">));</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">shops</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="s1">'Yanagiya Taiyaki'</span><span class="p">,</span><span class="w"> </span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'POINT(139.783981 35.685341)'</span><span class="p">));</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
 <p>If you want to find shops within the rectangle where Ikebukuro station (139.7101 35.7292) is the top-left point and Tokyo Station (139.7662 35.6815) is the bottom-right point, SELECT phrase is like the following:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">AsText</span><span class="p">(</span><span class="k">location</span><span class="p">)</span>
 <span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">shops</span>
-<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;LineString(139.7101 35.7292, 139.7662 35.6815)&#39;</span><span class="p">),</span><span class="w"> </span><span class="k">location</span><span class="p">);</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">MBRContains</span><span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">'LineString(139.7101 35.7292, 139.7662 35.6815)'</span><span class="p">),</span><span class="w"> </span><span class="k">location</span><span class="p">);</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
 <span class="c1">-- | id | name                  | AsText(location)                         |</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
-<span class="c1">-- |  1 | Nezu&#39;s Taiyaki        | POINT(139.762572777778 35.7202527777778) |</span>
+<span class="c1">-- |  1 | Nezu's Taiyaki        | POINT(139.762572777778 35.7202527777778) |</span>
 <span class="c1">-- +----+-----------------------+------------------------------------------+</span>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
@@ -916,16 +916,16 @@ It is used when tokenizing text and storing table key.</p>
 <p>You can create an index for _id column, but it should be HASH type.</p>
 <p>Let’s add records in the table by INSERT. Since _id column is implemented as a virtual column and its value is assigned by Groonga, you cannot specify the value when updating.
 So you need to exclude it from setting columns, or you need to use <code class="docutils literal notranslate"><span class="pre">null</span></code> as its value:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Saury for today&#39;s dinner.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Saury for today's dinner."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Update mroonga tomorrow.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Update mroonga tomorrow."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Buy some dumpling on the way home.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Buy some dumpling on the way home."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Thank God It&#39;s meat day.&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Thank God It's meat day."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 </pre></div>
 </div>
@@ -934,16 +934,16 @@ So you need to exclude it from setting columns, or you need to use <code class="
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- | _id  | content                                  |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
-<span class="c1">-- |    1 | Saury for today&#39;s dinner.                |</span>
+<span class="c1">-- |    1 | Saury for today's dinner.                |</span>
 <span class="c1">-- |    2 | Update mroonga tomorrow.                 |</span>
 <span class="c1">-- |    3 | Buy some dumpling on the way home.       |</span>
-<span class="c1">-- |    4 | Thank God It&#39;s meat day.                 |</span>
+<span class="c1">-- |    4 | Thank God It's meat day.                 |</span>
 <span class="c1">-- +------+------------------------------------------+</span>
 <span class="c1">-- 4 rows in set (0.00 sec)</span>
 </pre></div>
 </div>
 <p>By using last_insert_grn_id function, you can also get the record ID that is assigned by the last INSERT:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Just one bottle of milk in the fridge.&quot;</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="ss">"Just one bottle of milk in the fridge."</span><span class="p">);</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
@@ -956,11 +956,11 @@ So you need to exclude it from setting columns, or you need to use <code class="
 </pre></div>
 </div>
 <p>last_insert_grn_id function is included in Mroonga as a User-Defined Function (UDF), but if you have not yet register it in MySQL by CREATE FUNCTION, you need to invoke the following SQL for defining a function:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="w"> </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">&#39;ha_mroonga.so&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="w"> </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">'ha_mroonga.so'</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>As you can see in the example above, you can get the record ID by _id column or last_insert_grn_id function. It will be useful to use this value in the ensuing SQL queries like UPDATE:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;So much milk in the fridge.&quot;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">memos</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"So much milk in the fridge."</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last_insert_grn_id</span><span class="p">();</span>
 <span class="c1">-- Query OK, 1 row affected (0.00 sec)</span>
 <span class="c1">-- Rows matched: 1  Changed: 1  Warnings: 0</span>
 </pre></div>
@@ -986,19 +986,19 @@ It is implemented as <a class="reference internal" href="../reference/udf/mroong
 </div>
 <p>Here is the sample data for execution examples:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Groonga similar search&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Groonga similar search'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Groonga is an open-source fulltext search engine and column store.'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Mroonga similar search&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Mroonga similar search'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Mroonga is an open-source storage engine for fast fulltext search with MySQL.'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Rroonga library&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A library to use Groonga features from Ruby.&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Rroonga library'</span><span class="p">,</span><span class="w"> </span><span class="s1">'A library to use Groonga features from Ruby.'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Here is the example of similar search by content itself.</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'There are many open-source fulltext search engine.'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that you need to specify an content of document in <cite>AGAINST(’…’ IN NATURAL LANGUAGE MODE)</cite>.</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;There are many open-source fulltext search engine.&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">similarities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'There are many open-source fulltext search engine.'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +------------------------+</span>
 <span class="c1">-- | title                  |</span>
 <span class="c1">-- +------------------------+</span>
@@ -1015,7 +1015,7 @@ Here is the schema definition to use <cite>TokenMecab</cite> tokenizer:</p>
 <span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
 <span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenMecab&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'tokenizer "TokenMecab"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="w"> </span><span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1063,23 +1063,23 @@ consistency.</p>
 </div>
 <p>Here is the sample data for execution examples:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Groonga is an open-source fulltext search engine and column store.&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04-08&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;groonga&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Groonga is an open-source fulltext search engine and column store.'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04-08'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'groonga'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Mroonga is an open-source storage engine for fast fulltext search with MySQL.&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04-09&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-04&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Mroonga is an open-source storage engine for fast fulltext search with MySQL.'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04-09'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-04'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'MySQL'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">diaries</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">year</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">year_month</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-03-29&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;2013-03&#39;</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">&#39;MySQL&#39;</span><span class="p">);</span>
+<span class="w">       </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'Tritonn is a patched version of MySQL that supports better fulltext search function with Senna.'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-03-29'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'2013-03'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'MySQL'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Each record has <code class="docutils literal notranslate"><span class="pre">groonga</span></code> or <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code>. Each record also
@@ -1091,26 +1091,26 @@ is <code class="docutils literal notranslate"><span class="pre">--drilldown</spa
 SQL friendly. You need to parse search result JSON by yourself.</p>
 <p>Here is the example of faceted search by all available faceted search
 keys (result JSON is pretty printed):</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">&quot;select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">faceted_result</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">mroonga_command</span><span class="p">(</span><span class="ss">"select diaries --output_columns _id --limit 0 --drilldown tag,year,year_month"</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">faceted_result</span><span class="p">;</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | faceted_result              |</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- | [[[3],                      |</span>
-<span class="c1">-- |   [[&quot;_id&quot;,&quot;UInt32&quot;]]],      |</span>
+<span class="c1">-- |   [["_id","UInt32"]]],      |</span>
 <span class="c1">-- |  [[2],                      |</span>
-<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
-<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
-<span class="c1">-- |   [&quot;groonga&quot;,1],            |</span>
-<span class="c1">-- |   [&quot;MySQL&quot;,2]],             |</span>
+<span class="c1">-- |   [["_key","ShortText"],    |</span>
+<span class="c1">-- |    ["_nsubrecs","Int32"]],  |</span>
+<span class="c1">-- |   ["groonga",1],            |</span>
+<span class="c1">-- |   ["MySQL",2]],             |</span>
 <span class="c1">-- |  [[1],                      |</span>
-<span class="c1">-- |   [[&quot;_key&quot;,&quot;Time&quot;],         |</span>
-<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
+<span class="c1">-- |   [["_key","Time"],         |</span>
+<span class="c1">-- |    ["_nsubrecs","Int32"]],  |</span>
 <span class="c1">-- |   [1356998400.0,3]],        |</span>
 <span class="c1">-- |  [[2],                      |</span>
-<span class="c1">-- |   [[&quot;_key&quot;,&quot;ShortText&quot;],    |</span>
-<span class="c1">-- |    [&quot;_nsubrecs&quot;,&quot;Int32&quot;]],  |</span>
-<span class="c1">-- |   [&quot;2013-04&quot;,2],            |</span>
-<span class="c1">-- |   [&quot;2013-03&quot;,1]]]           |</span>
+<span class="c1">-- |   [["_key","ShortText"],    |</span>
+<span class="c1">-- |    ["_nsubrecs","Int32"]],  |</span>
+<span class="c1">-- |   ["2013-04",2],            |</span>
+<span class="c1">-- |   ["2013-03",1]]]           |</span>
 <span class="c1">-- +-----------------------------+</span>
 <span class="c1">-- 1 row in set (0.00 sec)</span>
 </pre></div>
@@ -1119,23 +1119,23 @@ keys (result JSON is pretty printed):</p>
 result. It’s not faceted search result.</p>
 <p>The second, third and forth elements are faceted search results:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"groonga"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"MySQL"</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;Time&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"Time"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
 <span class="w"> </span><span class="p">[</span><span class="mf">1356998400.0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
 </pre></div>
 </div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;2013-04&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;2013-03&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"2013-04"</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"2013-03"</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>The order of faceted search results is corresponding to the value of
@@ -1171,10 +1171,10 @@ search key.</p>
 result for <code class="docutils literal notranslate"><span class="pre">tag</span></code>) shows that matched records (all records in this
 case) have <code class="docutils literal notranslate"><span class="pre">groonga</span></code> and <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"groonga"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"MySQL"</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">_nsubrecs</span></code> column value in faceted search result shows the
@@ -1183,10 +1183,10 @@ number of records that have the corresponding faceted search key.</p>
 result for <code class="docutils literal notranslate"><span class="pre">tag</span></code>) shows that there are 1 record that has <code class="docutils literal notranslate"><span class="pre">groonga</span></code>
 as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value and 2 records that have <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> as <code class="docutils literal notranslate"><span class="pre">tag</span></code> value:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[[</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span><span class="s2">&quot;ShortText&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="p">[</span><span class="s2">&quot;_nsubrecs&quot;</span><span class="p">,</span><span class="s2">&quot;Int32&quot;</span><span class="p">]],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;groonga&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
-<span class="w"> </span><span class="p">[</span><span class="s2">&quot;MySQL&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="w"> </span><span class="p">[[</span><span class="s2">"_key"</span><span class="p">,</span><span class="s2">"ShortText"</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">"_nsubrecs"</span><span class="p">,</span><span class="s2">"Int32"</span><span class="p">]],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"groonga"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+<span class="w"> </span><span class="p">[</span><span class="s2">"MySQL"</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://groonga.org/docs/reference/commands/select.html">Groonga’s documentation about select command</a> for more
@@ -1204,15 +1204,15 @@ Thus, you can search records by using a regular expression via Groonga’s funct
 <p>Here is the example of search by regular expression.</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">content</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
-<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">content_index</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">&#39;tokenizer &quot;TokenRegexp&quot;, normalizer &quot;NormalizerAuto&quot;&#39;</span>
+<span class="w">  </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">content_index</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="k">COMMENT</span><span class="w"> </span><span class="s1">'tokenizer "TokenRegexp", normalizer "NormalizerAuto"'</span>
 <span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
 
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/usr/bin/groonga&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/var/log/auth.log&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/var/log/messages&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/tmp/local/var/log/auth.log&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/usr/bin/groonga'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/var/log/auth.log'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/var/log/messages'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'/tmp/local/var/log/auth.log'</span><span class="p">);</span>
 
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;*SS content @~ &quot;\\\\A/var/log/auth&quot;&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">MATCH</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="n">AGAINST</span><span class="w"> </span><span class="p">(</span><span class="s1">'*SS content @~ "\\\\A/var/log/auth"'</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="k">MODE</span><span class="p">);</span>
 <span class="c1">-- +-------------------+</span>
 <span class="c1">-- | content           |</span>
 <span class="c1">-- +-------------------+</span>
@@ -1237,7 +1237,7 @@ Thus, you can search records by using a regular expression via Groonga’s funct
 </div>
 <p>The default log level is NOTICE, i.e. we have important information only and we don’t have debug information etc.).</p>
 <p>You can get the log level by <code class="docutils literal notranslate"><span class="pre">mroonga_log_level</span></code> system variable, that is a global variable. You can also modify it dynamically by using SET phrase:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'mroonga_log_level'</span><span class="p">;</span>
 <span class="c1">-- +-------------------+--------+</span>
 <span class="c1">-- | Variable_name     | Value  |</span>
 <span class="c1">-- +-------------------+--------+</span>
@@ -1248,7 +1248,7 @@ Thus, you can search records by using a regular expression via Groonga’s funct
 <span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">mroonga_log_level</span><span class="o">=</span><span class="n">DUMP</span><span class="p">;</span>
 <span class="c1">-- Query OK, 0 rows affected (0.00 sec)</span>
 
-<span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;mroonga_log_level&#39;</span><span class="p">;</span>
+<span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'mroonga_log_level'</span><span class="p">;</span>
 <span class="c1">-- +-------------------+-------+</span>
 <span class="c1">-- | Variable_name     | Value |</span>
 <span class="c1">-- +-------------------+-------+</span>

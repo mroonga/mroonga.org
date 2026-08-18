@@ -567,27 +567,27 @@
 <h2><span class="section-number">9.3.6. </span>文字列<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>文字列はポインタと長さで表現する。 <code class="docutils literal notranslate"><span class="pre">\0</span></code> での終端を仮定しない。</p>
 <p>よい例（本当はもっとすっきりした例がよいけど。。。）:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;table_name column_name column_value&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">"table_name column_name column_value"</span>
 <span class="n">char</span> <span class="o">*</span><span class="n">column_name</span><span class="p">;</span>
 <span class="n">size_t</span> <span class="n">column_name_size</span><span class="p">;</span>
-<span class="n">column_name</span> <span class="o">=</span> <span class="n">raw_data</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;table_name &quot;</span><span class="p">);</span>
-<span class="n">column_name_size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;column_name&quot;</span><span class="p">);</span>
+<span class="n">column_name</span> <span class="o">=</span> <span class="n">raw_data</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">"table_name "</span><span class="p">);</span>
+<span class="n">column_name_size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">"column_name"</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>悪い例（無理やり <code class="docutils literal notranslate"><span class="pre">\0</span></code> 終端にしている）:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;table_name column_name column_value&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">"table_name column_name column_value"</span>
 <span class="n">char</span> <span class="o">*</span><span class="n">column_name</span><span class="p">;</span>
-<span class="n">column_name</span> <span class="o">=</span> <span class="n">strndup</span><span class="p">(</span><span class="n">raw_data</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;table_name &quot;</span><span class="p">),</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;column_name&quot;</span><span class="p">));</span>
+<span class="n">column_name</span> <span class="o">=</span> <span class="n">strndup</span><span class="p">(</span><span class="n">raw_data</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">"table_name "</span><span class="p">),</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">"column_name"</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>ただし、ファイル名など <code class="docutils literal notranslate"><span class="pre">\0</span></code> が前提であるものに関しては <code class="docutils literal notranslate"><span class="pre">\0</span></code> 終端を仮定してよい。</p>
 <p>よい例:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">database_path</span> <span class="o">=</span> <span class="s2">&quot;db/test.mrn&quot;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">database_path</span> <span class="o">=</span> <span class="s2">"db/test.mrn"</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>悪い例（ <code class="docutils literal notranslate"><span class="pre">\0</span></code> 終端を仮定せず、長さも管理している）:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">database_path</span> <span class="o">=</span> <span class="s2">&quot;db/test.mrn&quot;</span><span class="p">;</span>
-<span class="n">size_t</span> <span class="n">database_path_size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">&quot;db/test.mrn&quot;</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="o">*</span><span class="n">database_path</span> <span class="o">=</span> <span class="s2">"db/test.mrn"</span><span class="p">;</span>
+<span class="n">size_t</span> <span class="n">database_path_size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="s2">"db/test.mrn"</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">std::string</span></code> は内部でメモリ確保などの処理が発生するので多用しない。</p>
@@ -851,11 +851,11 @@
 <h2><span class="section-number">9.3.12. </span>定数<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
 <p>フラグやサイズなどを示す定数には <code class="docutils literal notranslate"><span class="pre">const</span></code> オブジェクトを用いる。これはデバッガー上でプログラムを走らせているときに名前で値を参照できるようにするためである。</p>
 <p>よい例:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">MRN_LOG_FILE_PATH</span> <span class="o">=</span> <span class="s2">&quot;groonga.log&quot;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">MRN_LOG_FILE_PATH</span> <span class="o">=</span> <span class="s2">"groonga.log"</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>悪い例（ <code class="docutils literal notranslate"><span class="pre">#define</span></code> を用いている）:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define MRN_LOG_FILE_PATH &quot;groonga.log&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define MRN_LOG_FILE_PATH "groonga.log"</span>
 </pre></div>
 </div>
 </section>
@@ -922,13 +922,13 @@ if (!name) { ... }
 <p>C++では真偽値に <code class="docutils literal notranslate"><span class="pre">bool</span></code> を使うためこのような状況は発生しないが、C言語由来のAPIでは <code class="docutils literal notranslate"><span class="pre">int</span></code> で真偽値を表現している場合が多い。しかし、 <code class="docutils literal notranslate"><span class="pre">int</span></code> だけでは真偽値として使っているか本当に数値として使っているかがわかりにくいため、 <code class="docutils literal notranslate"><span class="pre">int</span></code> のときはすべて数値として扱う。</p>
 <p>よい例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;same value!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">"same value!</span><span class="se">\n</span><span class="s2">"</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>悪い例（ <code class="docutils literal notranslate"><span class="pre">0</span></code> を偽の値として扱っている）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if (!memcmp(value1, value2, value_size)) {
-  printf(&quot;same value!\n&quot;);
+  printf("same value!\n");
 }
 </pre></div>
 </div>
@@ -970,12 +970,12 @@ if (!name) { ... }
 <h3><span class="section-number">9.3.15.2. </span>変数宣言と同時に初期化する<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
 <p>変数を宣言したときに同時に初期化する。宣言時に初期化せずに代入して初期化すると、無駄な処理が発生する可能性があるため非効率である。（後述）</p>
 <p>よい例:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name</span><span class="p">(</span><span class="s2">"users"</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>悪い例（ <code class="docutils literal notranslate"><span class="pre">std::string()</span></code> のところでコンストラクターが動き、 <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">...</span></code> のところで代入演算子が動いて2回初期化している）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">);</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">"users"</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>

@@ -447,7 +447,7 @@
 </pre></div>
 </div>
 <p>ダンプファイル中のストレージエンジンを変更します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/^) ENGINE=groonga/) ENGINE=mroonga/&#39;</span> <span class="n">database</span><span class="o">-</span><span class="n">groonga</span><span class="o">.</span><span class="n">dump</span> <span class="o">&gt;</span> <span class="n">database</span><span class="o">-</span><span class="n">mroonga</span><span class="o">.</span><span class="n">dump</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="s1">'s/^) ENGINE=groonga/) ENGINE=mroonga/'</span> <span class="n">database</span><span class="o">-</span><span class="n">groonga</span><span class="o">.</span><span class="n">dump</span> <span class="o">&gt;</span> <span class="n">database</span><span class="o">-</span><span class="n">mroonga</span><span class="o">.</span><span class="n">dump</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> の <code class="docutils literal notranslate"><span class="pre">ENGINE=groonga</span></code> だけが <code class="docutils literal notranslate"><span class="pre">ENGINE=mroonga</span></code> に変更されていることを確認します。 <code class="docutils literal notranslate"><span class="pre">&#64;&#64;</span> <span class="pre">...</span> <span class="pre">&#64;&#64;</span></code> 行に <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> が含まれているかを確認します。この行が <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> を含んでいたら、その変更はほぼ間違いなく <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> 用の変更です:</p>
@@ -466,7 +466,7 @@
 </pre></div>
 </div>
 <p>既存のデータベースを削除します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;DROP DATABASE MY_MROONGA_DATABASE&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">e</span> <span class="s1">'DROP DATABASE MY_MROONGA_DATABASE'</span>
 </pre></div>
 </div>
 <p>&quot;mroonga&quot;ストレージエンジンにアップグレードします。Debian GNU/LinuxやUbuntuでは <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> を使います。CentOSやFedoraでは <code class="docutils literal notranslate"><span class="pre">yum</span></code> を使います。</p>
@@ -484,7 +484,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">install</span></code> の前に <code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れてはいけません。もし、 <code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">remove</span></code> を実行することを忘れると、MySQLのシステムテーブルを壊してしまうかもしれません。</p>
 </div>
 <p>データベースを作り直します:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;CREATE DATABASE MY_MROONGA_DATABASE&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">e</span> <span class="s1">'CREATE DATABASE MY_MROONGA_DATABASE'</span>
 </pre></div>
 </div>
 <p>修正したダンプファイルを使ってデータベースを復旧します:</p>

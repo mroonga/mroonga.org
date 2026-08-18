@@ -463,7 +463,7 @@
 <section id="summary">
 <h2><span class="section-number">5.7.1.1. </span>概要<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>Mroongaは <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">AGAINST</span></code> に <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> 修飾子をつけることでブーリアン全文検索を実行できます。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">...</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">&#39;...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">...</span> <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(</span><span class="s1">'...'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>通常、デフォルトの <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">NATURAL</span> <span class="pre">LANGUAGE</span> <span class="pre">MODE</span></code> よりも <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> の方が適切です。なぜなら <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> はWeb検索エンジンのクエリーと似ているからです。多くのユーザーはWeb検索エンジンのクエリーに慣れています。</p>
@@ -481,9 +481,9 @@
   FULLTEXT INDEX title_index (title)
 ) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO books (title) VALUES (&#39;Professional MySQL&#39;);
-INSERT INTO books (title) VALUES (&#39;MySQL for Professional&#39;);
-INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
+INSERT INTO books (title) VALUES ('Professional MySQL');
+INSERT INTO books (title) VALUES ('MySQL for Professional');
+INSERT INTO books (title) VALUES ('Mroonga = MySQL + Groonga');
 </pre></div>
 </div>
 </section>
@@ -496,7 +496,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">for</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> または <code class="docutils literal notranslate"><span class="pre">for</span></code> が含まれているという意味です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'Mroonga for'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -512,7 +512,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">Mroonga</span> <span class="pre">OR</span> <span class="pre">for</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> または <code class="docutils literal notranslate"><span class="pre">for</span></code> が含まれているという意味です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;Mroonga OR for&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'Mroonga OR for'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -529,7 +529,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">+Mroonga</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> も <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> もどちらも含まれていること、という意味になります。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'+MySQL +Groonga'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -544,7 +544,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">+MySQL</span> <span class="pre">-Mroonga</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> は含まれるけど <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> は含まれないという意味になります。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+MySQL -Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'+MySQL -Mroonga'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
 <span class="o">--</span> <span class="o">+------------------------+</span>
@@ -560,7 +560,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">+M*</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">M</span></code> から始まる単語（この場合は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> と <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> ）が含まれていること、という意味になります。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+M*&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'+M*'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -574,25 +574,25 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p class="admonition-title">注釈</p>
 <p>正確に言うと、「単語」はあなたが思っている「単語」ではないかもしれません。この文脈での「単語」は「トークン」ということです。「トークン」は単語ではないかもしれません。たとえば、「It's」の中のトークンは「It」と「'」と「s」です。</p>
 <p><a class="reference internal" href="../udf/mroonga_command.html"><span class="doc">mroonga_command()</span></a> と <a class="reference external" href="https://groonga.org/ja/docs/reference/commands/tokenize.html">tokenize</a> を使うとトークンを確認できます。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">'tokenize TokenBigram "It''s" NormalizerMySQLGeneralCI'</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
-<span class="o">--</span> <span class="o">|</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">&#39;tokenize TokenBigram &quot;It&#39;&#39;s&quot; NormalizerMySQLGeneralCI&#39;</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span> <span class="n">mroonga_command</span><span class="p">(</span><span class="s1">'tokenize TokenBigram "It''s" NormalizerMySQLGeneralCI'</span><span class="p">)</span> <span class="o">|</span>
 <span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="p">[</span>                                                                        <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;IT&quot;</span><span class="p">,</span>                                                        <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>                                                        <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"value"</span><span class="p">:</span><span class="s2">"IT"</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"position"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"force_prefix"</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>                                                        <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"value"</span><span class="p">:</span><span class="s2">"'"</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"position"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"force_prefix"</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span>   <span class="p">},</span>                                                                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span>   <span class="p">{</span>                                                                      <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;S&quot;</span><span class="p">,</span>                                                         <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;position&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>                                                        <span class="o">|</span>
-<span class="o">--</span> <span class="o">|</span>     <span class="s2">&quot;force_prefix&quot;</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"value"</span><span class="p">:</span><span class="s2">"S"</span><span class="p">,</span>                                                         <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"position"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>                                                        <span class="o">|</span>
+<span class="o">--</span> <span class="o">|</span>     <span class="s2">"force_prefix"</span><span class="p">:</span><span class="n">false</span>                                                 <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span>   <span class="p">}</span>                                                                      <span class="o">|</span>
 <span class="o">--</span> <span class="o">|</span> <span class="p">]</span>                                                                        <span class="o">|</span>
 <span class="o">--</span> <span class="o">+--------------------------------------------------------------------------+</span>
@@ -607,7 +607,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">+&quot;Professional</span> <span class="pre">MySQL&quot;</span></code> というクエリーは <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code> というフレーズが含まれていること、という意味になります。このクエリーは <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> にはマッチしません。 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Profession</span></code> は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> という単語も <code class="docutils literal notranslate"><span class="pre">Professional</span></code> という単語も含んでいますが、 <code class="docutils literal notranslate"><span class="pre">Professional</span> <span class="pre">MySQL</span></code> というフレーズは含んでいません。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+&quot;Professional MySQL&quot;&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'+"Professional MySQL"'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+--------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>              <span class="o">|</span>
 <span class="o">--</span> <span class="o">+--------------------+</span>
@@ -629,7 +629,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p>以下はこのクエリーの実行結果です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
   <span class="n">FROM</span> <span class="n">books</span>
- <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;+(Groonga OR Mroonga) +MySQL&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+ <span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'+(Groonga OR Mroonga) +MySQL'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -644,11 +644,11 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p>プラグマはクエリーのメタデータです。プラグマを指定することでクエリーのパース方法を変更できます。</p>
 <p>実行方法をカスタマイズするためにクエリーの先頭にプラグマを埋め込むことができます。</p>
 <p>プラグマはクエリーの先頭になければいけません。クエリーの先頭に空白を入れてはいけません。プラグマは <code class="docutils literal notranslate"><span class="pre">*</span></code> から始まります。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'*PRAGMA ...'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>複数のプラグマを指定することができます。:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*PRAGMA1PRAGMA2 ...&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">MATCH</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'*PRAGMA1PRAGMA2 ...'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>以下は利用可能なプラグマの一覧です。</p>
@@ -666,7 +666,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">DOR</span></code> を使う例は次の通りです。 <code class="docutils literal notranslate"><span class="pre">'*DOR</span> <span class="pre">for</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal notranslate"><span class="pre">for</span></code> または <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> を含むという意味です。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
  <span class="n">FROM</span> <span class="n">books</span>
-<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*DOR for Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'*DOR for Mroonga'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -682,7 +682,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">D+</span></code> を使う例は次の通りです。 <code class="docutils literal notranslate"><span class="pre">'*D+</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> と <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> の両方を含むという意味です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
  <span class="n">FROM</span> <span class="n">books</span>
-<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D+ MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'*D+ MySQL Mroonga'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                     <span class="o">|</span>
 <span class="o">--</span> <span class="o">+---------------------------+</span>
@@ -697,7 +697,7 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 <p><code class="docutils literal notranslate"><span class="pre">D-</span></code> を使う例は次の通りです。 <code class="docutils literal notranslate"><span class="pre">'*D-</span> <span class="pre">MySQL</span> <span class="pre">Mroonga'</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE</span></code> は <code class="docutils literal notranslate"><span class="pre">MySQL</span></code> を含むが <code class="docutils literal notranslate"><span class="pre">Mroonga</span></code> を含まないという意味です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span>
  <span class="n">FROM</span> <span class="n">books</span>
-<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*D- MySQL Mroonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'*D- MySQL Mroonga'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">);</span>
 <span class="o">--</span> <span class="o">+------------------------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>                  <span class="o">|</span>
 <span class="o">--</span> <span class="o">+------------------------+</span>
@@ -726,20 +726,20 @@ INSERT INTO books (title) VALUES (&#39;Mroonga = MySQL + Groonga&#39;);
 ) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO memos (title, content) VALUES (
-  &#39;MySQL&#39;, &#39;MySQL is a RDBMS.&#39;
+  'MySQL', 'MySQL is a RDBMS.'
 );
 INSERT INTO memos (title, content) VALUES (
-  &#39;Groonga&#39;, &#39;Groonga is a full text search engine.&#39;
+  'Groonga', 'Groonga is a full text search engine.'
 );
 INSERT INTO memos (title, content) VALUES (
-  &#39;Mroonga&#39;, &#39;Mroonga is a storage engine for MySQL based on Groonga.&#39;
+  'Mroonga', 'Mroonga is a storage engine for MySQL based on Groonga.'
 );
 </pre></div>
 </div>
 <p>次の例は重みの使い方を示す例です。 <code class="docutils literal notranslate"><span class="pre">title</span></code> カラムは重みが <code class="docutils literal notranslate"><span class="pre">10</span></code> で、 <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムは重みが <code class="docutils literal notranslate"><span class="pre">1</span></code> です。これは <code class="docutils literal notranslate"><span class="pre">title</span></code> カラムの中にあるキーワードは <code class="docutils literal notranslate"><span class="pre">content</span></code> カラムの中にあるキーワードよりも10倍重要だということです。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">title</span><span class="p">,</span>
        <span class="n">content</span><span class="p">,</span>
-       <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">&#39;*W1:10,2:1 +Groonga&#39;</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
+       <span class="n">MATCH</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="n">AGAINST</span><span class="p">(</span><span class="s1">'*W1:10,2:1 +Groonga'</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span> <span class="n">AS</span> <span class="n">score</span>
   <span class="n">FROM</span> <span class="n">memos</span><span class="p">;</span>
 <span class="o">--</span> <span class="o">+---------+--------------------------------------------------------+-------+</span>
 <span class="o">--</span> <span class="o">|</span> <span class="n">title</span>   <span class="o">|</span> <span class="n">content</span>                                                <span class="o">|</span> <span class="n">score</span> <span class="o">|</span>
@@ -777,16 +777,16 @@ INSERT INTO memos (title, content) VALUES (
 ) ENGINE=Mroonga DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO comments VALUES (
-  &#39;A student started to use Mroonga storage engine. It is very fast!&#39;
+  'A student started to use Mroonga storage engine. It is very fast!'
 );
 INSERT INTO comments VALUES (
-  &#39;Another student also started to use Mroonga storage engine. It is very fast!&#39;
+  'Another student also started to use Mroonga storage engine. It is very fast!'
 );
 </pre></div>
 </div>
 <p>以下はスクリプト構文で <a class="reference external" href="https://groonga.org/ja/docs/reference/grn_expr/script_syntax.html#near-search-operator">近傍検索</a> を使う例です。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT content,
-       MATCH (content) AGAINST(&#39;*SS content *N &quot;student fast&quot;&#39; IN BOOLEAN MODE) AS score
+       MATCH (content) AGAINST('*SS content *N "student fast"' IN BOOLEAN MODE) AS score
   FROM comments;
 -- +------------------------------------------------------------------------------+-------+
 -- | content                                                                      | score |
