@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>News - 16 series &#8212; Mroonga v16.13 documentation</title>
+    <title>News - 16 series &#8212; Mroonga v16.16 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-    <script src="../_static/documentation_options.js?v=94f5da9b"></script>
+    <script src="../_static/documentation_options.js?v=b8744d8e"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>
@@ -72,7 +72,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="16.13" />
+  <meta name="docsearch:version" content="16.16" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -144,8 +144,8 @@
       
     
     
-    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v16.13 documentation - Home"/>
-    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v16.13 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-light" alt="Mroonga v16.16 documentation - Home"/>
+    <img src="../_static/mroonga.png" class="logo__image only-dark pst-js-only" alt="Mroonga v16.16 documentation - Home"/>
   
   
 </a></div>
@@ -429,8 +429,8 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="news-16-series">
 <h1>News - 16 series<a class="headerlink" href="#news-16-series" title="Link to this heading">#</a></h1>
-<section id="release-16-12-2026-10-02">
-<span id="release-16-12"></span><h2>Release 16.12 - 2026-10-02<a class="headerlink" href="#release-16-12-2026-10-02" title="Link to this heading">#</a></h2>
+<section id="release-16-15-2026-10-23">
+<span id="release-16-15"></span><h2>Release 16.15 - 2026-10-23<a class="headerlink" href="#release-16-15-2026-10-23" title="Link to this heading">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In this release, we do not provide Mroonga packages for Debian trixie for MySQL 8.4 and 9.7.
@@ -440,6 +440,73 @@ We will provide them again when this issue is resolved upstream.</p>
 </div>
 <section id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h3>
+<section id="added-support-for-the-latest-versions-of-the-following-rdbmss">
+<h4>Added support for the latest versions of the following RDBMSs<a class="headerlink" href="#added-support-for-the-latest-versions-of-the-following-rdbmss" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>MySQL Community Server 8.4 LTS (8.4.13)</p></li>
+<li><p>MySQL Community Server minimal 8.4 LTS (8.4.13)</p></li>
+<li><p>MySQL Community Server 9.7 LTS (9.7.4)</p></li>
+<li><p>MySQL Community Server minimal 9.7 LTS (9.7.4)</p></li>
+</ul>
+</section>
+<section id="don-t-register-mroonga-command-by-default">
+<h4>Don’t register <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> by default<a class="headerlink" href="#don-t-register-mroonga-command-by-default" title="Link to this heading">#</a></h4>
+<p>[<a class="reference external" href="https://jira.mariadb.org/browse/MDEV-41376">MDEV-41376</a>][Reported by Roel Van de Paar]</p>
+<p><code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> bypasses the privilege control of MySQL/MariaDB.
+So it should not be registered on a multi-user system that relies on privilege separation of accounts.</p>
+<p>But <code class="docutils literal notranslate"><span class="pre">install.sql</span></code> and <code class="docutils literal notranslate"><span class="pre">update.sql</span></code> always registered it.
+Packages run them on install and upgrade, so a dropped <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> came back on upgrade.</p>
+<p>This moves <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> registration to the new <code class="docutils literal notranslate"><span class="pre">install_mroonga_command.sql</span></code>.
+Users who need it can use the file manually.</p>
+<p>However, we don’t drop existing <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> on upgrade because users may use it.</p>
+</section>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<section id="fixed-returning-wrong-result-with-index-merge-intersection">
+<h4>Fixed returning wrong result with index_merge intersection<a class="headerlink" href="#fixed-returning-wrong-result-with-index-merge-intersection" title="Link to this heading">#</a></h4>
+<p>[<a class="reference external" href="https://github.com/mroonga/mroonga/issues/1264">GH-1264</a>][Reported by kotaokubo-nd]</p>
+<p>Mroonga returned wrong result with index_merge intersection as below:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">  </span><span class="n">category</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">  </span><span class="k">state</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="n">category</span><span class="w"> </span><span class="p">(</span><span class="n">category</span><span class="p">),</span>
+<span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="k">state</span><span class="w"> </span><span class="p">(</span><span class="k">state</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mroonga</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">items</span>
+<span class="w">  </span><span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">seq</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">254</span><span class="p">)</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="s1">'1'</span><span class="p">,</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">seq</span><span class="p">;</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="s1">'3'</span><span class="p">,</span><span class="w"> </span><span class="s1">'1'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="w"> </span><span class="s1">'3'</span><span class="p">,</span><span class="w"> </span><span class="s1">'0'</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="cm">/*+ INDEX_MERGE(items category, state) */</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">items</span>
+<span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'3'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'0'</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="thanks">
+<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Roel Van de Paar</p></li>
+<li><p>kotaokubo-nd</p></li>
+</ul>
+</section>
+</section>
+<section id="release-16-12-2026-10-02">
+<span id="release-16-12"></span><h2>Release 16.12 - 2026-10-02<a class="headerlink" href="#release-16-12-2026-10-02" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this release, we do not provide Mroonga packages for Debian trixie for MySQL 8.4 and 9.7.
+Currently, the Mroonga packages for Debian trixie cannot be installed with MySQL 8.4 and 9.7 due to a dependency issue.
+For details, refer to <a class="reference external" href="https://bugs.mysql.com/bug.php?id=120697">https://bugs.mysql.com/bug.php?id=120697</a>.
+We will provide them again when this issue is resolved upstream.</p>
+</div>
+<section id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <section id="mariadb-12-3-is-now-supported-in-this-release">
 <h4>MariaDB 12.3 is now supported in this release<a class="headerlink" href="#mariadb-12-3-is-now-supported-in-this-release" title="Link to this heading">#</a></h4>
 </section>
@@ -456,8 +523,8 @@ We will provide them again when this issue is resolved upstream.</p>
 <h4>Building Mroonga from source with MariaDB now requires a C++17-compatible compiler<a class="headerlink" href="#building-mroonga-from-source-with-mariadb-now-requires-a-c-17-compatible-compiler" title="Link to this heading">#</a></h4>
 </section>
 </section>
-<section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <section id="fixed-a-buffer-overflow-with-long-mroonga-database-path-prefix">
 <h4>Fixed a buffer overflow with long mroonga_database_path_prefix<a class="headerlink" href="#fixed-a-buffer-overflow-with-long-mroonga-database-path-prefix" title="Link to this heading">#</a></h4>
 <p>[<a class="reference external" href="https://jira.mariadb.org/browse/MDEV-41287">MDEV-41287</a>][Reported by Yuelin Wang]</p>
@@ -487,8 +554,8 @@ For example:</p>
 </ul>
 </section>
 </section>
-<section id="thanks">
-<h3>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>Thanks<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Alice Sherepa</p></li>
 <li><p>Yuelin Wang</p></li>
@@ -504,10 +571,10 @@ Currently, the Mroonga packages for Debian trixie cannot be installed with MySQL
 For details, refer to <a class="reference external" href="https://bugs.mysql.com/bug.php?id=120697">https://bugs.mysql.com/bug.php?id=120697</a>.
 We will provide them again when this issue is resolved upstream.</p>
 </div>
-<section id="id1">
-<h3>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<section id="added-support-for-the-latest-versions-of-the-following-rdbmss">
-<h4>Added support for the latest versions of the following RDBMSs<a class="headerlink" href="#added-support-for-the-latest-versions-of-the-following-rdbmss" title="Link to this heading">#</a></h4>
+<section id="id4">
+<h3>Improvements<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h4>Added support for the latest versions of the following RDBMSs<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>MariaDB 10.11 (10.11.19)</p></li>
 <li><p>MariaDB 11.4 (11.4.13)</p></li>
@@ -528,8 +595,8 @@ Currently, the Mroonga for Debian trixie package cannot be installed with MySQL 
 For details, refer to <a class="reference external" href="https://bugs.mysql.com/bug.php?id=120697">https://bugs.mysql.com/bug.php?id=120697</a>.
 We will provide them again when this issue is resolved upstream.</p>
 </div>
-<section id="id2">
-<h3>Improvements<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id6">
+<h3>Improvements<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <section id="added-support-for-mysql-community-server-9-7-lts-in-the-following-os">
 <h4>Added support for MySQL Community Server 9.7 LTS in the following OS<a class="headerlink" href="#added-support-for-mysql-community-server-9-7-lts-in-the-following-os" title="Link to this heading">#</a></h4>
 <ul class="simple">
@@ -550,8 +617,8 @@ We will provide them again when this issue is resolved upstream.</p>
 </ul>
 </section>
 </section>
-<section id="id3">
-<h3>Fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id7">
+<h3>Fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <section id="fixed-a-bug-that-could-cause-mroonga-to-crash-on-any-error-when-opening-an-index">
 <h4>Fixed a bug that could cause Mroonga to crash on any error when opening an index<a class="headerlink" href="#fixed-a-bug-that-could-cause-mroonga-to-crash-on-any-error-when-opening-an-index" title="Link to this heading">#</a></h4>
 <p><a class="reference external" href="https://github.com/mroonga/mroonga/issues/1138">GH-1138</a>[Reported by Jérome Perrin and Kazuhiko]</p>
@@ -559,8 +626,8 @@ We will provide them again when this issue is resolved upstream.</p>
 <p>If any error occured when opening a index, Mroonga could crash while handring the error.</p>
 </section>
 </section>
-<section id="id4">
-<h3>Thanks<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h3>Thanks<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Jérome Perrin</p></li>
 <li><p>Kazuhiko</p></li>
@@ -576,16 +643,16 @@ Currently, the Mroonga APT packages cannot be installed with MySQL 8.4.10 due to
 For details, refer to <a class="reference external" href="https://bugs.mysql.com/bug.php?id=120697">https://bugs.mysql.com/bug.php?id=120697</a>.
 We will provide them again when this issue is resolved upstream.</p>
 </div>
-<section id="id5">
-<h3>Improvements<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
-<section id="id6">
-<h4>Added support for MySQL Community Server 9.7 LTS in the following OS<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<section id="id9">
+<h3>Improvements<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h4>Added support for MySQL Community Server 9.7 LTS in the following OS<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>AlmaLinux 8, 9, and 10.</p></li>
 </ul>
 </section>
-<section id="id7">
-<h4>Added support for MySQL Community Server 8.4.11 in the following OS<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<section id="id11">
+<h4>Added support for MySQL Community Server 8.4.11 in the following OS<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>AlmaLinux 8, 9, and 10.</p></li>
 </ul>
@@ -601,8 +668,8 @@ Currently, the Mroonga APT packages cannot be installed with MySQL 8.4.10 due to
 For details, refer to <a class="reference external" href="https://bugs.mysql.com/bug.php?id=120697">https://bugs.mysql.com/bug.php?id=120697</a>.
 We will provide them again when this issue is resolved upstream.</p>
 </div>
-<section id="id8">
-<h3>Improvements<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id12">
+<h3>Improvements<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
 <section id="added-support-for-mysql-8-0-46-0ubuntu0-22-04-3-on-ubuntu-22-04">
 <h4>Added support for MySQL 8.0.46-0ubuntu0.22.04.3 on Ubuntu 22.04<a class="headerlink" href="#added-support-for-mysql-8-0-46-0ubuntu0-22-04-3-on-ubuntu-22-04" title="Link to this heading">#</a></h4>
 <p>This is the latest MySQL 8.0.46 package for Ubuntu 22.04.</p>
@@ -633,8 +700,8 @@ Currently, the Mroonga APT packages cannot be installed with MySQL 8.4.10 due to
 For details, refer to <a class="reference external" href="https://bugs.mysql.com/bug.php?id=120697">https://bugs.mysql.com/bug.php?id=120697</a>.
 We will provide them again when this issue is resolved upstream.</p>
 </div>
-<section id="id9">
-<h3>Improvements<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id13">
+<h3>Improvements<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <section id="added-support-for-mariadb-10-6-27-in-the-following-os">
 <h4>Added support for MariaDB 10.6.27 in the following OS<a class="headerlink" href="#added-support-for-mariadb-10-6-27-in-the-following-os" title="Link to this heading">#</a></h4>
 <ul class="simple">
@@ -685,8 +752,8 @@ We will provide them again when this issue is resolved upstream.</p>
 </section>
 <section id="release-16-01-2026-03-30">
 <span id="release-16-01"></span><h2>Release 16.01 - 2026-03-30<a class="headerlink" href="#release-16-01-2026-03-30" title="Link to this heading">#</a></h2>
-<section id="id10">
-<h3>Improvements<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<section id="id14">
+<h3>Improvements<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <section id="added-support-for-percona-server-for-mysql-8-0-45-36-in-the-following-os">
 <h4>Added support for Percona Server for MySQL 8.0.45-36 in the following OS<a class="headerlink" href="#added-support-for-percona-server-for-mysql-8-0-45-36-in-the-following-os" title="Link to this heading">#</a></h4>
 <ul class="simple">
@@ -712,8 +779,8 @@ We will provide them again when this issue is resolved upstream.</p>
 However, this behavior was neither documented nor tested, so support for it has been removed.</p>
 </section>
 </section>
-<section id="id11">
-<h3>Fixes<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<section id="id15">
+<h3>Fixes<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
 <section id="fixed-a-crash-bug-that-occurred-when-mroonga-log-file-was-set-null-or-an-empty-string">
 <h4>Fixed a crash bug that occurred when <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code> was set <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or an empty string<a class="headerlink" href="#fixed-a-crash-bug-that-occurred-when-mroonga-log-file-was-set-null-or-an-empty-string" title="Link to this heading">#</a></h4>
 <p>[<a class="reference external" href="https://github.com/mroonga/mroonga/pull/1069">GH-1069</a>][Patched by Hadeer Ramadan]</p>
@@ -726,8 +793,8 @@ However, this behavior was neither documented nor tested, so support for it has 
 </div>
 </section>
 </section>
-<section id="id12">
-<h3>Thanks<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<section id="id16">
+<h3>Thanks<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Hadeer Ramadan</p></li>
 <li><p>Roel Van de Paar</p></li>
@@ -765,54 +832,67 @@ However, this behavior was neither documented nor tested, so support for it has 
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-12-2026-10-02">Release 16.12 - 2026-10-02</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-15-2026-10-23">Release 16.15 - 2026-10-23</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-the-latest-versions-of-the-following-rdbmss">Added support for the latest versions of the following RDBMSs</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#don-t-register-mroonga-command-by-default">Don’t register <code class="docutils literal notranslate"><span class="pre">mroonga_command()</span></code> by default</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-returning-wrong-result-with-index-merge-intersection">Fixed returning wrong result with index_merge intersection</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-12-2026-10-02">Release 16.12 - 2026-10-02</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mariadb-12-3-is-now-supported-in-this-release">MariaDB 12.3 is now supported in this release</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropped-support-for-the-following-rdbmss">Dropped support for the following RDBMSs</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#building-mroonga-from-source-with-mariadb-now-requires-a-c-17-compatible-compiler">Building Mroonga from source with MariaDB now requires a C++17-compatible compiler</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-a-buffer-overflow-with-long-mroonga-database-path-prefix">Fixed a buffer overflow with long mroonga_database_path_prefix</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-automatic-creation-of-database-directories-for-absolute-mroonga-database-path-prefix">Fixed automatic creation of database directories for absolute mroonga_database_path_prefix</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-a-heap-buffer-overflow-on-escaped-string-in-table-index-comment-parameter">Fixed a heap buffer overflow on escaped string in table/index COMMENT parameter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-double-processing-of-escape-characters-in-index-comment-parameters">Fixed double processing of escape characters in index COMMENT parameters</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Thanks</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-11-2026-09-02">Release 16.11 - 2026-09-02</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-the-latest-versions-of-the-following-rdbmss">Added support for the latest versions of the following RDBMSs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Added support for the latest versions of the following RDBMSs</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-09-2026-08-14">Release 16.09 - 2026-08-14</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Improvements</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mysql-community-server-9-7-lts-in-the-following-os">Added support for MySQL Community Server 9.7 LTS in the following OS</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mysql-community-server-8-4-11-in-the-following-os">Added support for MySQL Community Server 8.4.11 in the following OS</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mariadb-10-6-28-in-the-following-os">Added support for MariaDB 10.6.28 in the following OS</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fixes</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-a-bug-that-could-cause-mroonga-to-crash-on-any-error-when-opening-an-index">Fixed a bug that could cause Mroonga to crash on any error when opening an index</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Thanks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Thanks</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-08-2026-08-04">Release 16.08 - 2026-08-04</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Improvements</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Added support for MySQL Community Server 9.7 LTS in the following OS</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Added support for MySQL Community Server 8.4.11 in the following OS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Added support for MySQL Community Server 9.7 LTS in the following OS</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Added support for MySQL Community Server 8.4.11 in the following OS</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-07-2026-06-30">Release 16.07 - 2026-06-30</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Improvements</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mysql-8-0-46-0ubuntu0-22-04-3-on-ubuntu-22-04">Added support for MySQL 8.0.46-0ubuntu0.22.04.3 on Ubuntu 22.04</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mysql-8-0-46-0ubuntu0-24-04-3-on-ubuntu-24-04">Added support for MySQL 8.0.46-0ubuntu0.24.04.3 on Ubuntu 24.04</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-percona-server-for-mysql-8-4-10-10-in-the-following-os">Added support for Percona Server for MySQL 8.4.10-10 in the following OS</a></li>
@@ -822,7 +902,7 @@ However, this behavior was neither documented nor tested, so support for it has 
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-05-2026-06-19">Release 16.05 - 2026-06-19</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Improvements</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mariadb-10-6-27-in-the-following-os">Added support for MariaDB 10.6.27 in the following OS</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mariadb-10-11-18-in-the-following-os">Added support for MariaDB 10.11.18 in the following OS</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mariadb-11-4-12-in-the-following-os">Added support for MariaDB 11.4.12 in the following OS</a></li>
@@ -836,18 +916,18 @@ However, this behavior was neither documented nor tested, so support for it has 
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-16-01-2026-03-30">Release 16.01 - 2026-03-30</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Improvements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Improvements</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-percona-server-for-mysql-8-0-45-36-in-the-following-os">Added support for Percona Server for MySQL 8.0.45-36 in the following OS</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-percona-server-for-mysql-8-4-8-8-in-the-following-os">Added support for Percona Server for MySQL 8.4.8-8 in the following OS</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added-support-for-mariadb-11-8-6-on-debian-13">Added support for MariaDB 11.8.6 on Debian 13</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropped-support-for-engine-xxx-in-connection-for-wrapper-mode">Dropped support for <code class="docutils literal notranslate"><span class="pre">engine</span> <span class="pre">"XXX"</span></code> in CONNECTION for wrapper mode</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Fixes</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-a-crash-bug-that-occurred-when-mroonga-log-file-was-set-null-or-an-empty-string">Fixed a crash bug that occurred when <code class="docutils literal notranslate"><span class="pre">mroonga_log_file</span></code> was set <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or an empty string</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Thanks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Thanks</a></li>
 </ul>
 </li>
 </ul>
